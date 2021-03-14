@@ -1,6 +1,6 @@
 firstName: Nadun
 lastName: De Silva
-occupation: Software Engineer &#38; ML Enthusiast
+occupation: Software Engineer &amp; ML Enthusiast
 phone: +94 778 222 607
 email: nadunrds@gmail.com
 website: nadundesilva.github.io
@@ -8,3 +8,14 @@ aboutMe:
   main: |
     Hi I am a Senior Software Engineer and Machine Learning Enthusiast. I am interested in Cloud Technologies,
     Observability and Anomaly Detection.
+  moreInfo: |
+    I currently work at WSO2 on leading the Observability area in an upcoming Cloud Platform. I have several years of
+    working experience as a software engineer working on multiple Research &amp; Development projects at WSO2.
+    I love learning about new technologies and is particularly interested in Machine Learning.
+socialMedia:
+  - url: https://www.facebook.com/nadunrds
+    iconClass: fa-facebook
+  - url: https://www.linkedin.com/in/nadundesilva
+    iconClass: fa-linkedin
+  - url: https://www.instagram.com/nadunrds/
+    iconClass: fa-instagram
