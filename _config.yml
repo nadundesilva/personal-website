@@ -1,0 +1,22 @@
+title: Nadun De Silva
+tagline: An aspiring Software Engineer and Machine Learning Enthusiast
+description: |
+  Personal website of Nadun De Silva who is an aspiring Software Engineer and Machine Learning Enthusiast.
+url: https://nadundesilva.github.io
+author: Nadun De Silva
+social:
+  name: Nadun De Silva
+  links:
+    - https://www.facebook.com/nadunrds
+    - https://www.linkedin.com/in/nadundesilva
+    - https://www.instagram.com/nadunrds
+    - https://github.com/nadundesilva
+locale: en_US
+image:
+  path: /assets/images/about/profile-photo.jpg
+  height: 100
+  width: 100
+seo:
+  type: Person
+plugins:
+  - jekyll-seo-tag
