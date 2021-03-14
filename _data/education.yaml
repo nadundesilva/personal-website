@@ -1,0 +1,21 @@
+qualifications:
+  - title: bachelor <span>of </span> science in engineering
+    timePeriod: 2014 - 2017
+    description: Studied Computer Science and Engineering &amp; completed a First Class Honors Degree.
+    school:
+      name: university of moratuwa
+      location: moratuwa, Sri Lanka
+  - title: G. C. E. Advanced Level Examination
+    timePeriod: 2004 - 2009
+    description: |
+      Studied for G. C. E. Advanced Level Examination &amp; completed G. C. E. Advanced Level Examination with A grades.
+    school:
+      name: st. joseph's college, colombo 10
+      location: colombo 10, Sri Lanka
+  - title: G. C. E. Ordinary Level Examination
+    timePeriod: 2009 - 2012
+    description: |
+      Studied and completed G. C. E. Ordinary Level Examination.
+    school:
+      name: st. joseph's college, colombo 10
+      location: colombo 10, Sri Lanka
