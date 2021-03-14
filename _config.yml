@@ -20,3 +20,4 @@ seo:
   type: Person
 plugins:
   - jekyll-seo-tag
+  - jekyll-sitemap
