@@ -6,8 +6,8 @@
     <div class="container">
         <div class="education-horizontal-timeline">
             <div class="row">
-                {% for qualification in site.data.education.qualifications %}
-                <div class="col-sm-{{ 12 | divided_by: site.data.education.qualifications.size }}">
+                {% for qualification in site.data.education %}
+                <div class="col-sm-{{ 12 | divided_by: site.data.education.size }}">
                     <div class="single-horizontal-timeline">
                         <div class="experience-time">
                             <h2>{{ qualification.timePeriod }}</h2>
