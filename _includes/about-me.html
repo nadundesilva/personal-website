@@ -34,7 +34,8 @@
                 </div>
                 <div class="col-sm-offset-1 col-sm-5">
                     <div class="single-about-img">
-                        <img src="assets/images/about/profile-photo.jpg" alt="profile-image">
+                        <img src="assets/images/about/profile-photo.jpg"
+                             alt="{{ site.data.profile.firstName }} {{ site.data.profile.lastName }}">
                         <div class="about-list-icon">
                             <ul>
                                 {% for item in site.data.profile.socialMedia %}
