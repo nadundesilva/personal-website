@@ -6,7 +6,7 @@
         </div>
         <div class="container">
             <div class="row">
-                {% assign skillsRowCount = site.data.skills.size | divided_by: 2 %}
+                {% assign skillsRowCount = site.data.skills.size | divided_by: 2.0 | ceil %}
                 <div class="col-md-6">
                     <div class="single-skill-content">
                         {% for skill in site.data.skills limit: skillsRowCount %}
