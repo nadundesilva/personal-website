@@ -526,8 +526,9 @@ span.single-timeline-horizontal.spacial-horizontal-line {width: 88px;}
     border:  1px solid #e5ebf2;
 }
 
-.profiles-content {padding-top: 100px;}
-.profiles-content .col-sm-3{padding:0;}
+.profiles-content {
+    padding-top: 100px;
+}
 .profile-txt {
     display: flex;
     align-items: center;
