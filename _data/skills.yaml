@@ -1,7 +1,11 @@
 - name: programming
   percentage: 90
+- name: time-series analysis
+  percentage: 80
 - name: databases
   percentage: 85
+- name: cloud computing
+  percentage: 80
 - name: leadership
   percentage: 80
 - name: teamwork
