@@ -1,0 +1,50 @@
+<!--profiles start -->
+<section id="profiles" class="profiles">
+    <div class="profiles-details">
+        <div class="section-heading text-center">
+            <h2>profiles</h2>
+        </div>
+        <div class="container">
+            <div class="profiles-content">
+                {% assign firstRowColumnCount = site.data.profiles.size | divided_by: 2.0 | ceil %}
+                {% assign firstRowColumnWidth = 12 | divided_by: firstRowColumnCount %}
+                {% assign secondRowColumnCount = site.data.profiles.size | minus: firstRowColumnCount %}
+                {% assign secondRowColumnWidth = 12 | divided_by: secondRowColumnCount %}
+                <div class="row">
+                    {% for profile in site.data.profiles limit: firstRowColumnCount %}
+                    <div class="col-sm-{{ firstRowColumnWidth }} single-profile{% if forloop.last == true %} profile-no-border{% endif %}">
+                        <div class="profile-txt">
+                            <a target="_blank" href="{{ profile.link }}"><i class="{{ profile.icon }}"></i></a>
+                            <div class="profile-icon-name">{{ profile.name }}</div>
+                        </div>
+                        <div class="single-profile-overlay">
+                            <div class="profile-txt">
+                                <a target="_blank" href="{{ profile.link }}"><i class="{{ profile.icon }}"></i></a>
+                                <div class="profile-icon-name">{{ profile.name }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="profile-border"></div>
+                <div class="row">
+                    {% for profile in site.data.profiles offset: firstRowColumnCount %}
+                    <div class="col-sm-{{ secondRowColumnWidth }} single-profile{% if forloop.last == true %} profile-no-border{% endif %}">
+                        <div class="profile-txt">
+                            <a target="_blank" href="{{ profile.link }}"><i class="{{ profile.icon }}"></i></a>
+                            <div class="profile-icon-name">{{ profile.name }}</div>
+                        </div>
+                        <div class="single-profile-overlay">
+                            <div class="profile-txt">
+                                <a target="_blank" href="{{ profile.link }}"><i class="{{ profile.icon }}"></i></a>
+                                <div class="profile-icon-name">{{ profile.name }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--/.profiles-->
+<!--profiles end -->
