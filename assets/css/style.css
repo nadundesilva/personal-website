@@ -12,7 +12,7 @@ font-family: 'Poppins', sans-serif;
 6.  Skill
 7.  Experience
 8.  Profiles
-9.  Portfolio
+9.  Achievements
 10. Clients
 
 /*-------------------------------------
@@ -598,14 +598,14 @@ span.single-timeline-horizontal.spacial-horizontal-line {width: 88px;}
 .single-profile:hover .profile-icon-name,.single-profile:hover .profile-txt a>i{color: #fff;}
 .single-profile:hover .profile-border {border:transparent;}
 /*-------------------------------------
-        9. Portfolio
+        9. Achievements
 --------------------------------------*/
-.portfolio {
+.achievements {
     padding:  50px 0 100px;
     border:  1px solid #e5ebf2;
 }
 
-.portfolio-content {padding-top: 100px;}
+.achievements-content {padding-top: 100px;}
 
 /* ---- .item ---- */
 .isotope:after {
