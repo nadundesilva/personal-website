@@ -1,3 +1,5 @@
+---
+---
 $(document).ready(function() {
 	"use strict";
 
@@ -57,8 +59,8 @@ $(document).ready(function() {
 
     // 4. owl carousel
 
-    $('#client').owlCarousel({
-        items:7,
+    $('#projects-carousel').owlCarousel({
+        items:{% if site.data.projects.size < 7 %}{{ site.data.projects.size }}{% else %}7{% endif %},
         loop:true,
         smartSpeed: 1000,
         autoplay:true,
@@ -66,20 +68,20 @@ $(document).ready(function() {
         autoplayHoverPause:true,
         responsive: {
             0:{
-                items:2
+                items:{% if site.data.projects.size < 2 %}{{ site.data.projects.size }}{% else %}2{% endif %}
             },
             415:{
-                items:2
+                items:{% if site.data.projects.size < 2 %}{{ site.data.projects.size }}{% else %}2{% endif %}
             },
             600:{
-                items:4
+                items:{% if site.data.projects.size < 4 %}{{ site.data.projects.size }}{% else %}4{% endif %}
 
             },
             1199:{
-                items:4
+                items:{% if site.data.projects.size < 4 %}{{ site.data.projects.size }}{% else %}4{% endif %}
             },
             1200:{
-                items:7
+                items:{% if site.data.projects.size < 7 %}{{ site.data.projects.size }}{% else %}7{% endif %}
             }
         }
     });
