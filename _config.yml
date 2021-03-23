@@ -18,6 +18,9 @@ image:
   width: 100
 seo:
   type: Person
+twitter:
+  username: nadunrds
+  card: summary
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
