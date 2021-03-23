@@ -65,9 +65,9 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  jekyll
-  jekyll-seo-tag
-  jekyll-sitemap
+  jekyll (= 4.2.0)
+  jekyll-seo-tag (= 2.7.1)
+  jekyll-sitemap (= 1.4.0)
 
 BUNDLED WITH
    2.2.14
