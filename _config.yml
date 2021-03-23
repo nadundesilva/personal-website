@@ -12,15 +12,19 @@ social:
     - https://www.instagram.com/nadunrds
     - https://github.com/nadundesilva
 locale: en_US
-image:
-  path: /assets/images/about/profile-photo.jpg
-  height: 100
-  width: 100
-seo:
-  type: Person
 twitter:
   username: nadunrds
   card: summary
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
+defaults:
+  - scope:
+      path: ""
+    values:
+      seo:
+        type: Person
+      image:
+        path: /assets/images/about/profile-photo.jpg
+        height: 200
+        width: 200
