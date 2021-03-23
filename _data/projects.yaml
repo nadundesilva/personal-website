@@ -1,0 +1,9 @@
+- name: Ballerina
+  logo: assets/images/projects/ballerina.svg
+  link: https://ballerina.io
+- name: Cellery
+  logo: assets/images/projects/cellery.svg
+  link: https://cellery.io
+- name: Siddhi
+  logo: assets/images/projects/siddhi.svg
+  link: https://siddhi.io

@@ -13,7 +13,7 @@ font-family: 'Poppins', sans-serif;
 7.  Experience
 8.  Profiles
 9.  Achievements
-10. Clients
+10. Projects
 
 /*-------------------------------------
 		1.General css (Reset code)
@@ -674,21 +674,27 @@ span.single-timeline-horizontal.spacial-horizontal-line {width: 88px;}
 }/*.isotope-overlay*/
 
 /*-------------------------------------
-        10. Clients
+        10. Projects
 --------------------------------------*/
-.clients {padding-top: 50px;}
-.clients-area {
+.projects {padding-top: 50px;}
+.projects-area {
     display: flex;
     align-items: center;
     height: 250px;
 }
-.clients-area .item {padding: 0 25px;}
+.projects-area .item {padding: 0 25px;}
 
-.clients .clients-area .owl-carousel .owl-item img {
+.projects .projects-area .owl-carousel .owl-item img {
     display: block;
     width: 100%;
     height: auto;
-    border-radius:0;
+    border-radius: 0;
+}
+
+.projects .projects-area .owl-carousel .owl-item a {
+    margin: auto;
+    width: 60%;
+    display: block;
 }
 
 /*hm-foot-icon*/
