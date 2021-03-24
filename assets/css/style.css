@@ -676,13 +676,23 @@ span.single-timeline-horizontal.spacial-horizontal-line {width: 88px;}
 /*-------------------------------------
         10. Projects
 --------------------------------------*/
-.projects {padding-top: 50px;}
+.projects {
+    padding-top: 50px;
+}
+
 .projects-area {
     display: flex;
     align-items: center;
     height: 250px;
 }
-.projects-area .item {padding: 0 25px;}
+
+.projects-area .container {
+    width: 100%
+}
+
+.projects-area .item {
+    padding: 0 25px;
+}
 
 .projects .projects-area .owl-carousel .owl-item img {
     display: block;

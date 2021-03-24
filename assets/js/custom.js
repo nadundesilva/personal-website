@@ -68,7 +68,7 @@ $(document).ready(function() {
         autoplayHoverPause:true,
         responsive: {
             0:{
-                items:{% if site.data.projects.size < 2 %}{{ site.data.projects.size }}{% else %}2{% endif %}
+                items:{% if site.data.projects.size < 2 %}{{ site.data.projects.size }}{% else %}1{% endif %}
             },
             415:{
                 items:{% if site.data.projects.size < 2 %}{{ site.data.projects.size }}{% else %}2{% endif %}
