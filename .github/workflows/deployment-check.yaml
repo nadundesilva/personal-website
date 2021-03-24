@@ -32,3 +32,11 @@ jobs:
           npm ci
           npm run cypress:run -- --browser ${{ matrix.browser }} --headless
           pushd
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results-${{ matrix.browser }}
+          path: |
+            _e2e_tests/cypress/videos/
+            _e2e_tests/cypress/screenshots/
