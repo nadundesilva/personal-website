@@ -4,3 +4,6 @@
 # Jekyll
 _site
 .jekyll-cache
+
+# NPM
+node_modules
