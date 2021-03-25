@@ -20,17 +20,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.16.0
-      - name: Setup Chrome
-        if: matrix.browser == 'chrome'
-        uses: browser-actions/setup-chrome@v0.0.0
-      - name: Setup Firefox
-        if: matrix.browser == 'firefox'
-        uses: browser-actions/setup-firefox@v0.0.0
       - name: Run End to End Tests
         run: |
           pushd ./_e2e_tests
-          npm ci
-          npm run cypress:run -- --browser ${{ matrix.browser }} --headless
+          docker run -t -v $PWD:/test -w /test cypress/included:6.8.0 run --headless --browser ${{ matrix.browser }}
           pushd
       - name: Upload artifacts
         if: always()
