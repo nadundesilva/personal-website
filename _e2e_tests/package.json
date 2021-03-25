@@ -4,8 +4,7 @@
   "description": "End to End Tests for Website",
   "main": "index.js",
   "scripts": {
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:open": "cypress open"
   },
   "repository": {
     "type": "git",
