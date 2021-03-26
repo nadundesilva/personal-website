@@ -1,0 +1,34 @@
+[
+  {
+    "name": "welcome-banner",
+    "hasNavBarItem": false
+  },
+  {
+    "name": "about-me",
+    "hasNavBarItem": false
+  },
+  {
+    "name": "education",
+    "hasNavBarItem": true
+  },
+  {
+    "name": "skills",
+    "hasNavBarItem": true
+  },
+  {
+    "name": "experience",
+    "hasNavBarItem": true
+  },
+  {
+    "name": "profiles",
+    "hasNavBarItem": true
+  },
+  {
+    "name": "achievements",
+    "hasNavBarItem": true
+  },
+  {
+    "name": "projects",
+    "hasNavBarItem": true
+  }
+]
