@@ -17,6 +17,11 @@ describe("Page Validation Test", () => {
                     .scrollIntoView({
                         duration: 1000
                     });
+                cy.get("[data-cy-section=" + section.name + "]")
+                    .should('be.visible')
+                    .toMatchImageSnapshot({
+                        name: "section-" + section.name + "-scroll-test"
+                    });
             });
         });
     });
@@ -26,9 +31,14 @@ describe("Page Validation Test", () => {
             sections.filter((section) => section.hasNavBarItem)
                 .forEach((section) => {
                     cy.get("[data-cy-nav-item=" + section.name + "]")
+                        .should('be.visible')
                         .click();
                     cy.get("[data-cy-section=" + section.name + "]")
-                        .should('be.visible');
+                        .should('be.visible')
+                        .toMatchImageSnapshot({
+                            name: "section-" + section.name + "-nav-click-test"
+                        });
+                    cy.wait(1000);
                 });
         });
     });

@@ -1,3 +1,7 @@
 {
-  "baseUrl": "https://nadundesilva.github.io"
+  "baseUrl": "https://nadundesilva.github.io",
+  "chromeWebSecurity": false,
+  "ignoreTestFiles": [
+    "**/__image_snapshots__/*"
+  ]
 }
