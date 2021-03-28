@@ -30,3 +30,5 @@ defaults:
         path: /assets/images/about/profile-photo.jpg
         height: 200
         width: 200
+webmaster_verifications:
+  yandex: acbc45e5d9645cf0
