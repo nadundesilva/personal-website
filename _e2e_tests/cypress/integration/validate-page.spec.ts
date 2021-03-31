@@ -16,9 +16,10 @@ describe("Page Validation Test", () => {
                 cy.get("[data-cy-section=" + section.name + "]")
                     .scrollIntoView({
                         duration: 1000
-                    });
-                cy.get("[data-cy-section=" + section.name + "]")
-                    .should('be.visible')
+                    })
+                    .should('be.visible');
+                cy.wait(1000);
+                cy.document()
                     .toMatchImageSnapshot({
                         name: "section-" + section.name + "-scroll-test"
                     });
@@ -34,11 +35,12 @@ describe("Page Validation Test", () => {
                         .should('be.visible')
                         .click();
                     cy.get("[data-cy-section=" + section.name + "]")
-                        .should('be.visible')
+                        .should('be.visible');
+                    cy.wait(1000);
+                    cy.document()
                         .toMatchImageSnapshot({
                             name: "section-" + section.name + "-nav-click-test"
                         });
-                    cy.wait(1000);
                 });
         });
     });

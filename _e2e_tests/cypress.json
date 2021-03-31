@@ -3,5 +3,13 @@
   "chromeWebSecurity": false,
   "ignoreTestFiles": [
     "**/__image_snapshots__/*"
-  ]
+  ],
+  "env": {
+    "cypress-plugin-snapshots": {
+      "autopassNewSnapshots": false,
+      "screenshotConfig": {
+        "capture": "viewport"
+      }
+    }
+  }
 }
