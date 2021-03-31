@@ -34,3 +34,5 @@ jobs:
           path: |
             _e2e_tests/cypress/videos/
             _e2e_tests/cypress/screenshots/
+            _e2e_tests/cypress/integration/__image_snapshots__/*.actual.png
+            _e2e_tests/cypress/integration/__image_snapshots__/*.diff.png
