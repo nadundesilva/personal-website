@@ -4,7 +4,6 @@ description: |
   Nadun De Silva is an aspiring Software Engineer and ML Enthusiast, interested in Machine Learning,
   Observability, Anomaly Detection & Cloud Technologies.
 url: https://nadundesilva.github.io
-author: Nadun De Silva
 social:
   name: Nadun De Silva
   links:
@@ -13,7 +12,6 @@ social:
     - https://www.instagram.com/nadunrds
     - https://github.com/nadundesilva
 locale: en_US
-logo: /assets/images/logo.png
 twitter:
   username: nadunrds
   card: summary
