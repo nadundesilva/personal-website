@@ -9,6 +9,9 @@
       "autopassNewSnapshots": false,
       "screenshotConfig": {
         "capture": "viewport"
+      },
+      "imageConfig": {
+        "threshold": 1
       }
     }
   }
