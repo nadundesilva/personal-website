@@ -30,3 +30,5 @@ defaults:
         width: 200
 webmaster_verifications:
   yandex: acbc45e5d9645cf0
+exclude:
+  - README.md
