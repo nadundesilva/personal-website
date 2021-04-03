@@ -13,9 +13,11 @@ aboutMe:
     working experience as a software engineer working on multiple Research &amp; Development projects at WSO2.
     I love learning about new technologies and is particularly interested in Machine Learning.
 socialMedia:
-  - url: https://www.facebook.com/nadunrds
-    iconClass: fa-facebook
   - url: https://www.linkedin.com/in/nadundesilva
     iconClass: fa-linkedin
+  - url: https://www.facebook.com/nadunrds
+    iconClass: fa-facebook
   - url: https://www.instagram.com/nadunrds
     iconClass: fa-instagram
+  - url: https://twitter.com/nadunrds
+    iconClass: fa-twitter
