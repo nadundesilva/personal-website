@@ -538,6 +538,7 @@ span.single-timeline-horizontal.spacial-horizontal-line {width: 88px;}
     flex-direction: column;
 }
 .single-profile {
+    cursor: pointer;
     position: relative;
     height: 150px;
     display: flex;
