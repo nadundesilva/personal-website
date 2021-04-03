@@ -13,6 +13,7 @@ describe("Page Validation Test", () => {
     it("Validates all sections", () => {
         cy.fixture("sections.json").then((sections) => {
             sections.forEach((section) => {
+                cy.wait(1000);
                 cy.get("[data-cy-section=" + section.name + "]")
                     .scrollIntoView({
                         duration: 1000
@@ -31,6 +32,7 @@ describe("Page Validation Test", () => {
         cy.fixture("sections.json").then((sections) => {
             sections.filter((section) => section.hasNavBarItem)
                 .forEach((section) => {
+                    cy.wait(1000);
                     cy.get("[data-cy-nav-item=" + section.name + "]")
                         .should('be.visible')
                         .click();
