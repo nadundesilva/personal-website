@@ -12,7 +12,8 @@
                 {% assign secondRowColumnWidth = 12 | divided_by: secondRowColumnCount %}
                 <div class="row">
                     {% for profile in site.data.profiles limit: firstRowColumnCount %}
-                    <div class="col-sm-{{ firstRowColumnWidth }} single-profile{% if forloop.last == true %} profile-no-border{% endif %}">
+                    <div class="col-sm-{{ firstRowColumnWidth }} single-profile{% if forloop.last == true %} profile-no-border{% endif %}"
+                        onclick="window.open('{{ profile.link }}');">
                         <div class="profile-txt">
                             <a target="_blank" href="{{ profile.link }}"><i class="{{ profile.icon }}"></i></a>
                             <div class="profile-icon-name">{{ profile.name }}</div>
@@ -29,7 +30,8 @@
                 <div class="profile-border"></div>
                 <div class="row">
                     {% for profile in site.data.profiles offset: firstRowColumnCount %}
-                    <div class="col-sm-{{ secondRowColumnWidth }} single-profile{% if forloop.last == true %} profile-no-border{% endif %}">
+                    <div class="col-sm-{{ secondRowColumnWidth }} single-profile{% if forloop.last == true %} profile-no-border{% endif %}"
+                        onclick="window.open('{{ profile.link }}');">
                         <div class="profile-txt">
                             <a target="_blank" href="{{ profile.link }}"><i class="{{ profile.icon }}"></i></a>
                             <div class="profile-icon-name">{{ profile.name }}</div>
