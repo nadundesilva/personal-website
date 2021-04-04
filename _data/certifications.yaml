@@ -1,0 +1,14 @@
+groups:
+- issuer: deeplearning.ai
+  certificates:
+  - name: AI For Everyone
+    type: Course
+    certificate: https://coursera.org/share/e8ae9a481ef41f070d6c7b00887e8b66
+- issuer: Linux Foundation
+  certificates:
+  - name: Certificed Kubernetes Administrator
+    type: Certification
+    certificate: https://www.youracclaim.com/badges/8241114b-7435-460a-a08f-9d33304c1470?source=linked_in_profile
+  - name: Certificed Kubernetes Application Developer
+    type: Certification
+    certificate: https://www.youracclaim.com/badges/e9df4128-2017-41c3-9e7d-028e37176243/linked_in_profile
