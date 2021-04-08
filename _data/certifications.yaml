@@ -1,5 +1,5 @@
 groups:
-- issuer: deeplearning.ai
+- issuer: Deeplearning.AI
   certificates:
   - name: AI For Everyone
     type: Course
