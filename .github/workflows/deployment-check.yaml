@@ -36,3 +36,19 @@ jobs:
             _e2e_tests/cypress/screenshots/
             _e2e_tests/cypress/integration/__image_snapshots__/*.actual.png
             _e2e_tests/cypress/integration/__image_snapshots__/*.diff.png
+
+  links-check:
+    name: Check Links in Website
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v1.0.6
+        with:
+          args: --verbose --no-progress --base-url https://nadundesilva.github.io ./_site/**
+      - name: Archive Link Checker Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Link Checker Report
+          path:  ./lychee/out.md
+      - name: Fail on Link Errors
+        run: exit ${{ steps.lc.outputs.exit_code }}
