@@ -1,6 +1,9 @@
 groups:
 - issuer: Deeplearning.AI
   certificates:
+  - name: Neural Networks and Deep Learning
+    type: Course
+    certificate: https://coursera.org/share/3c24c553a46e79e6864797adbc172edf
   - name: AI For Everyone
     type: Course
     certificate: https://coursera.org/share/e8ae9a481ef41f070d6c7b00887e8b66
