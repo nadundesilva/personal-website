@@ -11,7 +11,7 @@
                         <div class="col-sm-4">
                             {% for achievement in site.data.achievements.list limit: 2 %}
                             <div class="item">
-                                <img src="{{ achievement.image }}" alt="{{ achievement.name }}"/>
+                                {% picture {{ achievement.image }} --alt {{ achievement.name }} %}
                                 <div class="isotope-overlay">
                                     <a href="#">
                                         {{ achievement.name }}
@@ -22,8 +22,7 @@
                         </div><!-- /.col -->
                         <div class="col-sm-4">
                             <div class="item">
-                                <img src="{{ site.data.achievements.main.image }}"
-                                     alt="{{ site.data.achievements.main.name }}"/>
+                                {% picture {{ site.data.achievements.main.image }} --alt {{ site.data.achievements.main.name }} %}
                                 <div class="isotope-overlay">
                                     <a href="#">
                                         {{ site.data.achievements.main.name }}
@@ -34,7 +33,7 @@
                         <div class="col-sm-4">
                             {% for achievement in site.data.achievements.list offset: 2 %}
                             <div class="item">
-                                <img src="{{ achievement.image }}" alt="{{ achievement.name }}"/>
+                                {% picture {{ achievement.image }} --alt {{ achievement.name }} %}
                                 <div class="isotope-overlay">
                                     <a href="#">
                                         {{ achievement.name }}
