@@ -1,0 +1,4 @@
+# Settings for Jekyll Picture Tag
+presets:
+  default:
+    formats: [webp, original]
