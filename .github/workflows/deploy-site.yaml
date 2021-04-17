@@ -1,0 +1,127 @@
+name: Deploy Site
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  lint:
+    name: Lint Code Base
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Lint Code Base
+        uses: github/super-linter@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_YAML: true
+          VALIDATE_RUBY: true
+          VALIDATE_TYPESCRIPT_ES: true
+
+  build-site:
+    name: Build Site
+    runs-on: ubuntu-20.04
+    needs: lint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build Site
+        run: |
+          bundle
+          bundle exec jekyll build --safe --strict_front_matter
+      - name: Upload Site
+        uses: actions/upload-artifact@v2
+        with:
+          name: site
+          path: _site/
+
+  links-check:
+    name: Check Links in Website
+    runs-on: ubuntu-20.04
+    needs: build-site
+    steps:
+      - name: Download Site
+        uses: actions/download-artifact@v2
+        with:
+          name: site
+          path: _site/
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v1.0.6
+        with:
+          args: --verbose --no-progress --base-url https://nadundesilva.github.io ./_site/**
+      - name: Upload Link Checker Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Link Checker Report
+          path: ./lychee/out.md
+      - name: Fail on Link Errors
+        run: exit ${{ steps.lc.outputs.exit_code }}
+
+  integration-tests:
+    strategy:
+      matrix:
+        browser: [ electron, chrome, firefox ]
+    name: Run Integration Tests (${{ matrix.browser }})
+    runs-on: ubuntu-20.04
+    needs: build-site
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download Site
+        uses: actions/download-artifact@v2
+        with:
+          name: site
+          path: _site/
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.16.0
+      - name: Run End to End Tests
+        run: |
+          npx serve@11.3.2 ./_site --listen tcp://localhost:4000 </dev/null &>/dev/null &
+          SERVE_PID=${!}
+          npx wait-on@5.3.0 -t 10000 -i 1000 --verbose http://localhost:4000
+          pushd ./_e2e_tests
+          npm ci
+          docker run --network host --rm -t -v $PWD:/test -w /test -e CYPRESS_BASE_URL=http://localhost:4000 \
+            cypress/included:6.8.0 run --headless --browser ${{ matrix.browser }}
+          pushd
+          kill -9 ${SERVE_PID}
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results-${{ matrix.browser }}
+          path: |
+            _e2e_tests/cypress/videos/
+            _e2e_tests/cypress/screenshots/
+            _e2e_tests/cypress/integration/__image_snapshots__/*.actual.png
+            _e2e_tests/cypress/integration/__image_snapshots__/*.diff.png
+
+  deploy-site:
+    name: Deploy Site
+    runs-on: ubuntu-20.04
+    needs:
+      - links-check
+      - integration-tests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download Site
+        uses: actions/download-artifact@v2
+        with:
+          name: site
+          path: _site/
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.16.0
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          dry-run: ${{ github.event_name != 'push' }}
+          branch: gh-pages
+          folder: _site
+          commit-message: |
+            [Automated] Update Site (Source Commit: ${{ github.sha }})

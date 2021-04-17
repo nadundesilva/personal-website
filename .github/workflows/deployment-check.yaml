@@ -44,8 +44,8 @@ jobs:
       - name: Link Checker
         uses: lycheeverse/lychee-action@v1.0.6
         with:
-          args: --verbose --no-progress --base-url https://nadundesilva.github.io ./_site/**
-      - name: Archive Link Checker Report
+          args: --verbose --no-progress https://nadundesilva.github.io/
+      - name: Upload Link Checker Report
         uses: actions/upload-artifact@v2
         with:
           name: Link Checker Report
