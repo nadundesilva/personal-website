@@ -1,6 +1,12 @@
 groups:
 - issuer: Deeplearning.AI
   certificates:
+  - name: Structuring Machine Learning Projects
+    type: Course
+    certificate: https://coursera.org/share/a101b63a59e375da1fa0e71390cad8bf
+  - name: "Improving Deep Neural Networks: Hyperparameter Tuning, Regularization and Optimization"
+    type: Course
+    certificate: https://coursera.org/share/c4dddcb61fcd31de7f03bb3d6b27a284
   - name: Neural Networks and Deep Learning
     type: Course
     certificate: https://coursera.org/share/3c24c553a46e79e6864797adbc172edf
