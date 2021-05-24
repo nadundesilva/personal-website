@@ -1,6 +1,9 @@
 groups:
 - issuer: Deeplearning.AI
   certificates:
+  - name: Convolutional Neural Networks
+    type: Course
+    certificate: https://coursera.org/share/af7675219cb84d7bf30a9d86f11fa6e7
   - name: Structuring Machine Learning Projects
     type: Course
     certificate: https://coursera.org/share/a101b63a59e375da1fa0e71390cad8bf
