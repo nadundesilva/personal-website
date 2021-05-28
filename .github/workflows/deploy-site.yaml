@@ -29,6 +29,7 @@ jobs:
       - name: Build Site
         run: |
           sudo apt install -y libvips-tools=8.9.1-2
+          sudo gem install bundler
           bundle
           bundle exec jekyll build --safe --strict_front_matter
       - name: Upload Site
