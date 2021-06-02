@@ -9,3 +9,4 @@ _site
 node_modules
 _e2e_tests/cypress/videos
 _e2e_tests/cypress/screenshots
+_e2e_tests/cypress/downloads
