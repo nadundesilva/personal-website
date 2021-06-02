@@ -88,7 +88,7 @@ jobs:
           pushd ./_e2e_tests
           npm ci
           docker run --network host --rm -t -v $PWD:/test -w /test -e CYPRESS_BASE_URL=http://localhost:4000 \
-            cypress/included:6.8.0 run --headless --browser ${{ matrix.browser }}
+            cypress/included:7.4.0 run --headless --browser ${{ matrix.browser }}
           pushd
           kill -9 ${SERVE_PID}
       - name: Upload artifacts

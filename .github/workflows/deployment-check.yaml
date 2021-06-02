@@ -24,7 +24,7 @@ jobs:
         run: |
           pushd ./_e2e_tests
           npm ci
-          docker run -t -v $PWD:/test -w /test cypress/included:6.8.0 run --headless --browser ${{ matrix.browser }}
+          docker run -t -v $PWD:/test -w /test cypress/included:7.4.0 run --headless --browser ${{ matrix.browser }}
           pushd
       - name: Upload artifacts
         if: always()
