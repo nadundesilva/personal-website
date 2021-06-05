@@ -64,7 +64,7 @@ jobs:
   integration-tests:
     strategy:
       matrix:
-        browser: [ electron, chrome, firefox ]
+        browser: [ electron, chrome ]
     name: Run Integration Tests (${{ matrix.browser }})
     runs-on: ubuntu-20.04
     needs: build-site
