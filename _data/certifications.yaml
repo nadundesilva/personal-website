@@ -1,6 +1,9 @@
 groups:
 - issuer: Deeplearning.AI
   certificates:
+  - name: Deep Learning
+    type: Specialization
+    certificate: https://coursera.org/share/8e5db53bfef4c4b27f79004022edad72
   - name: Sequence Models
     type: Course
     certificate: https://coursera.org/share/2a2d6e75bf6aa27df99a455fca0d4bac
