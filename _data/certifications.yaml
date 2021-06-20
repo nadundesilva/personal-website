@@ -1,6 +1,9 @@
 groups:
 - issuer: Deeplearning.AI
   certificates:
+  - name: Sequence Models
+    type: Course
+    certificate: https://coursera.org/share/2a2d6e75bf6aa27df99a455fca0d4bac
   - name: Convolutional Neural Networks
     type: Course
     certificate: https://coursera.org/share/af7675219cb84d7bf30a9d86f11fa6e7
