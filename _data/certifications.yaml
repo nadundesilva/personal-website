@@ -1,24 +1,32 @@
 groups:
 - issuer: Deeplearning.AI
   certificates:
+  - name: Generative Adversarial Networks (GANs)
+    type: Specialization
+    certificate: ""
+    courses:
+      - name: Build Basic Generative Adversarial Networks (GANs)
+        type: Course
+        certificate: ""
   - name: Deep Learning
     type: Specialization
     certificate: https://coursera.org/share/8e5db53bfef4c4b27f79004022edad72
-  - name: Sequence Models
-    type: Course
-    certificate: https://coursera.org/share/2a2d6e75bf6aa27df99a455fca0d4bac
-  - name: Convolutional Neural Networks
-    type: Course
-    certificate: https://coursera.org/share/af7675219cb84d7bf30a9d86f11fa6e7
-  - name: Structuring Machine Learning Projects
-    type: Course
-    certificate: https://coursera.org/share/a101b63a59e375da1fa0e71390cad8bf
-  - name: "Improving Deep Neural Networks: Hyperparameter Tuning, Regularization and Optimization"
-    type: Course
-    certificate: https://coursera.org/share/c4dddcb61fcd31de7f03bb3d6b27a284
-  - name: Neural Networks and Deep Learning
-    type: Course
-    certificate: https://coursera.org/share/3c24c553a46e79e6864797adbc172edf
+    courses:
+      - name: Sequence Models
+        type: Course
+        certificate: https://coursera.org/share/2a2d6e75bf6aa27df99a455fca0d4bac
+      - name: Convolutional Neural Networks
+        type: Course
+        certificate: https://coursera.org/share/af7675219cb84d7bf30a9d86f11fa6e7
+      - name: Structuring Machine Learning Projects
+        type: Course
+        certificate: https://coursera.org/share/a101b63a59e375da1fa0e71390cad8bf
+      - name: "Improving Deep Neural Networks: Hyperparameter Tuning, Regularization and Optimization"
+        type: Course
+        certificate: https://coursera.org/share/c4dddcb61fcd31de7f03bb3d6b27a284
+      - name: Neural Networks and Deep Learning
+        type: Course
+        certificate: https://coursera.org/share/3c24c553a46e79e6864797adbc172edf
   - name: AI For Everyone
     type: Course
     certificate: https://coursera.org/share/e8ae9a481ef41f070d6c7b00887e8b66
