@@ -13,14 +13,16 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface LayoutProps {
-	children: React.ReactElement,
+	children: React.ReactElement | React.ReactElement[],
+	navItems: React.ReactElement | React.ReactElement[],
+	window?: () => Window,
 };
 
-const Layout = ({ children }: LayoutProps): React.ReactElement => {
+const Layout = ({ children, navItems, window }: LayoutProps): React.ReactElement => {
 	const trigger = useScrollTrigger({
 		disableHysteresis: true,
 		threshold: 0,
-		target: window
+		target: window !== undefined ? window() : undefined
 	});
 
 	const classes = useStyles();
@@ -28,8 +30,9 @@ const Layout = ({ children }: LayoutProps): React.ReactElement => {
 
 	const appBar = React.cloneElement((
 		<AppBar>
-			<Toolbar>
-				<Typography variant="h6">Nadun De Silva</Typography>
+			<Toolbar ref={scrollToTopRef}>
+				<Typography variant="h5">Nadun De Silva</Typography>
+				{navItems}
 			</Toolbar>
 		</AppBar>
 	), {
@@ -44,7 +47,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement => {
 		<React.Fragment>
 			<CssBaseline />
 			{appBar}
-			<Toolbar ref={scrollToTopRef} />
+			<Toolbar />
 			<Container>
 				<Box my={2}>
 					{children}

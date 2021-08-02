@@ -1,14 +1,8 @@
 import React from "react";
-import Layout from "./Layout";
+import Home from "./views/Home";
 
 const Portal = (): React.ReactElement => {
-	return (
-		<Layout>
-			<div>
-				App
-			</div>
-		</Layout>
-	);
+	return <Home/>;
 };
 
 export default Portal;
