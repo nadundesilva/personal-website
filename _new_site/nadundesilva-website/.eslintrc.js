@@ -35,6 +35,7 @@ module.exports = {
     }],
     "@typescript-eslint/space-before-function-paren": ["error", "never"],
     "@typescript-eslint/indent": ["error", "tab"],
-    "no-tabs": ["error", { allowIndentationTabs: true }]
+    "no-tabs": ["error", { allowIndentationTabs: true }],
+    "@typescript-eslint/quotes": ["error", "double"]
   }
 }
