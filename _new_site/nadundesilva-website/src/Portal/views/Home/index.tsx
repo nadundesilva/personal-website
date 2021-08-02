@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { Layout } from "../../../components";
 import AboutMe from "./AboutMe";
+import Education from "./Education";
 import { Button, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) => {
 		},
 		section: {
 			padding: theme.spacing(1),
-			margin: theme.spacing(2)
+			margin: theme.spacing(5)
 		},
 		sectionContent: {
 			padding: theme.spacing(3)
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme: Theme) => {
 interface Section {
 	name: string,
 	ref: React.RefObject<HTMLButtonElement>,
+	Component: () => React.ReactElement,
 };
 
 const Home = (): React.ReactElement => {
@@ -38,7 +40,8 @@ const Home = (): React.ReactElement => {
 	const pageSections: Section[] = [
 		{
 			name: "Education",
-			ref: useRef<HTMLButtonElement>(null)
+			ref: useRef<HTMLButtonElement>(null),
+			Component: Education
 		}
 	];
 
@@ -60,12 +63,14 @@ const Home = (): React.ReactElement => {
 			</React.Fragment>
 		}>
 			<div className={classes.root}>
+				<Typography variant="h6" align="center">About Me</Typography>
 				<AboutMe/>
 				<React.Fragment>
 					{
 						pageSections.map((section: Section) => (
 							<div className={classes.section} key={section.name}>
 								<Typography variant="h6" align="center">{section.name}</Typography>
+								<section.Component />
 							</div>
 						))
 					}
