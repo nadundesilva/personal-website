@@ -34,8 +34,7 @@ module.exports = {
       "multilineDetection": "brackets"
     }],
     "@typescript-eslint/space-before-function-paren": ["error", "never"],
-    "@typescript-eslint/indent": ["error", "tab"],
-    "no-tabs": ["error", { allowIndentationTabs: true }],
+    "@typescript-eslint/indent": ["error", 4],
     "@typescript-eslint/quotes": ["error", "double"]
   }
 }
