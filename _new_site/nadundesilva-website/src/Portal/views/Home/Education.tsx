@@ -1,19 +1,22 @@
 import React from "react";
-import { createStyles, Grid, makeStyles, Paper, Theme, Typography } from "@material-ui/core";
+import { createStyles, makeStyles, Paper, Theme, Typography } from "@material-ui/core";
 import { LocationOn as LocationOnIcon } from "@material-ui/icons";
 import { Timeline, TimelineItem, TimelineOppositeContent, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent } from "@material-ui/lab";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
+const useStyles = makeStyles((theme: Theme) => {
+    const instituteIconPadding = 0.5;
+    return createStyles({
         timeLineItemContent: {
             padding: theme.spacing(2)
         },
-        institute: {
-            display: "table-cell",
-            verticalAlign: "middle"
+        instituteIconRight: {
+            marginLeft: theme.spacing(instituteIconPadding)
+        },
+        instituteIconLeft: {
+            marginRight: theme.spacing(instituteIconPadding)
         }
-    })
-);
+    });
+});
 
 interface EducationItem {
     name: string,
@@ -60,26 +63,14 @@ const Education = (): React.ReactElement => {
                         </TimelineSeparator>
                         <TimelineContent>
                             <Paper elevation={3} className={classes.timeLineItemContent}>
-                                <Typography variant="h6" component="h6">{item.name}</Typography>
-                                <Typography color="textSecondary">
+                                <Typography variant="body1" component="h6">{item.name}</Typography>
+                                <Typography variant="body2" color="textSecondary">
                                     {item.description}
                                 </Typography>
-                                <Typography color="textSecondary" className={classes.institute}>
-                                    <Grid container spacing={3} justifyContent="center">
-                                        {index % 2 === 0 && (
-                                            <Grid item xs={4}>
-                                                <LocationOnIcon />
-                                            </Grid>
-                                        )}
-                                        <Grid item xs={4}>
-                                            {item.institute}
-                                        </Grid>
-                                        {index % 2 === 1 && (
-                                            <Grid item xs={4}>
-                                                <LocationOnIcon />
-                                            </Grid>
-                                        )}
-                                    </Grid>
+                                <Typography variant="body2" color="textSecondary">
+                                    {index % 2 === 0 && <LocationOnIcon className={classes.instituteIconLeft} fontSize="inherit"/>}
+                                    {item.institute}
+                                    {index % 2 === 1 && <LocationOnIcon className={classes.instituteIconRight} fontSize="inherit"/>}
                                 </Typography>
                             </Paper>
                         </TimelineContent>
