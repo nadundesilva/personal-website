@@ -1,4 +1,4 @@
-import { AppBar, Box, Container, createStyles, CssBaseline, Fab, makeStyles, Theme, Toolbar, Typography, useScrollTrigger, Zoom } from "@material-ui/core";
+import { AppBar, createStyles, CssBaseline, Fab, makeStyles, Theme, Toolbar, Typography, useScrollTrigger, Zoom } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import React, { useRef } from "react";
@@ -49,11 +49,7 @@ const Layout = ({ children, navItems, window }: LayoutProps): React.ReactElement
             <CssBaseline />
             {appBar}
             <Toolbar />
-            <Container>
-                <Box my={2}>
-                    {children}
-                </Box>
-            </Container>
+            {children}
             <Zoom in={trigger}>
                 <div onClick={handleClick} role="presentation" className={classes.fab}>
                     <Fab color="primary" size="small" aria-label="scroll back to top">

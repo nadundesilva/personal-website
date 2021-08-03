@@ -7,12 +7,13 @@ import Education from "./Education";
 import Experience from "./Experience";
 import Profiles from "./Profiles";
 import Skills from "./Skills";
+import WelcomeBanner from "./WelcomeBanner";
 import { Button, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => {
-    const sidesPadding = 10;
+    const sidesPadding = 30;
     return createStyles({
-        root: {
+        sectionsContainer: {
             marginLeft: theme.spacing(sidesPadding),
             marginRight: theme.spacing(sidesPadding)
         },
@@ -88,7 +89,8 @@ const Home = (): React.ReactElement => {
                 }
             </React.Fragment>
         }>
-            <div className={classes.root}>
+            <WelcomeBanner/>
+            <div className={classes.sectionsContainer}>
                 <Typography variant="h6" align="center">About Me</Typography>
                 <AboutMe/>
                 <React.Fragment>
