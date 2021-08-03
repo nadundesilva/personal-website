@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar, createStyles, Divider, Grid, makeStyles, Theme } from "@material-ui/core";
-import ProfilePicture from "./profile-photo.jpg";
+import profilePicture from "./profile-photo.jpg";
 
 const useStyles = makeStyles((theme: Theme) => {
     const descriptionSeparatorMargin = 2;
@@ -47,7 +47,7 @@ const AboutMe = (): React.ReactElement => {
                 </Grid>
             </Grid>
             <Grid item xs={3}>
-                <Avatar alt="Nadun De Silva" src={ProfilePicture} className={classes.profilePhoto}/>
+                <Avatar alt="Nadun De Silva" src={profilePicture} className={classes.profilePhoto}/>
             </Grid>
         </Grid>
     );
