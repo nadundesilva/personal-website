@@ -1,6 +1,7 @@
 import React from "react";
 import { createStyles, makeStyles, Paper, Theme, Typography } from "@material-ui/core";
-import { LocationOn as LocationOnIcon } from "@material-ui/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { Timeline, TimelineItem, TimelineOppositeContent, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -47,6 +48,7 @@ const Education = (): React.ReactElement => {
             institute: "Linux Foundation"
         }
     ];
+    const instituteIcon = <FontAwesomeIcon className={classes.instituteIconLeft} icon={faMapMarkerAlt}/>;
     return (
         <Timeline align="alternate">
             {
@@ -68,9 +70,13 @@ const Education = (): React.ReactElement => {
                                     {item.description}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
-                                    {index % 2 === 0 && <LocationOnIcon className={classes.instituteIconLeft} fontSize="inherit"/>}
+                                    {index % 2 === 0 && (
+                                        <React.Fragment>{instituteIcon}&nbsp;</React.Fragment>
+                                    )}
                                     {item.institute}
-                                    {index % 2 === 1 && <LocationOnIcon className={classes.instituteIconRight} fontSize="inherit"/>}
+                                    {index % 2 === 1 && (
+                                        <React.Fragment>&nbsp;{instituteIcon}</React.Fragment>
+                                    )}
                                 </Typography>
                             </Paper>
                         </TimelineContent>
