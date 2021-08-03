@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { Layout } from "../../../components";
 import AboutMe from "./AboutMe";
+import Achievements from "./Achievements";
 import Education from "./Education";
 import Experience from "./Experience";
 import Profiles from "./Profiles";
@@ -8,7 +9,7 @@ import Skills from "./Skills";
 import { Button, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => {
-    const sidesPadding = 16;
+    const sidesPadding = 10;
     return createStyles({
         root: {
             marginLeft: theme.spacing(sidesPadding),
@@ -56,6 +57,11 @@ const Home = (): React.ReactElement => {
             name: "Profiles",
             ref: useRef<HTMLDivElement>(null),
             Component: Profiles
+        },
+        {
+            name: "Achievements",
+            ref: useRef<HTMLDivElement>(null),
+            Component: Achievements
         }
     ];
 
