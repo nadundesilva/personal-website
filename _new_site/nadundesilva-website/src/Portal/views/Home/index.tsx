@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Layout } from "../../../components";
 import AboutMe from "./AboutMe";
 import Education from "./Education";
+import Skills from "./Skills";
 import { Button, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -20,17 +21,13 @@ const useStyles = makeStyles((theme: Theme) => {
         },
         sectionContent: {
             padding: theme.spacing(3)
-        },
-        profilePhoto: {
-            width: "100%",
-            height: "auto"
         }
     });
 });
 
 interface Section {
     name: string,
-    ref: React.RefObject<HTMLButtonElement>,
+    ref: React.RefObject<HTMLDivElement>,
     Component: () => React.ReactElement,
 };
 
@@ -40,12 +37,17 @@ const Home = (): React.ReactElement => {
     const pageSections: Section[] = [
         {
             name: "Education",
-            ref: useRef<HTMLButtonElement>(null),
+            ref: useRef<HTMLDivElement>(null),
             Component: Education
+        },
+        {
+            name: "Skills",
+            ref: useRef<HTMLDivElement>(null),
+            Component: Skills
         }
     ];
 
-    const generateGoToSectionHandler = (sectionRef: React.RefObject<HTMLButtonElement>) => () => {
+    const generateGoToSectionHandler = (sectionRef: React.RefObject<HTMLDivElement>) => () => {
         sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     };
     return (
@@ -55,7 +57,7 @@ const Home = (): React.ReactElement => {
                 {
                     pageSections.map((section: Section) => (
                         <Button key={section.name} variant={"contained"} color="primary" disableElevation
-                            ref={section.ref} onClick={generateGoToSectionHandler(section.ref)}>
+                            onClick={generateGoToSectionHandler(section.ref)}>
                             {section.name}
                         </Button>
                     ))
@@ -68,9 +70,11 @@ const Home = (): React.ReactElement => {
                 <React.Fragment>
                     {
                         pageSections.map((section: Section) => (
-                            <div className={classes.section} key={section.name}>
+                            <div ref={section.ref} className={classes.section} key={section.name}>
                                 <Typography variant="h6" align="center">{section.name}</Typography>
-                                <section.Component />
+                                <div className={classes.sectionContent}>
+                                    <section.Component/>
+                                </div>
                             </div>
                         ))
                     }
