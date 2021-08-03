@@ -1,5 +1,6 @@
 import { AppBar, Box, Container, createStyles, CssBaseline, Fab, makeStyles, Theme, Toolbar, Typography, useScrollTrigger, Zoom } from "@material-ui/core";
-import { KeyboardArrowUp as KeyboardArrowUpIcon } from "@material-ui/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import React, { useRef } from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -56,7 +57,7 @@ const Layout = ({ children, navItems, window }: LayoutProps): React.ReactElement
             <Zoom in={trigger}>
                 <div onClick={handleClick} role="presentation" className={classes.fab}>
                     <Fab color="primary" size="small" aria-label="scroll back to top">
-                        <KeyboardArrowUpIcon />
+                        <FontAwesomeIcon icon={faChevronUp}/>
                     </Fab>
                 </div>
             </Zoom>
