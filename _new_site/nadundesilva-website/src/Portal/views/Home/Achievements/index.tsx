@@ -44,7 +44,7 @@ const ANGEL_HACK_2016_TITLE = "Finalist - Angel Hack 2016";
 
 const Achievements = (): React.ReactElement => {
     const classes = useStyles();
-    const imageListItem = (title: string, imageLink: string, rowCount: number): React.ReactElement => (
+    const renderImageListItem = (title: string, imageLink: string, rowCount: number): React.ReactElement => (
         <ImageListItem rows={rowCount} cols={1}
             className={classNames(classes.imageListItem, classes.imageListItemImageContainer)}>
             <Grid container justifyContent="center" alignItems="center" className={classes.imageListItemImageOverlay}>
@@ -59,15 +59,15 @@ const Achievements = (): React.ReactElement => {
         <ImageList rowHeight={160} cols={3}>
             <ImageListItem rows={2} cols={1} className={classes.imageListItem}>
                 <ImageList rowHeight={160} cols={1}>
-                    {imageListItem(NASA_SPACE_APPS_2017_TITLE, nasaSpaceApps2017, 1)}
-                    {imageListItem(PLACEMENTS_IN_DEANS_LIST_TITLE, deansList2017, 1)}
+                    {renderImageListItem(NASA_SPACE_APPS_2017_TITLE, nasaSpaceApps2017, 1)}
+                    {renderImageListItem(PLACEMENTS_IN_DEANS_LIST_TITLE, deansList2017, 1)}
                 </ImageList>
             </ImageListItem>
-            {imageListItem(WSO2_OUTSTANDING_CONTRIBUTOR_TITLE, wso2OutstandingContributorImage, 2)}
+            {renderImageListItem(WSO2_OUTSTANDING_CONTRIBUTOR_TITLE, wso2OutstandingContributorImage, 2)}
             <ImageListItem rows={2} cols={1} className={classes.imageListItem}>
                 <ImageList rowHeight={160} cols={1}>
-                    {imageListItem(HSBC_YOUTH_ENTERPRISE_AWARDS_2015_TITLE, hsbcYouthEnterpriseAwards2015, 1)}
-                    {imageListItem(ANGEL_HACK_2016_TITLE, angelHack2016, 1)}
+                    {renderImageListItem(HSBC_YOUTH_ENTERPRISE_AWARDS_2015_TITLE, hsbcYouthEnterpriseAwards2015, 1)}
+                    {renderImageListItem(ANGEL_HACK_2016_TITLE, angelHack2016, 1)}
                 </ImageList>
             </ImageListItem>
         </ImageList>

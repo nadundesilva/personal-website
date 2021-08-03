@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Layout } from "../../../components";
 import AboutMe from "./AboutMe";
 import Achievements from "./Achievements";
+import ContributedProjects from "./ContributedProjects";
 import Education from "./Education";
 import Experience from "./Experience";
 import Profiles from "./Profiles";
@@ -62,6 +63,11 @@ const Home = (): React.ReactElement => {
             name: "Achievements",
             ref: useRef<HTMLDivElement>(null),
             Component: Achievements
+        },
+        {
+            name: "Contributed Projects",
+            ref: useRef<HTMLDivElement>(null),
+            Component: ContributedProjects
         }
     ];
 
