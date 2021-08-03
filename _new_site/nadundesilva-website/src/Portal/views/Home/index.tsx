@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Layout } from "../../../components";
 import AboutMe from "./AboutMe";
 import Education from "./Education";
+import Experience from "./Experience";
 import Skills from "./Skills";
 import { Button, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 
@@ -44,6 +45,11 @@ const Home = (): React.ReactElement => {
             name: "Skills",
             ref: useRef<HTMLDivElement>(null),
             Component: Skills
+        },
+        {
+            name: "Experience",
+            ref: useRef<HTMLDivElement>(null),
+            Component: Experience
         }
     ];
 
