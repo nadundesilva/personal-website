@@ -7,11 +7,14 @@ import { createStyles, Grid, makeStyles, Theme } from "@material-ui/core";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         profileSection: {
-            padding: theme.spacing(5),
+            padding: theme.spacing(4),
             cursor: "pointer",
             "&:hover": {
                 background: "#cccccc"
             }
+        },
+        profileIcon: {
+            margin: theme.spacing(1)
         }
     })
 );
@@ -65,10 +68,10 @@ const Profiles = (): React.ReactElement => {
                 profiles.map((profile) => (
                     <Grid item xs={4} key={profile.name} onClick={generateOpenLinkHandler(profile.link)}>
                         <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.profileSection}>
-                            <Grid item xs={12}>
-                                <FontAwesomeIcon icon={profile.icon}/>
+                            <Grid item xs={6}>
+                                <FontAwesomeIcon icon={profile.icon} size="3x" className={classes.profileIcon}/>
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
                                 {profile.name}
                             </Grid>
                         </Grid>
