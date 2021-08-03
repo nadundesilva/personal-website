@@ -3,6 +3,7 @@ import { Layout } from "../../../components";
 import AboutMe from "./AboutMe";
 import Education from "./Education";
 import Experience from "./Experience";
+import Profiles from "./Profiles";
 import Skills from "./Skills";
 import { Button, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 
@@ -50,6 +51,11 @@ const Home = (): React.ReactElement => {
             name: "Experience",
             ref: useRef<HTMLDivElement>(null),
             Component: Experience
+        },
+        {
+            name: "Profiles",
+            ref: useRef<HTMLDivElement>(null),
+            Component: Profiles
         }
     ];
 
