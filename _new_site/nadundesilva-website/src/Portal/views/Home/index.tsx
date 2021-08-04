@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme: Theme) => {
             margin: theme.spacing(5)
         },
         sectionTitle: {
+            margin: theme.spacing(5)
+        },
+        sectionTitleText: {
             fontWeight: "bold",
             padding: theme.spacing(5)
         },
@@ -79,6 +82,18 @@ const Home = (): React.ReactElement => {
     const generateGoToSectionHandler = (sectionRef: React.RefObject<HTMLDivElement>) => () => {
         sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     };
+    const generateSection = (title: string, section: React.ReactElement): React.ReactElement => (
+        <React.Fragment>
+            <div className={classes.sectionTitle}>
+                <Divider/>
+                <Typography variant="h5" align="center" className={classes.sectionTitle}>
+                    {title}
+                </Typography>
+                <Divider/>
+            </div>
+            <div className={classes.sectionContent}>{section}</div>
+        </React.Fragment>
+    );
     return (
         <Layout navItems={
             <React.Fragment>
@@ -96,25 +111,13 @@ const Home = (): React.ReactElement => {
             <WelcomeBanner/>
             <div className={classes.sectionsContainer}>
                 <div className={classes.section}>
-                    <Divider/>
-                    <Typography variant="h5" align="center" className={classes.sectionTitle}>
-                        About Me
-                    </Typography>
-                    <Divider/>
-                    <AboutMe/>
+                    {generateSection("About Me", <AboutMe/>)}
                 </div>
                 <React.Fragment>
                     {
                         pageSections.map((section: Section) => (
                             <div ref={section.ref} className={classes.section} key={section.name}>
-                                <Divider/>
-                                <Typography variant="h5" align="center" className={classes.sectionTitle}>
-                                    {section.name}
-                                </Typography>
-                                <Divider/>
-                                <div className={classes.sectionContent}>
-                                    <section.Component/>
-                                </div>
+                                {generateSection(section.name, <section.Component/>)}
                             </div>
                         ))
                     }

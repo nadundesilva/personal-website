@@ -21,8 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
                     left: 0,
                     right: 0,
                     backgroundColor: "rgba(0, 0, 0, 0.6)",
-                    zIndex: 9999
-
+                    zIndex: 1
                 }
             }
         },
