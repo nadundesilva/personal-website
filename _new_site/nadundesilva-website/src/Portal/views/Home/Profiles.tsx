@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { faFacebook, faGithub, faInstagram, faLinkedin, faMedium, faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { createStyles, Grid, makeStyles, Theme } from "@material-ui/core";
+import { createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         profileIcon: {
             margin: theme.spacing(1)
+        },
+        profileText: {
+            fontWeight: "bold"
         }
     })
 );
@@ -72,7 +75,7 @@ const Profiles = (): React.ReactElement => {
                                 <FontAwesomeIcon icon={profile.icon} size="3x" className={classes.profileIcon}/>
                             </Grid>
                             <Grid item xs={6}>
-                                {profile.name}
+                                <Typography className={classes.profileText}>{profile.name}</Typography>
                             </Grid>
                         </Grid>
                     </Grid>

@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme: Theme) => {
         timeLineItemContent: {
             padding: theme.spacing(2)
         },
+        timeLineItemTitle: {
+            fontWeight: "bold"
+        },
         instituteIconRight: {
             marginLeft: theme.spacing(instituteIconPadding)
         },
@@ -71,7 +74,9 @@ const Experience = (): React.ReactElement => {
                         </TimelineSeparator>
                         <TimelineContent>
                             <Paper elevation={3} className={classes.timeLineItemContent}>
-                                <Typography variant="body1" component="h6">{item.name}</Typography>
+                                <Typography variant="body1" component="h6" className={classes.timeLineItemTitle}>
+                                    {item.name}
+                                </Typography>
                                 <Typography variant="body2" color="textSecondary">
                                     {item.description}
                                 </Typography>
