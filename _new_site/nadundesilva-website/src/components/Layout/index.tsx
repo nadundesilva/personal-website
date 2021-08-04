@@ -42,7 +42,7 @@ const Layout = ({ children, navItems, window }: LayoutProps): React.ReactElement
     const checkedIcon = <FontAwesomeIcon icon={faMoon} transform={"grow-4 right-4 up-2"} color="#333333"/>;
     const appBar = React.cloneElement((
         <AppBar>
-            <Toolbar ref={scrollToTopRef}>
+            <Toolbar>
                 <Typography variant="h5">Nadun De Silva</Typography>
                 <Switch checked={isDarkMode} onChange={onThemeToggleChange}
                     icon={unCheckedIcon} checkedIcon={checkedIcon}
@@ -54,15 +54,15 @@ const Layout = ({ children, navItems, window }: LayoutProps): React.ReactElement
         elevation: trigger ? 4 : 0
     });
 
-    const handleClick = (event: React.MouseEvent<HTMLDivElement>): void => {
-        scrollToTopRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    const handleClick = (): void => {
+        scrollToTopRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     };
 
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
             {appBar}
-            <Toolbar />
+            <Toolbar ref={scrollToTopRef}/>
             {children}
             <Zoom in={trigger}>
                 <div onClick={handleClick} role="presentation" className={classes.fab}>
