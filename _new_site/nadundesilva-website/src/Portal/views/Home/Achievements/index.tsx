@@ -43,6 +43,8 @@ const WSO2_OUTSTANDING_CONTRIBUTOR_TITLE = "WSO2 Sustained Outstanding Contribut
 const HSBC_YOUTH_ENTERPRISE_AWARDS_2015_TITLE = "Finalist - British Council HSBC Youth Enterprise Awards 2015";
 const ANGEL_HACK_2016_TITLE = "Finalist - Angel Hack 2016";
 
+const ROW_HEIGHT = 300;
+
 const Achievements = (): React.ReactElement => {
     const classes = useStyles();
     const renderImageListItem = (title: string, imageLink: string, rowCount: number): React.ReactElement => (
@@ -57,16 +59,16 @@ const Achievements = (): React.ReactElement => {
         </ImageListItem>
     );
     return (
-        <ImageList rowHeight={160} cols={3}>
+        <ImageList rowHeight={ROW_HEIGHT} cols={3}>
             <ImageListItem rows={2} cols={1} className={classes.imageListItem}>
-                <ImageList rowHeight={160} cols={1}>
+                <ImageList rowHeight={ROW_HEIGHT} cols={1}>
                     {renderImageListItem(NASA_SPACE_APPS_2017_TITLE, nasaSpaceApps2017, 1)}
                     {renderImageListItem(PLACEMENTS_IN_DEANS_LIST_TITLE, deansList2017, 1)}
                 </ImageList>
             </ImageListItem>
             {renderImageListItem(WSO2_OUTSTANDING_CONTRIBUTOR_TITLE, wso2OutstandingContributorImage, 2)}
             <ImageListItem rows={2} cols={1} className={classes.imageListItem}>
-                <ImageList rowHeight={160} cols={1}>
+                <ImageList rowHeight={ROW_HEIGHT} cols={1}>
                     {renderImageListItem(HSBC_YOUTH_ENTERPRISE_AWARDS_2015_TITLE, hsbcYouthEnterpriseAwards2015, 1)}
                     {renderImageListItem(ANGEL_HACK_2016_TITLE, angelHack2016, 1)}
                 </ImageList>
