@@ -91,8 +91,10 @@ const Home = (): React.ReactElement => {
         }>
             <WelcomeBanner/>
             <div className={classes.sectionsContainer}>
-                <Typography variant="h6" align="center">About Me</Typography>
-                <AboutMe/>
+                <div className={classes.section}>
+                    <Typography variant="h6" align="center">About Me</Typography>
+                    <AboutMe/>
+                </div>
                 <React.Fragment>
                     {
                         pageSections.map((section: Section) => (
