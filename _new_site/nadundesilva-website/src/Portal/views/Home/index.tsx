@@ -24,6 +24,16 @@ const useStyles = makeStyles((theme: Theme) => {
             padding: theme.spacing(1),
             margin: theme.spacing(5)
         },
+        sectionTitle: {
+            fontWeight: "bold",
+            padding: theme.spacing(5),
+            borderTopWidth: theme.spacing(0.1),
+            borderTopStyle: "solid",
+            borderTopColor: "#dddddd",
+            borderBottomWidth: theme.spacing(0.1),
+            borderBottomStyle: "solid",
+            borderBottomColor: "#dddddd"
+        },
         sectionContent: {
             padding: theme.spacing(3)
         }
@@ -73,7 +83,7 @@ const Home = (): React.ReactElement => {
     ];
 
     const generateGoToSectionHandler = (sectionRef: React.RefObject<HTMLDivElement>) => () => {
-        sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     };
     return (
         <Layout navItems={
@@ -92,14 +102,18 @@ const Home = (): React.ReactElement => {
             <WelcomeBanner/>
             <div className={classes.sectionsContainer}>
                 <div className={classes.section}>
-                    <Typography variant="h6" align="center">About Me</Typography>
+                    <Typography variant="h5" align="center" className={classes.sectionTitle}>
+                        About Me
+                    </Typography>
                     <AboutMe/>
                 </div>
                 <React.Fragment>
                     {
                         pageSections.map((section: Section) => (
                             <div ref={section.ref} className={classes.section} key={section.name}>
-                                <Typography variant="h6" align="center">{section.name}</Typography>
+                                <Typography variant="h5" align="center" className={classes.sectionTitle}>
+                                    {section.name}
+                                </Typography>
                                 <div className={classes.sectionContent}>
                                     <section.Component/>
                                 </div>
