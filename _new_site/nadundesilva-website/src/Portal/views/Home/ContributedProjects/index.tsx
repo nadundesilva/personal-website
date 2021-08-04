@@ -1,11 +1,8 @@
 import React from "react";
-import { createStyles, Container, makeStyles, Theme } from "@material-ui/core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { createStyles, Grid, makeStyles, Theme } from "@material-ui/core";
 import ballerina from "./ballerina.svg";
 import cellery from "./cellery.svg";
 import siddhi from "./siddhi.svg";
-import Carousel from "react-material-ui-carousel";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -20,16 +17,16 @@ const useStyles = makeStyles((theme: Theme) =>
 const ContributedProjects = (): React.ReactElement => {
     const classes = useStyles();
     const renderCarouselItem = (imageLink: string, alt: string): React.ReactElement => (
-        <Container>
+        <Grid item xs={4}>
             <img src={imageLink} alt={alt} className={classes.carouselItem}/>
-        </Container>
+        </Grid>
     );
     return (
-        <Carousel PrevIcon={<FontAwesomeIcon icon={faChevronLeft}/>} NextIcon={<FontAwesomeIcon icon={faChevronRight}/>}>
+        <Grid container spacing={3} justifyContent="center" alignItems="center">
             {renderCarouselItem(ballerina, "Ballerina")}
             {renderCarouselItem(cellery, "Cellery")}
             {renderCarouselItem(siddhi, "Siddhi")}
-        </Carousel>
+        </Grid>
     );
 };
 
