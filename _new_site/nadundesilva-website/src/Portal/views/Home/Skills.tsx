@@ -83,7 +83,7 @@ const Skills = (): React.ReactElement => {
                 leftSideSkills.map((leftSideSkill, index) => (
                     <React.Fragment key={leftSideSkill.name}>
                         {renderPercentage(leftSideSkill)}
-                        {(index < rightSideSkills.length) ? renderPercentage(leftSideSkill) : null}
+                        {(index < rightSideSkills.length) ? renderPercentage(rightSideSkills[index]) : null}
                     </React.Fragment>
                 ))
             }
