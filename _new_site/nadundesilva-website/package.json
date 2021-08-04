@@ -21,7 +21,6 @@
     "classnames": "^2.3.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-material-ui-carousel": "^2.2.7",
     "react-scripts": "4.0.3",
     "typescript": "^4.3.5",
     "web-vitals": "^0.2.4",
