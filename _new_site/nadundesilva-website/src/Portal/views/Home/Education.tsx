@@ -8,7 +8,8 @@ const useStyles = makeStyles((theme: Theme) => {
     const instituteIconPadding = 0.5;
     return createStyles({
         timeLineItemContent: {
-            padding: theme.spacing(2)
+            padding: theme.spacing(2),
+            marginBottom: theme.spacing(5)
         },
         timeLineItemTitle: {
             fontWeight: "bold"
