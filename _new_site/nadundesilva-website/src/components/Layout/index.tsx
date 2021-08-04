@@ -1,10 +1,14 @@
-import { AppBar, createStyles, CssBaseline, Fab, makeStyles, Theme, Toolbar, Typography, useScrollTrigger, Zoom } from "@material-ui/core";
+import { AppBar, createStyles, CssBaseline, Fab, makeStyles, Switch, Theme, ThemeProvider, Toolbar, Typography, useMediaQuery, useScrollTrigger, Zoom } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import React, { useRef } from "react";
+import { faChevronUp, faMoon } from "@fortawesome/free-solid-svg-icons";
+import React, { useRef, useState } from "react";
+import useTheme from "./theme";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        themeToggle: {
+            marginLeft: theme.spacing(5)
+        },
         fab: {
             position: "fixed",
             bottom: theme.spacing(2),
@@ -29,10 +33,20 @@ const Layout = ({ children, navItems, window }: LayoutProps): React.ReactElement
     const classes = useStyles();
     const scrollToTopRef = useRef<HTMLDivElement>(null);
 
+    const isDarkModePrefered = useMediaQuery("(prefers-color-scheme: dark)");
+    const [isDarkMode, setDarkMode] = useState<boolean>(isDarkModePrefered);
+    const theme = useTheme(isDarkMode ? "dark" : "light");
+    const onThemeToggleChange = (): void => setDarkMode(!isDarkMode);
+
+    const unCheckedIcon = <FontAwesomeIcon icon={faMoon} transform={"grow-4 up-2"}/>;
+    const checkedIcon = <FontAwesomeIcon icon={faMoon} transform={"grow-4 right-4 up-2"} color="#333333"/>;
     const appBar = React.cloneElement((
         <AppBar>
             <Toolbar ref={scrollToTopRef}>
                 <Typography variant="h5">Nadun De Silva</Typography>
+                <Switch checked={isDarkMode} onChange={onThemeToggleChange}
+                    icon={unCheckedIcon} checkedIcon={checkedIcon}
+                    className={classes.themeToggle} name="themeToggle" color="secondary"/>
                 {navItems}
             </Toolbar>
         </AppBar>
@@ -45,7 +59,7 @@ const Layout = ({ children, navItems, window }: LayoutProps): React.ReactElement
     };
 
     return (
-        <React.Fragment>
+        <ThemeProvider theme={theme}>
             <CssBaseline />
             {appBar}
             <Toolbar />
@@ -57,7 +71,7 @@ const Layout = ({ children, navItems, window }: LayoutProps): React.ReactElement
                     </Fab>
                 </div>
             </Zoom>
-        </React.Fragment>
+        </ThemeProvider>
     );
 };
 
