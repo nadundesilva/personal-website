@@ -33,9 +33,15 @@ const Experience = (): React.ReactElement => {
     const classes = useStyles();
     const experienceItems: ExperienceItem[] = [
         {
+            name: "Associate Technical Lead",
+            timePeriod: "June 2021 - Present",
+            description: "Lead Choreo Observability Team as well as other Teams in Choreo",
+            institute: "WSO2, Colombo 03, Sri Lanka"
+        },
+        {
             name: "Senior Software Engineer",
-            timePeriod: "July 2019 - Present",
-            description: "Lead Observability Team in creating the PoC as well as the project in Choreo",
+            timePeriod: "July 2019 - June 2021",
+            description: "Lead Choreo Observability Team in creating the initial PoC as well as the Platform",
             institute: "WSO2, Colombo 03, Sri Lanka"
         },
         {
