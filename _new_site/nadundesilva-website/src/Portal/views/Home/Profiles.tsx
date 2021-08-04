@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(4),
             cursor: "pointer",
             "&:hover": {
-                background: "#cccccc"
+                background: theme.palette.type === "light" ? "#cccccc" : "#444444"
             }
         },
         profileIcon: {

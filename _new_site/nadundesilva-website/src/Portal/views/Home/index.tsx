@@ -8,7 +8,7 @@ import Experience from "./Experience";
 import Profiles from "./Profiles";
 import Skills from "./Skills";
 import WelcomeBanner from "./WelcomeBanner";
-import { Button, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Button, createStyles, Divider, makeStyles, Theme, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => {
     const sidesPadding = 30;
@@ -26,13 +26,7 @@ const useStyles = makeStyles((theme: Theme) => {
         },
         sectionTitle: {
             fontWeight: "bold",
-            padding: theme.spacing(5),
-            borderTopWidth: theme.spacing(0.1),
-            borderTopStyle: "solid",
-            borderTopColor: "#dddddd",
-            borderBottomWidth: theme.spacing(0.1),
-            borderBottomStyle: "solid",
-            borderBottomColor: "#dddddd"
+            padding: theme.spacing(5)
         },
         sectionContent: {
             padding: theme.spacing(3)
@@ -102,18 +96,22 @@ const Home = (): React.ReactElement => {
             <WelcomeBanner/>
             <div className={classes.sectionsContainer}>
                 <div className={classes.section}>
+                    <Divider/>
                     <Typography variant="h5" align="center" className={classes.sectionTitle}>
                         About Me
                     </Typography>
+                    <Divider/>
                     <AboutMe/>
                 </div>
                 <React.Fragment>
                     {
                         pageSections.map((section: Section) => (
                             <div ref={section.ref} className={classes.section} key={section.name}>
+                                <Divider/>
                                 <Typography variant="h5" align="center" className={classes.sectionTitle}>
                                     {section.name}
                                 </Typography>
+                                <Divider/>
                                 <div className={classes.sectionContent}>
                                     <section.Component/>
                                 </div>
