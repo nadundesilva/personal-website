@@ -1,5 +1,13 @@
 import React from "react";
-import { createStyles, Grid, LinearProgress, withStyles } from "@material-ui/core";
+import { createStyles, Grid, LinearProgress, makeStyles, Typography, withStyles } from "@material-ui/core";
+
+const useStyles = makeStyles(() =>
+    createStyles({
+        skillName: {
+            fontWeight: "bold"
+        }
+    })
+);
 
 const BorderLinearProgress = withStyles(() =>
     createStyles({
@@ -19,6 +27,7 @@ interface Skill {
 }
 
 const Skills = (): React.ReactElement => {
+    const classes = useStyles();
     const leftSideSkills: Skill[] = [
         {
             name: "Programming",
@@ -57,7 +66,7 @@ const Skills = (): React.ReactElement => {
     ];
     const renderPercentage = (skill: Skill): React.ReactElement => (
         <Grid item xs={6}>
-            {skill.name}
+            <Typography className={classes.skillName}>{skill.name}</Typography>
             <Grid container spacing={3} justifyContent="center" alignItems="center">
                 <Grid item xs={10}>
                     <BorderLinearProgress variant="determinate" value={skill.percentage}/>

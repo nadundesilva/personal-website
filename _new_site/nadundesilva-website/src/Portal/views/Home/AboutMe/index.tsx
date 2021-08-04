@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, createStyles, Divider, Grid, makeStyles, Theme } from "@material-ui/core";
+import { Avatar, createStyles, Divider, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 import profilePicture from "./profile-photo.jpg";
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme: Theme) => {
         profilePhoto: {
             width: "100%",
             height: "auto"
+        },
+        contactInfoItemHeader: {
+            fontWeight: "bold"
         }
     });
 });
@@ -33,16 +36,22 @@ const AboutMe = (): React.ReactElement => {
                 <Divider className={classes.descriptionSeparator} />
                 <Grid container spacing={3} justifyContent="center">
                     <Grid item xs={4}>
-                        <div>Phone:</div>
-                        <div>+94 778 222 607</div>
+                        <Typography className={classes.contactInfoItemHeader}>
+                            Phone:
+                        </Typography>
+                        <Typography>+94 778 222 607</Typography>
                     </Grid>
                     <Grid item xs={4}>
-                        <div>Email:</div>
-                        <div>nadunrds@gmail.com</div>
+                        <Typography className={classes.contactInfoItemHeader}>
+                            Email:
+                        </Typography>
+                        <Typography>nadunrds@gmail.com</Typography>
                     </Grid>
                     <Grid item xs={4}>
-                        <div>Website:</div>
-                        <div>nadundesilva.github.io</div>
+                        <Typography className={classes.contactInfoItemHeader}>
+                            Website:
+                        </Typography>
+                        <Typography>nadundesilva.github.io</Typography>
                     </Grid>
                 </Grid>
             </Grid>

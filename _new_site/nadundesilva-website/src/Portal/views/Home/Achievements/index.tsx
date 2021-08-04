@@ -1,13 +1,13 @@
 import React from "react";
 import classNames from "classnames";
-import { createStyles, Grid, ImageList, ImageListItem, makeStyles, Typography } from "@material-ui/core";
+import { createStyles, Grid, ImageList, ImageListItem, makeStyles, Theme, Typography } from "@material-ui/core";
 import wso2OutstandingContributorImage from "./wso2-outstanding-contributor.jpg";
 import nasaSpaceApps2017 from "./nasa-space-apps-2017.jpg";
 import hsbcYouthEnterpriseAwards2015 from "./hsbc-youth-enterprise-awards-2015.jpg";
 import deansList2017 from "./deans-list-2017.jpg";
 import angelHack2016 from "./angel-hack-2016.jpg";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         imageListItem: {
             height: "auto"
@@ -20,18 +20,19 @@ const useStyles = makeStyles(() =>
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    opacity: 0.8,
-                    zIndex: 999
+                    backgroundColor: "rgba(0, 0, 0, 0.6)",
+                    zIndex: 9999
 
                 }
             }
         },
         imageListItemImageOverlay: {
             color: "#ffffff",
-            backgroundColor: "#000000",
             position: "absolute",
-            textAlign: "center",
-            opacity: 0
+            textAlign: "center"
+        },
+        imageListItemText: {
+            fontWeight: "bold"
         }
     })
 );
@@ -49,7 +50,7 @@ const Achievements = (): React.ReactElement => {
             className={classNames(classes.imageListItem, classes.imageListItemImageContainer)}>
             <Grid container justifyContent="center" alignItems="center" className={classes.imageListItemImageOverlay}>
                 <Grid item xs={6}>
-                    <Typography>{title}</Typography>
+                    <Typography className={classes.imageListItemText}>{title}</Typography>
                 </Grid>
             </Grid>
             <img src={imageLink} alt={title}/>
