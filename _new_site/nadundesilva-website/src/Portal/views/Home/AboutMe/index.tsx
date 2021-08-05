@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar, createStyles, Divider, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
-import profilePicture from "./profile-photo.jpg";
+import profilePicture from "../../../../components/images/profile-photo.jpg";
 
 const useStyles = makeStyles((theme: Theme) => {
     const descriptionSeparatorMargin = 2;
