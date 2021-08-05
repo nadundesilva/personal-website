@@ -1,13 +1,14 @@
-import { AppBar, createStyles, CssBaseline, Fab, makeStyles, Switch, Theme, ThemeProvider, Toolbar, Typography, useMediaQuery, useScrollTrigger, Zoom } from "@material-ui/core";
+import { AppBar, createStyles, CssBaseline, Fab, IconButton, makeStyles, Theme, ThemeProvider, Toolbar, Tooltip, Typography, useMediaQuery, useScrollTrigger, Zoom } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronUp, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { faChevronUp, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import React, { useRef, useState } from "react";
 import useTheme from "./theme";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         themeToggle: {
-            marginLeft: theme.spacing(5)
+            marginLeft: theme.spacing(5),
+            marginRight: theme.spacing(5)
         },
         fab: {
             position: "fixed",
@@ -38,16 +39,20 @@ const Layout = ({ children, navItems, window }: LayoutProps): React.ReactElement
     const theme = useTheme(isDarkMode ? "dark" : "light");
     const onThemeToggleChange = (): void => setDarkMode(!isDarkMode);
 
-    const unCheckedIcon = <FontAwesomeIcon icon={faMoon} transform={"grow-4 up-2"}/>;
-    const checkedIcon = <FontAwesomeIcon icon={faMoon} transform={"grow-4 right-4 up-2"} color="#333333"/>;
     const appBar = React.cloneElement((
         <AppBar>
             <Toolbar>
                 <Typography variant="h5">Nadun De Silva</Typography>
-                <Switch checked={isDarkMode} onChange={onThemeToggleChange}
-                    icon={unCheckedIcon} checkedIcon={checkedIcon}
-                    className={classes.themeToggle} name="themeToggle" color="secondary"/>
                 {navItems}
+                <Tooltip title={`Change to ${isDarkMode ? "light" : "dark"} theme`}>
+                    <IconButton className={classes.themeToggle} size="small" onClick={onThemeToggleChange}>
+                        {
+                            isDarkMode
+                                ? <FontAwesomeIcon icon={faSun} transform={"grow-4"}/>
+                                : <FontAwesomeIcon icon={faMoon} transform={"grow-4"}/>
+                        }
+                    </IconButton>
+                </Tooltip>
             </Toolbar>
         </AppBar>
     ), {
