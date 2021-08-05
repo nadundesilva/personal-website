@@ -1,31 +1,40 @@
 import React from "react";
-import { createStyles, Grid, makeStyles, Theme } from "@material-ui/core";
+import { createStyles, Grid, makeStyles, Theme, useTheme } from "@material-ui/core";
 import ballerina from "./ballerina.svg";
+import ballerinaWhite from "./ballerina-white.svg";
 import cellery from "./cellery.svg";
+import celleryWhite from "./cellery-white.svg";
 import siddhi from "./siddhi.svg";
+import siddhiWhite from "./siddhi-white.svg";
+import choreo from "./choreo.svg";
+import choreoWhite from "./choreo-white.svg";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        carouselItem: {
+        projectLogo: {
             display: "block",
             margin: "auto",
-            height: theme.spacing(10)
+            padding: theme.spacing(5),
+            width: "100%"
         }
     })
 );
 
 const ContributedProjects = (): React.ReactElement => {
     const classes = useStyles();
-    const renderCarouselItem = (imageLink: string, alt: string): React.ReactElement => (
-        <Grid item xs={4}>
-            <img src={imageLink} alt={alt} className={classes.carouselItem}/>
+    const theme = useTheme();
+    const renderCarouselItem = (imageLink: string, blackThemeImageLink: string, alt: string): React.ReactElement => (
+        <Grid item xs={3}>
+            <img alt={alt} className={classes.projectLogo}
+                src={theme?.palette?.type === "light" ? imageLink : blackThemeImageLink}/>
         </Grid>
     );
     return (
         <Grid container spacing={3} justifyContent="center" alignItems="center">
-            {renderCarouselItem(ballerina, "Ballerina")}
-            {renderCarouselItem(cellery, "Cellery")}
-            {renderCarouselItem(siddhi, "Siddhi")}
+            {renderCarouselItem(choreo, choreoWhite, "Choreo")}
+            {renderCarouselItem(ballerina, ballerinaWhite, "Ballerina")}
+            {renderCarouselItem(cellery, celleryWhite, "Cellery")}
+            {renderCarouselItem(siddhi, siddhiWhite, "Siddhi")}
         </Grid>
     );
 };
