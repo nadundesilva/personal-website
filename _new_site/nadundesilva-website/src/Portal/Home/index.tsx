@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Layout } from "../../../components";
+import { Layout } from "../../components";
 import AboutMe from "./AboutMe";
 import Achievements from "./Achievements";
 import ContributedProjects from "./ContributedProjects";
