@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import React, { useRef, useState } from "react";
 import useTheme from "./theme";
+import RouterBreadcrumbs from "./RouterBreadcrumbs";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -72,6 +73,7 @@ const Layout = ({ children, navItems, window }: LayoutProps): React.ReactElement
             <CssBaseline />
             {appBar}
             <Toolbar ref={scrollToTopRef}/>
+            <RouterBreadcrumbs/>
             {children}
             <Zoom in={trigger}>
                 <div onClick={handleClick} role="presentation" className={classes.fab}>

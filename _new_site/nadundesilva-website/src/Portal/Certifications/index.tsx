@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme: Theme) => {
     const certificationTypeMargin = theme.spacing(2);
     return createStyles({
         root: {
-            paddingTop: theme.spacing(verticalPadding),
             paddingBottom: theme.spacing(verticalPadding),
             paddingLeft: theme.spacing(sidePadding),
             paddingRight: theme.spacing(sidePadding)
