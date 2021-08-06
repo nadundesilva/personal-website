@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme: Theme) =>
             marginLeft: theme.spacing(5),
             marginRight: theme.spacing(5)
         },
+        grow: {
+            flexGrow: 1
+        },
         fab: {
             position: "fixed",
             bottom: theme.spacing(2),
@@ -19,8 +22,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface LayoutProps {
-    children: React.ReactElement | React.ReactElement[],
-    navItems: React.ReactElement | React.ReactElement[],
+    children: React.ReactNode,
+    navItems?: React.ReactElement | React.ReactElement[],
     window?: () => Window,
 };
 
@@ -43,6 +46,7 @@ const Layout = ({ children, navItems, window }: LayoutProps): React.ReactElement
         <AppBar>
             <Toolbar>
                 <Typography variant="h5">Nadun De Silva</Typography>
+                <div className={classes.grow} />
                 {navItems}
                 <Tooltip title={`Change to ${isDarkMode ? "light" : "dark"} theme`}>
                     <IconButton className={classes.themeToggle} size="small" onClick={onThemeToggleChange}>

@@ -1,8 +1,9 @@
 import React from "react";
-import { createStyles, makeStyles, Paper, Theme, Typography } from "@material-ui/core";
+import { Box, Button, createStyles, makeStyles, Paper, Theme, Typography } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { Timeline, TimelineItem, TimelineOppositeContent, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent } from "@material-ui/lab";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) => {
     const instituteIconPadding = 0.5;
@@ -32,6 +33,7 @@ interface EducationItem {
 
 const Education = (): React.ReactElement => {
     const classes = useStyles();
+    const history = useHistory();
     const educationItems: EducationItem[] = [
         {
             name: "Bachelor of Science in Engineering",
@@ -53,7 +55,7 @@ const Education = (): React.ReactElement => {
         }
     ];
     const instituteIcon = <FontAwesomeIcon className={classes.instituteIconLeft} icon={faMapMarkerAlt}/>;
-    return (
+    const timeline = (
         <Timeline align="alternate">
             {
                 educationItems.map((item: EducationItem, index: number) => (
@@ -90,6 +92,17 @@ const Education = (): React.ReactElement => {
                 ))
             }
         </Timeline>
+    );
+    const viewMore = (): void => history.push("/certifications");
+    return (
+        <React.Fragment>
+            {timeline}
+            <Box display="flex" justifyContent="flex-end">
+                <Button size="small" color="primary" variant="contained" onClick={viewMore}>
+                    View Certifications
+                </Button>
+            </Box>
+        </React.Fragment>
     );
 };
 
