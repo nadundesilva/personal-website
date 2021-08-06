@@ -1,0 +1,136 @@
+import { Heading, Layout } from "../../components";
+import React from "react";
+import { Card, CardActionArea, CardContent, CardMedia, Chip, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import ckadLogo from "./ckad.png";
+import ckaLogo from "./cka.png";
+import deepLearningAiLogo from "./deep-learning-ai.png";
+
+const useStyles = makeStyles((theme: Theme) => {
+    const sidePadding = 30;
+    const verticalPadding = 5;
+    const certificationTypeMargin = theme.spacing(2);
+    return createStyles({
+        root: {
+            paddingTop: theme.spacing(verticalPadding),
+            paddingBottom: theme.spacing(verticalPadding),
+            paddingLeft: theme.spacing(sidePadding),
+            paddingRight: theme.spacing(sidePadding)
+        },
+        certificationCardContainer: {
+            padding: theme.spacing(2)
+        },
+        certificationCard: {
+            height: "100%"
+        },
+        certificationImage: {
+            width: "50%",
+            height: "auto",
+            margin: "auto",
+            padding: theme.spacing(2)
+        },
+        certificationIssuer: {
+            marginTop: theme.spacing(2)
+        },
+        certificationType: {
+            marginTop: certificationTypeMargin,
+            marginBottom: certificationTypeMargin
+        }
+    });
+});
+
+const DEEP_LEARNING_ISSUER = "Deeplearning.AI";
+const LINUX_FOUNDATION = "Linux Foundation";
+
+interface Certificate {
+    name: string,
+    type: "Course" | "Certification" | "Specialization",
+    link: string,
+    image: string,
+    issuer: string,
+};
+
+const Certifications = (): React.ReactElement => {
+    const classes = useStyles();
+    const certifications: Certificate[] = [
+        {
+            name: "Build Basic Generative Adversarial Networks (GANs)",
+            type: "Course",
+            link: "https://coursera.org/share/fed56feb8ba81177e6467779f22c0851",
+            image: deepLearningAiLogo,
+            issuer: DEEP_LEARNING_ISSUER
+        },
+        {
+            name: "Deep Learning",
+            type: "Specialization",
+            link: "https://coursera.org/share/8e5db53bfef4c4b27f79004022edad72",
+            image: deepLearningAiLogo,
+            issuer: DEEP_LEARNING_ISSUER
+        },
+        {
+            name: "AI For Everyone",
+            type: "Course",
+            link: "https://coursera.org/share/e8ae9a481ef41f070d6c7b00887e8b66",
+            image: deepLearningAiLogo,
+            issuer: DEEP_LEARNING_ISSUER
+        },
+        {
+            name: "Certificed Kubernetes Administrator",
+            type: "Certification",
+            link: "https://www.youracclaim.com/badges/8241114b-7435-460a-a08f-9d33304c1470?source=linked_in_profile",
+            image: ckaLogo,
+            issuer: LINUX_FOUNDATION
+        },
+        {
+            name: "Certificed Kubernetes Application Developer",
+            type: "Certification",
+            link: "https://www.youracclaim.com/badges/e9df4128-2017-41c3-9e7d-028e37176243/linked_in_profile",
+            image: ckadLogo,
+            issuer: LINUX_FOUNDATION
+        }
+    ];
+    const generateViewCertificateHandler = (link: string) => (): void => {
+        window.open(link, "_blank");
+    };
+    return (
+        <Layout>
+            <div className={classes.root}>
+                <Heading>Certifications</Heading>
+                <Grid container justifyContent="flex-start" alignItems="stretch">
+                    {
+                        certifications.map((certification, index) => (
+                            <Grid item xs={3} key={index} className={classes.certificationCardContainer}>
+                                <Card onClick={generateViewCertificateHandler(certification.link)}
+                                    className={classes.certificationCard}>
+                                    <CardActionArea>
+                                        <CardMedia
+                                            component="img"
+                                            alt={certification.name}
+                                            height="140"
+                                            image={certification.image}
+                                            title={certification.name}
+                                            classes={{
+                                                root: classes.certificationImage
+                                            }}
+                                        />
+                                        <CardContent>
+                                            <Typography variant="h6" component="h2">
+                                                {certification.name}
+                                            </Typography>
+                                            <Chip label={certification.type} color="secondary" size="small"
+                                                className={classes.certificationType}/>
+                                            <Typography color="textSecondary" className={classes.certificationIssuer}>
+                                                Issued by {certification.issuer}
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </Grid>
+                        ))
+                    }
+                </Grid>
+            </div>
+        </Layout>
+    );
+};
+
+export default Certifications;

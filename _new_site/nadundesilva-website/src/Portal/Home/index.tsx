@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Layout } from "../../components";
+import { Heading, Layout } from "../../components";
 import AboutMe from "./AboutMe";
 import Achievements from "./Achievements";
 import ContributedProjects from "./ContributedProjects";
@@ -8,28 +8,21 @@ import Experience from "./Experience";
 import Profiles from "./Profiles";
 import Skills from "./Skills";
 import WelcomeBanner from "./WelcomeBanner";
-import { Button, createStyles, Divider, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Button, createStyles, makeStyles, Theme } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => {
     const sidesPadding = 30;
+    const verticalPadding = 5;
     return createStyles({
         sectionsContainer: {
+            paddingTop: theme.spacing(verticalPadding),
+            paddingBottom: theme.spacing(verticalPadding),
             marginLeft: theme.spacing(sidesPadding),
             marginRight: theme.spacing(sidesPadding)
-        },
-        grow: {
-            flexGrow: 1
         },
         section: {
             padding: theme.spacing(1),
             margin: theme.spacing(5)
-        },
-        sectionTitle: {
-            margin: theme.spacing(5)
-        },
-        sectionTitleText: {
-            fontWeight: "bold",
-            padding: theme.spacing(5)
         },
         sectionContent: {
             padding: theme.spacing(3)
@@ -84,20 +77,13 @@ const Home = (): React.ReactElement => {
     };
     const generateSection = (title: string, section: React.ReactElement): React.ReactElement => (
         <React.Fragment>
-            <div className={classes.sectionTitle}>
-                <Divider/>
-                <Typography variant="h5" align="center" className={classes.sectionTitle}>
-                    {title}
-                </Typography>
-                <Divider/>
-            </div>
+            <Heading>{title}</Heading>
             <div className={classes.sectionContent}>{section}</div>
         </React.Fragment>
     );
     return (
         <Layout navItems={
             <React.Fragment>
-                <div className={classes.grow} />
                 {
                     pageSections.map((section: Section) => (
                         <Button key={section.name} variant={"contained"} color="primary" disableElevation
