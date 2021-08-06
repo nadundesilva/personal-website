@@ -11,6 +11,22 @@ const useTheme = (themeType: ThemeType): Theme => (
                 type: themeType,
                 primary: indigo,
                 secondary: indigo
+            },
+            overrides: {
+                MuiCssBaseline: {
+                    "@global": {
+                        "::-webkit-scrollbar": {
+                            width: "10px"
+                        },
+                        "::-webkit-scrollbar-track": {
+                            backgroundColor: "darkgrey"
+                        },
+                        "::-webkit-scrollbar-thumb": {
+                            backgroundColor: "#555555",
+                            boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.3)"
+                        }
+                    }
+                }
             }
         }),
         [themeType]
