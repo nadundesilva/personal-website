@@ -5,38 +5,24 @@ on:
   - pull_request
 
 jobs:
-  lint:
-    name: Lint Code Base
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Lint Code Base
-        uses: github/super-linter@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_YAML: true
-          VALIDATE_RUBY: true
-          VALIDATE_TYPESCRIPT_ES: true
-
   build-site:
     name: Build Site
     runs-on: ubuntu-20.04
-    needs: lint
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
       - name: Build Site
         run: |
-          sudo apt install -y libvips-tools=8.9.1-2
-          sudo gem install bundler
-          bundle
-          bundle exec jekyll build --safe --strict_front_matter
+          npm ci
+          npm run build
       - name: Upload Site
         uses: actions/upload-artifact@v2
         with:
           name: site
-          path: _site/
+          path: build/
 
   links-check:
     name: Check Links in Website
@@ -85,11 +71,9 @@ jobs:
           npx serve@11.3.2 ./_site --listen tcp://localhost:4000 </dev/null &>/dev/null &
           SERVE_PID=${!}
           npx wait-on@5.3.0 -t 10000 -i 1000 --verbose http://localhost:4000
-          pushd ./_e2e_tests
           npm ci
           docker run --network host --rm -t -v $PWD:/test -w /test -e CYPRESS_BASE_URL=http://localhost:4000 \
             cypress/included:7.4.0 run --headless --browser ${{ matrix.browser }}
-          pushd
           kill -9 ${SERVE_PID}
       - name: Upload artifacts
         if: always()
@@ -97,10 +81,10 @@ jobs:
         with:
           name: test-results-${{ matrix.browser }}
           path: |
-            _e2e_tests/cypress/videos/
-            _e2e_tests/cypress/screenshots/
-            _e2e_tests/cypress/integration/__image_snapshots__/*.actual.png
-            _e2e_tests/cypress/integration/__image_snapshots__/*.diff.png
+            cypress/videos/
+            cypress/screenshots/
+            cypress/integration/__image_snapshots__/*.actual.png
+            cypress/integration/__image_snapshots__/*.diff.png
 
   deploy-site:
     name: Deploy Site
