@@ -3,13 +3,16 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import RouterBreadcrumbs from "./RouterBreadcrumbs";
 
 const useStyles = makeStyles((theme: Theme) => {
-    const sidesPadding = 30;
-    const verticalPadding = 5;
+    const horizontalMargin = (padding: number): { marginLeft: number, marginRight: number } => ({
+        marginLeft: theme.spacing(padding),
+        marginRight: theme.spacing(padding)
+    });
     return createStyles({
-        sectionsContainer: {
-            marginBottom: theme.spacing(verticalPadding),
-            marginLeft: theme.spacing(sidesPadding),
-            marginRight: theme.spacing(sidesPadding)
+        content: {
+            marginBottom: theme.spacing(5),
+            [theme.breakpoints.down("md")]: horizontalMargin(0),
+            [theme.breakpoints.up("lg")]: horizontalMargin(30),
+            [theme.breakpoints.up("xl")]: horizontalMargin(60)
         }
     });
 });
@@ -21,7 +24,7 @@ interface LayoutContentProps {
 const LayoutContent = ({ children }: LayoutContentProps): React.ReactElement => {
     const classes = useStyles();
     return (
-        <div className={classes.sectionsContainer}>
+        <div className={classes.content}>
             <RouterBreadcrumbs/>
             {children}
         </div>
