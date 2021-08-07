@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme: Theme) => {
             width: "100%",
             height: "auto"
         },
+        profilePhotoPadding: {
+            padding: theme.spacing(2)
+        },
         contactInfoItemHeader: {
             fontWeight: "bold"
         }

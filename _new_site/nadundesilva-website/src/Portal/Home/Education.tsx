@@ -104,7 +104,7 @@ const Education = (): React.ReactElement => {
         <React.Fragment>
             {timeline}
             <Box display="flex" justifyContent="flex-end">
-                <Button color="primary" variant="contained" onClick={viewMore}>
+                <Button color="primary" variant="contained" size="small" onClick={viewMore}>
                     View Certifications
                 </Button>
             </Box>
