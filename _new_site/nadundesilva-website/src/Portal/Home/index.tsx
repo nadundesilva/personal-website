@@ -8,7 +8,7 @@ import Experience from "./Experience";
 import Profiles from "./Profiles";
 import Skills from "./Skills";
 import WelcomeBanner from "./WelcomeBanner";
-import { Button, createStyles, makeStyles, Theme } from "@material-ui/core";
+import { Button, createStyles, Hidden, makeStyles, Theme } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => {
     const sidesPadding = 30;
@@ -82,8 +82,8 @@ const Home = (): React.ReactElement => {
         </React.Fragment>
     );
     return (
-        <Layout navItems={
-            <React.Fragment>
+        <Layout appBarItems={
+            <Hidden mdDown>
                 {
                     pageSections.map((section: Section) => (
                         <Button key={section.name} variant={"contained"} color="primary" disableElevation
@@ -92,7 +92,7 @@ const Home = (): React.ReactElement => {
                         </Button>
                     ))
                 }
-            </React.Fragment>
+            </Hidden>
         }>
             <WelcomeBanner/>
             <div className={classes.sectionsContainer}>
