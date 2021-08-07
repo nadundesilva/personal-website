@@ -90,7 +90,7 @@ const Certifications = (): React.ReactElement => {
                 <Grid container justifyContent="flex-start" alignItems="stretch">
                     {
                         certifications.map((certification, index) => (
-                            <Grid item xs={3} key={index} className={classes.certificationCardContainer}>
+                            <Grid item xs={12} sm={6} md={4} xl={3} key={index} className={classes.certificationCardContainer}>
                                 <Card onClick={generateViewCertificateHandler(certification.link)}
                                     className={classes.certificationCard}>
                                     <CardActionArea>
@@ -105,7 +105,7 @@ const Certifications = (): React.ReactElement => {
                                             }}
                                         />
                                         <CardContent>
-                                            <Typography variant="h6" component="h2">
+                                            <Typography variant="h6" component="h2" align="center">
                                                 {certification.name}
                                             </Typography>
                                             <Chip label={certification.type} color="secondary" size="small"
