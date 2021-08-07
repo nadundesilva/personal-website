@@ -1,4 +1,3 @@
-import { Heading, Layout, LayoutContent } from "../../components";
 import React from "react";
 import { Card, CardActionArea, CardContent, CardMedia, Chip, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 import ckadLogo from "./ckad.png";
@@ -84,44 +83,39 @@ const Certifications = (): React.ReactElement => {
         window.open(link, "_blank");
     };
     return (
-        <Layout>
-            <LayoutContent>
-                <Heading>Certifications</Heading>
-                <Grid container justifyContent="flex-start" alignItems="stretch">
-                    {
-                        certifications.map((certification, index) => (
-                            <Grid item xs={12} sm={6} md={4} xl={3} key={index} className={classes.certificationCardContainer}>
-                                <Card onClick={generateViewCertificateHandler(certification.link)}
-                                    className={classes.certificationCard}>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            component="img"
-                                            alt={certification.name}
-                                            height="140"
-                                            image={certification.image}
-                                            title={certification.name}
-                                            classes={{
-                                                root: classes.certificationImage
-                                            }}
-                                        />
-                                        <CardContent>
-                                            <Typography variant="h6" component="h2" align="center">
-                                                {certification.name}
-                                            </Typography>
-                                            <Chip label={certification.type} color="secondary" size="small"
-                                                className={classes.certificationType}/>
-                                            <Typography color="textSecondary" className={classes.certificationIssuer}>
-                                                Issued by {certification.issuer}
-                                            </Typography>
-                                        </CardContent>
-                                    </CardActionArea>
-                                </Card>
-                            </Grid>
-                        ))
-                    }
-                </Grid>
-            </LayoutContent>
-        </Layout>
+        <Grid container justifyContent="flex-start" alignItems="stretch">
+            {
+                certifications.map((certification, index) => (
+                    <Grid item xs={12} sm={6} md={4} xl={3} key={index} className={classes.certificationCardContainer}>
+                        <Card onClick={generateViewCertificateHandler(certification.link)}
+                            className={classes.certificationCard}>
+                            <CardActionArea>
+                                <CardMedia
+                                    component="img"
+                                    alt={certification.name}
+                                    height="140"
+                                    image={certification.image}
+                                    title={certification.name}
+                                    classes={{
+                                        root: classes.certificationImage
+                                    }}
+                                />
+                                <CardContent>
+                                    <Typography variant="h6" component="h2" align="center">
+                                        {certification.name}
+                                    </Typography>
+                                    <Chip label={certification.type} color="secondary" size="small"
+                                        className={classes.certificationType}/>
+                                    <Typography color="textSecondary" className={classes.certificationIssuer}>
+                                        Issued by {certification.issuer}
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                ))
+            }
+        </Grid>
     );
 };
 
