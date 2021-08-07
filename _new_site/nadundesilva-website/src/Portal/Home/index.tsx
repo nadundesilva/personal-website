@@ -3,7 +3,7 @@ import { Heading, Layout, LayoutContent } from "../../components";
 import AboutMe from "./AboutMe";
 import Achievements from "./Achievements";
 import ContributedProjects from "./ContributedProjects";
-import Education from "./Education";
+import Certifications from "./Certifications";
 import Experience from "./Experience";
 import Profiles from "./Profiles";
 import Skills from "./Skills";
@@ -33,9 +33,14 @@ const Home = (): React.ReactElement => {
 
     const pageSections: Section[] = [
         {
-            name: "Education",
+            name: "Experience",
             ref: useRef<HTMLDivElement>(null),
-            Component: Education
+            Component: Experience
+        },
+        {
+            name: "Achievements",
+            ref: useRef<HTMLDivElement>(null),
+            Component: Achievements
         },
         {
             name: "Skills",
@@ -43,19 +48,14 @@ const Home = (): React.ReactElement => {
             Component: Skills
         },
         {
-            name: "Experience",
+            name: "Certifications",
             ref: useRef<HTMLDivElement>(null),
-            Component: Experience
+            Component: Certifications
         },
         {
             name: "Profiles",
             ref: useRef<HTMLDivElement>(null),
             Component: Profiles
-        },
-        {
-            name: "Achievements",
-            ref: useRef<HTMLDivElement>(null),
-            Component: Achievements
         },
         {
             name: "Contributed Projects",
