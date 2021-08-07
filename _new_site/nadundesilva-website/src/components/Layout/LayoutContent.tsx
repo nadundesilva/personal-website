@@ -3,9 +3,9 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import RouterBreadcrumbs from "./RouterBreadcrumbs";
 
 const useStyles = makeStyles((theme: Theme) => {
-    const horizontalMargin = (padding: number): { marginLeft: number, marginRight: number } => ({
-        marginLeft: theme.spacing(padding),
-        marginRight: theme.spacing(padding)
+    const horizontalMargin = (margin: number): { marginLeft: number, marginRight: number } => ({
+        marginLeft: theme.spacing(margin),
+        marginRight: theme.spacing(margin)
     });
     return createStyles({
         content: {
