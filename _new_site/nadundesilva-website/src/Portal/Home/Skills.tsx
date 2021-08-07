@@ -65,13 +65,13 @@ const Skills = (): React.ReactElement => {
         }
     ];
     const renderPercentage = (skill: Skill): React.ReactElement => (
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
             <Typography className={classes.skillName}>{skill.name}</Typography>
             <Grid container spacing={3} justifyContent="center" alignItems="center">
-                <Grid item xs={10}>
+                <Grid item xs={8} sm={10}>
                     <BorderLinearProgress variant="determinate" value={skill.percentage}/>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={4} sm={2}>
                     {skill.percentage} %
                 </Grid>
             </Grid>

@@ -24,7 +24,7 @@ const ContributedProjects = (): React.ReactElement => {
     const classes = useStyles();
     const theme = useTheme();
     const renderCarouselItem = (imageLink: string, blackThemeImageLink: string, alt: string): React.ReactElement => (
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4} md={3}>
             <img alt={alt} className={classes.projectLogo}
                 src={theme?.palette?.type === "light" ? imageLink : blackThemeImageLink}/>
         </Grid>
