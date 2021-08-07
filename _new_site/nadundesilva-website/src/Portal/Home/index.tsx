@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Heading, Layout } from "../../components";
+import { Heading, Layout, LayoutContent } from "../../components";
 import AboutMe from "./AboutMe";
 import Achievements from "./Achievements";
 import ContributedProjects from "./ContributedProjects";
@@ -10,16 +10,8 @@ import Skills from "./Skills";
 import WelcomeBanner from "./WelcomeBanner";
 import { Button, createStyles, Hidden, makeStyles, Theme } from "@material-ui/core";
 
-const useStyles = makeStyles((theme: Theme) => {
-    const sidesPadding = 30;
-    const verticalPadding = 5;
-    return createStyles({
-        sectionsContainer: {
-            paddingTop: theme.spacing(verticalPadding),
-            paddingBottom: theme.spacing(verticalPadding),
-            marginLeft: theme.spacing(sidesPadding),
-            marginRight: theme.spacing(sidesPadding)
-        },
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
         section: {
             padding: theme.spacing(1),
             margin: theme.spacing(5)
@@ -27,8 +19,8 @@ const useStyles = makeStyles((theme: Theme) => {
         sectionContent: {
             padding: theme.spacing(3)
         }
-    });
-});
+    })
+);
 
 interface Section {
     name: string,
@@ -95,7 +87,7 @@ const Home = (): React.ReactElement => {
             </Hidden>
         }>
             <WelcomeBanner/>
-            <div className={classes.sectionsContainer}>
+            <LayoutContent>
                 <div className={classes.section}>
                     {generateSection("About Me", <AboutMe/>)}
                 </div>
@@ -108,7 +100,7 @@ const Home = (): React.ReactElement => {
                         ))
                     }
                 </React.Fragment>
-            </div>
+            </LayoutContent>
         </Layout>
     );
 };

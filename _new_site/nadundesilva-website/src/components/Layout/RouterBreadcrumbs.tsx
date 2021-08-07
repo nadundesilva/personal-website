@@ -20,36 +20,33 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
     const location = useLocation();
     const classes = useStyles();
     const pathnames = location.pathname.split("/").filter((x) => x);
-    return (pathnames.length > 0
-        ? (
-            <Breadcrumbs aria-label="breadcrumb" className={classes.root}
-                separator={<FontAwesomeIcon icon={faChevronRight} transform={"shrink-4"}/>}>
-                <Link color="inherit" href="/" to="/" component={RouterLink}>
-                    Home
-                </Link>
-                {
-                    pathnames.map((value, index) => {
-                        const last = index === pathnames.length - 1;
-                        const to = `/${pathnames.slice(0, index + 1).join("/")}`;
+    return (
+        <Breadcrumbs aria-label="breadcrumb" className={classes.root}
+            separator={<FontAwesomeIcon icon={faChevronRight} transform={"shrink-4"}/>}>
+            <Link color="inherit" href="/" to="/" component={RouterLink}>
+                Home
+            </Link>
+            {
+                pathnames.map((value, index) => {
+                    const last = index === pathnames.length - 1;
+                    const to = `/${pathnames.slice(0, index + 1).join("/")}`;
 
-                        return (
-                            last
-                                ? (
-                                    <Typography color="textPrimary" key={to}>
-                                        {BREADCRUMBS_MAP[to]}
-                                    </Typography>
-                                )
-                                : (
-                                    <Link color="inherit" href={to} to={to} component={RouterLink} key={to}>
-                                        {BREADCRUMBS_MAP[to]}
-                                    </Link>
-                                )
-                        );
-                    })
-                }
-            </Breadcrumbs>
-        )
-        : null
+                    return (
+                        last
+                            ? (
+                                <Typography color="textPrimary" key={to}>
+                                    {BREADCRUMBS_MAP[to]}
+                                </Typography>
+                            )
+                            : (
+                                <Link color="inherit" href={to} to={to} component={RouterLink} key={to}>
+                                    {BREADCRUMBS_MAP[to]}
+                                </Link>
+                            )
+                    );
+                })
+            }
+        </Breadcrumbs>
     );
 };
 

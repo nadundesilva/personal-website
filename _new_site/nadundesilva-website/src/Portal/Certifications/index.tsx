@@ -1,4 +1,4 @@
-import { Heading, Layout } from "../../components";
+import { Heading, Layout, LayoutContent } from "../../components";
 import React from "react";
 import { Card, CardActionArea, CardContent, CardMedia, Chip, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 import ckadLogo from "./ckad.png";
@@ -6,15 +6,8 @@ import ckaLogo from "./cka.png";
 import deepLearningAiLogo from "./deep-learning-ai.png";
 
 const useStyles = makeStyles((theme: Theme) => {
-    const sidePadding = 30;
-    const verticalPadding = 5;
     const certificationTypeMargin = theme.spacing(2);
     return createStyles({
-        root: {
-            paddingBottom: theme.spacing(verticalPadding),
-            paddingLeft: theme.spacing(sidePadding),
-            paddingRight: theme.spacing(sidePadding)
-        },
         certificationCardContainer: {
             padding: theme.spacing(2)
         },
@@ -92,7 +85,7 @@ const Certifications = (): React.ReactElement => {
     };
     return (
         <Layout>
-            <div className={classes.root}>
+            <LayoutContent>
                 <Heading>Certifications</Heading>
                 <Grid container justifyContent="flex-start" alignItems="stretch">
                     {
@@ -127,7 +120,7 @@ const Certifications = (): React.ReactElement => {
                         ))
                     }
                 </Grid>
-            </div>
+            </LayoutContent>
         </Layout>
     );
 };
