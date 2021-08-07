@@ -69,7 +69,7 @@ const Profiles = (): React.ReactElement => {
         <Grid container justifyContent="center" alignItems="center">
             {
                 profiles.map((profile) => (
-                    <Grid item xs={4} key={profile.name} onClick={generateOpenLinkHandler(profile.link)}>
+                    <Grid item xs={12} sm={4} key={profile.name} onClick={generateOpenLinkHandler(profile.link)}>
                         <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.profileSection}>
                             <Grid item xs={6}>
                                 <FontAwesomeIcon icon={profile.icon} size="3x" className={classes.profileIcon}/>

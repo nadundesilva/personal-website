@@ -4,11 +4,13 @@ import { createStyles, Divider, makeStyles, Theme, Typography } from "@material-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         sectionTitle: {
-            margin: theme.spacing(5)
+            marginTop: theme.spacing(2),
+            marginBottom: theme.spacing(3)
         },
         sectionTitleText: {
             fontWeight: "bold",
-            padding: theme.spacing(5)
+            paddingTop: theme.spacing(5),
+            paddingBottom: theme.spacing(5)
         }
     })
 );
