@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles, makeStyles, Paper, Theme, Typography } from "@material-ui/core";
+import { createStyles, makeStyles, Paper, Theme, Typography, useMediaQuery, useTheme } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { Timeline, TimelineItem, TimelineOppositeContent, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent } from "@material-ui/lab";
@@ -32,6 +32,9 @@ interface ExperienceItem {
 
 const Experience = (): React.ReactElement => {
     const classes = useStyles();
+    const theme = useTheme();
+    const isTimelineLeftAligned = useMediaQuery(theme.breakpoints.down("xs"));
+
     const experienceItems: ExperienceItem[] = [
         {
             name: "Associate Technical Lead",
@@ -66,7 +69,7 @@ const Experience = (): React.ReactElement => {
     ];
     const instituteIcon = <FontAwesomeIcon className={classes.instituteIconLeft} icon={faMapMarkerAlt}/>;
     return (
-        <Timeline align="alternate">
+        <Timeline align={isTimelineLeftAligned ? "left" : "alternate"}>
             {
                 experienceItems.map((item: ExperienceItem, index: number) => (
                     <TimelineItem key={item.name}>
@@ -88,11 +91,11 @@ const Experience = (): React.ReactElement => {
                                     {item.description}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
-                                    {index % 2 === 0 && (
+                                    {(isTimelineLeftAligned || index % 2 === 0) && (
                                         <React.Fragment>{instituteIcon}&nbsp;</React.Fragment>
                                     )}
                                     {item.institute}
-                                    {index % 2 === 1 && (
+                                    {(!isTimelineLeftAligned && index % 2 === 1) && (
                                         <React.Fragment>&nbsp;{instituteIcon}</React.Fragment>
                                     )}
                                 </Typography>
