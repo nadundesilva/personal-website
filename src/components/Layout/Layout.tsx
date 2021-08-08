@@ -7,8 +7,7 @@ import useTheme from "./theme";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         themeToggle: {
-            marginLeft: theme.spacing(5),
-            marginRight: theme.spacing(5)
+            marginLeft: theme.spacing(5)
         },
         grow: {
             flexGrow: 1
