@@ -1,7 +1,7 @@
 import React from "react";
 import Home from "./Home";
 import { SEO } from "../components";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 
 const Portal = (): React.ReactElement => {
     return (
@@ -11,6 +11,9 @@ const Portal = (): React.ReactElement => {
                 <Switch>
                     <Route path="/" exact>
                         <Home/>
+                    </Route>
+                    <Route>
+                        <Redirect to="/" />
                     </Route>
                 </Switch>
             </BrowserRouter>
