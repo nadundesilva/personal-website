@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) => {
             objectFit: "cover"
         },
         introText: {
+            fontWeight: "bold",
             [theme.breakpoints.down("sm")]: fontSize(2),
             [theme.breakpoints.up("sm")]: fontSize(4),
             [theme.breakpoints.up("xl")]: fontSize(8)
