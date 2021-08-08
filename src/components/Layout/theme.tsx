@@ -1,14 +1,17 @@
-import { useMemo } from "react";
-import { createTheme, Theme } from "@material-ui/core";
+import { useMemo, useState } from "react";
+import { createTheme, Theme, useMediaQuery } from "@material-ui/core";
 import { indigo } from "@material-ui/core/colors";
 
-type ThemeType = "light" | "dark";
+export type ColorScheme = "dark" | "light";
 
-const useTheme = (themeType: ThemeType): Theme => (
-    useMemo(
+const useTheme = (): [{ theme: Theme, colorScheme: ColorScheme }, (newColorScheme: ColorScheme) => void] => {
+    const preferedColorScheme: ColorScheme = useMediaQuery("(prefers-color-scheme: dark)") ? "dark" : "light";
+    const [colorScheme, setColorScheme] = useState<ColorScheme>(preferedColorScheme);
+
+    const theme = useMemo(
         () => createTheme({
             palette: {
-                type: themeType,
+                type: colorScheme,
                 primary: indigo,
                 secondary: indigo
             },
@@ -29,8 +32,15 @@ const useTheme = (themeType: ThemeType): Theme => (
                 }
             }
         }),
-        [themeType]
-    )
-);
+        [colorScheme]
+    );
+    return [
+        {
+            theme,
+            colorScheme
+        },
+        setColorScheme
+    ];
+};
 
 export default useTheme;
