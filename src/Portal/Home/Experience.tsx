@@ -3,6 +3,7 @@ import { createStyles, makeStyles, Paper, Theme, Typography, useMediaQuery, useT
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { Timeline, TimelineItem, TimelineOppositeContent, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent } from "@material-ui/lab";
+import { useScrollOffset } from "../../components";
 
 const useStyles = makeStyles((theme: Theme) => {
     const instituteIconPadding = 0.5;
@@ -32,6 +33,9 @@ interface ExperienceItem {
 
 const Experience = (): React.ReactElement => {
     const classes = useStyles();
+    const { ref: rootRef, offset } = useScrollOffset<Element>({
+        trackExit: true
+    });
     const theme = useTheme();
     const isTimelineLeftAligned = useMediaQuery(theme.breakpoints.down("xs"));
 
@@ -68,41 +72,51 @@ const Experience = (): React.ReactElement => {
         }
     ];
     const instituteIcon = <FontAwesomeIcon className={classes.instituteIconLeft} icon={faMapMarkerAlt}/>;
+
+    const translation = offset * 20;
     return (
-        <Timeline align={isTimelineLeftAligned ? "left" : "alternate"}>
+        <Timeline ref={rootRef} align={isTimelineLeftAligned ? "left" : "alternate"}>
             {
-                experienceItems.map((item: ExperienceItem, index: number) => (
-                    <TimelineItem key={item.name}>
-                        <TimelineOppositeContent>
-                            <Typography variant="body2" color="textSecondary">
-                                {item.timePeriod}
-                            </Typography>
-                        </TimelineOppositeContent>
-                        <TimelineSeparator>
-                            <TimelineDot color="primary"/>
-                            <TimelineConnector/>
-                        </TimelineSeparator>
-                        <TimelineContent>
-                            <Paper elevation={3} className={classes.timeLineItemContent}>
-                                <Typography variant="body1" component="h6" className={classes.timeLineItemTitle}>
-                                    {item.name}
-                                </Typography>
+                experienceItems.map((item: ExperienceItem, index: number) => {
+                    const isOnLeft = isTimelineLeftAligned || index % 2 === 0;
+                    return (
+                        <TimelineItem key={item.name}>
+                            <TimelineOppositeContent>
                                 <Typography variant="body2" color="textSecondary">
-                                    {item.description}
+                                    {item.timePeriod}
                                 </Typography>
-                                <Typography variant="body2" color="textSecondary">
-                                    {(isTimelineLeftAligned || index % 2 === 0) && (
-                                        <React.Fragment>{instituteIcon}&nbsp;</React.Fragment>
-                                    )}
-                                    {item.institute}
-                                    {(!isTimelineLeftAligned && index % 2 === 1) && (
-                                        <React.Fragment>&nbsp;{instituteIcon}</React.Fragment>
-                                    )}
-                                </Typography>
-                            </Paper>
-                        </TimelineContent>
-                    </TimelineItem>
-                ))
+                            </TimelineOppositeContent>
+                            <TimelineSeparator>
+                                <TimelineDot color="primary"/>
+                                <TimelineConnector/>
+                            </TimelineSeparator>
+                            <TimelineContent>
+                                <Paper elevation={3} className={classes.timeLineItemContent}
+                                    style={{
+                                        transform: `translateX(${isOnLeft ? translation : -translation}vw)`,
+                                        opacity: 1 - offset
+                                    }}
+                                >
+                                    <Typography variant="body1" component="h6" className={classes.timeLineItemTitle}>
+                                        {item.name}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary">
+                                        {item.description}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary">
+                                        {isOnLeft && (
+                                            <React.Fragment>{instituteIcon}&nbsp;</React.Fragment>
+                                        )}
+                                        {item.institute}
+                                        {!isOnLeft && (
+                                            <React.Fragment>&nbsp;{instituteIcon}</React.Fragment>
+                                        )}
+                                    </Typography>
+                                </Paper>
+                            </TimelineContent>
+                        </TimelineItem>
+                    );
+                })
             }
         </Timeline>
     );
