@@ -38,31 +38,31 @@ const Experience = (): React.ReactElement => {
     const experienceItems: ExperienceItem[] = [
         {
             name: "Associate Technical Lead",
-            timePeriod: "June 2021 - Present",
+            timePeriod: "June 2021 to Now",
             description: "Lead Choreo Observability Team as well as other Teams in Choreo",
             institute: "WSO2, Colombo 03, Sri Lanka"
         },
         {
             name: "Senior Software Engineer",
-            timePeriod: "July 2019 - June 2021",
+            timePeriod: "July 2019 to June 2021",
             description: "Lead Choreo Observability Team in creating the initial PoC as well as the Platform",
             institute: "WSO2, Colombo 03, Sri Lanka"
         },
         {
             name: "Software Engineer",
-            timePeriod: "Jan 2018 - July 2019",
+            timePeriod: "Jan 2018 to July 2019",
             description: "Designed & developed several components in middle-ware & cloud projects",
             institute: "WSO2, Colombo 03, Sri Lanka"
         },
         {
             name: "Google Summer of Code Intern",
-            timePeriod: "May 2017 - Sep 2017",
+            timePeriod: "May 2017 to Sep 2017",
             description: "Designed and implemented a maven plugin for automatically generating documentation for Siddhi extensions using annotated data written in the java code.",
             institute: "WSO2, Colombo 03, Sri Lanka"
         },
         {
             name: "Software Engineering Trainee",
-            timePeriod: "July 2016 - Dec 2019",
+            timePeriod: "July 2016 to Dec 2019",
             description: "Implemented a Notebook prototype for the Data Analytics Server",
             institute: "WSO2, Colombo 03, Sri Lanka"
         }
