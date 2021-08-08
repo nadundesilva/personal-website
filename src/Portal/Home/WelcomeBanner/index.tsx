@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, createStyles, Grid, makeStyles, Theme, Typography, useTheme, useMediaQuery } from "@material-ui/core";
 import banner from "./banner.jpg";
-import cvPdf from "./nadundesilva-cv.pdf";
 
 const useStyles = makeStyles((theme: Theme) => {
     const horizontalPadding = (padding: number): { paddingTop: number, paddingLeft: number, paddingRight: number } => ({
@@ -60,7 +59,7 @@ const WelcomeBanner = (): React.ReactElement => {
 
     const downloadCv = (): void => {
         const a = document.createElement("a");
-        a.href = cvPdf;
+        a.href = process.env.PUBLIC_URL + "/nadundesilva-cv.pdf";
         a.setAttribute("download", "nadundesilva-cv.pdf");
         a.click();
         a.remove();
