@@ -19,7 +19,7 @@ const getStoredColorScheme = (): ColorScheme | null => {
         : null;
 };
 
-const useTheme = (): [{ theme: Theme, colorScheme: ColorScheme }, (newColorScheme: ColorScheme) => void] => {
+const useTheme = (): { theme: Theme, colorScheme: ColorScheme, setColorScheme: (newColorScheme: ColorScheme) => void } => {
     const preferedColorScheme: ColorScheme = useMediaQuery("(prefers-color-scheme: dark)") ? "dark" : "light";
     const initialStoredColorScheme = getStoredColorScheme();
 
@@ -27,13 +27,13 @@ const useTheme = (): [{ theme: Theme, colorScheme: ColorScheme }, (newColorSchem
         initialStoredColorScheme === null ? preferedColorScheme : initialStoredColorScheme
     );
 
+    const storageListener = (): void => {
+        const storedColorScheme = getStoredColorScheme();
+        if (storedColorScheme !== null) {
+            setColorScheme(storedColorScheme);
+        }
+    };
     useEffect(() => {
-        const storageListener = (): void => {
-            const storedColorScheme = getStoredColorScheme();
-            if (storedColorScheme !== null) {
-                setColorScheme(storedColorScheme);
-            }
-        };
         window.addEventListener("storage", storageListener);
         return (): void => window.removeEventListener("storage", storageListener);
     });
@@ -64,19 +64,17 @@ const useTheme = (): [{ theme: Theme, colorScheme: ColorScheme }, (newColorSchem
         }),
         [colorScheme]
     );
-    return [
-        {
-            theme,
-            colorScheme
-        },
-        (newColorScheme: ColorScheme) => {
+    return {
+        theme,
+        colorScheme,
+        setColorScheme: (newColorScheme: ColorScheme): void => {
             try {
                 localStorage.setItem(COLOR_SCHEME_KEY, newColorScheme);
             } catch {
             }
             setColorScheme(newColorScheme);
         }
-    ];
+    };
 };
 
 export default useTheme;

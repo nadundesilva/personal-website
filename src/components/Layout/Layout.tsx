@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme: Theme) =>
             position: "fixed",
             bottom: theme.spacing(2),
             right: theme.spacing(2)
+        },
+        children: {
+            overflowX: "hidden"
         }
     })
 );
@@ -36,7 +39,7 @@ const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElem
     const classes = useStyles();
     const scrollToTopRef = useRef<HTMLDivElement>(null);
 
-    const [{ theme, colorScheme }, setColorScheme] = useTheme();
+    const { theme, colorScheme, setColorScheme } = useTheme();
     const nextColorScheme = colorScheme === "dark" ? "light" : "dark";
     const onThemeToggleChange = (): void => setColorScheme(nextColorScheme);
 
@@ -66,7 +69,9 @@ const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElem
             <CssBaseline />
             {appBar}
             <Toolbar ref={scrollToTopRef}/>
-            {children}
+            <div className={classes.children}>
+                {children}
+            </div>
             <Zoom in={trigger}>
                 <div onClick={handleClick} role="presentation" className={classes.fab}>
                     <Fab color="primary" size="small" aria-label="scroll back to top">
