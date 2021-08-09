@@ -1,5 +1,6 @@
 import React from "react";
 import { createStyles, Grid, LinearProgress, makeStyles, Typography, withStyles } from "@material-ui/core";
+import { useScrollOffset } from "../../components";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -28,6 +29,8 @@ interface Skill {
 
 const Skills = (): React.ReactElement => {
     const classes = useStyles();
+    const { ref: rootRef, direction, offset } = useScrollOffset<HTMLDivElement>();
+
     const leftSideSkills: Skill[] = [
         {
             name: "Programming",
@@ -64,12 +67,16 @@ const Skills = (): React.ReactElement => {
             percentage: 90
         }
     ];
+
+    const animationOffset = 0.2;
+    const currentOffset = direction === 1 ? Math.min(offset + animationOffset, 1) : 1;
+    const currentOpacity = direction === -1 ? Math.max(offset - animationOffset, 0) / (1 - animationOffset) : 1;
     const renderPercentage = (skill: Skill): React.ReactElement => (
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} style={{ opacity: currentOpacity }}>
             <Typography className={classes.skillName}>{skill.name}</Typography>
             <Grid container spacing={3} justifyContent="center" alignItems="center">
                 <Grid item xs={8} sm={10}>
-                    <BorderLinearProgress variant="determinate" value={skill.percentage}/>
+                    <BorderLinearProgress variant="determinate" value={skill.percentage * currentOffset}/>
                 </Grid>
                 <Grid item xs={4} sm={2}>
                     {skill.percentage} %
@@ -77,8 +84,9 @@ const Skills = (): React.ReactElement => {
             </Grid>
         </Grid>
     );
+
     return (
-        <Grid container spacing={3} justifyContent="center" alignItems="center">
+        <Grid ref={rootRef} container spacing={3} justifyContent="center" alignItems="center">
             {
                 leftSideSkills.map((leftSideSkill, index) => (
                     <React.Fragment key={leftSideSkill.name}>

@@ -30,9 +30,7 @@ const useStyles = makeStyles((theme: Theme) => {
 
 const AboutMe = (): React.ReactElement => {
     const classes = useStyles();
-    const { ref: rootRef, offset } = useScrollOffset<HTMLDivElement>({
-        trackExit: true
-    });
+    const { ref: rootRef, offset } = useScrollOffset<HTMLDivElement>();
 
     const profilePhoto = (gridWidth: GridSize): React.ReactElement => (
         <Grid item xs={gridWidth}>

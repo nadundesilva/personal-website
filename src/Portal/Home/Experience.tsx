@@ -33,9 +33,7 @@ interface ExperienceItem {
 
 const Experience = (): React.ReactElement => {
     const classes = useStyles();
-    const { ref: rootRef, offset } = useScrollOffset<Element>({
-        trackExit: true
-    });
+    const { ref: rootRef, offset } = useScrollOffset<Element>();
     const theme = useTheme();
     const isTimelineLeftAligned = useMediaQuery(theme.breakpoints.down("xs"));
 
