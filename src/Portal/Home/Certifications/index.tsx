@@ -3,6 +3,7 @@ import { Card, CardActionArea, CardContent, CardMedia, Chip, createStyles, Grid,
 import ckadLogo from "./ckad.png";
 import ckaLogo from "./cka.png";
 import deepLearningAiLogo from "./deep-learning-ai.png";
+import { useScrollOffset } from "../../../components";
 
 const useStyles = makeStyles((theme: Theme) => {
     const certificationTypeMargin = theme.spacing(2);
@@ -42,6 +43,8 @@ interface Certificate {
 
 const Certifications = (): React.ReactElement => {
     const classes = useStyles();
+    const { ref: rootRef, direction, offset } = useScrollOffset<HTMLDivElement>();
+
     const certifications: Certificate[] = [
         {
             name: "Build Basic Generative Adversarial Networks (GANs)",
@@ -79,16 +82,23 @@ const Certifications = (): React.ReactElement => {
             issuer: LINUX_FOUNDATION
         }
     ];
+
     const generateViewCertificateHandler = (link: string) => (): void => {
         window.open(link, "_blank");
     };
+
+    const translation = (1 - offset) * 20;
     return (
-        <Grid container justifyContent="flex-start" alignItems="stretch">
+        <Grid ref={rootRef} container justifyContent="flex-start" alignItems="stretch">
             {
                 certifications.map((certification, index) => (
                     <Grid item xs={12} sm={6} md={4} xl={3} key={index} className={classes.certificationCardContainer}>
                         <Card onClick={generateViewCertificateHandler(certification.link)}
-                            className={classes.certificationCard}>
+                            className={classes.certificationCard}
+                            style={{
+                                transform: `translateY(${direction === 1 ? translation : -translation}vw) scale(${offset})`,
+                                opacity: offset
+                            }}>
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
