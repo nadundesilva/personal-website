@@ -6,6 +6,7 @@ import nasaSpaceApps2017 from "./nasa-space-apps-2017.jpg";
 import hsbcYouthEnterpriseAwards2015 from "./hsbc-youth-enterprise-awards-2015.jpg";
 import deansList2017 from "./deans-list-2017.jpg";
 import angelHack2016 from "./angel-hack-2016.jpg";
+import { useScrollOffset } from "../../../components";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -42,50 +43,97 @@ const WSO2_OUTSTANDING_CONTRIBUTOR_TITLE = "WSO2 Sustained Outstanding Contribut
 const HSBC_YOUTH_ENTERPRISE_AWARDS_2015_TITLE = "Finalist - British Council HSBC Youth Enterprise Awards 2015";
 const ANGEL_HACK_2016_TITLE = "Finalist - Angel Hack 2016";
 
+interface AchievementSection {
+    title: string,
+    imageLink: string,
+    animationOffset: number,
+};
+
 const ROW_HEIGHT = 300;
 
 const Achievements = (): React.ReactElement => {
     const classes = useStyles();
-    const renderImageListItem = (title: string, imageLink: string, rowCount: number): React.ReactElement => (
-        <ImageListItem rows={rowCount} cols={1}
-            className={classNames(classes.imageListItem, classes.imageListItemImageContainer)}>
-            <Grid container justifyContent="center" alignItems="center" className={classes.imageListItemImageOverlay}>
-                <Grid item xs={6}>
-                    <Typography className={classes.imageListItemText}>{title}</Typography>
+    const { ref: rootRef, offset } = useScrollOffset<HTMLDivElement>({
+        trackExit: true
+    });
+
+    const achievementSections: AchievementSection[] = [
+        {
+            title: NASA_SPACE_APPS_2017_TITLE,
+            imageLink: nasaSpaceApps2017,
+            animationOffset: 0.4
+        },
+        {
+            title: PLACEMENTS_IN_DEANS_LIST_TITLE,
+            imageLink: deansList2017,
+            animationOffset: 0.1
+        },
+        {
+            title: WSO2_OUTSTANDING_CONTRIBUTOR_TITLE,
+            imageLink: wso2OutstandingContributorImage,
+            animationOffset: 0.5
+        },
+        {
+            title: HSBC_YOUTH_ENTERPRISE_AWARDS_2015_TITLE,
+            imageLink: hsbcYouthEnterpriseAwards2015,
+            animationOffset: 0.3
+        },
+        {
+            title: ANGEL_HACK_2016_TITLE,
+            imageLink: angelHack2016,
+            animationOffset: 0.2
+        }
+    ];
+
+    const renderImageListItem = (achievementIndex: number, rowCount: number): React.ReactElement => {
+        const achievementSection: AchievementSection = achievementSections[achievementIndex];
+        const imageOffset = Math.max(offset - achievementSection.animationOffset, 0) / (1 - achievementSection.animationOffset);
+        return (
+            <ImageListItem rows={rowCount} cols={1}
+                className={classNames(classes.imageListItem, classes.imageListItemImageContainer)}
+                style={{
+                    transform: `scale(${imageOffset}, ${imageOffset})`,
+                    opacity: imageOffset
+                }}>
+                <Grid container justifyContent="center" alignItems="center" className={classes.imageListItemImageOverlay}>
+                    <Grid item xs={6}>
+                        <Typography className={classes.imageListItemText}>{achievementSection.title}</Typography>
+                    </Grid>
                 </Grid>
-            </Grid>
-            <img src={imageLink} alt={title}/>
-        </ImageListItem>
-    );
+                <img src={achievementSection.imageLink} alt={achievementSection.title}/>
+            </ImageListItem>
+        );
+    };
+
     return (
-        <React.Fragment>
+        <div ref={rootRef}>
             <Hidden smDown>
                 <ImageList rowHeight={ROW_HEIGHT} cols={3}>
                     <ImageListItem rows={2} cols={1} className={classes.imageListItem}>
                         <ImageList rowHeight={ROW_HEIGHT} cols={1}>
-                            {renderImageListItem(NASA_SPACE_APPS_2017_TITLE, nasaSpaceApps2017, 1)}
-                            {renderImageListItem(PLACEMENTS_IN_DEANS_LIST_TITLE, deansList2017, 1)}
+                            {renderImageListItem(0, 1)}
+                            {renderImageListItem(1, 1)}
                         </ImageList>
                     </ImageListItem>
-                    {renderImageListItem(WSO2_OUTSTANDING_CONTRIBUTOR_TITLE, wso2OutstandingContributorImage, 2)}
+                    {renderImageListItem(2, 2)}
                     <ImageListItem rows={2} cols={1} className={classes.imageListItem}>
                         <ImageList rowHeight={ROW_HEIGHT} cols={1}>
-                            {renderImageListItem(HSBC_YOUTH_ENTERPRISE_AWARDS_2015_TITLE, hsbcYouthEnterpriseAwards2015, 1)}
-                            {renderImageListItem(ANGEL_HACK_2016_TITLE, angelHack2016, 1)}
+                            {renderImageListItem(3, 1)}
+                            {renderImageListItem(4, 1)}
                         </ImageList>
                     </ImageListItem>
                 </ImageList>
             </Hidden>
             <Hidden mdUp>
                 <ImageList cols={1}>
-                    {renderImageListItem(NASA_SPACE_APPS_2017_TITLE, nasaSpaceApps2017, 1)}
-                    {renderImageListItem(PLACEMENTS_IN_DEANS_LIST_TITLE, deansList2017, 1)}
-                    {renderImageListItem(WSO2_OUTSTANDING_CONTRIBUTOR_TITLE, wso2OutstandingContributorImage, 1)}
-                    {renderImageListItem(HSBC_YOUTH_ENTERPRISE_AWARDS_2015_TITLE, hsbcYouthEnterpriseAwards2015, 1)}
-                    {renderImageListItem(ANGEL_HACK_2016_TITLE, angelHack2016, 1)}
+                    {renderImageListItem(0, 1)}
+                    {renderImageListItem(1, 1)}
+                    {renderImageListItem(2, 1)}
+                    {renderImageListItem(3, 1)}
+                    {renderImageListItem(4, 1)}
                 </ImageList>
             </Hidden>
-        </React.Fragment>
+        </div>
     );
 };
 
