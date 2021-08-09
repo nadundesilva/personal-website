@@ -53,9 +53,7 @@ const ROW_HEIGHT = 300;
 
 const Achievements = (): React.ReactElement => {
     const classes = useStyles();
-    const { ref: rootRef, offset } = useScrollOffset<HTMLDivElement>({
-        trackExit: true
-    });
+    const { ref: rootRef, offset } = useScrollOffset<HTMLDivElement>();
 
     const achievementSections: AchievementSection[] = [
         {
