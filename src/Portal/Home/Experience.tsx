@@ -73,7 +73,7 @@ const Experience = (): React.ReactElement => {
     ];
     const instituteIcon = <FontAwesomeIcon className={classes.instituteIconLeft} icon={faMapMarkerAlt}/>;
 
-    const translation = offset * 20;
+    const translation = (1 - offset) * 20;
     return (
         <Timeline ref={rootRef} align={isTimelineLeftAligned ? "left" : "alternate"}>
             {
@@ -94,7 +94,7 @@ const Experience = (): React.ReactElement => {
                                 <Paper elevation={3} className={classes.timeLineItemContent}
                                     style={{
                                         transform: `translateX(${isOnLeft ? translation : -translation}vw)`,
-                                        opacity: 1 - offset
+                                        opacity: offset
                                     }}
                                 >
                                     <Typography variant="body1" component="h6" className={classes.timeLineItemTitle}>
