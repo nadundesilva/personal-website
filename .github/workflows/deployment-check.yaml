@@ -22,20 +22,18 @@ jobs:
           node-version: 14.16.0
       - name: Run End to End Tests
         run: |
-          pushd ./_e2e_tests
           npm ci
           docker run -t -v $PWD:/test -w /test cypress/included:7.4.0 run --headless --browser ${{ matrix.browser }}
-          pushd
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: test-results-${{ matrix.browser }}
           path: |
-            _e2e_tests/cypress/videos/
-            _e2e_tests/cypress/screenshots/
-            _e2e_tests/cypress/integration/__image_snapshots__/*.actual.png
-            _e2e_tests/cypress/integration/__image_snapshots__/*.diff.png
+            cypress/videos/
+            cypress/screenshots/
+            cypress/integration/__image_snapshots__/*.actual.png
+            cypress/integration/__image_snapshots__/*.diff.png
 
   links-check:
     name: Check Links in Website
