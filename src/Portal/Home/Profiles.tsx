@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { faFacebook, faGithub, faInstagram, faLinkedin, faMedium, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import { useScrollOffset } from "../../components";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -30,6 +31,8 @@ interface Profile {
 
 const Profiles = (): React.ReactElement => {
     const classes = useStyles();
+    const { ref: rootRef, offset } = useScrollOffset<HTMLDivElement>();
+
     const profiles: Profile[] = [
         {
             name: "LinkedIn",
@@ -62,15 +65,22 @@ const Profiles = (): React.ReactElement => {
             link: "https://twitter.com/nadunrds"
         }
     ];
+
     const generateOpenLinkHandler = (link: string) => () => {
         window.open(link, "_blank");
     };
+
     return (
-        <Grid container justifyContent="center" alignItems="center">
+        <Grid ref={rootRef} container justifyContent="center" alignItems="center">
             {
                 profiles.map((profile) => (
                     <Grid item xs={12} sm={4} key={profile.name} onClick={generateOpenLinkHandler(profile.link)}>
-                        <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.profileSection}>
+                        <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.profileSection}
+                            style={{
+                                transform: `scale(${offset}, ${offset})`,
+                                opacity: offset
+                            }}
+                        >
                             <Grid item xs={6}>
                                 <FontAwesomeIcon icon={profile.icon} size="3x" className={classes.profileIcon}/>
                             </Grid>
