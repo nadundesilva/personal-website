@@ -8,6 +8,7 @@ import siddhi from "./siddhi.svg";
 import siddhiWhite from "./siddhi-white.svg";
 import choreo from "./choreo.svg";
 import choreoWhite from "./choreo-white.svg";
+import { useScrollOffset } from "../../../components";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,14 +24,22 @@ const useStyles = makeStyles((theme: Theme) =>
 const ContributedProjects = (): React.ReactElement => {
     const classes = useStyles();
     const theme = useTheme();
+    const { ref: rootRef, offset } = useScrollOffset<HTMLDivElement>();
+
     const renderCarouselItem = (imageLink: string, blackThemeImageLink: string, alt: string): React.ReactElement => (
-        <Grid item xs={12} sm={4} md={3}>
+        <Grid item xs={12} sm={4} md={3}
+            style={{
+                transform: `scale(${offset}, ${offset})`,
+                opacity: offset
+            }}
+        >
             <img alt={alt} className={classes.projectLogo}
                 src={theme?.palette?.type === "light" ? imageLink : blackThemeImageLink}/>
         </Grid>
     );
+
     return (
-        <Grid container spacing={3} justifyContent="center" alignItems="center">
+        <Grid ref={rootRef} container spacing={3} justifyContent="center" alignItems="center">
             {renderCarouselItem(choreo, choreoWhite, "Choreo")}
             {renderCarouselItem(ballerina, ballerinaWhite, "Ballerina")}
             {renderCarouselItem(cellery, celleryWhite, "Cellery")}
