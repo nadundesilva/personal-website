@@ -42,11 +42,11 @@ function useScrollOffset<T extends Element>(): UseScrollOffsetReturnValue<T> {
     };
 
     const handleScroll = (): void => {
-        updateOffset();
+        window.requestAnimationFrame(updateOffset);
     };
 
     useEffect(() => {
-        updateOffset();
+        window.requestAnimationFrame(updateOffset);
         window.addEventListener("scroll", handleScroll);
         return (): void => window.removeEventListener("scroll", handleScroll);
     });
