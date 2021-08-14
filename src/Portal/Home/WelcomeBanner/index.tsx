@@ -3,11 +3,6 @@ import { Button, createStyles, Grid, makeStyles, Theme, Typography, useTheme, us
 import banner from "./banner.jpg";
 
 const useStyles = makeStyles((theme: Theme) => {
-    const horizontalPadding = (padding: number): { paddingTop: number, paddingLeft: number, paddingRight: number } => ({
-        paddingTop: theme.spacing(padding),
-        paddingLeft: theme.spacing(padding),
-        paddingRight: theme.spacing(padding)
-    });
     return createStyles({
         bannerContainer: {
             position: "relative",
@@ -22,9 +17,7 @@ const useStyles = makeStyles((theme: Theme) => {
             bottom: 0,
             left: 0,
             right: 0,
-            [theme.breakpoints.down("md")]: horizontalPadding(10),
-            [theme.breakpoints.up("lg")]: horizontalPadding(20),
-            [theme.breakpoints.up("xl")]: horizontalPadding(50)
+            padding: "17vh"
         },
         bannerImage: {
             width: "100%",
