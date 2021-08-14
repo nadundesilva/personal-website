@@ -3,7 +3,6 @@ import { Avatar, createStyles, Divider, Grid, GridSize, Hidden, makeStyles, Them
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import profilePicture from "../../components/images/profile-photo.jpg";
-import { useScrollOffset } from "../../components";
 
 const useStyles = makeStyles((theme: Theme) => {
     const descriptionSeparatorMargin = 2;
@@ -30,16 +29,10 @@ const useStyles = makeStyles((theme: Theme) => {
 
 const AboutMe = (): React.ReactElement => {
     const classes = useStyles();
-    const { ref: rootRef, offset } = useScrollOffset<HTMLDivElement>();
 
     const profilePhoto = (gridWidth: GridSize): React.ReactElement => (
         <Grid item xs={gridWidth}>
-            <Avatar alt="Nadun De Silva" src={profilePicture} className={classes.profilePhoto}
-                style={{
-                    transform: `scale(${offset}, ${offset})`,
-                    opacity: offset
-                }}
-            />
+            <Avatar alt="Nadun De Silva" src={profilePicture} className={classes.profilePhoto}/>
         </Grid>
     );
 
@@ -53,7 +46,7 @@ const AboutMe = (): React.ReactElement => {
     );
 
     return (
-        <Grid container spacing={3} justifyContent="center" alignItems="center" ref={rootRef}>
+        <Grid container spacing={3} justifyContent="center" alignItems="center">
             <Hidden mdUp>{profilePhoto(12)}</Hidden>
             <Grid item xs={12} md={8}>
                 <Typography align={"justify"}>
