@@ -8,9 +8,6 @@ const useStyles = makeStyles((theme: Theme) => {
         paddingLeft: theme.spacing(padding),
         paddingRight: theme.spacing(padding)
     });
-    const fontSize = (size: number): { fontSize: string } => ({
-        fontSize: `${size}em`
-    });
     return createStyles({
         bannerContainer: {
             position: "relative",
@@ -36,14 +33,10 @@ const useStyles = makeStyles((theme: Theme) => {
         },
         introText: {
             fontWeight: "bold",
-            [theme.breakpoints.down("sm")]: fontSize(2),
-            [theme.breakpoints.up("sm")]: fontSize(4),
-            [theme.breakpoints.up("xl")]: fontSize(8)
+            fontSize: "6vh"
         },
         tagLineText: {
-            [theme.breakpoints.down("sm")]: fontSize(1),
-            [theme.breakpoints.up("sm")]: fontSize(2),
-            [theme.breakpoints.up("xl")]: fontSize(5)
+            fontSize: "3vh"
         }
     });
 });
