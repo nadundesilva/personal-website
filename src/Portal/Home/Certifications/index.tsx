@@ -89,7 +89,7 @@ const Certifications = (): React.ReactElement => {
 
     const translation = (1 - offset) * 20;
     return (
-        <Grid ref={rootRef} container justifyContent="flex-start" alignItems="stretch">
+        <Grid ref={rootRef} container justifyContent="center" alignItems="stretch">
             {
                 certifications.map((certification, index) => (
                     <Grid item xs={12} sm={6} md={4} xl={3} key={index} className={classes.certificationCardContainer}>
