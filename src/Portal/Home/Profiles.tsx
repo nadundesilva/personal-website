@@ -2,6 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { faFacebook, faGithub, faInstagram, faLinkedin, faMedium, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
 import { createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 import { useScrollOffset } from "../../components";
 
@@ -50,6 +51,11 @@ const Profiles = (): React.ReactElement => {
             link: "https://medium.com/@nadundesilva"
         },
         {
+            name: "Google Scholar",
+            icon: faGraduationCap,
+            link: "https://scholar.google.com/citations?user=CdXo_YQAAAAJ&hl=en&oi=ao"
+        },
+        {
             name: "Facebook",
             icon: faFacebook,
             link: "https://www.facebook.com/nadunrds"
@@ -73,8 +79,10 @@ const Profiles = (): React.ReactElement => {
     return (
         <Grid ref={rootRef} container justifyContent="center" alignItems="center">
             {
-                profiles.map((profile) => (
-                    <Grid item xs={12} sm={4} key={profile.name} onClick={generateOpenLinkHandler(profile.link)}>
+                profiles.map((profile, index) => (
+                    <Grid item xs={12} sm={3} key={profile.name}
+                        onClick={generateOpenLinkHandler(profile.link)}
+                    >
                         <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.profileSection}
                             style={{
                                 transform: `scale(${offset}, ${offset})`,
