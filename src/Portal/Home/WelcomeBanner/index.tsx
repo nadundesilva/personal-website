@@ -62,7 +62,7 @@ const WelcomeBanner = (): React.ReactElement => {
                 </Grid>
                 <Grid item xs={12}>
                     <Typography variant="h5" className={classes.tagLineText}>
-                        Software Engineer &amp; Deep Learning Enthusiast
+                        Associate Technical Lead &amp; Deep Learning Enthusiast
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
