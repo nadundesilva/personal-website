@@ -40,7 +40,7 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v1.0.6
         with:
-          args: --verbose --no-progress ./_site/**/*.html
+          args: --verbose --no-progress --exclude="^https://nadundesilva.github.io/.*" ./_site/**/*.html
       - name: Upload Link Checker Report
         uses: actions/upload-artifact@v2
         with:
