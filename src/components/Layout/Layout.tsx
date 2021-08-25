@@ -46,7 +46,7 @@ const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElem
     const appBar = React.cloneElement((
         <AppBar>
             <Toolbar>
-                <Typography variant="h5">Nadun De Silva</Typography>
+                <Typography variant="h5" component="h1">Nadun De Silva</Typography>
                 <div className={classes.grow} />
                 {appBarItems}
                 <Tooltip title={`Change to ${nextColorScheme} theme`}>
