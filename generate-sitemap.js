@@ -1,10 +1,13 @@
-const { simpleSitemapAndIndex } = require("sitemap")
+const { simpleSitemapAndIndex } = require("sitemap");
+const fs = require("fs");
 
 const currentTimestamp = new Date().toISOString();
+const hostname = "https://nadundesilva.github.io";
+const buildDir = "./build/";
 
 simpleSitemapAndIndex({
-    hostname: "https://nadundesilva.github.io",
-    destinationDir: "./build/",
+    hostname: hostname,
+    destinationDir: buildDir,
     gzip: false,
     sourceData: [
         {
@@ -19,5 +22,13 @@ simpleSitemapAndIndex({
         }
     ]
 }).then(() => {
-    console.log("Sitemap generated\n");
+    console.log("Sitemap generated");
+    fs.open(buildDir + "robots.txt", "a", 666, function(err, id) {
+        const siteMapEntry = `Sitemap: ${hostname}/sitemap-index.xml\n`;
+        fs.write(id, siteMapEntry, null, "utf8", function() {
+            fs.close(id, function() {
+                console.log("Added sitemap to robots.txt");
+            });
+        });
+    });
 });
