@@ -18,6 +18,8 @@ jobs:
         run: |
           npm ci
           npm run build
+        env:
+          PUBLIC_URL: https://nadundesilva.github.io
       - name: Upload Site
         uses: actions/upload-artifact@v2
         with:
