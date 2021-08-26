@@ -6,7 +6,7 @@ import nasaSpaceApps2017 from "./nasa-space-apps-2017.jpg";
 import hsbcYouthEnterpriseAwards2015 from "./hsbc-youth-enterprise-awards-2015.jpg";
 import deansList2017 from "./deans-list-2017.jpg";
 import angelHack2016 from "./angel-hack-2016.jpg";
-import { useScrollOffset } from "../../../components";
+import { useScrollOffset } from "../../components";
 
 const useStyles = makeStyles(() =>
     createStyles({

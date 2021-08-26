@@ -8,7 +8,7 @@ import siddhi from "./siddhi.svg";
 import siddhiWhite from "./siddhi-white.svg";
 import choreo from "./choreo.svg";
 import choreoWhite from "./choreo-white.svg";
-import { useScrollOffset } from "../../../components";
+import { useScrollOffset } from "../../components";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

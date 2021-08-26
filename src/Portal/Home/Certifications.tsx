@@ -3,7 +3,7 @@ import { Card, CardActionArea, CardContent, CardMedia, Chip, createStyles, Grid,
 import ckadLogo from "./ckad.png";
 import ckaLogo from "./cka.png";
 import deepLearningAiLogo from "./deep-learning-ai.png";
-import { useScrollOffset } from "../../../components";
+import { useScrollOffset } from "../../components";
 
 const useStyles = makeStyles((theme: Theme) => {
     const certificationTypeMargin = theme.spacing(2);
