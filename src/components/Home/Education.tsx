@@ -3,7 +3,7 @@ import { Box, Button, createStyles, makeStyles, Paper, Theme, Typography, useMed
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { Timeline, TimelineItem, TimelineOppositeContent, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent } from "@material-ui/lab";
-import { useHistory } from "react-router-dom";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles((theme: Theme) => {
     const instituteIconPadding = 0.5;
@@ -36,7 +36,7 @@ interface EducationItem {
 
 const Education = (): React.ReactElement => {
     const classes = useStyles();
-    const history = useHistory();
+    const router = useRouter();
     const theme = useTheme();
     const isTimelineLeftAligned = useMediaQuery(theme.breakpoints.down("xs"));
 
@@ -99,7 +99,7 @@ const Education = (): React.ReactElement => {
             }
         </Timeline>
     );
-    const viewMore = (): void => history.push("/certifications");
+    const viewMore = (): Promise<boolean> => router.push("/certifications");
     return (
         <React.Fragment>
             {timeline}

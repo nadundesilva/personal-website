@@ -1,13 +1,6 @@
 import React, { useRef } from "react";
-import { Heading, Layout, LayoutContent } from "../../components";
-import AboutMe from "./AboutMe";
-import Achievements from "./Achievements";
-import ContributedProjects from "./ContributedProjects";
-import Certifications from "./Certifications";
-import Experience from "./Experience";
-import Profiles from "./Profiles";
-import Skills from "./Skills";
-import WelcomeBanner from "./WelcomeBanner";
+import { Heading, Layout, LayoutContent } from "../src/components";
+import { AboutMe, Achievements, ContributedProjects, Certifications, Experience, Profiles, Skills, WelcomeBanner } from "../src/components/Home";
 import { Button, createStyles, Hidden, makeStyles, Theme } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>

@@ -1,14 +1,15 @@
 import React from "react";
 import { createStyles, Grid, makeStyles, Theme, useTheme } from "@material-ui/core";
-import ballerina from "./ballerina.svg";
-import ballerinaWhite from "./ballerina-white.svg";
-import cellery from "./cellery.svg";
-import celleryWhite from "./cellery-white.svg";
-import siddhi from "./siddhi.svg";
-import siddhiWhite from "./siddhi-white.svg";
-import choreo from "./choreo.svg";
-import choreoWhite from "./choreo-white.svg";
 import { useScrollOffset } from "../../components";
+
+const ballerina = "/projects/ballerina.svg";
+const ballerinaWhite = "/projects/ballerina-white.svg";
+const cellery = "/projects/cellery.svg";
+const celleryWhite = "/projects/cellery-white.svg";
+const siddhi = "/projects/siddhi.svg";
+const siddhiWhite = "/projects/siddhi-white.svg";
+const choreo = "/projects/choreo.svg";
+const choreoWhite = "/projects/choreo-white.svg";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

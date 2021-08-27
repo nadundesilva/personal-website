@@ -1,6 +1,7 @@
 import React from "react";
-import { Link as RouterLink, useLocation } from "react-router-dom";
-import { Breadcrumbs, createStyles, Link, makeStyles, Theme, Typography } from "@material-ui/core";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import { Breadcrumbs, createStyles, Link as BreadcrumbLink, makeStyles, Theme, Typography } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,15 +18,15 @@ const BREADCRUMBS_MAP: {[key: string]: string} = {
 };
 
 const RouterBreadcrumbs = (): React.ReactElement | null => {
-    const location = useLocation();
+    const router = useRouter();
     const classes = useStyles();
-    const pathnames = location.pathname.split("/").filter((x) => x);
+    const pathnames = router.pathname.split("/").filter((x) => x);
     return (
         <Breadcrumbs aria-label="breadcrumb" className={classes.root}
             separator={<FontAwesomeIcon icon={faChevronRight} transform={"shrink-4"}/>}>
-            <Link color="inherit" href="/" to="/" component={RouterLink}>
+            <BreadcrumbLink color="inherit" href="/" component={Link}>
                 Home
-            </Link>
+            </BreadcrumbLink>
             {
                 pathnames.map((value, index) => {
                     const last = index === pathnames.length - 1;
@@ -39,9 +40,9 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
                                 </Typography>
                             )
                             : (
-                                <Link color="inherit" href={to} to={to} component={RouterLink} key={to}>
+                                <BreadcrumbLink color="inherit" href={to} component={Link} key={to}>
                                     {BREADCRUMBS_MAP[to]}
-                                </Link>
+                                </BreadcrumbLink>
                             )
                     );
                 })
