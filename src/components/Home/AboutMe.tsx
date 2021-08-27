@@ -2,7 +2,8 @@ import React from "react";
 import { Avatar, createStyles, Divider, Grid, GridSize, Hidden, makeStyles, Theme, Typography } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import profilePicture from "../../components/images/profile-photo.jpg";
+
+const profilePicture = "/profile-photo.jpg";
 
 const useStyles = makeStyles((theme: Theme) => {
     const descriptionSeparatorMargin = 2;
