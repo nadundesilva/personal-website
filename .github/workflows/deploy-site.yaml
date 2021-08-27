@@ -24,7 +24,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: site
-          path: build/
+          path: out/
 
   links-check:
     name: Check Links in Website
