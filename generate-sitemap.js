@@ -3,7 +3,7 @@ const fs = require("fs");
 
 const currentTimestamp = new Date().toISOString();
 const hostname = "https://nadundesilva.github.io";
-const buildDir = "./build/";
+const buildDir = "./out/";
 
 simpleSitemapAndIndex({
     hostname: hostname,
