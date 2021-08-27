@@ -18,6 +18,7 @@ jobs:
         run: |
           npm ci
           npm run build
+          touch ./out/.nojekyll
         env:
           PUBLIC_URL: https://nadundesilva.github.io
       - name: Upload Site
