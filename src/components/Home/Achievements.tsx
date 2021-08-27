@@ -1,12 +1,13 @@
 import React from "react";
 import classNames from "classnames";
 import { createStyles, Grid, Hidden, ImageList, ImageListItem, makeStyles, Typography } from "@material-ui/core";
-import wso2OutstandingContributorImage from "./wso2-outstanding-contributor.jpg";
-import nasaSpaceApps2017 from "./nasa-space-apps-2017.jpg";
-import hsbcYouthEnterpriseAwards2015 from "./hsbc-youth-enterprise-awards-2015.jpg";
-import deansList2017 from "./deans-list-2017.jpg";
-import angelHack2016 from "./angel-hack-2016.jpg";
 import { useScrollOffset } from "../../components";
+
+const wso2OutstandingContributorImage = "/achievements/wso2-outstanding-contributor.jpg";
+const nasaSpaceApps2017 = "/achievements/nasa-space-apps-2017.jpg";
+const hsbcYouthEnterpriseAwards2015 = "/achievements/hsbc-youth-enterprise-awards-2015.jpg";
+const deansList2017 = "/achievements/deans-list-2017.jpg";
+const angelHack2016 = "/achievements/angel-hack-2016.jpg";
 
 const useStyles = makeStyles(() =>
     createStyles({

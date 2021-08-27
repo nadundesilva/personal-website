@@ -1,9 +1,10 @@
 import React from "react";
 import { Card, CardActionArea, CardContent, CardMedia, Chip, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
-import ckadLogo from "./ckad.png";
-import ckaLogo from "./cka.png";
-import deepLearningAiLogo from "./deep-learning-ai.png";
 import { useScrollOffset } from "../../components";
+
+const ckadLogo = "/certifications/ckad.png";
+const ckaLogo = "/certifications/cka.png";
+const deepLearningAiLogo = "/certifications/deep-learning-ai.png";
 
 const useStyles = makeStyles((theme: Theme) => {
     const certificationTypeMargin = theme.spacing(2);

@@ -1,4 +1,6 @@
+import React from "react";
 import Document, { DocumentContext, Html, Head, Main, NextScript } from "next/document";
+import { ServerStyleSheets } from '@material-ui/core/styles';
 
 const FULL_NAME = "Nadun De Silva";
 const TAG_LINE = "An aspiring Software Engineer and ML Enthusiast";
@@ -7,8 +9,20 @@ const DESCRIPTION = `${FULL_NAME} is an aspiring Software Engineer and ML Enthus
 
 class WebsiteDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
+    const sheets = new ServerStyleSheets();
+    const originalRenderPage = ctx.renderPage;
+
+    ctx.renderPage = () =>
+    originalRenderPage({
+      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
+    });
+
     const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
+    return {
+      ...initialProps,
+      // Styles fragment is rendered after the app and page rendering finish.
+      styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
+    };
   }
 
   render(): JSX.Element {
@@ -44,7 +58,6 @@ class WebsiteDocument extends Document {
           <meta property="twitter:site" content="@nadunrds"/>
 
           <meta name="yandex-verification" content="acbc45e5d9645cf0"/>
-          <link rel="manifest" href={`${PUBLIC_URL}/manifest.json`}/>
 
           <script type="application/ld+json" dangerouslySetInnerHTML={{
             __html: JSON.stringify({

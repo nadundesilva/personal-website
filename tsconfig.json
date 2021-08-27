@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["src/components/*"],
+      "@/service-worker/*": ["src/service-worker/*"]
+    },
     "target": "es5",
     "lib": [
       "dom",
@@ -21,7 +26,8 @@
     "jsx": "preserve"
   },
   "include": [
-    "src"
+    "src",
+    "pages"
   ],
   "exclude": [
     "node_modules"

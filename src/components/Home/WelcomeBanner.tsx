@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, createStyles, Grid, makeStyles, Theme, Typography, useTheme, useMediaQuery } from "@material-ui/core";
-import banner from "./banner.jpg";
+
+const banner = "/banner.jpg";
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
