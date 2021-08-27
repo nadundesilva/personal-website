@@ -46,7 +46,7 @@ const WelcomeBanner = (): React.ReactElement => {
         : (isMedium ? "medium" : "small");
 
     const downloadCv = (): void => {
-        window.open(process.env.PUBLIC_URL + "/nadundesilva-cv.pdf");
+        window.open((process.env.PUBLIC_URL ?? "") + "/nadundesilva-cv.pdf");
     };
 
     return (

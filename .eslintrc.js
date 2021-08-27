@@ -4,21 +4,21 @@ module.exports = {
     es2021: true
   },
   extends: [
-    'plugin:react/recommended',
-    'standard-with-typescript'
+    "standard-with-typescript",
+    "next/core-web-vitals"
   ],
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   parserOptions: {
-    project: './tsconfig.json',
+    project: "./tsconfig.json",
     ecmaFeatures: {
       jsx: true
     },
     ecmaVersion: 12,
-    sourceType: 'module'
+    sourceType: "module"
   },
   plugins: [
-    'react',
-    '@typescript-eslint'
+    "react",
+    "@typescript-eslint"
   ],
   rules: {
     "@typescript-eslint/semi": ["error", "always"],
