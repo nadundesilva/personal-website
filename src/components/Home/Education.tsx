@@ -99,7 +99,7 @@ const Education = (): React.ReactElement => {
             }
         </Timeline>
     );
-    const viewMore = (): Promise<boolean> => router.push("/certifications");
+    const viewMore = async(): Promise<boolean> => await router.push("/certifications");
     return (
         <React.Fragment>
             {timeline}
