@@ -3,14 +3,12 @@ node_modules
 /.pnp
 .pnp.js
 
-# Next
+# Next JS
 .next
+out
 
 # Testing
 coverage
-
-# Production
-build
 
 # Misc
 .DS_Store
