@@ -36,7 +36,7 @@ class WebsiteDocument extends Document {
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
                     <link rel="canonical" href={PUBLIC_URL}/>
-                    <link rel="apple-touch-icon" href={`${PUBLIC_URL}/profile-photo.jpg`}/>
+                    <link rel="apple-touch-icon" href={`${PUBLIC_URL}/assets/profile-photo.jpg`}/>
                     <meta property="fb:app_id" content="567329184466353"/>
 
                     <meta property="og:title" content={FULL_NAME}/>
@@ -45,7 +45,7 @@ class WebsiteDocument extends Document {
                     <meta property="og:locale" content="en_US"/>
                     <meta property="og:description" content={DESCRIPTION}/>
                     <meta property="og:url" content={PUBLIC_URL}/>
-                    <meta property="og:image" content={`${PUBLIC_URL}/profile-photo.jpg`}/>
+                    <meta property="og:image" content={`${PUBLIC_URL}/assets/profile-photo.jpg`}/>
                     <meta property="og:image:height" content="1960"/>
                     <meta property="og:image:width" content="1960"/>
                     <meta property="og:image:alt" content={FULL_NAME}/>
@@ -53,7 +53,7 @@ class WebsiteDocument extends Document {
                     <meta property="twitter:card" content="summary"/>
                     <meta property="twitter:title" content={FULL_NAME}/>
                     <meta property="twitter:description" content={DESCRIPTION}/>
-                    <meta property="twitter:image" content={`${PUBLIC_URL}/profile-photo.jpg`}/>
+                    <meta property="twitter:image" content={`${PUBLIC_URL}/assets/profile-photo.jpg`}/>
                     <meta property="twitter:image:alt" content={FULL_NAME}/>
                     <meta property="twitter:site" content="@nadunrds"/>
 
@@ -65,7 +65,7 @@ class WebsiteDocument extends Document {
                             image: {
                                 height: "1960",
                                 width: "1960",
-                                url: `${PUBLIC_URL}/profile-photo.jpg`,
+                                url: `${PUBLIC_URL}/assets/profile-photo.jpg`,
                                 "@type": "imageObject"
                             },
                             url: PUBLIC_URL,

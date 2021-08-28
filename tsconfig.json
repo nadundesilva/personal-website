@@ -24,11 +24,6 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "include": [
-    "src",
-    "pages"
-, "components"  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }

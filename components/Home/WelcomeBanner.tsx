@@ -1,7 +1,8 @@
 import React from "react";
 import { Button, createStyles, Grid, makeStyles, Theme, Typography, useTheme, useMediaQuery } from "@material-ui/core";
+import Image from "next/image";
 
-const banner = "/banner.jpg";
+const banner = "/assets/banner.jpg";
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -68,7 +69,7 @@ const WelcomeBanner = (): React.ReactElement => {
                     </Button>
                 </Grid>
             </Grid>
-            <img src={banner} alt="Nadun De Silva Website Banner" className={classes.bannerImage}/>
+            <Image src={banner} alt="Nadun De Silva Website Banner" className={classes.bannerImage}/>
         </div>
     );
 };
