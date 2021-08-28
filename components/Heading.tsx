@@ -25,7 +25,7 @@ const Heading = (props: HeadingProps): React.ReactElement => {
     return (
         <div className={classes.sectionTitle}>
             <Divider/>
-            <Typography variant="h5" align="center" className={classes.sectionTitleText}>
+            <Typography variant="h5" component="h2" align="center" className={classes.sectionTitleText}>
                 {props.children}
             </Typography>
             <Divider/>

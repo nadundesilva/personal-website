@@ -78,7 +78,7 @@ const Education = (): React.ReactElement => {
                         </TimelineSeparator>
                         <TimelineContent>
                             <Paper elevation={3} className={classes.timeLineItemContent}>
-                                <Typography variant="body1" component="h6" className={classes.timeLineItemTitle}>
+                                <Typography variant="body1" component="h2" className={classes.timeLineItemTitle}>
                                     {item.name}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
