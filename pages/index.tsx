@@ -4,6 +4,7 @@ import Heading from "@/components/Heading";
 import { AboutMe, Achievements, ContributedProjects, Certifications, Experience, Profiles, Skills, WelcomeBanner } from "@/components/Home";
 import { Button, Hidden, Theme } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
+import Head from "next/head";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -69,34 +70,39 @@ const Home = (): React.ReactElement => {
         </React.Fragment>
     );
     return (
-        <Layout appBarItems={
-            <Hidden mdDown>
-                {
-                    pageSections.map((section: Section) => (
-                        <Button key={section.name} variant={"contained"} color="primary" disableElevation
-                            onClick={generateGoToSectionHandler(section.ref)}>
-                            {section.name}
-                        </Button>
-                    ))
-                }
-            </Hidden>
-        }>
-            <WelcomeBanner/>
-            <LayoutContent>
-                <div className={classes.section}>
-                    {generateSection("About Me", <AboutMe/>)}
-                </div>
-                <React.Fragment>
+        <React.Fragment>
+            <Head>
+                <title>Nadun De Silva | An aspiring Software Engineer and ML Enthusiast</title>
+            </Head>
+            <Layout appBarItems={
+                <Hidden mdDown>
                     {
                         pageSections.map((section: Section) => (
-                            <div ref={section.ref} className={classes.section} key={section.name}>
-                                {generateSection(section.name, <section.Component/>)}
-                            </div>
+                            <Button key={section.name} variant={"contained"} color="primary" disableElevation
+                                onClick={generateGoToSectionHandler(section.ref)}>
+                                {section.name}
+                            </Button>
                         ))
                     }
-                </React.Fragment>
-            </LayoutContent>
-        </Layout>
+                </Hidden>
+            }>
+                <WelcomeBanner/>
+                <LayoutContent>
+                    <div className={classes.section}>
+                        {generateSection("About Me", <AboutMe/>)}
+                    </div>
+                    <React.Fragment>
+                        {
+                            pageSections.map((section: Section) => (
+                                <div ref={section.ref} className={classes.section} key={section.name}>
+                                    {generateSection(section.name, <section.Component/>)}
+                                </div>
+                            ))
+                        }
+                    </React.Fragment>
+                </LayoutContent>
+            </Layout>
+        </React.Fragment>
     );
 };
 
