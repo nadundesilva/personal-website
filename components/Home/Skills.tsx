@@ -72,19 +72,24 @@ const Skills = (): React.ReactElement => {
     const animationOffset = 0.2;
     const currentOffset = direction === 1 ? Math.min(offset + animationOffset, 1) : 1;
     const currentOpacity = direction === -1 ? Math.max(offset - animationOffset, 0) / (1 - animationOffset) : 1;
-    const renderPercentage = (skill: Skill): React.ReactElement => (
-        <Grid item xs={12} md={6} style={{ opacity: currentOpacity }}>
-            <Typography className={classes.skillName}>{skill.name}</Typography>
-            <Grid container spacing={3} justifyContent="center" alignItems="center">
-                <Grid item xs={8} sm={10}>
-                    <BorderLinearProgress variant="determinate" value={skill.percentage * currentOffset}/>
-                </Grid>
-                <Grid item xs={4} sm={2}>
-                    {skill.percentage} %
+    const renderPercentage = (skill: Skill): React.ReactElement => {
+        const labelId = `skill-${skill.name.toLowerCase().replace(/\s/g, "-")}-progressbar-label`;
+        return (
+            <Grid item xs={12} md={6} style={{ opacity: currentOpacity }}>
+                <Typography id={labelId} className={classes.skillName}>{skill.name}</Typography>
+                <Grid container spacing={3} justifyContent="center" alignItems="center">
+                    <Grid item xs={8} sm={10}>
+                        <BorderLinearProgress aria-labelledby={labelId} variant="determinate"
+                            aria-valuemin={0} aria-valuemax={100} aria-valuenow={skill.percentage}
+                            value={skill.percentage * currentOffset}/>
+                    </Grid>
+                    <Grid item xs={4} sm={2}>
+                        {skill.percentage} %
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
-    );
+        );
+    };
 
     return (
         <Grid ref={rootRef} container spacing={3} justifyContent="center" alignItems="center">
