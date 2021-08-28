@@ -3,4 +3,5 @@ module.exports = {
         loader: "imgix",
         path: "https://nadundesilva.imgix.net/",
     },
+    productionBrowserSourceMaps: true
 }
