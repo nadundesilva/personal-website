@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme: Theme) => {
         bannerImage: {
             zIndex: -1
         },
+        viewCvButton: {
+            zIndex: 1
+        },
         introText: {
             fontWeight: "bold",
             fontSize: "6vh"
@@ -67,7 +70,9 @@ const WelcomeBanner = (): React.ReactElement => {
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button variant="contained" color="primary" size={downloadButtonSize} onClick={downloadCv}>
+                    <Button variant="contained" color="primary" size={downloadButtonSize}
+                        className={classes.viewCvButton} onClick={downloadCv}
+                    >
                         View CV
                     </Button>
                 </Grid>
