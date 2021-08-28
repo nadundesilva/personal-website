@@ -3,7 +3,7 @@ import { Avatar, createStyles, Divider, Grid, GridSize, Hidden, makeStyles, Them
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
-const profilePicture = "/profile-photo.jpg";
+const profilePicture = "/assets/profile-photo.jpg";
 
 const useStyles = makeStyles((theme: Theme) => {
     const descriptionSeparatorMargin = 2;

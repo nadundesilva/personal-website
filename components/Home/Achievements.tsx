@@ -2,12 +2,13 @@ import React from "react";
 import classNames from "classnames";
 import { createStyles, Grid, Hidden, ImageList, ImageListItem, makeStyles, Typography } from "@material-ui/core";
 import { useScrollOffset } from "@/components/Layout";
+import Image from "next/image";
 
-const wso2OutstandingContributorImage = "/achievements/wso2-outstanding-contributor.jpg";
-const nasaSpaceApps2017 = "/achievements/nasa-space-apps-2017.jpg";
-const hsbcYouthEnterpriseAwards2015 = "/achievements/hsbc-youth-enterprise-awards-2015.jpg";
-const deansList2017 = "/achievements/deans-list-2017.jpg";
-const angelHack2016 = "/achievements/angel-hack-2016.jpg";
+const wso2OutstandingContributorImage = "/assets/achievements/wso2-outstanding-contributor.jpg";
+const nasaSpaceApps2017 = "/assets/achievements/nasa-space-apps-2017.jpg";
+const hsbcYouthEnterpriseAwards2015 = "/assets/achievements/hsbc-youth-enterprise-awards-2015.jpg";
+const deansList2017 = "/assets/achievements/deans-list-2017.jpg";
+const angelHack2016 = "/assets/achievements/angel-hack-2016.jpg";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -99,7 +100,7 @@ const Achievements = (): React.ReactElement => {
                         <Typography className={classes.imageListItemText}>{achievementSection.title}</Typography>
                     </Grid>
                 </Grid>
-                <img src={achievementSection.imageLink} alt={achievementSection.title}/>
+                <Image src={achievementSection.imageLink} alt={achievementSection.title}/>
             </ImageListItem>
         );
     };

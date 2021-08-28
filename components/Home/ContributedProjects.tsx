@@ -1,15 +1,16 @@
 import React from "react";
 import { createStyles, Grid, makeStyles, Theme, useTheme } from "@material-ui/core";
 import { useScrollOffset } from "@/components/Layout";
+import Image from "next/image";
 
-const ballerina = "/projects/ballerina.svg";
-const ballerinaWhite = "/projects/ballerina-white.svg";
-const cellery = "/projects/cellery.svg";
-const celleryWhite = "/projects/cellery-white.svg";
-const siddhi = "/projects/siddhi.svg";
-const siddhiWhite = "/projects/siddhi-white.svg";
-const choreo = "/projects/choreo.svg";
-const choreoWhite = "/projects/choreo-white.svg";
+const ballerina = "/assets/projects/ballerina.svg";
+const ballerinaWhite = "/assets/projects/ballerina-white.svg";
+const cellery = "/assets/projects/cellery.svg";
+const celleryWhite = "/assets/projects/cellery-white.svg";
+const siddhi = "/assets/projects/siddhi.svg";
+const siddhiWhite = "/assets/projects/siddhi-white.svg";
+const choreo = "/assets/projects/choreo.svg";
+const choreoWhite = "/assets/projects/choreo-white.svg";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -34,7 +35,7 @@ const ContributedProjects = (): React.ReactElement => {
                 opacity: offset
             }}
         >
-            <img alt={alt} className={classes.projectLogo}
+            <Image alt={alt} className={classes.projectLogo}
                 src={theme?.palette?.type === "light" ? imageLink : blackThemeImageLink}/>
         </Grid>
     );
