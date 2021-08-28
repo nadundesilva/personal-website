@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Paper, Theme, Typography, useMediaQuery, useT
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { Timeline, TimelineItem, TimelineOppositeContent, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent } from "@material-ui/lab";
-import { useScrollOffset } from "../../components";
+import { useScrollOffset } from "@/components/Layout";
 
 const useStyles = makeStyles((theme: Theme) => {
     const instituteIconPadding = 0.5;
