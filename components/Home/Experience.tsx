@@ -96,7 +96,7 @@ const Experience = (): React.ReactElement => {
                                         opacity: offset
                                     }}
                                 >
-                                    <Typography variant="body1" component="h6" className={classes.timeLineItemTitle}>
+                                    <Typography variant="body1" component="h2" className={classes.timeLineItemTitle}>
                                         {item.name}
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary">

@@ -57,12 +57,12 @@ const WelcomeBanner = (): React.ReactElement => {
         <div className={classes.bannerContainer}>
             <Grid container className={classes.banner}>
                 <Grid item xs={12}>
-                    <Typography variant="h2" className={classes.introText}>Hi, I am</Typography>
-                    <Typography variant="h2" className={classes.introText}>Nadun</Typography>
-                    <Typography variant="h2" className={classes.introText}>De Silva</Typography>
+                    <Typography variant="h2" component="p" className={classes.introText}>Hi, I am</Typography>
+                    <Typography variant="h2" component="p" className={classes.introText}>Nadun</Typography>
+                    <Typography variant="h2" component="p" className={classes.introText}>De Silva</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <Typography variant="h5" className={classes.tagLineText}>
+                    <Typography variant="h5" component="h2" className={classes.tagLineText}>
                         Associate Technical Lead &amp; Deep Learning Enthusiast
                     </Typography>
                 </Grid>
