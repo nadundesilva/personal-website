@@ -3,7 +3,6 @@ import Document, { DocumentContext, DocumentInitialProps, Html, Head, Main, Next
 import { ServerStyleSheets } from "@material-ui/core/styles";
 
 const FULL_NAME = "Nadun De Silva";
-const TAG_LINE = "An aspiring Software Engineer and ML Enthusiast";
 const PUBLIC_URL = "https://nadundesilva.github.io";
 const DESCRIPTION = `${FULL_NAME} is an aspiring Software Engineer and ML Enthusiast, interested in Machine Learning, Observability, Anomaly Detection &amp; Cloud Technologies.`;
 
@@ -29,7 +28,6 @@ class WebsiteDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    <title>{FULL_NAME} | {TAG_LINE}</title>
                     <meta name="description" content={DESCRIPTION}/>
 
                     <link rel="icon" href={`${PUBLIC_URL}/favicon.png`}/>
