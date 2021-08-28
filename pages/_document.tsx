@@ -3,7 +3,7 @@ import Document, { DocumentContext, DocumentInitialProps, Html, Head, Main, Next
 import { ServerStyleSheets } from "@material-ui/core/styles";
 
 const FULL_NAME = "Nadun De Silva";
-const PUBLIC_URL = "https://nadundesilva.github.io";
+const PUBLIC_URL = process.env.PUBLIC_URL ?? "https://nadundesilva.github.io";
 const DESCRIPTION = `${FULL_NAME} is an aspiring Software Engineer and ML Enthusiast, interested in Machine Learning, Observability, Anomaly Detection &amp; Cloud Technologies.`;
 
 class WebsiteDocument extends Document {
