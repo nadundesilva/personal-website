@@ -1,7 +1,8 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Breadcrumbs, createStyles, Link as BreadcrumbLink, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Breadcrumbs, Link as BreadcrumbLink, Theme, Typography } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 

@@ -1,6 +1,7 @@
 import React from "react";
 import classNames from "classnames";
-import { createStyles, Grid, Hidden, ImageList, ImageListItem, makeStyles, Typography } from "@material-ui/core";
+import { Grid, Hidden, ImageList, ImageListItem, Typography } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
 

@@ -1,5 +1,6 @@
 import React from "react";
-import { createStyles, Grid, makeStyles, Theme, useTheme } from "@material-ui/core";
+import { Grid, Theme } from "@material-ui/core";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
 
