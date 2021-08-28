@@ -100,7 +100,7 @@ const Achievements = (): React.ReactElement => {
                         <Typography className={classes.imageListItemText}>{achievementSection.title}</Typography>
                     </Grid>
                 </Grid>
-                <Image src={achievementSection.imageLink} alt={achievementSection.title}/>
+                <Image src={achievementSection.imageLink} alt={achievementSection.title} layout="fill" objectFit="cover"/>
             </ImageListItem>
         );
     };
