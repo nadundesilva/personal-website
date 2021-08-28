@@ -1,5 +1,6 @@
 import React from "react";
-import { createStyles, Grid, LinearProgress, makeStyles, Typography, withStyles } from "@material-ui/core";
+import { Grid, LinearProgress, Typography } from "@material-ui/core";
+import { makeStyles, createStyles, withStyles } from "@material-ui/core/styles";
 import { useScrollOffset } from "@/components/Layout";
 
 const useStyles = makeStyles(() =>

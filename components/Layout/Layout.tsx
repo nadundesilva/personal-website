@@ -1,4 +1,5 @@
-import { AppBar, createStyles, CssBaseline, Fab, IconButton, makeStyles, Theme, ThemeProvider, Toolbar, Tooltip, Typography, useScrollTrigger, Zoom } from "@material-ui/core";
+import { AppBar, CssBaseline, Fab, IconButton, Theme, Toolbar, Tooltip, Typography, useScrollTrigger, Zoom } from "@material-ui/core";
+import { makeStyles, createStyles, ThemeProvider } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import React, { useRef } from "react";

@@ -1,6 +1,7 @@
 import { useMemo, useEffect, useState } from "react";
-import { createTheme, Theme, useMediaQuery } from "@material-ui/core";
-import { indigo } from "@material-ui/core/colors";
+import { Theme, useMediaQuery } from "@material-ui/core";
+import { createTheme } from "@material-ui/core/styles";
+import indigo from "@material-ui/core/colors/indigo";
 
 export type ColorScheme = "dark" | "light";
 const colorSchemes = ["dark", "light"];

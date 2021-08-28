@@ -1,5 +1,6 @@
 import React from "react";
-import { Avatar, createStyles, Divider, Grid, GridSize, Hidden, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Avatar, Divider, Grid, GridSize, Hidden, Theme, Typography } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
