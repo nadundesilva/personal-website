@@ -2,8 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["src/components/*"],
-      "@/service-worker/*": ["src/service-worker/*"]
+      "@/components/*": ["components/*"]
     },
     "target": "es5",
     "lib": [
@@ -28,7 +27,7 @@
   "include": [
     "src",
     "pages"
-  ],
+, "components"  ],
   "exclude": [
     "node_modules"
   ]

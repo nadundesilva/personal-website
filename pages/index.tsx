@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
-import { Heading, Layout, LayoutContent } from "../src/components";
-import { AboutMe, Achievements, ContributedProjects, Certifications, Experience, Profiles, Skills, WelcomeBanner } from "../src/components/Home";
+import Layout, { LayoutContent } from "@/components/Layout";
+import Heading from "@/components/Heading";
+import { AboutMe, Achievements, ContributedProjects, Certifications, Experience, Profiles, Skills, WelcomeBanner } from "@/components/Home";
 import { Button, createStyles, Hidden, makeStyles, Theme } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>

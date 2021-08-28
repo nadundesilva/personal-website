@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import { createStyles, Grid, Hidden, ImageList, ImageListItem, makeStyles, Typography } from "@material-ui/core";
-import { useScrollOffset } from "../../components";
+import { useScrollOffset } from "@/components/Layout";
 
 const wso2OutstandingContributorImage = "/achievements/wso2-outstanding-contributor.jpg";
 const nasaSpaceApps2017 = "/achievements/nasa-space-apps-2017.jpg";
