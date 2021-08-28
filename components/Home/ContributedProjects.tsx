@@ -35,7 +35,7 @@ const ContributedProjects = (): React.ReactElement => {
                 opacity: offset
             }}
         >
-            <Image alt={alt} className={classes.projectLogo}
+            <Image alt={alt} className={classes.projectLogo} layout="fill" objectFit="contain"
                 src={theme?.palette?.type === "light" ? imageLink : blackThemeImageLink}/>
         </Grid>
     );

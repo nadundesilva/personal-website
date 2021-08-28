@@ -21,10 +21,12 @@ const useStyles = makeStyles((theme: Theme) => {
             right: 0,
             padding: "17vh"
         },
-        bannerImage: {
+        bannerImageContainer: {
             width: "100%",
-            height: `calc(100vh - ${theme.mixins.toolbar.minHeight ?? 0}px)`,
-            objectFit: "cover"
+            height: `calc(100vh - ${theme.mixins.toolbar.minHeight ?? 0}px)`
+        },
+        bannerImage: {
+            zIndex: -1
         },
         introText: {
             fontWeight: "bold",
@@ -69,7 +71,10 @@ const WelcomeBanner = (): React.ReactElement => {
                     </Button>
                 </Grid>
             </Grid>
-            <Image src={banner} alt="Nadun De Silva Website Banner" className={classes.bannerImage}/>
+            <div className={classes.bannerImageContainer}>
+                <Image src={banner} alt="Nadun De Silva Website Banner" className={classes.bannerImage}
+                    layout="fill" objectFit="cover" priority={true}/>
+            </div>
         </div>
     );
 };
