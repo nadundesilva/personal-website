@@ -27,7 +27,7 @@
     "typescript": "^4.4.2"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "PUBLIC_URL=http://localhost:3000 next dev",
     "build": "next build && next export && node generate-sitemap.js",
     "start": "next start",
     "lint": "next lint",
