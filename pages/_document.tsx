@@ -28,17 +28,20 @@ class WebsiteDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
+                    <meta name="application-name" content={FULL_NAME}/>
                     <meta name="description" content={DESCRIPTION}/>
-
-                    <link rel="icon" href={`${PUBLIC_URL}/favicon.png`}/>
-                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-                    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
+                    <meta name="theme-color" content="#000000"/>
+                    <link rel="manifest" href={`${PUBLIC_URL}/manifest.json`}/>
+                    <link rel="shortcut icon" href={`${PUBLIC_URL}/favicon.png`}/>
                     <link rel="canonical" href={PUBLIC_URL}/>
+
+                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+
                     <link rel="apple-touch-icon" href={`${PUBLIC_URL}/assets/profile-photo.jpg`}/>
                     <meta property="fb:app_id" content="567329184466353"/>
 
                     <meta property="og:title" content={FULL_NAME}/>
+                    <meta property="og:site_name" content={FULL_NAME}/>
                     <meta property="og:type" content="profile"/>
                     <meta property="og:fb:profile_id" content="nadunrds"/>
                     <meta property="og:locale" content="en_US"/>
