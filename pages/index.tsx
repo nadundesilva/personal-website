@@ -2,7 +2,8 @@ import React, { useRef } from "react";
 import Layout, { LayoutContent } from "@/components/Layout";
 import Heading from "@/components/Heading";
 import { AboutMe, Achievements, ContributedProjects, Certifications, Experience, Profiles, Skills, WelcomeBanner } from "@/components/Home";
-import { Button, createStyles, Hidden, makeStyles, Theme } from "@material-ui/core";
+import { Button, Hidden, Theme } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

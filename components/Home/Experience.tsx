@@ -1,5 +1,6 @@
 import React from "react";
-import { createStyles, makeStyles, Paper, Theme, Typography, useMediaQuery, useTheme } from "@material-ui/core";
+import { Paper, Theme, Typography, useMediaQuery } from "@material-ui/core";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { Timeline, TimelineItem, TimelineOppositeContent, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent } from "@material-ui/lab";

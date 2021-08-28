@@ -1,5 +1,6 @@
 import React from "react";
-import { createStyles, Divider, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Divider, Theme, Typography } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

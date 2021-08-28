@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { faFacebook, faGithub, faInstagram, faLinkedin, faMedium, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
-import { createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Grid, Theme, Typography } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { useScrollOffset } from "@/components/Layout";
 
 const useStyles = makeStyles((theme: Theme) =>

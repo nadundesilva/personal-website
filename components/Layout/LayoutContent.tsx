@@ -1,5 +1,6 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import { Theme } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import RouterBreadcrumbs from "./RouterBreadcrumbs";
 
 const useStyles = makeStyles((theme: Theme) => {

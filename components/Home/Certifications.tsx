@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, CardActionArea, CardContent, CardMedia, Chip, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Card, CardActionArea, CardContent, CardMedia, Chip, Grid, Theme, Typography } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { useScrollOffset } from "@/components/Layout";
 
 const ckadLogo = "/assets/certifications/ckad.png";
