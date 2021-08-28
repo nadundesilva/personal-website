@@ -1,6 +1,6 @@
 import React from "react";
 import { createStyles, Grid, makeStyles, Theme, useTheme } from "@material-ui/core";
-import { useScrollOffset } from "../../components";
+import { useScrollOffset } from "@/components/Layout";
 
 const ballerina = "/projects/ballerina.svg";
 const ballerinaWhite = "/projects/ballerina-white.svg";
