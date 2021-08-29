@@ -3,6 +3,7 @@ import { Avatar, Divider, Grid, GridSize, Hidden, Theme, Typography } from "@mat
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
 
 const profilePicture = "/assets/profile-photo.jpg";
 
@@ -14,6 +15,10 @@ const useStyles = makeStyles((theme: Theme) => {
             marginBottom: theme.spacing(descriptionSeparatorMargin)
         },
         profilePhoto: {
+            width: "100%",
+            paddingTop: "100%"
+        },
+        profilePhotoImage: {
             width: "100%",
             height: "auto"
         },
@@ -34,7 +39,9 @@ const AboutMe = (): React.ReactElement => {
 
     const profilePhoto = (gridWidth: GridSize): React.ReactElement => (
         <Grid item xs={gridWidth}>
-            <Avatar alt="Nadun De Silva" src={profilePicture} className={classes.profilePhoto}/>
+            <Avatar className={classes.profilePhoto}>
+                <Image src={profilePicture} alt="Nadun De Silva" layout="fill" objectFit="cover" className={classes.profilePhotoImage}/>
+            </Avatar>
         </Grid>
     );
 
