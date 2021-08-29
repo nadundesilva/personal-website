@@ -33,6 +33,7 @@ class WebsiteDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
+                    <meta charSet="UTF-8"/>
                     <meta name="application-name" content={FULL_NAME}/>
                     <meta name="description" content={DESCRIPTION}/>
                     <meta name="theme-color" content="#000000"/>
