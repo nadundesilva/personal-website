@@ -1,4 +1,4 @@
-import { AppBar, Container, CssBaseline, Fab, IconButton, Theme, Toolbar, Tooltip, Typography, useScrollTrigger, Zoom } from "@material-ui/core";
+import { AppBar, Box, Container, CssBaseline, Fab, IconButton, Theme, Toolbar, Tooltip, Typography, useScrollTrigger, Zoom } from "@material-ui/core";
 import { makeStyles, createStyles, ThemeProvider } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface LayoutProps {
-    children: React.ReactNode,
+    children: NonNullable<React.ReactNode>,
     appBarItems?: React.ReactElement | React.ReactElement[],
     window?: () => Window,
 };
@@ -76,18 +76,18 @@ const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElem
             <CssBaseline />
             {appBar}
             <Toolbar ref={scrollToTopRef}/>
-            <div className={classes.children}>
+            <Container maxWidth={false} disableGutters={true} className={classes.children}>
                 {children}
-            </div>
+            </Container>
             <Container maxWidth={false} className={classes.footerContainer}>
                 &copy; 2021 Nadun De Silva
             </Container>
             <Zoom in={trigger}>
-                <div onClick={handleClick} role="presentation" className={classes.fab}>
+                <Box onClick={handleClick} role="presentation" className={classes.fab}>
                     <Fab color="primary" size="small" aria-label="scroll back to top">
                         <FontAwesomeIcon icon={faChevronUp}/>
                     </Fab>
-                </div>
+                </Box>
             </Zoom>
         </ThemeProvider>
     );

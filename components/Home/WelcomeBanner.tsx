@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Grid, Theme, Typography, useMediaQuery } from "@material-ui/core";
+import { Button, Container, Grid, Theme, Typography, useMediaQuery } from "@material-ui/core";
 import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import Image from "next/image";
 
@@ -8,8 +8,7 @@ const banner = "/assets/banner.jpg";
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
         bannerContainer: {
-            position: "relative",
-            width: "100%"
+            position: "relative"
         },
         banner: {
             color: "#ffffff",
@@ -23,7 +22,6 @@ const useStyles = makeStyles((theme: Theme) => {
             padding: "17vh"
         },
         bannerImageContainer: {
-            width: "100%",
             height: `calc(100vh - ${theme.mixins.toolbar.minHeight ?? 0}px)`
         },
         bannerImage: {
@@ -57,7 +55,7 @@ const WelcomeBanner = (): React.ReactElement => {
     };
 
     return (
-        <div className={classes.bannerContainer}>
+        <Container maxWidth={false} disableGutters={true} className={classes.bannerContainer}>
             <Grid container className={classes.banner}>
                 <Grid item xs={12}>
                     <Typography variant="h2" component="p" className={classes.introText}>Hi, I am</Typography>
@@ -77,11 +75,11 @@ const WelcomeBanner = (): React.ReactElement => {
                     </Button>
                 </Grid>
             </Grid>
-            <div className={classes.bannerImageContainer}>
+            <Container maxWidth={false} disableGutters={true} className={classes.bannerImageContainer}>
                 <Image src={banner} alt="Nadun De Silva Website Banner" className={classes.bannerImage}
                     layout="fill" objectFit="cover" priority={true}/>
-            </div>
-        </div>
+            </Container>
+        </Container>
     );
 };
 
