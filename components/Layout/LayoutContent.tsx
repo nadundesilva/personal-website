@@ -1,19 +1,19 @@
 import React from "react";
-import { Theme } from "@material-ui/core";
+import { Container, Theme } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import RouterBreadcrumbs from "./RouterBreadcrumbs";
 
 const useStyles = makeStyles((theme: Theme) => {
-    const horizontalMargin = (margin: number): { marginLeft: number, marginRight: number } => ({
-        marginLeft: theme.spacing(margin),
-        marginRight: theme.spacing(margin)
+    const horizontalPadding = (padding: number): { paddingLeft: number, paddingRight: number } => ({
+        paddingLeft: theme.spacing(padding),
+        paddingRight: theme.spacing(padding)
     });
     return createStyles({
         content: {
             marginBottom: theme.spacing(5),
-            [theme.breakpoints.down("md")]: horizontalMargin(0),
-            [theme.breakpoints.up("lg")]: horizontalMargin(30),
-            [theme.breakpoints.up("xl")]: horizontalMargin(60)
+            [theme.breakpoints.down("md")]: horizontalPadding(0),
+            [theme.breakpoints.up("lg")]: horizontalPadding(30),
+            [theme.breakpoints.up("xl")]: horizontalPadding(60)
         }
     });
 });
@@ -25,10 +25,10 @@ interface LayoutContentProps {
 const LayoutContent = ({ children }: LayoutContentProps): React.ReactElement => {
     const classes = useStyles();
     return (
-        <div className={classes.content}>
+        <Container maxWidth={false} disableGutters={true} className={classes.content}>
             <RouterBreadcrumbs/>
             {children}
-        </div>
+        </Container>
     );
 };
 
