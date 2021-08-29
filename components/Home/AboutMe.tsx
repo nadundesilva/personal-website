@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Divider, Grid, GridSize, Hidden, Theme, Typography } from "@material-ui/core";
+import { Avatar, Divider, Grid, Hidden, Theme, Typography } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
@@ -37,10 +37,12 @@ const useStyles = makeStyles((theme: Theme) => {
 const AboutMe = (): React.ReactElement => {
     const classes = useStyles();
 
-    const profilePhoto = (gridWidth: GridSize): React.ReactElement => (
+    const profilePhoto = (gridWidth: 4 | 12): React.ReactElement => (
         <Grid item xs={gridWidth}>
             <Avatar className={classes.profilePhoto}>
-                <Image src={profilePicture} alt="Nadun De Silva" layout="fill" objectFit="cover" className={classes.profilePhotoImage}/>
+                <Image src={profilePicture} alt="Nadun De Silva" layout="fill" objectFit="cover"
+                    sizes={`${100 * (gridWidth / 12)}vw`}
+                    className={classes.profilePhotoImage}/>
             </Avatar>
         </Grid>
     );

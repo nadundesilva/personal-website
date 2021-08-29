@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardActionArea, CardContent, CardMedia, Chip, Grid, Theme, Typography } from "@material-ui/core";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
 
@@ -49,6 +49,7 @@ interface Certificate {
 
 const Certifications = (): React.ReactElement => {
     const classes = useStyles();
+    const theme = useTheme();
     const { ref: rootRef, direction, offset } = useScrollOffset<HTMLDivElement>();
 
     const certifications: Certificate[] = [
@@ -93,6 +94,12 @@ const Certifications = (): React.ReactElement => {
         window.open(link, "_blank");
     };
 
+    const xsWidth = theme.breakpoints.values.xs;
+    const smWidth = theme.breakpoints.values.sm;
+    const mdWidth = theme.breakpoints.values.md;
+    const xlWidth = theme.breakpoints.values.xl;
+    const imageSizes = `(min-width: ${xsWidth}px) 100vw, (min-width: ${smWidth}px) 50vw, 
+        (min-width: ${mdWidth}px) 34vw, (min-width: ${xlWidth}px) 25vw`;
     const translation = (1 - offset) * 20;
     return (
         <Grid ref={rootRef} container justifyContent="center" alignItems="stretch">
@@ -109,7 +116,8 @@ const Certifications = (): React.ReactElement => {
                                 <CardMedia
                                     component={(props) => (
                                         <div className={classes.certificationImage}>
-                                            <Image src={certification.image} alt={certification.name} layout="fill" objectFit="contain"/>
+                                            <Image src={certification.image} alt={certification.name} layout="fill"
+                                                sizes={imageSizes} objectFit="contain"/>
                                         </div>
                                     )}
                                     title={certification.name}

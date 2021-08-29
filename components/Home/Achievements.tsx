@@ -86,7 +86,7 @@ const Achievements = (): React.ReactElement => {
         }
     ];
 
-    const renderImageListItem = (achievementIndex: number, rowCount: number): React.ReactElement => {
+    const renderImageListItem = (achievementIndex: number, rowCount: number, totalColumns: number): React.ReactElement => {
         const achievementSection: AchievementSection = achievementSections[achievementIndex];
         const imageOffset = Math.max(offset - achievementSection.animationOffset, 0) / (1 - achievementSection.animationOffset);
         return (
@@ -101,37 +101,40 @@ const Achievements = (): React.ReactElement => {
                         <Typography className={classes.imageListItemText}>{achievementSection.title}</Typography>
                     </Grid>
                 </Grid>
-                <Image src={achievementSection.imageLink} alt={achievementSection.title} layout="fill" objectFit="cover"/>
+                <Image src={achievementSection.imageLink} alt={achievementSection.title} layout="fill" objectFit="cover"
+                    sizes={`${Math.ceil(100 / totalColumns)}vw`}/>
             </ImageListItem>
         );
     };
 
+    const LARGE_SCREEN_COLUMN_COUNT = 3;
+    const SMALL_SCREEN_COLUMN_COUNT = 1;
     return (
         <div ref={rootRef}>
             <Hidden smDown>
-                <ImageList rowHeight={ROW_HEIGHT} cols={3}>
+                <ImageList rowHeight={ROW_HEIGHT} cols={LARGE_SCREEN_COLUMN_COUNT}>
                     <ImageListItem rows={2} cols={1} className={classes.imageListItem}>
                         <ImageList rowHeight={ROW_HEIGHT} cols={1}>
-                            {renderImageListItem(0, 1)}
-                            {renderImageListItem(1, 1)}
+                            {renderImageListItem(0, 1, LARGE_SCREEN_COLUMN_COUNT)}
+                            {renderImageListItem(1, 1, LARGE_SCREEN_COLUMN_COUNT)}
                         </ImageList>
                     </ImageListItem>
-                    {renderImageListItem(2, 2)}
+                    {renderImageListItem(2, 2, LARGE_SCREEN_COLUMN_COUNT)}
                     <ImageListItem rows={2} cols={1} className={classes.imageListItem}>
                         <ImageList rowHeight={ROW_HEIGHT} cols={1}>
-                            {renderImageListItem(3, 1)}
-                            {renderImageListItem(4, 1)}
+                            {renderImageListItem(3, 1, LARGE_SCREEN_COLUMN_COUNT)}
+                            {renderImageListItem(4, 1, LARGE_SCREEN_COLUMN_COUNT)}
                         </ImageList>
                     </ImageListItem>
                 </ImageList>
             </Hidden>
             <Hidden mdUp>
-                <ImageList cols={1}>
-                    {renderImageListItem(0, 1)}
-                    {renderImageListItem(1, 1)}
-                    {renderImageListItem(2, 1)}
-                    {renderImageListItem(3, 1)}
-                    {renderImageListItem(4, 1)}
+                <ImageList cols={SMALL_SCREEN_COLUMN_COUNT}>
+                    {renderImageListItem(0, 1, SMALL_SCREEN_COLUMN_COUNT)}
+                    {renderImageListItem(1, 1, SMALL_SCREEN_COLUMN_COUNT)}
+                    {renderImageListItem(2, 1, SMALL_SCREEN_COLUMN_COUNT)}
+                    {renderImageListItem(3, 1, SMALL_SCREEN_COLUMN_COUNT)}
+                    {renderImageListItem(4, 1, SMALL_SCREEN_COLUMN_COUNT)}
                 </ImageList>
             </Hidden>
         </div>
