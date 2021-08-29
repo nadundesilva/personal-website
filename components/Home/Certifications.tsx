@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardActionArea, CardContent, CardMedia, Chip, Grid, Theme, Typography } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { useScrollOffset } from "@/components/Layout";
+import Image from "next/image";
 
 const ckadLogo = "/assets/certifications/ckad.png";
 const ckaLogo = "/assets/certifications/cka.png";
@@ -17,10 +18,13 @@ const useStyles = makeStyles((theme: Theme) => {
             height: "100%"
         },
         certificationImage: {
-            width: "50%",
-            height: "auto",
-            margin: "auto",
-            padding: theme.spacing(2)
+            position: "relative",
+            width: "60%",
+            paddingTop: "80%",
+            marginTop: 0,
+            marginRight: "20%",
+            marginBottom: 0,
+            marginLeft: "20%"
         },
         certificationIssuer: {
             marginTop: theme.spacing(2)
@@ -103,14 +107,12 @@ const Certifications = (): React.ReactElement => {
                             }}>
                             <CardActionArea>
                                 <CardMedia
-                                    component="img"
-                                    alt={certification.name}
-                                    height="140"
-                                    image={certification.image}
+                                    component={(props) => (
+                                        <div className={classes.certificationImage}>
+                                            <Image src={certification.image} alt={certification.name} layout="fill" objectFit="contain"/>
+                                        </div>
+                                    )}
                                     title={certification.name}
-                                    classes={{
-                                        root: classes.certificationImage
-                                    }}
                                 />
                                 <CardContent>
                                     <Typography variant="h6" component="h2" align="center">
