@@ -18,8 +18,7 @@ const nextConfig = {
     images: {
         loader: "imgix",
         path: "https://nadundesilva.imgix.net/",
-    },
-    productionBrowserSourceMaps: true
+    }
 };
 
 module.exports = withPlugins(plugins, nextConfig);
