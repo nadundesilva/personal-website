@@ -14,12 +14,13 @@ function WebsiteApp({ Component, pageProps }: AppProps): JSX.Element {
     );
 }
 
-export function reportWebVitals({ id, name, label, value }: NextWebVitalsMetric): void {
+export function reportWebVitals({ name, value, id, label, startTime }: NextWebVitalsMetric): void {
     (window as any).gtag("event", name, {
-        event_category: label === "web-vital" ? "Web Vitals" : "Next.js custom metric",
-        value: Math.round(name === "CLS" ? value * 1000 : value), // values must be integers
-        event_label: id,
-        non_interaction: true
+        value: value,
+        // Custom parameters
+        metric_id: id,
+        metric_label: label,
+        metric_timestamp: startTime
     });
 }
 
