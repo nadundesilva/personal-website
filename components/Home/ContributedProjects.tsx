@@ -29,6 +29,11 @@ const ContributedProjects = (): React.ReactElement => {
     const theme = useTheme();
     const { ref: rootRef, offset } = useScrollOffset<HTMLDivElement>();
 
+    const xsWidth = theme.breakpoints.values.xs;
+    const smWidth = theme.breakpoints.values.sm;
+    const mdWidth = theme.breakpoints.values.md;
+    const imageSizes = `(min-width: ${xsWidth}px) 100vw, (min-width: ${smWidth}px) 34vw, 
+        (min-width: ${mdWidth}px) 25vw`;
     const renderCarouselItem = (imageLink: string, blackThemeImageLink: string, alt: string): React.ReactElement => (
         <Grid item xs={12} sm={4} md={3}
             style={{
@@ -36,7 +41,7 @@ const ContributedProjects = (): React.ReactElement => {
                 opacity: offset
             }}
         >
-            <Image alt={alt} className={classes.projectLogo} layout="fill" objectFit="contain"
+            <Image alt={alt} className={classes.projectLogo} layout="fill" objectFit="contain" sizes={imageSizes}
                 src={theme?.palette?.type === "light" ? imageLink : blackThemeImageLink}/>
         </Grid>
     );
