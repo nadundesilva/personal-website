@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import Layout, { LayoutContent } from "@/components/Layout";
 import Heading from "@/components/Heading";
 import { AboutMe, Achievements, ContributedProjects, Certifications, Experience, Profiles, Skills, WelcomeBanner } from "@/components/Home";
-import { Button, Hidden, Theme } from "@material-ui/core";
+import { Button, Container, Hidden, Theme } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Head from "next/head";
 
@@ -66,7 +66,9 @@ const Home = (): React.ReactElement => {
     const generateSection = (title: string, section: React.ReactElement): React.ReactElement => (
         <React.Fragment>
             <Heading>{title}</Heading>
-            <div className={classes.sectionContent}>{section}</div>
+            <Container maxWidth={false} disableGutters={true} className={classes.sectionContent}>
+                {section}
+            </Container>
         </React.Fragment>
     );
     return (
@@ -88,15 +90,17 @@ const Home = (): React.ReactElement => {
             }>
                 <WelcomeBanner/>
                 <LayoutContent>
-                    <div className={classes.section}>
+                    <Container maxWidth={false} disableGutters={true} className={classes.section}>
                         {generateSection("About Me", <AboutMe/>)}
-                    </div>
+                    </Container>
                     <React.Fragment>
                         {
                             pageSections.map((section: Section) => (
-                                <div ref={section.ref} className={classes.section} key={section.name}>
+                                <Container maxWidth={false} disableGutters={true} ref={section.ref}
+                                    className={classes.section} key={section.name}
+                                >
                                     {generateSection(section.name, <section.Component/>)}
-                                </div>
+                                </Container>
                             ))
                         }
                     </React.Fragment>

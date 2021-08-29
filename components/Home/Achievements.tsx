@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { Grid, Hidden, ImageList, ImageListItem, Typography } from "@material-ui/core";
+import { Container, Grid, Hidden, ImageList, ImageListItem, Typography } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
@@ -110,7 +110,7 @@ const Achievements = (): React.ReactElement => {
     const LARGE_SCREEN_COLUMN_COUNT = 3;
     const SMALL_SCREEN_COLUMN_COUNT = 1;
     return (
-        <div ref={rootRef}>
+        <Container maxWidth={false} disableGutters={true} ref={rootRef}>
             <Hidden smDown>
                 <ImageList rowHeight={ROW_HEIGHT} cols={LARGE_SCREEN_COLUMN_COUNT}>
                     <ImageListItem rows={2} cols={1} className={classes.imageListItem}>
@@ -137,7 +137,7 @@ const Achievements = (): React.ReactElement => {
                     {renderImageListItem(4, 1, SMALL_SCREEN_COLUMN_COUNT)}
                 </ImageList>
             </Hidden>
-        </div>
+        </Container>
     );
 };
 

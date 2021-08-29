@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardActionArea, CardContent, CardMedia, Chip, Grid, Theme, Typography } from "@material-ui/core";
+import { Card, CardActionArea, CardContent, CardMedia, Chip, Container, Grid, Theme, Typography } from "@material-ui/core";
 import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
@@ -115,10 +115,10 @@ const Certifications = (): React.ReactElement => {
                             <CardActionArea>
                                 <CardMedia
                                     component={(props) => (
-                                        <div className={classes.certificationImage}>
+                                        <Container maxWidth={false} disableGutters={true} className={classes.certificationImage}>
                                             <Image src={certification.image} alt={certification.name} layout="fill"
                                                 sizes={imageSizes} objectFit="contain"/>
-                                        </div>
+                                        </Container>
                                     )}
                                     title={certification.name}
                                 />
