@@ -1,4 +1,4 @@
-import { AppBar, CssBaseline, Fab, IconButton, Theme, Toolbar, Tooltip, Typography, useScrollTrigger, Zoom } from "@material-ui/core";
+import { AppBar, Container, CssBaseline, Fab, IconButton, Theme, Toolbar, Tooltip, Typography, useScrollTrigger, Zoom } from "@material-ui/core";
 import { makeStyles, createStyles, ThemeProvider } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
@@ -20,6 +20,12 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         children: {
             overflowX: "hidden"
+        },
+        footerContainer: {
+            textAlign: "center",
+            paddingTop: theme.spacing(10),
+            paddingBottom: theme.spacing(5),
+            color: "#888888"
         }
     })
 );
@@ -73,6 +79,9 @@ const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElem
             <div className={classes.children}>
                 {children}
             </div>
+            <Container maxWidth={false} className={classes.footerContainer}>
+                &copy; 2021 Nadun De Silva
+            </Container>
             <Zoom in={trigger}>
                 <div onClick={handleClick} role="presentation" className={classes.fab}>
                     <Fab color="primary" size="small" aria-label="scroll back to top">
