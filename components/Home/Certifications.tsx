@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardActionArea, CardContent, CardMedia, Chip, Container, Grid, Theme, Typography } from "@material-ui/core";
+import { Card, CardActionArea, CardContent, CardMedia, Chip, Container, Grid, Slide, Theme, Typography } from "@material-ui/core";
 import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
@@ -100,40 +100,39 @@ const Certifications = (): React.ReactElement => {
     const xlWidth = theme.breakpoints.values.xl;
     const imageSizes = `(min-width: ${xsWidth}px) 100vw, (min-width: ${smWidth}px) 50vw, 
         (min-width: ${mdWidth}px) 34vw, (min-width: ${xlWidth}px) 25vw`;
-    const translation = (1 - offset) * 20;
+
     return (
         <Grid ref={rootRef} container justifyContent="center" alignItems="stretch">
             {
                 certifications.map((certification, index) => (
                     <Grid item xs={12} sm={6} md={4} xl={3} key={index} className={classes.certificationCardContainer}>
-                        <Card onClick={generateViewCertificateHandler(certification.link)}
-                            className={classes.certificationCard}
-                            style={{
-                                transform: `translateY(${direction === 1 ? translation : -translation}vw) scale(${offset})`,
-                                opacity: offset
-                            }}>
-                            <CardActionArea>
-                                <CardMedia
-                                    component={(props) => (
-                                        <Container maxWidth={false} disableGutters={true} className={classes.certificationImage}>
-                                            <Image src={certification.image} alt={certification.name} layout="fill"
-                                                sizes={imageSizes} objectFit="contain"/>
-                                        </Container>
-                                    )}
-                                    title={certification.name}
-                                />
-                                <CardContent>
-                                    <Typography variant="h6" component="h2" align="center">
-                                        {certification.name}
-                                    </Typography>
-                                    <Chip label={certification.type} color="secondary" size="small"
-                                        className={classes.certificationType}/>
-                                    <Typography color="textSecondary" className={classes.certificationIssuer}>
-                                        Issued by {certification.issuer}
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
-                        </Card>
+                        <Slide direction={"up"} in={offset > 0.5 || direction !== 1} timeout={1000}>
+                            <Card onClick={generateViewCertificateHandler(certification.link)}
+                                className={classes.certificationCard}
+                            >
+                                <CardActionArea>
+                                    <CardMedia
+                                        component={(props) => (
+                                            <Container maxWidth={false} disableGutters={true} className={classes.certificationImage}>
+                                                <Image src={certification.image} alt={certification.name} layout="fill"
+                                                    sizes={imageSizes} objectFit="contain"/>
+                                            </Container>
+                                        )}
+                                        title={certification.name}
+                                    />
+                                    <CardContent>
+                                        <Typography variant="h6" component="h2" align="center">
+                                            {certification.name}
+                                        </Typography>
+                                        <Chip label={certification.type} color="secondary" size="small"
+                                            className={classes.certificationType}/>
+                                        <Typography color="textSecondary" className={classes.certificationIssuer}>
+                                            Issued by {certification.issuer}
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        </Slide>
                     </Grid>
                 ))
             }

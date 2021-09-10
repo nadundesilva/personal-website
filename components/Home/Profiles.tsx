@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { faFacebook, faGithub, faInstagram, faLinkedin, faMedium, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
-import { Grid, Theme, Typography } from "@material-ui/core";
+import { Box, Grid, Grow, Theme, Typography } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { useScrollOffset } from "@/components/Layout";
 
@@ -84,18 +84,17 @@ const Profiles = (): React.ReactElement => {
                     <Grid item xs={12} sm={3} key={profile.name}
                         onClick={generateOpenLinkHandler(profile.link)}
                     >
-                        <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.profileSection}
-                            style={{
-                                transform: `scale(${offset}, ${offset})`,
-                                opacity: offset
-                            }}
-                        >
-                            <Grid item xs={6}>
-                                <FontAwesomeIcon icon={profile.icon} size="3x" className={classes.profileIcon}/>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Typography className={classes.profileText}>{profile.name}</Typography>
-                            </Grid>
+                        <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.profileSection}>
+                            <Grow in={offset > 0.5} timeout={1000}>
+                                <Box>
+                                    <Grid item xs={6}>
+                                        <FontAwesomeIcon icon={profile.icon} size="3x" className={classes.profileIcon}/>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography className={classes.profileText}>{profile.name}</Typography>
+                                    </Grid>
+                                </Box>
+                            </Grow>
                         </Grid>
                     </Grid>
                 ))

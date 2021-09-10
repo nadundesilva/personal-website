@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { Container, Grid, Hidden, ImageList, ImageListItem, Typography } from "@material-ui/core";
+import { Box, Container, Grid, Grow, Hidden, ImageList, ImageListItem, Typography } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
@@ -36,6 +36,9 @@ const useStyles = makeStyles(() =>
         },
         imageListItemText: {
             fontWeight: "bold"
+        },
+        achievementItem: {
+            height: "100%"
         }
     })
 );
@@ -49,7 +52,7 @@ const ANGEL_HACK_2016_TITLE = "Finalist - Angel Hack 2016";
 interface AchievementSection {
     title: string,
     imageLink: string,
-    animationOffset: number,
+    animationTimeoutFactor: number,
 };
 
 const ROW_HEIGHT = 300;
@@ -62,47 +65,47 @@ const Achievements = (): React.ReactElement => {
         {
             title: NASA_SPACE_APPS_2017_TITLE,
             imageLink: nasaSpaceApps2017,
-            animationOffset: 0.4
+            animationTimeoutFactor: 1.75
         },
         {
             title: PLACEMENTS_IN_DEANS_LIST_TITLE,
             imageLink: deansList2017,
-            animationOffset: 0.1
+            animationTimeoutFactor: 1
         },
         {
             title: WSO2_OUTSTANDING_CONTRIBUTOR_TITLE,
             imageLink: wso2OutstandingContributorImage,
-            animationOffset: 0.5
+            animationTimeoutFactor: 2
         },
         {
             title: HSBC_YOUTH_ENTERPRISE_AWARDS_2015_TITLE,
             imageLink: hsbcYouthEnterpriseAwards2015,
-            animationOffset: 0.3
+            animationTimeoutFactor: 1.5
         },
         {
             title: ANGEL_HACK_2016_TITLE,
             imageLink: angelHack2016,
-            animationOffset: 0.2
+            animationTimeoutFactor: 1.25
         }
     ];
 
     const renderImageListItem = (achievementIndex: number, rowCount: number, totalColumns: number): React.ReactElement => {
         const achievementSection: AchievementSection = achievementSections[achievementIndex];
-        const imageOffset = Math.max(offset - achievementSection.animationOffset, 0) / (1 - achievementSection.animationOffset);
         return (
             <ImageListItem rows={rowCount} cols={1}
                 className={classNames(classes.imageListItem, classes.imageListItemImageContainer)}
-                style={{
-                    transform: `scale(${imageOffset}, ${imageOffset})`,
-                    opacity: imageOffset
-                }}>
-                <Grid container justifyContent="center" alignItems="center" className={classes.imageListItemImageOverlay}>
-                    <Grid item xs={6}>
-                        <Typography className={classes.imageListItemText}>{achievementSection.title}</Typography>
-                    </Grid>
-                </Grid>
-                <Image src={achievementSection.imageLink} alt={achievementSection.title} layout="fill" objectFit="cover"
-                    sizes={`${Math.ceil(100 / totalColumns)}vw`}/>
+            >
+                <Grow in={offset > 0.3} timeout={1000 * achievementSection.animationTimeoutFactor}>
+                    <Box className={classes.achievementItem}>
+                        <Grid container justifyContent="center" alignItems="center" className={classes.imageListItemImageOverlay}>
+                            <Grid item xs={6}>
+                                <Typography className={classes.imageListItemText}>{achievementSection.title}</Typography>
+                            </Grid>
+                        </Grid>
+                        <Image src={achievementSection.imageLink} alt={achievementSection.title} layout="fill" objectFit="cover"
+                            sizes={`${Math.ceil(100 / totalColumns)}vw`}/>
+                    </Box>
+                </Grow>
             </ImageListItem>
         );
     };

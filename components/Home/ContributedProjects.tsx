@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Theme } from "@material-ui/core";
+import { Box, Grid, Slide, Theme } from "@material-ui/core";
 import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
@@ -15,6 +15,12 @@ const choreoWhite = "/assets/projects/choreo-white.svg";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        projectLogoContainer: {
+            position: "relative",
+            height: theme.spacing(5),
+            marginLeft: theme.spacing(5),
+            marginRight: theme.spacing(5)
+        },
         projectLogo: {
             display: "block",
             margin: "auto",
@@ -35,14 +41,13 @@ const ContributedProjects = (): React.ReactElement => {
     const imageSizes = `(min-width: ${xsWidth}px) 100vw, (min-width: ${smWidth}px) 34vw, 
         (min-width: ${mdWidth}px) 25vw`;
     const renderCarouselItem = (imageLink: string, blackThemeImageLink: string, alt: string): React.ReactElement => (
-        <Grid item xs={12} sm={4} md={3}
-            style={{
-                transform: `scale(${offset}, ${offset})`,
-                opacity: offset
-            }}
-        >
-            <Image alt={alt} className={classes.projectLogo} layout="fill" objectFit="contain" sizes={imageSizes}
-                src={theme?.palette?.type === "light" ? imageLink : blackThemeImageLink}/>
+        <Grid item xs={12} sm={4} md={3}>
+            <Slide direction={"up"} in={offset > 0.5} timeout={2000}>
+                <Box className={classes.projectLogoContainer}>
+                    <Image alt={alt} className={classes.projectLogo} layout="fill" objectFit="contain" sizes={imageSizes}
+                        src={theme?.palette?.type === "light" ? imageLink : blackThemeImageLink}/>
+                </Box>
+            </Slide>
         </Grid>
     );
 

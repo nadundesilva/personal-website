@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper, Theme, Typography, useMediaQuery } from "@material-ui/core";
+import { Paper, Slide, Theme, Typography, useMediaQuery } from "@material-ui/core";
 import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
@@ -72,7 +72,6 @@ const Experience = (): React.ReactElement => {
     ];
     const instituteIcon = <FontAwesomeIcon className={classes.instituteIconLeft} icon={faMapMarkerAlt}/>;
 
-    const translation = (1 - offset) * 20;
     return (
         <Timeline ref={rootRef} align={isTimelineLeftAligned ? "left" : "alternate"}>
             {
@@ -90,28 +89,25 @@ const Experience = (): React.ReactElement => {
                                 <TimelineConnector/>
                             </TimelineSeparator>
                             <TimelineContent>
-                                <Paper elevation={3} className={classes.timeLineItemContent}
-                                    style={{
-                                        transform: `translateX(${isOnLeft ? translation : -translation}vw)`,
-                                        opacity: offset
-                                    }}
-                                >
-                                    <Typography variant="body1" component="h2" className={classes.timeLineItemTitle}>
-                                        {item.name}
-                                    </Typography>
-                                    <Typography variant="body2" color="textSecondary">
-                                        {item.description}
-                                    </Typography>
-                                    <Typography variant="body2" color="textSecondary">
-                                        {isOnLeft && (
-                                            <React.Fragment>{instituteIcon}&nbsp;</React.Fragment>
-                                        )}
-                                        {item.institute}
-                                        {!isOnLeft && (
-                                            <React.Fragment>&nbsp;{instituteIcon}</React.Fragment>
-                                        )}
-                                    </Typography>
-                                </Paper>
+                                <Slide direction={isOnLeft ? "left" : "right"} in={offset > 0.5} timeout={1000}>
+                                    <Paper elevation={3} className={classes.timeLineItemContent}>
+                                        <Typography variant="body1" component="h2" className={classes.timeLineItemTitle}>
+                                            {item.name}
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary">
+                                            {item.description}
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary">
+                                            {isOnLeft && (
+                                                <React.Fragment>{instituteIcon}&nbsp;</React.Fragment>
+                                            )}
+                                            {item.institute}
+                                            {!isOnLeft && (
+                                                <React.Fragment>&nbsp;{instituteIcon}</React.Fragment>
+                                            )}
+                                        </Typography>
+                                    </Paper>
+                                </Slide>
                             </TimelineContent>
                         </TimelineItem>
                     );
