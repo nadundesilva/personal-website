@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) => {
             padding: "17vh"
         },
         bannerImageContainer: {
+            position: "relative",
             height: `calc(100vh - ${theme.mixins.toolbar.minHeight ?? 0}px)`
         },
         bannerImage: {
