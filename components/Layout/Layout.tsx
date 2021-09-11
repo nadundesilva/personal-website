@@ -1,9 +1,9 @@
-import { AppBar, Box, Container, CssBaseline, Fab, IconButton, Theme, Toolbar, Tooltip, Typography, useScrollTrigger, Zoom } from "@material-ui/core";
-import { makeStyles, createStyles, ThemeProvider } from "@material-ui/core/styles";
+import { AppBar, Box, Container, Fab, IconButton, Theme, Toolbar, Tooltip, Typography, useScrollTrigger, Zoom } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import React, { useRef } from "react";
-import useTheme from "./theme";
+import { useWebsiteTheme } from "./theme";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -46,7 +46,7 @@ const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElem
     const classes = useStyles();
     const scrollToTopRef = useRef<HTMLDivElement>(null);
 
-    const { theme, colorScheme, setColorScheme } = useTheme();
+    const { colorScheme, setColorScheme } = useWebsiteTheme();
     const nextColorScheme = colorScheme === "dark" ? "light" : "dark";
     const onThemeToggleChange = (): void => setColorScheme(nextColorScheme);
 
@@ -72,8 +72,7 @@ const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElem
     };
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
+        <React.Fragment>
             {appBar}
             <Toolbar ref={scrollToTopRef}/>
             <Container maxWidth={false} disableGutters={true} className={classes.children}>
@@ -89,7 +88,7 @@ const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElem
                     </Fab>
                 </Box>
             </Zoom>
-        </ThemeProvider>
+        </React.Fragment>
     );
 };
 
