@@ -1,6 +1,6 @@
-import { useMemo, useEffect, useState } from "react";
-import { Theme, useMediaQuery } from "@material-ui/core";
-import { createTheme } from "@material-ui/core/styles";
+import React, { useMemo, useEffect, useState, useContext } from "react";
+import { CssBaseline, Theme, useMediaQuery } from "@material-ui/core";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import indigo from "@material-ui/core/colors/indigo";
 
 export type ColorScheme = "dark" | "light";
@@ -20,7 +20,51 @@ const getStoredColorScheme = (): ColorScheme | null => {
         : null;
 };
 
-const useTheme = (): { theme: Theme, colorScheme: ColorScheme, setColorScheme: (newColorScheme: ColorScheme) => void } => {
+const createWebsiteTheme = (colorScheme: ColorScheme): Theme => {
+    return createTheme({
+        palette: {
+            type: colorScheme,
+            primary: indigo,
+            secondary: indigo
+        },
+        overrides: {
+            MuiCssBaseline: {
+                "@global": {
+                    "::-webkit-scrollbar": {
+                        width: "10px"
+                    },
+                    "::-webkit-scrollbar-track": {
+                        backgroundColor: "darkgrey"
+                    },
+                    "::-webkit-scrollbar-thumb": {
+                        backgroundColor: "#555555",
+                        boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.3)"
+                    }
+                }
+            }
+        }
+    });
+};
+
+interface WebsiteThemeContext {
+    theme: Theme,
+    colorScheme: ColorScheme,
+    setColorScheme: (newColorScheme: ColorScheme) => void,
+};
+
+const defaultColorScheme = getStoredColorScheme() ?? "light";
+
+const WebsiteTheme = React.createContext<WebsiteThemeContext>({
+    theme: createWebsiteTheme(defaultColorScheme),
+    colorScheme: defaultColorScheme,
+    setColorScheme: () => { throw Error("Setting color theme not implemented"); }
+});
+
+interface WebsiteThemeProviderProps {
+    children: React.ReactNode,
+}
+
+const WebsiteThemeProvider = ({ children }: WebsiteThemeProviderProps): React.ReactElement => {
     const preferedColorScheme: ColorScheme = useMediaQuery("(prefers-color-scheme: dark)") ? "dark" : "light";
     const initialStoredColorScheme = getStoredColorScheme();
 
@@ -39,43 +83,29 @@ const useTheme = (): { theme: Theme, colorScheme: ColorScheme, setColorScheme: (
         return (): void => window.removeEventListener("storage", storageListener);
     });
 
-    const theme = useMemo(
-        () => createTheme({
-            palette: {
-                type: colorScheme,
-                primary: indigo,
-                secondary: indigo
-            },
-            overrides: {
-                MuiCssBaseline: {
-                    "@global": {
-                        "::-webkit-scrollbar": {
-                            width: "10px"
-                        },
-                        "::-webkit-scrollbar-track": {
-                            backgroundColor: "darkgrey"
-                        },
-                        "::-webkit-scrollbar-thumb": {
-                            backgroundColor: "#555555",
-                            boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.3)"
-                        }
+    const theme = useMemo(() => createWebsiteTheme(colorScheme), [colorScheme]);
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <WebsiteTheme.Provider value={{
+                theme,
+                colorScheme,
+                setColorScheme: (newColorScheme: ColorScheme): void => {
+                    try {
+                        localStorage.setItem(COLOR_SCHEME_KEY, newColorScheme);
+                    } catch {
                     }
+                    setColorScheme(newColorScheme);
                 }
-            }
-        }),
-        [colorScheme]
+            }}>
+                {children}
+            </WebsiteTheme.Provider>
+        </ThemeProvider>
     );
-    return {
-        theme,
-        colorScheme,
-        setColorScheme: (newColorScheme: ColorScheme): void => {
-            try {
-                localStorage.setItem(COLOR_SCHEME_KEY, newColorScheme);
-            } catch {
-            }
-            setColorScheme(newColorScheme);
-        }
-    };
 };
 
-export default useTheme;
+export const useWebsiteTheme = (): WebsiteThemeContext => {
+    return useContext(WebsiteTheme);
+};
+
+export default WebsiteThemeProvider;
