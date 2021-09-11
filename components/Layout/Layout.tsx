@@ -1,5 +1,6 @@
-import { AppBar, Box, Container, Fab, IconButton, Theme, Toolbar, Tooltip, Typography, useScrollTrigger, Zoom } from "@material-ui/core";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { AppBar, Box, Container, Fab, IconButton, Theme, Toolbar, Tooltip, Typography, useScrollTrigger, Zoom } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import React, { useRef } from "react";
@@ -34,7 +35,7 @@ interface LayoutProps {
     children: NonNullable<React.ReactNode>,
     appBarItems?: React.ReactElement | React.ReactElement[],
     window?: () => Window,
-};
+}
 
 const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElement => {
     const trigger = useScrollTrigger({

@@ -1,9 +1,11 @@
 import React from "react";
-import { Paper, Slide, Theme, Typography, useMediaQuery } from "@material-ui/core";
-import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
+import { Paper, Slide, Theme, Typography, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import { Timeline, TimelineItem, TimelineOppositeContent, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent } from "@material-ui/lab";
+import { Timeline, TimelineItem, TimelineOppositeContent, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent } from "@mui/lab";
 import { useScrollOffset } from "@/components/Layout";
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -34,9 +36,9 @@ interface ExperienceItem {
 
 const Experience = (): React.ReactElement => {
     const classes = useStyles();
-    const { ref: rootRef, offset } = useScrollOffset<Element>();
+    const { ref: rootRef, offset } = useScrollOffset<HTMLUListElement>();
     const theme = useTheme();
-    const isTimelineLeftAligned = useMediaQuery(theme.breakpoints.down("xs"));
+    const isTimelineLeftAligned = useMediaQuery(theme.breakpoints.down("sm"));
 
     const experienceItems: ExperienceItem[] = [
         {
@@ -73,7 +75,7 @@ const Experience = (): React.ReactElement => {
     const instituteIcon = <FontAwesomeIcon className={classes.instituteIconLeft} icon={faMapMarkerAlt}/>;
 
     return (
-        <Timeline ref={rootRef} align={isTimelineLeftAligned ? "left" : "alternate"}>
+        <Timeline ref={rootRef} position={isTimelineLeftAligned ? "left" : "alternate"}>
             {
                 experienceItems.map((item: ExperienceItem, index: number) => {
                     const isOnLeft = isTimelineLeftAligned || index % 2 === 0;

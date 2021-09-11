@@ -1,6 +1,7 @@
 import React from "react";
-import { Container, Divider, Theme, Typography } from "@material-ui/core";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { Container, Divider, Theme, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface HeadingProps {
     children: React.ReactNode,
-};
+}
 
 const Heading = (props: HeadingProps): React.ReactElement => {
     const classes = useStyles();

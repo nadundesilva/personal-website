@@ -1,9 +1,11 @@
 import React from "react";
-import { Box, Button, Paper, Theme, Typography, useMediaQuery } from "@material-ui/core";
-import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
+import { Box, Button, Paper, Theme, Typography, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import { Timeline, TimelineItem, TimelineOppositeContent, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent } from "@material-ui/lab";
+import { Timeline, TimelineItem, TimelineOppositeContent, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent } from "@mui/lab";
 import { useRouter } from "next/router";
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -39,7 +41,7 @@ const Education = (): React.ReactElement => {
     const classes = useStyles();
     const router = useRouter();
     const theme = useTheme();
-    const isTimelineLeftAligned = useMediaQuery(theme.breakpoints.down("xs"));
+    const isTimelineLeftAligned = useMediaQuery(theme.breakpoints.down("sm"));
 
     const educationItems: EducationItem[] = [
         {
@@ -63,7 +65,7 @@ const Education = (): React.ReactElement => {
     ];
     const instituteIcon = <FontAwesomeIcon className={classes.instituteIconLeft} icon={faMapMarkerAlt}/>;
     const timeline = (
-        <Timeline align={isTimelineLeftAligned ? "left" : "alternate"} className={classes.timeline}>
+        <Timeline position={isTimelineLeftAligned ? "left" : "alternate"} className={classes.timeline}>
             {
                 educationItems.map((item: EducationItem, index: number) => (
                     <TimelineItem key={item.name}>

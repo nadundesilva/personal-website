@@ -1,6 +1,6 @@
 import React from "react";
 import Document, { DocumentContext, DocumentInitialProps, Html, Head, Main, NextScript } from "next/document";
-import { ServerStyleSheets } from "@material-ui/core/styles";
+import ServerStyleSheets from "@mui/styles/ServerStyleSheets";
 
 const FULL_NAME = "Nadun De Silva";
 const PUBLIC_URL = process.env.PUBLIC_URL ?? "https://nadundesilva.github.io";

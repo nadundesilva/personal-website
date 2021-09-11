@@ -1,6 +1,8 @@
 import React from "react";
-import { Button, Container, Grid, Theme, Typography, useMediaQuery } from "@material-ui/core";
-import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
+import { Button, Container, Grid, Theme, Typography, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 import Image from "next/image";
 
 const banner = "/assets/banner.jpg";
