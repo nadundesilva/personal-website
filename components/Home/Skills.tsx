@@ -1,17 +1,8 @@
 import React from "react";
 import { Grid, LinearProgress, Typography } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import withStyles from "@mui/styles/withStyles";
 import { useScrollOffset } from "@/components/Layout";
-
-const useStyles = makeStyles(() =>
-    createStyles({
-        skillName: {
-            fontWeight: "bold"
-        }
-    })
-);
 
 const BorderLinearProgress = withStyles(() =>
     createStyles({
@@ -31,7 +22,6 @@ interface Skill {
 }
 
 const Skills = (): React.ReactElement => {
-    const classes = useStyles();
     const { ref: rootRef, direction, offset } = useScrollOffset<HTMLDivElement>();
 
     const leftSideSkills: Skill[] = [
@@ -78,7 +68,7 @@ const Skills = (): React.ReactElement => {
         const labelId = `skill-${skill.name.toLowerCase().replace(/\s/g, "-")}-progressbar-label`;
         return (
             <Grid item xs={12} md={6} style={{ opacity: currentOpacity }}>
-                <Typography id={labelId} className={classes.skillName}>{skill.name}</Typography>
+                <Typography id={labelId} sx={{ fontWeight: "bold" }}>{skill.name}</Typography>
                 <Grid container spacing={3} justifyContent="center" alignItems="center">
                     <Grid item xs={8} sm={10}>
                         <BorderLinearProgress aria-labelledby={labelId} variant="determinate"

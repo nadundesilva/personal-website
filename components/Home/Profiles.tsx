@@ -19,9 +19,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         profileIcon: {
             margin: theme.spacing(1)
-        },
-        profileText: {
-            fontWeight: "bold"
         }
     })
 );
@@ -92,7 +89,7 @@ const Profiles = (): React.ReactElement => {
                                         <FontAwesomeIcon icon={profile.icon} size="3x" className={classes.profileIcon}/>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <Typography className={classes.profileText}>{profile.name}</Typography>
+                                        <Typography sx={{ fontWeight: "bold" }}>{profile.name}</Typography>
                                     </Grid>
                                 </Box>
                             </Grow>

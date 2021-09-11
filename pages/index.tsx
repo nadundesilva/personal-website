@@ -12,9 +12,6 @@ const useStyles = makeStyles((theme: Theme) =>
         section: {
             padding: theme.spacing(1),
             margin: theme.spacing(5)
-        },
-        sectionContent: {
-            padding: theme.spacing(3)
         }
     })
 );
@@ -67,7 +64,7 @@ const Home = (): React.ReactElement => {
     const generateSection = (title: string, section: React.ReactElement): React.ReactElement => (
         <React.Fragment>
             <Heading>{title}</Heading>
-            <Container maxWidth={false} disableGutters={true} className={classes.sectionContent}>
+            <Container maxWidth={false} disableGutters={true} sx={{ padding: 3 }}>
                 {section}
             </Container>
         </React.Fragment>
