@@ -11,16 +11,6 @@ import { useRouter } from "next/router";
 const useStyles = makeStyles((theme: Theme) => {
     const instituteIconPadding = 0.5;
     return createStyles({
-        timeline: {
-            marginBottom: theme.spacing(5)
-        },
-        timeLineItemContent: {
-            padding: theme.spacing(2),
-            marginBottom: theme.spacing(5)
-        },
-        timeLineItemTitle: {
-            fontWeight: "bold"
-        },
         instituteIconRight: {
             marginLeft: theme.spacing(instituteIconPadding)
         },
@@ -65,7 +55,7 @@ const Education = (): React.ReactElement => {
     ];
     const instituteIcon = <FontAwesomeIcon className={classes.instituteIconLeft} icon={faMapMarkerAlt}/>;
     const timeline = (
-        <Timeline position={isTimelineLeftAligned ? "left" : "alternate"} className={classes.timeline}>
+        <Timeline position={isTimelineLeftAligned ? "left" : "alternate"} sx={{ marginBottom: 5 }}>
             {
                 educationItems.map((item: EducationItem, index: number) => (
                     <TimelineItem key={item.name}>
@@ -79,8 +69,8 @@ const Education = (): React.ReactElement => {
                             <TimelineConnector/>
                         </TimelineSeparator>
                         <TimelineContent>
-                            <Paper elevation={3} className={classes.timeLineItemContent}>
-                                <Typography variant="body1" component="h2" className={classes.timeLineItemTitle}>
+                            <Paper elevation={3} sx={{ padding: 2, marginBottom: 5 }}>
+                                <Typography variant="body1" component="h2" sx={{ fontWeight: "bold" }}>
                                     {item.name}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">

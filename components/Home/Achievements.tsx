@@ -34,12 +34,6 @@ const useStyles = makeStyles(() =>
             color: "#ffffff",
             position: "absolute",
             textAlign: "center"
-        },
-        imageListItemText: {
-            fontWeight: "bold"
-        },
-        achievementItem: {
-            height: "100%"
         }
     })
 );
@@ -97,10 +91,10 @@ const Achievements = (): React.ReactElement => {
                 className={classNames(classes.imageListItem, classes.imageListItemImageContainer)}
             >
                 <Grow in={offset > 0.3} timeout={1000 * achievementSection.animationTimeoutFactor}>
-                    <Box className={classes.achievementItem}>
+                    <Box sx={{ height: "100%" }}>
                         <Grid container justifyContent="center" alignItems="center" className={classes.imageListItemImageOverlay}>
                             <Grid item xs={6}>
-                                <Typography className={classes.imageListItemText}>{achievementSection.title}</Typography>
+                                <Typography sx={{ fontWeight: "bold" }}>{achievementSection.title}</Typography>
                             </Grid>
                         </Grid>
                         <Image src={achievementSection.imageLink} alt={achievementSection.title} layout="fill" objectFit="cover"

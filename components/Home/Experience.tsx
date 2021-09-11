@@ -11,13 +11,6 @@ import { useScrollOffset } from "@/components/Layout";
 const useStyles = makeStyles((theme: Theme) => {
     const instituteIconPadding = 0.5;
     return createStyles({
-        timeLineItemContent: {
-            padding: theme.spacing(2),
-            marginBottom: theme.spacing(5)
-        },
-        timeLineItemTitle: {
-            fontWeight: "bold"
-        },
         instituteIconRight: {
             marginLeft: theme.spacing(instituteIconPadding)
         },
@@ -92,8 +85,8 @@ const Experience = (): React.ReactElement => {
                             </TimelineSeparator>
                             <TimelineContent>
                                 <Slide direction={isOnLeft ? "left" : "right"} in={offset > 0.5} timeout={1000}>
-                                    <Paper elevation={3} className={classes.timeLineItemContent}>
-                                        <Typography variant="body1" component="h2" className={classes.timeLineItemTitle}>
+                                    <Paper elevation={3} sx={{ padding: 2, marginBottom: 5 }}>
+                                        <Typography variant="body1" component="h2" sx={{ fontWeight: "bold" }}>
                                             {item.name}
                                         </Typography>
                                         <Typography variant="body2" color="textSecondary">
