@@ -1,7 +1,12 @@
 import React, { useMemo, useEffect, useState, useContext } from "react";
-import { CssBaseline, Theme, useMediaQuery } from "@material-ui/core";
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
-import indigo from "@material-ui/core/colors/indigo";
+import { CssBaseline, Theme, useMediaQuery, adaptV4Theme } from "@mui/material";
+import { createTheme, ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
+import { indigo } from "@mui/material/colors";
+
+declare module "@mui/styles/defaultTheme" {
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface DefaultTheme extends Theme {}
+}
 
 export type ColorScheme = "dark" | "light";
 const colorSchemes = ["dark", "light"];
@@ -21,9 +26,9 @@ const getStoredColorScheme = (): ColorScheme | null => {
 };
 
 const createWebsiteTheme = (colorScheme: ColorScheme): Theme => {
-    return createTheme({
+    return createTheme(adaptV4Theme({
         palette: {
-            type: colorScheme,
+            mode: colorScheme,
             primary: indigo,
             secondary: indigo
         },
@@ -43,14 +48,14 @@ const createWebsiteTheme = (colorScheme: ColorScheme): Theme => {
                 }
             }
         }
-    });
+    }));
 };
 
 interface WebsiteThemeContext {
     theme: Theme,
     colorScheme: ColorScheme,
     setColorScheme: (newColorScheme: ColorScheme) => void,
-};
+}
 
 const defaultColorScheme = getStoredColorScheme() ?? "light";
 
@@ -85,22 +90,24 @@ const WebsiteThemeProvider = ({ children }: WebsiteThemeProviderProps): React.Re
 
     const theme = useMemo(() => createWebsiteTheme(colorScheme), [colorScheme]);
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <WebsiteTheme.Provider value={{
-                theme,
-                colorScheme,
-                setColorScheme: (newColorScheme: ColorScheme): void => {
-                    try {
-                        localStorage.setItem(COLOR_SCHEME_KEY, newColorScheme);
-                    } catch {
+        <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <WebsiteTheme.Provider value={{
+                    theme,
+                    colorScheme,
+                    setColorScheme: (newColorScheme: ColorScheme): void => {
+                        try {
+                            localStorage.setItem(COLOR_SCHEME_KEY, newColorScheme);
+                        } catch {
+                        }
+                        setColorScheme(newColorScheme);
                     }
-                    setColorScheme(newColorScheme);
-                }
-            }}>
-                {children}
-            </WebsiteTheme.Provider>
-        </ThemeProvider>
+                }}>
+                    {children}
+                </WebsiteTheme.Provider>
+            </ThemeProvider>
+        </StyledEngineProvider>
     );
 };
 

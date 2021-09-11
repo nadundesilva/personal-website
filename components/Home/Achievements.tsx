@@ -1,7 +1,8 @@
 import React from "react";
 import classNames from "classnames";
-import { Box, Container, Grid, Grow, Hidden, ImageList, ImageListItem, Typography } from "@material-ui/core";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { Box, Container, Grid, Grow, Hidden, ImageList, ImageListItem, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
 
@@ -53,7 +54,7 @@ interface AchievementSection {
     title: string,
     imageLink: string,
     animationTimeoutFactor: number,
-};
+}
 
 const ROW_HEIGHT = 300;
 
@@ -114,7 +115,7 @@ const Achievements = (): React.ReactElement => {
     const SMALL_SCREEN_COLUMN_COUNT = 1;
     return (
         <Container maxWidth={false} disableGutters={true} ref={rootRef}>
-            <Hidden smDown>
+            <Hidden mdDown>
                 <ImageList rowHeight={ROW_HEIGHT} cols={LARGE_SCREEN_COLUMN_COUNT}>
                     <ImageListItem rows={2} cols={1} className={classes.imageListItem}>
                         <ImageList rowHeight={ROW_HEIGHT} cols={1}>

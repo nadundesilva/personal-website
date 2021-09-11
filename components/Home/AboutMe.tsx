@@ -1,6 +1,7 @@
 import React from "react";
-import { Avatar, Divider, Grid, Hidden, Theme, Typography } from "@material-ui/core";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { Avatar, Divider, Grid, Hidden, Theme, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
@@ -80,7 +81,7 @@ const AboutMe = (): React.ReactElement => {
                     {contactItem("Website", "nadundesilva.github.io")}
                 </Grid>
             </Grid>
-            <Hidden smDown>{profilePhoto(4)}</Hidden>
+            <Hidden mdDown>{profilePhoto(4)}</Hidden>
         </Grid>
     );
 };
