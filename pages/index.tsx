@@ -2,8 +2,9 @@ import React, { useRef } from "react";
 import Layout, { LayoutContent } from "@/components/Layout";
 import Heading from "@/components/Heading";
 import { AboutMe, Achievements, ContributedProjects, Certifications, Experience, Profiles, Skills, WelcomeBanner } from "@/components/Home";
-import { Button, Container, Hidden, Theme } from "@material-ui/core";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { Button, Container, Hidden, Theme } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 import Head from "next/head";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -22,7 +23,7 @@ interface Section {
     name: string,
     ref: React.RefObject<HTMLDivElement>,
     Component: () => React.ReactElement,
-};
+}
 
 const Home = (): React.ReactElement => {
     const classes = useStyles();
@@ -77,7 +78,7 @@ const Home = (): React.ReactElement => {
                 <title>Nadun De Silva | An aspiring Software Engineer and ML Enthusiast</title>
             </Head>
             <Layout appBarItems={
-                <Hidden mdDown>
+                <Hidden lgDown>
                     {
                         pageSections.map((section: Section) => (
                             <Button key={section.name} variant={"contained"} color="primary" disableElevation

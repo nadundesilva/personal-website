@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { faFacebook, faGithub, faInstagram, faLinkedin, faMedium, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
-import { Box, Grid, Grow, Theme, Typography } from "@material-ui/core";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { Box, Grid, Grow, Theme, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 import { useScrollOffset } from "@/components/Layout";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(4),
             cursor: "pointer",
             "&:hover": {
-                background: theme.palette.type === "light" ? "#cccccc" : "#444444"
+                background: theme.palette.mode === "light" ? "#cccccc" : "#444444"
             }
         },
         profileIcon: {

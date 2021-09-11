@@ -1,6 +1,8 @@
 import React from "react";
-import { Box, Grid, Slide, Theme } from "@material-ui/core";
-import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
+import { Box, Grid, Slide, Theme } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
 
@@ -45,7 +47,7 @@ const ContributedProjects = (): React.ReactElement => {
             <Slide direction={"up"} in={offset > 0.5} timeout={2000}>
                 <Box className={classes.projectLogoContainer}>
                     <Image alt={alt} className={classes.projectLogo} layout="fill" objectFit="contain" sizes={imageSizes}
-                        src={theme?.palette?.type === "light" ? imageLink : blackThemeImageLink}/>
+                        src={theme?.palette?.mode === "light" ? imageLink : blackThemeImageLink}/>
                 </Box>
             </Slide>
         </Grid>

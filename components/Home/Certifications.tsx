@@ -1,6 +1,8 @@
 import React from "react";
-import { Card, CardActionArea, CardContent, CardMedia, Chip, Container, Grid, Slide, Theme, Typography } from "@material-ui/core";
-import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
+import { Card, CardActionArea, CardContent, CardMedia, Chip, Container, Grid, Slide, Theme, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
 
@@ -45,7 +47,7 @@ interface Certificate {
     link: string,
     image: string,
     issuer: string,
-};
+}
 
 const Certifications = (): React.ReactElement => {
     const classes = useStyles();
