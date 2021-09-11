@@ -15,16 +15,9 @@ const useStyles = makeStyles((theme: Theme) => {
             marginTop: theme.spacing(descriptionSeparatorMargin),
             marginBottom: theme.spacing(descriptionSeparatorMargin)
         },
-        profilePhoto: {
-            width: "100%",
-            paddingTop: "100%"
-        },
         profilePhotoImage: {
             width: "100%",
             height: "auto"
-        },
-        profilePhotoPadding: {
-            padding: theme.spacing(2)
         },
         textIcon: {
             marginRight: theme.spacing(1)
@@ -40,7 +33,7 @@ const AboutMe = (): React.ReactElement => {
 
     const profilePhoto = (gridWidth: 4 | 12): React.ReactElement => (
         <Grid item xs={gridWidth}>
-            <Avatar className={classes.profilePhoto}>
+            <Avatar sx={{ width: "100%", paddingTop: "100%" }}>
                 <Image src={profilePicture} alt="Nadun De Silva" layout="fill" objectFit="cover"
                     sizes={`${100 * (gridWidth / 12)}vw`}
                     className={classes.profilePhotoImage}/>
@@ -50,7 +43,7 @@ const AboutMe = (): React.ReactElement => {
 
     const contactItem = (name: string, value: string): React.ReactElement => (
         <Grid item xs={12} md={4}>
-            <Typography className={classes.contactInfoItemHeader}>
+            <Typography sx={{ fontWeight: "bold" }}>
                 {name}:
             </Typography>
             <Typography>{value}</Typography>

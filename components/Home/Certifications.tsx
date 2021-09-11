@@ -1,42 +1,12 @@
 import React from "react";
-import { Card, CardActionArea, CardContent, CardMedia, Chip, Container, Grid, Slide, Theme, Typography } from "@mui/material";
+import { Card, CardActionArea, CardContent, CardMedia, Chip, Container, Grid, Slide, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
 import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
 
 const ckadLogo = "/assets/certifications/ckad.png";
 const ckaLogo = "/assets/certifications/cka.png";
 const deepLearningAiLogo = "/assets/certifications/deep-learning-ai.png";
-
-const useStyles = makeStyles((theme: Theme) => {
-    const certificationTypeMargin = theme.spacing(2);
-    return createStyles({
-        certificationCardContainer: {
-            padding: theme.spacing(2)
-        },
-        certificationCard: {
-            height: "100%"
-        },
-        certificationImage: {
-            position: "relative",
-            width: "60%",
-            paddingTop: "80%",
-            marginTop: 0,
-            marginRight: "20%",
-            marginBottom: 0,
-            marginLeft: "20%"
-        },
-        certificationIssuer: {
-            marginTop: theme.spacing(2)
-        },
-        certificationType: {
-            marginTop: certificationTypeMargin,
-            marginBottom: certificationTypeMargin
-        }
-    });
-});
 
 const DEEP_LEARNING_ISSUER = "Deeplearning.AI";
 const LINUX_FOUNDATION = "Linux Foundation";
@@ -50,7 +20,6 @@ interface Certificate {
 }
 
 const Certifications = (): React.ReactElement => {
-    const classes = useStyles();
     const theme = useTheme();
     const { ref: rootRef, direction, offset } = useScrollOffset<HTMLDivElement>();
 
@@ -107,15 +76,23 @@ const Certifications = (): React.ReactElement => {
         <Grid ref={rootRef} container justifyContent="center" alignItems="stretch">
             {
                 certifications.map((certification, index) => (
-                    <Grid item xs={12} sm={6} md={4} xl={3} key={index} className={classes.certificationCardContainer}>
+                    <Grid item xs={12} sm={6} md={4} xl={3} key={index} sx={{ padding: 2 }}>
                         <Slide direction={"up"} in={offset > 0.5 || direction !== 1} timeout={1000}>
-                            <Card onClick={generateViewCertificateHandler(certification.link)}
-                                className={classes.certificationCard}
-                            >
+                            <Card onClick={generateViewCertificateHandler(certification.link)} sx={{ height: "100%" }}>
                                 <CardActionArea>
                                     <CardMedia
                                         component={(props) => (
-                                            <Container maxWidth={false} disableGutters={true} className={classes.certificationImage}>
+                                            <Container maxWidth={false} disableGutters={true}
+                                                sx={{
+                                                    position: "relative",
+                                                    width: "60%",
+                                                    paddingTop: "80%",
+                                                    marginTop: 0,
+                                                    marginRight: "20%",
+                                                    marginBottom: 0,
+                                                    marginLeft: "20%"
+                                                }}
+                                            >
                                                 <Image src={certification.image} alt={certification.name} layout="fill"
                                                     sizes={imageSizes} objectFit="contain"/>
                                             </Container>
@@ -127,8 +104,8 @@ const Certifications = (): React.ReactElement => {
                                             {certification.name}
                                         </Typography>
                                         <Chip label={certification.type} color="secondary" size="small"
-                                            className={classes.certificationType}/>
-                                        <Typography color="textSecondary" className={classes.certificationIssuer}>
+                                            sx={{ marginTop: 2, marginBottom: 2 }}/>
+                                        <Typography color="textSecondary" sx={{ marginTop: 2 }}>
                                             Issued by {certification.issuer}
                                         </Typography>
                                     </CardContent>

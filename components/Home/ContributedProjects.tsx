@@ -17,12 +17,6 @@ const choreoWhite = "/assets/projects/choreo-white.svg";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        projectLogoContainer: {
-            position: "relative",
-            height: theme.spacing(5),
-            marginLeft: theme.spacing(5),
-            marginRight: theme.spacing(5)
-        },
         projectLogo: {
             display: "block",
             margin: "auto",
@@ -45,7 +39,14 @@ const ContributedProjects = (): React.ReactElement => {
     const renderCarouselItem = (imageLink: string, blackThemeImageLink: string, alt: string): React.ReactElement => (
         <Grid item xs={12} sm={4} md={3}>
             <Slide direction={"up"} in={offset > 0.5} timeout={2000}>
-                <Box className={classes.projectLogoContainer}>
+                <Box
+                    sx={{
+                        position: "relative",
+                        height: (theme) => theme.spacing(5),
+                        marginLeft: 5,
+                        marginRight: 5
+                    }}
+                >
                     <Image alt={alt} className={classes.projectLogo} layout="fill" objectFit="contain" sizes={imageSizes}
                         src={theme?.palette?.mode === "light" ? imageLink : blackThemeImageLink}/>
                 </Box>
