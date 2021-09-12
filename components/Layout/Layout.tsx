@@ -1,18 +1,13 @@
 import { AppBar, Box, Container, Fab, IconButton, Toolbar, Tooltip, Typography, useScrollTrigger, Zoom } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
+import { styled } from "@mui/material/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import React, { useRef } from "react";
 import { useWebsiteTheme } from "./theme";
 
-const useStyles = makeStyles(() =>
-    createStyles({
-        grow: {
-            flexGrow: 1
-        }
-    })
-);
+const GrowingDiv = styled("div")({
+    flexGrow: 1
+});
 
 interface LayoutProps {
     children: NonNullable<React.ReactNode>,
@@ -27,7 +22,6 @@ const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElem
         target: window !== undefined ? window() : undefined
     });
 
-    const classes = useStyles();
     const scrollToTopRef = useRef<HTMLDivElement>(null);
 
     const { colorScheme, setColorScheme } = useWebsiteTheme();
@@ -38,7 +32,7 @@ const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElem
         <AppBar>
             <Toolbar>
                 <Typography variant="h5" component="h1">Nadun De Silva</Typography>
-                <div className={classes.grow} />
+                <GrowingDiv/>
                 {appBarItems}
                 <Tooltip title={`Change to ${nextColorScheme} theme`}>
                     <IconButton sx={{ marginLeft: 5 }} size="small" onClick={onThemeToggleChange}>

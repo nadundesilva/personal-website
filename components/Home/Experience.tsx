@@ -1,24 +1,10 @@
 import React from "react";
-import { Paper, Slide, Theme, Typography, useMediaQuery } from "@mui/material";
+import { Paper, Slide, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { Timeline, TimelineItem, TimelineOppositeContent, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent } from "@mui/lab";
 import { useScrollOffset } from "@/components/Layout";
-
-const useStyles = makeStyles((theme: Theme) => {
-    const instituteIconPadding = 0.5;
-    return createStyles({
-        instituteIconRight: {
-            marginLeft: theme.spacing(instituteIconPadding)
-        },
-        instituteIconLeft: {
-            marginRight: theme.spacing(instituteIconPadding)
-        }
-    });
-});
 
 interface ExperienceItem {
     name: string,
@@ -28,7 +14,6 @@ interface ExperienceItem {
 }
 
 const Experience = (): React.ReactElement => {
-    const classes = useStyles();
     const { ref: rootRef, offset } = useScrollOffset<HTMLUListElement>();
     const theme = useTheme();
     const isTimelineLeftAligned = useMediaQuery(theme.breakpoints.down("sm"));
@@ -65,7 +50,7 @@ const Experience = (): React.ReactElement => {
             institute: "WSO2, Colombo 03, Sri Lanka"
         }
     ];
-    const instituteIcon = <FontAwesomeIcon className={classes.instituteIconLeft} icon={faMapMarkerAlt}/>;
+    const instituteIcon = <FontAwesomeIcon icon={faMapMarkerAlt}/>;
 
     return (
         <Timeline ref={rootRef} position={isTimelineLeftAligned ? "left" : "alternate"}>

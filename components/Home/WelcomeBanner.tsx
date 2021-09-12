@@ -1,22 +1,15 @@
 import React from "react";
 import { Button, Container, Grid, Theme, Typography, useMediaQuery } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
+import { styled, useTheme } from "@mui/material/styles";
 import Image from "next/image";
 
 const banner = "/assets/banner.jpg";
 
-const useStyles = makeStyles(() => {
-    return createStyles({
-        bannerImage: {
-            zIndex: -1
-        }
-    });
+const BannerImage = styled(Image)({
+    zIndex: -1
 });
 
 const WelcomeBanner = (): React.ReactElement => {
-    const classes = useStyles();
     const theme = useTheme();
 
     const isLarge = useMediaQuery(theme.breakpoints.up("xl"));
@@ -73,8 +66,8 @@ const WelcomeBanner = (): React.ReactElement => {
                     height: (theme: Theme) => `calc(100vh - ${theme.mixins.toolbar.minHeight ?? 0}px)`
                 }}
             >
-                <Image src={banner} alt="Nadun De Silva Website Banner" className={classes.bannerImage}
-                    layout="fill" objectFit="cover" priority={true}/>
+                <BannerImage src={banner} alt="Nadun De Silva Website Banner" layout="fill"
+                    objectFit="cover" priority={true}/>
             </Container>
         </Container>
     );
