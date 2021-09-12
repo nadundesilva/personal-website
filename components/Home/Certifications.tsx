@@ -76,7 +76,7 @@ const Certifications = (): React.ReactElement => {
         <Grid ref={rootRef} container justifyContent="center" alignItems="stretch">
             {
                 certifications.map((certification, index) => (
-                    <Grid item xs={12} sm={6} md={4} xl={3} key={index} sx={{ padding: 2 }}>
+                    <Grid item xs={12} sm={6} md={4} key={index} sx={{ padding: 2 }}>
                         <Slide direction={"up"} in={offset > 0.5 || direction !== 1} timeout={1000}>
                             <Card onClick={generateViewCertificateHandler(certification.link)} sx={{ height: "100%" }}>
                                 <CardActionArea>
