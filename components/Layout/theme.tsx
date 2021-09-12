@@ -3,11 +3,6 @@ import { CssBaseline, Theme, useMediaQuery, adaptV4Theme } from "@mui/material";
 import { createTheme, ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import { indigo } from "@mui/material/colors";
 
-declare module "@mui/styles/defaultTheme" {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface DefaultTheme extends Theme {}
-}
-
 export type ColorScheme = "dark" | "light";
 const colorSchemes = ["dark", "light"];
 
