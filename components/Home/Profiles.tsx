@@ -3,23 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { faFacebook, faGithub, faInstagram, faLinkedin, faMedium, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
-import { Box, Grid, Grow, Theme, Typography } from "@mui/material";
+import { Box, Grid, Grow, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
 import { useScrollOffset } from "@/components/Layout";
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        profileSection: {
-            padding: theme.spacing(4),
-            cursor: "pointer",
-            "&:hover": {
-                background: theme.palette.mode === "light" ? "#cccccc" : "#444444"
-            }
-        }
-    })
-);
 
 const ProfileIcon = styled(FontAwesomeIcon)(({ theme }) => ({
     margin: theme.spacing(1)
@@ -32,7 +18,6 @@ interface Profile {
 }
 
 const Profiles = (): React.ReactElement => {
-    const classes = useStyles();
     const { ref: rootRef, offset } = useScrollOffset<HTMLDivElement>();
 
     const profiles: Profile[] = [
@@ -84,7 +69,15 @@ const Profiles = (): React.ReactElement => {
                     <Grid item xs={12} sm={3} key={profile.name}
                         onClick={generateOpenLinkHandler(profile.link)}
                     >
-                        <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.profileSection}>
+                        <Grid container direction="column" justifyContent="center" alignItems="center"
+                            sx={{
+                                padding: (theme) => theme.spacing(4),
+                                cursor: "pointer",
+                                "&:hover": {
+                                    background: (theme) => theme.palette.mode === "light" ? "#cccccc" : "#444444"
+                                }
+                            }}
+                        >
                             <Grow in={offset > 0.5} timeout={1000}>
                                 <Box>
                                     <Grid item xs={6}>
