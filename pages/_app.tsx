@@ -3,16 +3,27 @@ import type { AppProps, NextWebVitalsMetric } from "next/app";
 import Head from "next/head";
 import "../styles.css";
 import WebsiteThemeProvider from "@/components/Layout/theme";
+import { CacheProvider, EmotionCache } from "@emotion/react";
+import createCache from "@emotion/cache";
 
-function WebsiteApp({ Component, pageProps }: AppProps): JSX.Element {
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createCache({ key: "css" });
+
+export interface WebsiteAppProps extends AppProps {
+    emotionCache?: EmotionCache,
+}
+
+function WebsiteApp({ Component, pageProps, emotionCache = clientSideEmotionCache }: WebsiteAppProps): JSX.Element {
     return (
         <React.StrictMode>
             <Head>
                 <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"/>
             </Head>
-            <WebsiteThemeProvider>
-                <Component {...pageProps}/>
-            </WebsiteThemeProvider>
+            <CacheProvider value={emotionCache}>
+                <WebsiteThemeProvider>
+                    <Component {...pageProps}/>
+                </WebsiteThemeProvider>
+            </CacheProvider>
         </React.StrictMode>
     );
 }
