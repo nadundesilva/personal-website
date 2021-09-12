@@ -1,42 +1,32 @@
 import React from "react";
-import { Avatar, Divider, Grid, Hidden, Theme, Typography } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
+import { Avatar, Divider, Grid, Hidden, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 
 const profilePicture = "/assets/profile-photo.jpg";
 
-const useStyles = makeStyles((theme: Theme) => {
-    const descriptionSeparatorMargin = 2;
-    return createStyles({
-        descriptionSeparator: {
-            marginTop: theme.spacing(descriptionSeparatorMargin),
-            marginBottom: theme.spacing(descriptionSeparatorMargin)
-        },
-        profilePhotoImage: {
-            width: "100%",
-            height: "auto"
-        },
-        textIcon: {
-            marginRight: theme.spacing(1)
-        },
-        contactInfoItemHeader: {
-            fontWeight: "bold"
-        }
-    });
+const ProfilePhoto = styled(Image)({
+    width: "100%",
+    height: "auto"
 });
 
-const AboutMe = (): React.ReactElement => {
-    const classes = useStyles();
+const InstituteIcon = styled(FontAwesomeIcon)(({ theme }) => ({
+    marginRight: theme.spacing(1)
+}));
 
+const ItemDivider = styled(Divider)(({ theme }) => ({
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
+}));
+
+const AboutMe = (): React.ReactElement => {
     const profilePhoto = (gridWidth: 4 | 12): React.ReactElement => (
         <Grid item xs={gridWidth}>
             <Avatar sx={{ width: "100%", paddingTop: "100%" }}>
-                <Image src={profilePicture} alt="Nadun De Silva" layout="fill" objectFit="cover"
-                    sizes={`${100 * (gridWidth / 12)}vw`}
-                    className={classes.profilePhotoImage}/>
+                <ProfilePhoto src={profilePicture} alt="Nadun De Silva" layout="fill" objectFit="cover"
+                    sizes={`${100 * (gridWidth / 12)}vw`}/>
             </Avatar>
         </Grid>
     );
@@ -61,13 +51,12 @@ const AboutMe = (): React.ReactElement => {
                     I love learning about new technologies and is particularly
                     interested in Deep Learning.
                 </Typography>
-                <Divider className={classes.descriptionSeparator} />
+                <ItemDivider/>
                 <Typography>Bachelor of Science in Engineering</Typography>
                 <Typography display="inline" color="textSecondary">
-                    <FontAwesomeIcon icon={faMapMarkerAlt} className={classes.textIcon}/>
-                    University of Moratuwa
+                    <InstituteIcon icon={faMapMarkerAlt}/> University of Moratuwa
                 </Typography>
-                <Divider className={classes.descriptionSeparator} />
+                <ItemDivider/>
                 <Grid container spacing={3} justifyContent="center">
                     {contactItem("Phone", "+94 778 222 607")}
                     {contactItem("Email", "nadunrds@gmail.com")}

@@ -4,6 +4,7 @@ import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { faFacebook, faGithub, faInstagram, faLinkedin, faMedium, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
 import { Box, Grid, Grow, Theme, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import { useScrollOffset } from "@/components/Layout";
@@ -16,12 +17,13 @@ const useStyles = makeStyles((theme: Theme) =>
             "&:hover": {
                 background: theme.palette.mode === "light" ? "#cccccc" : "#444444"
             }
-        },
-        profileIcon: {
-            margin: theme.spacing(1)
         }
     })
 );
+
+const ProfileIcon = styled(FontAwesomeIcon)(({ theme }) => ({
+    margin: theme.spacing(1)
+}));
 
 interface Profile {
     name: string,
@@ -86,7 +88,7 @@ const Profiles = (): React.ReactElement => {
                             <Grow in={offset > 0.5} timeout={1000}>
                                 <Box>
                                     <Grid item xs={6}>
-                                        <FontAwesomeIcon icon={profile.icon} size="3x" className={classes.profileIcon}/>
+                                        <ProfileIcon icon={profile.icon} size="3x"/>
                                     </Grid>
                                     <Grid item xs={6}>
                                         <Typography sx={{ fontWeight: "bold" }}>{profile.name}</Typography>
