@@ -1,6 +1,7 @@
 import React from "react";
 import Document, { DocumentContext, DocumentInitialProps, Html, Head, Main, NextScript } from "next/document";
-import ServerStyleSheets from "@mui/styles/ServerStyleSheets";
+import createCache from "@emotion/cache";
+import createEmotionServer from "@emotion/server/create-instance";
 
 const FULL_NAME = "Nadun De Silva";
 const PUBLIC_URL = process.env.PUBLIC_URL ?? "https://nadundesilva.github.io";
@@ -10,22 +11,31 @@ const GA_TRACKING_ID = "GTM-T9KX7B4";
 
 class WebsiteDocument extends Document {
     static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
-        const sheets = new ServerStyleSheets();
         const originalRenderPage = ctx.renderPage;
+
+        const cache = createCache({ key: "css" });
+        const { extractCriticalToChunks } = createEmotionServer(cache);
 
         ctx.renderPage = () => (
             originalRenderPage({
-                enhanceApp: (App) => function EnhancedApp(props) {
-                    return sheets.collect(<App {...props} />);
+                enhanceApp: (App: any) => function EnhancedApp(props) {
+                    return <App emotionCache={cache} {...props}/>;
                 }
             })
         );
 
         const initialProps = await Document.getInitialProps(ctx);
+        const emotionStyles = extractCriticalToChunks(initialProps.html);
+        const emotionStyleTags = emotionStyles.styles.map((style) => (
+            <style data-emotion={`${style.key} ${style.ids.join(" ")}`} key={style.key}
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{ __html: style.css }}
+            />
+        ));
         return {
             ...initialProps,
             // Styles fragment is rendered after the app and page rendering finish.
-            styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()]
+            styles: [...React.Children.toArray(initialProps.styles), ...emotionStyleTags]
         };
     }
 
