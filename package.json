@@ -17,7 +17,6 @@
     "@mui/lab": "^5.0.0-alpha.46",
     "@mui/material": "^5.0.0-rc.1",
     "@mui/styles": "^5.0.0-rc.1",
-    "classnames": "^2.3.1",
     "next": "^11.1.2",
     "next-compose-plugins": "^2.2.1",
     "next-pwa": "^5.3.1",
