@@ -2,19 +2,14 @@ import React, { useRef } from "react";
 import Layout, { LayoutContent } from "@/components/Layout";
 import Heading from "@/components/Heading";
 import { AboutMe, Achievements, ContributedProjects, Certifications, Experience, Profiles, Skills, WelcomeBanner } from "@/components/Home";
-import { Button, Container, Hidden, Theme } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
+import { Button, Container, Hidden } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import Head from "next/head";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        section: {
-            padding: theme.spacing(1),
-            margin: theme.spacing(5)
-        }
-    })
-);
+const SectionContainer = styled(Container)(({ theme }) => ({
+    padding: theme.spacing(1),
+    margin: theme.spacing(5)
+}));
 
 interface Section {
     name: string,
@@ -23,8 +18,6 @@ interface Section {
 }
 
 const Home = (): React.ReactElement => {
-    const classes = useStyles();
-
     const pageSections: Section[] = [
         {
             name: "Experience",
@@ -88,17 +81,17 @@ const Home = (): React.ReactElement => {
             }>
                 <WelcomeBanner/>
                 <LayoutContent>
-                    <Container maxWidth={false} disableGutters={true} className={classes.section}>
+                    <SectionContainer maxWidth={false} disableGutters={true}>
                         {generateSection("About Me", <AboutMe/>)}
-                    </Container>
+                    </SectionContainer>
                     <React.Fragment>
                         {
                             pageSections.map((section: Section) => (
-                                <Container maxWidth={false} disableGutters={true} ref={section.ref}
-                                    className={classes.section} key={section.name}
+                                <SectionContainer maxWidth={false} disableGutters={true} ref={section.ref}
+                                    key={section.name}
                                 >
                                     {generateSection(section.name, <section.Component/>)}
-                                </Container>
+                                </SectionContainer>
                             ))
                         }
                     </React.Fragment>

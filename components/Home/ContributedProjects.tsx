@@ -1,8 +1,6 @@
 import React from "react";
-import { Box, Grid, Slide, Theme } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
+import { Box, Grid, Slide } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
 import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
 
@@ -15,19 +13,14 @@ const siddhiWhite = "/assets/projects/siddhi-white.svg";
 const choreo = "/assets/projects/choreo.svg";
 const choreoWhite = "/assets/projects/choreo-white.svg";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        projectLogo: {
-            display: "block",
-            margin: "auto",
-            padding: theme.spacing(5),
-            width: "100%"
-        }
-    })
-);
+const ProjectLogo = styled(Image)(({ theme }) => ({
+    display: "block",
+    margin: "auto",
+    padding: theme.spacing(5),
+    width: "100%"
+}));
 
 const ContributedProjects = (): React.ReactElement => {
-    const classes = useStyles();
     const theme = useTheme();
     const { ref: rootRef, offset } = useScrollOffset<HTMLDivElement>();
 
@@ -47,7 +40,7 @@ const ContributedProjects = (): React.ReactElement => {
                         marginRight: 5
                     }}
                 >
-                    <Image alt={alt} className={classes.projectLogo} layout="fill" objectFit="contain" sizes={imageSizes}
+                    <ProjectLogo alt={alt} layout="fill" objectFit="contain" sizes={imageSizes}
                         src={theme?.palette?.mode === "light" ? imageLink : blackThemeImageLink}/>
                 </Box>
             </Slide>
