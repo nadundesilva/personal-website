@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect, useState, useContext } from "react";
-import { CssBaseline, Theme, useMediaQuery, adaptV4Theme } from "@mui/material";
+import { CssBaseline, Theme, useMediaQuery } from "@mui/material";
 import { createTheme, ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import { indigo } from "@mui/material/colors";
 
@@ -21,29 +21,13 @@ const getStoredColorScheme = (): ColorScheme | null => {
 };
 
 const createWebsiteTheme = (colorScheme: ColorScheme): Theme => {
-    return createTheme(adaptV4Theme({
+    return createTheme({
         palette: {
             mode: colorScheme,
             primary: indigo,
             secondary: indigo
-        },
-        overrides: {
-            MuiCssBaseline: {
-                "@global": {
-                    "::-webkit-scrollbar": {
-                        width: "10px"
-                    },
-                    "::-webkit-scrollbar-track": {
-                        backgroundColor: "darkgrey"
-                    },
-                    "::-webkit-scrollbar-thumb": {
-                        backgroundColor: "#555555",
-                        boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.3)"
-                    }
-                }
-            }
         }
-    }));
+    });
 };
 
 interface WebsiteThemeContext {
