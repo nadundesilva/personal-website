@@ -1,15 +1,15 @@
 import React from "react";
-import { styled } from "@material-ui/core/styles";
+import { styled } from "@mui/material/styles";
 import { Grid, LinearProgress, Typography, linearProgressClasses } from "@mui/material";
 import { useScrollOffset } from "@/components/Layout";
 
-const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+const BorderLinearProgress = styled(LinearProgress)({
     height: 10,
     borderRadius: 5,
     [`&.${linearProgressClasses.bar}`]: {
         borderRadius: 5
     }
-}));
+});
 
 interface Skill {
     name: string,
