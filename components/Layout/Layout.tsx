@@ -1,14 +1,9 @@
 import { faChevronUp, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AppBar, Box, Container, Fab, IconButton, Toolbar, Tooltip, Typography, useScrollTrigger, Zoom } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import React, { useRef } from "react";
 
 import { useWebsiteTheme } from "./theme";
-
-const GrowingDiv = styled("div")({
-    flexGrow: 1
-});
 
 interface LayoutProps {
     children: NonNullable<React.ReactNode>,
@@ -33,7 +28,7 @@ const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElem
         <AppBar>
             <Toolbar>
                 <Typography variant="h5" component="h1">Nadun De Silva</Typography>
-                <GrowingDiv/>
+                <Box sx={{ flexGrow: 1 }}/>
                 {appBarItems}
                 <Tooltip title={`Change to ${nextColorScheme} theme`}>
                     <IconButton sx={{ marginLeft: 5 }} size="small" onClick={onThemeToggleChange}>

@@ -1,4 +1,4 @@
-import { Button, Container } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Head from "next/head";
 import React, { useRef } from "react";
@@ -68,7 +68,7 @@ const Home = (): React.ReactElement => {
                 <title>Nadun De Silva | An aspiring Software Engineer and ML Enthusiast</title>
             </Head>
             <Layout appBarItems={
-                <Container maxWidth={false} disableGutters={true} sx={{ display: { xs: "none", md: "block" } }}>
+                <Box sx={{ display: { xs: "none", md: "block" } }}>
                     {
                         pageSections.map((section: Section) => (
                             <Button key={section.name} variant={"contained"} color="primary" disableElevation
@@ -77,7 +77,7 @@ const Home = (): React.ReactElement => {
                             </Button>
                         ))
                     }
-                </Container>
+                </Box>
             }>
                 <WelcomeBanner/>
                 <LayoutContent>
