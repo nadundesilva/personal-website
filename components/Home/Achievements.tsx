@@ -91,7 +91,7 @@ const Achievements = (): React.ReactElement => {
                 }}
             >
                 <Grow in={offset > 0.3} timeout={1000 * achievementSection.animationTimeoutFactor}>
-                    <Box sx={{ height: "100%" }}>
+                    <Box sx={{ height: "100%", position: "relative" }}>
                         <ImageListItemImageOverlay container justifyContent="center" alignItems="center"
                             className={classes.imageListItemImageOverlay}
                         >
