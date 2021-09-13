@@ -71,7 +71,7 @@ const Home = (): React.ReactElement => {
                 <Box sx={{ display: { xs: "none", md: "block" } }}>
                     {
                         pageSections.map((section: Section) => (
-                            <Button key={section.name} variant={"contained"} color="primary" disableElevation
+                            <Button key={section.name} variant="text" color="primary" disableElevation
                                 onClick={generateGoToSectionHandler(section.ref)}>
                                 {section.name}
                             </Button>
