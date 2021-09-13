@@ -1,5 +1,6 @@
 import { Box, Container, Grid, Grow, ImageList, ImageListItem, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Image from "next/image";
 import React from "react";
 
@@ -107,36 +108,42 @@ const Achievements = (): React.ReactElement => {
         );
     };
 
+    const theme = useTheme();
+    const isAboveMd = useMediaQuery(theme.breakpoints.up("md"));
+
     const LARGE_SCREEN_COLUMN_COUNT = 3;
     const SMALL_SCREEN_COLUMN_COUNT = 1;
     return (
         <Container maxWidth={false} disableGutters={true} ref={rootRef}>
-            <Container sx={{ display: { xs: "none", md: "block" } }}>
-                <ImageList rowHeight={ROW_HEIGHT} cols={LARGE_SCREEN_COLUMN_COUNT}>
-                    <FullSizeImageListItem rows={2} cols={1}>
-                        <ImageList rowHeight={ROW_HEIGHT} cols={1}>
-                            {renderImageListItem(0, 1, LARGE_SCREEN_COLUMN_COUNT)}
-                            {renderImageListItem(1, 1, LARGE_SCREEN_COLUMN_COUNT)}
+            {
+                isAboveMd
+                    ? (
+                        <ImageList rowHeight={ROW_HEIGHT} cols={LARGE_SCREEN_COLUMN_COUNT}>
+                            <FullSizeImageListItem rows={2} cols={1}>
+                                <ImageList rowHeight={ROW_HEIGHT} cols={1}>
+                                    {renderImageListItem(0, 1, LARGE_SCREEN_COLUMN_COUNT)}
+                                    {renderImageListItem(1, 1, LARGE_SCREEN_COLUMN_COUNT)}
+                                </ImageList>
+                            </FullSizeImageListItem>
+                            {renderImageListItem(2, 2, LARGE_SCREEN_COLUMN_COUNT)}
+                            <FullSizeImageListItem rows={2} cols={1}>
+                                <ImageList rowHeight={ROW_HEIGHT} cols={1}>
+                                    {renderImageListItem(3, 1, LARGE_SCREEN_COLUMN_COUNT)}
+                                    {renderImageListItem(4, 1, LARGE_SCREEN_COLUMN_COUNT)}
+                                </ImageList>
+                            </FullSizeImageListItem>
                         </ImageList>
-                    </FullSizeImageListItem>
-                    {renderImageListItem(2, 2, LARGE_SCREEN_COLUMN_COUNT)}
-                    <FullSizeImageListItem rows={2} cols={1}>
-                        <ImageList rowHeight={ROW_HEIGHT} cols={1}>
-                            {renderImageListItem(3, 1, LARGE_SCREEN_COLUMN_COUNT)}
-                            {renderImageListItem(4, 1, LARGE_SCREEN_COLUMN_COUNT)}
+                    )
+                    : (
+                        <ImageList rowHeight={ROW_HEIGHT} cols={SMALL_SCREEN_COLUMN_COUNT}>
+                            {renderImageListItem(0, 1, SMALL_SCREEN_COLUMN_COUNT)}
+                            {renderImageListItem(1, 1, SMALL_SCREEN_COLUMN_COUNT)}
+                            {renderImageListItem(2, 1, SMALL_SCREEN_COLUMN_COUNT)}
+                            {renderImageListItem(3, 1, SMALL_SCREEN_COLUMN_COUNT)}
+                            {renderImageListItem(4, 1, SMALL_SCREEN_COLUMN_COUNT)}
                         </ImageList>
-                    </FullSizeImageListItem>
-                </ImageList>
-            </Container>
-            <Container sx={{ display: { xs: "block", md: "none" } }}>
-                <ImageList cols={SMALL_SCREEN_COLUMN_COUNT}>
-                    {renderImageListItem(0, 1, SMALL_SCREEN_COLUMN_COUNT)}
-                    {renderImageListItem(1, 1, SMALL_SCREEN_COLUMN_COUNT)}
-                    {renderImageListItem(2, 1, SMALL_SCREEN_COLUMN_COUNT)}
-                    {renderImageListItem(3, 1, SMALL_SCREEN_COLUMN_COUNT)}
-                    {renderImageListItem(4, 1, SMALL_SCREEN_COLUMN_COUNT)}
-                </ImageList>
-            </Container>
+                    )
+            }
         </Container>
     );
 };
