@@ -86,12 +86,8 @@ const Certifications = (): React.ReactElement => {
                                             <Container maxWidth={false} disableGutters={true}
                                                 sx={{
                                                     position: "relative",
-                                                    width: "60%",
-                                                    paddingTop: "80%",
-                                                    marginTop: 0,
-                                                    marginRight: "20%",
-                                                    marginBottom: 0,
-                                                    marginLeft: "20%"
+                                                    pt: "80%",
+                                                    margin: "auto"
                                                 }}
                                             >
                                                 <Image src={certification.image} alt={certification.name} layout="fill"
@@ -107,7 +103,7 @@ const Certifications = (): React.ReactElement => {
                                         <Chip label={certification.type} color="secondary" size="small"
                                             sx={{ marginTop: 2, marginBottom: 2 }}/>
                                         <Typography color="textSecondary" sx={{ marginTop: 2 }}>
-                                            Issued by {certification.issuer}
+                                            Issued by<br/>{certification.issuer}
                                         </Typography>
                                     </CardContent>
                                 </CardActionArea>
