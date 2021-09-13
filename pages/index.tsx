@@ -1,4 +1,4 @@
-import { Button, Container, Hidden } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Head from "next/head";
 import React, { useRef } from "react";
@@ -8,8 +8,7 @@ import { AboutMe, Achievements, ContributedProjects, Certifications, Experience,
 import Layout, { LayoutContent } from "@/components/Layout";
 
 const SectionContainer = styled(Container)(({ theme }) => ({
-    padding: theme.spacing(1),
-    margin: theme.spacing(5)
+    margin: 0
 }));
 
 interface Section {
@@ -69,7 +68,7 @@ const Home = (): React.ReactElement => {
                 <title>Nadun De Silva | An aspiring Software Engineer and ML Enthusiast</title>
             </Head>
             <Layout appBarItems={
-                <Hidden lgDown>
+                <Container maxWidth={false} disableGutters={true} sx={{ display: { xs: "none", md: "block" } }}>
                     {
                         pageSections.map((section: Section) => (
                             <Button key={section.name} variant={"contained"} color="primary" disableElevation
@@ -78,7 +77,7 @@ const Home = (): React.ReactElement => {
                             </Button>
                         ))
                     }
-                </Hidden>
+                </Container>
             }>
                 <WelcomeBanner/>
                 <LayoutContent>
