@@ -1,7 +1,8 @@
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Avatar, Divider, Grid, Hidden, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Avatar, Divider, Grid, Typography } from "@mui/material";
+import { styled, Theme } from "@mui/material/styles";
+import { SxProps } from "@mui/system";
 import Image from "next/image";
 import React from "react";
 
@@ -22,8 +23,8 @@ const ItemDivider = styled(Divider)(({ theme }) => ({
 }));
 
 const AboutMe = (): React.ReactElement => {
-    const profilePhoto = (gridWidth: 4 | 12): React.ReactElement => (
-        <Grid item xs={gridWidth}>
+    const profilePhoto = (gridWidth: 4 | 12, sx: SxProps<Theme>): React.ReactElement => (
+        <Grid item xs={gridWidth} sx={sx}>
             <Avatar sx={{ width: "100%", paddingTop: "100%" }}>
                 <ProfilePhoto src={profilePicture} alt="Nadun De Silva" layout="fill" objectFit="cover"
                     sizes={`${100 * (gridWidth / 12)}vw`}/>
@@ -42,7 +43,7 @@ const AboutMe = (): React.ReactElement => {
 
     return (
         <Grid container spacing={3} justifyContent="center" alignItems="center">
-            <Hidden mdUp>{profilePhoto(12)}</Hidden>
+            {profilePhoto(12, { display: { xs: "block", md: "none" } })}
             <Grid item xs={12} md={8}>
                 <Typography align={"justify"}>
                     I am currently leading the Observability area of Choreo at WSO2.
@@ -63,7 +64,7 @@ const AboutMe = (): React.ReactElement => {
                     {contactItem("Website", "nadundesilva.github.io")}
                 </Grid>
             </Grid>
-            <Hidden mdDown>{profilePhoto(4)}</Hidden>
+            {profilePhoto(4, { display: { xs: "none", md: "block" } })}
         </Grid>
     );
 };
