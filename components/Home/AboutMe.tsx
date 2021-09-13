@@ -1,9 +1,9 @@
-import React from "react";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Divider, Grid, Hidden, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
+import React from "react";
 
 const profilePicture = "/assets/profile-photo.jpg";
 

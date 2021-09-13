@@ -35,6 +35,27 @@ module.exports = {
     }],
     "@typescript-eslint/space-before-function-paren": ["error", "never"],
     "@typescript-eslint/indent": ["error", 4],
-    "@typescript-eslint/quotes": ["error", "double"]
+    "@typescript-eslint/quotes": ["error", "double"],
+    "import/order": ["error", {
+      "groups": ["builtin", "external"],
+      "pathGroups": [
+        {
+          "pattern": "@/components/**",
+          "group": "internal"
+        }
+      ],
+      "newlines-between": "always",
+      "alphabetize": {
+        "order": 'asc',
+        "caseInsensitive": true
+      },
+      "warnOnUnassignedImports": true
+    }],
+    "no-multiple-empty-lines": ["error", {
+      "max": 1,
+      "maxEOF": 1,
+      "maxBOF": 0
+    }],
+    "no-duplicate-imports": ["error", { "includeExports": true }]
   }
 }

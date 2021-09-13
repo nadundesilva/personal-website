@@ -1,5 +1,5 @@
-import React from "react";
 import { Container, Divider, Typography } from "@mui/material";
+import React from "react";
 
 interface HeadingProps {
     children: React.ReactNode,
