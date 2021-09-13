@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Grow, Hidden, ImageList, ImageListItem, Typography } from "@mui/material";
+import { Box, Container, Grid, Grow, ImageList, ImageListItem, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Image from "next/image";
 import React from "react";
@@ -111,7 +111,7 @@ const Achievements = (): React.ReactElement => {
     const SMALL_SCREEN_COLUMN_COUNT = 1;
     return (
         <Container maxWidth={false} disableGutters={true} ref={rootRef}>
-            <Hidden mdDown>
+            <Container sx={{ display: { xs: "none", md: "block" } }}>
                 <ImageList rowHeight={ROW_HEIGHT} cols={LARGE_SCREEN_COLUMN_COUNT}>
                     <FullSizeImageListItem rows={2} cols={1}>
                         <ImageList rowHeight={ROW_HEIGHT} cols={1}>
@@ -127,8 +127,8 @@ const Achievements = (): React.ReactElement => {
                         </ImageList>
                     </FullSizeImageListItem>
                 </ImageList>
-            </Hidden>
-            <Hidden mdUp>
+            </Container>
+            <Container sx={{ display: { xs: "block", md: "none" } }}>
                 <ImageList cols={SMALL_SCREEN_COLUMN_COUNT}>
                     {renderImageListItem(0, 1, SMALL_SCREEN_COLUMN_COUNT)}
                     {renderImageListItem(1, 1, SMALL_SCREEN_COLUMN_COUNT)}
@@ -136,7 +136,7 @@ const Achievements = (): React.ReactElement => {
                     {renderImageListItem(3, 1, SMALL_SCREEN_COLUMN_COUNT)}
                     {renderImageListItem(4, 1, SMALL_SCREEN_COLUMN_COUNT)}
                 </ImageList>
-            </Hidden>
+            </Container>
         </Container>
     );
 };
