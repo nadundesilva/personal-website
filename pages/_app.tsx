@@ -1,10 +1,11 @@
-import React from "react";
+import createCache from "@emotion/cache";
+import { CacheProvider, EmotionCache } from "@emotion/react";
 import type { AppProps, NextWebVitalsMetric } from "next/app";
 import Head from "next/head";
+import React from "react";
+
 import "../styles.css";
 import WebsiteThemeProvider from "@/components/Layout/theme";
-import { CacheProvider, EmotionCache } from "@emotion/react";
-import createCache from "@emotion/cache";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createCache({ key: "css" });

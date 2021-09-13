@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
-import Layout, { LayoutContent } from "@/components/Layout";
-import Heading from "@/components/Heading";
-import { AboutMe, Achievements, ContributedProjects, Certifications, Experience, Profiles, Skills, WelcomeBanner } from "@/components/Home";
 import { Button, Container, Hidden } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Head from "next/head";
+import React, { useRef } from "react";
+
+import Heading from "@/components/Heading";
+import { AboutMe, Achievements, ContributedProjects, Certifications, Experience, Profiles, Skills, WelcomeBanner } from "@/components/Home";
+import Layout, { LayoutContent } from "@/components/Layout";
 
 const SectionContainer = styled(Container)(({ theme }) => ({
     padding: theme.spacing(1),

@@ -1,8 +1,9 @@
+import { faChevronUp, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AppBar, Box, Container, Fab, IconButton, Toolbar, Tooltip, Typography, useScrollTrigger, Zoom } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronUp, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import React, { useRef } from "react";
+
 import { useWebsiteTheme } from "./theme";
 
 const GrowingDiv = styled("div")({

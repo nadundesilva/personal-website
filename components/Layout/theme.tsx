@@ -1,7 +1,7 @@
-import React, { useMemo, useEffect, useState, useContext } from "react";
 import { CssBaseline, Theme, useMediaQuery } from "@mui/material";
-import { createTheme, ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import { indigo } from "@mui/material/colors";
+import { createTheme, ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
+import React, { useMemo, useEffect, useState, useContext } from "react";
 
 export type ColorScheme = "dark" | "light";
 const colorSchemes = ["dark", "light"];

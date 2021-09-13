@@ -1,8 +1,9 @@
-import React from "react";
 import { Card, CardActionArea, CardContent, CardMedia, Chip, Container, Grid, Slide, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
+import React from "react";
+
+import { useScrollOffset } from "@/components/Layout";
 
 const ckadLogo = "/assets/certifications/ckad.png";
 const ckaLogo = "/assets/certifications/cka.png";
