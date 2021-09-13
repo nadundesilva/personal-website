@@ -1,9 +1,9 @@
-import React from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { Breadcrumbs, Link as BreadcrumbLink, Typography } from "@mui/material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Breadcrumbs, Link as BreadcrumbLink, Typography } from "@mui/material";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
 
 const BREADCRUMBS_MAP: {[key: string]: string} = {
     "/certifications": "Certification"

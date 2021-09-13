@@ -1,6 +1,7 @@
-import React from "react";
-import { styled } from "@mui/material/styles";
 import { Grid, LinearProgress, Typography, linearProgressClasses } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import React from "react";
+
 import { useScrollOffset } from "@/components/Layout";
 
 const BorderLinearProgress = styled(LinearProgress)({

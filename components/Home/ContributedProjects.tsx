@@ -1,8 +1,9 @@
-import React from "react";
 import { Box, Grid, Slide } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
-import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
+import React from "react";
+
+import { useScrollOffset } from "@/components/Layout";
 
 const ballerina = "/assets/projects/ballerina.svg";
 const ballerinaWhite = "/assets/projects/ballerina-white.svg";

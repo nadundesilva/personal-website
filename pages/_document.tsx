@@ -1,7 +1,7 @@
-import React from "react";
-import Document, { DocumentContext, DocumentInitialProps, Html, Head, Main, NextScript } from "next/document";
 import createCache from "@emotion/cache";
 import createEmotionServer from "@emotion/server/create-instance";
+import Document, { DocumentContext, DocumentInitialProps, Html, Head, Main, NextScript } from "next/document";
+import React from "react";
 
 const FULL_NAME = "Nadun De Silva";
 const PUBLIC_URL = process.env.PUBLIC_URL ?? "https://nadundesilva.github.io";

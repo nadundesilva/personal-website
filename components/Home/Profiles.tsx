@@ -1,10 +1,11 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { faFacebook, faGithub, faInstagram, faLinkedin, faMedium, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, Grid, Grow, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import React from "react";
+
 import { useScrollOffset } from "@/components/Layout";
 
 const ProfileIcon = styled(FontAwesomeIcon)(({ theme }) => ({

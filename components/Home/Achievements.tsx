@@ -1,8 +1,9 @@
-import React from "react";
 import { Box, Container, Grid, Grow, Hidden, ImageList, ImageListItem, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useScrollOffset } from "@/components/Layout";
 import Image from "next/image";
+import React from "react";
+
+import { useScrollOffset } from "@/components/Layout";
 
 const wso2OutstandingContributorImage = "/assets/achievements/wso2-outstanding-contributor.jpg";
 const nasaSpaceApps2017 = "/assets/achievements/nasa-space-apps-2017.jpg";
