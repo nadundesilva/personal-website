@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardContent, CardMedia, Chip, Container, Grid, Slide, Typography } from "@mui/material";
+import { Box, Card, CardActionArea, CardContent, CardMedia, Chip, Container, Grid, Slide, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Image from "next/image";
 import React from "react";
@@ -80,7 +80,15 @@ const Certifications = (): React.ReactElement => {
                     <Grid item xs={12} sm={6} md={4} key={index} sx={{ padding: 2 }}>
                         <Slide direction={"up"} in={offset > 0.5 || direction !== 1} timeout={1000}>
                             <Card onClick={generateViewCertificateHandler(certification.link)} sx={{ height: "100%" }}>
-                                <CardActionArea>
+                                <CardActionArea
+                                    sx={{
+                                        height: "100%",
+                                        width: "100%",
+                                        padding: 1,
+                                        display: "flex",
+                                        flexDirection: "column"
+                                    }}
+                                >
                                     <CardMedia
                                         component={(props) => (
                                             <Container maxWidth={false} disableGutters={true}
@@ -96,10 +104,20 @@ const Certifications = (): React.ReactElement => {
                                         )}
                                         title={certification.name}
                                     />
-                                    <CardContent>
-                                        <Typography variant="h6" component="h2" align="center">
+                                    <CardContent
+                                        sx={{
+                                            width: "100%",
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            justifyContent: "space-between",
+                                            alignItems: "flex-start",
+                                            flexGrow: 1
+                                        }}
+                                    >
+                                        <Typography variant="h6" component="h2" align="center" sx={{ width: "100%" }}>
                                             {certification.name}
                                         </Typography>
+                                        <Box sx={{ flexGrow: 1 }}/>
                                         <Chip label={certification.type} color="secondary" size="small"
                                             sx={{ marginTop: 2, marginBottom: 2 }}/>
                                         <Typography color="textSecondary" sx={{ marginTop: 2 }}>
