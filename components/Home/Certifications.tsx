@@ -8,7 +8,9 @@ import { useScrollOffset } from "@/components/Layout";
 const ckadLogo = "/assets/certifications/ckad.png";
 const ckaLogo = "/assets/certifications/cka.png";
 const deepLearningAiLogo = "/assets/certifications/deep-learning-ai.png";
+const universityOfAlbertaLogo = "/assets/certifications/university-of-alberta.png";
 
+const UNIVERSITY_OF_ALBERTA_ISSUER = "University of Alberta";
 const DEEP_LEARNING_ISSUER = "Deeplearning.AI";
 const LINUX_FOUNDATION = "Linux Foundation";
 
@@ -25,6 +27,13 @@ const Certifications = (): React.ReactElement => {
     const { ref: rootRef, direction, offset } = useScrollOffset<HTMLDivElement>();
 
     const certifications: Certificate[] = [
+        {
+            name: "Fundamentals of Reinforcement Learning",
+            type: "Course",
+            link: "https://coursera.org/share/fcbebc1de9e6a9b3ecb186983af7b969",
+            image: universityOfAlbertaLogo,
+            issuer: UNIVERSITY_OF_ALBERTA_ISSUER
+        },
         {
             name: "Build Basic Generative Adversarial Networks (GANs)",
             type: "Course",
