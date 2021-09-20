@@ -6,7 +6,7 @@ import React from "react";
 const banner = "/assets/banner.jpg";
 
 const BannerImage = styled(Image)({
-    zIndex: -1
+    zIndex: 1
 });
 
 const WelcomeBanner = (): React.ReactElement => {
@@ -34,7 +34,8 @@ const WelcomeBanner = (): React.ReactElement => {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    padding: "17vh"
+                    padding: "17vh",
+                    zIndex: 2
                 }}
             >
                 <Grid item xs={12}>
@@ -53,9 +54,7 @@ const WelcomeBanner = (): React.ReactElement => {
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button variant="contained" color="primary" size={downloadButtonSize}
-                        sx={{ zIndex: 1 }} onClick={downloadCv}
-                    >
+                    <Button variant="contained" color="primary" size={downloadButtonSize} onClick={downloadCv}>
                         View CV
                     </Button>
                 </Grid>
