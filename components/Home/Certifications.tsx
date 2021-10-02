@@ -87,7 +87,7 @@ const Certifications = (): React.ReactElement => {
             {
                 certifications.map((certification, index) => (
                     <Grid item xs={12} sm={6} md={4} key={index} sx={{ padding: 2 }}>
-                        <Slide direction={"up"} in={offset > 0.5 || direction !== 1} timeout={1000}>
+                        <Slide direction={direction === -1 ? "down" : "up"} in={offset > 0.5} timeout={1000}>
                             <Card onClick={generateViewCertificateHandler(certification.link)} sx={{ height: "100%" }}>
                                 <CardActionArea
                                     sx={{
@@ -100,9 +100,11 @@ const Certifications = (): React.ReactElement => {
                                 >
                                     <CardMedia
                                         component={(props) => (
-                                            <Container maxWidth={false} disableGutters={true}
+                                            <Container {...props} maxWidth={false} disableGutters={true}
                                                 sx={{
                                                     position: "relative",
+                                                    width: "100%",
+                                                    height: "auto",
                                                     pt: "80%",
                                                     margin: "auto"
                                                 }}
