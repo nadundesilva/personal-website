@@ -1,20 +1,38 @@
-import { Box, Button, Container } from "@mui/material";
+import { Box, Button, CircularProgress, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import React, { useRef } from "react";
 
 import Heading from "@/components/Heading";
-import { AboutMe, Achievements, ContributedProjects, Certifications, Experience, Profiles, Skills, WelcomeBanner } from "@/components/Home";
+import { WelcomeBanner } from "@/components/Home";
 import Layout, { LayoutContent } from "@/components/Layout";
 
 const SectionContainer = styled(Container)(({ theme }) => ({
     margin: 0
 }));
 
+const dynamicOptions = {
+    loading: () => (
+        <Box sx={{ display: "flex", justifyContent: "center", py: 5 }}>
+            <CircularProgress/>
+        </Box>
+    ),
+    ssr: false
+};
+
+const AboutMe = dynamic<{}>(async() => await import("@/components/Home/AboutMe"), dynamicOptions);
+const Achievements = dynamic<{}>(async() => await import("@/components/Home/Achievements"), dynamicOptions);
+const ContributedProjects = dynamic<{}>(async() => await import("@/components/Home/ContributedProjects"), dynamicOptions);
+const Certifications = dynamic<{}>(async() => await import("@/components/Home/Certifications"), dynamicOptions);
+const Experience = dynamic<{}>(async() => await import("@/components/Home/Experience"), dynamicOptions);
+const Profiles = dynamic<{}>(async() => await import("@/components/Home/Profiles"), dynamicOptions);
+const Skills = dynamic<{}>(async() => await import("@/components/Home/Skills"), dynamicOptions);
+
 interface Section {
     name: string,
     ref: React.RefObject<HTMLDivElement>,
-    Component: () => React.ReactElement,
+    Component: React.ComponentType<{}>,
 }
 
 const Home = (): React.ReactElement => {
