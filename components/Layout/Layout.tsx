@@ -57,7 +57,7 @@ const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElem
                     textAlign: "center",
                     paddingTop: 10,
                     paddingBottom: 5,
-                    color: "#888888"
+                    color: "#666666"
                 }}
             >
                 &copy; 2021 Nadun De Silva
