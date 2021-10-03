@@ -9,12 +9,13 @@ import { WelcomeBanner } from "@/components/Home";
 import Layout, { LayoutContent } from "@/components/Layout";
 
 const SectionContainer = styled(Container)(({ theme }) => ({
-    margin: 0
+    margin: 0,
+    paddingTop: `${theme.mixins.toolbar.minHeight ?? 0}px`
 }));
 
 const dynamicOptions = {
     loading: () => (
-        <Box sx={{ display: "flex", justifyContent: "center", py: 5 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", py: 5 }} data-testid="section-loader">
             <CircularProgress/>
         </Box>
     ),
@@ -33,6 +34,7 @@ interface Section {
     name: string,
     ref: React.RefObject<HTMLDivElement>,
     Component: React.ComponentType<{}>,
+    sectionId: string,
 }
 
 const Home = (): React.ReactElement => {
@@ -40,48 +42,51 @@ const Home = (): React.ReactElement => {
         {
             name: "Experience",
             ref: useRef<HTMLDivElement>(null),
-            Component: Experience
+            Component: Experience,
+            sectionId: "experience"
         },
         {
             name: "Achievements",
             ref: useRef<HTMLDivElement>(null),
-            Component: Achievements
+            Component: Achievements,
+            sectionId: "achievements"
         },
         {
             name: "Skills",
             ref: useRef<HTMLDivElement>(null),
-            Component: Skills
+            Component: Skills,
+            sectionId: "skills"
         },
         {
             name: "Certifications",
             ref: useRef<HTMLDivElement>(null),
-            Component: Certifications
+            Component: Certifications,
+            sectionId: "certifications"
         },
         {
             name: "Profiles",
             ref: useRef<HTMLDivElement>(null),
-            Component: Profiles
+            Component: Profiles,
+            sectionId: "profiles"
         },
         {
             name: "Contributed Projects",
             ref: useRef<HTMLDivElement>(null),
-            Component: ContributedProjects
+            Component: ContributedProjects,
+            sectionId: "contributed-projects"
         }
     ];
 
-    const generateGoToSectionHandler = (sectionRef: React.RefObject<HTMLDivElement>) => () => {
-        sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    };
-    const generateSection = (title: string, section: React.ReactElement): React.ReactElement => (
-        <React.Fragment>
+    const generateSection = (title: string, section: React.ReactElement, testId: string): React.ReactElement => (
+        <Container maxWidth={false} disableGutters={true} data-testid={testId}>
             <Heading>{title}</Heading>
             <Container maxWidth={false} disableGutters={true} sx={{ padding: 3 }}>
                 {section}
             </Container>
-        </React.Fragment>
+        </Container>
     );
     return (
-        <React.Fragment>
+        <Container maxWidth={false} disableGutters={true} data-testid={"home-page"}>
             <Head>
                 <title>Nadun De Silva | An aspiring Software Engineer and ML Enthusiast</title>
             </Head>
@@ -90,7 +95,9 @@ const Home = (): React.ReactElement => {
                     {
                         pageSections.map((section: Section) => (
                             <Button key={section.name} variant="text" color="primary" disableElevation
-                                onClick={generateGoToSectionHandler(section.ref)}>
+                                href={`#${section.sectionId}`}
+                                data-testid={`${section.sectionId}-nav-button`}
+                                sx={{ color: "#ffffff" }}>
                                 {section.name}
                             </Button>
                         ))
@@ -100,22 +107,22 @@ const Home = (): React.ReactElement => {
                 <WelcomeBanner/>
                 <LayoutContent>
                     <SectionContainer maxWidth={false} disableGutters={true}>
-                        {generateSection("About Me", <AboutMe/>)}
+                        {generateSection("About Me", <AboutMe/>, "about-me-section")}
                     </SectionContainer>
                     <React.Fragment>
                         {
                             pageSections.map((section: Section) => (
-                                <SectionContainer maxWidth={false} disableGutters={true} ref={section.ref}
-                                    key={section.name}
+                                <SectionContainer maxWidth={false} disableGutters={true} key={section.name}
+                                    id={section.sectionId}
                                 >
-                                    {generateSection(section.name, <section.Component/>)}
+                                    {generateSection(section.name, <section.Component/>, `${section.sectionId}-section`)}
                                 </SectionContainer>
                             ))
                         }
                     </React.Fragment>
                 </LayoutContent>
             </Layout>
-        </React.Fragment>
+        </Container>
     );
 };
 
