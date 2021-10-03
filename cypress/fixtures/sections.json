@@ -1,1 +1,37 @@
-[]
+[
+    {
+        "name": "About Me",
+        "testIdPrefix": "about-me",
+        "hasNavBarButton": false
+    },
+    {
+        "name": "Experience",
+        "testIdPrefix": "experience",
+        "hasNavBarButton": true
+    },
+    {
+        "name": "Achievements",
+        "testIdPrefix": "achievements",
+        "hasNavBarButton": true
+    },
+    {
+        "name": "Skills",
+        "testIdPrefix": "skills",
+        "hasNavBarButton": true
+    },
+    {
+        "name": "Certifications",
+        "testIdPrefix": "certifications",
+        "hasNavBarButton": true
+    },
+    {
+        "name": "Profiles",
+        "testIdPrefix": "profiles",
+        "hasNavBarButton": true
+    },
+    {
+        "name": "Contributed Projects",
+        "testIdPrefix": "contributed-projects",
+        "hasNavBarButton": true
+    }
+]

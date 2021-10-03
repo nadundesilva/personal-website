@@ -55,7 +55,7 @@ const WelcomeBanner = (): React.ReactElement => {
                 </Grid>
                 <Grid item xs={12}>
                     <Button variant="contained" color="primary" size={downloadButtonSize} onClick={downloadCv}
-                        data-testId="view-cv-button">
+                        data-testid="view-cv-button">
                         View CV
                     </Button>
                 </Grid>
