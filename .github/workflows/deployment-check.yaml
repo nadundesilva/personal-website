@@ -10,7 +10,7 @@ jobs:
   deployment-validation:
     strategy:
       matrix:
-        browser: [ electron, chrome ]
+        browser: [ electron, chrome, firefox ]
     name: Ubuntu Deployment Check (${{ matrix.browser }})
     runs-on: ubuntu-20.04
     steps:
