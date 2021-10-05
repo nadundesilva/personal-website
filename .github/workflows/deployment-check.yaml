@@ -10,7 +10,7 @@ jobs:
   deployment-validation:
     strategy:
       matrix:
-        browser: [ electron, chrome, firefox ]
+        browser: [ electron, chrome ]
     name: Ubuntu Deployment Check (${{ matrix.browser }})
     runs-on: ubuntu-20.04
     steps:
@@ -23,7 +23,8 @@ jobs:
       - name: Run End to End Tests
         run: |
           npm ci
-          docker run -t -v $PWD:/test -w /test cypress/included:7.4.0 run --headless --browser ${{ matrix.browser }}
+          docker run -t -v $PWD:/test -w /test cypress/included:7.4.0 run --headless --browser ${{ matrix.browser }} \
+            --reporter cypress-image-snapshot/reporter
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v2
@@ -32,9 +33,7 @@ jobs:
           path: |
             cypress/videos/
             cypress/screenshots/
-            cypress/integration/__image_snapshots__/*.actual.png
-            cypress/integration/__image_snapshots__/*.diff.png
-
+            cypress/snapshots/**/__diff_output__/**
   links-check:
     name: Check Links in Website
     runs-on: ubuntu-20.04

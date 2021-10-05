@@ -28,6 +28,8 @@ describe("Test Home Page", () => {
                         .wait(3000);
                     cy.getByTestId(`${section.testIdPrefix}-section`)
                         .should("be.visible");
+                    cy.getByTestId(`${section.testIdPrefix}-section`)
+                        .matchImageSnapshot(`home-page-${section.testIdPrefix}-section`);
                 }
             });
         });

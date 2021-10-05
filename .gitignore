@@ -16,6 +16,10 @@ public/workbox-*.js.map
 # Testing
 coverage
 
+# Cypress
+cypress/videos/**
+cypress/snapshots/**/__diff_output__/**
+
 # Misc
 .DS_Store
 .env.local

@@ -27,7 +27,9 @@
     "build": "next build && next export && node generate-sitemap.js",
     "start": "next start",
     "lint": "next lint",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run --reporter cypress-image-snapshot/reporter",
+    "cypress:snapshots:update": "npm run cypress:run -- --env updateSnapshots=true"
   },
   "browserslist": {
     "production": [
