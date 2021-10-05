@@ -1,6 +1,11 @@
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
 
-addMatchImageSnapshotCommand();
+addMatchImageSnapshotCommand({
+    failureThreshold: 0.1,
+    failureThresholdType: "percent",
+    customDiffConfig: { threshold: 0.1 },
+    capture: "viewport"
+});
 
 const testIdSelector = (testId: string) => `[data-testid="${testId}"]`;
 
