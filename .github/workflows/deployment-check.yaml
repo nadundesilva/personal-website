@@ -39,6 +39,8 @@ jobs:
     name: Check Links in Website
     runs-on: ubuntu-20.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Link Checker
         id: lychee
         uses: lycheeverse/lychee-action@v1.0.6
@@ -51,3 +53,27 @@ jobs:
           path:  ./lychee/out.md
       - name: Fail on Link Errors
         run: exit ${{ steps.lychee.outputs.exit_code }}
+
+  website-audit:
+    name: Run Website Audit
+    runs-on: ubuntu-20.04
+    needs: build-site
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.17.6"
+      - name: Run Lighthouse Audit
+        run: |
+          npm install -g @lhci/cli@0.9.x
+          lhci autorun
+        env:
+          LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: website-audit
+          path: ./lhci-out
