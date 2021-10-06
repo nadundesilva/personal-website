@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - lhci-implementation
   pull_request:
     branches:
       - main
@@ -179,6 +180,42 @@ jobs:
             cypress/screenshots/
             cypress/snapshots/**/__diff_output__/**
 
+  website-audit:
+    name: Run Website Audit
+    runs-on: ubuntu-20.04
+    needs: build-site
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download Site
+        uses: actions/download-artifact@v2
+        with:
+          name: site
+          path: _site/
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.17.6"
+      - name: Run Lighthouse Audit
+        run: |
+          npm install -g @lhci/cli@0.9.x
+          sudo apt install -y ca-certificates
+          source .github/scripts/utils.sh
+
+          startServer
+          sudo cp ${NODE_EXTRA_CA_CERTS} /usr/local/share/ca-certificates
+          sudo update-ca-certificates
+          lhci autorun
+          stopServer
+        env:
+          LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: website-audit
+          path: ./lhci-out
+
   deploy-site:
     name: Deploy Site
     runs-on: ubuntu-20.04
@@ -188,7 +225,7 @@ jobs:
       - run-e2e-tests
       - build-site
       - links-check
-      - check-site-build
+      - website-audit
     steps:
       - name: Checkout
         uses: actions/checkout@v2
