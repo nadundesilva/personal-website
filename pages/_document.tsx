@@ -40,10 +40,45 @@ class WebsiteDocument extends Document {
     }
 
     render(): JSX.Element {
+        const cspValues = {
+            "default-src": ["'none'"],
+            "manifest-src": ["'self'"],
+            "img-src": [
+                "'self'",
+                "data:",
+                "https://nadundesilva.imgix.net",
+                "https://www.google.lk"
+            ],
+            "style-src": [
+                "'unsafe-inline'",
+                "https://fonts.googleapis.com"
+            ],
+            "font-src": ["https://fonts.gstatic.com"],
+            "script-src": [
+                "'self'",
+                "https://www.googletagmanager.com",
+                "http://www.googletagmanager.com",
+                "'sha256-zGXNhnZec+38XK4g2xHGdVAURhFrFDpw+SmUnNuuFr4='"
+            ],
+            "connect-src": [
+                "'self'",
+                "https://analytics.google.com"
+            ]
+        };
+        if (process.env.NODE_ENV === "development") {
+            cspValues["script-src"].push("'unsafe-eval'");
+        }
+        const csps = [];
+        for (const [cspKey, cspValue] of Object.entries(cspValues)) {
+            csps.push(`${cspKey} ${cspValue.join(" ")}`);
+        }
+
         return (
             <Html lang="en">
                 <Head>
                     <meta charSet="UTF-8"/>
+                    <meta httpEquiv="Content-Security-Policy" content={csps.join("; ")}/>
+
                     <meta name="application-name" content={FULL_NAME}/>
                     <meta name="description" content={DESCRIPTION}/>
                     <meta name="theme-color" content="#000000"/>
@@ -103,20 +138,18 @@ class WebsiteDocument extends Document {
 
                     {/* Google Tag Manager */}
                     <script async defer src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}/>
-                    <script
-                        dangerouslySetInnerHTML={{
-                            __html: `
-                                window.dataLayer = window.dataLayer || [];
-                                function gtag() {
-                                    dataLayer.push(arguments);
-                                }
-                                gtag("js", new Date());
-                                gtag("config", "${GA_TRACKING_ID}", {
-                                    page_path: window.location.pathname,
-                                });
-                            `
-                        }}
-                    />
+                    <script dangerouslySetInnerHTML={{
+                        __html: `
+                            window.dataLayer = window.dataLayer || [];
+                            function gtag() {
+                                dataLayer.push(arguments);
+                            }
+                            gtag("js", new Date());
+                            gtag("config", "${GA_TRACKING_ID}", {
+                                page_path: window.location.pathname,
+                            });
+                        `
+                    }}/>
                 </Head>
                 <body>
                     <Main />
