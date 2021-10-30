@@ -28,6 +28,13 @@ const Certifications = (): React.ReactElement => {
 
     const certifications: Certificate[] = [
         {
+            name: "Deep Learning",
+            type: "Specialization",
+            link: "https://coursera.org/share/8e5db53bfef4c4b27f79004022edad72",
+            image: deepLearningAiLogo,
+            issuer: DEEP_LEARNING_ISSUER
+        },
+        {
             name: "Fundamentals of Reinforcement Learning",
             type: "Course",
             link: "https://coursera.org/share/fcbebc1de9e6a9b3ecb186983af7b969",
@@ -38,13 +45,6 @@ const Certifications = (): React.ReactElement => {
             name: "Build Basic Generative Adversarial Networks (GANs)",
             type: "Course",
             link: "https://coursera.org/share/fed56feb8ba81177e6467779f22c0851",
-            image: deepLearningAiLogo,
-            issuer: DEEP_LEARNING_ISSUER
-        },
-        {
-            name: "Deep Learning",
-            type: "Specialization",
-            link: "https://coursera.org/share/8e5db53bfef4c4b27f79004022edad72",
             image: deepLearningAiLogo,
             issuer: DEEP_LEARNING_ISSUER
         },
