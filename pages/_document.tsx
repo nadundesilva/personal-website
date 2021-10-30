@@ -77,6 +77,7 @@ class WebsiteDocument extends Document {
             <Html lang="en">
                 <Head>
                     <meta charSet="UTF-8"/>
+                    <meta name="theme-color" content="#3f51b5"/>
 
                     <meta httpEquiv="X-DNS-Prefetch-Control" content="on"/>
                     <meta httpEquiv="Strict-Transport-Security" content="max-age=63072000; includeSubDomains; preload"/>
