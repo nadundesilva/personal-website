@@ -53,6 +53,7 @@ class WebsiteDocument extends Document {
                 "'unsafe-inline'",
                 "https://fonts.googleapis.com"
             ],
+            "style-src-elem": ["'self'"],
             "font-src": ["https://fonts.gstatic.com"],
             "script-src": [
                 "'self'",
@@ -63,7 +64,8 @@ class WebsiteDocument extends Document {
             "connect-src": [
                 "'self'",
                 "https://analytics.google.com"
-            ]
+            ],
+            "prefetch-src": ["'self'"]
         };
         if (process.env.NODE_ENV === "development") {
             cspValues["script-src"].push("'unsafe-eval'");
