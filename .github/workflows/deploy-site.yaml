@@ -41,7 +41,7 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v1.0.6
         with:
-          args: --verbose --no-progress --base="./_site/" --exclude="^https://fonts.gstatic.com/$" --exclude="^https://www.linkedin.com/in/nadundesilva$" ./_site/**/*.html
+          args: --verbose --no-progress --base="./_site/" --exclude="^https://fonts.gstatic.com/$" --exclude="^https://www.linkedin.com/in/nadundesilva$" --exclude="^https://www.googletagmanager.com/$" --exclude="^https://fonts.googleapis.com/$" --exclude="^http://www.googletagmanager.com/$" --exclude="^https://nadundesilva.github.io/$" ./_site/**/*.html
       - name: Upload Link Checker Report
         uses: actions/upload-artifact@v2
         with:
