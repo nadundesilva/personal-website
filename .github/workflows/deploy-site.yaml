@@ -71,14 +71,26 @@ jobs:
           node-version: "14.17.6"
       - name: Run End to End Tests
         run: |
-          npx serve@11.3.2 ./_site --listen tcp://localhost:4000 </dev/null &>/dev/null &
+          openssl req -newkey rsa:4096 \
+            -x509 \
+            -sha256 \
+            -days 3650 \
+            -nodes \
+            -out $PWD/server.crt \
+            -subj "/C=AU/ST=NSW/L=Sydney/O=nadunrds/OU=nadun/CN=nadundesilva.github.io/emailAddress=nadunrds@gmail.com" \
+            -keyout $PWD/server.key
+          export NODE_EXTRA_CA_CERTS=$PWD/server.crt
+
+          sudo echo "127.0.0.1 nadundesilva.github.io" | sudo tee -a /etc/hosts
+          sudo npx serve@12.0.1 ./_site --no-port-switching --debug --single --ssl-cert $PWD/server.crt --ssl-key $PWD/server.key --listen tcp://nadundesilva.github.io:443 </dev/null &>/dev/null &
           SERVE_PID=${!}
-          npx wait-on@5.3.0 -t 10000 -i 1000 --verbose http://localhost:4000
+          npx wait-on@5.3.0 -t 10000 -i 1000 --verbose https://nadundesilva.github.io
+
           npm ci
-          docker run --network host --rm -t -v $PWD:/test -w /test -e CYPRESS_BASE_URL=http://localhost:4000 \
+          docker run --network host --rm -t -v $PWD:/test -w /test -e CYPRESS_BASE_URL=https://nadundesilva.github.io \
             cypress/included:7.4.0 run --headless --browser ${{ matrix.browser }} \
             --reporter cypress-image-snapshot/reporter
-          kill -9 ${SERVE_PID}
+          sudo kill -9 ${SERVE_PID}
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v2
