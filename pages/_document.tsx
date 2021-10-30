@@ -50,10 +50,13 @@ class WebsiteDocument extends Document {
                 "https://www.google.lk"
             ],
             "style-src": [
+                "'unsafe-inline'"
+            ],
+            "style-src-elem": [
+                "'self'",
                 "'unsafe-inline'",
                 "https://fonts.googleapis.com"
             ],
-            "style-src-elem": ["'self'"],
             "font-src": ["https://fonts.gstatic.com"],
             "script-src": [
                 "'self'",
