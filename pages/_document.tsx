@@ -77,6 +77,13 @@ class WebsiteDocument extends Document {
             <Html lang="en">
                 <Head>
                     <meta charSet="UTF-8"/>
+
+                    <meta httpEquiv="X-DNS-Prefetch-Control" content="on"/>
+                    <meta httpEquiv="Strict-Transport-Security" content="max-age=63072000; includeSubDomains; preload"/>
+                    <meta httpEquiv="X-XSS-Protection" content="1; mode=block"/>
+                    <meta httpEquiv="Permissions-Policy" content=""/>
+                    <meta httpEquiv="X-Content-Type-Options" content="nosniff"/>
+                    <meta httpEquiv="Referrer-Policy" content="origin"/>
                     <meta httpEquiv="Content-Security-Policy" content={csps.join("; ")}/>
 
                     <meta name="application-name" content={FULL_NAME}/>
