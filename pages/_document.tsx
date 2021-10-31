@@ -123,6 +123,7 @@ class WebsiteDocument extends Document {
                     <meta property="twitter:image:alt" content={FULL_NAME}/>
                     <meta property="twitter:site" content="@nadunrds"/>
 
+                    <meta name="google-site-verification" content="M8dg6gzVYU0noXFvsPOqknm_WjREFeNE212YeUk0g30"/>
                     <meta name="yandex-verification" content="acbc45e5d9645cf0"/>
 
                     <script type="application/ld+json" dangerouslySetInnerHTML={{
