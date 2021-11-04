@@ -1,8 +1,12 @@
 name: Deploy Site
 
 on:
-  - push
-  - pull_request
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build-site:
@@ -100,6 +104,7 @@ jobs:
             cypress/videos/
             cypress/screenshots/
             cypress/snapshots/**/__diff_output__/**
+
   deploy-site:
     name: Deploy Site
     runs-on: ubuntu-20.04
