@@ -2,8 +2,8 @@
 
 declare namespace Cypress {
     interface Chainable {
-        getByTestId(value: string): Chainable<Element>;
-        childrenByTestId(value: string): Chainable<Element>;
+        getByTestId(testId: string): Chainable<JQuery<HTMLElement>>;
+        childrenByTestId(sub: Chainable<JQuery<HTMLElement>>, testId: string): Chainable<JQuery<HTMLElement>>;
         matchImageSnapshot(name: string): Chainable<Element>;
     }
 }
