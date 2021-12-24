@@ -86,7 +86,7 @@ jobs:
           export NODE_EXTRA_CA_CERTS=$PWD/server.crt
 
           sudo echo "127.0.0.1 nadundesilva.github.io" | sudo tee -a /etc/hosts
-          sudo npx serve@12.0.1 ./_site --no-port-switching --debug --single --ssl-cert $PWD/server.crt --ssl-key $PWD/server.key --listen tcp://nadundesilva.github.io:443 </dev/null &>/dev/null &
+          sudo npx serve@12.0.1 ./_site --no-port-switching --debug --single --ssl-cert $PWD/server.crt --ssl-key $PWD/server.key --listen tcp://nadundesilva.github.io:443 </dev/null &
           SERVE_PID=${!}
           npx wait-on@5.3.0 -t 10000 -i 1000 --verbose https://nadundesilva.github.io
 
