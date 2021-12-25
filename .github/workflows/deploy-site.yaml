@@ -86,9 +86,10 @@ jobs:
           export NODE_EXTRA_CA_CERTS=$PWD/server.crt
 
           sudo echo "127.0.0.1 nadundesilva.github.io" | sudo tee -a /etc/hosts
-          sudo npx serve@12.0.1 ./_site --no-port-switching --debug --single --ssl-cert $PWD/server.crt --ssl-key $PWD/server.key --listen tcp://nadundesilva.github.io:443 </dev/null &
+          npx serve ./_site --no-port-switching --debug --single --ssl-cert $PWD/server.crt --ssl-key $PWD/server.key --listen tcp://nadundesilva.github.io:8080 </dev/null &
           SERVE_PID=${!}
-          npx wait-on@5.3.0 -t 10000 -i 1000 --verbose https://nadundesilva.github.io
+          sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 443 -j REDIRECT --to-port 8080
+          npx wait-on -t 10000 -i 1000 --verbose https://nadundesilva.github.io
 
           npm ci
           docker run --network host --rm -t -v $PWD:/test -w /test -e CYPRESS_BASE_URL=https://nadundesilva.github.io \
