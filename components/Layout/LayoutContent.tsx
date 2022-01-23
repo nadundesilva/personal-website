@@ -13,8 +13,8 @@ const LayoutContent = ({ children }: LayoutContentProps): React.ReactElement => 
             marginBottom: 5,
             px: {
                 xs: 0,
-                lg: 30,
-                xl: 60
+                lg: 20,
+                xl: 40
             }
         }}
     >
