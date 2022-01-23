@@ -29,8 +29,8 @@ const ImageListItemImageOverlay = styled(Grid)({
 });
 
 const NASA_SPACE_APPS_2017_TITLE = "Global Finalist - Galactic Impact - NASA Space Apps Challenge 2017";
-const PLACEMENTS_IN_DEANS_LIST_TITLE = "Placements in Dean’s List";
-const WSO2_OUTSTANDING_CONTRIBUTOR_TITLE = "WSO2 Sustained Outstanding Contribution Award";
+const PLACEMENTS_IN_DEANS_LIST_TITLE = "Placements in Dean's List";
+const WSO2_OUTSTANDING_CONTRIBUTOR_TITLE = "WSO2 Sustained Outstanding Contribution Award - Consecutive years from 2019 to 2021";
 const HSBC_YOUTH_ENTERPRISE_AWARDS_2015_TITLE = "Finalist - British Council HSBC Youth Enterprise Awards 2015";
 const ANGEL_HACK_2016_TITLE = "Finalist - Angel Hack 2016";
 
