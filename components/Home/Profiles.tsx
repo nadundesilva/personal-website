@@ -2,7 +2,7 @@ import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { faFacebook, faGithub, faInstagram, faLinkedin, faMedium, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, Grid, Grow, Typography } from "@mui/material";
+import { Container, Grid, Grow, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import React from "react";
 
@@ -80,14 +80,16 @@ const Profiles = (): React.ReactElement => {
                             }}
                         >
                             <Grow in={offset > 0.5} timeout={1000}>
-                                <Box>
-                                    <Grid item xs={6}>
+                                <Container disableGutters={true}>
+                                    <Grid item xs={6} sx={{ margin: "auto", textAlign: "center" }}>
                                         <ProfileIcon icon={profile.icon} size="3x"/>
                                     </Grid>
-                                    <Grid item xs={6}>
-                                        <Typography sx={{ fontWeight: "bold" }}>{profile.name}</Typography>
+                                    <Grid item xs={6} sx={{ margin: "auto", textAlign: "center" }}>
+                                        <Typography sx={{ fontWeight: "bold" }}>
+                                            {profile.name}
+                                        </Typography>
                                     </Grid>
-                                </Box>
+                                </Container>
                             </Grow>
                         </Grid>
                     </Grid>
