@@ -31,7 +31,9 @@ const LayoutContent = ({ children }: LayoutContentProps): React.ReactElement => 
         }}
     >
         <RouterBreadcrumbs/>
-        {children}
+        <Container maxWidth={false}>
+            {children}
+        </Container>
     </Container>
 );
 

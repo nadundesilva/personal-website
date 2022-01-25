@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 import { CssBaseline, Theme, useMediaQuery } from "@mui/material";
-import { indigo } from "@mui/material/colors";
+import { grey, indigo } from "@mui/material/colors";
 import { createTheme, ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import React, { useMemo, useEffect, useState, useContext } from "react";
 
@@ -38,6 +38,15 @@ const createWebsiteTheme = (colorScheme: ColorScheme): Theme => {
             mode: colorScheme,
             primary: indigo,
             secondary: indigo
+        },
+        components: {
+            MuiLink: {
+                styleOverrides: {
+                    root: {
+                        color: grey[700]
+                    }
+                }
+            }
         }
     });
 };
