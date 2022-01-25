@@ -13,12 +13,18 @@
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, Container, Link, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import Head from "next/head";
 import React from "react";
+import { grey } from "@mui/material/colors";
+import Image from "next/image";
 
 import Layout, { LayoutContent } from "@/components/Layout";
-import { grey } from "@mui/material/colors";
+
+const gsoc = "/assets/experience/gsoc.svg";
+const gsocWhite = "/assets/experience/gsoc-white.svg";
+const wso2 = "/assets/experience/wso2.svg";
+const wso2White = "/assets/experience/wso2-white.svg";
 
 const Section = styled(Box)(({ theme }) => ({
     margin: 0,
@@ -52,11 +58,26 @@ const Paragraph = ({ children }: TypographyRestyledProps) => (
 );
 
 const Experience = (): React.ReactElement => {
+    const theme = useTheme();
+
     const Siddhi = <Link target={"_blank"} href={"https://siddhi.io/"}>Siddhi</Link>;
     const React = <Link target={"_blank"} href={"https://reactjs.org/"}>React</Link>;
     const Cellery = <Link target={"_blank"} href={"https://cellery.io/"}>Cellery</Link>;
     const Ballerina = <Link target={"_blank"} href={"https://ballerina.io/"}>Ballerina</Link>;
     const Choreo = <Link target={"_blank"} href={"https://wso2.com/choreo/"}>Choreo</Link>;
+
+    const Wso2Logo = (
+        <Box sx={{ position: "relative", height: "2em" }}>
+            <Image alt={"WSO2"} layout="fill" objectFit="fill"
+                src={theme?.palette?.mode === "light" ? wso2 : wso2White}/>
+        </Box>
+    );
+    const GsocLogo = (
+        <Box sx={{ position: "relative", height: "2em" }}>
+            <Image alt={"Google Summer of Code"} layout="fill" objectFit="fill"
+                src={theme?.palette?.mode === "light" ? gsoc : gsocWhite}/>
+        </Box>
+    );
 
     return (
         <Container maxWidth={false} disableGutters={true}>
@@ -68,6 +89,7 @@ const Experience = (): React.ReactElement => {
                     <Section>
                         <SectionHeading>Software Engineering Trainee</SectionHeading>
                         <Timespan>July 2016 to December 2016</Timespan>
+                        {Wso2Logo}
                         <Paragraph>
                             I worked as a Software Engineering intern at WSO2 as a required internship of the
                             B.Sc. (Hons.) in Engineering (Computer Science and Engineering) degree. I started
@@ -90,6 +112,7 @@ const Experience = (): React.ReactElement => {
                     <Section>
                         <SectionHeading>Google Summer of Code Intern</SectionHeading>
                         <Timespan>May 2017 to Sep 2017</Timespan>
+                        {GsocLogo}
                         <Paragraph>
                             During my last year at the University, I worked as a Google Summer of Code intern
                             in my spare time. I worked for WSO2 during this period as well and developed a
@@ -104,6 +127,7 @@ const Experience = (): React.ReactElement => {
                     <Section>
                         <SectionHeading>Software Engineer</SectionHeading>
                         <Timespan>Jan 2018 to July 2019</Timespan>
+                        {Wso2Logo}
                         <Paragraph>
                             I was head hunted by WSO2 before the end of my degree and I was offered to start
                             working as a Software Engineer at WSO2. At the start of my employment, I worked in
@@ -156,6 +180,7 @@ const Experience = (): React.ReactElement => {
                     <Section>
                         <SectionHeading>Senior Software Engineer</SectionHeading>
                         <Timespan>July 2019 to June 2021</Timespan>
+                        {Wso2Logo}
                         <Paragraph>
                             Later, I completely owned the Observability area and mentored few interns as well
                             as other junior engineers as well. I have also implemented parts of the CLI,
@@ -200,6 +225,7 @@ const Experience = (): React.ReactElement => {
                     <Section>
                         <SectionHeading>Associate Technical Lead</SectionHeading>
                         <Timespan>June 2021 to Now</Timespan>
+                        {Wso2Logo}
                         <Paragraph>
                             Even before being promoted to an Associate Technical Lead, I was performing well at this level
                             and I continued to improve and grow within my new role as an Associate Technical Lead. I continued
