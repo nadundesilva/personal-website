@@ -63,7 +63,7 @@ const Experience = (): React.ReactElement => {
             institute: "WSO2, Colombo 03, Sri Lanka"
         }
     ];
-    const instituteIcon = <FontAwesomeIcon icon={faMapMarkerAlt}/>;
+    const locationIcon = <FontAwesomeIcon icon={faMapMarkerAlt}/>;
 
     return (
         <Timeline ref={rootRef} position={isTimelineLeftAligned ? "left" : "alternate"}>
@@ -92,11 +92,11 @@ const Experience = (): React.ReactElement => {
                                         </Typography>
                                         <Typography variant="body2" color="textSecondary">
                                             {isOnLeft && (
-                                                <React.Fragment>{instituteIcon}&nbsp;</React.Fragment>
+                                                <React.Fragment>{locationIcon}&nbsp;</React.Fragment>
                                             )}
                                             {item.institute}
                                             {!isOnLeft && (
-                                                <React.Fragment>&nbsp;{instituteIcon}</React.Fragment>
+                                                <React.Fragment>&nbsp;{locationIcon}</React.Fragment>
                                             )}
                                         </Typography>
                                     </Paper>

@@ -92,7 +92,7 @@ const Home = (): React.ReactElement => {
     const generateSection = (title: string, section: React.ReactElement, testId: string): React.ReactElement => (
         <Container maxWidth={false} disableGutters={true} data-testid={testId}>
             <Heading>{title}</Heading>
-            <Container maxWidth={false} disableGutters={true} sx={{ padding: 3 }}>
+            <Container maxWidth={false} disableGutters={true} sx={{ py: 3 }}>
                 {section}
             </Container>
         </Container>
