@@ -78,8 +78,8 @@ const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElem
                 <Box onClick={handleClick} role="presentation"
                     sx={{
                         position: "fixed",
-                        bottom: 2,
-                        right: 2
+                        bottom: 10,
+                        right: 10
                     }}
                 >
                     <Fab color="primary" size="small" aria-label="scroll back to top">
