@@ -92,7 +92,7 @@ const Profiles = (): React.ReactElement => {
                             }}
                         >
                             <Grow in={offset > 0.5} timeout={1000}>
-                                <Container disableGutters={true}>
+                                <Container disableGutters>
                                     <Grid item xs={6} sx={{ margin: "auto", textAlign: "center" }}>
                                         <ProfileIcon icon={profile.icon} size="3x"/>
                                     </Grid>
