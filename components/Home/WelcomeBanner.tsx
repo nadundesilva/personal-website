@@ -35,7 +35,7 @@ const WelcomeBanner = (): React.ReactElement => {
     };
 
     return (
-        <Container maxWidth={false} disableGutters={true} sx={{ position: "relative" }}>
+        <Container maxWidth={false} disableGutters sx={{ position: "relative" }}>
             <Grid container
                 sx={{
                     color: "#ffffff",
@@ -72,14 +72,14 @@ const WelcomeBanner = (): React.ReactElement => {
                     </Button>
                 </Grid>
             </Grid>
-            <Container maxWidth={false} disableGutters={true}
+            <Container maxWidth={false} disableGutters
                 sx={{
                     position: "relative",
                     height: (theme: Theme) => `calc(100vh - ${theme.mixins.toolbar.minHeight ?? 0}px)`
                 }}
             >
                 <BannerImage src={banner} alt="Nadun De Silva Website Banner" layout="fill"
-                    objectFit="cover" priority={true}/>
+                    objectFit="cover" priority/>
             </Container>
         </Container>
     );

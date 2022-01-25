@@ -126,7 +126,7 @@ const Achievements = (): React.ReactElement => {
     const LARGE_SCREEN_COLUMN_COUNT = 3;
     const SMALL_SCREEN_COLUMN_COUNT = 1;
     return (
-        <Container maxWidth={false} disableGutters={true} ref={rootRef}>
+        <Container maxWidth={false} disableGutters ref={rootRef}>
             {
                 isAboveMd
                     ? (

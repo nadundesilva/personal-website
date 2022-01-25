@@ -112,7 +112,7 @@ const Certifications = (): React.ReactElement => {
                                 >
                                     <CardMedia
                                         component={(props) => (
-                                            <Container {...props} maxWidth={false} disableGutters={true}
+                                            <Container {...props} maxWidth={false} disableGutters
                                                 sx={{
                                                     position: "relative",
                                                     width: "100%",

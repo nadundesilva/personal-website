@@ -90,15 +90,15 @@ const Home = (): React.ReactElement => {
     ];
 
     const generateSection = (title: string, section: React.ReactElement, testId: string): React.ReactElement => (
-        <Container maxWidth={false} disableGutters={true} data-testid={testId}>
+        <Container maxWidth={false} disableGutters data-testid={testId}>
             <Heading>{title}</Heading>
-            <Container maxWidth={false} disableGutters={true} sx={{ py: 3 }}>
+            <Container maxWidth={false} disableGutters sx={{ py: 3 }}>
                 {section}
             </Container>
         </Container>
     );
     return (
-        <Container maxWidth={false} disableGutters={true} data-testid={"home-page"}>
+        <Container maxWidth={false} disableGutters data-testid={"home-page"}>
             <Head>
                 <title>Nadun De Silva | An aspiring Software Engineer and ML Enthusiast</title>
             </Head>
@@ -118,13 +118,13 @@ const Home = (): React.ReactElement => {
             }>
                 <WelcomeBanner/>
                 <LayoutContent>
-                    <SectionContainer maxWidth={false} disableGutters={true}>
+                    <SectionContainer maxWidth={false} disableGutters>
                         {generateSection("About Me", <AboutMe/>, "about-me-section")}
                     </SectionContainer>
                     <React.Fragment>
                         {
                             pageSections.map((section: Section) => (
-                                <SectionContainer maxWidth={false} disableGutters={true} key={section.name}
+                                <SectionContainer maxWidth={false} disableGutters key={section.name}
                                     id={section.sectionId}
                                 >
                                     {generateSection(section.name, <section.Component/>, `${section.sectionId}-section`)}
