@@ -61,7 +61,7 @@ const Layout = ({ children, appBarItems, window }: LayoutProps): React.ReactElem
         <React.Fragment>
             {appBar}
             <Toolbar ref={scrollToTopRef}/>
-            <Container maxWidth={false} disableGutters={true} sx={{ overflowX: "hidden" }}>
+            <Container maxWidth={false} disableGutters sx={{ overflowX: "hidden" }}>
                 {children}
             </Container>
             <Container maxWidth={false}

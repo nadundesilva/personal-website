@@ -20,7 +20,7 @@ interface LayoutContentProps {
 }
 
 const LayoutContent = ({ children }: LayoutContentProps): React.ReactElement => (
-    <Container maxWidth={false} disableGutters={true}
+    <Container maxWidth={false} disableGutters
         sx={{
             marginBottom: 5,
             px: {

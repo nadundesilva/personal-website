@@ -18,7 +18,7 @@ interface HeadingProps {
 }
 
 const Heading = (props: HeadingProps): React.ReactElement => (
-    <Container maxWidth={false} disableGutters={true} sx={{ my: 2 }}>
+    <Container maxWidth={false} disableGutters sx={{ my: 2 }}>
         <Divider/>
         <Typography variant="h5" component="h2" align="center"
             sx={{
