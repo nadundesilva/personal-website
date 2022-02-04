@@ -14,10 +14,9 @@ import { Box, Button, CircularProgress, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 import Heading from "@/components/Heading";
-import { WelcomeBanner } from "@/components/Home";
 import Layout, { LayoutContent } from "@/components/Layout";
 
 const SectionContainer = styled(Container)(({ theme }) => ({
@@ -50,6 +49,15 @@ interface Section {
 }
 
 const Home = (): React.ReactElement => {
+    const [isWelcomeBannerLoaded, setWelcomeBannerLoaded] = useState<boolean>(false);
+    const WelcomeBanner = dynamic<{}>(
+        async() => await import("@/components/Home/WelcomeBanner").then(async(component) => {
+            setWelcomeBannerLoaded(true);
+            return await Promise.resolve(component);
+        }),
+        dynamicOptions
+    );
+
     const pageSections: Section[] = [
         {
             name: "Experience",
@@ -117,22 +125,26 @@ const Home = (): React.ReactElement => {
                 </Box>
             }>
                 <WelcomeBanner/>
-                <LayoutContent>
-                    <SectionContainer maxWidth={false} disableGutters>
-                        {generateSection("About Me", <AboutMe/>, "about-me-section")}
-                    </SectionContainer>
-                    <React.Fragment>
-                        {
-                            pageSections.map((section: Section) => (
-                                <SectionContainer maxWidth={false} disableGutters key={section.name}
-                                    id={section.sectionId}
-                                >
-                                    {generateSection(section.name, <section.Component/>, `${section.sectionId}-section`)}
-                                </SectionContainer>
-                            ))
-                        }
-                    </React.Fragment>
-                </LayoutContent>
+                {
+                    isWelcomeBannerLoaded && (
+                        <LayoutContent>
+                            <SectionContainer maxWidth={false} disableGutters>
+                                {generateSection("About Me", <AboutMe/>, "about-me-section")}
+                            </SectionContainer>
+                            <React.Fragment>
+                                {
+                                    pageSections.map((section: Section) => (
+                                        <SectionContainer maxWidth={false} disableGutters key={section.name}
+                                            id={section.sectionId}
+                                        >
+                                            {generateSection(section.name, <section.Component/>, `${section.sectionId}-section`)}
+                                        </SectionContainer>
+                                    ))
+                                }
+                            </React.Fragment>
+                        </LayoutContent>
+                    )
+                }
             </Layout>
         </Container>
     );
