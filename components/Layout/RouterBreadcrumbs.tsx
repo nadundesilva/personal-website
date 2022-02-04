@@ -18,7 +18,8 @@ import { useRouter } from "next/router";
 import React from "react";
 
 const BREADCRUMBS_MAP: {[key: string]: string} = {
-    "/experience": "Experience"
+    "/experience": "Experience",
+    "/achievements": "Achievements"
 };
 
 const RouterBreadcrumbs = (): React.ReactElement | null => {
