@@ -79,14 +79,14 @@ const Experience = (): React.ReactElement => {
     const Choreo = <Link target={"_blank"} href={"https://wso2.com/choreo/"}>Choreo</Link>;
 
     const Wso2Logo = (
-        <Box sx={{ position: "relative", height: "2em" }}>
-            <Image alt={"WSO2"} layout="fill" objectFit="fill"
+        <Box sx={{ position: "relative", height: "2em", my: 1 }}>
+            <Image alt={"WSO2"} layout="fill" objectFit="scale-down" objectPosition="left top"
                 src={theme?.palette?.mode === "light" ? wso2 : wso2White}/>
         </Box>
     );
     const GsocLogo = (
-        <Box sx={{ position: "relative", height: "2em" }}>
-            <Image alt={"Google Summer of Code"} layout="fill" objectFit="fill"
+        <Box sx={{ position: "relative", height: "2em", my: 1 }}>
+            <Image alt={"Google Summer of Code"} layout="fill" objectFit="scale-down" objectPosition="left top"
                 src={theme?.palette?.mode === "light" ? gsoc : gsocWhite}/>
         </Box>
     );
