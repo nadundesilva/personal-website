@@ -61,7 +61,19 @@ const Experience = (): React.ReactElement => {
     const theme = useTheme();
 
     const Siddhi = <Link target={"_blank"} href={"https://siddhi.io/"}>Siddhi</Link>;
+    const mkDocs = <Link target={"_blank"} href={"https://www.mkdocs.org/"}>MkDocs</Link>;
+    const wso2IdentityServer = (
+        <Link target={"_blank"} href={"https://wso2.com/identity-server/"}>
+            WSO2 Identity Server
+        </Link>
+    );
     const React = <Link target={"_blank"} href={"https://reactjs.org/"}>React</Link>;
+    const apacheOpenWhisk = (
+        <Link target={"_blank"} href={"https://openwhisk.apache.org/"}>
+            Apache OpenWhisk
+        </Link>
+    );
+    const knative = <Link target={"_blank"} href={"https://knative.dev/docs/"}>Knative</Link>;
     const Cellery = <Link target={"_blank"} href={"https://cellery.io/"}>Cellery</Link>;
     const Ballerina = <Link target={"_blank"} href={"https://ballerina.io/"}>Ballerina</Link>;
     const Choreo = <Link target={"_blank"} href={"https://wso2.com/choreo/"}>Choreo</Link>;
@@ -117,8 +129,7 @@ const Experience = (): React.ReactElement => {
                             of Code intern. I worked for WSO2 during this period as well and developed a maven plugin
                             for automatically generating documentation for the {Siddhi} extensions. The information
                             for the documentation was scraped from the data annotated into the extensions using a
-                            maven plugin and the collected data was converted into html pages
-                            using <Link target={"_blank"} href={"https://www.mkdocs.org/"}>MkDocs</Link>. This was
+                            maven plugin and the collected data was converted into html pages using {mkDocs}. This was
                             used by {Siddhi} for generating their documentation till it was decommissioned several years
                             later.
                         </Paragraph>
@@ -132,8 +143,7 @@ const Experience = (): React.ReactElement => {
                             working as a Software Engineer at WSO2. At the start of my employment, I worked in
                             multiple teams as part of the probation period. During one of these assignments,
                             I implemented a password policy authenticator which is an authentication extension for
-                            the <Link href={"https://wso2.com/identity-server/"}>WSO2 Identity Server</Link> which
-                            would validate and enforce password policies.
+                            the {wso2IdentityServer} which would validate and enforce password policies.
                         </Paragraph>
                         <Paragraph>
                             After completing this feature, I worked on a Customer Success Enablement project
@@ -151,12 +161,11 @@ const Experience = (): React.ReactElement => {
                             for me at that time, I managed to learn the observability space in a short time and
                             implement a considerable amount of it along with another engineer. I also contributed
                             with ideas for the platform as a whole as well. The WSO2 Serverless Platform was based
-                            on <Link href={"https://openwhisk.apache.org/"}>Apache OpenWhisk</Link> and it
-                            allowed running any docker image in serverless mode which was a new concept at that
-                            time. However, almost near the time when we completed a basic but complete version of
-                            the platform, <Link href={"https://knative.dev/docs/"}>Knative</Link> which offered a
-                            similar experience was announced. As a result, the serverless platform was not offered
-                            as part of the product line of WSO2 and it was discontinued.
+                            on {apacheOpenWhisk} and it allowed running any docker image in serverless mode which
+                            was a new concept at that time. However, almost near the time when we completed a basic
+                            but complete version of the platform, {knative} which offered a similar experience was
+                            announced. As a result, the serverless platform was not offered as part of the product
+                            line of WSO2 and it was discontinued.
                         </Paragraph>
                         <Paragraph>
                             Afterwards, I spent few more weeks within the Cloud team including a month of
