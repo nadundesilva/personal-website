@@ -78,6 +78,7 @@ const Achievements = (): React.ReactElement => {
         <Container maxWidth={false} disableGutters>
             <Head>
                 <title>Achievements of Nadun De Silva</title>
+                <meta name="robots" content="noindex, nofollow"/>
             </Head>
             <Layout>
                 <LayoutContent>
