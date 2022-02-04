@@ -21,10 +21,10 @@ const plugins = [
         {
             pwa: {
                 dest: "public",
-                register: true
-            }
-        }
-    ]
+                register: true,
+            },
+        },
+    ],
 ];
 
 const nextConfig = {
