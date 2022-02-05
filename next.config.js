@@ -15,6 +15,10 @@ const withPlugins = require("next-compose-plugins");
 
 const pwa = require("next-pwa");
 
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+    enabled: process.env.ANALYZE === "true",
+});
+
 const plugins = [
     [
         pwa,
@@ -25,6 +29,7 @@ const plugins = [
             },
         },
     ],
+    [withBundleAnalyzer],
 ];
 
 const nextConfig = {
