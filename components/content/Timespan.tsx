@@ -15,11 +15,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
-interface TypographyRestyledProps {
+interface TimespanProps {
     children: React.ReactNode,
 }
 
-const Timespan = ({ children }: TypographyRestyledProps): React.ReactElement => (
+const Timespan = ({ children }: TimespanProps): React.ReactElement => (
     <Typography variant={"body1"} sx={{ pt: 1, pb: 1, color: grey[700] }}>
         <FontAwesomeIcon icon={faCalendarAlt}/>&nbsp;{children}
     </Typography>
