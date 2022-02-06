@@ -47,7 +47,8 @@ const WelcomeBanner = (): React.ReactElement => {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    padding: "17vh",
+                    pt: "17vh",
+                    px: "3vh",
                     zIndex: 2
                 }}
             >
