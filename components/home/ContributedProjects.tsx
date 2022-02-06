@@ -16,15 +16,7 @@ import Image from "next/image";
 import React from "react";
 
 import { useScrollOffset } from "@/components/Layout";
-
-const ballerina = "/assets/projects/ballerina.svg";
-const ballerinaWhite = "/assets/projects/ballerina-white.svg";
-const cellery = "/assets/projects/cellery.svg";
-const celleryWhite = "/assets/projects/cellery-white.svg";
-const siddhi = "/assets/projects/siddhi.svg";
-const siddhiWhite = "/assets/projects/siddhi-white.svg";
-const choreo = "/assets/projects/choreo.svg";
-const choreoWhite = "/assets/projects/choreo-white.svg";
+import { Logos, LogoAsset } from "@/constants";
 
 const ProjectLogo = styled(Image)(({ theme }) => ({
     display: "block",
@@ -42,7 +34,7 @@ const ContributedProjects = (): React.ReactElement => {
     const mdWidth = theme.breakpoints.values.md;
     const imageSizes = `(min-width: ${xsWidth}px) 100vw, (min-width: ${smWidth}px) 34vw, 
         (min-width: ${mdWidth}px) 25vw`;
-    const renderCarouselItem = (imageLink: string, blackThemeImageLink: string, alt: string): React.ReactElement => (
+    const renderCarouselItem = (logo: LogoAsset): React.ReactElement => (
         <Grid item xs={12} sm={4} md={3}>
             <Slide direction={"up"} in={offset > 0.5} timeout={2000}>
                 <Box
@@ -53,8 +45,8 @@ const ContributedProjects = (): React.ReactElement => {
                         marginRight: 5
                     }}
                 >
-                    <ProjectLogo alt={alt} layout="fill" objectFit="contain" sizes={imageSizes}
-                        src={theme?.palette?.mode === "light" ? imageLink : blackThemeImageLink}/>
+                    <ProjectLogo alt={logo.alt} layout="fill" objectFit="contain" sizes={imageSizes}
+                        src={logo.src(theme.palette.mode)}/>
                 </Box>
             </Slide>
         </Grid>
@@ -62,10 +54,10 @@ const ContributedProjects = (): React.ReactElement => {
 
     return (
         <Grid ref={rootRef} container spacing={3} justifyContent="center" alignItems="center">
-            {renderCarouselItem(choreo, choreoWhite, "Choreo")}
-            {renderCarouselItem(ballerina, ballerinaWhite, "Ballerina")}
-            {renderCarouselItem(cellery, celleryWhite, "Cellery")}
-            {renderCarouselItem(siddhi, siddhiWhite, "Siddhi")}
+            {renderCarouselItem(Logos.Choreo)}
+            {renderCarouselItem(Logos.Ballerina)}
+            {renderCarouselItem(Logos.Cellery)}
+            {renderCarouselItem(Logos.Siddhi)}
         </Grid>
     );
 };

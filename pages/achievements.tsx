@@ -16,17 +16,7 @@ import React from "react";
 
 import { Logo, Paragraph, Section, SectionHeading, Timespan } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/Layout";
-
-const wso2 = "/assets/experience/wso2.svg";
-const wso2White = "/assets/experience/wso2-white.svg";
-const uom = "/assets/education/university-of-moratuwa-logo.png";
-const nasaSpaceApps = "/assets/achievements/nasa-space-apps-logo.png";
-const nasaSpaceAppsWhite = "/assets/achievements/nasa-space-apps-logo-white.png";
-const angelHack = "/assets/achievements/angel-hack-logo.png";
-const angelHackWhite = "/assets/achievements/angel-hack-logo-white.png";
-const hackaDev = "/assets/achievements/hackadev-logo.png";
-const hackaDevWhite = "/assets/achievements/hackadev-logo-white.png";
-const britishCouncil = "/assets/achievements/british-council-logo.png";
+import { Logos } from "@/constants";
 
 const Achievements = (): React.ReactElement => {
     const nasaSpaceAppsChallenge = (
@@ -52,12 +42,12 @@ const Achievements = (): React.ReactElement => {
         </Link>
     );
 
-    const wso2Logo = <Logo alt={"WSO2"} src={wso2} srcWhite={wso2White} height={"2.5em"}/>;
-    const uomLogo = <Logo alt={"University Of Moratuwa"} src={uom} srcWhite={uom} height={"4em"}/>;
-    const nasaSpaceAppsChallengeLogo = <Logo alt={"NASA Space Apps Challenge"} src={nasaSpaceApps} srcWhite={nasaSpaceAppsWhite}/>;
-    const angelHackLogo = <Logo alt={"Angel Hack"} src={angelHack} srcWhite={angelHackWhite} height={"2.5em"}/>;
-    const hackaDevLogo = <Logo alt={"HackaDev"} src={hackaDev} srcWhite={hackaDevWhite} height={"4.5em"}/>;
-    const britishCouncilLogo = <Logo alt={"British Council"} src={britishCouncil} srcWhite={britishCouncil} height={"2.5em"}/>;
+    const wso2Logo = <Logo height={"2.5em"} logo={Logos.WSO2}/>;
+    const uomLogo = <Logo height={"4em"} logo={Logos.UniversityOfMoratuwa}/>;
+    const nasaSpaceAppsChallengeLogo = <Logo logo={Logos.NASASpaceAppsChallenge}/>;
+    const angelHackLogo = <Logo height={"2.5em"} logo={Logos.AngelHack}/>;
+    const hackaDevLogo = <Logo height={"4.5em"} logo={Logos.HackaDev}/>;
+    const britishCouncilLogo = <Logo height={"2.5em"} logo={Logos.BritishCouncil}/>;
 
     return (
         <Container maxWidth={false} disableGutters>

@@ -12,11 +12,11 @@
  */
 import { Typography } from "@mui/material";
 
-interface TypographyRestyledProps {
+interface SectionHeadingProps {
     children: React.ReactNode,
 }
 
-const SectionHeading = ({ children }: TypographyRestyledProps): React.ReactElement => (
+const SectionHeading = ({ children }: SectionHeadingProps): React.ReactElement => (
     <Typography variant="h6" component="h2" sx={{ pt: 2 }}>
         {children}
     </Typography>
