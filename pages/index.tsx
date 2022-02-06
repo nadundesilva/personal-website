@@ -33,13 +33,13 @@ const dynamicOptions = {
     ssr: false
 };
 
-const AboutMe = dynamic<{}>(async() => await import("@/components/Home/AboutMe"), dynamicOptions);
-const Achievements = dynamic<{}>(async() => await import("@/components/Home/Achievements"), dynamicOptions);
-const ContributedProjects = dynamic<{}>(async() => await import("@/components/Home/ContributedProjects"), dynamicOptions);
-const Certifications = dynamic<{}>(async() => await import("@/components/Home/Certifications"), dynamicOptions);
-const Experience = dynamic<{}>(async() => await import("@/components/Home/Experience"), dynamicOptions);
-const Profiles = dynamic<{}>(async() => await import("@/components/Home/Profiles"), dynamicOptions);
-const Skills = dynamic<{}>(async() => await import("@/components/Home/Skills"), dynamicOptions);
+const AboutMe = dynamic<{}>(async() => await import("@/components/home/AboutMe"), dynamicOptions);
+const Achievements = dynamic<{}>(async() => await import("@/components/home/Achievements"), dynamicOptions);
+const ContributedProjects = dynamic<{}>(async() => await import("@/components/home/ContributedProjects"), dynamicOptions);
+const Certifications = dynamic<{}>(async() => await import("@/components/home/Certifications"), dynamicOptions);
+const Experience = dynamic<{}>(async() => await import("@/components/home/Experience"), dynamicOptions);
+const Profiles = dynamic<{}>(async() => await import("@/components/home/Profiles"), dynamicOptions);
+const Skills = dynamic<{}>(async() => await import("@/components/home/Skills"), dynamicOptions);
 
 interface Section {
     name: string,
@@ -75,7 +75,7 @@ const HomeLayout = ({ children, pageSections }: HomeLayoutProps): React.ReactEle
 const Home = (): React.ReactElement => {
     const [isWelcomeBannerLoaded, setWelcomeBannerLoaded] = useState<boolean>(false);
     const WelcomeBanner = dynamic<{}>(
-        async() => await import("@/components/Home/WelcomeBanner").then(async(component) => {
+        async() => await import("@/components/home/WelcomeBanner").then(async(component) => {
             setWelcomeBannerLoaded(true);
             return await Promise.resolve(component);
         }),
