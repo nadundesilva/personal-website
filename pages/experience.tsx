@@ -17,10 +17,10 @@ import React from "react";
 import { Logo, Paragraph, Section, SectionHeading, Timespan } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/Layout";
 
-const gsoc = "/assets/experience/gsoc.svg";
-const gsocWhite = "/assets/experience/gsoc-white.svg";
 const wso2 = "/assets/experience/wso2.svg";
 const wso2White = "/assets/experience/wso2-white.svg";
+const gsoc = "/assets/experience/gsoc.svg";
+const gsocWhite = "/assets/experience/gsoc-white.svg";
 
 const Experience = (): React.ReactElement => {
     const Siddhi = <Link target={"_blank"} href={"https://siddhi.io/"}>Siddhi</Link>;
@@ -72,7 +72,7 @@ const Experience = (): React.ReactElement => {
                         <Paragraph>
                             Throughout all this work, I always made myself available for other team members who approached me
                             seeking for technical guidance or any clarifications about the platform. I also contributed to many
-                            other technical and architectural decision of the platform as well. Through all these, I still worked
+                            other technical and architectural decisions of the platform as well. Through all these, I still worked
                             at the level of other engineers and kept up with the technical aspects as well. I always thought out
                             of the box and helped improve many aspects of the platform as well.
                         </Paragraph>
@@ -82,7 +82,7 @@ const Experience = (): React.ReactElement => {
                         <Timespan>July 2019 to June 2021</Timespan>
                         {Wso2Logo}
                         <Paragraph>
-                            Later, I completely owned the Observability area and mentored few interns as well
+                            Later, I completely owned the Observability area and mentored a few interns as well
                             as other junior engineers. I have also implemented parts of the CLI, VS Code Extension
                             and other tools of {Cellery} which involved different new concepts and technologies
                             which I learnt within short periods of time. Later when project {Choreo} was
@@ -90,8 +90,8 @@ const Experience = (): React.ReactElement => {
                             the project {Choreo} was rebooted and project {Cellery} was discontinued.
                         </Paragraph>
                         <Paragraph>
-                            When {Choreo} project initially started (rebooted from the very first implementation),
-                            I was again selected to the small team of engineers who were tasked to making it a reality.
+                            When the {Choreo} project initially started (rebooted from the very first implementation),
+                            I was again selected to the small team of engineers who were tasked to make it a reality.
                             Two more engineers were also added to the {Choreo} Observability subteam and I was tasked
                             with leading the implementation of {Choreo} Observability. I designed the core architecture
                             of {Choreo} Observability and also worked on improving {Ballerina} Observability to
@@ -149,7 +149,7 @@ const Experience = (): React.ReactElement => {
                             time. I worked on the Observability aspects of the platform and while this was a new area
                             for me at that time, I managed to learn the observability space in a short time and
                             implement a considerable amount of it along with another engineer. I also contributed
-                            with ideas for the platform as a whole as well. The WSO2 Serverless Platform was based
+                            ideas for the platform as a whole as well. The WSO2 Serverless Platform was based
                             on {apacheOpenWhisk} and it allowed running any docker image in serverless mode which
                             was a new concept at that time. However, almost near the time when we completed a basic
                             but complete version of the platform, {knative} which offered a similar experience was
@@ -157,7 +157,7 @@ const Experience = (): React.ReactElement => {
                             line of WSO2 and it was discontinued.
                         </Paragraph>
                         <Paragraph>
-                            Afterwards, I spent few more weeks within the Cloud team including a month of
+                            Afterwards, I spent a few more weeks within the Cloud team including a month of
                             customer support rotation, which helped me gain valuable experience in handling customer
                             requests and also gain insights into other aspects of the business apart from the
                             technical side of it.
@@ -197,7 +197,7 @@ const Experience = (): React.ReactElement => {
                             I worked as a Software Engineering intern at WSO2 as a required part of my
                             B.Sc. (Hons.) in Engineering (Computer Science and Engineering) degree. I started
                             working as a member of the Data Analytics Server (DAS) product team building a
-                            prototype Notebook for analysing data collected by the DAS. However,
+                            prototype Notebook for analyzing data collected by the DAS. However,
                             the project was aborted and was not added to the DAS product when the company
                             decided to discontinue the DAS product.
                         </Paragraph>

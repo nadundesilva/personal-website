@@ -17,14 +17,16 @@ import React from "react";
 import { Logo, Paragraph, Section, SectionHeading, Timespan } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/Layout";
 
-const nasaSpaceApps = "/assets/achievements/nasa-space-apps-logo.png";
-const nasaSpaceAppsWhite = "/assets/achievements/nasa-space-apps-logo-white.png";
-const britishCouncil = "/assets/achievements/british-council-logo.png";
-const angelHack = "/assets/achievements/angel-hack-logo.png";
-const angelHackWhite = "/assets/achievements/angel-hack-logo-white.png";
-const uom = "/assets/education/university-of-moratuwa-logo.png";
 const wso2 = "/assets/experience/wso2.svg";
 const wso2White = "/assets/experience/wso2-white.svg";
+const uom = "/assets/education/university-of-moratuwa-logo.png";
+const nasaSpaceApps = "/assets/achievements/nasa-space-apps-logo.png";
+const nasaSpaceAppsWhite = "/assets/achievements/nasa-space-apps-logo-white.png";
+const angelHack = "/assets/achievements/angel-hack-logo.png";
+const angelHackWhite = "/assets/achievements/angel-hack-logo-white.png";
+const hackaDev = "/assets/achievements/hackadev-logo.png";
+const hackaDevWhite = "/assets/achievements/hackadev-logo-white.png";
+const britishCouncil = "/assets/achievements/british-council-logo.png";
 
 const Achievements = (): React.ReactElement => {
     const nasaSpaceAppsChallenge = (
@@ -50,11 +52,12 @@ const Achievements = (): React.ReactElement => {
         </Link>
     );
 
-    const nasaSpaceAppsChallengeLogo = <Logo alt={"NASA Space Apps Challenge"} src={nasaSpaceApps} srcWhite={nasaSpaceAppsWhite}/>;
-    const britishCouncilLogo = <Logo alt={"British Council"} src={britishCouncil} srcWhite={britishCouncil} height={"2.5em"}/>;
-    const angelHackLogo = <Logo alt={"Angel Hack"} src={angelHack} srcWhite={angelHackWhite} height={"2.5em"}/>;
-    const uomLogo = <Logo alt={"University Of Moratuwa"} src={uom} srcWhite={uom} height={"4em"}/>;
     const wso2Logo = <Logo alt={"WSO2"} src={wso2} srcWhite={wso2White} height={"2.5em"}/>;
+    const uomLogo = <Logo alt={"University Of Moratuwa"} src={uom} srcWhite={uom} height={"4em"}/>;
+    const nasaSpaceAppsChallengeLogo = <Logo alt={"NASA Space Apps Challenge"} src={nasaSpaceApps} srcWhite={nasaSpaceAppsWhite}/>;
+    const angelHackLogo = <Logo alt={"Angel Hack"} src={angelHack} srcWhite={angelHackWhite} height={"2.5em"}/>;
+    const hackaDevLogo = <Logo alt={"HackaDev"} src={hackaDev} srcWhite={hackaDevWhite} height={"4.5em"}/>;
+    const britishCouncilLogo = <Logo alt={"British Council"} src={britishCouncil} srcWhite={britishCouncil} height={"2.5em"}/>;
 
     return (
         <Container maxWidth={false} disableGutters>
@@ -71,11 +74,16 @@ const Achievements = (): React.ReactElement => {
                         <Paragraph>
                             Each year for employees who have performed exceptionally throughout the year,
                             the &quote;Sustained Outstanding Contribution Award&quote; is awarded. I was
-                            presented this award for several consecutive years at WSO2. This award was changed
-                            at year 2021 to be only awarded for the top 5% employees at WSO2 making it
-                            extremely hard to achieve. In year 2021, I was offered this award with only 18
-                            other people in the whole company gaining the same award. This is the
-                            best awards offered for an employee for exceptional performance.
+                            presented this award for several consecutive years at WSO2. Along with the
+                            award I had been commended many times for performing well above the expected
+                            level for many years.
+                        </Paragraph>
+                        <Paragraph>
+                            In 2021, this award was changed to be only awarded for the top 5% employees
+                            at WSO2 making it extremely hard to achieve. In the year 2021, I was offered this
+                            award with only 18 other people in the whole company gaining the same award.
+                            This is the best award offered for an employee for exceptional performance
+                            at WSO2.
                         </Paragraph>
                     </Section>
                     <Section>
@@ -104,17 +112,43 @@ const Achievements = (): React.ReactElement => {
                         </Paragraph>
                     </Section>
                     <Section>
+                        <SectionHeading>WSO2 Internal Hackathon - Honorable Mention</SectionHeading>
+                        <Timespan>2017</Timespan>
+                        {wso2Logo}
+                        <Paragraph>
+                            WSO2 Internal Hackathon (WHack) was held for the first time in 2017 which was open to
+                            all employees including interns who worked there at that time. I was an intern at that
+                            time at WSO2 and I along with a few other interns participated in the WSO2 internal
+                            hackathon. We proposed a system to track users across multiple platforms for improving
+                            customer analytics and thereby improve the customer experience as well. We were presented
+                            with an honorable mention for this solution.
+                        </Paragraph>
+                    </Section>
+                    <Section>
                         <SectionHeading>Angel Hack - Finalist</SectionHeading>
                         <Timespan>2016</Timespan>
                         {angelHackLogo}
                         <Paragraph>
-                            In Angel Hack 2016, our team developed a smart workout system which combied
+                            In Angel Hack 2016, our team developed a smart workout system which combined
                             a virtual reality game with an exercise bicycle fitted with a sensor to encourage
-                            people to workout more. The game maps the user&lsquo;ss movement on the bicycle to
+                            people to workout more. The game maps the user&lsquo;s movement on the bicycle to
                             movements on the game. The user is presented with targets which they can achieve by
                             collecting coins in their path. In the final round where the finalists were tasked
                             with developing their concepts within a limited time frame, we developed a working
                             prototype which the judges were able to try out as well.
+                        </Paragraph>
+                    </Section>
+                    <Section>
+                        <SectionHeading>HackaDev - Finalist</SectionHeading>
+                        <Timespan>2015</Timespan>
+                        {hackaDevLogo}
+                        <Paragraph>
+                            HackaDev is a competition which provides a platform for teams from within Sri Lanka
+                            to provide solutions for problems within Sri Lanka. In 2015, the teams were tasked
+                            with addressing problems which were faced by people in Uva province in Sri Lanka.
+                            Our team presented a platform which provided entrepreneurs a place to showcase
+                            their skills and products. The platform focussed on connecting entrepreneurs with
+                            customers and investors to help bootstrap businesses in the area.
                         </Paragraph>
                     </Section>
                     <Section>
@@ -125,7 +159,7 @@ const Achievements = (): React.ReactElement => {
                             British Council HSBC Youth Enterprise Awards is a hackathon in which many teams
                             presented ideas to help solve problems in different domains. In the hackathon held in 2015,
                             our team presented an idea, along with a prototype, to revolutionize education. Although
-                            there are so many online content, many people still prefer to use books. However, there
+                            there is so much online content, many people still prefer to use books. However, there
                             are many occasions where the written word and diagrams are not enough to understand
                             complex concepts. The proposed system visualized drawings using augmented reality to
                             help students study them easily.
