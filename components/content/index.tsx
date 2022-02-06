@@ -12,6 +12,7 @@
  */
 import Logo from "./Logo";
 import Paragraph from "./Paragraph";
+import Photo from "./Photo";
 import Section from "./Section";
 import SectionHeading from "./SectionHeading";
 import Timespan from "./Timespan";
@@ -19,6 +20,7 @@ import Timespan from "./Timespan";
 export {
     Logo,
     Paragraph,
+    Photo,
     Section,
     SectionHeading,
     Timespan

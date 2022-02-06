@@ -15,7 +15,8 @@ import { styled } from "@mui/material/styles";
 
 const Section = styled(Box)(() => ({
     margin: 0,
-    paddingTop: 5
+    paddingTop: 5,
+    clear: "both"
 }));
 
 export default Section;
