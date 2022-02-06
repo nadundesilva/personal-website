@@ -10,15 +10,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, Container, Link, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
-import { styled, useTheme } from "@mui/material/styles";
+import { Container, Link } from "@mui/material";
 import Head from "next/head";
-import Image from "next/image";
 import React from "react";
 
+import { Logo, Paragraph, Section, SectionHeading, Timespan } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/Layout";
 
 const gsoc = "/assets/experience/gsoc.svg";
@@ -26,40 +22,7 @@ const gsocWhite = "/assets/experience/gsoc-white.svg";
 const wso2 = "/assets/experience/wso2.svg";
 const wso2White = "/assets/experience/wso2-white.svg";
 
-const Section = styled(Box)(({ theme }) => ({
-    margin: 0,
-    paddingTop: 5
-}));
-
-interface TypographyRestyledProps {
-    children: React.ReactNode,
-}
-
-const SectionHeading = ({ children }: TypographyRestyledProps): React.ReactElement => (
-    <Typography variant="h6" component="h2" sx={{ pt: 2 }}>
-        {children}
-    </Typography>
-);
-
-const Timespan = ({ children }: TypographyRestyledProps): React.ReactElement => (
-    <Typography variant={"body1"} sx={{ pt: 1, pb: 1, color: grey[700] }}>
-        <FontAwesomeIcon icon={faCalendarAlt}/>&nbsp;{children}
-    </Typography>
-);
-
-const Paragraph = ({ children }: TypographyRestyledProps): React.ReactElement => (
-    <Typography
-        variant="body1"
-        gutterBottom
-        sx={{ m: 0, pt: 2, textAlign: "justify" }}
-    >
-        {children}
-    </Typography>
-);
-
 const Experience = (): React.ReactElement => {
-    const theme = useTheme();
-
     const Siddhi = <Link target={"_blank"} href={"https://siddhi.io/"}>Siddhi</Link>;
     const mkDocs = <Link target={"_blank"} href={"https://www.mkdocs.org/"}>MkDocs</Link>;
     const wso2IdentityServer = (
@@ -78,18 +41,8 @@ const Experience = (): React.ReactElement => {
     const Ballerina = <Link target={"_blank"} href={"https://ballerina.io/"}>Ballerina</Link>;
     const Choreo = <Link target={"_blank"} href={"https://wso2.com/choreo/"}>Choreo</Link>;
 
-    const Wso2Logo = (
-        <Box sx={{ position: "relative", height: "2em", my: 1 }}>
-            <Image alt={"WSO2"} layout="fill" objectFit="scale-down" objectPosition="left top"
-                src={theme?.palette?.mode === "light" ? wso2 : wso2White}/>
-        </Box>
-    );
-    const GsocLogo = (
-        <Box sx={{ position: "relative", height: "2em", my: 1 }}>
-            <Image alt={"Google Summer of Code"} layout="fill" objectFit="scale-down" objectPosition="left top"
-                src={theme?.palette?.mode === "light" ? gsoc : gsocWhite}/>
-        </Box>
-    );
+    const Wso2Logo = <Logo alt={"WSO2"} src={wso2} srcWhite={wso2White} height={"2.5em"}/>;
+    const GsocLogo = <Logo alt={"Google Summer of Code"} src={gsoc} srcWhite={gsocWhite}/>;
 
     return (
         <Container maxWidth={false} disableGutters>
