@@ -10,46 +10,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, Container, Link, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
-import { styled } from "@mui/material/styles";
+import { Container, Link } from "@mui/material";
 import Head from "next/head";
 import React from "react";
 
+import { Logo, Paragraph, Section, SectionHeading, Timespan } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/Layout";
 
-const Section = styled(Box)(() => ({
-    margin: 0,
-    paddingTop: 5
-}));
-
-interface TypographyRestyledProps {
-    children: React.ReactNode,
-}
-
-const SectionHeading = ({ children }: TypographyRestyledProps): React.ReactElement => (
-    <Typography variant="h6" component="h2" sx={{ pt: 2 }}>
-        {children}
-    </Typography>
-);
-
-const Year = ({ children }: TypographyRestyledProps): React.ReactElement => (
-    <Typography variant={"body1"} sx={{ pt: 1, pb: 1, color: grey[700] }}>
-        <FontAwesomeIcon icon={faCalendarAlt}/>&nbsp;{children}
-    </Typography>
-);
-
-const Paragraph = ({ children }: TypographyRestyledProps): React.ReactElement => (
-    <Typography
-        variant="body1"
-        gutterBottom
-        sx={{ m: 0, pt: 2, textAlign: "justify" }}
-    >
-        {children}
-    </Typography>
-);
+const nasaSpaceApps = "/assets/achievements/nasa-space-apps-logo.png";
+const nasaSpaceAppsWhite = "/assets/achievements/nasa-space-apps-logo-white.png";
+const britishCouncil = "/assets/achievements/british-council-logo.png";
+const angelHack = "/assets/achievements/angel-hack-logo.png";
+const angelHackWhite = "/assets/achievements/angel-hack-logo-white.png";
+const uom = "/assets/education/university-of-moratuwa-logo.png";
+const wso2 = "/assets/experience/wso2.svg";
+const wso2White = "/assets/experience/wso2-white.svg";
 
 const Achievements = (): React.ReactElement => {
     const nasaSpaceAppsChallenge = (
@@ -74,6 +49,13 @@ const Achievements = (): React.ReactElement => {
             Team Codon
         </Link>
     );
+
+    const nasaSpaceAppsChallengeLogo = <Logo alt={"NASA Space Apps Challenge"} src={nasaSpaceApps} srcWhite={nasaSpaceAppsWhite}/>;
+    const britishCouncilLogo = <Logo alt={"British Council"} src={britishCouncil} srcWhite={britishCouncil} height={"2.5em"}/>;
+    const angelHackLogo = <Logo alt={"Angel Hack"} src={angelHack} srcWhite={angelHackWhite} height={"2.5em"}/>;
+    const uomLogo = <Logo alt={"University Of Moratuwa"} src={uom} srcWhite={uom} height={"4em"}/>;
+    const wso2Logo = <Logo alt={"WSO2"} src={wso2} srcWhite={wso2White} height={"2.5em"}/>;
+
     return (
         <Container maxWidth={false} disableGutters>
             <Head>
@@ -84,7 +66,8 @@ const Achievements = (): React.ReactElement => {
                 <LayoutContent>
                     <Section>
                         <SectionHeading>NASA Space Apps Challenge - Galactic Impact - Global Finalist</SectionHeading>
-                        <Year>2017</Year>
+                        <Timespan>2017</Timespan>
+                        {nasaSpaceAppsChallengeLogo}
                         <Paragraph>
                             The {nasaSpaceAppsChallenge} is a competition hosted by NASA with teams from around the
                             world competing under different categories. In the 2017 challenge, I along with five other
@@ -98,7 +81,8 @@ const Achievements = (): React.ReactElement => {
                     </Section>
                     <Section>
                         <SectionHeading>British Council HSBC Youth Enterprise Awards - Finalist</SectionHeading>
-                        <Year>2015</Year>
+                        <Timespan>2015</Timespan>
+                        {britishCouncilLogo}
                         <Paragraph>
                             British Council HSBC Youth Enterprise Awards is a hackathon in which many teams
                             presented ideas to help solve problems in different domains. In the hackathon held in 2015,
@@ -111,7 +95,8 @@ const Achievements = (): React.ReactElement => {
                     </Section>
                     <Section>
                         <SectionHeading>Angel Hack - Finalist</SectionHeading>
-                        <Year>2016</Year>
+                        <Timespan>2016</Timespan>
+                        {angelHackLogo}
                         <Paragraph>
                             In Angel Hack 2016, our team developed a smart workout system which combied
                             a virtual reality game with an exercise bicycle fitted with a sensor to encourage
@@ -124,7 +109,8 @@ const Achievements = (): React.ReactElement => {
                     </Section>
                     <Section>
                         <SectionHeading>Placements in Dean&lsquo;s List</SectionHeading>
-                        <Year>2014 to 2018</Year>
+                        <Timespan>2014 to 2018</Timespan>
+                        {uomLogo}
                         <Paragraph>
                             During my B.Sc. (Hons.) in Engineering (Computer Science and Engineering) degree, I was
                             offered placements in the Dean&lsquo;s List for scoring a GPA above 3.8 (out of 4.2) for
@@ -133,7 +119,8 @@ const Achievements = (): React.ReactElement => {
                     </Section>
                     <Section>
                         <SectionHeading>WSO2 Sustained Outstanding Contribution Award</SectionHeading>
-                        <Year>2019 to 2021</Year>
+                        <Timespan>2019 to 2021</Timespan>
+                        {wso2Logo}
                         <Paragraph>
                             Each year for employees who have performed exceptionally throughout the year,
                             the &quote;Sustained Outstanding Contribution Award&quote; is awarded. I was
