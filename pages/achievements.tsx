@@ -64,10 +64,9 @@ const Achievements = (): React.ReactElement => {
                         <Photo float={"right"} photo={Photos.WSO2OutstandingContributor2019}/>
                         <Paragraph>
                             Each year for employees who have performed exceptionally throughout the year,
-                            the &quote;Sustained Outstanding Contribution Award&quote; is awarded. I was
-                            presented this award for several consecutive years at WSO2. Along with the
-                            award I had been commended many times for performing well above the expected
-                            level for many years.
+                            the Sustained Outstanding Contribution Award is awarded. I was presented this
+                            award for several consecutive years at WSO2. Along with the award I had been
+                            commended many times for performing well above the expected level for many years.
                         </Paragraph>
                         <Paragraph>
                             In 2021, this award was changed to be only awarded for the top 5% employees
@@ -78,30 +77,44 @@ const Achievements = (): React.ReactElement => {
                         </Paragraph>
                     </Section>
                     <Section>
-                        <SectionHeading>Placements in Dean&lsquo;s List</SectionHeading>
+                        <SectionHeading>Placements in the Dean&lsquo;s List at the University of Moratuwa</SectionHeading>
                         <Timespan>2014 to 2018</Timespan>
                         {uomLogo}
                         <Photo float={"right"} photo={Photos.UOMDeansList2017}/>
                         <Paragraph>
-                            During my B.Sc. (Hons.) in Engineering (Computer Science and Engineering) degree, I was
-                            offered placements in the Dean&lsquo;s List for scoring a GPA above 3.8 (out of 4.2) for
-                            6 out of the 8 semesters I studied at the University of Moratuwa.
+                            During my B.Sc. (Hons.) in Engineering (Computer Science and Engineering) degree at the
+                            University of Moratuwa, I was offered placements in the Dean&lsquo;s List for scoring a GPA
+                            above 3.8 (out of 4.2) for 6 out of the 8 semesters I studied at the University of Moratuwa.
+                        </Paragraph>
+                        <Paragraph>
+                            The semester in which placements in the Dean&lsquo;s List was awarded (4.20 GPA Scale):
+                            <ul>
+                                <li>Semester 02 (GPA - 3.82)</li>
+                                <li>Semester 03 (GPA - 3.84)</li>
+                                <li>Semester 05 (GPA - 3.82)</li>
+                                <li>Semester 06 (GPA - 4.03)</li>
+                                <li>Semester 07 (GPA - 4.04)</li>
+                                <li>Semester 08 (GPA - 4.01)</li>
+                            </ul>
                         </Paragraph>
                     </Section>
                     <Section>
                         <SectionHeading>NASA Space Apps Challenge - Galactic Impact - Global Finalist</SectionHeading>
                         <Timespan>2017</Timespan>
                         {nasaSpaceAppsChallengeLogo}
-                        <Photo float={"right"} photo={Photos.NASASpaceAppsChallenge2017}/>
+                        <Photo float={"right"} photo={Photos.NASASpaceAppsChallenge2017Newspaper}/>
                         <Paragraph>
                             The {nasaSpaceAppsChallenge} is a competition hosted by NASA with teams from around the
                             world competing under different categories. In the 2017 challenge, I along with five other
                             team members ({teamCodon}), competed under the {ourEcologicalNeighborhood} category to
-                            solve the {whereTheGenesFlow} challenge. We came up with a platform to map and compare
-                            population genetics of a species with landscape features, climate conditions, and human
-                            activities in a region to identify potential barriers or facilitators to gene migration
-                            and local adaptation. The platform at its core utilizes a clustering algorithm for identifying
-                            patterns for identifying any such barriers.
+                            solve the {whereTheGenesFlow} challenge.
+                        </Paragraph>
+                        <Photo float={"left"} photo={Photos.NASASpaceAppsChallenge2017}/>
+                        <Paragraph>
+                            We came up with a platform to map and compare population genetics of a species with landscape
+                            features, climate conditions, and human activities in a region to identify potential barriers
+                            or facilitators to gene migration and local adaptation. The platform at its core utilizes
+                            a clustering algorithm for identifying patterns for identifying any such barriers.
                         </Paragraph>
                     </Section>
                     <Section>
@@ -125,11 +138,23 @@ const Achievements = (): React.ReactElement => {
                         <Paragraph>
                             In Angel Hack 2016, our team developed a smart workout system which combined
                             a virtual reality game with an exercise bicycle fitted with a sensor to encourage
-                            people to workout more. The game maps the user&lsquo;s movement on the bicycle to
+                            people to workout more.
+                        </Paragraph>
+                        <Photo float={"left"} photo={Photos.AngelHack2016Bike}/>
+                        <Paragraph>
+                            The game maps the user&lsquo;s movement on the bicycle to
                             movements on the game. The user is presented with targets which they can achieve by
                             collecting coins in their path. In the final round where the finalists were tasked
                             with developing their concepts within a limited time frame, we developed a working
                             prototype which the judges were able to try out as well.
+                        </Paragraph>
+                        <Paragraph>
+                            The game was built using Unity which received the signal from the sensor attached
+                            to the exercise bicycle. The speed at which the user pedaled the bicycle forward
+                            was mapped into the speed at which the user moved within the game and the slight
+                            movements of the head was mapped into the bicycle making small turns. The path forward
+                            was designed to avoid too much strain on the neck, but to simply provide an enjoyable
+                            game for the user to enjoy while they exercised using the bicycle.
                         </Paragraph>
                     </Section>
                     <Section>
@@ -153,9 +178,12 @@ const Achievements = (): React.ReactElement => {
                         <Paragraph>
                             British Council HSBC Youth Enterprise Awards is a hackathon in which many teams
                             presented ideas to help solve problems in different domains. In the hackathon held in 2015,
-                            our team presented an idea, along with a prototype, to revolutionize education. Although
-                            there is so much online content, many people still prefer to use books. However, there
-                            are many occasions where the written word and diagrams are not enough to understand
+                            our team presented an idea, along with a prototype, in the hope of revolusionizing education.
+                        </Paragraph>
+                        <Photo float={"left"} photo={Photos.HSBCYouthEnterpriseAwards2015Discussion}/>
+                        <Paragraph>
+                            Although there is so much online content, many people still prefer to use books. However,
+                            there are many occasions where the written word and diagrams are not enough to understand
                             complex concepts. The proposed system visualized drawings using augmented reality to
                             help students study them easily.
                         </Paragraph>
