@@ -78,7 +78,7 @@ class WebsiteDocument extends Document {
             ],
             "connect-src": [
                 "'self'",
-                "https://analytics.google.com"
+                "https://www.google-analytics.com"
             ],
             "prefetch-src": ["'self'"]
         };
