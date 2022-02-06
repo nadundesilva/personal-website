@@ -65,6 +65,30 @@ const Achievements = (): React.ReactElement => {
             <Layout>
                 <LayoutContent>
                     <Section>
+                        <SectionHeading>WSO2 Sustained Outstanding Contribution Award</SectionHeading>
+                        <Timespan>2019 to 2021</Timespan>
+                        {wso2Logo}
+                        <Paragraph>
+                            Each year for employees who have performed exceptionally throughout the year,
+                            the &quote;Sustained Outstanding Contribution Award&quote; is awarded. I was
+                            presented this award for several consecutive years at WSO2. This award was changed
+                            at year 2021 to be only awarded for the top 5% employees at WSO2 making it
+                            extremely hard to achieve. In year 2021, I was offered this award with only 18
+                            other people in the whole company gaining the same award. This is the
+                            best awards offered for an employee for exceptional performance.
+                        </Paragraph>
+                    </Section>
+                    <Section>
+                        <SectionHeading>Placements in Dean&lsquo;s List</SectionHeading>
+                        <Timespan>2014 to 2018</Timespan>
+                        {uomLogo}
+                        <Paragraph>
+                            During my B.Sc. (Hons.) in Engineering (Computer Science and Engineering) degree, I was
+                            offered placements in the Dean&lsquo;s List for scoring a GPA above 3.8 (out of 4.2) for
+                            6 out of the 8 semesters I studied at the University of Moratuwa.
+                        </Paragraph>
+                    </Section>
+                    <Section>
                         <SectionHeading>NASA Space Apps Challenge - Galactic Impact - Global Finalist</SectionHeading>
                         <Timespan>2017</Timespan>
                         {nasaSpaceAppsChallengeLogo}
@@ -77,20 +101,6 @@ const Achievements = (): React.ReactElement => {
                             activities in a region to identify potential barriers or facilitators to gene migration
                             and local adaptation. The platform at its core utilizes a clustering algorithm for identifying
                             patterns for identifying any such barriers.
-                        </Paragraph>
-                    </Section>
-                    <Section>
-                        <SectionHeading>British Council HSBC Youth Enterprise Awards - Finalist</SectionHeading>
-                        <Timespan>2015</Timespan>
-                        {britishCouncilLogo}
-                        <Paragraph>
-                            British Council HSBC Youth Enterprise Awards is a hackathon in which many teams
-                            presented ideas to help solve problems in different domains. In the hackathon held in 2015,
-                            our team presented an idea, along with a prototype, to revolutionize education. Although
-                            there are so many online content, many people still prefer to use books. However, there
-                            are many occasions where the written word and diagrams are not enough to understand
-                            complex concepts. The proposed system visualized drawings using augmented reality to
-                            help students study them easily.
                         </Paragraph>
                     </Section>
                     <Section>
@@ -108,27 +118,17 @@ const Achievements = (): React.ReactElement => {
                         </Paragraph>
                     </Section>
                     <Section>
-                        <SectionHeading>Placements in Dean&lsquo;s List</SectionHeading>
-                        <Timespan>2014 to 2018</Timespan>
-                        {uomLogo}
+                        <SectionHeading>British Council HSBC Youth Enterprise Awards - Finalist</SectionHeading>
+                        <Timespan>2015</Timespan>
+                        {britishCouncilLogo}
                         <Paragraph>
-                            During my B.Sc. (Hons.) in Engineering (Computer Science and Engineering) degree, I was
-                            offered placements in the Dean&lsquo;s List for scoring a GPA above 3.8 (out of 4.2) for
-                            6 out of the 8 semesters I studied at the University of Moratuwa.
-                        </Paragraph>
-                    </Section>
-                    <Section>
-                        <SectionHeading>WSO2 Sustained Outstanding Contribution Award</SectionHeading>
-                        <Timespan>2019 to 2021</Timespan>
-                        {wso2Logo}
-                        <Paragraph>
-                            Each year for employees who have performed exceptionally throughout the year,
-                            the &quote;Sustained Outstanding Contribution Award&quote; is awarded. I was
-                            presented this award for several consecutive years at WSO2. This award was changed
-                            at year 2021 to be only awarded for the top 5% employees at WSO2 making it
-                            extremely hard to achieve. In year 2021, I was offered this award with only 18
-                            other people in the whole company gaining the same award. This is the
-                            best awards offered for an employee for exceptional performance.
+                            British Council HSBC Youth Enterprise Awards is a hackathon in which many teams
+                            presented ideas to help solve problems in different domains. In the hackathon held in 2015,
+                            our team presented an idea, along with a prototype, to revolutionize education. Although
+                            there are so many online content, many people still prefer to use books. However, there
+                            are many occasions where the written word and diagrams are not enough to understand
+                            complex concepts. The proposed system visualized drawings using augmented reality to
+                            help students study them easily.
                         </Paragraph>
                     </Section>
                 </LayoutContent>
