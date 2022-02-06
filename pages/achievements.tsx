@@ -14,9 +14,9 @@ import { Container, Link } from "@mui/material";
 import Head from "next/head";
 import React from "react";
 
-import { Logo, Paragraph, Section, SectionHeading, Timespan } from "@/components/content";
+import { Logo, Paragraph, Photo, Section, SectionHeading, Timespan } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/Layout";
-import { Logos } from "@/constants";
+import { Logos, Photos } from "@/constants";
 
 const Achievements = (): React.ReactElement => {
     const nasaSpaceAppsChallenge = (
@@ -61,6 +61,7 @@ const Achievements = (): React.ReactElement => {
                         <SectionHeading>WSO2 Sustained Outstanding Contribution Award</SectionHeading>
                         <Timespan>2019 to 2021</Timespan>
                         {wso2Logo}
+                        <Photo float={"right"} photo={Photos.WSO2OutstandingContributor2019}/>
                         <Paragraph>
                             Each year for employees who have performed exceptionally throughout the year,
                             the &quote;Sustained Outstanding Contribution Award&quote; is awarded. I was
@@ -80,6 +81,7 @@ const Achievements = (): React.ReactElement => {
                         <SectionHeading>Placements in Dean&lsquo;s List</SectionHeading>
                         <Timespan>2014 to 2018</Timespan>
                         {uomLogo}
+                        <Photo float={"right"} photo={Photos.UOMDeansList2017}/>
                         <Paragraph>
                             During my B.Sc. (Hons.) in Engineering (Computer Science and Engineering) degree, I was
                             offered placements in the Dean&lsquo;s List for scoring a GPA above 3.8 (out of 4.2) for
@@ -90,6 +92,7 @@ const Achievements = (): React.ReactElement => {
                         <SectionHeading>NASA Space Apps Challenge - Galactic Impact - Global Finalist</SectionHeading>
                         <Timespan>2017</Timespan>
                         {nasaSpaceAppsChallengeLogo}
+                        <Photo float={"right"} photo={Photos.NASASpaceAppsChallenge2017}/>
                         <Paragraph>
                             The {nasaSpaceAppsChallenge} is a competition hosted by NASA with teams from around the
                             world competing under different categories. In the 2017 challenge, I along with five other
@@ -118,6 +121,7 @@ const Achievements = (): React.ReactElement => {
                         <SectionHeading>Angel Hack - Finalist</SectionHeading>
                         <Timespan>2016</Timespan>
                         {angelHackLogo}
+                        <Photo float={"right"} photo={Photos.AngelHack2016}/>
                         <Paragraph>
                             In Angel Hack 2016, our team developed a smart workout system which combined
                             a virtual reality game with an exercise bicycle fitted with a sensor to encourage
@@ -145,6 +149,7 @@ const Achievements = (): React.ReactElement => {
                         <SectionHeading>British Council HSBC Youth Enterprise Awards - Finalist</SectionHeading>
                         <Timespan>2015</Timespan>
                         {britishCouncilLogo}
+                        <Photo float={"right"} photo={Photos.HSBCYouthEnterpriseAwards2015}/>
                         <Paragraph>
                             British Council HSBC Youth Enterprise Awards is a hackathon in which many teams
                             presented ideas to help solve problems in different domains. In the hackathon held in 2015,
