@@ -72,10 +72,10 @@ export interface LogoAsset {
     height: number,
 }
 
-const CKAD_LOGO_SRC = "/assets/certifications/ckad.png";
-const CKA_LOGO_SRC = "/assets/certifications/cka.png";
-const DEEP_LEARNING_AI_LOGO_SRC = "/assets/certifications/deep-learning-ai.png";
-const UNIVERSITY_OF_ALBERTA_LOGO_SRC = "/assets/certifications/university-of-alberta.png";
+const CKAD_LOGO_SRC = "/assets/certifications/ckad-logo.png";
+const CKA_LOGO_SRC = "/assets/certifications/cka-logo.png";
+const DEEP_LEARNING_AI_LOGO_SRC = "/assets/certifications/deep-learning-ai-logo.png";
+const UNIVERSITY_OF_ALBERTA_LOGO_SRC = "/assets/certifications/university-of-alberta-logo.png";
 const UNIVERSITY_OF_MORATUWA_LOGO_SRC = "/assets/education/university-of-moratuwa-logo.png";
 const BRITISH_COUNCIL_LOGO_SRC = "/assets/achievements/british-council-logo.png";
 
@@ -124,8 +124,8 @@ export const Logos: { [key: string]: LogoAsset } = {
     },
     GoogleSummerOfCode: {
         src: generateResolveSrcFunc({
-            src: "/assets/experience/gsoc.svg",
-            srcWhite: "/assets/experience/gsoc-white.svg"
+            src: "/assets/experience/gsoc-logo.svg",
+            srcWhite: "/assets/experience/gsoc-logo-white.svg"
         }),
         alt: "Google Summer of Code",
         width: 3192,
@@ -178,8 +178,8 @@ export const Logos: { [key: string]: LogoAsset } = {
     },
     WSO2: {
         src: generateResolveSrcFunc({
-            src: "/assets/experience/wso2.svg",
-            srcWhite: "/assets/experience/wso2-white.svg"
+            src: "/assets/experience/wso2-logo.svg",
+            srcWhite: "/assets/experience/wso2-logo-white.svg"
         }),
         alt: "WSO2",
         width: 3192,
@@ -187,8 +187,8 @@ export const Logos: { [key: string]: LogoAsset } = {
     },
     Siddhi: {
         src: generateResolveSrcFunc({
-            src: "/assets/projects/siddhi.svg",
-            srcWhite: "/assets/projects/siddhi-white.svg"
+            src: "/assets/projects/siddhi-logo.svg",
+            srcWhite: "/assets/projects/siddhi-logo-white.svg"
         }),
         alt: "Siddhi",
         width: 3192,
@@ -196,8 +196,8 @@ export const Logos: { [key: string]: LogoAsset } = {
     },
     Cellery: {
         src: generateResolveSrcFunc({
-            src: "/assets/projects/cellery.svg",
-            srcWhite: "/assets/projects/cellery-white.svg"
+            src: "/assets/projects/cellery-logo.svg",
+            srcWhite: "/assets/projects/cellery-logo-white.svg"
         }),
         alt: "Cellery",
         width: 3192,
@@ -205,8 +205,8 @@ export const Logos: { [key: string]: LogoAsset } = {
     },
     Ballerina: {
         src: generateResolveSrcFunc({
-            src: "/assets/projects/ballerina.svg",
-            srcWhite: "/assets/projects/ballerina-white.svg"
+            src: "/assets/projects/ballerina-logo.svg",
+            srcWhite: "/assets/projects/ballerina-logo-white.svg"
         }),
         alt: "Ballerina",
         width: 3192,
@@ -214,8 +214,8 @@ export const Logos: { [key: string]: LogoAsset } = {
     },
     Choreo: {
         src: generateResolveSrcFunc({
-            src: "/assets/projects/choreo.svg",
-            srcWhite: "/assets/projects/choreo-white.svg"
+            src: "/assets/projects/choreo-logo.svg",
+            srcWhite: "/assets/projects/choreo-logo-white.svg"
         }),
         alt: "Choreo",
         width: 3192,
