@@ -16,11 +16,7 @@ import Image from "next/image";
 import React from "react";
 
 import { useScrollOffset } from "@/components/Layout";
-
-const ckadLogo = "/assets/certifications/ckad.png";
-const ckaLogo = "/assets/certifications/cka.png";
-const deepLearningAiLogo = "/assets/certifications/deep-learning-ai.png";
-const universityOfAlbertaLogo = "/assets/certifications/university-of-alberta.png";
+import { Logos, LogoAsset } from "@/constants";
 
 const UNIVERSITY_OF_ALBERTA_ISSUER = "University of Alberta";
 const DEEP_LEARNING_ISSUER = "Deeplearning.AI";
@@ -30,7 +26,7 @@ interface Certificate {
     name: string,
     type: "Course" | "Certification" | "Specialization",
     link: string,
-    image: string,
+    image: LogoAsset,
     issuer: string,
 }
 
@@ -43,42 +39,42 @@ const Certifications = (): React.ReactElement => {
             name: "Deep Learning",
             type: "Specialization",
             link: "https://coursera.org/share/8e5db53bfef4c4b27f79004022edad72",
-            image: deepLearningAiLogo,
+            image: Logos.DeepLearningAI,
             issuer: DEEP_LEARNING_ISSUER
         },
         {
             name: "Fundamentals of Reinforcement Learning",
             type: "Course",
             link: "https://coursera.org/share/fcbebc1de9e6a9b3ecb186983af7b969",
-            image: universityOfAlbertaLogo,
+            image: Logos.UniversityOfAlberta,
             issuer: UNIVERSITY_OF_ALBERTA_ISSUER
         },
         {
             name: "Build Basic Generative Adversarial Networks (GANs)",
             type: "Course",
             link: "https://coursera.org/share/fed56feb8ba81177e6467779f22c0851",
-            image: deepLearningAiLogo,
+            image: Logos.DeepLearningAI,
             issuer: DEEP_LEARNING_ISSUER
         },
         {
             name: "AI For Everyone",
             type: "Course",
             link: "https://coursera.org/share/e8ae9a481ef41f070d6c7b00887e8b66",
-            image: deepLearningAiLogo,
+            image: Logos.DeepLearningAI,
             issuer: DEEP_LEARNING_ISSUER
         },
         {
-            name: "Certificed Kubernetes Administrator",
+            name: "Certified Kubernetes Administrator",
             type: "Certification",
             link: "https://www.youracclaim.com/badges/8241114b-7435-460a-a08f-9d33304c1470?source=linked_in_profile",
-            image: ckaLogo,
+            image: Logos.CKA,
             issuer: LINUX_FOUNDATION
         },
         {
-            name: "Certificed Kubernetes Application Developer",
+            name: "Certified Kubernetes Application Developer",
             type: "Certification",
             link: "https://www.youracclaim.com/badges/e9df4128-2017-41c3-9e7d-028e37176243/linked_in_profile",
-            image: ckadLogo,
+            image: Logos.CKAD,
             issuer: LINUX_FOUNDATION
         }
     ];
@@ -121,7 +117,8 @@ const Certifications = (): React.ReactElement => {
                                                     margin: "auto"
                                                 }}
                                             >
-                                                <Image src={certification.image} alt={certification.name} layout="fill"
+                                                <Image alt={certification.image.alt} layout="fill"
+                                                    src={certification.image.src(theme.palette.mode)}
                                                     sizes={imageSizes} objectFit="contain"/>
                                             </Container>
                                         )}

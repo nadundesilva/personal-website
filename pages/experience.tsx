@@ -16,11 +16,7 @@ import React from "react";
 
 import { Logo, Paragraph, Section, SectionHeading, Timespan } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/Layout";
-
-const wso2 = "/assets/experience/wso2.svg";
-const wso2White = "/assets/experience/wso2-white.svg";
-const gsoc = "/assets/experience/gsoc.svg";
-const gsocWhite = "/assets/experience/gsoc-white.svg";
+import { Logos } from "@/constants";
 
 const Experience = (): React.ReactElement => {
     const Siddhi = <Link target={"_blank"} href={"https://siddhi.io/"}>Siddhi</Link>;
@@ -41,8 +37,8 @@ const Experience = (): React.ReactElement => {
     const Ballerina = <Link target={"_blank"} href={"https://ballerina.io/"}>Ballerina</Link>;
     const Choreo = <Link target={"_blank"} href={"https://wso2.com/choreo/"}>Choreo</Link>;
 
-    const Wso2Logo = <Logo alt={"WSO2"} src={wso2} srcWhite={wso2White} height={"2.5em"}/>;
-    const GsocLogo = <Logo alt={"Google Summer of Code"} src={gsoc} srcWhite={gsocWhite}/>;
+    const Wso2Logo = <Logo logo={Logos.WSO2} height={"2.5em"}/>;
+    const GsocLogo = <Logo logo={Logos.GoogleSummerOfCode}/>;
 
     return (
         <Container maxWidth={false} disableGutters>

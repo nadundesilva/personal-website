@@ -4,6 +4,9 @@
     "paths": {
       "@/components/*": [
         "components/*"
+      ],
+      "@/constants": [
+        "constants"
       ]
     },
     "target": "es5",

@@ -12,11 +12,11 @@
  */
 import { Typography } from "@mui/material";
 
-interface TypographyRestyledProps {
+interface ParagraphProps {
     children: React.ReactNode,
 }
 
-const Paragraph = ({ children }: TypographyRestyledProps): React.ReactElement => (
+const Paragraph = ({ children }: ParagraphProps): React.ReactElement => (
     <Typography
         variant="body1"
         gutterBottom
