@@ -10,7 +10,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Button, Container, Grid, Theme, Typography, useMediaQuery } from "@mui/material";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Box, Button, Container, Grid, Theme, Typography, useMediaQuery } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import Image from "next/image";
 import React from "react";
@@ -82,6 +84,18 @@ const WelcomeBanner = (): React.ReactElement => {
                 <BannerImage src={Images.WelcomeBanner.src} alt={Images.WelcomeBanner.alt} layout="fill"
                     objectFit="cover" priority placeholder="blur" blurDataURL={Images.WelcomeBanner.blurDataURL}/>
             </Container>
+            <Box role="presentation"
+                sx={{
+                    position: "absolute",
+                    bottom: 24,
+                    right: 24,
+                    zIndex: 3,
+                    color: "white"
+                }}
+            >
+                <Typography sx={{ display: "inline", pr: 1, fontSize: "1.5vh" }}>Scroll down to learn more</Typography>
+                <FontAwesomeIcon icon={faChevronDown}/>
+            </Box>
         </Container>
     );
 };
