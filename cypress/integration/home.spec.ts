@@ -20,14 +20,15 @@ interface Section {
 describe("Test Home Page", () => {
     beforeEach(() => {
         cy.visit("/");
-        cy.getByTestId("home-page")
-            .childrenByTestId("section-loader")
-            .should("not.exist");
+        cy.findByTestId("home-page").within(() => {
+            cy.findAllByTestId("section-loader")
+                .should("not.exist");
+        });
         cy.log("Loaded Home page");
     });
 
     it("validates page load", () => {
-        cy.getByTestId("view-cv-button")
+        cy.findByTestId("view-cv-button")
             .should("be.visible");
     });
 
@@ -35,13 +36,13 @@ describe("Test Home Page", () => {
         cy.fixture("sections").then((sections: Section[]) => {
             sections.forEach((section) => {
                 if (section.hasNavBarButton) {
-                    cy.getByTestId(`${section.testIdPrefix}-section`)
+                    cy.findByTestId(`${section.testIdPrefix}-section`)
                         .scrollIntoView();
                     cy.wait(5000); // Wait for images to load
 
-                    cy.getByTestId(`${section.testIdPrefix}-section`)
+                    cy.findByTestId(`${section.testIdPrefix}-section`)
                         .should("be.visible");
-                    cy.getByTestId(`${section.testIdPrefix}-section`)
+                    cy.findByTestId(`${section.testIdPrefix}-section`)
                         .matchImageSnapshot(`home-page-${section.testIdPrefix}-section`);
                 }
             });

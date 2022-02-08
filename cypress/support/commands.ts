@@ -10,7 +10,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
+import "@testing-library/cypress/add-commands";
+import { addMatchImageSnapshotCommand } from "cypress-image-snapshot/command";
 
 addMatchImageSnapshotCommand({
     failureThreshold: 0.1,
@@ -18,11 +19,3 @@ addMatchImageSnapshotCommand({
     customDiffConfig: { threshold: 0.1 },
     capture: "viewport"
 });
-
-const testIdSelector = (testId: string) => `[data-testid="${testId}"]`;
-
-Cypress.Commands.add("getByTestId", (testId: string) => cy.get(testIdSelector(testId)));
-
-Cypress.Commands.add("childrenByTestId", { prevSubject: "element" }, (sub: JQuery<HTMLElement>, testId: string) => (
-    cy.wrap(sub).children(testIdSelector(testId))
-));
