@@ -14,7 +14,7 @@
 interface Section {
     name: string,
     testIdPrefix: string,
-    hasNavBarButton: boolean
+    hasNavBarButton: boolean,
 }
 
 describe("Test Home Page", () => {
@@ -35,10 +35,10 @@ describe("Test Home Page", () => {
         cy.fixture("sections").then((sections: Section[]) => {
             sections.forEach((section) => {
                 if (section.hasNavBarButton) {
-                    cy.getByTestId(`${section.testIdPrefix}-nav-button`)
-                        .should("be.visible")
-                        .click()
-                        .wait(3000);
+                    cy.getByTestId(`${section.testIdPrefix}-section`)
+                        .scrollIntoView();
+                    cy.wait(5000); // Wait for images to load
+
                     cy.getByTestId(`${section.testIdPrefix}-section`)
                         .should("be.visible");
                     cy.getByTestId(`${section.testIdPrefix}-section`)
