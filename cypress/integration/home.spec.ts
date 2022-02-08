@@ -20,15 +20,13 @@ interface Section {
 describe("Test Home Page", () => {
     beforeEach(() => {
         cy.visit("/");
-        cy.findByTestId("home-page").within(() => {
-            cy.findAllByTestId("section-loader")
-                .should("not.exist");
-        });
+        cy.findAllByTestId("section-loader")
+            .should("not.exist");
         cy.log("Loaded Home page");
     });
 
     it("validates page load", () => {
-        cy.findByTestId("view-cv-button")
+        cy.findByRole("button", { name: /view cv/i })
             .should("be.visible");
     });
 

@@ -69,8 +69,7 @@ const WelcomeBanner = (): React.ReactElement => {
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button variant="contained" color="primary" size={downloadButtonSize} onClick={downloadCv}
-                        data-testid="view-cv-button">
+                    <Button variant="contained" color="primary" size={downloadButtonSize} onClick={downloadCv}>
                         View CV
                     </Button>
                 </Grid>
