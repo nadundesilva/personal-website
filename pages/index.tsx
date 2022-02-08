@@ -60,7 +60,6 @@ const HomeLayout = ({ children, pageSections }: HomeLayoutProps): React.ReactEle
                 pageSections.map((section: Section) => (
                     <Button key={section.name} variant="text" color="primary" disableElevation
                         href={`#${section.sectionId}`}
-                        data-testid={`${section.sectionId}-nav-button`}
                         sx={{ color: "#ffffff" }}>
                         {section.name}
                     </Button>
