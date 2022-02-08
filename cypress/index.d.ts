@@ -12,10 +12,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-declare namespace Cypress {
-    interface Chainable {
-        getByTestId(testId: string): Chainable<JQuery<HTMLElement>>;
-        childrenByTestId(testId: string): Chainable<JQuery<HTMLElement>>;
-        matchImageSnapshot(name: string): Chainable<Element>;
-    }
-}
+import "@testing-library/cypress/types";
