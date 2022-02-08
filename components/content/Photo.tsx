@@ -26,7 +26,7 @@ const Photo = ({ photo, float }: PhotoProps): React.ReactElement => (
         position: "relative",
         float: float,
         height: "auto",
-        width: "20vw",
+        width: { xs: "100%", md: "20vw" },
         my: 2,
         ml: float === "left" ? 0 : 2,
         mr: float === "right" ? 0 : 2
