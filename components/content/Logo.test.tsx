@@ -23,8 +23,8 @@ test("renders logo with default height", async() => {
             }
         })}>
             <Logo logo={{
-                src: (mode) => mode === "light" ? "/test-image-1/light.png" : "/test-image-1/dark.png",
-                alt: "Test Image 1 Alt",
+                src: (mode) => mode === "light" ? "/test-logo-1/light.png" : "/test-logo-1/dark.png",
+                alt: "Test Logo 1 Alt",
                 width: 142,
                 height: 251
             }}/>
@@ -33,12 +33,12 @@ test("renders logo with default height", async() => {
 
     expect(container.querySelector("div.MuiBox-root")).toHaveStyle("height: 3em");
     const image = await screen.findByRole("img", {
-        name: /test image 1 alt/i
+        name: /test logo 1 alt/i
     });
     await waitFor(() => {
         expect(image.getAttribute("src")).toMatch(/\/_next\/image/i);
     });
-    expect(image).toHaveAttribute("src", "/_next/image?url=%2Ftest-image-1%2Flight.png&w=3840&q=75");
+    expect(image).toHaveAttribute("src", "/_next/image?url=%2Ftest-logo-1%2Flight.png&w=3840&q=75");
 });
 
 test("renders logo with specific height", async() => {
@@ -49,8 +49,8 @@ test("renders logo with specific height", async() => {
             }
         })}>
             <Logo height={"4.5em"} logo={{
-                src: (mode) => mode === "light" ? "/test-image-2/light.png" : "/test-image-2/dark.png",
-                alt: "Test Image 2 Alt",
+                src: (mode) => mode === "light" ? "/test-logo-2/light.png" : "/test-logo-2/dark.png",
+                alt: "Test Logo 2 Alt",
                 width: 144,
                 height: 257
             }}/>
@@ -59,12 +59,12 @@ test("renders logo with specific height", async() => {
 
     expect(container.querySelector("div.MuiBox-root")).toHaveStyle("height: 4.5em");
     const image = await screen.findByRole("img", {
-        name: /test image 2 alt/i
+        name: /test logo 2 alt/i
     });
     await waitFor(() => {
         expect(image.getAttribute("src")).toMatch(/\/_next\/image/i);
     });
-    expect(image).toHaveAttribute("src", "/_next/image?url=%2Ftest-image-2%2Flight.png&w=3840&q=75");
+    expect(image).toHaveAttribute("src", "/_next/image?url=%2Ftest-logo-2%2Flight.png&w=3840&q=75");
 });
 
 test("renders logo with dark theme", async() => {
@@ -75,8 +75,8 @@ test("renders logo with dark theme", async() => {
             }
         })}>
             <Logo logo={{
-                src: (mode) => mode === "light" ? "/test-image-3/light.png" : "/test-image-3/dark.png",
-                alt: "Test Image 3 Alt",
+                src: (mode) => mode === "light" ? "/test-logo-3/light.png" : "/test-logo-3/dark.png",
+                alt: "Test Logo 3 Alt",
                 width: 149,
                 height: 253
             }}/>
@@ -84,10 +84,10 @@ test("renders logo with dark theme", async() => {
     );
 
     const image = await screen.findByRole("img", {
-        name: /test image 3 alt/i
+        name: /test logo 3 alt/i
     });
     await waitFor(() => {
         expect(image.getAttribute("src")).toMatch(/\/_next\/image/i);
     });
-    expect(image).toHaveAttribute("src", "/_next/image?url=%2Ftest-image-3%2Fdark.png&w=3840&q=75");
+    expect(image).toHaveAttribute("src", "/_next/image?url=%2Ftest-logo-3%2Fdark.png&w=3840&q=75");
 });
