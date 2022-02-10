@@ -33,6 +33,9 @@ const plugins = [
 ];
 
 const nextConfig = {
+    eslint: {
+        ignoreDuringBuilds: process.env["BUILD_TYPE"] == "test"
+    },
     images: {
         loader: "imgix",
         path: "https://nadundesilva.imgix.net/",
