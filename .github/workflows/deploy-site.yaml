@@ -18,6 +18,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "14.17.6"
+      - name: Running Unit Tests
+        run: npm run test:ci
       - name: Build Site
         run: |
           npm ci
