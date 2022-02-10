@@ -82,7 +82,7 @@ class WebsiteDocument extends Document {
             ],
             "prefetch-src": ["'self'"]
         };
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === "development" || process.env.BUILD_TYPE === "test") {
             cspValues["script-src"].push("'unsafe-eval'");
         }
         const csps = [];
