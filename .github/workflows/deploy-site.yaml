@@ -75,11 +75,14 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: site
-          path: _site/
+          path: _site_downloaded/
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
           node-version: "14.17.6"
+      - name: Instrument Website for Code Coverage
+        run: |
+          npx nyc instrument --compact=false _site_downloaded _site
       - name: Run End to End Tests
         run: |
           openssl req -newkey rsa:4096 \
@@ -103,6 +106,9 @@ jobs:
             cypress/included:7.4.0 run --headless --browser ${{ matrix.browser }} \
             --reporter cypress-image-snapshot/reporter
           sudo kill -9 ${SERVE_PID}
+      - name: Show Code Coverage Summary
+        run: |
+          npx nyc report --reporter=text-summary --reporter=clover --reporter=html
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v2
@@ -112,6 +118,11 @@ jobs:
             cypress/videos/
             cypress/screenshots/
             cypress/snapshots/**/__diff_output__/**
+      - name: Upload E2E Tests Code Coverage Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: e2e-tests-coverage
+          path: coverage/
 
   deploy-site:
     name: Deploy Site

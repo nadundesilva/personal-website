@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-do-expressions": "~7.16.7",
+    "@cypress/code-coverage": "^3.9.12",
     "@next/bundle-analyzer": "^12.0.10",
     "@testing-library/cypress": "^8.0.2",
     "@testing-library/jest-dom": "^5.16.2",

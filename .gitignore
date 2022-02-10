@@ -15,6 +15,7 @@ public/workbox-*.js.map
 
 # Testing
 coverage
+.nyc_output
 
 # Cypress
 cypress/videos/**
