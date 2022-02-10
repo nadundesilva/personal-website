@@ -19,9 +19,11 @@ jobs:
         with:
           node-version: "14.17.6"
       - name: Install Dependencies
-        run: npm ci
+        run: |
+          npm ci
       - name: Running Unit Tests
-        run: npm run test:ci
+        run: |
+          npm run test:ci
       - name: Build Site
         run: |
           npm run build
@@ -68,22 +70,20 @@ jobs:
         browser: [ electron, chrome ]
     name: Run Integration Tests (${{ matrix.browser }})
     runs-on: ubuntu-20.04
-    needs: build-site
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Download Site
-        uses: actions/download-artifact@v2
-        with:
-          name: site
-          path: _site_downloaded/
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
           node-version: "14.17.6"
       - name: Instrument Website for Code Coverage
         run: |
-          npx nyc instrument --compact=false _site_downloaded _site
+          npm ci
+          npx nyc instrument --in-place --compact=false .
+          npm run build
+        env:
+          BUILD_TYPE: test
       - name: Run End to End Tests
         run: |
           openssl req -newkey rsa:4096 \
@@ -97,7 +97,7 @@ jobs:
           export NODE_EXTRA_CA_CERTS=$PWD/server.crt
 
           sudo echo "127.0.0.1 nadundesilva.github.io" | sudo tee -a /etc/hosts
-          npx serve ./_site --no-port-switching --debug --single --ssl-cert $PWD/server.crt --ssl-key $PWD/server.key --listen tcp://nadundesilva.github.io:8080 </dev/null &
+          npx serve ./out --no-port-switching --debug --single --ssl-cert $PWD/server.crt --ssl-key $PWD/server.key --listen tcp://nadundesilva.github.io:8080 </dev/null &
           SERVE_PID=${!}
           sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 443 -j REDIRECT --to-port 8080
           npx wait-on -t 10000 -i 1000 --verbose https://nadundesilva.github.io
@@ -106,15 +106,16 @@ jobs:
           docker run --network host --rm -t -v $PWD:/test -w /test -e CYPRESS_BASE_URL=https://nadundesilva.github.io \
             cypress/included:7.4.0 run --headless --browser ${{ matrix.browser }} \
             --reporter cypress-image-snapshot/reporter
+
+          sleep 5s
           sudo kill -9 ${SERVE_PID}
-      - name: Show Code Coverage Summary
-        run: |
-          npx nyc report --reporter=text-summary --reporter=clover --reporter=html
+          RUNNER_USER="$(id -u):$(id -g)"
+          sudo chown -R ${RUNNER_USER} coverage
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: test-results-${{ matrix.browser }}
+          name: e2e-test-results-${{ matrix.browser }}
           path: |
             cypress/videos/
             cypress/screenshots/
@@ -130,6 +131,7 @@ jobs:
     runs-on: ubuntu-20.04
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs:
+      - build-site
       - links-check
       - integration-tests
     steps:
