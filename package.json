@@ -24,7 +24,7 @@
   },
   "scripts": {
     "dev": "PUBLIC_URL=http://localhost:3000 next dev",
-    "build": "npm run test:ci && next build && next export && node generate-sitemap.js",
+    "build": "next build && next export && node generate-sitemap.js",
     "build:analyze": "ANALYZE=true next build",
     "start": "next start",
     "lint": "next lint",
