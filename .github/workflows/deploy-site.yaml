@@ -32,6 +32,11 @@ jobs:
         with:
           name: site
           path: out/
+      - name: Upload Unit Tests Code Coverage Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: unit-tests-coverage
+          path: coverage/
 
   links-check:
     name: Check Links in Website
