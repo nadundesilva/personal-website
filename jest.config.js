@@ -17,7 +17,7 @@ const createJestConfig = nextJest({ dir: "./" });
 
 const customJestConfig = {
     collectCoverage: true,
-    coverageReporters: ["clover", "html"],
+    coverageReporters: ["text-summary", "clover", "html"],
     moduleDirectories: ["node_modules", "<rootDir>/"],
     modulePathIgnorePatterns: ["<rootDir>/cypress/"],
     setupFilesAfterEnv: ["<rootDir>/jest-setup.ts"],
