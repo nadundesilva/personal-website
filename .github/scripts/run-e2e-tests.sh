@@ -14,6 +14,8 @@
 TEST_BROWSER=${TEST_BROWSER:-"chrome"}
 TEST_SITE_DIR=${TEST_SITE_DIR:-"_site"}
 
+echo
+echo "Generating certs for the website server"
 openssl req -newkey rsa:4096 \
     -x509 \
     -sha256 \
@@ -24,6 +26,8 @@ openssl req -newkey rsa:4096 \
     -keyout $PWD/server.key
 export NODE_EXTRA_CA_CERTS=$PWD/server.crt
 
+echo
+echo "Starting website server"
 sudo echo "127.0.0.1 nadundesilva.github.io" | sudo tee -a /etc/hosts
 npx serve ./out \
     --no-port-switching \
@@ -36,6 +40,8 @@ SERVE_PID=${!}
 sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 443 -j REDIRECT --to-port 8080
 npx wait-on -t 10000 -i 1000 --verbose https://nadundesilva.github.io
 
+echo
+echo "Running e2e tests"
 docker run \
     --network host \
     --rm \
@@ -48,8 +54,17 @@ docker run \
     --browser ${TEST_BROWSER} \
     --reporter cypress-image-snapshot/reporter
 
+echo
+echo "Shutting down website server"
 sleep 5s
 sudo kill -9 ${SERVE_PID}
 
-RUNNER_USER="$(id -u):$(id -g)"
-sudo chown -R ${RUNNER_USER} coverage
+if [ -d "coverage" ]; then
+    echo
+    echo "Update coverage report premissions"
+    RUNNER_USER="$(id -u):$(id -g)"
+    sudo chown -R ${RUNNER_USER} coverage
+else
+    echo
+    echo "Coverage directory does not exist"
+fi

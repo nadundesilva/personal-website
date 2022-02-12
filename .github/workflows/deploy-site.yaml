@@ -9,8 +9,8 @@ on:
       - main
 
 jobs:
-  run-tests:
-    name: Run Tests
+  run-unit-tests:
+    name: Run Unit Tests
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -25,6 +25,35 @@ jobs:
       - name: Running Unit Tests
         run: |
           npm run test:ci
+      - name: Upload Code Coverage to CodeCov
+        uses: codecov/codecov-action@v2
+        with:
+          name: coverage-reports
+          flags: unit-tests
+          fail_ci_if_error: true
+          verbose: true
+      - name: Upload Code Coverage Report Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: unit-tests-coverage
+          path: coverage/
+
+  run-e2e-tests:
+    strategy:
+      matrix:
+        browser: [ electron, chrome ]
+    name: Run E2E Tests (${{ matrix.browser }})
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.17.6"
+      - name: Install Dependencies
+        run: |
+          npm ci
       - name: Instrument Website for Code Coverage
         run: |
           npm ci
@@ -36,21 +65,28 @@ jobs:
         run: |
           bash .github/scripts/run-e2e-tests.sh
         env:
-          TEST_BROWSER: chrome
+          TEST_BROWSER: ${{ matrix.browser }}
           TEST_SITE_DIR: _site
-      - name: Upload artifacts
+      - name: Upload Code Coverage to CodeCov
+        uses: codecov/codecov-action@v2
+        with:
+          name: coverage-reports
+          flags: e2e-tests
+          fail_ci_if_error: true
+          verbose: true
+      - name: Upload Test Results Artifacts
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: e2e-test-results-
+          name: e2e-test-results-${{ matrix.browser }}
           path: |
             cypress/videos/
             cypress/screenshots/
             cypress/snapshots/**/__diff_output__/**
-      - name: Upload E2E Tests Code Coverage Report
+      - name: Upload Code Coverage Report Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: e2e-tests-coverage
+          name: e2e-tests-coverage-${{ matrix.browser }}
           path: coverage/
 
   build-site:
@@ -62,6 +98,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "14.17.6"
+      - name: Install Dependencies
+        run: |
+          npm ci
       - name: Build Site
         run: |
           npm run build
@@ -102,11 +141,11 @@ jobs:
       - name: Fail on Link Errors
         run: exit ${{ steps.lychee.outputs.exit_code }}
 
-  site-e2e-tests:
+  check-site-build-with-e2e-tests:
     strategy:
       matrix:
         browser: [ electron, chrome ]
-    name: Run Integration Tests (${{ matrix.browser }})
+    name: Run E2E Tests against Site Build (${{ matrix.browser }})
     runs-on: ubuntu-20.04
     needs: build-site
     steps:
@@ -134,26 +173,22 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: e2e-test-results-${{ matrix.browser }}
+          name: site-build-e2e-test-results-${{ matrix.browser }}
           path: |
             cypress/videos/
             cypress/screenshots/
             cypress/snapshots/**/__diff_output__/**
-      - name: Upload E2E Tests Code Coverage Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: e2e-tests-coverage
-          path: coverage/
 
   deploy-site:
     name: Deploy Site
     runs-on: ubuntu-20.04
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs:
-      - run-tests
+      - run-unit-tests
+      - run-e2e-tests
       - build-site
       - links-check
-      - site-e2e-tests
+      - check-site-build-with-e2e-tests
     steps:
       - name: Checkout
         uses: actions/checkout@v2
