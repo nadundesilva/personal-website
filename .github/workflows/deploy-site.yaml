@@ -141,11 +141,11 @@ jobs:
       - name: Fail on Link Errors
         run: exit ${{ steps.lychee.outputs.exit_code }}
 
-  check-site-build-with-e2e-tests:
+  check-site-build:
     strategy:
       matrix:
         browser: [ electron, chrome ]
-    name: Run E2E Tests against Site Build (${{ matrix.browser }})
+    name: Check Site Build (${{ matrix.browser }})
     runs-on: ubuntu-20.04
     needs: build-site
     steps:
@@ -188,7 +188,7 @@ jobs:
       - run-e2e-tests
       - build-site
       - links-check
-      - check-site-build-with-e2e-tests
+      - check-site-build
     steps:
       - name: Checkout
         uses: actions/checkout@v2
