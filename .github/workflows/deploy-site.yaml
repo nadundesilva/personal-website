@@ -9,6 +9,50 @@ on:
       - main
 
 jobs:
+  run-tests:
+    name: Run Tests
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.17.6"
+      - name: Install Dependencies
+        run: |
+          npm ci
+      - name: Running Unit Tests
+        run: |
+          npm run test:ci
+      - name: Instrument Website for Code Coverage
+        run: |
+          npm ci
+          npx nyc instrument --in-place --compact=false .
+          npm run build
+        env:
+          BUILD_TYPE: test
+      - name: Run End to End Tests
+        run: |
+          bash .github/scripts/run-e2e-tests.sh
+        env:
+          TEST_BROWSER: chrome
+          TEST_SITE_DIR: _site
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: e2e-test-results-
+          path: |
+            cypress/videos/
+            cypress/screenshots/
+            cypress/snapshots/**/__diff_output__/**
+      - name: Upload E2E Tests Code Coverage Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: e2e-tests-coverage
+          path: coverage/
+
   build-site:
     name: Build Site
     runs-on: ubuntu-20.04
@@ -18,12 +62,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "14.17.6"
-      - name: Install Dependencies
-        run: |
-          npm ci
-      - name: Running Unit Tests
-        run: |
-          npm run test:ci
       - name: Build Site
         run: |
           npm run build
@@ -64,12 +102,13 @@ jobs:
       - name: Fail on Link Errors
         run: exit ${{ steps.lychee.outputs.exit_code }}
 
-  integration-tests:
+  site-e2e-tests:
     strategy:
       matrix:
         browser: [ electron, chrome ]
     name: Run Integration Tests (${{ matrix.browser }})
     runs-on: ubuntu-20.04
+    needs: build-site
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -77,40 +116,20 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "14.17.6"
-      - name: Instrument Website for Code Coverage
+      - name: Install Dependencies
         run: |
           npm ci
-          npx nyc instrument --in-place --compact=false .
-          npm run build
-        env:
-          BUILD_TYPE: test
+      - name: Download Site
+        uses: actions/download-artifact@v2
+        with:
+          name: site
+          path: _site/
       - name: Run End to End Tests
         run: |
-          openssl req -newkey rsa:4096 \
-            -x509 \
-            -sha256 \
-            -days 3650 \
-            -nodes \
-            -out $PWD/server.crt \
-            -subj "/C=AU/ST=NSW/L=Sydney/O=nadunrds/OU=nadun/CN=nadundesilva.github.io/emailAddress=nadunrds@gmail.com" \
-            -keyout $PWD/server.key
-          export NODE_EXTRA_CA_CERTS=$PWD/server.crt
-
-          sudo echo "127.0.0.1 nadundesilva.github.io" | sudo tee -a /etc/hosts
-          npx serve ./out --no-port-switching --debug --single --ssl-cert $PWD/server.crt --ssl-key $PWD/server.key --listen tcp://nadundesilva.github.io:8080 </dev/null &
-          SERVE_PID=${!}
-          sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 443 -j REDIRECT --to-port 8080
-          npx wait-on -t 10000 -i 1000 --verbose https://nadundesilva.github.io
-
-          npm ci
-          docker run --network host --rm -t -v $PWD:/test -w /test -e CYPRESS_BASE_URL=https://nadundesilva.github.io \
-            cypress/included:7.4.0 run --headless --browser ${{ matrix.browser }} \
-            --reporter cypress-image-snapshot/reporter
-
-          sleep 5s
-          sudo kill -9 ${SERVE_PID}
-          RUNNER_USER="$(id -u):$(id -g)"
-          sudo chown -R ${RUNNER_USER} coverage
+          bash .github/scripts/run-e2e-tests.sh
+        env:
+          TEST_BROWSER: ${{ matrix.browser }}
+          TEST_SITE_DIR: _site
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v2
@@ -131,9 +150,10 @@ jobs:
     runs-on: ubuntu-20.04
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs:
+      - run-tests
       - build-site
       - links-check
-      - integration-tests
+      - site-e2e-tests
     steps:
       - name: Checkout
         uses: actions/checkout@v2
