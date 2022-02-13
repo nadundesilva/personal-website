@@ -53,12 +53,10 @@ const Experience = (): React.ReactElement => {
                         <Timespan>June 2021 to Now</Timespan>
                         {Wso2Logo}
                         <Paragraph>
-                            Even before being promoted to an Associate Technical Lead, I was performing way above my level
-                            and I continued to improve and grow within my new role as an Associate Technical Lead. I continued
-                            to lead the Observability team and it was considered one of the most stable areas in the platform
-                            during that time. Moreover, I guided multiple engineers and helped them improve for the better as well.
-                            Apart from that I also contributed to other areas such as growth hacking, UX, SRE and other aspects
-                            of the {Choreo} platform.
+                            I led the Observability team in technical aspects and it was considered one of the most stable areas in the
+                            {Choreo} platform during that time. Moreover, I guided multiple engineers and helped them improve for
+                            the better as well. Apart from that I also contributed to other areas such as growth hacking, UX, SRE
+                            and other aspects of the {Choreo} platform.
                         </Paragraph>
                         <Paragraph>
                             Apart from the Observability Area, I also led the effort on the Choreo Online VS Code Editor as well
@@ -67,10 +65,10 @@ const Experience = (): React.ReactElement => {
                         </Paragraph>
                         <Paragraph>
                             Throughout all this work, I always made myself available for other team members who approached me
-                            seeking for technical guidance or any clarifications about the platform. I also contributed to many
-                            other technical and architectural decisions of the platform as well. Through all these, I still worked
-                            at the level of other engineers and kept up with the technical aspects as well. I always thought out
-                            of the box and helped improve many aspects of the platform as well.
+                            seeking for technical guidance or any clarifications about the platform. I always thought out of the
+                            box and contributed to many other technical and architectural decisions of the platform as well.
+                            Through all these, I still worked at the level of other engineers and kept up with the technical
+                            aspects as well.
                         </Paragraph>
                     </Section>
                     <Section>
@@ -78,7 +76,7 @@ const Experience = (): React.ReactElement => {
                         <Timespan>July 2019 to June 2021</Timespan>
                         {Wso2Logo}
                         <Paragraph>
-                            Later, I completely owned the Observability area and mentored a few interns as well
+                            I completely owned the Observability area and mentored a few interns as well
                             as other junior engineers. I have also implemented parts of the CLI, VS Code Extension
                             and other tools of {Cellery} which involved different new concepts and technologies
                             which I learnt within short periods of time. Later when project {Choreo} was
@@ -91,10 +89,9 @@ const Experience = (): React.ReactElement => {
                             Two more engineers were also added to the {Choreo} Observability subteam and I was tasked
                             with leading the implementation of {Choreo} Observability. I designed the core architecture
                             of {Choreo} Observability and also worked on improving {Ballerina} Observability to
-                            support {Choreo} Observability better as well. While generally this level of responsibilities
+                            support {Choreo} Observability better. While generally this level of responsibilities
                             are not given to a Senior Software Engineer, I was trusted with it and I handled these
-                            responsibilities quite well and the Observability area later became one of the most stable
-                            areas and one of the main features of {Choreo} as well.
+                            responsibilities quite well.
                         </Paragraph>
                         <Paragraph>
                             The source code of {Ballerina} Observability was not actively maintained when I took over
@@ -113,10 +110,10 @@ const Experience = (): React.ReactElement => {
                         </Paragraph>
                         <Paragraph>
                             After the initial PoC was complete, the {Choreo} product also evolved and the Observability
-                            Team also gained new members and evolved as well. I was entrusted with continuing to lead
-                            the Observability Team while some of the product management aspects were handed over to others.
-                            I guided the team into implementing most of the core features of {Choreo} Observability and
-                            I helped and encouraged the engineers in my team to grow and improve themselves as well.
+                            Team also gained new members. I was entrusted with continuing to lead the Observability Team
+                            while some of the product management aspects were handed over to others. I guided the team
+                            into implementing most of the core features of {Choreo} Observability and I helped and
+                            encouraged the engineers in my team to grow and improve themselves as well.
                         </Paragraph>
                     </Section>
                     <Section>
@@ -124,11 +121,10 @@ const Experience = (): React.ReactElement => {
                         <Timespan>Jan 2018 to July 2019</Timespan>
                         {Wso2Logo}
                         <Paragraph>
-                            I was head hunted by WSO2 before the end of my degree and I was offered to start
-                            working as a Software Engineer at WSO2. At the start of my employment, I worked in
-                            multiple teams as part of the probation period. During one of these assignments,
-                            I implemented a password policy authenticator which is an authentication extension for
-                            the {wso2IdentityServer} which would validate and enforce password policies.
+                            At the start of my employment, I worked in multiple teams as part of the probation period.
+                            During one of these assignments, I implemented a password policy authenticator which
+                            is an authentication extension for the {wso2IdentityServer}. It would validate a user
+                            login and enforce password policies.
                         </Paragraph>
                         <Paragraph>
                             After completing this feature, I worked on a Customer Success Enablement project
@@ -194,7 +190,7 @@ const Experience = (): React.ReactElement => {
                             B.Sc. (Hons.) in Engineering (Computer Science and Engineering) degree. I started
                             working as a member of the Data Analytics Server (DAS) product team building a
                             prototype Notebook for analyzing data collected by the DAS. However,
-                            the project was aborted and was not added to the DAS product when the company
+                            the project was aborted and was not added to the DAS product as the company
                             decided to discontinue the DAS product.
                         </Paragraph>
                         <Paragraph>
