@@ -12,10 +12,10 @@
  */
 import { render, screen } from "@testing-library/react";
 
-import SectionHeading from "./SectionHeading";
+import Section from "./Section";
 
-test("renders section heading with children", async() => {
-    render(<SectionHeading>Test Section Heading written by Nadun De Silva</SectionHeading>);
+test("renders section with correct content", async() => {
+    render(<Section>Test Section content written by Nadun De Silva</Section>);
 
-    await screen.findByText("Test Section Heading written by Nadun De Silva");
+    await screen.findByText("Test Section content written by Nadun De Silva");
 });
