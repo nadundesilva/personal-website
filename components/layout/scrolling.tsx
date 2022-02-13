@@ -12,6 +12,9 @@
  */
 import { MutableRefObject, useEffect, useState, useRef } from "react";
 
+// -1 -> div partially or completely above viewport
+//  0 -> div visible in viewport
+//  1 -> div partially or completely below viewport
 type Direction = -1 | 0 | 1;
 
 interface UseScrollOffsetReturnValue<T> {
@@ -38,15 +41,15 @@ function useScrollOffset<T extends Element>(): UseScrollOffsetReturnValue<T> {
             } else if (refBBox.bottom <= 0) {
                 direction = -1;
                 newOffset = 0;
-            } else if (refBBox.top >= viewportHeight / 2) {
+            } else if (refBBox.top > viewportHeight / 2) {
                 const fullPageHeight = document.documentElement.offsetHeight;
                 const yOffset = window.pageYOffset;
                 const pageBottomOffset = (yOffset + viewportHeight * 1.5 - fullPageHeight) / (viewportHeight / 2);
                 const clientRectOffset = 2 - refBBox.top / (viewportHeight / 2);
 
                 direction = 1;
-                newOffset = pageBottomOffset > clientRectOffset ? pageBottomOffset : clientRectOffset;
-            } else if (refBBox.bottom <= viewportHeight / 2) {
+                newOffset = Math.max(pageBottomOffset, clientRectOffset);
+            } else if (refBBox.bottom < viewportHeight / 2) {
                 direction = -1;
                 newOffset = (refBBox.bottom) / (viewportHeight / 2);
             } else {
@@ -55,6 +58,9 @@ function useScrollOffset<T extends Element>(): UseScrollOffsetReturnValue<T> {
             }
             setDirection(direction);
             setOffset(newOffset);
+        } else {
+            setDirection(0);
+            setOffset(0);
         }
     };
 
