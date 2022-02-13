@@ -28,14 +28,24 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
     return (
         <Breadcrumbs aria-label="breadcrumb" sx={{ margin: 3 }}
             separator={<FontAwesomeIcon icon={faChevronRight} transform={"shrink-4"}/>}>
-            <Link passHref href={"/"}>
-                <BreadcrumbLink color="inherit">
-                    Home
-                </BreadcrumbLink>
-            </Link>
+            {
+                pathnames.length === 0
+                    ? (
+                        <Typography color="textPrimary">
+                            Home
+                        </Typography>
+                    )
+                    : (
+                        <Link passHref href={"/"}>
+                            <BreadcrumbLink color="inherit">
+                                Home
+                            </BreadcrumbLink>
+                        </Link>
+                    )
+            }
             {
                 pathnames.map((value, index) => {
-                    const last = index === pathnames.length - 1;
+                    const last = index === (pathnames.length - 1);
                     const to = `/${pathnames.slice(0, index + 1).join("/")}`;
 
                     return (
