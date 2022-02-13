@@ -15,7 +15,7 @@ import { useTheme } from "@mui/material/styles";
 import Image from "next/image";
 import React from "react";
 
-import { useScrollOffset } from "@/components/Layout";
+import { useScrollOffset } from "@/components/layout";
 import { Logos, LogoAsset } from "@/constants";
 
 const UNIVERSITY_OF_ALBERTA_ISSUER = "University of Alberta";

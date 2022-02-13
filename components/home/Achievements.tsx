@@ -16,7 +16,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Image from "next/image";
 import React from "react";
 
-import { useScrollOffset } from "@/components/Layout";
+import { useScrollOffset } from "@/components/layout";
 import { Photos, ImageAsset } from "@/constants";
 
 const PREFIX = "Home-Achievements";
