@@ -15,7 +15,7 @@ import { styled, useTheme } from "@mui/material/styles";
 import Image from "next/image";
 import React from "react";
 
-import { useScrollOffset } from "@/components/Layout";
+import { useScrollOffset } from "@/components/layout";
 import { Logos, LogoAsset } from "@/constants";
 
 const ProjectLogo = styled(Image)(({ theme }) => ({

@@ -18,7 +18,7 @@ import { Container, Grid, Grow, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import React from "react";
 
-import { useScrollOffset } from "@/components/Layout";
+import { useScrollOffset } from "@/components/layout";
 
 const ProfileIcon = styled(FontAwesomeIcon)(({ theme }) => ({
     margin: theme.spacing(1)

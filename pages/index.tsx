@@ -17,7 +17,7 @@ import Head from "next/head";
 import React, { useRef, useState } from "react";
 
 import Heading from "@/components/Heading";
-import Layout, { LayoutContent } from "@/components/Layout";
+import Layout, { LayoutContent } from "@/components/layout";
 
 const SectionContainer = styled(Container)(({ theme }) => ({
     margin: 0,

@@ -17,7 +17,7 @@ import { Paper, Slide, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import React from "react";
 
-import { useScrollOffset } from "@/components/Layout";
+import { useScrollOffset } from "@/components/layout";
 
 interface ExperienceItem {
     name: string,

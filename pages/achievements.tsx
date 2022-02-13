@@ -15,7 +15,7 @@ import Head from "next/head";
 import React from "react";
 
 import { Logo, Paragraph, Photo, Section, SectionHeading, Timespan } from "@/components/content";
-import Layout, { LayoutContent } from "@/components/Layout";
+import Layout, { LayoutContent } from "@/components/layout";
 import { Logos, Photos } from "@/constants";
 
 const Achievements = (): React.ReactElement => {

@@ -14,7 +14,7 @@ import { Grid, LinearProgress, Typography, linearProgressClasses } from "@mui/ma
 import { styled } from "@mui/material/styles";
 import React from "react";
 
-import { useScrollOffset } from "@/components/Layout";
+import { useScrollOffset } from "@/components/layout";
 
 const BorderLinearProgress = styled(LinearProgress)({
     height: 10,
