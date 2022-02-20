@@ -178,7 +178,7 @@ const Achievements = (): React.ReactElement => {
                         <Paragraph>
                             British Council HSBC Youth Enterprise Awards is a hackathon in which many teams
                             presented ideas to help solve problems in different domains. In the hackathon held in 2015,
-                            our team presented an idea, along with a prototype, in the hope of revolusionizing education.
+                            our team presented an idea, along with a prototype, in the hope of revolutionizing education.
                         </Paragraph>
                         <Photo float={"left"} photo={Photos.HSBCYouthEnterpriseAwards2015Discussion}/>
                         <Paragraph>
