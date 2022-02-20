@@ -53,22 +53,21 @@ const Experience = (): React.ReactElement => {
                         <Timespan>June 2021 to Now</Timespan>
                         {Wso2Logo}
                         <Paragraph>
-                            I led the Observability team in technical aspects and it was considered one of the most stable areas in the
-                            {Choreo} platform during that time. Moreover, I guided multiple engineers and helped them improve for
-                            the better as well. Apart from that I also contributed to other areas such as growth hacking, UX, SRE
-                            and other aspects of the {Choreo} platform.
+                            I led the Observability team in technical aspects and it was considered one of the most stable areas in
+                            the {Choreo} platform during that time. Moreover, I guided multiple engineers and helped them improve for
+                            the better. I also contributed to other areas such as growth hacking, UX, SRE and other aspects of
+                            the {Choreo} platform.
                         </Paragraph>
                         <Paragraph>
-                            Apart from the Observability Area, I also led the effort on the Choreo Online VS Code Editor as well
-                            as implemented a significant portion of it. This feature also was finished on time and in good quality
-                            as well. This involved implementing a secure environment for users to edit their code.
+                            Apart from the Observability Area, I also led the effort on the Choreo Online VS Code Editor and
+                            implemented a significant portion of it. This feature also was finished on time while adhering to
+                            code quality, architectural and security standards. This involved implementing a secure environment
+                            for users to edit their code.
                         </Paragraph>
                         <Paragraph>
-                            Throughout all this work, I always made myself available for other team members who approached me
-                            seeking for technical guidance or any clarifications about the platform. I always thought out of the
-                            box and contributed to many other technical and architectural decisions of the platform as well.
-                            Through all these, I still worked at the level of other engineers and kept up with the technical
-                            aspects as well.
+                            I always thought out of the box and contributed to many other technical and architectural decisions
+                            of the platform as well. Through all these, I still worked at the level of other engineers and kept
+                            up with the technical aspects of the platform.
                         </Paragraph>
                     </Section>
                     <Section>
@@ -76,7 +75,7 @@ const Experience = (): React.ReactElement => {
                         <Timespan>July 2019 to June 2021</Timespan>
                         {Wso2Logo}
                         <Paragraph>
-                            I completely owned the Observability area and mentored a few interns as well
+                            I completely owned the Observability area of Cellery and mentored a few interns as well
                             as other junior engineers. I have also implemented parts of the CLI, VS Code Extension
                             and other tools of {Cellery} which involved different new concepts and technologies
                             which I learnt within short periods of time. Later when project {Choreo} was
@@ -91,7 +90,7 @@ const Experience = (): React.ReactElement => {
                             of {Choreo} Observability and also worked on improving {Ballerina} Observability to
                             support {Choreo} Observability better. While generally this level of responsibilities
                             are not given to a Senior Software Engineer, I was trusted with it and I handled these
-                            responsibilities quite well.
+                            responsibilities quite well, earning the top performance award for each year.
                         </Paragraph>
                         <Paragraph>
                             The source code of {Ballerina} Observability was not actively maintained when I took over
@@ -159,7 +158,7 @@ const Experience = (): React.ReactElement => {
                             VICK (later named as {Cellery}) which was aimed towards making deployments in
                             Kubernetes easier. I was selected to be part of the initial research team to
                             implement the product. I worked on this project for some time and it evolved
-                            and along with the Cell based architecture later became project {Cellery}.
+                            and along with the Cell based architecture, later became project {Cellery}.
                             I mainly worked on the Observability aspects of the platform, but I contributed
                             to almost all the other areas of the product with thoughts and ideas as well.
                             While working on project {Cellery}, I was able to gain in depth knowledge on
