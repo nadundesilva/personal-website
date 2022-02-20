@@ -122,543 +122,533 @@ afterEach(() => {
     scrollListeners = [];
 });
 
+const DIV_HEIGHT = 2000;
+
 describe.each([
+    (() => {
+        const pageHeight = DIV_HEIGHT * 4 + 1000;
+        return {
+            name: "page height greater twice div height, with div at viewport middle",
+            pageHeight: pageHeight,
+            divTop: pageHeight / 2 - DIV_HEIGHT / 2
+        };
+    })(),
     {
-        name: "viewport height greater than twice div height",
-        pageHeight: 10000,
-        viewportHeight: 4500,
-        divTop: 5000,
-        divHeight: 2000
-    },
-    ...(() => Array.from(Array(5).keys()).reverse().map((i) => ({
-        name: `viewport height ${i + 1} points higher than twice div height`,
-        pageHeight: 10000,
-        viewportHeight: 4000 + (i + 1),
-        divTop: 5000,
-        divHeight: 2000
-    })))(),
-    {
-        name: "viewport height equal to twice div height",
-        pageHeight: 10000,
-        viewportHeight: 4000,
-        divTop: 5000,
-        divHeight: 2000
-    },
-    ...(() => Array.from(Array(5).keys()).map((i) => ({
-        name: `viewport height ${i + 1} points smaller than twice div height`,
-        pageHeight: 10000,
-        viewportHeight: 4000 - (i + 1),
-        divTop: 5000,
-        divHeight: 2000
-    })))(),
-    ...(() => Array.from(Array(5).keys()).reverse().map((i) => ({
-        name: `viewport height ${i + 1} points higher than (3 / 2) times div height`,
-        pageHeight: 10000,
-        viewportHeight: 3000 + (i + 1),
-        divTop: 5000,
-        divHeight: 2000
-    })))(),
-    {
-        name: "viewport height between div height and twice div height",
-        pageHeight: 10000,
-        viewportHeight: 3000,
-        divTop: 5000,
-        divHeight: 2000
-    },
-    ...(() => Array.from(Array(5).keys()).map((i) => ({
-        name: `viewport height ${i + 1} points smaller than (3 / 2) times div height`,
-        pageHeight: 10000,
-        viewportHeight: 3000 - (i + 1),
-        divTop: 5000,
-        divHeight: 2000
-    })))(),
-    ...(() => Array.from(Array(5).keys()).reverse().map((i) => ({
-        name: `viewport height ${i + 1} points higher than div height`,
-        pageHeight: 10000,
-        viewportHeight: 2000 + (i + 1),
-        divTop: 5000,
-        divHeight: 2000
-    })))(),
-    {
-        name: "viewport height equal to div height",
-        pageHeight: 10000,
-        viewportHeight: 2000,
-        divTop: 5000,
-        divHeight: 2000
-    },
-    ...(() => Array.from(Array(10).keys()).map((i) => ({
-        name: `viewport height ${i + 1} points smaller than div height`,
-        pageHeight: 10000,
-        viewportHeight: 2000 - (i + 1),
-        divTop: 5000,
-        divHeight: 2000
-    })))(),
-    ...(() => Array.from(Array(10).keys()).reverse().map((i) => ({
-        name: `viewport height ${i + 1} points higher than (3 / 4) times div height`,
-        pageHeight: 10000,
-        viewportHeight: 1500 + (i + 1),
-        divTop: 5000,
-        divHeight: 2000
-    })))(),
-    {
-        name: "viewport height between half div height and div height",
-        pageHeight: 10000,
-        viewportHeight: 1500,
-        divTop: 5000,
-        divHeight: 2000
-    },
-    ...(() => Array.from(Array(10).keys()).map((i) => ({
-        name: `viewport height ${i + 1} points smaller than (3 / 4) times div height`,
-        pageHeight: 10000,
-        viewportHeight: 1500 - (i + 1),
-        divTop: 5000,
-        divHeight: 2000
-    })))(),
-    ...(() => Array.from(Array(10).keys()).reverse().map((i) => ({
-        name: `viewport height ${i + 1} points higher than half div height`,
-        pageHeight: 10000,
-        viewportHeight: 1000 + (i + 1),
-        divTop: 5000,
-        divHeight: 2000
-    })))(),
-    {
-        name: "viewport height equal to half div height",
-        pageHeight: 10000,
-        viewportHeight: 1000,
-        divTop: 5000,
-        divHeight: 2000
-    },
-    ...(() => Array.from(Array(10).keys()).map((i) => ({
-        name: `viewport height ${i + 1} points smaller than half div height`,
-        pageHeight: 10000,
-        viewportHeight: 1000 - (i + 1),
-        divTop: 5000,
-        divHeight: 2000
-    })))(),
-    {
-        name: "viewport height smaller than half div height",
-        pageHeight: 10000,
-        viewportHeight: 500,
-        divTop: 5000,
-        divHeight: 2000
+        name: "page height greater twice div height, with div at top",
+        pageHeight: DIV_HEIGHT * 4 + 1000,
+        divTop: 0
     }
-])("[page height: $pageHeight, viewport height: $viewportHeight, div top: $divTop, div height: $divHeight] $name", ({ pageHeight, viewportHeight, divHeight, divTop }) => {
-    interface TestData {
+])("[page height: $pageHeight, div top: $divTop] $name", ({ pageHeight, divTop }) => {
+    // Sanity checks before running tests
+    expect(pageHeight).toBeGreaterThanOrEqual(divTop + DIV_HEIGHT);
+
+    interface ViewportData {
         name: string,
         if?: boolean,
-        viewportTop: number,
-        direction: number,
-        offset: number,
+        viewportHeight: number,
     };
 
-    const testData: TestData[] = [
-        // viewport bottom at or above div top
+    const viewportData: ViewportData[] = [
         {
-            name: "viewport bottom above div completely",
-            if: divTop > viewportHeight,
-            viewportTop: Math.floor((divTop - viewportHeight) / 2),
-            direction: 1,
-            offset: 0
+            name: "viewport height greater than twice div height",
+            if: DIV_HEIGHT * 2 > 500,
+            viewportHeight: DIV_HEIGHT * 2 - 500
         },
+        ...(() => Array.from(Array(5).keys()).reverse().map((i) => ({
+            name: `viewport height ${i + 1} points higher than twice div height`,
+            viewportHeight: DIV_HEIGHT * 2 + (i + 1)
+        })))(),
         {
-            name: "viewport bottom at div top",
-            if: divTop >= viewportHeight,
-            viewportTop: divTop - viewportHeight,
-            direction: 1,
-            offset: 0
+            name: "viewport height equal to twice div height",
+            viewportHeight: DIV_HEIGHT * 2
         },
-        // viewport bottom between div top and div halfway point
-        (() => {
-            const offset = Math.min(viewportHeight / 4, divHeight / 8);
-            return {
-                name: "viewport bottom between div top and div halfway point, with div top between viewport halfway point and viewport bottom",
-                if: divTop >= viewportHeight - offset,
-                viewportTop: divTop - viewportHeight + offset,
-                direction: 1,
-                offset: (2 * offset) / viewportHeight
-            };
-        })(),
+        ...(() => Array.from(Array(5).keys()).map((i) => ({
+            name: `viewport height ${i + 1} points smaller than twice div height`,
+            if: DIV_HEIGHT * 2 > (i + 1),
+            viewportHeight: DIV_HEIGHT * 2 - (i + 1)
+        })))(),
+        ...(() => Array.from(Array(5).keys()).reverse().map((i) => ({
+            name: `viewport height ${i + 1} points higher than (3 / 2) times div height`,
+            viewportHeight: DIV_HEIGHT * 1.5 + (i + 1)
+        })))(),
         {
-            name: "viewport bottom between div top and div halfway point, with div top at viewport halfway point",
-            if: viewportHeight < divHeight,
-            viewportTop: divTop - viewportHeight + viewportHeight / 2,
-            direction: 0,
-            offset: 1
+            name: "viewport height between div height and twice div height",
+            viewportHeight: DIV_HEIGHT * 1.5
         },
+        ...(() => Array.from(Array(5).keys()).map((i) => ({
+            name: `viewport height ${i + 1} points smaller than (3 / 2) times div height`,
+            if: DIV_HEIGHT * 1.5 > (i + 1),
+            viewportHeight: DIV_HEIGHT * 1.5 - (i + 1)
+        })))(),
+        ...(() => Array.from(Array(5).keys()).reverse().map((i) => ({
+            name: `viewport height ${i + 1} points higher than div height`,
+            viewportHeight: DIV_HEIGHT + (i + 1)
+        })))(),
         {
-            name: "viewport bottom between div top and div halfway point, with div top between viewport top and viewport halfway point",
-            if: viewportHeight / 2 < divHeight / 2,
-            viewportTop: divTop - viewportHeight + viewportHeight / 2 + Math.ceil((divHeight - viewportHeight) / 4),
-            direction: 0,
-            offset: 1
+            name: "viewport height equal to div height",
+            viewportHeight: DIV_HEIGHT
         },
+        ...(() => Array.from(Array(10).keys()).map((i) => ({
+            name: `viewport height ${i + 1} points smaller than div height`,
+            if: DIV_HEIGHT > (i + 1),
+            viewportHeight: DIV_HEIGHT - (i + 1)
+        })))(),
+        ...(() => Array.from(Array(10).keys()).reverse().map((i) => ({
+            name: `viewport height ${i + 1} points higher than (3 / 4) times div height`,
+            viewportHeight: DIV_HEIGHT * 0.75 + (i + 1)
+        })))(),
         {
-            name: "viewport bottom between div top and div halfway point, with div top at viewport top",
-            if: viewportHeight < divHeight / 2,
-            viewportTop: divTop,
-            direction: 0,
-            offset: 1
+            name: "viewport height between half div height and div height",
+            viewportHeight: DIV_HEIGHT * 0.75
         },
+        ...(() => Array.from(Array(10).keys()).map((i) => ({
+            name: `viewport height ${i + 1} points smaller than (3 / 4) times div height`,
+            if: DIV_HEIGHT * 0.75 > (i + 1),
+            viewportHeight: DIV_HEIGHT * 0.75 - (i + 1)
+        })))(),
+        ...(() => Array.from(Array(10).keys()).reverse().map((i) => ({
+            name: `viewport height ${i + 1} points higher than half div height`,
+            viewportHeight: DIV_HEIGHT * 0.5 + (i + 1)
+        })))(),
         {
-            name: "both viewport top and bottom between div top and div halfway point",
-            if: viewportHeight / 2 < divHeight,
-            viewportTop: divTop + (divHeight / 2 - viewportHeight) / 2,
-            direction: 0,
-            offset: 1
+            name: "viewport height equal to half div height",
+            viewportHeight: DIV_HEIGHT * 0.5
         },
-        // viewport bottom at div halfway point
+        ...(() => Array.from(Array(10).keys()).map((i) => ({
+            name: `viewport height ${i + 1} points smaller than half div height`,
+            if: DIV_HEIGHT * 0.5 > (i + 1),
+            viewportHeight: DIV_HEIGHT * 0.5 - (i + 1)
+        })))(),
         {
-            name: "viewport bottom at div halfway point, with div top between viewport halfway point and viewport bottom",
-            if: viewportHeight > divHeight,
-            viewportTop: divTop - viewportHeight + divHeight / 2,
-            direction: 1,
-            offset: divHeight / viewportHeight
-        },
-        {
-            name: "viewport bottom at div halfway point, with div top at viewport halfway point",
-            if: viewportHeight === divHeight,
-            viewportTop: divTop - viewportHeight + divHeight / 2,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom at div halfway point, with div top between viewport top and viewport halfway point",
-            if: viewportHeight < divHeight && viewportHeight > divHeight / 2,
-            viewportTop: divTop - viewportHeight + divHeight / 2,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom at div halfway point, with div top at viewport top",
-            if: viewportHeight === divHeight / 2,
-            viewportTop: divTop - viewportHeight + divHeight / 2,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom at div halfway point, with div top above viewport top",
-            if: viewportHeight < divHeight / 2,
-            viewportTop: divTop - viewportHeight + divHeight / 2,
-            direction: 0,
-            offset: 1
-        },
-        // viewport bottom between div halfway point and div bottom
-        (() => {
-            const offset = Math.min(viewportHeight / 2 - divHeight / 2, divHeight / 2) / 2;
-            return {
-                name: "viewport bottom between div halfway point and div bottom, with div top between viewport halfway point and viewport bottom",
-                if: viewportHeight > divHeight,
-                viewportTop: divTop - viewportHeight + divHeight / 2 + offset,
-                direction: 1,
-                offset: (divHeight + offset * 2) / viewportHeight
-            };
-        })(),
-        {
-            name: "viewport bottom between div halfway point and div bottom, with div top at viewport halfway point",
-            if: viewportHeight > divHeight && viewportHeight / 2 < divHeight,
-            viewportTop: divTop - viewportHeight / 2,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom between div halfway point and div bottom, with div top between viewport top and viewport halfway point",
-            if: viewportHeight > divHeight / 2 && viewportHeight / 2 < divHeight,
-            viewportTop: divTop - viewportHeight / 2 + Math.ceil((divHeight - viewportHeight / 2) / 2),
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom between div halfway point and div bottom, with div top at viewport top",
-            if: viewportHeight > divHeight / 2 && viewportHeight < divHeight,
-            viewportTop: divTop,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom between div halfway point and div bottom, with viewport top between div top and div halfway point, " +
-                "with viewport halfway point above div halfway point",
-            if: viewportHeight / 2 < divHeight / 2,
-            viewportTop: divTop + divHeight / 2 - viewportHeight * 0.5 + Math.ceil((divHeight - viewportHeight) / 4),
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom between div halfway point and div bottom, with viewport top between div top and div halfway point, " +
-                "with viewport halfway point at div halfway point",
-            if: viewportHeight + 1 < divHeight,
-            viewportTop: divTop + divHeight / 2 - viewportHeight * 0.5,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom between div halfway point and div bottom, with viewport top between div top and div halfway point, " +
-                "with viewport halfway point below div halfway point",
-            if: viewportHeight / 2 < divHeight / 2,
-            viewportTop: divTop + divHeight / 2 - viewportHeight * 0.5 - Math.ceil((divHeight - viewportHeight) / 4),
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom between div halfway point and div bottom, with viewport top at div halfway point",
-            if: viewportHeight < divHeight / 2,
-            viewportTop: divTop + divHeight / 2,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "both viewport bottom and viewport top between div halfway point and div bottom",
-            if: viewportHeight < divHeight / 2,
-            viewportTop: divTop + divHeight / 2 + Math.ceil((divHeight / 2 - viewportHeight) * 0.5),
-            direction: 0,
-            offset: 1
-        },
-        // viewport bottom at div bottom
-        {
-            name: "viewport bottom at div bottom, with div top between viewport halfway point and viewport bottom",
-            if: viewportHeight / 2 > divHeight,
-            viewportTop: divTop - viewportHeight + divHeight,
-            direction: 1,
-            offset: divHeight * 2 / viewportHeight
-        },
-        {
-            name: "viewport bottom at div bottom, with div top at viewport halfway point",
-            if: viewportHeight / 2 === divHeight,
-            viewportTop: divTop - viewportHeight + divHeight,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom at div bottom, with div top between viewport top and viewport halfway point",
-            if: viewportHeight / 2 < divHeight && viewportHeight > divHeight,
-            viewportTop: divTop - viewportHeight + divHeight,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom at div bottom, with div top at viewport top",
-            if: viewportHeight === divHeight,
-            viewportTop: divTop - viewportHeight + divHeight,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom at div bottom, with viewport top between div top and div halfway point",
-            if: viewportHeight < divHeight && viewportHeight > divHeight / 2,
-            viewportTop: divTop - viewportHeight + divHeight,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom at div bottom, with viewport top at div halfway point",
-            if: viewportHeight === divHeight / 2,
-            viewportTop: divTop - viewportHeight + divHeight,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom at div bottom, with viewport top between div halfway point and div bottom",
-            if: viewportHeight < divHeight / 2,
-            viewportTop: divTop - viewportHeight + divHeight,
-            direction: 0,
-            offset: 1
-        },
-        // viewport bottom below div bottom
-        {
-            name: "viewport bottom below div bottom, with div top between viewport halfway point and viewport bottom",
-            if: viewportHeight / 2 > divHeight,
-            viewportTop: divTop - viewportHeight + divHeight + (viewportHeight / 2 - divHeight) / 2,
-            direction: 1,
-            offset: (divHeight + viewportHeight / 2) / viewportHeight
-        },
-        {
-            name: "viewport bottom below div bottom, with div top at viewport halfway point",
-            if: viewportHeight / 2 > divHeight,
-            viewportTop: divTop - viewportHeight / 2,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom below div bottom, with div top between viewport top and viewport halfway point, " +
-                "with viewport halfway point above div halfway point",
-            if: viewportHeight > divHeight,
-            viewportTop: divTop - viewportHeight / 2 + divHeight / 2 - (viewportHeight - divHeight) / 4,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom below div bottom, with div top between viewport top and viewport halfway point, " +
-                "with viewport halfway point at div halfway point",
-            if: viewportHeight > divHeight,
-            viewportTop: divTop - viewportHeight / 2 + divHeight / 2,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom below div bottom, with div top between viewport top and viewport halfway point, " +
-                "with viewport halfway point between div halfway point and div bottom",
-            if: viewportHeight > divHeight && viewportHeight / 2 < divHeight,
-            viewportTop: divTop - viewportHeight / 2 + divHeight / 2 + (viewportHeight - divHeight) / 4,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom below div bottom, with div top between viewport top and viewport halfway point, " +
-                "with viewport halfway point at div bottom",
-            if: viewportHeight > divHeight && viewportHeight / 2 < divHeight,
-            viewportTop: divTop - viewportHeight / 2 + divHeight,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom below div bottom, with div top between viewport top and viewport halfway point, " +
-                "with viewport halfway point below div bottom",
-            if: viewportHeight / 2 > divHeight,
-            viewportTop: divTop - viewportHeight / 2 + divHeight + (viewportHeight / 2 - divHeight) / 2,
-            direction: -1,
-            offset: (viewportHeight / 2 + divHeight) / viewportHeight
-        },
-        {
-            name: "viewport bottom below div bottom, with div top at viewport top, " +
-                "with viewport halfway point between div halfway point and div bottom",
-            if: viewportHeight > divHeight && viewportHeight / 2 < divHeight,
-            viewportTop: divTop,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom below div bottom, with div top at viewport top, " +
-                "with viewport halfway point at div bottom",
-            if: viewportHeight / 2 === divHeight,
-            viewportTop: divTop,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom below div bottom, with div top at viewport top, " +
-                "with viewport halfway point below div bottom",
-            if: viewportHeight / 2 > divHeight,
-            viewportTop: divTop,
-            direction: -1,
-            offset: (2 * divHeight) / viewportHeight
-        },
-        {
-            name: "viewport bottom below div bottom, with viewport top between div top and div halfway point, " +
-                "with viewport halfway point between div halfway point and div bottom",
-            if: viewportHeight / 2 < divHeight && viewportHeight > divHeight,
-            viewportTop: divTop - viewportHeight + viewportHeight / 2 + divHeight / 2 + (divHeight - viewportHeight / 2) / 2,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom below div bottom, with viewport top between div top and div halfway point, " +
-                "with viewport halfway point at div bottom",
-            if: viewportHeight / 2 < divHeight && viewportHeight > divHeight,
-            viewportTop: divTop - viewportHeight / 2 + divHeight,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom below div bottom, with viewport top between div top and div halfway point, " +
-                "with viewport halfway point below div bottom",
-            if: viewportHeight > divHeight,
-            viewportTop: divTop - viewportHeight / 2 + divHeight + (viewportHeight / 2 - divHeight / 2) / 2,
-            direction: -1,
-            offset: (viewportHeight / 2 + divHeight / 2) / viewportHeight
-        },
-        {
-            name: "viewport bottom below div bottom, with viewport top at div halfway point, " +
-                "with viewport halfway point between div halfway point and div bottom",
-            if: viewportHeight < divHeight && viewportHeight > divHeight / 2,
-            viewportTop: divTop + divHeight / 2,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom below div bottom, with viewport top at div halfway point, " +
-                "with viewport halfway point at div bottom",
-            if: viewportHeight === divHeight,
-            viewportTop: divTop + divHeight / 2,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom below div bottom, with viewport top at div halfway point, " +
-                "with viewport halfway point below div bottom",
-            if: viewportHeight > divHeight,
-            viewportTop: divTop + divHeight / 2,
-            direction: -1,
-            offset: divHeight / viewportHeight
-        },
-        {
-            name: "viewport bottom below div bottom, with viewport top between div halfway point and div bottom, " +
-                "with viewport halfway point between div halfway point and div bottom",
-            if: viewportHeight < divHeight,
-            viewportTop: divTop + divHeight - viewportHeight / 2 - (divHeight / 2 - viewportHeight / 2) / 2,
-            direction: 0,
-            offset: 1
-        },
-        {
-            name: "viewport bottom below div bottom, with viewport top between div halfway point and div bottom, " +
-                "with viewport halfway point at div bottom",
-            if: viewportHeight < divHeight,
-            viewportTop: divTop + divHeight - viewportHeight / 2,
-            direction: 0,
-            offset: 1
-        },
-        (() => {
-            const viewportTop = divTop + divHeight - viewportHeight / 2 - (divHeight / 2 - viewportHeight / 2) / 2;
-            const isDirectionBelow = divTop - viewportTop + divHeight < viewportHeight / 2;
-            return {
-                name: "viewport bottom below div bottom, with viewport top between div halfway point and div bottom, " +
-                    "with viewport halfway point below div bottom",
-                viewportTop: viewportTop,
-                direction: isDirectionBelow ? -1 : 0,
-                offset: isDirectionBelow ? (viewportHeight / 2 + divHeight / 2) / viewportHeight : 1
-            };
-        })(),
-        {
-            name: "viewport top at div bottom",
-            if: divTop + divHeight + viewportHeight <= pageHeight,
-            viewportTop: divTop + divHeight,
-            direction: -1,
-            offset: 0
-        },
-        {
-            name: "viewport top below div bottom",
-            if: divTop + divHeight + viewportHeight < pageHeight,
-            viewportTop: divTop + divHeight + (pageHeight - divTop - divHeight - viewportHeight) / 2,
-            direction: -1,
-            offset: 0
+            name: "viewport height smaller than half div height",
+            if: DIV_HEIGHT * 0.5 > 500,
+            viewportHeight: DIV_HEIGHT * 0.5 - 500
         }
     ];
 
-    test.each(
-        testData.filter(datum => (datum.if === undefined || datum.if))
-    )("[viewport top: $viewportTop, direction: $direction, offset: $offset] $name", async({ viewportTop, direction, offset }) => {
-        // Sanity checks before running tests
-        expect(viewportTop).toBeGreaterThanOrEqual(0);
-        expect(offset).toBeGreaterThanOrEqual(0);
+    describe.each(
+        viewportData.filter(datum => (datum.if === undefined || datum.if))
+    )("[viewport height: $viewportHeight] $name", ({ viewportHeight }) => {
+        interface TestData {
+            name: string,
+            if?: boolean,
+            viewportTop: number,
+            direction: number,
+            offset: number,
+        };
 
-        act(() => {
-            render(
-                <ScrollingComponent
-                    pageHeight={pageHeight}
-                    viewportHeight={viewportHeight}
-                    div={{
-                        top: divTop,
-                        height: divHeight
-                    }}
-                />
-            );
-        });
+        const testData: TestData[] = [
+            // viewport bottom at or above div top
+            {
+                name: "viewport bottom above div completely",
+                if: divTop > viewportHeight,
+                viewportTop: Math.floor((divTop - viewportHeight) / 2),
+                direction: 1,
+                offset: 0
+            },
+            {
+                name: "viewport bottom at div top",
+                if: divTop >= viewportHeight,
+                viewportTop: divTop - viewportHeight,
+                direction: 1,
+                offset: 0
+            },
+            // viewport bottom between div top and div halfway point
+            (() => {
+                const offset = Math.min(viewportHeight / 4, DIV_HEIGHT / 8);
+                return {
+                    name: "viewport bottom between div top and div halfway point, with div top between viewport halfway point and viewport bottom",
+                    if: divTop >= viewportHeight - offset,
+                    viewportTop: divTop - viewportHeight + offset,
+                    direction: 1,
+                    offset: (2 * offset) / viewportHeight
+                };
+            })(),
+            {
+                name: "viewport bottom between div top and div halfway point, with div top at viewport halfway point",
+                if: viewportHeight < DIV_HEIGHT && divTop >= viewportHeight / 2,
+                viewportTop: divTop - viewportHeight / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom between div top and div halfway point, with div top between viewport top and viewport halfway point",
+                if: viewportHeight < DIV_HEIGHT && divTop >= viewportHeight / 2,
+                viewportTop: divTop - viewportHeight / 2 + (Math.min(DIV_HEIGHT / 2, divTop) - viewportHeight / 2) / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom between div top and div halfway point, with div top at viewport top",
+                if: viewportHeight < DIV_HEIGHT / 2,
+                viewportTop: divTop,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "both viewport top and bottom between div top and div halfway point",
+                if: viewportHeight < DIV_HEIGHT / 2,
+                viewportTop: divTop + (DIV_HEIGHT / 2 - viewportHeight) / 2,
+                direction: 0,
+                offset: 1
+            },
+            // viewport bottom at div halfway point
+            {
+                name: "viewport bottom at div halfway point, with div top between viewport halfway point and viewport bottom",
+                if: viewportHeight > DIV_HEIGHT && viewportHeight - DIV_HEIGHT / 2 <= divTop,
+                viewportTop: divTop - viewportHeight + DIV_HEIGHT / 2,
+                direction: 1,
+                offset: DIV_HEIGHT / viewportHeight
+            },
+            {
+                name: "viewport bottom at div halfway point, with div top at viewport halfway point",
+                if: viewportHeight === DIV_HEIGHT && viewportHeight / 2 <= divTop,
+                viewportTop: divTop - viewportHeight + DIV_HEIGHT / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom at div halfway point, with div top between viewport top and viewport halfway point",
+                if: viewportHeight < DIV_HEIGHT && (viewportHeight - DIV_HEIGHT / 2) <= divTop,
+                viewportTop: divTop - viewportHeight + DIV_HEIGHT / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom at div halfway point, with div top at viewport top",
+                if: viewportHeight === DIV_HEIGHT / 2,
+                viewportTop: divTop - viewportHeight + DIV_HEIGHT / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom at div halfway point, with div top above viewport top",
+                if: viewportHeight < DIV_HEIGHT / 2,
+                viewportTop: divTop - viewportHeight + DIV_HEIGHT / 2,
+                direction: 0,
+                offset: 1
+            },
+            // viewport bottom between div halfway point and div bottom
+            (() => {
+                const offset = viewportHeight / 2 > DIV_HEIGHT
+                    ? Math.min(DIV_HEIGHT, divTop + DIV_HEIGHT - viewportHeight) / 2
+                    : (DIV_HEIGHT - viewportHeight / 2) + (viewportHeight / 2 - DIV_HEIGHT / 2) / 2;
+                return {
+                    name: "viewport bottom between div halfway point and div bottom, with div top between viewport halfway point and viewport bottom",
+                    if: viewportHeight > DIV_HEIGHT && viewportHeight / 2 <= divTop,
+                    viewportTop: divTop - viewportHeight + DIV_HEIGHT - offset,
+                    direction: 1,
+                    offset: (DIV_HEIGHT - offset) / (viewportHeight / 2)
+                };
+            })(),
+            {
+                name: "viewport bottom between div halfway point and div bottom, with div top at viewport halfway point",
+                if: viewportHeight > DIV_HEIGHT && viewportHeight / 2 < DIV_HEIGHT && viewportHeight / 2 <= divTop,
+                viewportTop: divTop - viewportHeight / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom between div halfway point and div bottom, with div top between viewport top and viewport halfway point",
+                if: viewportHeight * 0.75 <= divTop + DIV_HEIGHT / 2 && viewportHeight / 2 < DIV_HEIGHT,
+                viewportTop: divTop - viewportHeight / 2 + (DIV_HEIGHT - viewportHeight / 2) / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom between div halfway point and div bottom, with div top at viewport top",
+                if: viewportHeight > DIV_HEIGHT / 2 && viewportHeight < DIV_HEIGHT,
+                viewportTop: divTop,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom between div halfway point and div bottom, with viewport top between div top and div halfway point, " +
+                    "with viewport halfway point above div halfway point",
+                if: viewportHeight / 2 < DIV_HEIGHT / 2,
+                viewportTop: divTop + DIV_HEIGHT / 2 - viewportHeight / 2 + Math.ceil((DIV_HEIGHT - viewportHeight) / 4),
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom between div halfway point and div bottom, with viewport top between div top and div halfway point, " +
+                    "with viewport halfway point at div halfway point",
+                if: viewportHeight + 1 < DIV_HEIGHT,
+                viewportTop: divTop + DIV_HEIGHT / 2 - viewportHeight / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom between div halfway point and div bottom, with viewport top between div top and div halfway point, " +
+                    "with viewport halfway point below div halfway point",
+                if: viewportHeight < DIV_HEIGHT,
+                viewportTop: divTop + DIV_HEIGHT / 2 - viewportHeight / 2 - (DIV_HEIGHT - viewportHeight) / 4,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom between div halfway point and div bottom, with viewport top at div halfway point",
+                if: viewportHeight < DIV_HEIGHT / 2,
+                viewportTop: divTop + DIV_HEIGHT / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "both viewport bottom and viewport top between div halfway point and div bottom",
+                if: viewportHeight < DIV_HEIGHT / 2,
+                viewportTop: divTop + DIV_HEIGHT / 2 + Math.ceil((DIV_HEIGHT / 2 - viewportHeight) * 0.5),
+                direction: 0,
+                offset: 1
+            },
+            // viewport bottom at div bottom
+            {
+                name: "viewport bottom at div bottom, with div top between viewport halfway point and viewport bottom",
+                if: viewportHeight / 2 > DIV_HEIGHT && viewportHeight - DIV_HEIGHT <= divTop,
+                viewportTop: divTop - viewportHeight + DIV_HEIGHT,
+                direction: 1,
+                offset: DIV_HEIGHT * 2 / viewportHeight
+            },
+            {
+                name: "viewport bottom at div bottom, with div top at viewport halfway point",
+                if: viewportHeight / 2 === DIV_HEIGHT && viewportHeight / 2 <= divTop,
+                viewportTop: divTop - viewportHeight + DIV_HEIGHT,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom at div bottom, with div top between viewport top and viewport halfway point",
+                if: viewportHeight / 2 < DIV_HEIGHT && viewportHeight > DIV_HEIGHT && viewportHeight - DIV_HEIGHT <= divTop,
+                viewportTop: divTop - viewportHeight + DIV_HEIGHT,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom at div bottom, with div top at viewport top",
+                if: viewportHeight === DIV_HEIGHT,
+                viewportTop: divTop - viewportHeight + DIV_HEIGHT,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom at div bottom, with viewport top between div top and div halfway point",
+                if: viewportHeight < DIV_HEIGHT && viewportHeight > DIV_HEIGHT / 2,
+                viewportTop: divTop - viewportHeight + DIV_HEIGHT,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom at div bottom, with viewport top at div halfway point",
+                if: viewportHeight === DIV_HEIGHT / 2,
+                viewportTop: divTop - viewportHeight + DIV_HEIGHT,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom at div bottom, with viewport top between div halfway point and div bottom",
+                if: viewportHeight < DIV_HEIGHT / 2,
+                viewportTop: divTop - viewportHeight + DIV_HEIGHT,
+                direction: 0,
+                offset: 1
+            },
+            // viewport bottom below div bottom
+            {
+                name: "viewport bottom below div bottom, with div top between viewport halfway point and viewport bottom",
+                if: viewportHeight / 2 > DIV_HEIGHT && viewportHeight / 2 < divTop,
+                viewportTop: divTop - viewportHeight + DIV_HEIGHT + (viewportHeight / 2 - DIV_HEIGHT) / 2,
+                direction: 1,
+                offset: (DIV_HEIGHT + viewportHeight / 2) / viewportHeight
+            },
+            {
+                name: "viewport bottom below div bottom, with div top at viewport halfway point",
+                if: viewportHeight / 2 > DIV_HEIGHT && viewportHeight / 2 <= divTop,
+                viewportTop: divTop - viewportHeight / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom below div bottom, with div top between viewport top and viewport halfway point, " +
+                    "with viewport halfway point above div halfway point",
+                if: viewportHeight > DIV_HEIGHT && (viewportHeight / 2 - DIV_HEIGHT / 2) <= divTop,
+                viewportTop: divTop - viewportHeight / 2 + DIV_HEIGHT / 2 - (viewportHeight / 2 - DIV_HEIGHT / 2) / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom below div bottom, with div top between viewport top and viewport halfway point, " +
+                    "with viewport halfway point at div halfway point",
+                if: viewportHeight > DIV_HEIGHT && (viewportHeight / 2 - DIV_HEIGHT / 2) <= divTop,
+                viewportTop: divTop - viewportHeight / 2 + DIV_HEIGHT / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom below div bottom, with div top between viewport top and viewport halfway point, " +
+                    "with viewport halfway point between div halfway point and div bottom",
+                if: viewportHeight > DIV_HEIGHT && viewportHeight / 2 < DIV_HEIGHT && viewportHeight / 2 - DIV_HEIGHT / 2 <= divTop,
+                viewportTop: divTop - viewportHeight / 2 + DIV_HEIGHT / 2 + (viewportHeight / 2 - DIV_HEIGHT / 2) / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom below div bottom, with div top between viewport top and viewport halfway point, " +
+                    "with viewport halfway point at div bottom",
+                if: viewportHeight > DIV_HEIGHT && viewportHeight / 2 < DIV_HEIGHT,
+                viewportTop: divTop - viewportHeight / 2 + DIV_HEIGHT,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom below div bottom, with div top between viewport top and viewport halfway point, " +
+                    "with viewport halfway point below div bottom",
+                if: viewportHeight / 2 > DIV_HEIGHT && divTop > 0,
+                viewportTop: Math.max(divTop - viewportHeight / 2 + DIV_HEIGHT + (viewportHeight / 2 - DIV_HEIGHT) / 2, 0),
+                direction: -1,
+                offset: (viewportHeight / 2 + DIV_HEIGHT) / viewportHeight
+            },
+            {
+                name: "viewport bottom below div bottom, with div top at viewport top, " +
+                    "with viewport halfway point between div halfway point and div bottom",
+                if: viewportHeight > DIV_HEIGHT && viewportHeight / 2 < DIV_HEIGHT,
+                viewportTop: divTop,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom below div bottom, with div top at viewport top, " +
+                    "with viewport halfway point at div bottom",
+                if: viewportHeight / 2 === DIV_HEIGHT,
+                viewportTop: divTop,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom below div bottom, with div top at viewport top, " +
+                    "with viewport halfway point below div bottom",
+                if: viewportHeight / 2 > DIV_HEIGHT,
+                viewportTop: divTop,
+                direction: -1,
+                offset: (2 * DIV_HEIGHT) / viewportHeight
+            },
+            {
+                name: "viewport bottom below div bottom, with viewport top between div top and div halfway point, " +
+                    "with viewport halfway point between div halfway point and div bottom",
+                if: viewportHeight / 2 < DIV_HEIGHT && viewportHeight > DIV_HEIGHT / 2,
+                viewportTop: divTop - viewportHeight / 2 + DIV_HEIGHT / 2 + Math.max(DIV_HEIGHT / 4, (viewportHeight - DIV_HEIGHT + 1) / 2),
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom below div bottom, with viewport top between div top and div halfway point, " +
+                    "with viewport halfway point at div bottom",
+                if: viewportHeight / 2 < DIV_HEIGHT && viewportHeight > DIV_HEIGHT,
+                viewportTop: divTop - viewportHeight / 2 + DIV_HEIGHT,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom below div bottom, with viewport top between div top and div halfway point, " +
+                    "with viewport halfway point below div bottom",
+                if: viewportHeight > DIV_HEIGHT,
+                viewportTop: divTop - viewportHeight / 2 + DIV_HEIGHT + (viewportHeight / 2 - DIV_HEIGHT / 2) / 2,
+                direction: -1,
+                offset: (viewportHeight / 2 + DIV_HEIGHT / 2) / viewportHeight
+            },
+            {
+                name: "viewport bottom below div bottom, with viewport top at div halfway point, " +
+                    "with viewport halfway point between div halfway point and div bottom",
+                if: viewportHeight < DIV_HEIGHT && viewportHeight > DIV_HEIGHT / 2,
+                viewportTop: divTop + DIV_HEIGHT / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom below div bottom, with viewport top at div halfway point, " +
+                    "with viewport halfway point at div bottom",
+                if: viewportHeight === DIV_HEIGHT,
+                viewportTop: divTop + DIV_HEIGHT / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom below div bottom, with viewport top at div halfway point, " +
+                    "with viewport halfway point below div bottom",
+                if: viewportHeight > DIV_HEIGHT,
+                viewportTop: divTop + DIV_HEIGHT / 2,
+                direction: -1,
+                offset: DIV_HEIGHT / viewportHeight
+            },
+            {
+                name: "viewport bottom below div bottom, with viewport top between div halfway point and div bottom, " +
+                    "with viewport halfway point between div halfway point and div bottom",
+                if: viewportHeight < DIV_HEIGHT,
+                viewportTop: divTop + DIV_HEIGHT - viewportHeight / 2 - (DIV_HEIGHT / 2 - viewportHeight / 2) / 2,
+                direction: 0,
+                offset: 1
+            },
+            {
+                name: "viewport bottom below div bottom, with viewport top between div halfway point and div bottom, " +
+                    "with viewport halfway point at div bottom",
+                if: viewportHeight < DIV_HEIGHT,
+                viewportTop: divTop + DIV_HEIGHT - viewportHeight / 2,
+                direction: 0,
+                offset: 1
+            },
+            (() => {
+                const viewportTop = divTop + DIV_HEIGHT - viewportHeight / 2 - (DIV_HEIGHT / 2 - viewportHeight / 2) / 2;
+                const isDirectionBelow = divTop - viewportTop + DIV_HEIGHT < viewportHeight / 2;
+                return {
+                    name: "viewport bottom below div bottom, with viewport top between div halfway point and div bottom, " +
+                        "with viewport halfway point below div bottom",
+                    viewportTop: viewportTop,
+                    direction: isDirectionBelow ? -1 : 0,
+                    offset: isDirectionBelow ? (viewportHeight / 2 + DIV_HEIGHT / 2) / viewportHeight : 1
+                };
+            })(),
+            {
+                name: "viewport top at div bottom",
+                if: divTop + DIV_HEIGHT + viewportHeight <= pageHeight,
+                viewportTop: divTop + DIV_HEIGHT,
+                direction: -1,
+                offset: 0
+            },
+            {
+                name: "viewport top below div bottom",
+                if: divTop + DIV_HEIGHT + viewportHeight < pageHeight,
+                viewportTop: divTop + DIV_HEIGHT + (pageHeight - divTop - DIV_HEIGHT - viewportHeight) / 2,
+                direction: -1,
+                offset: 0
+            }
+        ];
 
-        await act(async() => {
-            await triggerScroll(viewportTop);
-        });
+        test.each(
+            testData.filter(datum => (datum.if === undefined || datum.if))
+        )("[viewport top: $viewportTop, direction: $direction, offset: $offset] $name", async({ viewportTop, direction, offset }) => {
+            // Sanity checks before running tests
+            expect(viewportTop).toBeGreaterThanOrEqual(0);
+            expect(offset).toBeGreaterThanOrEqual(0);
+            expect(pageHeight).toBeGreaterThanOrEqual(viewportTop + viewportHeight);
 
-        await testHook({
-            direction: direction,
-            offset: offset
+            act(() => {
+                render(
+                    <ScrollingComponent
+                        pageHeight={pageHeight}
+                        viewportHeight={viewportHeight}
+                        div={{
+                            top: divTop,
+                            height: DIV_HEIGHT
+                        }}
+                    />
+                );
+            });
+
+            await act(async() => {
+                await triggerScroll(viewportTop);
+            });
+
+            await testHook({
+                direction: direction,
+                offset: offset
+            });
         });
     });
 });
