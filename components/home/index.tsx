@@ -11,12 +11,13 @@
  * limitations under the License.
  */
 import AboutMe from "./AboutMe";
-import Achievements from "./Achievements";
-import Certifications from "./Certifications";
-import ContributedProjects from "./ContributedProjects";
-import Experience from "./Experience";
-import Profiles from "./Profiles";
-import Skills from "./Skills";
+import Heading from "./Heading";
+import Achievements from "./sections/Achievements";
+import Certifications from "./sections/Certifications";
+import ContributedProjects from "./sections/ContributedProjects";
+import Experience from "./sections/Experience";
+import Profiles from "./sections/Profiles";
+import Skills from "./sections/Skills";
 import WelcomeBanner from "./WelcomeBanner";
 
 export {
@@ -25,6 +26,7 @@ export {
     Certifications,
     ContributedProjects,
     Experience,
+    Heading,
     Profiles,
     Skills,
     WelcomeBanner

@@ -16,7 +16,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import React, { useRef, useState } from "react";
 
-import Heading from "@/components/Heading";
+import { Heading } from "@/components/home";
 import Layout, { LayoutContent } from "@/components/layout";
 
 const SectionContainer = styled(Container)(({ theme }) => ({
@@ -34,12 +34,12 @@ const dynamicOptions = {
 };
 
 const AboutMe = dynamic<{}>(async() => await import("@/components/home/AboutMe"), dynamicOptions);
-const Achievements = dynamic<{}>(async() => await import("@/components/home/Achievements"), dynamicOptions);
-const ContributedProjects = dynamic<{}>(async() => await import("@/components/home/ContributedProjects"), dynamicOptions);
-const Certifications = dynamic<{}>(async() => await import("@/components/home/Certifications"), dynamicOptions);
-const Experience = dynamic<{}>(async() => await import("@/components/home/Experience"), dynamicOptions);
-const Profiles = dynamic<{}>(async() => await import("@/components/home/Profiles"), dynamicOptions);
-const Skills = dynamic<{}>(async() => await import("@/components/home/Skills"), dynamicOptions);
+const Achievements = dynamic<{}>(async() => await import("@/components/home/sections/Achievements"), dynamicOptions);
+const ContributedProjects = dynamic<{}>(async() => await import("@/components/home/sections/ContributedProjects"), dynamicOptions);
+const Certifications = dynamic<{}>(async() => await import("@/components/home/sections/Certifications"), dynamicOptions);
+const Experience = dynamic<{}>(async() => await import("@/components/home/sections/Experience"), dynamicOptions);
+const Profiles = dynamic<{}>(async() => await import("@/components/home/sections/Profiles"), dynamicOptions);
+const Skills = dynamic<{}>(async() => await import("@/components/home/sections/Skills"), dynamicOptions);
 
 interface Section {
     name: string,
