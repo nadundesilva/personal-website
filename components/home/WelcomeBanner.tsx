@@ -12,7 +12,7 @@
  */
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, Button, Container, Grid, styled, Theme, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Container, Grid, Link, styled, Theme, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 
@@ -30,10 +30,6 @@ const WelcomeBanner = (): React.ReactElement => {
     const downloadButtonSize = isLarge
         ? "large"
         : (isMedium ? "medium" : "small");
-
-    const downloadCv = (): void => {
-        window.open((process.env.PUBLIC_URL ?? "") + "/nadundesilva-cv.pdf");
-    };
 
     return (
         <Container maxWidth={false} disableGutters sx={{ position: "relative" }}>
@@ -68,9 +64,11 @@ const WelcomeBanner = (): React.ReactElement => {
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button variant="contained" color="primary" size={downloadButtonSize} onClick={downloadCv}>
-                        View CV
-                    </Button>
+                    <Link target={"_blank"} href={"/nadundesilva-cv.pdf"}>
+                        <Button variant="contained" color="primary" size={downloadButtonSize}>
+                            View CV
+                        </Button>
+                    </Link>
                 </Grid>
             </Grid>
             <Container maxWidth={false} disableGutters

@@ -14,7 +14,7 @@ import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { faFacebook, faGithub, faInstagram, faLinkedin, faMedium, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Container, Grid, Grow, styled, Typography } from "@mui/material";
+import { Container, Grid, Grow, Link, styled, Typography } from "@mui/material";
 import React from "react";
 
 import { useScrollOffset } from "@/components/layout";
@@ -70,39 +70,36 @@ const Profiles = (): React.ReactElement => {
         }
     ];
 
-    const generateOpenLinkHandler = (link: string) => () => {
-        window.open(link, "_blank");
-    };
-
     return (
         <Grid ref={rootRef} container justifyContent="center" alignItems="center">
             {
                 profiles.map((profile, index) => (
-                    <Grid item xs={12} sm={3} key={profile.name}
-                        onClick={generateOpenLinkHandler(profile.link)}
-                    >
-                        <Grid container direction="column" justifyContent="center" alignItems="center"
-                            sx={{
-                                padding: (theme) => theme.spacing(4),
-                                cursor: "pointer",
-                                "&:hover": {
-                                    background: (theme) => theme.palette.mode === "light" ? "#cccccc" : "#444444"
-                                }
-                            }}
-                        >
-                            <Grow in={offset > 0.5} timeout={1000}>
-                                <Container disableGutters>
-                                    <Grid item xs={6} sx={{ margin: "auto", textAlign: "center" }}>
-                                        <ProfileIcon icon={profile.icon} size="3x"/>
-                                    </Grid>
-                                    <Grid item xs={6} sx={{ margin: "auto", textAlign: "center" }}>
-                                        <Typography sx={{ fontWeight: "bold" }}>
-                                            {profile.name}
-                                        </Typography>
-                                    </Grid>
-                                </Container>
-                            </Grow>
-                        </Grid>
+                    <Grid item xs={12} sm={3} key={profile.name}>
+                        <Link target={"_blank"} href={profile.link}>
+                            <Grid container direction="column" justifyContent="center" alignItems="center"
+                                sx={{
+                                    padding: (theme) => theme.spacing(4),
+                                    cursor: "pointer",
+                                    "&:hover": {
+                                        background: (theme) => theme.palette.mode === "light" ? "#cccccc" : "#444444"
+                                    },
+                                    color: (theme) => theme.palette.mode === "light" ? "black" : "white"
+                                }}
+                            >
+                                <Grow in={offset > 0.5} timeout={1000}>
+                                    <Container disableGutters>
+                                        <Grid item xs={6} sx={{ margin: "auto", textAlign: "center" }}>
+                                            <ProfileIcon icon={profile.icon} size="3x"/>
+                                        </Grid>
+                                        <Grid item xs={6} sx={{ margin: "auto", textAlign: "center" }}>
+                                            <Typography sx={{ fontWeight: "bold" }}>
+                                                {profile.name}
+                                            </Typography>
+                                        </Grid>
+                                    </Container>
+                                </Grow>
+                            </Grid>
+                        </Link>
                     </Grid>
                 ))
             }
