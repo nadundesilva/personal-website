@@ -12,8 +12,7 @@
  */
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, Button, Container, Grid, Theme, Typography, useMediaQuery } from "@mui/material";
-import { styled, useTheme } from "@mui/material/styles";
+import { Box, Button, Container, Grid, styled, Theme, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 

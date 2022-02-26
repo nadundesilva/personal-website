@@ -13,8 +13,7 @@
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Timeline, TimelineItem, TimelineOppositeContent, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent } from "@mui/lab";
-import { Paper, Slide, Typography, useMediaQuery } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Paper, Slide, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 
 import { useScrollOffset } from "@/components/layout";
