@@ -10,8 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Box, Grid, Slide } from "@mui/material";
-import { styled, useTheme } from "@mui/material/styles";
+import { Box, Grid, Slide, styled, useTheme } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 

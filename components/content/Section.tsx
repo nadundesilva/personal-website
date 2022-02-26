@@ -10,8 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Box } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, styled } from "@mui/material";
 
 const Section = styled(Box)(() => ({
     margin: 0,

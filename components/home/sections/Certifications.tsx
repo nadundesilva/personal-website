@@ -10,8 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Box, Card, CardActionArea, CardContent, CardMedia, Chip, Container, Grid, Slide, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Box, Card, CardActionArea, CardContent, CardMedia, Chip, Container, Grid, Slide, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 

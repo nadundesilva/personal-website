@@ -10,8 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Box } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Box, useTheme } from "@mui/material";
 import Image from "next/image";
 
 import { LogoAsset } from "@/constants";

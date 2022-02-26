@@ -10,8 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Grid, LinearProgress, Typography, linearProgressClasses } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Grid, LinearProgress, styled, Typography, linearProgressClasses } from "@mui/material";
 import React from "react";
 
 import { useScrollOffset } from "@/components/layout";
