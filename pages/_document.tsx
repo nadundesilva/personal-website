@@ -21,8 +21,12 @@ const DESCRIPTION = `${FULL_NAME} is an aspiring Software Engineer and ML Enthus
 
 const GA_TRACKING_ID = "GTM-T9KX7B4";
 
-class WebsiteDocument extends Document {
-    static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
+interface WebsiteDocumentProps {
+    currentPath: string,
+}
+
+class WebsiteDocument extends Document<WebsiteDocumentProps> {
+    static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps & WebsiteDocumentProps> {
         const originalRenderPage = ctx.renderPage;
 
         const cache = createCache({ key: "css" });
@@ -46,12 +50,15 @@ class WebsiteDocument extends Document {
         ));
         return {
             ...initialProps,
+            currentPath: ctx.pathname,
             // Styles fragment is rendered after the app and page rendering finish.
             styles: [...React.Children.toArray(initialProps.styles), ...emotionStyleTags]
         };
     }
 
     render(): JSX.Element {
+        const { currentPath } = this.props;
+
         const cspValues = {
             "default-src": ["'none'"],
             "manifest-src": ["'self'"],
@@ -109,7 +116,7 @@ class WebsiteDocument extends Document {
                     <meta name="theme-color" content="#000000"/>
                     <link rel="manifest" href={`${PUBLIC_URL}/manifest.json`}/>
                     <link rel="shortcut icon" href={`${PUBLIC_URL}/favicon.png`}/>
-                    <link rel="canonical" href={PUBLIC_URL}/>
+                    <link rel="canonical" href={PUBLIC_URL + currentPath}/>
 
                     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
 
