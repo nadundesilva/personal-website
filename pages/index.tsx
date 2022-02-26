@@ -10,8 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Box, Button, CircularProgress, Container } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, Button, CircularProgress, Container, styled } from "@mui/material";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import React, { useRef, useState } from "react";

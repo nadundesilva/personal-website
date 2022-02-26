@@ -10,9 +10,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { CssBaseline, Theme, useMediaQuery } from "@mui/material";
+import { createTheme, CssBaseline, StyledEngineProvider, Theme, ThemeProvider, useMediaQuery } from "@mui/material";
 import { grey, indigo } from "@mui/material/colors";
-import { createTheme, ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import React, { useMemo, useEffect, useState, useContext } from "react";
 
 export type ColorScheme = "dark" | "light";

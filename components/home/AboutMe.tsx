@@ -12,8 +12,7 @@
  */
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Avatar, Divider, Grid, Typography } from "@mui/material";
-import { styled, Theme } from "@mui/material/styles";
+import { Avatar, Divider, Grid, styled, Theme, Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
 import Image from "next/image";
 import React from "react";
