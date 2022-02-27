@@ -10,6 +10,45 @@ on:
       - main
 
 jobs:
+  run-codeql-analysis:
+    name: Run CodeQL Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: javascript
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v1
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
+
+  run-ossar-analysis:
+    name: RUn OSSAR Analysis
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.x'
+      - name: Run OSSAR
+        uses: github/ossar-action@v1
+        id: ossar
+      - name: Upload OSSAR results
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: ${{ steps.ossar.outputs.sarifFile }}
+
   run-unit-tests:
     name: Run Unit Tests
     runs-on: ubuntu-20.04
@@ -119,7 +158,7 @@ jobs:
           name: unit-tests-coverage
           path: coverage/
 
-  links-check:
+  check-links:
     name: Check Links in Website
     runs-on: ubuntu-20.04
     needs: build-site
@@ -182,7 +221,7 @@ jobs:
             cypress/screenshots/
             cypress/snapshots/**/__diff_output__/**
 
-  website-audit:
+  run-website-audit:
     name: Run Website Audit
     runs-on: ubuntu-20.04
     needs: build-site
@@ -223,11 +262,13 @@ jobs:
     runs-on: ubuntu-20.04
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs:
+      - run-codeql-analysis
+      - run-ossar-analysis
       - run-unit-tests
       - run-e2e-tests
       - build-site
-      - links-check
-      - website-audit
+      - check-links
+      - run-website-audit
     steps:
       - name: Checkout
         uses: actions/checkout@v2
