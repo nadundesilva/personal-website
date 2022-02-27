@@ -73,9 +73,9 @@ const Profiles = (): React.ReactElement => {
     return (
         <Grid ref={rootRef} container justifyContent="center" alignItems="center">
             {
-                profiles.map((profile, index) => (
+                profiles.map((profile) => (
                     <Grid item xs={12} sm={3} key={profile.name}>
-                        <Link target={"_blank"} href={profile.link}>
+                        <Link target={"_blank"} href={profile.link} aria-label={profile.name}>
                             <Grid container direction="column" justifyContent="center" alignItems="center"
                                 sx={{
                                     padding: (theme) => theme.spacing(4),
