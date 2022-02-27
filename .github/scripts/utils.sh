@@ -21,20 +21,20 @@ function startServer() {
         -sha256 \
         -days 3650 \
         -nodes \
-        -out ${PWD}/server.crt \
+        -out "${PWD}/server.crt" \
         -subj "/C=AU/ST=NSW/L=Sydney/O=nadunrds/OU=nadun/CN=nadundesilva.github.io/emailAddress=nadunrds@gmail.com" \
-        -keyout ${PWD}/server.key
-    export NODE_EXTRA_CA_CERTS=${PWD}/server.crt
+        -keyout "${PWD}/server.key"
+    export NODE_EXTRA_CA_CERTS="${PWD}/server.crt"
 
     echo
     echo "Starting website server"
     sudo echo "127.0.0.1 nadundesilva.github.io" | sudo tee -a /etc/hosts
-    npx serve ${WEBSITE_BUILD_DIR} \
+    npx serve "${WEBSITE_BUILD_DIR}" \
         --no-port-switching \
         --debug \
         --single \
-        --ssl-cert ${PWD}/server.crt \
-        --ssl-key ${PWD}/server.key \
+        --ssl-cert "${PWD}/server.crt" \
+        --ssl-key "${PWD}/server.key" \
         --listen tcp://nadundesilva.github.io:8080 </dev/null &
     export SERVE_PID=${!}
     sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 443 -j REDIRECT --to-port 8080
