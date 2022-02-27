@@ -118,7 +118,8 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                     <link rel="shortcut icon" href={`${PUBLIC_URL}/favicon.png`}/>
                     <link rel="canonical" href={PUBLIC_URL + currentPath}/>
 
-                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+                    <link rel="preconnect" href="https://nadundesilva.imgix.net"/>
+                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 
                     <link rel="apple-touch-icon" href={`${PUBLIC_URL}/assets/profile-photo.jpg`}/>
                     <meta property="fb:app_id" content="567329184466353"/>
