@@ -14,7 +14,9 @@
 TEST_BROWSER=${TEST_BROWSER:-"chrome"}
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-source ${SCRIPT_DIR}/utils.sh
+
+# shellcheck source=.github/scripts/utils.sh
+source "${SCRIPT_DIR}/utils.sh"
 
 startServer
 
@@ -24,12 +26,12 @@ docker run \
     --network host \
     --rm \
     -t \
-    -v ${PWD}:/test \
+    -v "${PWD}:/test" \
     -w /test \
     -e CYPRESS_BASE_URL=https://nadundesilva.github.io \
     cypress/included:7.4.0 run \
     --headless \
-    --browser ${TEST_BROWSER} \
+    --browser "${TEST_BROWSER}" \
     --reporter cypress-image-snapshot/reporter
 
 stopServer
@@ -38,7 +40,7 @@ if [ -d "coverage" ]; then
     echo
     echo "Update coverage report premissions"
     RUNNER_USER="$(id -u):$(id -g)"
-    sudo chown -R ${RUNNER_USER} coverage
+    sudo chown -R "${RUNNER_USER}" coverage
 else
     echo
     echo "Coverage directory does not exist"

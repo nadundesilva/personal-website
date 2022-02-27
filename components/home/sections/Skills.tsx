@@ -68,7 +68,7 @@ const Skills = (): React.ReactElement => {
         }
     ];
 
-    const animationOffset = 0.2;
+    const animationOffset: number = 0.2;
     const currentOffset = direction === 1 ? Math.min(offset + animationOffset, 1) : 1;
     const currentOpacity = direction === -1 ? Math.max(offset - animationOffset, 0) / (1 - animationOffset) : 1;
     const renderPercentage = (skill: Skill): React.ReactElement => {

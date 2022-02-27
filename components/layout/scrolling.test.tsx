@@ -122,7 +122,7 @@ afterEach(() => {
     scrollListeners = [];
 });
 
-const DIV_HEIGHT = 2000;
+const DIV_HEIGHT: number = 2000;
 
 describe.each([
     (() => {
@@ -138,7 +138,7 @@ describe.each([
         pageHeight: DIV_HEIGHT * 4 + 1000,
         divTop: 0
     }
-])("[page height: $pageHeight, div top: $divTop] $name", ({ pageHeight, divTop }) => {
+])("[page height: $pageHeight, div top: $divTop] $name", ({ pageHeight, divTop }: { pageHeight: number, divTop: number }) => {
     // Sanity checks before running tests
     expect(pageHeight).toBeGreaterThanOrEqual(divTop + DIV_HEIGHT);
 
@@ -228,7 +228,7 @@ describe.each([
 
     describe.each(
         viewportData.filter(datum => (datum.if === undefined || datum.if))
-    )("[viewport height: $viewportHeight] $name", ({ viewportHeight }) => {
+    )("[viewport height: $viewportHeight] $name", ({ viewportHeight }: { viewportHeight: number }) => {
         interface TestData {
             name: string,
             if?: boolean,
@@ -622,7 +622,7 @@ describe.each([
 
         test.each(
             testData.filter(datum => (datum.if === undefined || datum.if))
-        )("[viewport top: $viewportTop, direction: $direction, offset: $offset] $name", async({ viewportTop, direction, offset }) => {
+        )("[viewport top: $viewportTop, direction: $direction, offset: $offset] $name", async({ viewportTop, direction, offset }: { viewportTop: number, direction: number, offset: number }) => {
             // Sanity checks before running tests
             expect(viewportTop).toBeGreaterThanOrEqual(0);
             expect(offset).toBeGreaterThanOrEqual(0);

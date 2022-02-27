@@ -21,7 +21,7 @@ const customJestConfig = {
     coverageReporters: ["text-summary", "clover", "html"],
     moduleDirectories: ["node_modules", "<rootDir>/"],
     modulePathIgnorePatterns: ["<rootDir>/cypress/"],
-    setupFilesAfterEnv: ["<rootDir>/jest-setup.ts"],
+    setupFilesAfterEnv: ["<rootDir>/jest-setup.js"],
     transform: {
         "^.+\\.(js|jsx|ts|tsx)$": [
             "babel-jest", {
