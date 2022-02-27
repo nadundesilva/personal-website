@@ -10,7 +10,9 @@ jobs:
   deployment-validation:
     strategy:
       matrix:
-        browser: [ electron, chrome ]
+        browser:
+          - electron
+          - chrome
     name: Ubuntu Deployment Check (${{ matrix.browser }})
     runs-on: ubuntu-20.04
     steps:
@@ -23,7 +25,10 @@ jobs:
       - name: Run End to End Tests
         run: |
           npm ci
-          docker run -t -v $PWD:/test -w /test cypress/included:7.4.0 run --headless --browser ${{ matrix.browser }} \
+          docker run -t -v "${PWD}:/test" -w /test cypress/included:7.4.0 \
+              run \
+            --headless \
+            --browser ${{ matrix.browser }} \
             --reporter cypress-image-snapshot/reporter
       - name: Upload artifacts
         if: always()
@@ -50,9 +55,11 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Link Checker Report
-          path:  ./lychee/out.md
+          path: ./lychee/out.md
       - name: Fail on Link Errors
-        run: exit ${{ steps.lychee.outputs.exit_code }}
+        run: |
+          # shellcheck disable=SC2242
+          exit ${{ steps.lychee.outputs.exit_code }}
 
   website-audit:
     name: Run Website Audit

@@ -4,12 +4,39 @@ on:
   push:
     branches:
       - main
-      - lhci-implementation
   pull_request:
     branches:
       - main
 
 jobs:
+  run-super-linter:
+    name: Run GitHub Super Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.17.6"
+      - name: Install Dependencies
+        run: |
+          npm ci
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINTER_RULES_PATH: .
+          TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.json
+          VALIDATE_ALL_CODEBASE: "true"
+          VALIDATE_GITLEAKS: "false"
+          VALIDATE_JSCPD: "false"
+          VALIDATE_JAVASCRIPT_STANDARD: "false"
+          VALIDATE_TYPESCRIPT_STANDARD: "false"
+
   run-codeql-analysis:
     name: Run CodeQL Analysis
     runs-on: ubuntu-latest
@@ -32,7 +59,7 @@ jobs:
         uses: github/codeql-action/analyze@v1
 
   run-ossar-analysis:
-    name: RUn OSSAR Analysis
+    name: Run OSSAR Analysis
     runs-on: windows-latest
     steps:
       - name: Checkout repository
@@ -81,7 +108,9 @@ jobs:
   run-e2e-tests:
     strategy:
       matrix:
-        browser: [ electron, chrome ]
+        browser:
+          - electron
+          - chrome
     name: Run E2E Tests (${{ matrix.browser }})
     runs-on: ubuntu-20.04
     steps:
@@ -181,12 +210,16 @@ jobs:
           name: Link Checker Report
           path: ./lychee/out.md
       - name: Fail on Link Errors
-        run: exit ${{ steps.lychee.outputs.exit_code }}
+        run: |
+          # shellcheck disable=SC2242
+          exit ${{ steps.lychee.outputs.exit_code }}
 
   check-site-build:
     strategy:
       matrix:
-        browser: [ electron, chrome ]
+        browser:
+          - electron
+          - chrome
     name: Check Site Build (${{ matrix.browser }})
     runs-on: ubuntu-20.04
     needs: build-site
@@ -244,7 +277,7 @@ jobs:
           source .github/scripts/utils.sh
 
           startServer
-          sudo cp ${NODE_EXTRA_CA_CERTS} /usr/local/share/ca-certificates
+          sudo cp "${NODE_EXTRA_CA_CERTS}" /usr/local/share/ca-certificates
           sudo update-ca-certificates
           lhci autorun
           stopServer
@@ -262,6 +295,7 @@ jobs:
     runs-on: ubuntu-20.04
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs:
+      - run-super-linter
       - run-codeql-analysis
       - run-ossar-analysis
       - run-unit-tests
