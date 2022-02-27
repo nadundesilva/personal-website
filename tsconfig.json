@@ -7,6 +7,9 @@
       ],
       "@/constants": [
         "constants"
+      ],
+      "@/styles.css": [
+        "styles.css"
       ]
     },
     "target": "es5",

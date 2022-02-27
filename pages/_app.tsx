@@ -16,8 +16,8 @@ import type { AppProps, NextWebVitalsMetric } from "next/app";
 import Head from "next/head";
 import React from "react";
 
-import "../styles.css";
 import WebsiteThemeProvider from "@/components/layout/theme";
+import "@/styles.css";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createCache({ key: "css" });
