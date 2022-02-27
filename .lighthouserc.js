@@ -11,25 +11,37 @@
  * limitations under the License.
  */
 
-const paths = [
+const PATHS = [
     "/",
     "/achievements",
-    "/experience"
+    "/experience",
 ];
+
+let LIVE_SITE_ASSERTIONS = {};
+if (process.env["VALIDATING_LIVE_SITE"] === "true") {
+    LIVE_SITE_ASSERTIONS = {
+        ...LIVE_SITE_ASSERTIONS,
+        ...{
+            "is-crawlable": ["warn"],
+            "unsized-images": ["warn"],
+            "uses-responsive-images": ["warn"]
+        },
+    };
+}
 
 module.exports = {
     "ci": {
         "collect": {
-            "url": paths.map((path) => "https://nadundesilva.github.io" + path),
+            "url": PATHS.map((path) => "https://nadundesilva.github.io" + path),
             "isSinglePageApplication": true,
             "numberOfRuns": 5,
             "settings": {
-                "chromeFlags": "--ignore-certificate-errors"
-            }
+                "chromeFlags": "--ignore-certificate-errors",
+            },
         },
         "upload": {
             "target": "filesystem",
-            "outputDir": "./lhci-out"
+            "outputDir": "./lhci-out",
         },
         "assert": {
             "preset": "lighthouse:recommended",
@@ -39,8 +51,9 @@ module.exports = {
                 "non-composited-animations": ["warn"],
                 "offscreen-images": ["warn"],
                 "preload-lcp-image": ["warn"],
-                "unused-javascript": ["warn"]
-            }
-        }
+                "unused-javascript": ["warn"],
+                ...LIVE_SITE_ASSERTIONS,
+            },
+        },
     }
 };

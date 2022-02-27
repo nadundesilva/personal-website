@@ -70,6 +70,7 @@ jobs:
           lhci autorun
         env:
           LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATING_LIVE_SITE: "true"
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v2
