@@ -78,7 +78,7 @@ const WelcomeBanner = (): React.ReactElement => {
                 }}
             >
                 <BannerImage src={Images.WelcomeBanner.src} alt={Images.WelcomeBanner.alt} layout="fill"
-                    objectFit="cover" priority placeholder="blur" blurDataURL={Images.WelcomeBanner.blurDataURL}/>
+                    objectFit="cover" priority={true} placeholder="blur" blurDataURL={Images.WelcomeBanner.blurDataURL}/>
             </Container>
             <Box role="presentation"
                 sx={{
