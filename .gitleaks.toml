@@ -1,0 +1,7 @@
+title = "Nadun De Silva's Personal Site - Gitleaks Config"
+
+[allowlist]
+regexes = [
+	'''linkedin.com/in/nadundesilva''',
+    '''fb:app_id\" content=\"567329184466353\"'''
+]
