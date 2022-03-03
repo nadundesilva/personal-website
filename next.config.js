@@ -34,7 +34,7 @@ const plugins = [
 
 const nextConfig = {
     eslint: {
-        ignoreDuringBuilds: process.env["BUILD_TYPE"] == "test"
+        ignoreDuringBuilds: process.env["BUILD_TYPE"] == "test",
     },
     images: {
         loader: "imgix",

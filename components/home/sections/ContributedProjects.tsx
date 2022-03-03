@@ -21,7 +21,7 @@ const ProjectLogo = styled(Image)(({ theme }) => ({
     display: "block",
     margin: "auto",
     padding: theme.spacing(5),
-    width: "100%"
+    width: "100%",
 }));
 
 const ContributedProjects = (): React.ReactElement => {
@@ -41,18 +41,29 @@ const ContributedProjects = (): React.ReactElement => {
                         position: "relative",
                         height: (theme) => theme.spacing(5),
                         marginLeft: 5,
-                        marginRight: 5
+                        marginRight: 5,
                     }}
                 >
-                    <ProjectLogo alt={logo.alt} layout="fill" objectFit="contain" sizes={imageSizes}
-                        src={logo.src(theme.palette.mode)}/>
+                    <ProjectLogo
+                        alt={logo.alt}
+                        layout="fill"
+                        objectFit="contain"
+                        sizes={imageSizes}
+                        src={logo.src(theme.palette.mode)}
+                    />
                 </Box>
             </Slide>
         </Grid>
     );
 
     return (
-        <Grid ref={rootRef} container spacing={3} justifyContent="center" alignItems="center">
+        <Grid
+            ref={rootRef}
+            container
+            spacing={3}
+            justifyContent="center"
+            alignItems="center"
+        >
             {renderCarouselItem(Logos.Choreo)}
             {renderCarouselItem(Logos.Ballerina)}
             {renderCarouselItem(Logos.Cellery)}

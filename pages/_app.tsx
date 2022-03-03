@@ -23,31 +23,44 @@ import "@/styles.css";
 const clientSideEmotionCache = createCache({ key: "css" });
 
 export interface WebsiteAppProps extends AppProps {
-    emotionCache?: EmotionCache,
+    emotionCache?: EmotionCache;
 }
 
-function WebsiteApp({ Component, pageProps, emotionCache = clientSideEmotionCache }: WebsiteAppProps): JSX.Element {
+function WebsiteApp({
+    Component,
+    pageProps,
+    emotionCache = clientSideEmotionCache,
+}: WebsiteAppProps): JSX.Element {
     return (
         <React.StrictMode>
             <Head>
-                <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"/>
+                <meta
+                    name="viewport"
+                    content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
+                />
             </Head>
             <CacheProvider value={emotionCache}>
                 <WebsiteThemeProvider>
-                    <Component {...pageProps}/>
+                    <Component {...pageProps} />
                 </WebsiteThemeProvider>
             </CacheProvider>
         </React.StrictMode>
     );
 }
 
-export function reportWebVitals({ name, value, id, label, startTime }: NextWebVitalsMetric): void {
+export function reportWebVitals({
+    name,
+    value,
+    id,
+    label,
+    startTime,
+}: NextWebVitalsMetric): void {
     (window as any).gtag("event", name, {
         value: value,
         // Custom parameters
         metric_id: id,
         metric_label: label,
-        metric_timestamp: startTime
+        metric_timestamp: startTime,
     });
 }
 

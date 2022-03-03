@@ -24,11 +24,15 @@ afterAll(() => {
     jest.resetModules();
 });
 
-test("renders layout content with correct content", async() => {
-    render(<LayoutContent>Test Layout content written by Nadun De Silva</LayoutContent>);
+test("renders layout content with correct content", async () => {
+    render(
+        <LayoutContent>
+            Test Layout content written by Nadun De Silva
+        </LayoutContent>,
+    );
 
     await screen.findByRole("navigation", {
-        name: /breadcrumb/i
+        name: /breadcrumb/i,
     });
 
     await screen.findByText("Test Layout content written by Nadun De Silva");

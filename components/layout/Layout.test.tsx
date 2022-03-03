@@ -17,7 +17,10 @@ import { useState } from "react";
 import Layout from "./Layout";
 import WebsiteThemeProvider from "./theme";
 
-const scrollState = { scrolledDown: false, setScrolledDown: (scrolledDown: boolean) => {} };
+const scrollState = {
+    scrolledDown: false,
+    setScrolledDown: (scrolledDown: boolean) => {},
+};
 const useMockScrollTrigger = (options?: any): boolean => {
     const [scrolledDown, setScrolledDown] = useState<boolean>(false);
     scrollState.scrolledDown = scrolledDown;
@@ -30,36 +33,43 @@ type Theme = "light" | "dark";
 type ScrollState = "initial" | "scrolled-down" | "top";
 
 interface ValidateResult {
-    changeThemeButton: HTMLElement,
-    scrollBackToTopButton?: HTMLElement,
-};
+    changeThemeButton: HTMLElement;
+    scrollBackToTopButton?: HTMLElement;
+}
 
-const validateLayout = async(theme: Theme, scrollState: ScrollState): Promise<ValidateResult> => {
+const validateLayout = async (
+    theme: Theme,
+    scrollState: ScrollState,
+): Promise<ValidateResult> => {
     await screen.findByText("Test Layout children written by Nadun De Silva");
     await screen.findByRole("heading", {
-        name: /nadun de silva/i
+        name: /nadun de silva/i,
     });
     const changeThemeButton = await screen.findByRole("button", {
-        name: RegExp(`change to ${theme} theme`, "i")
+        name: RegExp(`change to ${theme} theme`, "i"),
     });
     await screen.findByText(/© 2021 nadun de silva/i);
 
     let scrollBackToTopButton: HTMLElement | undefined;
     if (scrollState !== "initial") {
         scrollBackToTopButton = await screen.findByRole("button", {
-            name: /scroll back to top/i
+            name: /scroll back to top/i,
         });
 
         if (scrollState === "scrolled-down") {
-            expect(scrollBackToTopButton.parentElement).toHaveStyle("transform: none");
+            expect(scrollBackToTopButton.parentElement).toHaveStyle(
+                "transform: none",
+            );
         } else if (scrollState === "top") {
-            expect(scrollBackToTopButton.parentElement).toHaveStyle("transform: scale(0)");
+            expect(scrollBackToTopButton.parentElement).toHaveStyle(
+                "transform: scale(0)",
+            );
         }
     }
 
     return {
         changeThemeButton,
-        scrollBackToTopButton
+        scrollBackToTopButton,
     };
 };
 
@@ -71,22 +81,24 @@ afterAll(() => {
     jest.resetModules();
 });
 
-test("render layout without appbar items", async() => {
+test("render layout without appbar items", async () => {
     render(<Layout>Test Layout children written by Nadun De Silva</Layout>);
 
     await validateLayout("dark", "initial");
 });
 
-test("render layout with appbar items as a single element", async() => {
+test("render layout with appbar items as a single element", async () => {
     render(
-        <Layout appBarItems={
-            <Box data-testid="appbar-items-group">
-                <Button data-testid={"appbar-item-01"}>Item 01</Button>
-                <Button data-testid={"appbar-item-02"}>Item 02</Button>
-            </Box>
-        }>
+        <Layout
+            appBarItems={
+                <Box data-testid="appbar-items-group">
+                    <Button data-testid={"appbar-item-01"}>Item 01</Button>
+                    <Button data-testid={"appbar-item-02"}>Item 02</Button>
+                </Box>
+            }
+        >
             Test Layout children written by Nadun De Silva
-        </Layout>
+        </Layout>,
     );
 
     await validateLayout("dark", "initial");
@@ -96,16 +108,20 @@ test("render layout with appbar items as a single element", async() => {
     await within(appBarItemsGroup).findByTestId("appbar-item-02");
 });
 
-test("render layout with appbar items as elements array", async() => {
+test("render layout with appbar items as elements array", async () => {
     render(
-        <Layout appBarItems={
-            [
-                <Button data-testid={"appbar-item-01"} key={"item-01"}>Item 01</Button>,
-                <Button data-testid={"appbar-item-02"} key={"item-02"}>Item 02</Button>
-            ]
-        }>
+        <Layout
+            appBarItems={[
+                <Button data-testid={"appbar-item-01"} key={"item-01"}>
+                    Item 01
+                </Button>,
+                <Button data-testid={"appbar-item-02"} key={"item-02"}>
+                    Item 02
+                </Button>,
+            ]}
+        >
             Test Layout children written by Nadun De Silva
-        </Layout>
+        </Layout>,
     );
 
     await validateLayout("dark", "initial");
@@ -114,7 +130,7 @@ test("render layout with appbar items as elements array", async() => {
     await screen.findByTestId("appbar-item-02");
 });
 
-test("render layout with scrolled down from top", async() => {
+test("render layout with scrolled down from top", async () => {
     act(() => {
         render(<Layout>Test Layout children written by Nadun De Silva</Layout>);
     });
@@ -128,7 +144,7 @@ test("render layout with scrolled down from top", async() => {
     await validateLayout("dark", "scrolled-down");
 });
 
-test("render layout with scroll back to top clicked", async() => {
+test("render layout with scroll back to top clicked", async () => {
     act(() => {
         render(<Layout>Test Layout children written by Nadun De Silva</Layout>);
     });
@@ -139,7 +155,10 @@ test("render layout with scroll back to top clicked", async() => {
         scrollState.setScrolledDown(true);
     });
 
-    const { scrollBackToTopButton } = await validateLayout("dark", "scrolled-down");
+    const { scrollBackToTopButton } = await validateLayout(
+        "dark",
+        "scrolled-down",
+    );
 
     if (scrollBackToTopButton instanceof HTMLElement) {
         const scrollIntoViewMock = jest.fn();
@@ -160,11 +179,11 @@ test("render layout with scroll back to top clicked", async() => {
     }
 });
 
-test("change theme", async() => {
+test("change theme", async () => {
     render(
         <WebsiteThemeProvider>
             <Layout>Test Layout children written by Nadun De Silva</Layout>
-        </WebsiteThemeProvider>
+        </WebsiteThemeProvider>,
     );
 
     let layoutValidation = await validateLayout("dark", "initial");
@@ -176,8 +195,12 @@ test("change theme", async() => {
     await validateLayout("dark", "initial");
 });
 
-test("render layout with window function", async() => {
-    render(<Layout window={() => window}>Test Layout children written by Nadun De Silva</Layout>);
+test("render layout with window function", async () => {
+    render(
+        <Layout window={() => window}>
+            Test Layout children written by Nadun De Silva
+        </Layout>,
+    );
 
     await validateLayout("dark", "initial");
 });

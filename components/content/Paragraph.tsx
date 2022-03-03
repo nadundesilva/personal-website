@@ -13,7 +13,7 @@
 import { Typography } from "@mui/material";
 
 interface ParagraphProps {
-    children: React.ReactNode,
+    children: React.ReactNode;
 }
 
 const Paragraph = ({ children }: ParagraphProps): React.ReactElement => (

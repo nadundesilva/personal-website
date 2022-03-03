@@ -16,16 +16,21 @@ import Image from "next/image";
 import { LogoAsset } from "@/constants";
 
 interface LogoProps {
-    logo: LogoAsset,
-    height?: string,
-};
+    logo: LogoAsset;
+    height?: string;
+}
 
 const Logo = ({ logo, height }: LogoProps): React.ReactElement => {
     const theme = useTheme();
     return (
         <Box sx={{ position: "relative", height: height ?? "3em", my: 1 }}>
-            <Image alt={logo.alt} layout="fill" objectFit="scale-down" objectPosition="left top"
-                src={logo.src(theme.palette.mode)}/>
+            <Image
+                alt={logo.alt}
+                layout="fill"
+                objectFit="scale-down"
+                objectPosition="left top"
+                src={logo.src(theme.palette.mode)}
+            />
         </Box>
     );
 };

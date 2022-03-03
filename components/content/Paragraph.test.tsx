@@ -14,7 +14,7 @@ import { render, screen } from "@testing-library/react";
 
 import Paragraph from "./Paragraph";
 
-test("renders paragraph with correct children", async() => {
+test("renders paragraph with correct children", async () => {
     render(<Paragraph>Test Paragraph written by Nadun De Silva</Paragraph>);
 
     await screen.findByText("Test Paragraph written by Nadun De Silva");

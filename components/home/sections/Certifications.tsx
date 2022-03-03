@@ -10,7 +10,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Box, Card, CardActionArea, CardContent, CardMedia, Chip, Container, Grid, Link, Slide, Typography, useTheme } from "@mui/material";
+import {
+    Box,
+    Card,
+    CardActionArea,
+    CardContent,
+    CardMedia,
+    Chip,
+    Container,
+    Grid,
+    Link,
+    Slide,
+    Typography,
+    useTheme,
+} from "@mui/material";
 import Image from "next/image";
 import React from "react";
 
@@ -22,16 +35,20 @@ const DEEP_LEARNING_ISSUER = "Deeplearning.AI";
 const LINUX_FOUNDATION = "Linux Foundation";
 
 interface Certificate {
-    name: string,
-    type: "Course" | "Certification" | "Specialization",
-    link: string,
-    image: LogoAsset,
-    issuer: string,
+    name: string;
+    type: "Course" | "Certification" | "Specialization";
+    link: string;
+    image: LogoAsset;
+    issuer: string;
 }
 
 const Certifications = (): React.ReactElement => {
     const theme = useTheme();
-    const { ref: rootRef, direction, offset } = useScrollOffset<HTMLDivElement>();
+    const {
+        ref: rootRef,
+        direction,
+        offset,
+    } = useScrollOffset<HTMLDivElement>();
 
     const certifications: Certificate[] = [
         {
@@ -39,43 +56,43 @@ const Certifications = (): React.ReactElement => {
             type: "Specialization",
             link: "https://coursera.org/share/8e5db53bfef4c4b27f79004022edad72",
             image: Logos.DeepLearningAI,
-            issuer: DEEP_LEARNING_ISSUER
+            issuer: DEEP_LEARNING_ISSUER,
         },
         {
             name: "Fundamentals of Reinforcement Learning",
             type: "Course",
             link: "https://coursera.org/share/fcbebc1de9e6a9b3ecb186983af7b969",
             image: Logos.UniversityOfAlberta,
-            issuer: UNIVERSITY_OF_ALBERTA_ISSUER
+            issuer: UNIVERSITY_OF_ALBERTA_ISSUER,
         },
         {
             name: "Build Basic Generative Adversarial Networks (GANs)",
             type: "Course",
             link: "https://coursera.org/share/fed56feb8ba81177e6467779f22c0851",
             image: Logos.DeepLearningAI,
-            issuer: DEEP_LEARNING_ISSUER
+            issuer: DEEP_LEARNING_ISSUER,
         },
         {
             name: "AI For Everyone",
             type: "Course",
             link: "https://coursera.org/share/e8ae9a481ef41f070d6c7b00887e8b66",
             image: Logos.DeepLearningAI,
-            issuer: DEEP_LEARNING_ISSUER
+            issuer: DEEP_LEARNING_ISSUER,
         },
         {
             name: "Certified Kubernetes Administrator",
             type: "Certification",
             link: "https://www.youracclaim.com/badges/8241114b-7435-460a-a08f-9d33304c1470?source=linked_in_profile",
             image: Logos.CKA,
-            issuer: LINUX_FOUNDATION
+            issuer: LINUX_FOUNDATION,
         },
         {
             name: "Certified Kubernetes Application Developer",
             type: "Certification",
             link: "https://www.youracclaim.com/badges/e9df4128-2017-41c3-9e7d-028e37176243/linked_in_profile",
             image: Logos.CKAD,
-            issuer: LINUX_FOUNDATION
-        }
+            issuer: LINUX_FOUNDATION,
+        },
     ];
 
     const xsWidth = theme.breakpoints.values.xs;
@@ -86,67 +103,109 @@ const Certifications = (): React.ReactElement => {
         (min-width: ${mdWidth}px) 34vw, (min-width: ${xlWidth}px) 25vw`;
 
     return (
-        <Grid ref={rootRef} container justifyContent="center" alignItems="stretch">
-            {
-                certifications.map((certification, index) => (
-                    <Grid item xs={12} sm={6} md={4} key={index} sx={{ padding: 2 }}>
-                        <Slide direction={direction === -1 ? "down" : "up"} in={offset > 0.5} timeout={1000}>
-                            <Link target={"_blank"} href={certification.link}>
-                                <Card sx={{ height: "100%" }}>
-                                    <CardActionArea
+        <Grid
+            ref={rootRef}
+            container
+            justifyContent="center"
+            alignItems="stretch"
+        >
+            {certifications.map((certification, index) => (
+                <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    key={index}
+                    sx={{ padding: 2 }}
+                >
+                    <Slide
+                        direction={direction === -1 ? "down" : "up"}
+                        in={offset > 0.5}
+                        timeout={1000}
+                    >
+                        <Link target={"_blank"} href={certification.link}>
+                            <Card sx={{ height: "100%" }}>
+                                <CardActionArea
+                                    sx={{
+                                        height: "100%",
+                                        width: "100%",
+                                        padding: 1,
+                                        display: "flex",
+                                        flexDirection: "column",
+                                    }}
+                                >
+                                    <CardMedia
+                                        component={(props) => (
+                                            <Container
+                                                {...props}
+                                                maxWidth={false}
+                                                disableGutters
+                                                sx={{
+                                                    position: "relative",
+                                                    width: "100%",
+                                                    height: "auto",
+                                                    pt: "80%",
+                                                    margin: "auto",
+                                                }}
+                                            >
+                                                <Image
+                                                    alt={
+                                                        certification.image.alt
+                                                    }
+                                                    layout="fill"
+                                                    src={certification.image.src(
+                                                        theme.palette.mode,
+                                                    )}
+                                                    sizes={imageSizes}
+                                                    objectFit="contain"
+                                                />
+                                            </Container>
+                                        )}
+                                        title={certification.name}
+                                    />
+                                    <CardContent
                                         sx={{
-                                            height: "100%",
                                             width: "100%",
-                                            padding: 1,
                                             display: "flex",
-                                            flexDirection: "column"
+                                            flexDirection: "column",
+                                            justifyContent: "space-between",
+                                            alignItems: "flex-start",
+                                            flexGrow: 1,
                                         }}
                                     >
-                                        <CardMedia
-                                            component={(props) => (
-                                                <Container {...props} maxWidth={false} disableGutters
-                                                    sx={{
-                                                        position: "relative",
-                                                        width: "100%",
-                                                        height: "auto",
-                                                        pt: "80%",
-                                                        margin: "auto"
-                                                    }}
-                                                >
-                                                    <Image alt={certification.image.alt} layout="fill"
-                                                        src={certification.image.src(theme.palette.mode)}
-                                                        sizes={imageSizes} objectFit="contain"/>
-                                                </Container>
-                                            )}
-                                            title={certification.name}
-                                        />
-                                        <CardContent
-                                            sx={{
-                                                width: "100%",
-                                                display: "flex",
-                                                flexDirection: "column",
-                                                justifyContent: "space-between",
-                                                alignItems: "flex-start",
-                                                flexGrow: 1
-                                            }}
+                                        <Typography
+                                            variant="h6"
+                                            component="h2"
+                                            align="center"
+                                            sx={{ width: "100%" }}
                                         >
-                                            <Typography variant="h6" component="h2" align="center" sx={{ width: "100%" }}>
-                                                {certification.name}
-                                            </Typography>
-                                            <Box sx={{ flexGrow: 1 }}/>
-                                            <Chip label={certification.type} color="secondary" size="small"
-                                                sx={{ marginTop: 2, marginBottom: 2 }}/>
-                                            <Typography color="textSecondary" sx={{ marginTop: 2 }}>
-                                                Issued by<br/>{certification.issuer}
-                                            </Typography>
-                                        </CardContent>
-                                    </CardActionArea>
-                                </Card>
-                            </Link>
-                        </Slide>
-                    </Grid>
-                ))
-            }
+                                            {certification.name}
+                                        </Typography>
+                                        <Box sx={{ flexGrow: 1 }} />
+                                        <Chip
+                                            label={certification.type}
+                                            color="secondary"
+                                            size="small"
+                                            sx={{
+                                                marginTop: 2,
+                                                marginBottom: 2,
+                                            }}
+                                        />
+                                        <Typography
+                                            color="textSecondary"
+                                            sx={{ marginTop: 2 }}
+                                        >
+                                            Issued by
+                                            <br />
+                                            {certification.issuer}
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        </Link>
+                    </Slide>
+                </Grid>
+            ))}
         </Grid>
     );
 };
