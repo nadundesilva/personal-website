@@ -11,11 +11,7 @@
  * limitations under the License.
  */
 
-const PATHS = [
-    "/",
-    "/achievements",
-    "/experience",
-];
+const PATHS = ["/", "/achievements", "/experience"];
 
 let LIVE_SITE_ASSERTIONS = {};
 if (process.env["VALIDATING_LIVE_SITE"] === "true") {
@@ -24,29 +20,29 @@ if (process.env["VALIDATING_LIVE_SITE"] === "true") {
         ...{
             "is-crawlable": ["warn"],
             "unsized-images": ["warn"],
-            "uses-responsive-images": ["warn"]
+            "uses-responsive-images": ["warn"],
         },
     };
 }
 
 module.exports = {
-    "ci": {
-        "collect": {
-            "url": PATHS.map((path) => "https://nadundesilva.github.io" + path),
-            "isSinglePageApplication": true,
-            "numberOfRuns": 5,
-            "settings": {
-                "chromeFlags": "--ignore-certificate-errors",
+    ci: {
+        collect: {
+            url: PATHS.map((path) => "https://nadundesilva.github.io" + path),
+            isSinglePageApplication: true,
+            numberOfRuns: 5,
+            settings: {
+                chromeFlags: "--ignore-certificate-errors",
             },
         },
-        "upload": {
-            "target": "filesystem",
-            "outputDir": "./lhci-out",
+        upload: {
+            target: "filesystem",
+            outputDir: "./lhci-out",
         },
-        "assert": {
-            "preset": "lighthouse:recommended",
-            "assertions": {
-                "canonical": ["warn"],
+        assert: {
+            preset: "lighthouse:recommended",
+            assertions: {
+                canonical: ["warn"],
                 "csp-xss": ["warn"],
                 "non-composited-animations": ["warn"],
                 "offscreen-images": ["warn"],
@@ -55,5 +51,5 @@ module.exports = {
                 ...LIVE_SITE_ASSERTIONS,
             },
         },
-    }
+    },
 };

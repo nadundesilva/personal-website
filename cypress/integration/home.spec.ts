@@ -12,36 +12,39 @@
  */
 
 interface Section {
-    name: string,
-    testIdPrefix: string,
-    hasNavBarButton: boolean,
+    name: string;
+    testIdPrefix: string;
+    hasNavBarButton: boolean;
 }
 
 describe("Test Home Page", () => {
     beforeEach(() => {
         cy.visit("/");
-        cy.findAllByTestId("section-loader")
-            .should("not.exist");
+        cy.findAllByTestId("section-loader").should("not.exist");
         cy.log("Loaded Home page");
     });
 
     it("validates page load", () => {
-        cy.findByRole("button", { name: /view cv/i })
-            .should("be.visible");
+        cy.findByRole("button", { name: /view cv/i }).should("be.visible");
     });
 
     it("validates sections", () => {
         cy.fixture("sections").then((sections: Section[]) => {
             sections.forEach((section) => {
                 if (section.hasNavBarButton) {
-                    cy.findByTestId(`${section.testIdPrefix}-section`)
-                        .scrollIntoView();
+                    cy.findByTestId(
+                        `${section.testIdPrefix}-section`,
+                    ).scrollIntoView();
                     cy.wait(5000); // Wait for images to load
 
-                    cy.findByTestId(`${section.testIdPrefix}-section`)
-                        .should("be.visible");
-                    cy.findByTestId(`${section.testIdPrefix}-section`)
-                        .matchImageSnapshot(`home-page-${section.testIdPrefix}-section`);
+                    cy.findByTestId(`${section.testIdPrefix}-section`).should(
+                        "be.visible",
+                    );
+                    cy.findByTestId(
+                        `${section.testIdPrefix}-section`,
+                    ).matchImageSnapshot(
+                        `home-page-${section.testIdPrefix}-section`,
+                    );
                 }
             });
         });

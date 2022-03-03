@@ -17,22 +17,31 @@ import React from "react";
 import { ImageAsset } from "@/constants";
 
 interface PhotoProps {
-    photo: ImageAsset,
-    float: "left" | "right",
+    photo: ImageAsset;
+    float: "left" | "right";
 }
 
 const Photo = ({ photo, float }: PhotoProps): React.ReactElement => (
-    <Box sx={{
-        position: "relative",
-        float: float,
-        height: "auto",
-        width: { xs: "100%", md: "20vw" },
-        my: 2,
-        ml: float === "left" ? 0 : 2,
-        mr: float === "right" ? 0 : 2
-    }}>
-        <Image layout="intrinsic" width={photo.width} height={photo.height}
-            src={photo.src} alt={photo.alt} placeholder="blur" blurDataURL={photo.blurDataURL}/>
+    <Box
+        sx={{
+            position: "relative",
+            float: float,
+            height: "auto",
+            width: { xs: "100%", md: "20vw" },
+            my: 2,
+            ml: float === "left" ? 0 : 2,
+            mr: float === "right" ? 0 : 2,
+        }}
+    >
+        <Image
+            layout="intrinsic"
+            width={photo.width}
+            height={photo.height}
+            src={photo.src}
+            alt={photo.alt}
+            placeholder="blur"
+            blurDataURL={photo.blurDataURL}
+        />
     </Box>
 );
 

@@ -14,22 +14,25 @@ import { Container, Divider, Typography } from "@mui/material";
 import React from "react";
 
 interface HeadingProps {
-    children: React.ReactNode,
+    children: React.ReactNode;
 }
 
 const Heading = (props: HeadingProps): React.ReactElement => (
     <Container maxWidth={false} disableGutters sx={{ my: 2 }}>
-        <Divider/>
-        <Typography variant="h5" component="h2" align="center"
+        <Divider />
+        <Typography
+            variant="h5"
+            component="h2"
+            align="center"
             sx={{
                 fontWeight: "bold",
                 paddingTop: 5,
-                paddingBottom: 5
+                paddingBottom: 5,
             }}
         >
             {props.children}
         </Typography>
-        <Divider/>
+        <Divider />
     </Container>
 );
 

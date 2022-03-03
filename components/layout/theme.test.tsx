@@ -43,10 +43,10 @@ const WebsiteThemeConsumer = (): React.ReactElement => {
 
     return (
         <Box data-testid={"theme-data-group"}>
-            <Box data-testid={"theme-data-color-scheme"}>{websiteTheme.colorScheme}</Box>
-            <Button onClick={onSetColorScheme}>
-                Toggle Theme
-            </Button>
+            <Box data-testid={"theme-data-color-scheme"}>
+                {websiteTheme.colorScheme}
+            </Box>
+            <Button onClick={onSetColorScheme}>Toggle Theme</Button>
         </Box>
     );
 };
@@ -55,49 +55,55 @@ afterEach(() => {
     localStorage.removeItem("COLOR_SCHEME");
 });
 
-test("initializes with default color scheme", async() => {
+test("initializes with default color scheme", async () => {
     render(
         <WebsiteThemeProvider>
-            <WebsiteThemeConsumer/>
-        </WebsiteThemeProvider>
+            <WebsiteThemeConsumer />
+        </WebsiteThemeProvider>,
     );
 
     const themeDataGroupDiv = await screen.findByTestId("theme-data-group");
-    const colorSchemeDiv = await within(themeDataGroupDiv).findByTestId("theme-data-color-scheme");
+    const colorSchemeDiv = await within(themeDataGroupDiv).findByTestId(
+        "theme-data-color-scheme",
+    );
     expect(colorSchemeDiv.innerHTML).toBe("light");
 });
 
-test("initializes with browser color scheme preferences", async() => {
+test("initializes with browser color scheme preferences", async () => {
     mediaQueryHook.result = true;
 
     render(
         <WebsiteThemeProvider>
-            <WebsiteThemeConsumer/>
-        </WebsiteThemeProvider>
+            <WebsiteThemeConsumer />
+        </WebsiteThemeProvider>,
     );
 
     const themeDataGroupDiv = await screen.findByTestId("theme-data-group");
-    const colorSchemeDiv = await within(themeDataGroupDiv).findByTestId("theme-data-color-scheme");
+    const colorSchemeDiv = await within(themeDataGroupDiv).findByTestId(
+        "theme-data-color-scheme",
+    );
     expect(colorSchemeDiv.innerHTML).toBe("dark");
 
     mediaQueryHook.result = false;
 });
 
-test("initializes with color scheme set in localStorage", async() => {
+test("initializes with color scheme set in localStorage", async () => {
     localStorage.setItem("COLOR_SCHEME", "dark");
 
     render(
         <WebsiteThemeProvider>
-            <WebsiteThemeConsumer/>
-        </WebsiteThemeProvider>
+            <WebsiteThemeConsumer />
+        </WebsiteThemeProvider>,
     );
 
     const themeDataGroupDiv = await screen.findByTestId("theme-data-group");
-    const colorSchemeDiv = await within(themeDataGroupDiv).findByTestId("theme-data-color-scheme");
+    const colorSchemeDiv = await within(themeDataGroupDiv).findByTestId(
+        "theme-data-color-scheme",
+    );
     expect(colorSchemeDiv.innerHTML).toBe("dark");
 });
 
-test("initializes with default color scheme when accessing localStorage fails", async() => {
+test("initializes with default color scheme when accessing localStorage fails", async () => {
     localStorage.setItem("COLOR_SCHEME", "dark");
 
     const localStorageGetItemMock = jest.fn();
@@ -109,30 +115,37 @@ test("initializes with default color scheme when accessing localStorage fails", 
 
     render(
         <WebsiteThemeProvider>
-            <WebsiteThemeConsumer/>
-        </WebsiteThemeProvider>
+            <WebsiteThemeConsumer />
+        </WebsiteThemeProvider>,
     );
 
     expect(localStorageGetItemMock).toBeCalledTimes(1);
     const themeDataGroupDiv = await screen.findByTestId("theme-data-group");
-    const colorSchemeDiv = await within(themeDataGroupDiv).findByTestId("theme-data-color-scheme");
+    const colorSchemeDiv = await within(themeDataGroupDiv).findByTestId(
+        "theme-data-color-scheme",
+    );
     expect(colorSchemeDiv.innerHTML).toBe("light");
 });
 
-test("toggles color scheme", async() => {
+test("toggles color scheme", async () => {
     render(
         <WebsiteThemeProvider>
-            <WebsiteThemeConsumer/>
-        </WebsiteThemeProvider>
+            <WebsiteThemeConsumer />
+        </WebsiteThemeProvider>,
     );
 
     const themeDataGroupDiv = await screen.findByTestId("theme-data-group");
-    const colorSchemeDiv = await within(themeDataGroupDiv).findByTestId("theme-data-color-scheme");
+    const colorSchemeDiv = await within(themeDataGroupDiv).findByTestId(
+        "theme-data-color-scheme",
+    );
     expect(colorSchemeDiv.innerHTML).toBe("light");
 
-    const setColorSchemeButton = await within(themeDataGroupDiv).findByRole("button", {
-        name: /toggle theme/i
-    });
+    const setColorSchemeButton = await within(themeDataGroupDiv).findByRole(
+        "button",
+        {
+            name: /toggle theme/i,
+        },
+    );
 
     act(() => {
         fireEvent.click(setColorSchemeButton);
@@ -145,19 +158,24 @@ test("toggles color scheme", async() => {
     expect(colorSchemeDiv.innerHTML).toBe("light");
 });
 
-test("set color scheme to localStorage after rendering", async() => {
+test("set color scheme to localStorage after rendering", async () => {
     render(
         <WebsiteThemeProvider>
-            <WebsiteThemeConsumer/>
-        </WebsiteThemeProvider>
+            <WebsiteThemeConsumer />
+        </WebsiteThemeProvider>,
     );
 
     const themeDataGroupDiv = await screen.findByTestId("theme-data-group");
-    const colorSchemeDiv = await within(themeDataGroupDiv).findByTestId("theme-data-color-scheme");
+    const colorSchemeDiv = await within(themeDataGroupDiv).findByTestId(
+        "theme-data-color-scheme",
+    );
 
-    const setColorSchemeButton = await within(themeDataGroupDiv).findByRole("button", {
-        name: /toggle theme/i
-    });
+    const setColorSchemeButton = await within(themeDataGroupDiv).findByRole(
+        "button",
+        {
+            name: /toggle theme/i,
+        },
+    );
     act(() => {
         fireEvent.click(setColorSchemeButton);
     });
@@ -171,28 +189,35 @@ test("set color scheme to localStorage after rendering", async() => {
     window.Storage.prototype.getItem = localStorageGetItemMock;
 
     act(() => {
-        window.dispatchEvent(new StorageEvent("storage", {
-            key: "COLOR_SCHEME",
-            newValue: "light"
-        }));
+        window.dispatchEvent(
+            new StorageEvent("storage", {
+                key: "COLOR_SCHEME",
+                newValue: "light",
+            }),
+        );
     });
 
     expect(colorSchemeDiv.innerHTML).toBe("light");
 });
 
-test("remove color scheme from localStorage after rendering", async() => {
+test("remove color scheme from localStorage after rendering", async () => {
     render(
         <WebsiteThemeProvider>
-            <WebsiteThemeConsumer/>
-        </WebsiteThemeProvider>
+            <WebsiteThemeConsumer />
+        </WebsiteThemeProvider>,
     );
 
     const themeDataGroupDiv = await screen.findByTestId("theme-data-group");
-    const colorSchemeDiv = await within(themeDataGroupDiv).findByTestId("theme-data-color-scheme");
+    const colorSchemeDiv = await within(themeDataGroupDiv).findByTestId(
+        "theme-data-color-scheme",
+    );
 
-    const setColorSchemeButton = await within(themeDataGroupDiv).findByRole("button", {
-        name: /toggle theme/i
-    });
+    const setColorSchemeButton = await within(themeDataGroupDiv).findByRole(
+        "button",
+        {
+            name: /toggle theme/i,
+        },
+    );
     act(() => {
         fireEvent.click(setColorSchemeButton);
     });
@@ -206,10 +231,12 @@ test("remove color scheme from localStorage after rendering", async() => {
     window.Storage.prototype.getItem = localStorageGetItemMock;
 
     act(() => {
-        window.dispatchEvent(new StorageEvent("storage", {
-            key: "COLOR_SCHEME",
-            newValue: null
-        }));
+        window.dispatchEvent(
+            new StorageEvent("storage", {
+                key: "COLOR_SCHEME",
+                newValue: null,
+            }),
+        );
     });
 
     expect(colorSchemeDiv.innerHTML).toBe("dark");

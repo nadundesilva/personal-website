@@ -14,7 +14,7 @@ import { render, screen } from "@testing-library/react";
 
 import Timespan from "./Timespan";
 
-test("renders timespan with provided time range", async() => {
+test("renders timespan with provided time range", async () => {
     render(<Timespan>Test time range written by Nadun De Silva</Timespan>);
 
     await screen.findByText("Test time range written by Nadun De Silva");

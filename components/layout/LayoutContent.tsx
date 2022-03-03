@@ -16,24 +16,26 @@ import React from "react";
 import RouterBreadcrumbs from "./RouterBreadcrumbs";
 
 interface LayoutContentProps {
-    children: React.ReactNode,
+    children: React.ReactNode;
 }
 
-const LayoutContent = ({ children }: LayoutContentProps): React.ReactElement => (
-    <Container maxWidth={false} disableGutters
+const LayoutContent = ({
+    children,
+}: LayoutContentProps): React.ReactElement => (
+    <Container
+        maxWidth={false}
+        disableGutters
         sx={{
             marginBottom: 5,
             px: {
                 xs: 0,
                 lg: 20,
-                xl: 40
-            }
+                xl: 40,
+            },
         }}
     >
-        <RouterBreadcrumbs/>
-        <Container maxWidth={false}>
-            {children}
-        </Container>
+        <RouterBreadcrumbs />
+        <Container maxWidth={false}>{children}</Container>
     </Container>
 );
 

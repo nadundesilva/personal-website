@@ -16,12 +16,13 @@ import { Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
 interface TimespanProps {
-    children: React.ReactNode,
+    children: React.ReactNode;
 }
 
 const Timespan = ({ children }: TimespanProps): React.ReactElement => (
     <Typography variant={"body1"} sx={{ pt: 1, pb: 1, color: grey[700] }}>
-        <FontAwesomeIcon icon={faCalendarAlt}/>&nbsp;{children}
+        <FontAwesomeIcon icon={faCalendarAlt} />
+        &nbsp;{children}
     </Typography>
 );
 

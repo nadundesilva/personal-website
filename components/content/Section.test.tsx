@@ -14,7 +14,7 @@ import { render, screen } from "@testing-library/react";
 
 import Section from "./Section";
 
-test("renders section with correct content", async() => {
+test("renders section with correct content", async () => {
     render(<Section>Test Section content written by Nadun De Silva</Section>);
 
     await screen.findByText("Test Section content written by Nadun De Silva");

@@ -1,86 +1,86 @@
 name: Deployment Check
 
 on:
-  workflow_dispatch:
-  deployment:
-  schedule:
-    - cron: 0 0 * * *
+    workflow_dispatch:
+    deployment:
+    schedule:
+        - cron: 0 0 * * *
 
 jobs:
-  deployment-validation:
-    strategy:
-      matrix:
-        browser:
-          - electron
-          - chrome
-    name: Ubuntu Deployment Check (${{ matrix.browser }})
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: "14.17.6"
-      - name: Run End to End Tests
-        run: |
-          npm ci
-          docker run -t -v "${PWD}:/test" -w /test cypress/included:7.4.0 \
-              run \
-            --headless \
-            --browser ${{ matrix.browser }} \
-            --reporter cypress-image-snapshot/reporter
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-results-${{ matrix.browser }}
-          path: |
-            cypress/videos/
-            cypress/screenshots/
-            cypress/snapshots/**/__diff_output__/**
+    deployment-validation:
+        strategy:
+            matrix:
+                browser:
+                    - electron
+                    - chrome
+        name: Ubuntu Deployment Check (${{ matrix.browser }})
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Setup Node.js
+              uses: actions/setup-node@v1
+              with:
+                  node-version: "14.17.6"
+            - name: Run End to End Tests
+              run: |
+                  npm ci
+                  docker run -t -v "${PWD}:/test" -w /test cypress/included:7.4.0 \
+                      run \
+                    --headless \
+                    --browser ${{ matrix.browser }} \
+                    --reporter cypress-image-snapshot/reporter
+            - name: Upload artifacts
+              if: always()
+              uses: actions/upload-artifact@v2
+              with:
+                  name: test-results-${{ matrix.browser }}
+                  path: |
+                      cypress/videos/
+                      cypress/screenshots/
+                      cypress/snapshots/**/__diff_output__/**
 
-  links-check:
-    name: Check Links in Website
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Link Checker
-        id: lychee
-        uses: lycheeverse/lychee-action@v1.0.6
-        with:
-          args: --verbose --no-progress https://nadundesilva.github.io/
-      - name: Upload Link Checker Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: Link Checker Report
-          path: ./lychee/out.md
-      - name: Fail on Link Errors
-        run: |
-          # shellcheck disable=SC2242
-          exit ${{ steps.lychee.outputs.exit_code }}
+    links-check:
+        name: Check Links in Website
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Link Checker
+              id: lychee
+              uses: lycheeverse/lychee-action@v1.0.6
+              with:
+                  args: --verbose --no-progress https://nadundesilva.github.io/
+            - name: Upload Link Checker Report
+              uses: actions/upload-artifact@v2
+              with:
+                  name: Link Checker Report
+                  path: ./lychee/out.md
+            - name: Fail on Link Errors
+              run: |
+                  # shellcheck disable=SC2242
+                  exit ${{ steps.lychee.outputs.exit_code }}
 
-  website-audit:
-    name: Run Website Audit
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: "14.17.6"
-      - name: Run Lighthouse Audit
-        run: |
-          npm install -g @lhci/cli@0.9.x
-          lhci autorun
-        env:
-          LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATING_LIVE_SITE: "true"
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: website-audit
-          path: ./lhci-out
+    website-audit:
+        name: Run Website Audit
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Setup Node.js
+              uses: actions/setup-node@v1
+              with:
+                  node-version: "14.17.6"
+            - name: Run Lighthouse Audit
+              run: |
+                  npm install -g @lhci/cli@0.9.x
+                  lhci autorun
+              env:
+                  LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  VALIDATING_LIVE_SITE: "true"
+            - name: Upload artifacts
+              if: always()
+              uses: actions/upload-artifact@v2
+              with:
+                  name: website-audit
+                  path: ./lhci-out

@@ -1,325 +1,325 @@
 name: Deploy Site
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 jobs:
-  run-super-linter:
-    name: Run GitHub Super Linter
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: "14.17.6"
-      - name: Install Dependencies
-        run: |
-          npm ci
-      - name: Lint Code Base
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LINTER_RULES_PATH: .
-          TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.json
-          TYPESCRIPT_DEFAULT_STYLE: "prettier"
-          VALIDATE_ALL_CODEBASE: "true"
-          VALIDATE_GITLEAKS: "false"
-          VALIDATE_JSCPD: "false"
-          VALIDATE_JAVASCRIPT_STANDARD: "false"
+    run-super-linter:
+        name: Run GitHub Super Linter
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
+            - name: Setup Node.js
+              uses: actions/setup-node@v1
+              with:
+                  node-version: "14.17.6"
+            - name: Install Dependencies
+              run: |
+                  npm ci
+            - name: Lint Code Base
+              uses: github/super-linter@v4
+              env:
+                  DEFAULT_BRANCH: main
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  LINTER_RULES_PATH: .
+                  TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.json
+                  TYPESCRIPT_DEFAULT_STYLE: "prettier"
+                  VALIDATE_ALL_CODEBASE: "true"
+                  VALIDATE_GITLEAKS: "false"
+                  VALIDATE_JSCPD: "false"
+                  VALIDATE_JAVASCRIPT_STANDARD: "false"
 
-  run-codeql-analysis:
-    name: Run CodeQL Analysis
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-    strategy:
-      fail-fast: false
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
-        with:
-          languages: javascript
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v1
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+    run-codeql-analysis:
+        name: Run CodeQL Analysis
+        runs-on: ubuntu-latest
+        permissions:
+            actions: read
+            contents: read
+            security-events: write
+        strategy:
+            fail-fast: false
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+            - name: Initialize CodeQL
+              uses: github/codeql-action/init@v1
+              with:
+                  languages: javascript
+            - name: Autobuild
+              uses: github/codeql-action/autobuild@v1
+            - name: Perform CodeQL Analysis
+              uses: github/codeql-action/analyze@v1
 
-  run-ossar-analysis:
-    name: Run OSSAR Analysis
-    runs-on: windows-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Install .NET
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '3.1.x'
-      - name: Run OSSAR
-        uses: github/ossar-action@v1
-        id: ossar
-      - name: Upload OSSAR results
-        uses: github/codeql-action/upload-sarif@v1
-        with:
-          sarif_file: ${{ steps.ossar.outputs.sarifFile }}
+    run-ossar-analysis:
+        name: Run OSSAR Analysis
+        runs-on: windows-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+            - name: Install .NET
+              uses: actions/setup-dotnet@v1
+              with:
+                  dotnet-version: "3.1.x"
+            - name: Run OSSAR
+              uses: github/ossar-action@v1
+              id: ossar
+            - name: Upload OSSAR results
+              uses: github/codeql-action/upload-sarif@v1
+              with:
+                  sarif_file: ${{ steps.ossar.outputs.sarifFile }}
 
-  run-unit-tests:
-    name: Run Unit Tests
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: "14.17.6"
-      - name: Install Dependencies
-        run: |
-          npm ci
-      - name: Running Unit Tests
-        run: |
-          npm run test:ci
-      - name: Upload Code Coverage to CodeCov
-        uses: codecov/codecov-action@v2
-        with:
-          name: coverage-reports
-          flags: unit-tests
-          fail_ci_if_error: true
-          verbose: true
-      - name: Upload Code Coverage Report Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: unit-tests-coverage
-          path: coverage/
+    run-unit-tests:
+        name: Run Unit Tests
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Setup Node.js
+              uses: actions/setup-node@v1
+              with:
+                  node-version: "14.17.6"
+            - name: Install Dependencies
+              run: |
+                  npm ci
+            - name: Running Unit Tests
+              run: |
+                  npm run test:ci
+            - name: Upload Code Coverage to CodeCov
+              uses: codecov/codecov-action@v2
+              with:
+                  name: coverage-reports
+                  flags: unit-tests
+                  fail_ci_if_error: true
+                  verbose: true
+            - name: Upload Code Coverage Report Artifacts
+              uses: actions/upload-artifact@v2
+              with:
+                  name: unit-tests-coverage
+                  path: coverage/
 
-  run-e2e-tests:
-    strategy:
-      matrix:
-        browser:
-          - electron
-          - chrome
-    name: Run E2E Tests (${{ matrix.browser }})
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: "14.17.6"
-      - name: Install Dependencies
-        run: |
-          npm ci
-      - name: Instrument Website for Code Coverage
-        run: |
-          npm ci
-          npx nyc instrument --in-place --compact=false .
-          npm run build
-        env:
-          BUILD_TYPE: test
-      - name: Run End to End Tests
-        run: |
-          bash .github/scripts/run-e2e-tests.sh
-        env:
-          TEST_BROWSER: ${{ matrix.browser }}
-          WEBSITE_BUILD_DIR: out
-      - name: Upload Code Coverage to CodeCov
-        uses: codecov/codecov-action@v2
-        with:
-          name: coverage-reports
-          flags: e2e-tests
-          fail_ci_if_error: true
-          verbose: true
-      - name: Upload Test Results Artifacts
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: e2e-test-results-${{ matrix.browser }}
-          path: |
-            cypress/videos/
-            cypress/screenshots/
-            cypress/snapshots/**/__diff_output__/**
-      - name: Upload Code Coverage Report Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: e2e-tests-coverage-${{ matrix.browser }}
-          path: coverage/
+    run-e2e-tests:
+        strategy:
+            matrix:
+                browser:
+                    - electron
+                    - chrome
+        name: Run E2E Tests (${{ matrix.browser }})
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Setup Node.js
+              uses: actions/setup-node@v1
+              with:
+                  node-version: "14.17.6"
+            - name: Install Dependencies
+              run: |
+                  npm ci
+            - name: Instrument Website for Code Coverage
+              run: |
+                  npm ci
+                  npx nyc instrument --in-place --compact=false .
+                  npm run build
+              env:
+                  BUILD_TYPE: test
+            - name: Run End to End Tests
+              run: |
+                  bash .github/scripts/run-e2e-tests.sh
+              env:
+                  TEST_BROWSER: ${{ matrix.browser }}
+                  WEBSITE_BUILD_DIR: out
+            - name: Upload Code Coverage to CodeCov
+              uses: codecov/codecov-action@v2
+              with:
+                  name: coverage-reports
+                  flags: e2e-tests
+                  fail_ci_if_error: true
+                  verbose: true
+            - name: Upload Test Results Artifacts
+              if: always()
+              uses: actions/upload-artifact@v2
+              with:
+                  name: e2e-test-results-${{ matrix.browser }}
+                  path: |
+                      cypress/videos/
+                      cypress/screenshots/
+                      cypress/snapshots/**/__diff_output__/**
+            - name: Upload Code Coverage Report Artifacts
+              uses: actions/upload-artifact@v2
+              with:
+                  name: e2e-tests-coverage-${{ matrix.browser }}
+                  path: coverage/
 
-  build-site:
-    name: Build Site
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "14.17.6"
-      - name: Install Dependencies
-        run: |
-          npm ci
-      - name: Build Site
-        run: |
-          npm run build
-          touch ./out/.nojekyll
-        env:
-          PUBLIC_URL: https://nadundesilva.github.io
-      - name: Upload Site
-        uses: actions/upload-artifact@v2
-        with:
-          name: site
-          path: out/
-      - name: Upload Unit Tests Code Coverage Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: unit-tests-coverage
-          path: coverage/
+    build-site:
+        name: Build Site
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: "14.17.6"
+            - name: Install Dependencies
+              run: |
+                  npm ci
+            - name: Build Site
+              run: |
+                  npm run build
+                  touch ./out/.nojekyll
+              env:
+                  PUBLIC_URL: https://nadundesilva.github.io
+            - name: Upload Site
+              uses: actions/upload-artifact@v2
+              with:
+                  name: site
+                  path: out/
+            - name: Upload Unit Tests Code Coverage Report
+              uses: actions/upload-artifact@v2
+              with:
+                  name: unit-tests-coverage
+                  path: coverage/
 
-  check-links:
-    name: Check Links in Website
-    runs-on: ubuntu-20.04
-    needs: build-site
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Download Site
-        uses: actions/download-artifact@v2
-        with:
-          name: site
-          path: _site/
-      - name: Link Checker
-        id: lychee
-        uses: lycheeverse/lychee-action@v1.0.6
-        with:
-          args: --verbose --no-progress --base="./_site/" ./_site/**/*.html
-      - name: Upload Link Checker Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: Link Checker Report
-          path: ./lychee/out.md
-      - name: Fail on Link Errors
-        run: |
-          # shellcheck disable=SC2242
-          exit ${{ steps.lychee.outputs.exit_code }}
+    check-links:
+        name: Check Links in Website
+        runs-on: ubuntu-20.04
+        needs: build-site
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Download Site
+              uses: actions/download-artifact@v2
+              with:
+                  name: site
+                  path: _site/
+            - name: Link Checker
+              id: lychee
+              uses: lycheeverse/lychee-action@v1.0.6
+              with:
+                  args: --verbose --no-progress --base="./_site/" ./_site/**/*.html
+            - name: Upload Link Checker Report
+              uses: actions/upload-artifact@v2
+              with:
+                  name: Link Checker Report
+                  path: ./lychee/out.md
+            - name: Fail on Link Errors
+              run: |
+                  # shellcheck disable=SC2242
+                  exit ${{ steps.lychee.outputs.exit_code }}
 
-  check-site-build:
-    strategy:
-      matrix:
-        browser:
-          - electron
-          - chrome
-    name: Check Site Build (${{ matrix.browser }})
-    runs-on: ubuntu-20.04
-    needs: build-site
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: "14.17.6"
-      - name: Install Dependencies
-        run: |
-          npm ci
-      - name: Download Site
-        uses: actions/download-artifact@v2
-        with:
-          name: site
-          path: _site/
-      - name: Run End to End Tests
-        run: |
-          bash .github/scripts/run-e2e-tests.sh
-        env:
-          TEST_BROWSER: ${{ matrix.browser }}
-          WEBSITE_BUILD_DIR: _site
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: site-build-e2e-test-results-${{ matrix.browser }}
-          path: |
-            cypress/videos/
-            cypress/screenshots/
-            cypress/snapshots/**/__diff_output__/**
+    check-site-build:
+        strategy:
+            matrix:
+                browser:
+                    - electron
+                    - chrome
+        name: Check Site Build (${{ matrix.browser }})
+        runs-on: ubuntu-20.04
+        needs: build-site
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Setup Node.js
+              uses: actions/setup-node@v1
+              with:
+                  node-version: "14.17.6"
+            - name: Install Dependencies
+              run: |
+                  npm ci
+            - name: Download Site
+              uses: actions/download-artifact@v2
+              with:
+                  name: site
+                  path: _site/
+            - name: Run End to End Tests
+              run: |
+                  bash .github/scripts/run-e2e-tests.sh
+              env:
+                  TEST_BROWSER: ${{ matrix.browser }}
+                  WEBSITE_BUILD_DIR: _site
+            - name: Upload artifacts
+              if: always()
+              uses: actions/upload-artifact@v2
+              with:
+                  name: site-build-e2e-test-results-${{ matrix.browser }}
+                  path: |
+                      cypress/videos/
+                      cypress/screenshots/
+                      cypress/snapshots/**/__diff_output__/**
 
-  run-website-audit:
-    name: Run Website Audit
-    runs-on: ubuntu-20.04
-    needs: build-site
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Download Site
-        uses: actions/download-artifact@v2
-        with:
-          name: site
-          path: _site/
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: "14.17.6"
-      - name: Run Lighthouse Audit
-        run: |
-          npm install -g @lhci/cli@0.9.x
-          sudo apt install -y ca-certificates
-          source .github/scripts/utils.sh
+    run-website-audit:
+        name: Run Website Audit
+        runs-on: ubuntu-20.04
+        needs: build-site
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Download Site
+              uses: actions/download-artifact@v2
+              with:
+                  name: site
+                  path: _site/
+            - name: Setup Node.js
+              uses: actions/setup-node@v1
+              with:
+                  node-version: "14.17.6"
+            - name: Run Lighthouse Audit
+              run: |
+                  npm install -g @lhci/cli@0.9.x
+                  sudo apt install -y ca-certificates
+                  source .github/scripts/utils.sh
 
-          startServer
-          sudo cp "${NODE_EXTRA_CA_CERTS}" /usr/local/share/ca-certificates
-          sudo update-ca-certificates
-          lhci autorun
-          stopServer
-        env:
-          LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: website-audit
-          path: ./lhci-out
+                  startServer
+                  sudo cp "${NODE_EXTRA_CA_CERTS}" /usr/local/share/ca-certificates
+                  sudo update-ca-certificates
+                  lhci autorun
+                  stopServer
+              env:
+                  LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Upload artifacts
+              if: always()
+              uses: actions/upload-artifact@v2
+              with:
+                  name: website-audit
+                  path: ./lhci-out
 
-  deploy-site:
-    name: Deploy Site
-    runs-on: ubuntu-20.04
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    needs:
-      - run-super-linter
-      - run-codeql-analysis
-      - run-ossar-analysis
-      - run-unit-tests
-      - run-e2e-tests
-      - build-site
-      - check-links
-      - run-website-audit
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Download Site
-        uses: actions/download-artifact@v2
-        with:
-          name: site
-          path: _site/
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: "14.17.6"
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.1
-        with:
-          dry-run: ${{ github.event_name != 'push' }}
-          branch: gh-pages
-          folder: _site
-          commit-message: |
-            [Automated] Update Site (Source Commit: ${{ github.sha }})
+    deploy-site:
+        name: Deploy Site
+        runs-on: ubuntu-20.04
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        needs:
+            - run-super-linter
+            - run-codeql-analysis
+            - run-ossar-analysis
+            - run-unit-tests
+            - run-e2e-tests
+            - build-site
+            - check-links
+            - run-website-audit
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Download Site
+              uses: actions/download-artifact@v2
+              with:
+                  name: site
+                  path: _site/
+            - name: Setup Node.js
+              uses: actions/setup-node@v1
+              with:
+                  node-version: "14.17.6"
+            - name: Deploy
+              uses: JamesIves/github-pages-deploy-action@4.1.1
+              with:
+                  dry-run: ${{ github.event_name != 'push' }}
+                  branch: gh-pages
+                  folder: _site
+                  commit-message: |
+                      [Automated] Update Site (Source Commit: ${{ github.sha }})

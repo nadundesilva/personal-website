@@ -16,7 +16,4 @@ import useScrollOffset from "./scrolling";
 
 export default Layout;
 
-export {
-    LayoutContent,
-    useScrollOffset
-};
+export { LayoutContent, useScrollOffset };
