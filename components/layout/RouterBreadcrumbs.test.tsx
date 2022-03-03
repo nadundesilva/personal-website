@@ -25,15 +25,19 @@ afterAll(() => {
     jest.resetModules();
 });
 
-test("renders router breadcrumbs in <root> page", async () => {
+const renderBreadcrumbs = async (url: string): Promise<HTMLElement> => {
     await act(async () => {
-        await singletonRouter.push("");
+        await singletonRouter.push(url);
     });
     render(<RouterBreadcrumbs />);
 
-    const breadcrumbs = await screen.findByRole("navigation", {
+    return await screen.findByRole("navigation", {
         name: /breadcrumb/i,
     });
+};
+
+test("renders router breadcrumbs in <root> page", async () => {
+    const breadcrumbs = await renderBreadcrumbs("");
 
     const homeLink = within(breadcrumbs).queryByRole("link", {
         name: /home/i,
@@ -44,14 +48,7 @@ test("renders router breadcrumbs in <root> page", async () => {
 });
 
 test("renders router breadcrumbs in <root>/experience page", async () => {
-    await act(async () => {
-        await singletonRouter.push("/experience");
-    });
-    render(<RouterBreadcrumbs />);
-
-    const breadcrumbs = await screen.findByRole("navigation", {
-        name: /breadcrumb/i,
-    });
+    const breadcrumbs = await renderBreadcrumbs("/experience");
 
     const homeLink = await within(breadcrumbs).findByRole("link", {
         name: /home/i,
@@ -67,14 +64,7 @@ test("renders router breadcrumbs in <root>/experience page", async () => {
 });
 
 test("renders router breadcrumbs in <root>/achievements page", async () => {
-    await act(async () => {
-        await singletonRouter.push("/achievements");
-    });
-    render(<RouterBreadcrumbs />);
-
-    const breadcrumbs = await screen.findByRole("navigation", {
-        name: /breadcrumb/i,
-    });
+    const breadcrumbs = await renderBreadcrumbs("/achievements");
 
     const homeLink = await within(breadcrumbs).findByRole("link", {
         name: /home/i,
