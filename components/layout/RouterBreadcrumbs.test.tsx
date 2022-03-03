@@ -25,64 +25,64 @@ afterAll(() => {
     jest.resetModules();
 });
 
-test("renders router breadcrumbs in <root> page", async() => {
-    await act(async() => {
+test("renders router breadcrumbs in <root> page", async () => {
+    await act(async () => {
         await singletonRouter.push("");
     });
-    render(<RouterBreadcrumbs/>);
+    render(<RouterBreadcrumbs />);
 
     const breadcrumbs = await screen.findByRole("navigation", {
-        name: /breadcrumb/i
+        name: /breadcrumb/i,
     });
 
     const homeLink = within(breadcrumbs).queryByRole("link", {
-        name: /home/i
+        name: /home/i,
     });
     expect(homeLink).toBeNull();
 
     await within(breadcrumbs).findByText("Home");
 });
 
-test("renders router breadcrumbs in <root>/experience page", async() => {
-    await act(async() => {
+test("renders router breadcrumbs in <root>/experience page", async () => {
+    await act(async () => {
         await singletonRouter.push("/experience");
     });
-    render(<RouterBreadcrumbs/>);
+    render(<RouterBreadcrumbs />);
 
     const breadcrumbs = await screen.findByRole("navigation", {
-        name: /breadcrumb/i
+        name: /breadcrumb/i,
     });
 
     const homeLink = await within(breadcrumbs).findByRole("link", {
-        name: /home/i
+        name: /home/i,
     });
     expect(homeLink).toHaveAttribute("href", "/");
 
     const experienceLink = within(breadcrumbs).queryByRole("link", {
-        name: /experience/i
+        name: /experience/i,
     });
     expect(experienceLink).toBeNull();
 
     await within(breadcrumbs).findByText("Experience");
 });
 
-test("renders router breadcrumbs in <root>/achievements page", async() => {
-    await act(async() => {
+test("renders router breadcrumbs in <root>/achievements page", async () => {
+    await act(async () => {
         await singletonRouter.push("/achievements");
     });
-    render(<RouterBreadcrumbs/>);
+    render(<RouterBreadcrumbs />);
 
     const breadcrumbs = await screen.findByRole("navigation", {
-        name: /breadcrumb/i
+        name: /breadcrumb/i,
     });
 
     const homeLink = await within(breadcrumbs).findByRole("link", {
-        name: /home/i
+        name: /home/i,
     });
     expect(homeLink).toHaveAttribute("href", "/");
 
     const achievementsLink = within(breadcrumbs).queryByRole("link", {
-        name: /achievements/i
+        name: /achievements/i,
     });
     expect(achievementsLink).toBeNull();
 

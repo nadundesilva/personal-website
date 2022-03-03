@@ -17,11 +17,4 @@ import Section from "./Section";
 import SectionHeading from "./SectionHeading";
 import Timespan from "./Timespan";
 
-export {
-    Logo,
-    Paragraph,
-    Photo,
-    Section,
-    SectionHeading,
-    Timespan
-};
+export { Logo, Paragraph, Photo, Section, SectionHeading, Timespan };

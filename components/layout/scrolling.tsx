@@ -18,9 +18,9 @@ import { MutableRefObject, useEffect, useState, useRef } from "react";
 type Direction = -1 | 0 | 1;
 
 interface UseScrollOffsetReturnValue<T> {
-    ref: MutableRefObject<T | null>,
-    direction: Direction,
-    offset: number,
+    ref: MutableRefObject<T | null>;
+    direction: Direction;
+    offset: number;
 }
 
 function useScrollOffset<T extends Element>(): UseScrollOffsetReturnValue<T> {
@@ -44,14 +44,16 @@ function useScrollOffset<T extends Element>(): UseScrollOffsetReturnValue<T> {
             } else if (refBBox.top > viewportHeight / 2) {
                 const fullPageHeight = document.documentElement.offsetHeight;
                 const yOffset = window.pageYOffset;
-                const pageBottomOffset = (yOffset + viewportHeight * 1.5 - fullPageHeight) / (viewportHeight / 2);
+                const pageBottomOffset =
+                    (yOffset + viewportHeight * 1.5 - fullPageHeight) /
+                    (viewportHeight / 2);
                 const clientRectOffset = 2 - refBBox.top / (viewportHeight / 2);
 
                 direction = 1;
                 newOffset = Math.max(pageBottomOffset, clientRectOffset);
             } else if (refBBox.bottom < viewportHeight / 2) {
                 direction = -1;
-                newOffset = (refBBox.bottom) / (viewportHeight / 2);
+                newOffset = refBBox.bottom / (viewportHeight / 2);
             } else {
                 direction = 0;
                 newOffset = 1;
@@ -77,7 +79,7 @@ function useScrollOffset<T extends Element>(): UseScrollOffsetReturnValue<T> {
     return {
         ref,
         direction,
-        offset: Math.min(Math.max(offset, 0), 1)
+        offset: Math.min(Math.max(offset, 0), 1),
     };
 }
 

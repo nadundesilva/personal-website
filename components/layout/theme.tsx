@@ -10,7 +10,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { createTheme, CssBaseline, StyledEngineProvider, Theme, ThemeProvider, useMediaQuery } from "@mui/material";
+import {
+    createTheme,
+    CssBaseline,
+    StyledEngineProvider,
+    Theme,
+    ThemeProvider,
+    useMediaQuery,
+} from "@mui/material";
 import { grey, indigo } from "@mui/material/colors";
 import React, { useMemo, useEffect, useState, useContext } from "react";
 
@@ -26,8 +33,9 @@ const getStoredColorScheme = (): ColorScheme | null => {
     } catch {
         storedColorScheme = null;
     }
-    return storedColorScheme !== null && colorSchemes.includes(storedColorScheme)
-        ? storedColorScheme as ColorScheme
+    return storedColorScheme !== null &&
+        colorSchemes.includes(storedColorScheme)
+        ? (storedColorScheme as ColorScheme)
         : null;
 };
 
@@ -36,24 +44,24 @@ const createWebsiteTheme = (colorScheme: ColorScheme): Theme => {
         palette: {
             mode: colorScheme,
             primary: indigo,
-            secondary: indigo
+            secondary: indigo,
         },
         components: {
             MuiLink: {
                 styleOverrides: {
                     root: {
-                        color: grey[700]
-                    }
-                }
-            }
-        }
+                        color: grey[700],
+                    },
+                },
+            },
+        },
     });
 };
 
 interface WebsiteThemeContext {
-    theme: Theme,
-    colorScheme: ColorScheme,
-    setColorScheme: (newColorScheme: ColorScheme) => void,
+    theme: Theme;
+    colorScheme: ColorScheme;
+    setColorScheme: (newColorScheme: ColorScheme) => void;
 }
 
 const defaultColorScheme = getStoredColorScheme() ?? "light";
@@ -61,19 +69,29 @@ const defaultColorScheme = getStoredColorScheme() ?? "light";
 const WebsiteTheme = React.createContext<WebsiteThemeContext>({
     theme: createWebsiteTheme(defaultColorScheme),
     colorScheme: defaultColorScheme,
-    setColorScheme: () => { throw Error("Setting color theme not implemented"); }
+    setColorScheme: () => {
+        throw Error("Setting color theme not implemented");
+    },
 });
 
 interface WebsiteThemeProviderProps {
-    children: React.ReactNode,
+    children: React.ReactNode;
 }
 
-const WebsiteThemeProvider = ({ children }: WebsiteThemeProviderProps): React.ReactElement => {
-    const preferedColorScheme: ColorScheme = useMediaQuery("(prefers-color-scheme: dark)") ? "dark" : "light";
+const WebsiteThemeProvider = ({
+    children,
+}: WebsiteThemeProviderProps): React.ReactElement => {
+    const preferedColorScheme: ColorScheme = useMediaQuery(
+        "(prefers-color-scheme: dark)",
+    )
+        ? "dark"
+        : "light";
     const initialStoredColorScheme = getStoredColorScheme();
 
     const [colorScheme, setColorScheme] = useState<ColorScheme>(
-        initialStoredColorScheme === null ? preferedColorScheme : initialStoredColorScheme
+        initialStoredColorScheme === null
+            ? preferedColorScheme
+            : initialStoredColorScheme,
     );
 
     const storageListener = (): void => {
@@ -84,7 +102,8 @@ const WebsiteThemeProvider = ({ children }: WebsiteThemeProviderProps): React.Re
     };
     useEffect(() => {
         window.addEventListener("storage", storageListener);
-        return (): void => window.removeEventListener("storage", storageListener);
+        return (): void =>
+            window.removeEventListener("storage", storageListener);
     });
 
     const theme = useMemo(() => createWebsiteTheme(colorScheme), [colorScheme]);
@@ -92,17 +111,21 @@ const WebsiteThemeProvider = ({ children }: WebsiteThemeProviderProps): React.Re
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <WebsiteTheme.Provider value={{
-                    theme,
-                    colorScheme,
-                    setColorScheme: (newColorScheme: ColorScheme): void => {
-                        try {
-                            localStorage.setItem(COLOR_SCHEME_KEY, newColorScheme);
-                        } catch {
-                        }
-                        setColorScheme(newColorScheme);
-                    }
-                }}>
+                <WebsiteTheme.Provider
+                    value={{
+                        theme,
+                        colorScheme,
+                        setColorScheme: (newColorScheme: ColorScheme): void => {
+                            try {
+                                localStorage.setItem(
+                                    COLOR_SCHEME_KEY,
+                                    newColorScheme,
+                                );
+                            } catch {}
+                            setColorScheme(newColorScheme);
+                        },
+                    }}
+                >
                     {children}
                 </WebsiteTheme.Provider>
             </ThemeProvider>

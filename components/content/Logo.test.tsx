@@ -15,79 +15,114 @@ import { render, screen, waitFor } from "@testing-library/react";
 
 import Logo from "./Logo";
 
-test("renders logo with default height", async() => {
+test("renders logo with default height", async () => {
     const { container } = render(
-        <ThemeProvider theme={createTheme({
-            palette: {
-                mode: "light"
-            }
-        })}>
-            <Logo logo={{
-                src: (mode) => mode === "light" ? "/test-logo-1/light.png" : "/test-logo-1/dark.png",
-                alt: "Test Logo 1 Alt",
-                width: 142,
-                height: 251
-            }}/>
-        </ThemeProvider>
+        <ThemeProvider
+            theme={createTheme({
+                palette: {
+                    mode: "light",
+                },
+            })}
+        >
+            <Logo
+                logo={{
+                    src: (mode) =>
+                        mode === "light"
+                            ? "/test-logo-1/light.png"
+                            : "/test-logo-1/dark.png",
+                    alt: "Test Logo 1 Alt",
+                    width: 142,
+                    height: 251,
+                }}
+            />
+        </ThemeProvider>,
     );
 
-    expect(container.querySelector("div.MuiBox-root")).toHaveStyle("height: 3em");
+    expect(container.querySelector("div.MuiBox-root")).toHaveStyle(
+        "height: 3em",
+    );
     const image = await screen.findByRole("img", {
-        name: /test logo 1 alt/i
+        name: /test logo 1 alt/i,
     });
     await waitFor(() => {
         expect(image.getAttribute("src")).toMatch(/\/_next\/image/i);
     });
-    expect(image).toHaveAttribute("src", "/_next/image?url=%2Ftest-logo-1%2Flight.png&w=3840&q=75");
+    expect(image).toHaveAttribute(
+        "src",
+        "/_next/image?url=%2Ftest-logo-1%2Flight.png&w=3840&q=75",
+    );
 });
 
-test("renders logo with specific height", async() => {
+test("renders logo with specific height", async () => {
     const { container } = render(
-        <ThemeProvider theme={createTheme({
-            palette: {
-                mode: "light"
-            }
-        })}>
-            <Logo height={"4.5em"} logo={{
-                src: (mode) => mode === "light" ? "/test-logo-2/light.png" : "/test-logo-2/dark.png",
-                alt: "Test Logo 2 Alt",
-                width: 144,
-                height: 257
-            }}/>
-        </ThemeProvider>
+        <ThemeProvider
+            theme={createTheme({
+                palette: {
+                    mode: "light",
+                },
+            })}
+        >
+            <Logo
+                height={"4.5em"}
+                logo={{
+                    src: (mode) =>
+                        mode === "light"
+                            ? "/test-logo-2/light.png"
+                            : "/test-logo-2/dark.png",
+                    alt: "Test Logo 2 Alt",
+                    width: 144,
+                    height: 257,
+                }}
+            />
+        </ThemeProvider>,
     );
 
-    expect(container.querySelector("div.MuiBox-root")).toHaveStyle("height: 4.5em");
+    expect(container.querySelector("div.MuiBox-root")).toHaveStyle(
+        "height: 4.5em",
+    );
     const image = await screen.findByRole("img", {
-        name: /test logo 2 alt/i
+        name: /test logo 2 alt/i,
     });
     await waitFor(() => {
         expect(image.getAttribute("src")).toMatch(/\/_next\/image/i);
     });
-    expect(image).toHaveAttribute("src", "/_next/image?url=%2Ftest-logo-2%2Flight.png&w=3840&q=75");
+    expect(image).toHaveAttribute(
+        "src",
+        "/_next/image?url=%2Ftest-logo-2%2Flight.png&w=3840&q=75",
+    );
 });
 
-test("renders logo with dark theme", async() => {
+test("renders logo with dark theme", async () => {
     render(
-        <ThemeProvider theme={createTheme({
-            palette: {
-                mode: "dark"
-            }
-        })}>
-            <Logo logo={{
-                src: (mode) => mode === "light" ? "/test-logo-3/light.png" : "/test-logo-3/dark.png",
-                alt: "Test Logo 3 Alt",
-                width: 149,
-                height: 253
-            }}/>
-        </ThemeProvider>
+        <ThemeProvider
+            theme={createTheme({
+                palette: {
+                    mode: "dark",
+                },
+            })}
+        >
+            <Logo
+                logo={{
+                    src: (mode) =>
+                        mode === "light"
+                            ? "/test-logo-3/light.png"
+                            : "/test-logo-3/dark.png",
+                    alt: "Test Logo 3 Alt",
+                    width: 149,
+                    height: 253,
+                }}
+            />
+        </ThemeProvider>,
     );
 
     const image = await screen.findByRole("img", {
-        name: /test logo 3 alt/i
+        name: /test logo 3 alt/i,
     });
     await waitFor(() => {
         expect(image.getAttribute("src")).toMatch(/\/_next\/image/i);
     });
-    expect(image).toHaveAttribute("src", "/_next/image?url=%2Ftest-logo-3%2Fdark.png&w=3840&q=75");
+    expect(image).toHaveAttribute(
+        "src",
+        "/_next/image?url=%2Ftest-logo-3%2Fdark.png&w=3840&q=75",
+    );
 });

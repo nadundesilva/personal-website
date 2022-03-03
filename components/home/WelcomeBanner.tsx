@@ -12,14 +12,25 @@
  */
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, Button, Container, Grid, Link, styled, Theme, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+    Box,
+    Button,
+    Container,
+    Grid,
+    Link,
+    styled,
+    Theme,
+    Typography,
+    useMediaQuery,
+    useTheme,
+} from "@mui/material";
 import Image from "next/image";
 import React from "react";
 
 import { Images } from "@/constants";
 
 const BannerImage = styled(Image)({
-    zIndex: 1
+    zIndex: 1,
 });
 
 const WelcomeBanner = (): React.ReactElement => {
@@ -29,11 +40,18 @@ const WelcomeBanner = (): React.ReactElement => {
     const isMedium = useMediaQuery(theme.breakpoints.up("md"));
     const downloadButtonSize = isLarge
         ? "large"
-        : (isMedium ? "medium" : "small");
+        : isMedium
+        ? "medium"
+        : "small";
 
     return (
-        <Container maxWidth={false} disableGutters sx={{ position: "relative" }}>
-            <Grid container
+        <Container
+            maxWidth={false}
+            disableGutters
+            sx={{ position: "relative" }}
+        >
+            <Grid
+                container
                 sx={{
                     color: "#ffffff",
                     backgroundColor: "rgba(0, 0, 0, 0.8)",
@@ -45,52 +63,83 @@ const WelcomeBanner = (): React.ReactElement => {
                     right: 0,
                     pt: "17vh",
                     px: "3vh",
-                    zIndex: 2
+                    zIndex: 2,
                 }}
             >
                 <Grid item xs={12}>
-                    <Typography variant="h2" component="p"
+                    <Typography
+                        variant="h2"
+                        component="p"
                         sx={{
                             fontWeight: "bold",
-                            fontSize: "6vh"
+                            fontSize: "6vh",
                         }}
                     >
-                        Hi, I am<br/>Nadun<br/>De Silva
+                        Hi, I am
+                        <br />
+                        Nadun
+                        <br />
+                        De Silva
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <Typography variant="h5" component="h2" sx={{ fontSize: "3vh" }}>
+                    <Typography
+                        variant="h5"
+                        component="h2"
+                        sx={{ fontSize: "3vh" }}
+                    >
                         Associate Technical Lead &amp; Deep Learning Enthusiast
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <Link target={"_blank"} href={"/nadundesilva-cv.pdf"}>
-                        <Button variant="contained" color="primary" size={downloadButtonSize}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size={downloadButtonSize}
+                        >
                             View CV
                         </Button>
                     </Link>
                 </Grid>
             </Grid>
-            <Container maxWidth={false} disableGutters
+            <Container
+                maxWidth={false}
+                disableGutters
                 sx={{
                     position: "relative",
-                    height: (theme: Theme) => `calc(100vh - ${theme.mixins.toolbar.minHeight ?? 0}px)`
+                    height: (theme: Theme) =>
+                        `calc(100vh - ${
+                            theme.mixins.toolbar.minHeight ?? 0
+                        }px)`,
                 }}
             >
-                <BannerImage src={Images.WelcomeBanner.src} alt={Images.WelcomeBanner.alt} layout="fill"
-                    objectFit="cover" priority={true} placeholder="blur" blurDataURL={Images.WelcomeBanner.blurDataURL}/>
+                <BannerImage
+                    src={Images.WelcomeBanner.src}
+                    alt={Images.WelcomeBanner.alt}
+                    layout="fill"
+                    objectFit="cover"
+                    priority={true}
+                    placeholder="blur"
+                    blurDataURL={Images.WelcomeBanner.blurDataURL}
+                />
             </Container>
-            <Box role="presentation"
+            <Box
+                role="presentation"
                 sx={{
                     position: "absolute",
                     bottom: 24,
                     right: 24,
                     zIndex: 3,
-                    color: "white"
+                    color: "white",
                 }}
             >
-                <Typography sx={{ display: "inline", pr: 1, fontSize: "1.5vh" }}>Scroll down to learn more</Typography>
-                <FontAwesomeIcon icon={faChevronDown}/>
+                <Typography
+                    sx={{ display: "inline", pr: 1, fontSize: "1.5vh" }}
+                >
+                    Scroll down to learn more
+                </Typography>
+                <FontAwesomeIcon icon={faChevronDown} />
             </Box>
         </Container>
     );

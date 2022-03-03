@@ -29,5 +29,5 @@ export {
     Heading,
     Profiles,
     Skills,
-    WelcomeBanner
+    WelcomeBanner,
 };

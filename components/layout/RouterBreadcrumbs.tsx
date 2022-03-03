@@ -17,54 +17,45 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
-const BREADCRUMBS_MAP: {[key: string]: string} = {
+const BREADCRUMBS_MAP: { [key: string]: string } = {
     "/experience": "Experience",
-    "/achievements": "Achievements"
+    "/achievements": "Achievements",
 };
 
 const RouterBreadcrumbs = (): React.ReactElement | null => {
     const router = useRouter();
     const pathnames = router.pathname.split("/").filter((x) => x);
     return (
-        <Breadcrumbs aria-label="breadcrumb" sx={{ margin: 3 }}
-            separator={<FontAwesomeIcon icon={faChevronRight} transform={"shrink-4"}/>}>
-            {
-                pathnames.length === 0
-                    ? (
-                        <Typography color="textPrimary">
-                            Home
-                        </Typography>
-                    )
-                    : (
-                        <Link passHref href={"/"}>
-                            <BreadcrumbLink color="inherit">
-                                Home
-                            </BreadcrumbLink>
-                        </Link>
-                    )
+        <Breadcrumbs
+            aria-label="breadcrumb"
+            sx={{ margin: 3 }}
+            separator={
+                <FontAwesomeIcon icon={faChevronRight} transform={"shrink-4"} />
             }
-            {
-                pathnames.map((value, index) => {
-                    const last = index === (pathnames.length - 1);
-                    const to = `/${pathnames.slice(0, index + 1).join("/")}`;
+        >
+            {pathnames.length === 0 ? (
+                <Typography color="textPrimary">Home</Typography>
+            ) : (
+                <Link passHref href={"/"}>
+                    <BreadcrumbLink color="inherit">Home</BreadcrumbLink>
+                </Link>
+            )}
+            {pathnames.map((value, index) => {
+                const last = index === pathnames.length - 1;
+                const to = `/${pathnames.slice(0, index + 1).join("/")}`;
 
-                    return (
-                        last
-                            ? (
-                                <Typography color="textPrimary" key={to}>
-                                    {BREADCRUMBS_MAP[to]}
-                                </Typography>
-                            )
-                            : (
-                                <Link passHref href={to} key={to}>
-                                    <BreadcrumbLink color="inherit">
-                                        {BREADCRUMBS_MAP[to]}
-                                    </BreadcrumbLink>
-                                </Link>
-                            )
-                    );
-                })
-            }
+                return last ? (
+                    <Typography color="textPrimary" key={to}>
+                        {BREADCRUMBS_MAP[to]}
+                    </Typography>
+                ) : (
+                    <Link passHref href={to} key={to}>
+                        <BreadcrumbLink color="inherit">
+                            {BREADCRUMBS_MAP[to]}
+                        </BreadcrumbLink>
+                    </Link>
+                );
+            })}
         </Breadcrumbs>
     );
 };
