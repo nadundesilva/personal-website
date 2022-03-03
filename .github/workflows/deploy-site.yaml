@@ -30,12 +30,12 @@ jobs:
                   DEFAULT_BRANCH: main
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   LINTER_RULES_PATH: .
-                  TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.json
-                  TYPESCRIPT_DEFAULT_STYLE: "prettier"
                   VALIDATE_ALL_CODEBASE: "true"
+                  TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.json
+                  TYPESCRIPT_DEFAULT_STYLE: prettier
+                  JAVASCRIPT_DEFAULT_STYLE: prettier
                   VALIDATE_GITLEAKS: "false"
                   VALIDATE_JSCPD: "false"
-                  VALIDATE_JAVASCRIPT_STANDARD: "false"
 
     run-codeql-analysis:
         name: Run CodeQL Analysis
