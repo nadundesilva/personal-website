@@ -130,7 +130,7 @@ test("render layout with appbar items as elements array", async () => {
     await screen.findByTestId("appbar-item-02");
 });
 
-test("render layout with scrolled down from top", async () => {
+const validateLayoutWithScroll = async (): Promise<ValidateResult> => {
     act(() => {
         render(<Layout>Test Layout children written by Nadun De Silva</Layout>);
     });
@@ -141,24 +141,15 @@ test("render layout with scrolled down from top", async () => {
         scrollState.setScrolledDown(true);
     });
 
-    await validateLayout("dark", "scrolled-down");
+    return await validateLayout("dark", "scrolled-down");
+};
+
+test("render layout with scrolled down from top", async () => {
+    await validateLayoutWithScroll();
 });
 
 test("render layout with scroll back to top clicked", async () => {
-    act(() => {
-        render(<Layout>Test Layout children written by Nadun De Silva</Layout>);
-    });
-
-    await validateLayout("dark", "initial");
-
-    act(() => {
-        scrollState.setScrolledDown(true);
-    });
-
-    const { scrollBackToTopButton } = await validateLayout(
-        "dark",
-        "scrolled-down",
-    );
+    const { scrollBackToTopButton } = await validateLayoutWithScroll();
 
     if (scrollBackToTopButton instanceof HTMLElement) {
         const scrollIntoViewMock = jest.fn();

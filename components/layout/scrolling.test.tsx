@@ -171,117 +171,149 @@ describe.each([
             viewportHeight: number;
         }
 
+        const generateViewPortDataArray = (
+            viewportDataFunc: (i: number) => ViewportData,
+            count: number,
+            reverse: boolean,
+        ): ViewportData[] => {
+            let arr = Array.from(Array(count).keys());
+            if (reverse) {
+                arr = arr.reverse();
+            }
+            return arr.map(viewportDataFunc);
+        };
+
         const viewportData: ViewportData[] = [
             {
                 name: "viewport height greater than twice div height",
                 if: DIV_HEIGHT * 2 > 500,
                 viewportHeight: DIV_HEIGHT * 2 - 500,
             },
-            ...(() =>
-                Array.from(Array(5).keys())
-                    .reverse()
-                    .map((i) => ({
-                        name: `viewport height ${
-                            i + 1
-                        } points higher than twice div height`,
-                        viewportHeight: DIV_HEIGHT * 2 + (i + 1),
-                    })))(),
+            ...generateViewPortDataArray(
+                (i) => ({
+                    name: `viewport height ${
+                        i + 1
+                    } points higher than twice div height`,
+                    viewportHeight: DIV_HEIGHT * 2 + (i + 1),
+                }),
+                5,
+                true,
+            ),
             {
                 name: "viewport height equal to twice div height",
                 viewportHeight: DIV_HEIGHT * 2,
             },
-            ...(() =>
-                Array.from(Array(5).keys()).map((i) => ({
+            ...generateViewPortDataArray(
+                (i) => ({
                     name: `viewport height ${
                         i + 1
                     } points smaller than twice div height`,
                     if: DIV_HEIGHT * 2 > i + 1,
                     viewportHeight: DIV_HEIGHT * 2 - (i + 1),
-                })))(),
-            ...(() =>
-                Array.from(Array(5).keys())
-                    .reverse()
-                    .map((i) => ({
-                        name: `viewport height ${
-                            i + 1
-                        } points higher than (3 / 2) times div height`,
-                        viewportHeight: DIV_HEIGHT * 1.5 + (i + 1),
-                    })))(),
+                }),
+                5,
+                false,
+            ),
+            ...generateViewPortDataArray(
+                (i) => ({
+                    name: `viewport height ${
+                        i + 1
+                    } points higher than (3 / 2) times div height`,
+                    viewportHeight: DIV_HEIGHT * 1.5 + (i + 1),
+                }),
+                5,
+                true,
+            ),
             {
                 name: "viewport height between div height and twice div height",
                 viewportHeight: DIV_HEIGHT * 1.5,
             },
-            ...(() =>
-                Array.from(Array(5).keys()).map((i) => ({
+            ...generateViewPortDataArray(
+                (i) => ({
                     name: `viewport height ${
                         i + 1
                     } points smaller than (3 / 2) times div height`,
                     if: DIV_HEIGHT * 1.5 > i + 1,
                     viewportHeight: DIV_HEIGHT * 1.5 - (i + 1),
-                })))(),
-            ...(() =>
-                Array.from(Array(5).keys())
-                    .reverse()
-                    .map((i) => ({
-                        name: `viewport height ${
-                            i + 1
-                        } points higher than div height`,
-                        viewportHeight: DIV_HEIGHT + (i + 1),
-                    })))(),
+                }),
+                5,
+                false,
+            ),
+            ...generateViewPortDataArray(
+                (i) => ({
+                    name: `viewport height ${
+                        i + 1
+                    } points higher than div height`,
+                    viewportHeight: DIV_HEIGHT + (i + 1),
+                }),
+                5,
+                true,
+            ),
             {
                 name: "viewport height equal to div height",
                 viewportHeight: DIV_HEIGHT,
             },
-            ...(() =>
-                Array.from(Array(10).keys()).map((i) => ({
+            ...generateViewPortDataArray(
+                (i) => ({
                     name: `viewport height ${
                         i + 1
                     } points smaller than div height`,
                     if: DIV_HEIGHT > i + 1,
                     viewportHeight: DIV_HEIGHT - (i + 1),
-                })))(),
-            ...(() =>
-                Array.from(Array(10).keys())
-                    .reverse()
-                    .map((i) => ({
-                        name: `viewport height ${
-                            i + 1
-                        } points higher than (3 / 4) times div height`,
-                        viewportHeight: DIV_HEIGHT * 0.75 + (i + 1),
-                    })))(),
+                }),
+                10,
+                false,
+            ),
+            ...generateViewPortDataArray(
+                (i) => ({
+                    name: `viewport height ${
+                        i + 1
+                    } points higher than (3 / 4) times div height`,
+                    viewportHeight: DIV_HEIGHT * 0.75 + (i + 1),
+                }),
+                10,
+                true,
+            ),
             {
                 name: "viewport height between half div height and div height",
                 viewportHeight: DIV_HEIGHT * 0.75,
             },
-            ...(() =>
-                Array.from(Array(10).keys()).map((i) => ({
+            ...generateViewPortDataArray(
+                (i) => ({
                     name: `viewport height ${
                         i + 1
                     } points smaller than (3 / 4) times div height`,
                     if: DIV_HEIGHT * 0.75 > i + 1,
                     viewportHeight: DIV_HEIGHT * 0.75 - (i + 1),
-                })))(),
-            ...(() =>
-                Array.from(Array(10).keys())
-                    .reverse()
-                    .map((i) => ({
-                        name: `viewport height ${
-                            i + 1
-                        } points higher than half div height`,
-                        viewportHeight: DIV_HEIGHT * 0.5 + (i + 1),
-                    })))(),
+                }),
+                10,
+                false,
+            ),
+            ...generateViewPortDataArray(
+                (i) => ({
+                    name: `viewport height ${
+                        i + 1
+                    } points higher than half div height`,
+                    viewportHeight: DIV_HEIGHT * 0.5 + (i + 1),
+                }),
+                10,
+                true,
+            ),
             {
                 name: "viewport height equal to half div height",
                 viewportHeight: DIV_HEIGHT * 0.5,
             },
-            ...(() =>
-                Array.from(Array(10).keys()).map((i) => ({
+            ...generateViewPortDataArray(
+                (i) => ({
                     name: `viewport height ${
                         i + 1
                     } points smaller than half div height`,
                     if: DIV_HEIGHT * 0.5 > i + 1,
                     viewportHeight: DIV_HEIGHT * 0.5 - (i + 1),
-                })))(),
+                }),
+                10,
+                false,
+            ),
             {
                 name: "viewport height smaller than half div height",
                 if: DIV_HEIGHT * 0.5 > 500,
