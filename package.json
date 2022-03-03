@@ -27,7 +27,9 @@
         "build": "next build && next export && node generate-sitemap.js",
         "build:analyze": "ANALYZE=true next build",
         "start": "next start",
-        "lint": "next lint",
+        "lint": "npm run lint:ts && npm run lint:css",
+        "lint:ts": "next lint",
+        "lint:css": "stylelint *.css **/*.css",
         "format": "npx prettier --write .",
         "test": "jest --watch",
         "test:ci": "jest --ci",
@@ -79,6 +81,9 @@
         "nyc": "^15.1.0",
         "prettier": "2.5.1",
         "sitemap": "~7.1.1",
+        "stylelint": "^14.5.3",
+        "stylelint-config-prettier": "^9.0.3",
+        "stylelint-config-standard": "^25.0.0",
         "typescript": "~4.5.5"
     }
 }
