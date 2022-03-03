@@ -202,23 +202,23 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                         dangerouslySetInnerHTML={{
                             __html: JSON.stringify({
                                 "@type": "Person",
-                                image: {
-                                    height: "1960",
-                                    width: "1960",
-                                    url: `${PUBLIC_URL}/assets/profile-photo.jpg`,
+                                "image": {
+                                    "height": "1960",
+                                    "width": "1960",
+                                    "url": `${PUBLIC_URL}/assets/profile-photo.jpg`,
                                     "@type": "imageObject",
                                 },
-                                url: PUBLIC_URL,
-                                headline: FULL_NAME,
-                                sameAs: [
+                                "url": PUBLIC_URL,
+                                "headline": FULL_NAME,
+                                "sameAs": [
                                     "https://www.facebook.com/nadunrds",
                                     "https://www.linkedin.com/in/nadundesilva",
                                     "https://www.instagram.com/nadunrds",
                                     "https://github.com/nadundesilva",
                                     "https://twitter.com/nadunrds",
                                 ],
-                                description: DESCRIPTION,
-                                name: FULL_NAME,
+                                "description": DESCRIPTION,
+                                "name": FULL_NAME,
                                 "@context": "https://schema.org",
                             }),
                         }}
