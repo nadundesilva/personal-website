@@ -31,11 +31,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LINTER_RULES_PATH: .
           TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.json
+          TYPESCRIPT_DEFAULT_STYLE: "prettier"
           VALIDATE_ALL_CODEBASE: "true"
           VALIDATE_GITLEAKS: "false"
           VALIDATE_JSCPD: "false"
           VALIDATE_JAVASCRIPT_STANDARD: "false"
-          VALIDATE_TYPESCRIPT_STANDARD: "false"
 
   run-codeql-analysis:
     name: Run CodeQL Analysis
