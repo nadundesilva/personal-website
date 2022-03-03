@@ -95,7 +95,7 @@ const Achievements = (): React.ReactElement => {
                 rows={rowCount}
                 cols={1}
                 sx={{
-                    position: "relative",
+                    "position": "relative",
                     "&:hover": {
                         [`& .${classes.imageListItemImageOverlay}`]: {
                             top: 0,

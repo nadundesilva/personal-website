@@ -97,15 +97,15 @@ const Profiles = (): React.ReactElement => {
                             justifyContent="center"
                             alignItems="center"
                             sx={{
-                                padding: (theme) => theme.spacing(4),
-                                cursor: "pointer",
+                                "padding": (theme) => theme.spacing(4),
+                                "cursor": "pointer",
                                 "&:hover": {
                                     background: (theme) =>
                                         theme.palette.mode === "light"
                                             ? "#cccccc"
                                             : "#444444",
                                 },
-                                color: (theme) =>
+                                "color": (theme) =>
                                     theme.palette.mode === "light"
                                         ? "black"
                                         : "white",

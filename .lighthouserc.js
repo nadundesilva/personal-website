@@ -42,7 +42,7 @@ module.exports = {
         assert: {
             preset: "lighthouse:recommended",
             assertions: {
-                canonical: ["warn"],
+                "canonical": ["warn"],
                 "csp-xss": ["warn"],
                 "non-composited-animations": ["warn"],
                 "offscreen-images": ["warn"],
