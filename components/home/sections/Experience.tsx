@@ -130,13 +130,14 @@ const Experience = (): React.ReactElement => {
                                     >
                                         {isOnLeft && (
                                             <React.Fragment>
-                                                {locationIcon}&nbsp;
+                                                {locationIcon}{" "}
                                             </React.Fragment>
                                         )}
                                         {item.institute}
                                         {!isOnLeft && (
                                             <React.Fragment>
-                                                &nbsp;{locationIcon}
+                                                {" "}
+                                                {locationIcon}
                                             </React.Fragment>
                                         )}
                                     </Typography>

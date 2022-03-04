@@ -21,8 +21,7 @@ interface TimespanProps {
 
 const Timespan = ({ children }: TimespanProps): React.ReactElement => (
     <Typography variant={"body1"} sx={{ pt: 1, pb: 1, color: grey[700] }}>
-        <FontAwesomeIcon icon={faCalendarAlt} />
-        &nbsp;{children}
+        <FontAwesomeIcon icon={faCalendarAlt} /> {children}
     </Typography>
 );
 
