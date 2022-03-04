@@ -301,6 +301,7 @@ jobs:
             - build-site
             - check-links
             - run-website-audit
+            - check-site-build
         steps:
             - name: Checkout
               uses: actions/checkout@v2
