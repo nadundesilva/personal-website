@@ -30,12 +30,12 @@ const Experience = (): React.ReactElement => {
             Siddhi
         </Link>
     );
-    const mkDocs = (
+    const MkDocs = (
         <Link target={"_blank"} href={"https://www.mkdocs.org/"}>
             MkDocs
         </Link>
     );
-    const wso2IdentityServer = (
+    const Wso2IdentityServer = (
         <Link target={"_blank"} href={"https://wso2.com/identity-server/"}>
             WSO2 Identity Server
         </Link>
@@ -45,12 +45,12 @@ const Experience = (): React.ReactElement => {
             React
         </Link>
     );
-    const apacheOpenWhisk = (
+    const ApacheOpenWhisk = (
         <Link target={"_blank"} href={"https://openwhisk.apache.org/"}>
             Apache OpenWhisk
         </Link>
     );
-    const knative = (
+    const KNative = (
         <Link target={"_blank"} href={"https://knative.dev/docs/"}>
             Knative
         </Link>
@@ -71,8 +71,8 @@ const Experience = (): React.ReactElement => {
         </Link>
     );
 
-    const Wso2Logo = <Logo logo={Logos.WSO2} height={"2.5em"} />;
-    const GsocLogo = <Logo logo={Logos.GoogleSummerOfCode} />;
+    const wso2Logo = <Logo logo={Logos.WSO2} height={"2.5em"} />;
+    const gsocLogo = <Logo logo={Logos.GoogleSummerOfCode} />;
 
     return (
         <Container maxWidth={false} disableGutters>
@@ -87,7 +87,7 @@ const Experience = (): React.ReactElement => {
                             Associate Technical Lead
                         </SectionHeading>
                         <Timespan>June 2021 to Now</Timespan>
-                        {Wso2Logo}
+                        {wso2Logo}
                         <Paragraph>
                             I led the Observability team in technical aspects
                             and it was considered one of the most stable areas
@@ -119,7 +119,7 @@ const Experience = (): React.ReactElement => {
                             Senior Software Engineer
                         </SectionHeading>
                         <Timespan>July 2019 to June 2021</Timespan>
-                        {Wso2Logo}
+                        {wso2Logo}
                         <Paragraph>
                             I completely owned the Observability area of Cellery
                             and mentored a few interns as well as other junior
@@ -189,13 +189,13 @@ const Experience = (): React.ReactElement => {
                     <Section>
                         <SectionHeading>Software Engineer</SectionHeading>
                         <Timespan>Jan 2018 to July 2019</Timespan>
-                        {Wso2Logo}
+                        {wso2Logo}
                         <Paragraph>
                             At the start of my employment, I worked in multiple
                             teams as part of the probation period. During one of
                             these assignments, I implemented a password policy
                             authenticator which is an authentication extension
-                            for the {wso2IdentityServer}. It would validate a
+                            for the {Wso2IdentityServer}. It would validate a
                             user login and enforce password policies.
                         </Paragraph>
                         <Paragraph>
@@ -223,11 +223,11 @@ const Experience = (): React.ReactElement => {
                             implement a considerable amount of it along with
                             another engineer. I also contributed ideas for the
                             platform as a whole as well. The WSO2 Serverless
-                            Platform was based on {apacheOpenWhisk} and it
+                            Platform was based on {ApacheOpenWhisk} and it
                             allowed running any docker image in serverless mode
                             which was a new concept at that time. However,
                             almost near the time when we completed a basic but
-                            complete version of the platform, {knative} which
+                            complete version of the platform, {KNative} which
                             offered a similar experience was announced. As a
                             result, the serverless platform was not offered as
                             part of the product line of WSO2 and it was
@@ -264,7 +264,7 @@ const Experience = (): React.ReactElement => {
                             Google Summer of Code Intern
                         </SectionHeading>
                         <Timespan>May 2017 to Sep 2017</Timespan>
-                        {GsocLogo}
+                        {gsocLogo}
                         <Paragraph>
                             During my last year at the University, in my spare
                             time, I worked as a Google Summer of Code intern. I
@@ -274,7 +274,7 @@ const Experience = (): React.ReactElement => {
                             extensions. The information for the documentation
                             was scraped from the data annotated into the
                             extensions using a maven plugin and the collected
-                            data was converted into html pages using {mkDocs}.
+                            data was converted into html pages using {MkDocs}.
                             This was used by {Siddhi} for generating their
                             documentation till it was decommissioned several
                             years later.
@@ -285,7 +285,7 @@ const Experience = (): React.ReactElement => {
                             Software Engineering Trainee
                         </SectionHeading>
                         <Timespan>July 2016 to December 2016</Timespan>
-                        {Wso2Logo}
+                        {wso2Logo}
                         <Paragraph>
                             I worked as a Software Engineering intern at WSO2 as
                             a required part of my B.Sc. (Hons.) in Engineering
