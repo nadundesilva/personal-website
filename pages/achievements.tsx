@@ -26,12 +26,12 @@ import Layout, { LayoutContent } from "@/components/layout";
 import { Logos, Photos } from "@/constants";
 
 const Achievements = (): React.ReactElement => {
-    const nasaSpaceAppsChallenge = (
+    const NasaSpaceAppsChallenge = (
         <Link target={"_blank"} href={"https://www.spaceappschallenge.org/"}>
             NASA Space Apps Challenge
         </Link>
     );
-    const ourEcologicalNeighborhood = (
+    const OurEcologicalNeighborhood = (
         <Link
             href={
                 "https://2017.spaceappschallenge.org/challenges/our-ecological-neighborhood/"
@@ -41,7 +41,7 @@ const Achievements = (): React.ReactElement => {
             Our Ecological Neighborhood
         </Link>
     );
-    const whereTheGenesFlow = (
+    const WhereTheGenesFlow = (
         <Link
             target={"_blank"}
             href={
@@ -51,7 +51,7 @@ const Achievements = (): React.ReactElement => {
             Where the Genes Flow
         </Link>
     );
-    const teamCodon = (
+    const TeamCodon = (
         <Link
             target={"_blank"}
             href={
@@ -154,12 +154,12 @@ const Achievements = (): React.ReactElement => {
                             photo={Photos.NASASpaceAppsChallenge2017Newspaper}
                         />
                         <Paragraph>
-                            The {nasaSpaceAppsChallenge} is a competition hosted
+                            The {NasaSpaceAppsChallenge} is a competition hosted
                             by NASA with teams from around the world competing
                             under different categories. In the 2017 challenge, I
-                            along with five other team members ({teamCodon}),
-                            competed under the {ourEcologicalNeighborhood}{" "}
-                            category to solve the {whereTheGenesFlow} challenge.
+                            along with five other team members ({TeamCodon}),
+                            competed under the {OurEcologicalNeighborhood}{" "}
+                            category to solve the {WhereTheGenesFlow} challenge.
                         </Paragraph>
                         <Photo
                             float={"left"}
