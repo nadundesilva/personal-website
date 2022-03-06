@@ -108,6 +108,8 @@ const DEEP_LEARNING_AI_LOGO_SRC =
     "/assets/certifications/deep-learning-ai-logo.png";
 const UNIVERSITY_OF_ALBERTA_LOGO_SRC =
     "/assets/certifications/university-of-alberta-logo.png";
+const ST_JOSEPHS_COLLEGE_COLOMBO_10_LOGO_SRC =
+    "/assets/education/st-josephs-college-colombo-10-logo.png";
 const UNIVERSITY_OF_MORATUWA_LOGO_SRC =
     "/assets/education/university-of-moratuwa-logo.png";
 const BRITISH_COUNCIL_LOGO_SRC =
@@ -123,6 +125,15 @@ const generateResolveSrcFunc = (image: {
 };
 
 export const Logos: { [key: string]: LogoAsset } = {
+    StJosephsCollegeColombo10: {
+        src: generateResolveSrcFunc({
+            src: ST_JOSEPHS_COLLEGE_COLOMBO_10_LOGO_SRC,
+            srcWhite: ST_JOSEPHS_COLLEGE_COLOMBO_10_LOGO_SRC,
+        }),
+        alt: "St. Joseph's College, Colombo 10",
+        width: 264,
+        height: 300,
+    },
     NASASpaceAppsChallenge: {
         src: generateResolveSrcFunc({
             src: "/assets/achievements/nasa-space-apps-logo.png",
