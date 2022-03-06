@@ -14,8 +14,47 @@ import { act, render, screen, within } from "@testing-library/react";
 import singletonRouter from "next/router";
 
 import RouterBreadcrumbs from "./RouterBreadcrumbs";
+import { Routes } from "@/constants";
 
 jest.mock("next/dist/client/router", () => require("next-router-mock"));
+jest.mock("@/constants", () => ({
+    Routes: {
+        "/test-page-1": {
+            name: "Test Page 1",
+        },
+        "/test-page-2": {
+            name: "Test Page 2",
+            subRoutes: {
+                "/test-page-2-a": {
+                    name: "Test Page 2 A",
+                },
+            },
+        },
+        "/test-page-3": {
+            name: "Test Page 3",
+            subRoutes: {
+                "/test-page-3-a": {
+                    name: "Test Page 3 A",
+                },
+                "/test-page-3-b": {
+                    name: "Test Page 3 B",
+                    subRoutes: {},
+                },
+                "/test-page-3-c": {
+                    name: "Test Page 3 C",
+                    subRoutes: {
+                        "/test-page-3-c-i": {
+                            name: "Test Page 3 C I",
+                        },
+                    },
+                },
+            },
+        },
+        "/test-page-4": {
+            name: "Test Page 4",
+        },
+    },
+}));
 
 afterEach(() => {
     jest.resetAllMocks();
@@ -47,34 +86,88 @@ test("renders router breadcrumbs in <root> page", async () => {
     await within(breadcrumbs).findByText("Home");
 });
 
-test("renders router breadcrumbs in <root>/experience page", async () => {
-    const breadcrumbs = await renderBreadcrumbs("/experience");
+interface TestRoute {
+    name: string;
+    path: string;
+}
 
-    const homeLink = await within(breadcrumbs).findByRole("link", {
-        name: /home/i,
-    });
-    expect(homeLink).toHaveAttribute("href", "/");
+const levelOneRoutes = Object.entries(Routes).map(([key, value]) => ({
+    name: value.name,
+    path: key,
+}));
 
-    const experienceLink = within(breadcrumbs).queryByRole("link", {
-        name: /experience/i,
-    });
-    expect(experienceLink).toBeNull();
+describe.each(levelOneRoutes)(
+    "level one routes at <root>$path",
+    ({ name: levelOneName, path: levelOnePath }: TestRoute) => {
+        const levelOneSubRoutes = Routes[levelOnePath].subRoutes;
+        if (levelOneSubRoutes !== undefined) {
+            const levelTwoRoutes = Object.entries(levelOneSubRoutes).map(
+                ([key, value]) => ({
+                    name: value.name,
+                    path: levelOnePath + key,
+                }),
+            );
 
-    await within(breadcrumbs).findByText("Experience");
-});
+            describe.each(levelTwoRoutes)(
+                "level two routes at <root>$path",
+                ({ name: levelTwoName, path: levelTwoPath }: TestRoute) => {
+                    const renderLevelTwoBreadCrumbs =
+                        async (): Promise<HTMLElement> => {
+                            const breadcrumbs = await renderBreadcrumbs(
+                                levelTwoPath,
+                            );
 
-test("renders router breadcrumbs in <root>/achievements page", async () => {
-    const breadcrumbs = await renderBreadcrumbs("/achievements");
+                            const homeLink = await within(
+                                breadcrumbs,
+                            ).findByRole("link", {
+                                name: /home/i,
+                            });
+                            expect(homeLink).toHaveAttribute("href", "/");
 
-    const homeLink = await within(breadcrumbs).findByRole("link", {
-        name: /home/i,
-    });
-    expect(homeLink).toHaveAttribute("href", "/");
+                            const levelOneLink = await within(
+                                breadcrumbs,
+                            ).findByRole("link", {
+                                name: new RegExp(levelOneName, "i"),
+                            });
+                            expect(levelOneLink).toHaveAttribute(
+                                "href",
+                                levelOnePath,
+                            );
 
-    const achievementsLink = within(breadcrumbs).queryByRole("link", {
-        name: /achievements/i,
-    });
-    expect(achievementsLink).toBeNull();
+                            return breadcrumbs;
+                        };
 
-    await within(breadcrumbs).findByText("Achievements");
-});
+                    test("renders router breadcrumbs page", async () => {
+                        const breadcrumbs = await renderLevelTwoBreadCrumbs();
+
+                        const levelTwoLink = within(breadcrumbs).queryByRole(
+                            "link",
+                            {
+                                name: new RegExp(levelTwoName, "i"),
+                            },
+                        );
+                        expect(levelTwoLink).toBeNull();
+
+                        await within(breadcrumbs).findByText(levelTwoName);
+                    });
+                },
+            );
+        }
+
+        test("renders router breadcrumbs page", async () => {
+            const breadcrumbs = await renderBreadcrumbs(levelOnePath);
+
+            const homeLink = await within(breadcrumbs).findByRole("link", {
+                name: /home/i,
+            });
+            expect(homeLink).toHaveAttribute("href", "/");
+
+            const levelOneLink = within(breadcrumbs).queryByRole("link", {
+                name: new RegExp(levelOneName, "i"),
+            });
+            expect(levelOneLink).toBeNull();
+
+            await within(breadcrumbs).findByText(levelOneName);
+        });
+    },
+);
