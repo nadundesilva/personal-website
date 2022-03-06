@@ -40,16 +40,18 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
                 if (currentSubPath in currentRoutes) {
                     const route = currentRoutes[currentSubPath];
                     const currentPath = currentBasePath + currentSubPath;
-                    if (route.subRoutes !== undefined) {
+                    if (currentPathnames.length > 1) {
                         breadcrumbs.push({
                             name: route.name,
                             path: currentPath,
                         });
-                        visitRoutes(
-                            route.subRoutes,
-                            currentPathnames.slice(1, length),
-                            currentPath,
-                        );
+                        if (route.subRoutes !== undefined) {
+                            visitRoutes(
+                                route.subRoutes,
+                                currentPathnames.slice(1),
+                                currentPath,
+                            );
+                        }
                     } else {
                         breadcrumbs.push({
                             name: route.name,
