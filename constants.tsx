@@ -10,9 +10,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const Routes: { [key: string]: string } = {
-    "/experience": "Experience",
-    "/achievements": "Achievements",
+export interface Route {
+    name: string;
+    subRoutes?: { [key: string]: Route };
+}
+
+export const Routes: { [key: string]: Route } = {
+    "/experience": {
+        name: "Experience",
+    },
+    "/achievements": {
+        name: "Achievements",
+    },
 };
 
 export interface ImageAsset {

@@ -17,11 +17,50 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { Routes } from "@/constants";
+import { Routes, Route } from "@/constants";
 
 const RouterBreadcrumbs = (): React.ReactElement | null => {
     const router = useRouter();
     const pathnames = router.pathname.split("/").filter((x) => x);
+
+    const breadcrumbs: Array<{ name: string; path?: string }> = [
+        {
+            name: "Home",
+            path: pathnames.length > 0 ? "/" : undefined,
+        },
+    ];
+    if (pathnames.length > 0) {
+        const visitRoutes = (
+            currentRoutes: { [key: string]: Route },
+            currentPathnames: string[],
+            currentBasePath: string,
+        ): void => {
+            if (currentPathnames.length > 0) {
+                const currentSubPath = "/" + currentPathnames[0];
+                if (currentSubPath in currentRoutes) {
+                    const route = currentRoutes[currentSubPath];
+                    const currentPath = currentBasePath + currentSubPath;
+                    if (route.subRoutes !== undefined) {
+                        breadcrumbs.push({
+                            name: route.name,
+                            path: currentPath,
+                        });
+                        visitRoutes(
+                            route.subRoutes,
+                            currentPathnames.slice(1, length),
+                            currentPath,
+                        );
+                    } else {
+                        breadcrumbs.push({
+                            name: route.name,
+                        });
+                    }
+                }
+            }
+        };
+        visitRoutes(Routes, pathnames, "");
+    }
+
     return (
         <Breadcrumbs
             aria-label="breadcrumb"
@@ -30,25 +69,15 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
                 <FontAwesomeIcon icon={faChevronRight} transform={"shrink-4"} />
             }
         >
-            {pathnames.length === 0 ? (
-                <Typography color="textPrimary">Home</Typography>
-            ) : (
-                <Link passHref href={"/"}>
-                    <BreadcrumbLink color="inherit">Home</BreadcrumbLink>
-                </Link>
-            )}
-            {pathnames.map((value, index) => {
-                const last = index === pathnames.length - 1;
-                const to = `/${pathnames.slice(0, index + 1).join("/")}`;
-
-                return last ? (
-                    <Typography color="textPrimary" key={to}>
-                        {Routes[to]}
+            {breadcrumbs.map((breadcrumb) => {
+                return breadcrumb.path === undefined ? (
+                    <Typography color="textPrimary" key={breadcrumb.name}>
+                        {breadcrumb.name}
                     </Typography>
                 ) : (
-                    <Link passHref href={to} key={to}>
+                    <Link passHref href={breadcrumb.path} key={breadcrumb.name}>
                         <BreadcrumbLink color="inherit">
-                            {Routes[to]}
+                            {breadcrumb.name}
                         </BreadcrumbLink>
                     </Link>
                 );
