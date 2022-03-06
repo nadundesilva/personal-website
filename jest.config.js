@@ -21,6 +21,11 @@ const customJestConfig = {
     coverageReporters: ["text-summary", "clover", "html"],
     moduleDirectories: ["node_modules", "<rootDir>/"],
     modulePathIgnorePatterns: ["<rootDir>/cypress/"],
+    moduleNameMapper: {
+        "@/components/(.*)": ["<rootDir>/components/$1"],
+        "@/constants": ["<rootDir>/constants"],
+        "@/styles.css": ["<rootDir>/styles.css"],
+    },
     setupFilesAfterEnv: ["<rootDir>/jest-setup.js"],
     transform: {
         "^.+\\.(js|jsx|ts|tsx)$": [
