@@ -17,10 +17,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
-const BREADCRUMBS_MAP: { [key: string]: string } = {
-    "/experience": "Experience",
-    "/achievements": "Achievements",
-};
+import { Routes } from "@/constants";
 
 const RouterBreadcrumbs = (): React.ReactElement | null => {
     const router = useRouter();
@@ -46,12 +43,12 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
 
                 return last ? (
                     <Typography color="textPrimary" key={to}>
-                        {BREADCRUMBS_MAP[to]}
+                        {Routes[to]}
                     </Typography>
                 ) : (
                     <Link passHref href={to} key={to}>
                         <BreadcrumbLink color="inherit">
-                            {BREADCRUMBS_MAP[to]}
+                            {Routes[to]}
                         </BreadcrumbLink>
                     </Link>
                 );

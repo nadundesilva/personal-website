@@ -10,6 +10,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+export const Routes: { [key: string]: string } = {
+    "/experience": "Experience",
+    "/achievements": "Achievements",
+};
+
 export interface ImageAsset {
     src: string;
     alt: string;
