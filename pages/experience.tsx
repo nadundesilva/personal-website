@@ -70,6 +70,16 @@ const Experience = (): React.ReactElement => {
             Choreo
         </Link>
     );
+    const WSO2 = (
+        <Link target={"_blank"} href={"https://wso2.com/"}>
+            WSO2
+        </Link>
+    );
+    const GoogleSummerOfCode = (
+        <Link target={"_blank"} href={"https://summerofcode.withgoogle.com/"}>
+            Google Summer of Code
+        </Link>
+    );
 
     const wso2Logo = <Logo logo={Logos.WSO2} height={"2.5em"} />;
     const gsocLogo = <Logo logo={Logos.GoogleSummerOfCode} />;
@@ -214,7 +224,8 @@ const Experience = (): React.ReactElement => {
                         </Paragraph>
                         <Paragraph>
                             After getting instated as a permanent employee, I
-                            joined the Cloud Team at WSO2 and worked on the WSO2
+                            joined the Cloud Team at {WSO2} and worked on the{" "}
+                            {WSO2}
                             Serverless Platform which was a new product being
                             developed at that time. I worked on the
                             Observability aspects of the platform and while this
@@ -222,7 +233,7 @@ const Experience = (): React.ReactElement => {
                             learn the observability space in a short time and
                             implement a considerable amount of it along with
                             another engineer. I also contributed ideas for the
-                            platform as a whole as well. The WSO2 Serverless
+                            platform as a whole as well. The {WSO2} Serverless
                             Platform was based on {ApacheOpenWhisk} and it
                             allowed running any docker image in serverless mode
                             which was a new concept at that time. However,
@@ -230,7 +241,7 @@ const Experience = (): React.ReactElement => {
                             complete version of the platform, {KNative} which
                             offered a similar experience was announced. As a
                             result, the serverless platform was not offered as
-                            part of the product line of WSO2 and it was
+                            part of the product line of {WSO2} and it was
                             discontinued.
                         </Paragraph>
                         <Paragraph>
@@ -242,7 +253,7 @@ const Experience = (): React.ReactElement => {
                             technical side of it.
                         </Paragraph>
                         <Paragraph>
-                            After Serverless Platform was discontinued, WSO2
+                            After Serverless Platform was discontinued, {WSO2}
                             started another project named VICK (later named as{" "}
                             {Cellery}) which was aimed towards making
                             deployments in Kubernetes easier. I was selected to
@@ -267,8 +278,8 @@ const Experience = (): React.ReactElement => {
                         {gsocLogo}
                         <Paragraph>
                             During my last year at the University, in my spare
-                            time, I worked as a Google Summer of Code intern. I
-                            worked for WSO2 during this period as well and
+                            time, I worked as a {GoogleSummerOfCode} intern. I
+                            worked for {WSO2} during this period as well and
                             developed a maven plugin for automatically
                             generating documentation for the {Siddhi}{" "}
                             extensions. The information for the documentation
@@ -287,15 +298,15 @@ const Experience = (): React.ReactElement => {
                         <Timespan>July 2016 to December 2016</Timespan>
                         {wso2Logo}
                         <Paragraph>
-                            I worked as a Software Engineering intern at WSO2 as
-                            a required part of my B.Sc. (Hons.) in Engineering
-                            (Computer Science and Engineering) degree. I started
-                            working as a member of the Data Analytics Server
-                            (DAS) product team building a prototype Notebook for
-                            analyzing data collected by the DAS. However, the
-                            project was aborted and was not added to the DAS
-                            product as the company decided to discontinue the
-                            DAS product.
+                            I worked as a Software Engineering intern at {WSO2}{" "}
+                            as a required part of my B.Sc. (Hons.) in
+                            Engineering (Computer Science and Engineering)
+                            degree. I started working as a member of the Data
+                            Analytics Server (DAS) product team building a
+                            prototype Notebook for analyzing data collected by
+                            the DAS. However, the project was aborted and was
+                            not added to the DAS product as the company decided
+                            to discontinue the DAS product.
                         </Paragraph>
                         <Paragraph>
                             Afterwards, as part of the Complex Event Processor

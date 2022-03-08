@@ -61,6 +61,41 @@ const Achievements = (): React.ReactElement => {
             Team Codon
         </Link>
     );
+    const UniversityOfMoratuwa = (
+        <Link target={"_blank"} href={"https://uom.lk/"}>
+            University of Moratuwa
+        </Link>
+    );
+    const NASA = (
+        <Link target={"_blank"} href={"https://www.nasa.gov/"}>
+            NASA
+        </Link>
+    );
+    const WSO2 = (
+        <Link target={"_blank"} href={"https://wso2.com/"}>
+            WSO2
+        </Link>
+    );
+    const BritishCouncilHSBCYouthEnterpriseAwards = (
+        <Link
+            target={"_blank"}
+            href={
+                "https://www.britishcouncil.lk/programmes/education/internationalising-higher-education/hsbc-youth-enterprise-awards"
+            }
+        >
+            British Council HSBC Youth Enterprise Awards
+        </Link>
+    );
+    const HackaDev = (
+        <Link target={"_blank"} href={"https://www.hackadev.lk/"}>
+            HackaDev
+        </Link>
+    );
+    const AngelHack = (
+        <Link target={"_blank"} href={"https://angelhack.com/"}>
+            Angel Hack
+        </Link>
+    );
 
     const wso2Logo = <Logo height={"2.5em"} logo={Logos.WSO2} />;
     const uomLogo = <Logo height={"4em"} logo={Logos.UniversityOfMoratuwa} />;
@@ -96,18 +131,18 @@ const Achievements = (): React.ReactElement => {
                             exceptionally throughout the year, the Sustained
                             Outstanding Contribution Award is awarded. I was
                             presented this award for several consecutive years
-                            at WSO2. Along with the award I had been commended
+                            at {WSO2}. Along with the award I had been commended
                             many times for performing well above the expected
                             level for many years.
                         </Paragraph>
                         <Paragraph>
                             In 2021, this award was changed to be only awarded
-                            for the top 5% employees at WSO2 making it extremely
-                            hard to achieve. In the year 2021, I was offered
-                            this award with only 18 other people in the whole
-                            company gaining the same award. This is the best
-                            award offered for an employee for exceptional
-                            performance at WSO2.
+                            for the top 5% employees at {WSO2} making it
+                            extremely hard to achieve. In the year 2021, I was
+                            offered this award with only 18 other people in the
+                            whole company gaining the same award. This is the
+                            best award offered for an employee for exceptional
+                            performance at {WSO2}.
                         </Paragraph>
                     </Section>
                     <Section>
@@ -127,7 +162,7 @@ const Achievements = (): React.ReactElement => {
                             Moratuwa, I was offered placements in the
                             Dean&lsquo;s List for scoring a GPA above 3.8 (out
                             of 4.2) for 6 out of the 8 semesters I studied at
-                            the University of Moratuwa.
+                            the {UniversityOfMoratuwa}.
                         </Paragraph>
                         <Paragraph>
                             The semester in which placements in the Dean&lsquo;s
@@ -155,7 +190,7 @@ const Achievements = (): React.ReactElement => {
                         />
                         <Paragraph>
                             The {NasaSpaceAppsChallenge} is a competition hosted
-                            by NASA with teams from around the world competing
+                            by {NASA} with teams from around the world competing
                             under different categories. In the 2017 challenge, I
                             along with five other team members ({TeamCodon}),
                             competed under the {OurEcologicalNeighborhood}{" "}
@@ -183,11 +218,11 @@ const Achievements = (): React.ReactElement => {
                         <Timespan>2017</Timespan>
                         {wso2Logo}
                         <Paragraph>
-                            WSO2 Internal Hackathon (WHack) was held for the
+                            {WSO2} Internal Hackathon (WHack) was held for the
                             first time in 2017 which was open to all employees
                             including interns who worked there at that time. I
-                            was an intern at that time at WSO2 and I along with
-                            a few other interns participated in the WSO2
+                            was an intern at that time at {WSO2} and I along
+                            with a few other interns participated in the {WSO2}
                             internal hackathon. We proposed a system to track
                             users across multiple platforms for improving
                             customer analytics and thereby improve the customer
@@ -201,7 +236,7 @@ const Achievements = (): React.ReactElement => {
                         {angelHackLogo}
                         <Photo float={"right"} photo={Photos.AngelHack2016} />
                         <Paragraph>
-                            In Angel Hack 2016, our team developed a smart
+                            In {AngelHack} 2016, our team developed a smart
                             workout system which combined a virtual reality game
                             with an exercise bicycle fitted with a sensor to
                             encourage people to workout more.
@@ -238,12 +273,12 @@ const Achievements = (): React.ReactElement => {
                         <Timespan>2015</Timespan>
                         {hackaDevLogo}
                         <Paragraph>
-                            HackaDev is a competition which provides a platform
-                            for teams from within Sri Lanka to provide solutions
-                            for problems within Sri Lanka. In 2015, the teams
-                            were tasked with addressing problems which were
-                            faced by people in Uva province in Sri Lanka. Our
-                            team presented a platform which provided
+                            {HackaDev} is a competition which provides a
+                            platform for teams from within Sri Lanka to provide
+                            solutions for problems within Sri Lanka. In 2015,
+                            the teams were tasked with addressing problems which
+                            were faced by people in Uva province in Sri Lanka.
+                            Our team presented a platform which provided
                             entrepreneurs a place to showcase their skills and
                             products. The platform focussed on connecting
                             entrepreneurs with customers and investors to help
@@ -262,7 +297,7 @@ const Achievements = (): React.ReactElement => {
                             photo={Photos.HSBCYouthEnterpriseAwards2015}
                         />
                         <Paragraph>
-                            British Council HSBC Youth Enterprise Awards is a
+                            {BritishCouncilHSBCYouthEnterpriseAwards} is a
                             hackathon in which many teams presented ideas to
                             help solve problems in different domains. In the
                             hackathon held in 2015, our team presented an idea,
