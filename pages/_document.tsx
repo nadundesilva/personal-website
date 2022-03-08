@@ -24,7 +24,7 @@ import React from "react";
 
 const FULL_NAME = "Nadun De Silva";
 const PUBLIC_URL = process.env.PUBLIC_URL ?? "https://nadundesilva.github.io";
-const DESCRIPTION = `${FULL_NAME} is an aspiring Software Engineer and ML Enthusiast, interested in Machine Learning, Observability, Anomaly Detection &amp; Cloud Technologies.`;
+const DESCRIPTION = `${FULL_NAME} is an aspiring Software Engineer interested in Deep Learning, Observability, Anomaly Detection &amp; Cloud Technologies.`;
 
 const GA_TRACKING_ID = "GTM-T9KX7B4";
 
