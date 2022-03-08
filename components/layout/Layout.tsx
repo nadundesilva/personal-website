@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     AppBar,
     Box,
+    Button,
     Container,
     Fab,
     IconButton,
@@ -27,6 +28,7 @@ import {
 import React, { useRef } from "react";
 
 import { useWebsiteTheme } from "./theme";
+import { Routes } from "@/constants";
 
 interface LayoutProps {
     children: NonNullable<React.ReactNode>;
@@ -50,6 +52,25 @@ const Layout = ({
     const { colorScheme, setColorScheme } = useWebsiteTheme();
     const nextColorScheme = colorScheme === "dark" ? "light" : "dark";
     const onThemeToggleChange = (): void => setColorScheme(nextColorScheme);
+
+    if (appBarItems === undefined) {
+        appBarItems = (
+            <Box sx={{ display: { xs: "none", md: "block" } }}>
+                {Object.entries(Routes).map(([path, route]) => (
+                    <Button
+                        key={path}
+                        variant="text"
+                        color="primary"
+                        disableElevation
+                        href={path}
+                        sx={{ color: "#ffffff" }}
+                    >
+                        {route.name}
+                    </Button>
+                ))}
+            </Box>
+        );
+    }
 
     const appBar = React.cloneElement(
         <AppBar>
