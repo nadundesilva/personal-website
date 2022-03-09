@@ -14,11 +14,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
                   fetch-depth: 0
             - name: Setup Node.js
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v2
               with:
                   node-version: "14.17.6"
             - name: Install Dependencies
@@ -46,7 +46,7 @@ jobs:
             fail-fast: false
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
             - name: Initialize CodeQL
               uses: github/codeql-action/init@v1
               with:
@@ -61,7 +61,7 @@ jobs:
         runs-on: windows-latest
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
             - name: Install .NET
               uses: actions/setup-dotnet@v1
               with:
@@ -79,9 +79,9 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
             - name: Setup Node.js
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v2
               with:
                   node-version: "14.17.6"
             - name: Install Dependencies
@@ -98,7 +98,7 @@ jobs:
                   fail_ci_if_error: true
                   verbose: true
             - name: Upload Code Coverage Report Artifacts
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: unit-tests-coverage
                   path: coverage/
@@ -113,9 +113,9 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
             - name: Setup Node.js
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v2
               with:
                   node-version: "14.17.6"
             - name: Install Dependencies
@@ -143,7 +143,7 @@ jobs:
                   verbose: true
             - name: Upload Test Results Artifacts
               if: always()
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: e2e-test-results-${{ matrix.browser }}
                   path: |
@@ -151,7 +151,7 @@ jobs:
                       cypress/screenshots/
                       cypress/snapshots/**/__diff_output__/**
             - name: Upload Code Coverage Report Artifacts
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: e2e-tests-coverage-${{ matrix.browser }}
                   path: coverage/
@@ -161,7 +161,7 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
             - uses: actions/setup-node@v2
               with:
                   node-version: "14.17.6"
@@ -175,12 +175,12 @@ jobs:
               env:
                   PUBLIC_URL: https://nadundesilva.github.io
             - name: Upload Site
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: site
                   path: out/
             - name: Upload Unit Tests Code Coverage Report
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: unit-tests-coverage
                   path: coverage/
@@ -191,16 +191,16 @@ jobs:
         needs: build-site
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
             - name: Setup Node.js
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v2
               with:
                   node-version: "14.17.6"
             - name: Install Dependencies
               run: |
                   npm ci
             - name: Download Site
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v3
               with:
                   name: site
                   path: _site/
@@ -225,7 +225,7 @@ jobs:
                   WEBSITE_BUILD_DIR: _site
             - name: Upload Link Checker Report
               if: always()
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: Link Checker Report
                   path: ./lychee/out.md
@@ -241,16 +241,16 @@ jobs:
         needs: build-site
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
             - name: Setup Node.js
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v2
               with:
                   node-version: "14.17.6"
             - name: Install Dependencies
               run: |
                   npm ci
             - name: Download Site
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v3
               with:
                   name: site
                   path: _site/
@@ -262,7 +262,7 @@ jobs:
                   WEBSITE_BUILD_DIR: _site
             - name: Upload artifacts
               if: always()
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: site-build-e2e-test-results-${{ matrix.browser }}
                   path: |
@@ -276,14 +276,14 @@ jobs:
         needs: build-site
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
             - name: Download Site
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v3
               with:
                   name: site
                   path: _site/
             - name: Setup Node.js
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v2
               with:
                   node-version: "14.17.6"
             - name: Run Lighthouse Audit
@@ -301,7 +301,7 @@ jobs:
                   LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Upload artifacts
               if: always()
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: website-audit
                   path: ./lhci-out
@@ -322,18 +322,18 @@ jobs:
             - check-site-build
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
             - name: Download Site
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v3
               with:
                   name: site
                   path: _site/
             - name: Setup Node.js
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v2
               with:
                   node-version: "14.17.6"
             - name: Deploy
-              uses: JamesIves/github-pages-deploy-action@4.1.1
+              uses: JamesIves/github-pages-deploy-action@v4.2.5
               with:
                   dry-run: ${{ github.event_name != 'push' }}
                   branch: gh-pages
