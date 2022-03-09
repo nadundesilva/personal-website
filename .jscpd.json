@@ -1,0 +1,7 @@
+{
+    "configurations": {
+        "ignore": [
+            ".github/workflows/*.yaml"
+        ]
+    }
+}
