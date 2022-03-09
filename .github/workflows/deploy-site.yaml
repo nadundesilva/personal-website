@@ -192,17 +192,37 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v2
+            - name: Setup Node.js
+              uses: actions/setup-node@v1
+              with:
+                  node-version: "14.17.6"
+            - name: Install Dependencies
+              run: |
+                  npm ci
             - name: Download Site
               uses: actions/download-artifact@v2
               with:
                   name: site
                   path: _site/
+            - name: Start Server
+              run: |
+                  source .github/scripts/utils.sh
+                  startServer
+                  echo "SERVE_PID=${SERVE_PID}" >> "${GITHUB_ENV}"
+              env:
+                  WEBSITE_BUILD_DIR: _site
             - name: Link Checker
               id: lychee
               uses: lycheeverse/lychee-action@v1.3.2
               with:
-                  args: --verbose --no-progress --base="./_site/" ./_site/**/*.html
+                  args: --verbose --no-progress https://nadundesilva.github.io/
                   fail: true
+            - name: Stop Server
+              run: |
+                  source .github/scripts/utils.sh
+                  stopServer
+              env:
+                  WEBSITE_BUILD_DIR: _site
             - name: Upload Link Checker Report
               if: always()
               uses: actions/upload-artifact@v2
