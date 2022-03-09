@@ -199,18 +199,16 @@ jobs:
                   path: _site/
             - name: Link Checker
               id: lychee
-              uses: lycheeverse/lychee-action@v1.0.6
+              uses: lycheeverse/lychee-action@v1.3.2
               with:
                   args: --verbose --no-progress --base="./_site/" ./_site/**/*.html
+                  fail: true
             - name: Upload Link Checker Report
+              if: always()
               uses: actions/upload-artifact@v2
               with:
                   name: Link Checker Report
                   path: ./lychee/out.md
-            - name: Fail on Link Errors
-              run: |
-                  # shellcheck disable=SC2242
-                  exit ${{ steps.lychee.outputs.exit_code }}
 
     check-site-build:
         strategy:
