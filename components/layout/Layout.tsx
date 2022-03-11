@@ -25,6 +25,7 @@ import {
     useScrollTrigger,
     Zoom,
 } from "@mui/material";
+import Link from "next/link";
 import React, { useRef } from "react";
 
 import { useWebsiteTheme } from "./theme";
@@ -57,16 +58,16 @@ const Layout = ({
         appBarItems = (
             <Box sx={{ display: { xs: "none", md: "block" } }}>
                 {Object.entries(Routes).map(([path, route]) => (
-                    <Button
-                        key={path}
-                        variant="text"
-                        color="primary"
-                        disableElevation
-                        href={path}
-                        sx={{ color: "#ffffff" }}
-                    >
-                        {route.name}
-                    </Button>
+                    <Link key={path} href={path} passHref={true}>
+                        <Button
+                            variant="text"
+                            color="primary"
+                            disableElevation
+                            sx={{ color: "#ffffff" }}
+                        >
+                            {route.name}
+                        </Button>
+                    </Link>
                 ))}
             </Box>
         );
