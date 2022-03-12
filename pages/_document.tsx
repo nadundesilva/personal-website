@@ -216,6 +216,7 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                                     "https://www.instagram.com/nadunrds",
                                     "https://github.com/nadundesilva",
                                     "https://twitter.com/nadunrds",
+                                    "https://scholar.google.com/citations?user=CdXo_YQAAAAJ",
                                 ],
                                 "description": DESCRIPTION,
                                 "name": FULL_NAME,
