@@ -59,6 +59,7 @@ jobs:
     run-ossar-analysis:
         name: Run OSSAR Analysis
         runs-on: windows-latest
+        if: false
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
@@ -313,7 +314,7 @@ jobs:
         needs:
             - run-super-linter
             - run-codeql-analysis
-            - run-ossar-analysis
+            # - run-ossar-analysis
             - run-unit-tests
             - run-e2e-tests
             - build-site
