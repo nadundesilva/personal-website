@@ -18,7 +18,6 @@ if (process.env["VALIDATING_LIVE_SITE"] === "true") {
     LIVE_SITE_ASSERTIONS = {
         ...LIVE_SITE_ASSERTIONS,
         ...{
-            "is-crawlable": ["warn"],
             "unsized-images": ["warn"],
             "uses-responsive-images": ["warn"],
         },

@@ -12,7 +12,6 @@
  */
 import {
     Box,
-    Button,
     CircularProgress,
     Container,
     styled,
@@ -76,37 +75,6 @@ interface Section {
     Component: React.ComponentType<{}>;
     sectionId: string;
 }
-
-interface HomeLayoutProps {
-    children: NonNullable<React.ReactNode>;
-    pageSections: Section[];
-}
-
-const HomeLayout = ({
-    children,
-    pageSections,
-}: HomeLayoutProps): React.ReactElement => (
-    <Layout
-        appBarItems={
-            <Box sx={{ display: { xs: "none", md: "block" } }}>
-                {pageSections.map((section: Section) => (
-                    <Button
-                        key={section.name}
-                        variant="text"
-                        color="primary"
-                        disableElevation
-                        href={`#${section.sectionId}`}
-                        sx={{ color: "#ffffff" }}
-                    >
-                        {section.name}
-                    </Button>
-                ))}
-            </Box>
-        }
-    >
-        {children}
-    </Layout>
-);
 
 const Home = (): React.ReactElement => {
     const [isWelcomeBannerLoaded, setWelcomeBannerLoaded] =
@@ -219,10 +187,10 @@ const Home = (): React.ReactElement => {
                 </title>
             </Head>
             {isWelcomeBannerLoaded ? (
-                <HomeLayout pageSections={pageSections}>
+                <Layout>
                     <WelcomeBanner />
                     {layoutContent}
-                </HomeLayout>
+                </Layout>
             ) : (
                 <WelcomeBanner />
             )}
