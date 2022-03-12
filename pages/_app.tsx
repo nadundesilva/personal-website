@@ -12,9 +12,11 @@
  */
 import createCache from "@emotion/cache";
 import { CacheProvider, EmotionCache } from "@emotion/react";
+import { Box, CircularProgress } from "@mui/material";
 import type { AppProps, NextWebVitalsMetric } from "next/app";
 import Head from "next/head";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 
 import WebsiteThemeProvider from "@/components/layout/theme";
 import "@/styles.css";
@@ -31,6 +33,27 @@ function WebsiteApp({
     pageProps,
     emotionCache = clientSideEmotionCache,
 }: WebsiteAppProps): JSX.Element {
+    const router = useRouter();
+    const [isLoading, setLoading] = useState<boolean>(false);
+
+    const handleLoadingStart = (): void => {
+        setLoading(true);
+    };
+    const handleLoadingEnd = (): void => {
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        router.events.on("routeChangeStart", handleLoadingStart);
+        router.events.on("routeChangeComplete", handleLoadingEnd);
+        router.events.on("routeChangeError", handleLoadingEnd);
+        return () => {
+            router.events.off("routeChangeStart", handleLoadingStart);
+            router.events.off("routeChangeComplete", handleLoadingEnd);
+            router.events.off("routeChangeError", handleLoadingEnd);
+        };
+    });
+
     return (
         <React.StrictMode>
             <Head>
@@ -41,7 +64,20 @@ function WebsiteApp({
             </Head>
             <CacheProvider value={emotionCache}>
                 <WebsiteThemeProvider>
-                    <Component {...pageProps} />
+                    {isLoading ? (
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                                pt: "25%",
+                                height: "100vh",
+                            }}
+                        >
+                            <CircularProgress />
+                        </Box>
+                    ) : (
+                        <Component {...pageProps} />
+                    )}
                 </WebsiteThemeProvider>
             </CacheProvider>
         </React.StrictMode>
