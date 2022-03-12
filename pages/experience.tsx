@@ -88,7 +88,6 @@ const Experience = (): React.ReactElement => {
         <Container maxWidth={false} disableGutters>
             <Head>
                 <title>Experience of Nadun De Silva</title>
-                <meta name="robots" content="noindex, nofollow" />
             </Head>
             <Layout>
                 <LayoutContent>
