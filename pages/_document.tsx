@@ -209,7 +209,6 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                                     "@type": "imageObject",
                                 },
                                 "url": PUBLIC_URL,
-                                "headline": FULL_NAME,
                                 "sameAs": [
                                     "https://www.facebook.com/nadunrds",
                                     "https://www.linkedin.com/in/nadundesilva",
