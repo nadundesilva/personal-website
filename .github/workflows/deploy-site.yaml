@@ -92,6 +92,7 @@ jobs:
               run: |
                   npm run test:ci
             - name: Upload Code Coverage to CodeCov
+              if: ${{ github.event_name == 'push' }}
               uses: codecov/codecov-action@v2
               with:
                   name: coverage-reports
@@ -136,6 +137,7 @@ jobs:
                   TEST_BROWSER: ${{ matrix.browser }}
                   WEBSITE_BUILD_DIR: out
             - name: Upload Code Coverage to CodeCov
+              if: ${{ github.event_name == 'push' }}
               uses: codecov/codecov-action@v2
               with:
                   name: coverage-reports
