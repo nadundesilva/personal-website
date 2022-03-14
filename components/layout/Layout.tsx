@@ -12,13 +12,18 @@
  */
 import { faChevronUp, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Menu as MenuIcon } from "@mui/icons-material";
 import {
     AppBar,
     Box,
     Button,
     Container,
+    Drawer,
     Fab,
     IconButton,
+    List,
+    ListItem,
+    ListItemText,
     Toolbar,
     Tooltip,
     Typography,
@@ -36,10 +41,7 @@ interface LayoutProps {
     window?: () => Window;
 }
 
-const Layout = ({
-    children,
-    window,
-}: LayoutProps): React.ReactElement => {
+const Layout = ({ children, window }: LayoutProps): React.ReactElement => {
     const trigger = useScrollTrigger({
         disableHysteresis: true,
         threshold: 0,
@@ -48,13 +50,54 @@ const Layout = ({
 
     const scrollToTopRef = useRef<HTMLDivElement>(null);
 
+    const [isDrawerOpen, setDrawerOpen] = React.useState<boolean>(false);
+    const toggleDrawer = (): void => setDrawerOpen(!isDrawerOpen);
+
     const { colorScheme, setColorScheme } = useWebsiteTheme();
     const nextColorScheme = colorScheme === "dark" ? "light" : "dark";
     const onThemeToggleChange = (): void => setColorScheme(nextColorScheme);
 
+    const drawer = (
+        <React.Fragment>
+            <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={toggleDrawer}
+                edge="start"
+                sx={{
+                    mr: 2,
+                    display: {
+                        xs: "block",
+                        md: "none",
+                    },
+                }}
+            >
+                <MenuIcon />
+            </IconButton>
+            <Drawer anchor={"top"} open={isDrawerOpen} onClose={toggleDrawer}>
+                <Box
+                    sx={{ width: "auto" }}
+                    onClick={toggleDrawer}
+                    onKeyDown={toggleDrawer}
+                >
+                    <List>
+                        {Object.entries(Routes).map(([path, route]) => (
+                            <Link key={path} href={path} passHref={true}>
+                                <ListItem button>
+                                    <ListItemText primary={route.name} />
+                                </ListItem>
+                            </Link>
+                        ))}
+                    </List>
+                </Box>
+            </Drawer>
+        </React.Fragment>
+    );
+
     const appBar = React.cloneElement(
         <AppBar>
             <Toolbar>
+                {drawer}
                 <Typography variant="h5" component="h1">
                     Nadun De Silva
                 </Typography>
