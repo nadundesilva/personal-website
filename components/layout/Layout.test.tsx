@@ -10,8 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Box, Button } from "@mui/material";
-import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { useState } from "react";
 
 import Layout from "./Layout";
@@ -85,49 +84,6 @@ test("render layout without appbar items", async () => {
     render(<Layout>Test Layout children written by Nadun De Silva</Layout>);
 
     await validateLayout("dark", "initial");
-});
-
-test("render layout with appbar items as a single element", async () => {
-    render(
-        <Layout
-            appBarItems={
-                <Box data-testid="appbar-items-group">
-                    <Button data-testid={"appbar-item-01"}>Item 01</Button>
-                    <Button data-testid={"appbar-item-02"}>Item 02</Button>
-                </Box>
-            }
-        >
-            Test Layout children written by Nadun De Silva
-        </Layout>,
-    );
-
-    await validateLayout("dark", "initial");
-
-    const appBarItemsGroup = await screen.findByTestId("appbar-items-group");
-    await within(appBarItemsGroup).findByTestId("appbar-item-01");
-    await within(appBarItemsGroup).findByTestId("appbar-item-02");
-});
-
-test("render layout with appbar items as elements array", async () => {
-    render(
-        <Layout
-            appBarItems={[
-                <Button data-testid={"appbar-item-01"} key={"item-01"}>
-                    Item 01
-                </Button>,
-                <Button data-testid={"appbar-item-02"} key={"item-02"}>
-                    Item 02
-                </Button>,
-            ]}
-        >
-            Test Layout children written by Nadun De Silva
-        </Layout>,
-    );
-
-    await validateLayout("dark", "initial");
-
-    await screen.findByTestId("appbar-item-01");
-    await screen.findByTestId("appbar-item-02");
 });
 
 const validateLayoutWithScroll = async (): Promise<ValidateResult> => {
