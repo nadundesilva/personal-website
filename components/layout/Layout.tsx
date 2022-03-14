@@ -33,13 +33,11 @@ import { Routes } from "@/constants";
 
 interface LayoutProps {
     children: NonNullable<React.ReactNode>;
-    appBarItems?: React.ReactElement | React.ReactElement[];
     window?: () => Window;
 }
 
 const Layout = ({
     children,
-    appBarItems,
     window,
 }: LayoutProps): React.ReactElement => {
     const trigger = useScrollTrigger({
@@ -54,25 +52,6 @@ const Layout = ({
     const nextColorScheme = colorScheme === "dark" ? "light" : "dark";
     const onThemeToggleChange = (): void => setColorScheme(nextColorScheme);
 
-    if (appBarItems === undefined) {
-        appBarItems = (
-            <Box sx={{ display: { xs: "none", md: "block" } }}>
-                {Object.entries(Routes).map(([path, route]) => (
-                    <Link key={path} href={path} passHref={true}>
-                        <Button
-                            variant="text"
-                            color="primary"
-                            disableElevation
-                            sx={{ color: "#ffffff" }}
-                        >
-                            {route.name}
-                        </Button>
-                    </Link>
-                ))}
-            </Box>
-        );
-    }
-
     const appBar = React.cloneElement(
         <AppBar>
             <Toolbar>
@@ -80,7 +59,20 @@ const Layout = ({
                     Nadun De Silva
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
-                {appBarItems}
+                <Box sx={{ display: { xs: "none", md: "block" } }}>
+                    {Object.entries(Routes).map(([path, route]) => (
+                        <Link key={path} href={path} passHref={true}>
+                            <Button
+                                variant="text"
+                                color="primary"
+                                disableElevation
+                                sx={{ color: "#ffffff" }}
+                            >
+                                {route.name}
+                            </Button>
+                        </Link>
+                    ))}
+                </Box>
                 <Tooltip title={`Change to ${nextColorScheme} theme`}>
                     <IconButton
                         sx={{ marginLeft: 5 }}
