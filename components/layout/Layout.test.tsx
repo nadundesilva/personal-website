@@ -15,6 +15,7 @@ import { useState } from "react";
 
 import Layout from "./Layout";
 import WebsiteThemeProvider from "./theme";
+import { Routes } from "@/constants";
 
 const scrollState = {
     scrolledDown: false,
@@ -27,6 +28,45 @@ const useMockScrollTrigger = (options?: any): boolean => {
     return scrolledDown;
 };
 jest.mock("@mui/material/useScrollTrigger", () => useMockScrollTrigger);
+
+jest.mock("@/constants", () => ({
+    Routes: {
+        "/test-page-1": {
+            name: "Test Page 1",
+        },
+        "/test-page-2": {
+            name: "Test Page 2",
+            subRoutes: {
+                "/test-page-2-a": {
+                    name: "Test Page 2 A",
+                },
+            },
+        },
+        "/test-page-3": {
+            name: "Test Page 3",
+            subRoutes: {
+                "/test-page-3-a": {
+                    name: "Test Page 3 A",
+                },
+                "/test-page-3-b": {
+                    name: "Test Page 3 B",
+                    subRoutes: {},
+                },
+                "/test-page-3-c": {
+                    name: "Test Page 3 C",
+                    subRoutes: {
+                        "/test-page-3-c-i": {
+                            name: "Test Page 3 C I",
+                        },
+                    },
+                },
+            },
+        },
+        "/test-page-4": {
+            name: "Test Page 4",
+        },
+    },
+}));
 
 type Theme = "light" | "dark";
 type ScrollState = "initial" | "scrolled-down" | "top";
@@ -150,4 +190,19 @@ test("render layout with window function", async () => {
     );
 
     await validateLayout("dark", "initial");
+});
+
+test("renders navigation panel", async () => {
+    render(
+        <Layout window={() => window}>
+            Test Layout children written by Nadun De Silva
+        </Layout>,
+    );
+
+    Object.entries(Routes).map(async ([key, value]) => {
+        const link = await screen.findByRole("link", {
+            name: new RegExp(value.name, "i"),
+        });
+        expect(link).toHaveAttribute("href", key);
+    });
 });
