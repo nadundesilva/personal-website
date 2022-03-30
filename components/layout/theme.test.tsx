@@ -17,11 +17,10 @@ import React, { useState } from "react";
 import WebsiteThemeProvider, { ColorScheme, useWebsiteTheme } from "./theme";
 
 const mediaQueryHook = { result: false };
-const useMockMediaQuery = (queryInput: string): boolean => {
+jest.mock("@mui/material/useMediaQuery", () => (queryInput: string): boolean => {
     expect(queryInput).toBe("(prefers-color-scheme: dark)");
     return mediaQueryHook.result;
-};
-jest.mock("@mui/material/useMediaQuery", () => useMockMediaQuery);
+});
 
 afterEach(() => {
     jest.resetAllMocks();
