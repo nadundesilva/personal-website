@@ -21,13 +21,12 @@ const scrollState = {
     scrolledDown: false,
     setScrolledDown: (scrolledDown: boolean) => {},
 };
-const useMockScrollTrigger = (options?: any): boolean => {
+jest.mock("@mui/material/useScrollTrigger", () => (options?: any): boolean => {
     const [scrolledDown, setScrolledDown] = useState<boolean>(false);
     scrollState.scrolledDown = scrolledDown;
     scrollState.setScrolledDown = setScrolledDown;
     return scrolledDown;
-};
-jest.mock("@mui/material/useScrollTrigger", () => useMockScrollTrigger);
+});
 
 jest.mock("@/constants", () => ({
     Routes: {
