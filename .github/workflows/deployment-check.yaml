@@ -21,7 +21,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v2
               with:
-                  node-version: "14.17.6"
+                  node-version: "16.14.2"
             - name: Run End to End Tests
               run: |
                   npm ci
@@ -68,7 +68,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v2
               with:
-                  node-version: "14.17.6"
+                  node-version: "16.14.2"
             - name: Run Lighthouse Audit
               run: |
                   npm install -g @lhci/cli@0.9.x
