@@ -215,7 +215,7 @@ jobs:
                   WEBSITE_BUILD_DIR: _site
             - name: Link Checker
               id: lychee
-              uses: lycheeverse/lychee-action@v1.3.2
+              uses: lycheeverse/lychee-action@v1.4.1
               with:
                   args: --verbose --no-progress https://nadundesilva.github.io/
                   fail: true
