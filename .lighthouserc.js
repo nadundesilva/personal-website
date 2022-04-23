@@ -20,6 +20,7 @@ if (process.env["VALIDATING_LIVE_SITE"] === "true") {
         ...{
             "unsized-images": ["warn"],
             "uses-responsive-images": ["warn"],
+            "errors-in-console": ["warn"],
         },
     };
 }
