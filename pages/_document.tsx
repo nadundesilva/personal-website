@@ -89,15 +89,25 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                 "'unsafe-inline'",
                 "https://fonts.googleapis.com",
             ],
-            "font-src": ["https://fonts.gstatic.com"],
+            "font-src": [
+                "https://fonts.gstatic.com",
+                "https://script.hotjar.com",
+            ],
             "script-src": [
                 "'self'",
                 "https://www.googletagmanager.com",
                 "http://www.googletagmanager.com",
                 "'sha256-zGXNhnZec+38XK4g2xHGdVAURhFrFDpw+SmUnNuuFr4='",
+                "https://static.hotjar.com",
+                "https://script.hotjar.com",
             ],
-            "connect-src": ["'self'", "https://www.google-analytics.com"],
+            "connect-src": [
+                "'self'",
+                "https://www.google-analytics.com",
+                "https://in.hotjar.com",
+            ],
             "prefetch-src": ["'self'"],
+            "frame-src": ["https://vars.hotjar.com"],
         };
         if (
             process.env.NODE_ENV === "development" ||
