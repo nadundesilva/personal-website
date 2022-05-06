@@ -42,6 +42,8 @@ module.exports = {
         assert: {
             preset: "lighthouse:recommended",
             assertions: {
+                "errors-in-console": ["warn"],
+                "inspector-issues": ["warn"],
                 "canonical": ["warn"],
                 "csp-xss": ["warn"],
                 "non-composited-animations": ["warn"],
