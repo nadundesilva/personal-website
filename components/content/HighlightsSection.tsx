@@ -10,20 +10,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import HighlightsSection from "./HighlightsSection";
-import Logo from "./Logo";
-import Paragraph from "./Paragraph";
-import Photo from "./Photo";
-import Section from "./Section";
-import SectionHeading from "./SectionHeading";
-import Timespan from "./Timespan";
+import { Box, Typography } from "@mui/material";
 
-export {
-    HighlightsSection,
-    Logo,
-    Paragraph,
-    Photo,
-    Section,
-    SectionHeading,
-    Timespan,
-};
+interface HighlightsSectionProps {
+    children: React.ReactNode;
+}
+
+const HighlightsSection = ({
+    children,
+}: HighlightsSectionProps): React.ReactElement => (
+    <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
+        <Typography sx={{ fontWeight: "bold" }}>Highlights:</Typography>
+        <ul>{children}</ul>
+    </Box>
+);
+
+export default HighlightsSection;
