@@ -10,47 +10,63 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const { simpleSitemapAndIndex } = require("sitemap");
+const { SitemapStream, streamToPromise } = require("sitemap");
+const { Readable } = require("stream");
 const fs = require("fs");
 
 const currentTimestamp = new Date().toISOString();
 const hostname = "https://nadundesilva.github.io";
-const buildDir = "./out/";
+const sitemapFileName = "sitemap.xml";
+const robotsFileName = "robots.txt";
+const buildDir = "./out";
 
-simpleSitemapAndIndex({
-    hostname: hostname,
-    destinationDir: buildDir,
-    gzip: false,
-    sourceData: [
-        {
-            url: "/",
-            changefreq: "daily",
-            lastmod: currentTimestamp,
-        },
-        {
-            url: "/experience",
-            changefreq: "daily",
-            lastmod: currentTimestamp,
-        },
-        {
-            url: "/achievements",
-            changefreq: "daily",
-            lastmod: currentTimestamp,
-        },
-        {
-            url: "/nadundesilva-cv.pdf",
-            changefreq: "daily",
-            lastmod: currentTimestamp,
-        },
-    ],
-}).then(() => {
-    console.log("Sitemap generated");
-    fs.open(buildDir + "robots.txt", "a", 666, function (err, id) {
-        const siteMapEntry = `\nSitemap: ${hostname}/sitemap-index.xml\n`;
-        fs.write(id, siteMapEntry, null, "utf8", function () {
-            fs.close(id, function () {
-                console.log("Added sitemap to robots.txt\n");
-            });
-        });
+const urls = [
+    {
+        url: "/",
+        changefreq: "daily",
+        lastmod: currentTimestamp,
+    },
+    {
+        url: "/experience",
+        changefreq: "daily",
+        lastmod: currentTimestamp,
+    },
+    {
+        url: "/achievements",
+        changefreq: "daily",
+        lastmod: currentTimestamp,
+    },
+    {
+        url: "/nadundesilva-cv.pdf",
+        changefreq: "daily",
+        lastmod: currentTimestamp,
+    },
+];
+
+const stream = new SitemapStream({ hostname: hostname });
+
+streamToPromise(Readable.from(urls).pipe(stream)).then((data) => {
+    const sitemapFile = `${buildDir}/${sitemapFileName}`;
+    fs.writeFile(sitemapFile, data.toString(), (err) => {
+        if (err) {
+            console.err(`Failed to generate sitemap ${sitemapFile} file`);
+            process.exit(1);
+        } else {
+            console.log(`Generated sitemap ${sitemapFile} file`);
+            writeRobotsFile();
+        }
     });
 });
+
+function writeRobotsFile() {
+    const robotsFile = `${buildDir}/${robotsFileName}`;
+    const sitemapEntry = `\nSitemap: ${hostname}/${sitemapFileName}\n`;
+    fs.appendFile(robotsFile, sitemapEntry, (err) => {
+        if (err) {
+            console.err(`Failed to add sitemap to ${robotsFile} file`);
+            process.exit(1);
+        } else {
+            console.log(`Added sitemap to ${robotsFile} file`);
+        }
+    });
+}
