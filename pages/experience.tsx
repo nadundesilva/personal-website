@@ -28,7 +28,9 @@ interface HighlightsSectionProps {
     children: React.ReactNode;
 }
 
-const HighlightsSection = ({ children }: HighlightsSectionProps): React.ReactElement => (
+const HighlightsSection = ({
+    children,
+}: HighlightsSectionProps): React.ReactElement => (
     <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
         <Typography sx={{ fontWeight: "bold" }}>Highlights:</Typography>
         <ul>{children}</ul>
@@ -148,20 +150,20 @@ const Experience = (): React.ReactElement => {
                             </li>
                             <li>
                                 Analyzed the startup time of the Kubernetes
-                                resources of the Choreo Editors and reduced
-                                the time by 80%, increasing the overall
-                                user experience.
+                                resources of the Choreo Editors and reduced the
+                                time by 80%, increasing the overall user
+                                experience.
                             </li>
                             <li>
                                 Reduced the MsSQL DB utilization by 60%, by
-                                introducing a Redis cache and randomization
-                                of cache expiry times, increasing the number
-                                of users the system can handle.
+                                introducing a Redis cache and randomization of
+                                cache expiry times, increasing the number of
+                                users the system can handle.
                             </li>
                             <li>
                                 Completed 95% of the targets and sprint
-                                milestones on time, by prioritization of
-                                tasks and fostering a good working environment.
+                                milestones on time, by prioritization of tasks
+                                and fostering a good working environment.
                             </li>
                         </HighlightsSection>
                     </Section>
@@ -239,9 +241,9 @@ const Experience = (): React.ReactElement => {
                         <HighlightsSection>
                             <li>
                                 Spearheaded and implemented the foundation for
-                                Choreo observability within 3 months, with a team
-                                of 2 other engineers, creating the backbone of
-                                Choreo observability.
+                                Choreo observability within 3 months, with a
+                                team of 2 other engineers, creating the backbone
+                                of Choreo observability.
                             </li>
                             <li>
                                 Architected the Choreo observability storages
@@ -250,18 +252,17 @@ const Experience = (): React.ReactElement => {
                                 the data for Machine Learning (ML) use cases.
                             </li>
                             <li>
-                                Revamped the observability instrumentation
-                                at Ballerina compiler level, within 1 month,
-                                to map the observability data to the source
-                                code, providing a better debugging experience
-                                for users.
+                                Revamped the observability instrumentation at
+                                Ballerina compiler level, within 1 month, to map
+                                the observability data to the source code,
+                                providing a better debugging experience for
+                                users.
                             </li>
                             <li>
-                                Minimized and maintained the lowest number
-                                of bugs across all areas within Choreo by
-                                implementing proper code reviewing, testing
-                                and deployment practices in a team of 6
-                                engineers.
+                                Minimized and maintained the lowest number of
+                                bugs across all areas within Choreo by
+                                implementing proper code reviewing, testing and
+                                deployment practices in a team of 6 engineers.
                             </li>
                         </HighlightsSection>
                     </Section>
@@ -358,8 +359,8 @@ const Experience = (): React.ReactElement => {
                             </li>
                             <li>
                                 Implemented the observability aspects of the
-                                WSO2 Serverless Platform using Prometheus
-                                and Jaeger on top of Kubernetes and OpenWhisk.
+                                WSO2 Serverless Platform using Prometheus and
+                                Jaeger on top of Kubernetes and OpenWhisk.
                             </li>
                         </HighlightsSection>
                     </Section>
