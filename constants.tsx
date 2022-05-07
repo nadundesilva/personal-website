@@ -22,6 +22,9 @@ export const Routes: { [key: string]: Route } = {
     "/achievements": {
         name: "Achievements",
     },
+    "/education": {
+        name: "Education",
+    },
 };
 
 export interface ImageAsset {
