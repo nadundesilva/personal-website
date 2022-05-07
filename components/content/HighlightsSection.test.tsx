@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, Nadun De Silva. All Rights Reserved.
+ * Copyright (c) 2022, Nadun De Silva. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -10,20 +10,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import HighlightsSection from "./HighlightsSection";
-import Logo from "./Logo";
-import Paragraph from "./Paragraph";
-import Photo from "./Photo";
-import Section from "./Section";
-import SectionHeading from "./SectionHeading";
-import Timespan from "./Timespan";
+import { render, screen } from "@testing-library/react";
 
-export {
-    HighlightsSection,
-    Logo,
-    Paragraph,
-    Photo,
-    Section,
-    SectionHeading,
-    Timespan,
-};
+import HighlightsSection from "./HighlightsSection";
+
+test("renders highlights section", async () => {
+    render(
+        <HighlightsSection>
+            <li>Highlight 01</li>
+            <li>Highlight 02</li>
+            <li>Highlight 03</li>
+        </HighlightsSection>,
+    );
+
+    await screen.findByText("Highlight 01");
+    await screen.findByText("Highlight 02");
+    await screen.findByText("Highlight 03");
+});

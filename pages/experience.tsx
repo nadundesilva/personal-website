@@ -10,11 +10,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Box, Container, Link, Typography } from "@mui/material";
+import { Container, Link } from "@mui/material";
 import Head from "next/head";
 import React from "react";
 
 import {
+    HighlightsSection,
     Logo,
     Paragraph,
     Section,
@@ -23,19 +24,6 @@ import {
 } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/layout";
 import { Logos } from "@/constants";
-
-interface HighlightsSectionProps {
-    children: React.ReactNode;
-}
-
-const HighlightsSection = ({
-    children,
-}: HighlightsSectionProps): React.ReactElement => (
-    <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
-        <Typography sx={{ fontWeight: "bold" }}>Highlights:</Typography>
-        <ul>{children}</ul>
-    </Box>
-);
 
 const Experience = (): React.ReactElement => {
     const Siddhi = (
