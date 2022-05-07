@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Container, Link } from "@mui/material";
+import { Box, Container, Link, Typography } from "@mui/material";
 import Head from "next/head";
 import React from "react";
 
@@ -23,6 +23,17 @@ import {
 } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/layout";
 import { Logos } from "@/constants";
+
+interface HighlightsSectionProps {
+    children: React.ReactNode;
+}
+
+const HighlightsSection = ({ children }: HighlightsSectionProps): React.ReactElement => (
+    <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
+        <Typography sx={{ fontWeight: "bold" }}>Highlights:</Typography>
+        <ul>{children}</ul>
+    </Box>
+);
 
 const Experience = (): React.ReactElement => {
     const Siddhi = (
@@ -122,6 +133,37 @@ const Experience = (): React.ReactElement => {
                             worked at the level of other engineers and kept up
                             with the technical aspects of the platform.
                         </Paragraph>
+                        <HighlightsSection>
+                            <li>
+                                Achieved the Sustained Outstanding Contribution
+                                Award for the third consecutive year — currently
+                                awarded only for the top 5% of the employees in
+                                the company.
+                            </li>
+                            <li>
+                                Engineered the minimum viable features for
+                                Choreo online editor&apos;s resource scheduling,
+                                within 1.5 months, leading another engineer,
+                                using Kubernetes and GoLang.
+                            </li>
+                            <li>
+                                Analyzed the startup time of the Kubernetes
+                                resources of the Choreo Editors and reduced
+                                the time by 80%, increasing the overall
+                                user experience.
+                            </li>
+                            <li>
+                                Reduced the MsSQL DB utilization by 60%, by
+                                introducing a Redis cache and randomization
+                                of cache expiry times, increasing the number
+                                of users the system can handle.
+                            </li>
+                            <li>
+                                Completed 95% of the targets and sprint
+                                milestones on time, by prioritization of
+                                tasks and fostering a good working environment.
+                            </li>
+                        </HighlightsSection>
                     </Section>
                     <Section>
                         <SectionHeading>
@@ -194,6 +236,34 @@ const Experience = (): React.ReactElement => {
                             helped and encouraged the engineers in my team to
                             grow and improve themselves as well.
                         </Paragraph>
+                        <HighlightsSection>
+                            <li>
+                                Spearheaded and implemented the foundation for
+                                Choreo observability within 3 months, with a team
+                                of 2 other engineers, creating the backbone of
+                                Choreo observability.
+                            </li>
+                            <li>
+                                Architected the Choreo observability storages
+                                with data archival into a Data Lake, decreasing
+                                the cost by 90% for the company while storing
+                                the data for Machine Learning (ML) use cases.
+                            </li>
+                            <li>
+                                Revamped the observability instrumentation
+                                at Ballerina compiler level, within 1 month,
+                                to map the observability data to the source
+                                code, providing a better debugging experience
+                                for users.
+                            </li>
+                            <li>
+                                Minimized and maintained the lowest number
+                                of bugs across all areas within Choreo by
+                                implementing proper code reviewing, testing
+                                and deployment practices in a team of 6
+                                engineers.
+                            </li>
+                        </HighlightsSection>
                     </Section>
                     <Section>
                         <SectionHeading>Software Engineer</SectionHeading>
@@ -268,6 +338,30 @@ const Experience = (): React.ReactElement => {
                             this helped me immensely in my role as a software
                             engineer later in my career.
                         </Paragraph>
+                        <HighlightsSection>
+                            <li>
+                                Delivered the Cellery observability basic
+                                features within 2 months for observing
+                                microservice composites, using Kubernetes,
+                                Istio, OpenTracing and Envoy.
+                            </li>
+                            <li>
+                                Headed the implementation of Cellery developer
+                                tools using Language Server Extensions and
+                                visualizations of Cells using D3.
+                            </li>
+                            <li>
+                                Developed Cellery Hub backed by a Docker
+                                Registry as storage and authentication of the
+                                CLI and portal using OpenID Connect (OIDC),
+                                collaborating with a team, within 1 month.
+                            </li>
+                            <li>
+                                Implemented the observability aspects of the
+                                WSO2 Serverless Platform using Prometheus
+                                and Jaeger on top of Kubernetes and OpenWhisk.
+                            </li>
+                        </HighlightsSection>
                     </Section>
                     <Section>
                         <SectionHeading>
