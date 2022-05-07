@@ -81,7 +81,7 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                 "data:",
                 "https://nadundesilva.imgix.net",
                 "https://www.google.lk",
-                "https://www.googletagmanager.com"
+                "https://www.googletagmanager.com",
             ],
             "style-src": ["'unsafe-inline'"],
             "style-src-elem": [
