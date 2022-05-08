@@ -13,7 +13,7 @@
 import { Box, useTheme } from "@mui/material";
 import Image from "next/image";
 
-import { LogoAsset } from "@/constants";
+import { LogoAsset } from "@/constants/logos";
 
 interface LogoProps {
     logo: LogoAsset;

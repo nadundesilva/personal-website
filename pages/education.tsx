@@ -10,6 +10,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, Button, Container, Link, Typography } from "@mui/material";
 import Head from "next/head";
 import NextLink from "next/link";
@@ -24,7 +26,7 @@ import {
     Timespan,
 } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/layout";
-import { Logos } from "@/constants";
+import { Logos } from "@/constants/logos";
 
 const Education = (): React.ReactElement => {
     const UniversityOfMoratuwa = (
@@ -73,7 +75,11 @@ const Education = (): React.ReactElement => {
             <Layout>
                 <LayoutContent>
                     <NextLink passHref href={"/education/certifications"}>
-                        <Button size="small" variant="outlined">
+                        <Button
+                            size="small"
+                            variant="outlined"
+                            endIcon={<FontAwesomeIcon icon={faArrowRight} />}
+                        >
                             View Certifications
                         </Button>
                     </NextLink>

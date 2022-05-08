@@ -15,7 +15,7 @@ import Image from "next/image";
 import React from "react";
 
 import { useScrollOffset } from "@/components/layout";
-import { Logos, LogoAsset } from "@/constants";
+import { Logos, LogoAsset } from "@/constants/logos";
 
 const ProjectLogo = styled(Image)(({ theme }) => ({
     display: "block",

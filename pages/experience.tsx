@@ -23,7 +23,7 @@ import {
     Timespan,
 } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/layout";
-import { Logos } from "@/constants";
+import { Logos } from "@/constants/logos";
 
 const Experience = (): React.ReactElement => {
     const Siddhi = (

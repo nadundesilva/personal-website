@@ -27,7 +27,7 @@ import {
 import Image from "next/image";
 import React from "react";
 
-import { Images } from "@/constants";
+import { Images } from "@/constants/images";
 
 const BannerImage = styled(Image)({
     zIndex: 1,
