@@ -14,10 +14,10 @@ import { act, render, screen, within } from "@testing-library/react";
 import singletonRouter from "next/router";
 
 import RouterBreadcrumbs from "./RouterBreadcrumbs";
-import { Routes } from "@/constants";
+import { Routes } from "@/constants/routes";
 
 jest.mock("next/dist/client/router", () => require("next-router-mock"));
-jest.mock("@/constants", () => ({
+jest.mock("@/constants/routes", () => ({
     Routes: {
         "/test-page-1": {
             name: "Test Page 1",

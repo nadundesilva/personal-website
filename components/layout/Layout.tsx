@@ -34,7 +34,7 @@ import Link from "next/link";
 import React, { useRef } from "react";
 
 import { useWebsiteTheme } from "./theme";
-import { Routes } from "@/constants";
+import { Routes } from "@/constants/routes";
 
 interface LayoutProps {
     children: NonNullable<React.ReactNode>;

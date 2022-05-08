@@ -14,7 +14,7 @@ import { Box } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 
-import { ImageAsset } from "@/constants";
+import { ImageAsset } from "@/constants/images";
 
 interface PhotoProps {
     photo: ImageAsset;

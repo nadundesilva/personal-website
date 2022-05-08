@@ -22,7 +22,8 @@ import {
     Timespan,
 } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/layout";
-import { Logos } from "@/constants";
+import { Certificates } from "@/constants/certificates";
+import { Logos } from "@/constants/logos";
 
 const Certifications = (): React.ReactElement => {
     const universityOfAlberta = (
@@ -100,7 +101,10 @@ const Certifications = (): React.ReactElement => {
                 <LayoutContent>
                     <Section>
                         <SectionHeading>
-                            Fundamentals of Reinforcement Learning
+                            {
+                                Certificates.FundamentalsOfReinforcementLearning
+                                    .name
+                            }
                         </SectionHeading>
                         <Timespan>September 2021</Timespan>
                         {universityOfAlberta}
@@ -114,7 +118,11 @@ const Certifications = (): React.ReactElement => {
                     </Section>
                     <Section>
                         <SectionHeading>
-                            Build Basic Generative Adversarial Networks (GANs)
+                            {
+                                Certificates
+                                    .BuildBasicGenerativeAdversarialNetworks
+                                    .name
+                            }
                         </SectionHeading>
                         <Timespan>July 2021</Timespan>
                         {deepLearningAi}
@@ -128,7 +136,7 @@ const Certifications = (): React.ReactElement => {
                     </Section>
                     <Section>
                         <SectionHeading>
-                            Deep Learning (Specialization)
+                            {Certificates.DeepLearning.name}
                         </SectionHeading>
                         <Timespan>June 2021</Timespan>
                         {deepLearningAi}
@@ -158,7 +166,7 @@ const Certifications = (): React.ReactElement => {
                     </Section>
                     <Section>
                         <SectionHeading>
-                            Certified Kubernetes Administrator (CKA)
+                            {Certificates.CertifiedKubernetesAdministrator.name}
                         </SectionHeading>
                         <Timespan>December 2020</Timespan>
                         {cka}
@@ -171,7 +179,11 @@ const Certifications = (): React.ReactElement => {
                     </Section>
                     <Section>
                         <SectionHeading>
-                            Certified Kubernetes Application Developer (CKAD)
+                            {
+                                Certificates
+                                    .CertifiedKubernetesApplicationDeveloper
+                                    .name
+                            }
                         </SectionHeading>
                         <Timespan>January 2020</Timespan>
                         {ckad}
