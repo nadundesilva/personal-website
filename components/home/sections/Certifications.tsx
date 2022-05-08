@@ -39,7 +39,7 @@ const Certifications = (): React.ReactElement => {
     } = useScrollOffset<HTMLDivElement>();
 
     const certifications: Certificate[] = [
-        Certificates.DeepLearning,
+        Certificates.DeepLearningSpecialization,
         Certificates.FundamentalsOfReinforcementLearning,
         Certificates.BuildBasicGenerativeAdversarialNetworks,
         Certificates.CertifiedKubernetesAdministrator,

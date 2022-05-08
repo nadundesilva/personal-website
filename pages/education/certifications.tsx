@@ -136,7 +136,7 @@ const Certifications = (): React.ReactElement => {
                     </Section>
                     <Section>
                         <SectionHeading>
-                            {Certificates.DeepLearning.name}
+                            {Certificates.DeepLearningSpecialization.name}
                         </SectionHeading>
                         <Timespan>June 2021</Timespan>
                         {deepLearningAi}

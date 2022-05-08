@@ -23,7 +23,7 @@ const customJestConfig = {
     modulePathIgnorePatterns: ["<rootDir>/cypress/"],
     moduleNameMapper: {
         "@/components/(.*)": ["<rootDir>/components/$1"],
-        "@/constants": ["<rootDir>/constants"],
+        "@/constants/(.*)": ["<rootDir>/constants/$1"],
         "@/styles.css": ["<rootDir>/styles.css"],
     },
     setupFilesAfterEnv: ["<rootDir>/jest-setup.js"],
