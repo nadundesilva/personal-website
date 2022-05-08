@@ -24,6 +24,11 @@ export const Routes: { [key: string]: Route } = {
     },
     "/education": {
         name: "Education",
+        subRoutes: {
+            "/certifications": {
+                name: "Certifications",
+            },
+        },
     },
 };
 

@@ -82,7 +82,7 @@ const Layout = ({ children, window }: LayoutProps): React.ReactElement => {
                 >
                     <List>
                         {Object.entries(Routes).map(([path, route]) => (
-                            <Link key={path} href={path} passHref={true}>
+                            <Link key={path} href={path} passHref>
                                 <ListItem button>
                                     <ListItemText primary={route.name} />
                                 </ListItem>
