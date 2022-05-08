@@ -10,7 +10,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Box, Container, Link } from "@mui/material";
+import { faExternalLink } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Box, Button, Container, Link } from "@mui/material";
 import Head from "next/head";
 import React from "react";
 
@@ -22,7 +24,7 @@ import {
     Timespan,
 } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/layout";
-import { Certificates } from "@/constants/certificates";
+import { Certificate, Certificates } from "@/constants/certificates";
 import { Logos } from "@/constants/logos";
 
 const Certifications = (): React.ReactElement => {
@@ -92,6 +94,20 @@ const Certifications = (): React.ReactElement => {
         </Link>
     );
 
+    const generateCredential = (certificate: Certificate): React.ReactNode => (
+        <Box sx={{ m: 0, pt: 2 }}>
+            <Button
+                size="small"
+                variant="outlined"
+                endIcon={<FontAwesomeIcon icon={faExternalLink} />}
+                href={certificate.link}
+                target={"_blank"}
+            >
+                View Credential
+            </Button>
+        </Box>
+    );
+
     return (
         <Container maxWidth={false} disableGutters>
             <Head>
@@ -108,6 +124,9 @@ const Certifications = (): React.ReactElement => {
                         </SectionHeading>
                         <Timespan>September 2021</Timespan>
                         {universityOfAlberta}
+                        {generateCredential(
+                            Certificates.FundamentalsOfReinforcementLearning,
+                        )}
                         <Paragraph>
                             This course is offered by{" "}
                             {AlbertaMachineIntelligenceInstitute}
@@ -126,6 +145,9 @@ const Certifications = (): React.ReactElement => {
                         </SectionHeading>
                         <Timespan>July 2021</Timespan>
                         {deepLearningAi}
+                        {generateCredential(
+                            Certificates.BuildBasicGenerativeAdversarialNetworks,
+                        )}
                         <Paragraph>
                             This course is offered by {DeepLearningAi} on{" "}
                             {Coursera}, taught mainly by {SharonZhou}. It covers
@@ -140,6 +162,9 @@ const Certifications = (): React.ReactElement => {
                         </SectionHeading>
                         <Timespan>June 2021</Timespan>
                         {deepLearningAi}
+                        {generateCredential(
+                            Certificates.DeepLearningSpecialization,
+                        )}
                         <Paragraph>
                             Deep Learning specialization is offered by{" "}
                             {DeepLearningAi} on {Coursera}, taught mainly by{" "}
@@ -170,6 +195,9 @@ const Certifications = (): React.ReactElement => {
                         </SectionHeading>
                         <Timespan>December 2020</Timespan>
                         {cka}
+                        {generateCredential(
+                            Certificates.CertifiedKubernetesAdministrator,
+                        )}
                         <Paragraph>
                             Certified Kubernetes Administrator is offered and
                             governed by the {LinuxFoundation}. This covers the
@@ -187,6 +215,9 @@ const Certifications = (): React.ReactElement => {
                         </SectionHeading>
                         <Timespan>January 2020</Timespan>
                         {ckad}
+                        {generateCredential(
+                            Certificates.CertifiedKubernetesApplicationDeveloper,
+                        )}
                         <Paragraph>
                             Certified Kubernetes Application Developer is
                             offered and governed by the {LinuxFoundation}. This
