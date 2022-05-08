@@ -146,7 +146,7 @@ const Certifications = (): React.ReactElement => {
                                         >
                                             Issued by
                                             <br />
-                                            {certification.issuer}
+                                            {certification.issuer.name}
                                         </Typography>
                                     </CardContent>
                                 </CardActionArea>

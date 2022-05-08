@@ -23,7 +23,9 @@ import {
     Timespan,
 } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/layout";
+import { Time, TimeRange } from "@/constants/commons";
 import { Photos } from "@/constants/images";
+import { Institute, Institutes } from "@/constants/institutes";
 import { Logos } from "@/constants/logos";
 
 const Achievements = (): React.ReactElement => {
@@ -62,31 +64,6 @@ const Achievements = (): React.ReactElement => {
             Team Codon
         </Link>
     );
-    const UniversityOfMoratuwa = (
-        <Link target={"_blank"} href={"https://uom.lk/"}>
-            University of Moratuwa
-        </Link>
-    );
-    const NASA = (
-        <Link target={"_blank"} href={"https://www.nasa.gov/"}>
-            NASA
-        </Link>
-    );
-    const WSO2 = (
-        <Link target={"_blank"} href={"https://wso2.com/"}>
-            WSO2
-        </Link>
-    );
-    const BritishCouncilHSBCYouthEnterpriseAwards = (
-        <Link
-            target={"_blank"}
-            href={
-                "https://www.britishcouncil.lk/programmes/education/internationalising-higher-education/hsbc-youth-enterprise-awards"
-            }
-        >
-            British Council HSBC Youth Enterprise Awards
-        </Link>
-    );
     const HackaDev = (
         <Link target={"_blank"} href={"https://www.hackadev.lk/"}>
             HackaDev
@@ -97,6 +74,22 @@ const Achievements = (): React.ReactElement => {
             Angel Hack
         </Link>
     );
+
+    const generateInstituteLink = (
+        institute: Institute,
+    ): React.ReactElement => (
+        <Link target={"_blank"} href={institute.link}>
+            {institute.name}
+        </Link>
+    );
+    const UniversityOfMoratuwa = generateInstituteLink(
+        Institutes.UniversityOfMoratuwa,
+    );
+    const NASA = generateInstituteLink(Institutes.NASA);
+    const BritishCouncilHSBCYouthEnterpriseAwards = generateInstituteLink(
+        Institutes.BritishCouncilHSBCYouthEnterpriseAwards,
+    );
+    const WSO2 = generateInstituteLink(Institutes.WSO2);
 
     const wso2Logo = <Logo height={"2.5em"} logo={Logos.WSO2} />;
     const uomLogo = <Logo height={"4em"} logo={Logos.UniversityOfMoratuwa} />;
@@ -120,7 +113,11 @@ const Achievements = (): React.ReactElement => {
                         <SectionHeading>
                             WSO2 Sustained Outstanding Contribution Award
                         </SectionHeading>
-                        <Timespan>2019 to 2021</Timespan>
+                        <Timespan
+                            value={
+                                new TimeRange(new Time(2019), new Time(2021))
+                            }
+                        />
                         {wso2Logo}
                         <Photo
                             float={"right"}
@@ -150,7 +147,11 @@ const Achievements = (): React.ReactElement => {
                             Placements in the Dean&lsquo;s List at the
                             University of Moratuwa
                         </SectionHeading>
-                        <Timespan>2014 to 2018</Timespan>
+                        <Timespan
+                            value={
+                                new TimeRange(new Time(2014), new Time(2018))
+                            }
+                        />
                         {uomLogo}
                         <Photo
                             float={"right"}
@@ -182,7 +183,7 @@ const Achievements = (): React.ReactElement => {
                             NASA Space Apps Challenge - Galactic Impact - Global
                             Finalist
                         </SectionHeading>
-                        <Timespan>2017</Timespan>
+                        <Timespan value={new Time(2017)} />
                         {nasaSpaceAppsChallengeLogo}
                         <Photo
                             float={"right"}
@@ -215,7 +216,7 @@ const Achievements = (): React.ReactElement => {
                         <SectionHeading>
                             WSO2 Internal Hackathon - Honorable Mention
                         </SectionHeading>
-                        <Timespan>2017</Timespan>
+                        <Timespan value={new Time(2017)} />
                         {wso2Logo}
                         <Paragraph>
                             {WSO2} Internal Hackathon (WHack) was held for the
@@ -232,7 +233,7 @@ const Achievements = (): React.ReactElement => {
                     </Section>
                     <Section>
                         <SectionHeading>Angel Hack - Finalist</SectionHeading>
-                        <Timespan>2016</Timespan>
+                        <Timespan value={new Time(2016)} />
                         {angelHackLogo}
                         <Photo float={"right"} photo={Photos.AngelHack2016} />
                         <Paragraph>
@@ -270,7 +271,7 @@ const Achievements = (): React.ReactElement => {
                     </Section>
                     <Section>
                         <SectionHeading>HackaDev - Finalist</SectionHeading>
-                        <Timespan>2015</Timespan>
+                        <Timespan value={new Time(2015)} />
                         {hackaDevLogo}
                         <Paragraph>
                             {HackaDev} is a competition which provides a
@@ -290,7 +291,7 @@ const Achievements = (): React.ReactElement => {
                             British Council HSBC Youth Enterprise Awards -
                             Finalist
                         </SectionHeading>
-                        <Timespan>2015</Timespan>
+                        <Timespan value={new Time(2015)} />
                         {britishCouncilLogo}
                         <Photo
                             float={"right"}
