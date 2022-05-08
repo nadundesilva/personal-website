@@ -13,9 +13,25 @@
 import { render, screen } from "@testing-library/react";
 
 import Timespan from "./Timespan";
+import { Time, TimeRange } from "@/constants/commons";
+
+test("renders timespan with provided time", async () => {
+    render(<Timespan value={new Time(2021, "January")} />);
+
+    await screen.findByText("January 2021");
+});
 
 test("renders timespan with provided time range", async () => {
-    render(<Timespan>Test time range written by Nadun De Silva</Timespan>);
+    render(
+        <Timespan
+            value={
+                new TimeRange(
+                    new Time(2021, "January"),
+                    new Time(2022, "March"),
+                )
+            }
+        />,
+    );
 
-    await screen.findByText("Test time range written by Nadun De Silva");
+    await screen.findByText("January 2021 to March 2022");
 });

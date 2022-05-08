@@ -23,6 +23,7 @@ import {
     Timespan,
 } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/layout";
+import { Now, Time, TimeRange } from "@/constants/commons";
 import { Logos } from "@/constants/logos";
 
 const Experience = (): React.ReactElement => {
@@ -96,7 +97,9 @@ const Experience = (): React.ReactElement => {
                         <SectionHeading>
                             Associate Technical Lead
                         </SectionHeading>
-                        <Timespan>June 2021 to Now</Timespan>
+                        <Timespan
+                            value={new TimeRange(new Time(2021, "June"), Now)}
+                        />
                         {wso2Logo}
                         <Paragraph>
                             I led the Observability team in technical aspects
@@ -159,7 +162,14 @@ const Experience = (): React.ReactElement => {
                         <SectionHeading>
                             Senior Software Engineer
                         </SectionHeading>
-                        <Timespan>July 2019 to June 2021</Timespan>
+                        <Timespan
+                            value={
+                                new TimeRange(
+                                    new Time(2019, "July"),
+                                    new Time(2021, "June"),
+                                )
+                            }
+                        />
                         {wso2Logo}
                         <Paragraph>
                             I completely owned the Observability area of Cellery
@@ -256,7 +266,14 @@ const Experience = (): React.ReactElement => {
                     </Section>
                     <Section>
                         <SectionHeading>Software Engineer</SectionHeading>
-                        <Timespan>Jan 2018 to July 2019</Timespan>
+                        <Timespan
+                            value={
+                                new TimeRange(
+                                    new Time(2018, "January"),
+                                    new Time(2019, "July"),
+                                )
+                            }
+                        />
                         {wso2Logo}
                         <Paragraph>
                             At the start of my employment, I worked in multiple
@@ -356,7 +373,14 @@ const Experience = (): React.ReactElement => {
                         <SectionHeading>
                             Google Summer of Code Intern
                         </SectionHeading>
-                        <Timespan>May 2017 to Sep 2017</Timespan>
+                        <Timespan
+                            value={
+                                new TimeRange(
+                                    new Time(2017, "May"),
+                                    new Time(2017, "September"),
+                                )
+                            }
+                        />
                         {gsocLogo}
                         <Paragraph>
                             During my last year at the University, in my spare
@@ -377,7 +401,14 @@ const Experience = (): React.ReactElement => {
                         <SectionHeading>
                             Software Engineering Trainee
                         </SectionHeading>
-                        <Timespan>July 2016 to December 2016</Timespan>
+                        <Timespan
+                            value={
+                                new TimeRange(
+                                    new Time(2016, "July"),
+                                    new Time(2016, "December"),
+                                )
+                            }
+                        />
                         {wso2Logo}
                         <Paragraph>
                             I worked as a Software Engineering intern at {WSO2}{" "}
