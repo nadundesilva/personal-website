@@ -23,7 +23,8 @@ import {
     Timespan,
 } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/layout";
-import { Logos, Photos } from "@/constants";
+import { Photos } from "@/constants/images";
+import { Logos } from "@/constants/logos";
 
 const Achievements = (): React.ReactElement => {
     const NasaSpaceAppsChallenge = (

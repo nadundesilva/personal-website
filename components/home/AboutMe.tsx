@@ -24,7 +24,7 @@ import { SxProps } from "@mui/system";
 import Image from "next/image";
 import React from "react";
 
-import { Photos } from "@/constants";
+import { Photos } from "@/constants/images";
 
 const ProfilePhoto = styled(Image)({
     width: "100%",

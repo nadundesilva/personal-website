@@ -15,7 +15,7 @@ import { useState } from "react";
 
 import Layout from "./Layout";
 import WebsiteThemeProvider from "./theme";
-import { Routes } from "@/constants";
+import { Routes } from "@/constants/routes";
 
 const scrollState = {
     scrolledDown: false,
@@ -28,7 +28,7 @@ jest.mock("@mui/material/useScrollTrigger", () => (options?: any): boolean => {
     return scrolledDown;
 });
 
-jest.mock("@/constants", () => ({
+jest.mock("@/constants/routes", () => ({
     Routes: {
         "/test-page-1": {
             name: "Test Page 1",
