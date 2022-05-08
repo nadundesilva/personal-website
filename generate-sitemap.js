@@ -21,27 +21,17 @@ const robotsFileName = "robots.txt";
 const buildDir = "./out";
 
 const urls = [
-    {
-        url: "/",
-        changefreq: "daily",
-        lastmod: currentTimestamp,
-    },
-    {
-        url: "/experience",
-        changefreq: "daily",
-        lastmod: currentTimestamp,
-    },
-    {
-        url: "/achievements",
-        changefreq: "daily",
-        lastmod: currentTimestamp,
-    },
-    {
-        url: "/nadundesilva-cv.pdf",
-        changefreq: "daily",
-        lastmod: currentTimestamp,
-    },
-];
+    "/",
+    "/nadundesilva-cv.pdf",
+    "/experience",
+    "/achievements",
+    "/education",
+    "/education/certifications",
+].map((url) => ({
+    url: url,
+    changefreq: "daily",
+    lastmod: currentTimestamp,
+}));
 
 const stream = new SitemapStream({ hostname: hostname });
 

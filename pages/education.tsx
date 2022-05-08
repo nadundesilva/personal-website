@@ -10,8 +10,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Box, Container, Link, Typography } from "@mui/material";
+import { Box, Button, Container, Link, Typography } from "@mui/material";
 import Head from "next/head";
+import NextLink from "next/link";
 import React from "react";
 
 import {
@@ -71,6 +72,11 @@ const Education = (): React.ReactElement => {
             </Head>
             <Layout>
                 <LayoutContent>
+                    <NextLink passHref href={"/education/certifications"}>
+                        <Button size="small" variant="outlined">
+                            View Certifications
+                        </Button>
+                    </NextLink>
                     <Section>
                         <SectionHeading>
                             B.Sc. (Hons.) in Engineering (Computer Science and

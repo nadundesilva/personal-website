@@ -73,13 +73,6 @@ const Certifications = (): React.ReactElement => {
             issuer: DEEP_LEARNING_ISSUER,
         },
         {
-            name: "AI For Everyone",
-            type: "Course",
-            link: "https://coursera.org/share/e8ae9a481ef41f070d6c7b00887e8b66",
-            image: Logos.DeepLearningAI,
-            issuer: DEEP_LEARNING_ISSUER,
-        },
-        {
             name: "Certified Kubernetes Administrator",
             type: "Certification",
             link: "https://www.youracclaim.com/badges/8241114b-7435-460a-a08f-9d33304c1470?source=linked_in_profile",
