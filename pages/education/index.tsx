@@ -26,18 +26,23 @@ import {
     Timespan,
 } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/layout";
+import { Time, TimeRange } from "@/constants/commons";
+import { Institute, Institutes } from "@/constants/institutes";
 import { Logos } from "@/constants/logos";
 
 const Education = (): React.ReactElement => {
-    const UniversityOfMoratuwa = (
-        <Link target={"_blank"} href={"https://uom.lk/"}>
-            University of Moratuwa
+    const generateInstituteLink = (
+        institute: Institute,
+    ): React.ReactElement => (
+        <Link target={"_blank"} href={institute.link}>
+            {institute.name}
         </Link>
     );
-    const StJosephsCollegeColombo10 = (
-        <Link target={"_blank"} href={"https://www.stjosephscollege.lk/"}>
-            St. Joseph&apos;s College
-        </Link>
+    const UniversityOfMoratuwa = generateInstituteLink(
+        Institutes.UniversityOfMoratuwa,
+    );
+    const StJosephsCollegeColombo10 = generateInstituteLink(
+        Institutes.StJosephsCollegeColombo10,
     );
 
     const GanBasedAnomalyDetectionInIndustrialSoftwareSystems = (
@@ -88,7 +93,14 @@ const Education = (): React.ReactElement => {
                             B.Sc. (Hons.) in Engineering (Computer Science and
                             Engineering)
                         </SectionHeading>
-                        <Timespan>March 2014 to June 2017</Timespan>
+                        <Timespan
+                            value={
+                                new TimeRange(
+                                    new Time(2014, "March"),
+                                    new Time(2017, "June"),
+                                )
+                            }
+                        />
                         {uomLogo}
                         <Paragraph>
                             I studied for my four year bachelor&apos;s degree at
@@ -129,7 +141,7 @@ const Education = (): React.ReactElement => {
                         </Box>
                     </Section>
                     <SectionHeading>G.C.E. Advanced Level</SectionHeading>
-                    <Timespan>2012</Timespan>
+                    <Timespan value={new Time(2012)} />
                     {sjcLogo}
                     <Paragraph>
                         I attended school at {StJosephsCollegeColombo10} where I

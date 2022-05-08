@@ -15,13 +15,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
+import { FormattableTime } from "@/constants/commons";
+
 interface TimespanProps {
-    children: React.ReactNode;
+    value: FormattableTime;
 }
 
-const Timespan = ({ children }: TimespanProps): React.ReactElement => (
+const Timespan = ({ value }: TimespanProps): React.ReactElement => (
     <Typography variant={"body1"} sx={{ pt: 1, pb: 1, color: grey[700] }}>
-        <FontAwesomeIcon icon={faCalendarAlt} /> {children}
+        <FontAwesomeIcon icon={faCalendarAlt} /> {value.format()}
     </Typography>
 );
 

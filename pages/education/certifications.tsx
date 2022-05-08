@@ -25,87 +25,56 @@ import {
 } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/layout";
 import { Certificate, Certificates } from "@/constants/certificates";
-import { Logos } from "@/constants/logos";
+import { Institute, Institutes } from "@/constants/institutes";
+import { People, Person } from "@/constants/people";
 
 const Certifications = (): React.ReactElement => {
-    const universityOfAlberta = (
-        <Logo height={"5em"} logo={Logos.UniversityOfAlberta} />
+    const generateInstituteLink = (
+        institute: Institute,
+    ): React.ReactElement => (
+        <Link target={"_blank"} href={institute.link}>
+            {institute.name}
+        </Link>
     );
-    const deepLearningAi = <Logo height={"4em"} logo={Logos.DeepLearningAI} />;
-    const cka = <Logo height={"5em"} logo={Logos.CKA} />;
-    const ckad = <Logo height={"5em"} logo={Logos.CKAD} />;
+    const AlbertaMachineIntelligenceInstitute = generateInstituteLink(
+        Institutes.AlbertaMachineIntelligenceInstitute,
+    );
+    const UniversityOfAlberta = generateInstituteLink(
+        Institutes.UniversityOfAlberta,
+    );
+    const DeepLearningAi = generateInstituteLink(Institutes.DeepLearningAi);
+    const Coursera = generateInstituteLink(Institutes.Coursera);
+    const LinuxFoundation = generateInstituteLink(Institutes.LinuxFoundation);
 
-    const AlbertaMachineIntelligenceInstitute = (
-        <Link target={"_blank"} href={"https://www.amii.ca/"}>
-            Alberta Machine Intelligence Institute (Amii)
+    const generatePersonLink = (person: Person): React.ReactElement => (
+        <Link target={"_blank"} href={person.profile}>
+            {person.name}
         </Link>
     );
-    const UniversityOfAlberta = (
-        <Link target={"_blank"} href={"https://www.ualberta.ca/"}>
-            University of Alberta
-        </Link>
-    );
-    const DeepLearningAi = (
-        <Link target={"_blank"} href={"https://www.deeplearning.ai/"}>
-            DeepLearning.AI
-        </Link>
-    );
-    const Coursera = (
-        <Link target={"_blank"} href={"https://www.coursera.org/"}>
-            Coursera
-        </Link>
-    );
-    const LinuxFoundation = (
-        <Link target={"_blank"} href={"https://www.linuxfoundation.org/"}>
-            Linux Foundation
-        </Link>
-    );
+    const AndrewNg = generatePersonLink(People.AndrewNg);
+    const SharonZhou = generatePersonLink(People.SharonZhou);
+    const AdamWhite = generatePersonLink(People.AdamWhite);
+    const MarthaWhite = generatePersonLink(People.MarthaWhite);
 
-    const AndrewNg = (
-        <Link
-            target={"_blank"}
-            href={"https://en.wikipedia.org/wiki/Andrew_Ng"}
-        >
-            Andrew Ng
-        </Link>
-    );
-    const SharonZhou = (
-        <Link
-            target={"_blank"}
-            href={"https://www.coursera.org/instructor/sharon-zhou"}
-        >
-            Sharon Zhou
-        </Link>
-    );
-    const AdamWhite = (
-        <Link
-            target={"_blank"}
-            href={"https://www.coursera.org/instructor/adam-white"}
-        >
-            Adam White
-        </Link>
-    );
-    const MarthaWhite = (
-        <Link
-            target={"_blank"}
-            href={"https://www.coursera.org/instructor/martha-white"}
-        >
-            Martha White
-        </Link>
-    );
-
-    const generateCredential = (certificate: Certificate): React.ReactNode => (
-        <Box sx={{ m: 0, pt: 2 }}>
-            <Button
-                size="small"
-                variant="outlined"
-                endIcon={<FontAwesomeIcon icon={faExternalLink} />}
-                href={certificate.link}
-                target={"_blank"}
-            >
-                View Credential
-            </Button>
-        </Box>
+    const generateSectionHeader = (
+        certificate: Certificate,
+    ): React.ReactNode => (
+        <React.Fragment>
+            <SectionHeading>{certificate.name}</SectionHeading>
+            <Timespan value={certificate.completedOn} />
+            <Logo height={"5em"} logo={certificate.logo} />
+            <Box sx={{ m: 0, pt: 2 }}>
+                <Button
+                    size="small"
+                    variant="outlined"
+                    endIcon={<FontAwesomeIcon icon={faExternalLink} />}
+                    href={certificate.link}
+                    target={"_blank"}
+                >
+                    View Credential
+                </Button>
+            </Box>
+        </React.Fragment>
     );
 
     return (
@@ -116,36 +85,19 @@ const Certifications = (): React.ReactElement => {
             <Layout>
                 <LayoutContent>
                     <Section>
-                        <SectionHeading>
-                            {
-                                Certificates.FundamentalsOfReinforcementLearning
-                                    .name
-                            }
-                        </SectionHeading>
-                        <Timespan>September 2021</Timespan>
-                        {universityOfAlberta}
-                        {generateCredential(
+                        {generateSectionHeader(
                             Certificates.FundamentalsOfReinforcementLearning,
                         )}
                         <Paragraph>
                             This course is offered by{" "}
-                            {AlbertaMachineIntelligenceInstitute}
-                            at the {UniversityOfAlberta} on {Coursera}, taught
-                            mainly by {AdamWhite} &amp; {MarthaWhite}. It covers
-                            the basics of Reinforcement Learning.
+                            {AlbertaMachineIntelligenceInstitute} at the{" "}
+                            {UniversityOfAlberta} on {Coursera}, taught mainly
+                            by {AdamWhite} &amp; {MarthaWhite}. It covers the
+                            basics of Reinforcement Learning.
                         </Paragraph>
                     </Section>
                     <Section>
-                        <SectionHeading>
-                            {
-                                Certificates
-                                    .BuildBasicGenerativeAdversarialNetworks
-                                    .name
-                            }
-                        </SectionHeading>
-                        <Timespan>July 2021</Timespan>
-                        {deepLearningAi}
-                        {generateCredential(
+                        {generateSectionHeader(
                             Certificates.BuildBasicGenerativeAdversarialNetworks,
                         )}
                         <Paragraph>
@@ -157,12 +109,7 @@ const Certifications = (): React.ReactElement => {
                         </Paragraph>
                     </Section>
                     <Section>
-                        <SectionHeading>
-                            {Certificates.DeepLearningSpecialization.name}
-                        </SectionHeading>
-                        <Timespan>June 2021</Timespan>
-                        {deepLearningAi}
-                        {generateCredential(
+                        {generateSectionHeader(
                             Certificates.DeepLearningSpecialization,
                         )}
                         <Paragraph>
@@ -190,12 +137,7 @@ const Certifications = (): React.ReactElement => {
                         </Box>
                     </Section>
                     <Section>
-                        <SectionHeading>
-                            {Certificates.CertifiedKubernetesAdministrator.name}
-                        </SectionHeading>
-                        <Timespan>December 2020</Timespan>
-                        {cka}
-                        {generateCredential(
+                        {generateSectionHeader(
                             Certificates.CertifiedKubernetesAdministrator,
                         )}
                         <Paragraph>
@@ -206,16 +148,7 @@ const Certifications = (): React.ReactElement => {
                         </Paragraph>
                     </Section>
                     <Section>
-                        <SectionHeading>
-                            {
-                                Certificates
-                                    .CertifiedKubernetesApplicationDeveloper
-                                    .name
-                            }
-                        </SectionHeading>
-                        <Timespan>January 2020</Timespan>
-                        {ckad}
-                        {generateCredential(
+                        {generateSectionHeader(
                             Certificates.CertifiedKubernetesApplicationDeveloper,
                         )}
                         <Paragraph>
