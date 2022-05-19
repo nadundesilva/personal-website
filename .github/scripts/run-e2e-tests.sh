@@ -29,7 +29,7 @@ docker run \
     -v "${PWD}:/test" \
     -w /test \
     -e CYPRESS_BASE_URL=https://nadundesilva.github.io \
-    cypress/included:7.4.0 run \
+    cypress/included:9.6.1 run \
     --headless \
     --browser "${TEST_BROWSER}" \
     --reporter cypress-image-snapshot/reporter

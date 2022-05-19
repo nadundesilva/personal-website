@@ -19,3 +19,12 @@ addMatchImageSnapshotCommand({
     customDiffConfig: { threshold: 0.1 },
     capture: "viewport",
 });
+
+Cypress.Commands.add("loadPage", (url) => {
+    cy.clearLocalStorage();
+
+    cy.visit(url);
+    cy.log(`Loaded ${url} page`);
+    window.localStorage.setItem("COLOR_SCHEME", "light");
+    cy.wait(5000); // Wait for images to load
+});

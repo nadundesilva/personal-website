@@ -19,13 +19,13 @@ interface Section {
 
 describe("Test Home Page", () => {
     beforeEach(() => {
-        cy.visit("/");
+        cy.loadPage("/");
         cy.findAllByTestId("section-loader").should("not.exist");
-        cy.log("Loaded Home page");
     });
 
     it("validates page load", () => {
         cy.findByRole("button", { name: /view cv/i }).should("be.visible");
+        cy.matchImageSnapshot("home-page-initial", { capture: "fullPage" });
     });
 
     it("validates sections", () => {
