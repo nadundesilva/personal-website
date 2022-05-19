@@ -25,7 +25,7 @@ jobs:
             - name: Run End to End Tests
               run: |
                   npm ci
-                  docker run -t -v "${PWD}:/test" -w /test cypress/included:7.4.0 \
+                  docker run -t -v "${PWD}:/test" -w /test cypress/included:9.6.1 \
                       run \
                     --headless \
                     --browser ${{ matrix.browser }} \
