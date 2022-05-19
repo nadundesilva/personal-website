@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Container, Link } from "@mui/material";
+import { Box, Container, Link } from "@mui/material";
 import Head from "next/head";
 import React from "react";
 
@@ -165,9 +165,11 @@ const Achievements = (): React.ReactElement => {
                             of 4.2) for 6 out of the 8 semesters I studied at
                             the {UniversityOfMoratuwa}.
                         </Paragraph>
-                        <Paragraph>
-                            The semester in which placements in the Dean&lsquo;s
-                            List was awarded (4.20 GPA Scale):
+                        <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
+                            <Paragraph>
+                                The semester in which placements in the Dean&lsquo;s
+                                List was awarded (4.20 GPA Scale):
+                            </Paragraph>
                             <ul>
                                 <li>Semester 02 (GPA - 3.82)</li>
                                 <li>Semester 03 (GPA - 3.84)</li>
@@ -176,7 +178,7 @@ const Achievements = (): React.ReactElement => {
                                 <li>Semester 07 (GPA - 4.04)</li>
                                 <li>Semester 08 (GPA - 4.01)</li>
                             </ul>
-                        </Paragraph>
+                        </Box>
                     </Section>
                     <Section>
                         <SectionHeading>
