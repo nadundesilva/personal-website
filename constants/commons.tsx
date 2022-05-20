@@ -35,7 +35,7 @@ export class Time implements FormattableTime {
     constructor(year: number, month?: Month) {
         if (year < 1994) {
             throw Error(
-                `Invalid year; expected to be greater than date of birth (${year})`,
+                `Invalid year; expected to be greater than year of birth (${year})`,
             );
         }
         this.year = year;
@@ -64,7 +64,7 @@ export class TimeRange implements FormattableTime {
     from: Time | NowTime;
     to: Time | NowTime;
 
-    constructor(from: Time | NowTime, to: Time | NowTime) {
+    constructor(from: Time, to: Time | NowTime) {
         this.from = from;
         this.to = to;
     }
