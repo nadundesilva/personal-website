@@ -167,8 +167,8 @@ const Achievements = (): React.ReactElement => {
                         </Paragraph>
                         <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
                             <Paragraph>
-                                The semester in which placements in the Dean&lsquo;s
-                                List was awarded (4.20 GPA Scale):
+                                The semester in which placements in the
+                                Dean&lsquo;s List was awarded (4.20 GPA Scale):
                             </Paragraph>
                             <ul>
                                 <li>Semester 02 (GPA - 3.82)</li>
