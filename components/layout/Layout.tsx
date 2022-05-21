@@ -95,7 +95,7 @@ const Layout = ({ children, window }: LayoutProps): React.ReactElement => {
     );
 
     const appBar = React.cloneElement(
-        <AppBar data-testId={"app-bar"}>
+        <AppBar data-testid={"app-bar"}>
             <Toolbar>
                 {drawer}
                 <Typography variant="h5" component="h1">
