@@ -1,16 +1,16 @@
 coverage:
-  status:
-    project:
-      default: off
-      unit-tests:
-        flags: 
-          - unit-tests
-      e2e-tests:
-        flags: 
-          - e2e-tests
+    status:
+        project:
+            default: off
+            unit-tests:
+                flags:
+                    - unit-tests
+            e2e-tests:
+                flags:
+                    - e2e-tests
 
 flags:
-  unit-tests:
-    carryforward: false
-  e2e-tests:
-    carryforward: false
+    unit-tests:
+        carryforward: false
+    e2e-tests:
+        carryforward: false

@@ -37,7 +37,7 @@ afterAll(() => {
 const WebsiteThemeConsumer = (): React.ReactElement => {
     const websiteTheme = useWebsiteTheme();
     const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
-    const [error, setError] = useState<Error|undefined>(undefined);
+    const [error, setError] = useState<Error | undefined>(undefined);
 
     const onSetColorScheme = (): void => {
         const newColorScheme = colorScheme === "light" ? "dark" : "light";
@@ -52,9 +52,7 @@ const WebsiteThemeConsumer = (): React.ReactElement => {
 
     return (
         <Box data-testid={"theme-data-group"}>
-            <Box data-testid={"theme-data-error"}>
-                {error?.message}
-            </Box>
+            <Box data-testid={"theme-data-error"}>{error?.message}</Box>
             <Box data-testid={"theme-data-color-scheme"}>
                 {websiteTheme.colorScheme}
             </Box>
@@ -80,8 +78,14 @@ const renderTestComponent = async (
     );
     expect(colorSchemeDiv.innerHTML).toBe(initialTheme);
 
-    const themeDataErrorDiv = await within(themeDataGroupDiv).findByTestId("theme-data-error");
-    expect(await within(themeDataErrorDiv).queryByText("Setting color theme not implemented")).toBeNull();
+    const themeDataErrorDiv = await within(themeDataGroupDiv).findByTestId(
+        "theme-data-error",
+    );
+    expect(
+        await within(themeDataErrorDiv).queryByText(
+            "Setting color theme not implemented",
+        ),
+    ).toBeNull();
 
     return { themeDataGroupDiv, colorSchemeDiv };
 };
@@ -91,9 +95,7 @@ afterEach(() => {
 });
 
 test("fails when provider is not present", async () => {
-    render(
-        <WebsiteThemeConsumer />,
-    );
+    render(<WebsiteThemeConsumer />);
     const themeDataGroupDiv = await screen.findByTestId("theme-data-group");
     const setColorSchemeButton = await within(themeDataGroupDiv).findByRole(
         "button",
@@ -104,8 +106,12 @@ test("fails when provider is not present", async () => {
     act(() => {
         fireEvent.click(setColorSchemeButton);
     });
-    const themeDataErrorDiv = await within(themeDataGroupDiv).findByTestId("theme-data-error");
-    await within(themeDataErrorDiv).findByText("Setting color theme not implemented");
+    const themeDataErrorDiv = await within(themeDataGroupDiv).findByTestId(
+        "theme-data-error",
+    );
+    await within(themeDataErrorDiv).findByText(
+        "Setting color theme not implemented",
+    );
 });
 
 test("initializes with default color scheme", async () => {
@@ -152,8 +158,14 @@ const testTogglingTheme = async (
     });
     expect(colorSchemeDiv.innerHTML).toBe(newTheme);
 
-    const themeDataErrorDiv = await within(themeDataGroupDiv).findByTestId("theme-data-error");
-    expect(await within(themeDataErrorDiv).queryByText("Setting color theme not implemented")).toBeNull();
+    const themeDataErrorDiv = await within(themeDataGroupDiv).findByTestId(
+        "theme-data-error",
+    );
+    expect(
+        await within(themeDataErrorDiv).queryByText(
+            "Setting color theme not implemented",
+        ),
+    ).toBeNull();
 
     return setColorSchemeButton;
 };
