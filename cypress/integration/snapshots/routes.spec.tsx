@@ -36,6 +36,7 @@ describe("route pages", () => {
                 }
                 it(`validates ${currentPath} page load`, () => {
                     cy.loadPage(currentPath);
+                    cy.wait(5000); // Wait for images to load
                     cy.matchImageSnapshot(`${snapshotNamePrefix}-page`, {
                         capture: "fullPage",
                     });
