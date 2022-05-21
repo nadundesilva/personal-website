@@ -14,7 +14,6 @@
 describe("navigation between pages", () => {
     it("validates navigation between pages", () => {
         cy.loadPage("/");
-        cy.findAllByTestId("section-loader").should("not.exist");
 
         cy.clickNavLink("experience");
         cy.clickBreadcrumb("home");
@@ -23,12 +22,12 @@ describe("navigation between pages", () => {
         cy.clickBreadcrumb("home");
 
         cy.clickNavLink("education");
-        cy.findByRole('link', {name: /view certifications/i}).click();
+        cy.findByRole("link", { name: /view certifications/i }).click();
         cy.clickBreadcrumb("education");
         cy.clickBreadcrumb("home");
 
         cy.clickNavLink("education");
-        cy.findByRole('link', {name: /view certifications/i}).click();
+        cy.findByRole("link", { name: /view certifications/i }).click();
         cy.clickBreadcrumb("home");
     });
 });
