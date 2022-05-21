@@ -17,7 +17,9 @@ import "@testing-library/cypress/types";
 declare global {
     namespace Cypress {
         interface Chainable {
-            loadPage(url: string): Chainable<Element>;
+            loadPage(url: string): void;
+            clickNavLink(name: string): Chainable<JQuery<Element>>;
+            clickBreadcrumb(name: string): Chainable<JQuery<Element>>;
         }
     }
 }

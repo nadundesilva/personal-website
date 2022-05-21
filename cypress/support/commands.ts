@@ -20,11 +20,35 @@ addMatchImageSnapshotCommand({
     capture: "viewport",
 });
 
-Cypress.Commands.add("loadPage", (url) => {
+Cypress.Commands.add("loadPage", (url: string): void => {
     cy.clearLocalStorage();
 
     cy.visit(url);
     cy.log(`Loaded ${url} page`);
     window.localStorage.setItem("COLOR_SCHEME", "light");
     cy.wait(5000); // Wait for images to load
+});
+
+Cypress.Commands.add("clickNavLink", (name: string): void => {
+    cy.findByTestId("app-bar").within(() => {
+        const link = cy.findByRole("link", {
+            name: new RegExp(name, "i"),
+        });
+        link.should("exist");
+        link.click();
+        cy.findByRole("progressbar").should("not.exist");
+    });
+});
+
+Cypress.Commands.add("clickBreadcrumb", (name: string): void => {
+    cy.findByRole("navigation", {
+        name: /breadcrumb/i,
+    }).within(() => {
+        const breadcrumb = cy.findByRole("link", {
+            name: new RegExp(name, "i"),
+        });
+        breadcrumb.should("exist");
+        breadcrumb.click();
+        cy.findByRole("progressbar").should("not.exist");
+    });
 });
