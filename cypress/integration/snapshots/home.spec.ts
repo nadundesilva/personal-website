@@ -17,7 +17,7 @@ interface Section {
     hasNavBarButton: boolean;
 }
 
-describe("Test Home Page", () => {
+describe("home page", () => {
     beforeEach(() => {
         cy.loadPage("/");
         cy.findAllByTestId("section-loader").should("not.exist");
