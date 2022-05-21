@@ -21,7 +21,7 @@ const routes: Routes = {
     },
 };
 
-describe("Test Routes", () => {
+describe("route pages", () => {
     const generateTests = (
         currentRoutes: Routes,
         currentBasePath: string,
