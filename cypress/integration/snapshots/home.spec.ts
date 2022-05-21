@@ -20,7 +20,7 @@ interface Section {
 describe("home page", () => {
     beforeEach(() => {
         cy.loadPage("/");
-        cy.findAllByTestId("section-loader").should("not.exist");
+        cy.wait(5000); // Wait for images to load
     });
 
     it("validates page load", () => {

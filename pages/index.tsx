@@ -25,10 +25,7 @@ const SectionContainer = styled(Container)(({ theme }) => ({
 
 const dynamicOptions = {
     loading: () => (
-        <Box
-            sx={{ display: "flex", justifyContent: "center", py: 5 }}
-            data-testid="section-loader"
-        >
+        <Box sx={{ display: "flex", justifyContent: "center", py: 5 }}>
             <CircularProgress />
         </Box>
     ),
@@ -90,7 +87,6 @@ const Home = (): React.ReactElement => {
                         justifyContent: "center",
                         height: "100vh",
                     }}
-                    data-testid="section-loader"
                 >
                     <CircularProgress sx={{ margin: "auto" }} />
                 </Box>

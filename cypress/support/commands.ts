@@ -26,7 +26,7 @@ Cypress.Commands.add("loadPage", (url: string): void => {
     cy.visit(url);
     cy.log(`Loaded ${url} page`);
     window.localStorage.setItem("COLOR_SCHEME", "light");
-    cy.wait(5000); // Wait for images to load
+    cy.findByRole("progressbar").should("not.exist");
 });
 
 Cypress.Commands.add("clickNavLink", (name: string): void => {
