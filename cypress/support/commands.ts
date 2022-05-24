@@ -23,6 +23,11 @@ addMatchImageSnapshotCommand({
 Cypress.Commands.add("loadPage", (url: string): void => {
     cy.clearLocalStorage();
 
+    const viewportWidth = Cypress.config("viewportWidth");
+    const viewportHeight = Cypress.config("viewportHeight");
+    cy.viewport(viewportWidth, viewportHeight);
+    cy.log(`Changed viewport to ${viewportWidth}x${viewportHeight}`);
+
     cy.visit(url);
     cy.log(`Loaded ${url} page`);
     window.localStorage.setItem("COLOR_SCHEME", "light");
