@@ -11,14 +11,6 @@
  * limitations under the License.
  */
 import "@testing-library/cypress/add-commands";
-import { addMatchImageSnapshotCommand } from "cypress-image-snapshot/command";
-
-addMatchImageSnapshotCommand({
-    failureThreshold: 0.75,
-    failureThresholdType: "percent",
-    customDiffConfig: { threshold: 0.75 },
-    capture: "viewport",
-});
 
 Cypress.Commands.add("loadPage", (url: string): void => {
     cy.clearLocalStorage();

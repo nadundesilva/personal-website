@@ -31,8 +31,7 @@ docker run \
     -e CYPRESS_BASE_URL=https://nadundesilva.github.io \
     cypress/included:9.6.1 run \
     --headless \
-    --browser "${TEST_BROWSER}" \
-    --reporter cypress-image-snapshot/reporter
+    --browser "${TEST_BROWSER}"
 
 stopServer
 

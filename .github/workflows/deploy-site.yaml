@@ -151,7 +151,6 @@ jobs:
                   path: |
                       cypress/videos/
                       cypress/screenshots/
-                      cypress/snapshots/**/__diff_output__/**
             - name: Upload Code Coverage Report Artifacts
               uses: actions/upload-artifact@v3
               with:
@@ -270,7 +269,6 @@ jobs:
                   path: |
                       cypress/videos/
                       cypress/screenshots/
-                      cypress/snapshots/**/__diff_output__/**
 
     run-website-audit:
         name: Run Website Audit
