@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 import * as registerCodeCoverageTasks from "@cypress/code-coverage/task";
-import { addMatchImageSnapshotPlugin } from "cypress-image-snapshot/plugin";
 
 /**
  * @type {Cypress.PluginConfig}
@@ -22,7 +21,6 @@ module.exports = (
     on: Cypress.PluginEvents,
     config: Cypress.PluginConfigOptions,
 ) => {
-    addMatchImageSnapshotPlugin(on, config);
     registerCodeCoverageTasks(on, config);
 
     on("before:browser:launch", (browser, launchOptions) => {
