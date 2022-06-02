@@ -30,7 +30,7 @@
         "lint": "npm run lint:ts && npm run lint:css",
         "lint:ts": "next lint",
         "lint:css": "stylelint *.css **/*.css",
-        "format": "npx prettier --write .",
+        "format": "prettier --write .",
         "test": "jest --watch",
         "test:ci": "jest --ci",
         "cypress:open": "cypress open",
