@@ -20,8 +20,6 @@ coverage
 # Cypress
 cypress/videos/**
 cypress/screenshots/**
-cypress/snapshots/**/__diff_output__/**
-cypress/.snapshot-report
 
 # Misc
 .DS_Store

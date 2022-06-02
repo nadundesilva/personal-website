@@ -34,8 +34,7 @@
         "test": "jest --watch",
         "test:ci": "jest --ci",
         "cypress:open": "cypress open",
-        "cypress:run": "cypress run --reporter cypress-image-snapshot/reporter",
-        "cypress:snapshots:update": "npm run cypress:run -- --env updateSnapshots=true"
+        "cypress:run": "cypress run"
     },
     "browserslist": {
         "production": [
@@ -58,7 +57,6 @@
         "@testing-library/jest-dom": "^5.16.4",
         "@testing-library/react": "^13.1.1",
         "@testing-library/user-event": "~14.1.1",
-        "@types/cypress-image-snapshot": "~3.1.6",
         "@types/jest": "^27.4.1",
         "@types/node": "~17.0.25",
         "@types/react": "~18.0.6",
@@ -67,7 +65,6 @@
         "@typescript-eslint/parser": "~5.20.0",
         "babel-plugin-import": "~1.13.5",
         "cypress": "^9.6.1",
-        "cypress-image-snapshot": "~4.0.1",
         "eslint": "~8.14.0",
         "eslint-config-next": "~12.1.5",
         "eslint-config-prettier": "^8.5.0",
