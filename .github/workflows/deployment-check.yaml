@@ -80,3 +80,23 @@ jobs:
               with:
                   name: website-audit
                   path: ./lhci-out
+
+    run-vulnerability-analysis:
+        name: Run Vulnerability Analysis
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Run Trivy vulnerability scanner
+              uses: aquasecurity/trivy-action@master
+              with:
+                  scan-type: fs
+                  vuln-type: library
+                  exit-code: 1
+                  format: sarif
+                  output: trivy-results.sarif
+            - name: Upload Trivy scan results to GitHub Security tab
+              uses: github/codeql-action/upload-sarif@v2
+              if: always()
+              with:
+                  sarif_file: trivy-results.sarif
