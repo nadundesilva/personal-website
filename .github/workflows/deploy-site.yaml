@@ -22,8 +22,7 @@ jobs:
               with:
                   node-version: "16.14.2"
             - name: Install Dependencies
-              run: |
-                  npm ci
+              run: npm ci
             - name: Lint Code Base
               uses: github/super-linter@v4
               env:
@@ -56,23 +55,25 @@ jobs:
             - name: Perform CodeQL Analysis
               uses: github/codeql-action/analyze@v1
 
-    run-ossar-analysis:
-        name: Run OSSAR Analysis
-        runs-on: windows-latest
+    run-vulnerability-analysis:
+        name: Run Vulnerability Analysis
+        runs-on: ubuntu-20.04
         steps:
-            - name: Checkout repository
+            - name: Checkout
               uses: actions/checkout@v3
-            - name: Install .NET
-              uses: actions/setup-dotnet@v1
+            - name: Run Trivy vulnerability scanner
+              uses: aquasecurity/trivy-action@master
               with:
-                  dotnet-version: "6.0.x"
-            - name: Run OSSAR
-              uses: github/ossar-action@v1
-              id: ossar
-            - name: Upload OSSAR results
-              uses: github/codeql-action/upload-sarif@v1
+                  scan-type: fs
+                  vuln-type: library
+                  exit-code: 1
+                  format: sarif
+                  output: trivy-results.sarif
+            - name: Upload Trivy scan results to GitHub Security tab
+              uses: github/codeql-action/upload-sarif@v2
+              if: always()
               with:
-                  sarif_file: ${{ steps.ossar.outputs.sarifFile }}
+                  sarif_file: trivy-results.sarif
 
     run-unit-tests:
         name: Run Unit Tests
@@ -85,11 +86,9 @@ jobs:
               with:
                   node-version: "16.14.2"
             - name: Install Dependencies
-              run: |
-                  npm ci
+              run: npm ci
             - name: Running Unit Tests
-              run: |
-                  npm run test:ci
+              run: npm run test:ci
             - name: Upload Code Coverage to CodeCov
               if: ${{ github.event_name == 'push' }}
               uses: codecov/codecov-action@v2
@@ -120,8 +119,7 @@ jobs:
               with:
                   node-version: "16.14.2"
             - name: Install Dependencies
-              run: |
-                  npm ci
+              run: npm ci
             - name: Instrument Website for Code Coverage
               run: |
                   npm ci
@@ -167,8 +165,7 @@ jobs:
               with:
                   node-version: "16.14.2"
             - name: Install Dependencies
-              run: |
-                  npm ci
+              run: npm ci
             - name: Build Site
               run: |
                   npm run build
@@ -198,8 +195,7 @@ jobs:
               with:
                   node-version: "16.14.2"
             - name: Install Dependencies
-              run: |
-                  npm ci
+              run: npm ci
             - name: Download Site
               uses: actions/download-artifact@v3
               with:
@@ -248,16 +244,14 @@ jobs:
               with:
                   node-version: "16.14.2"
             - name: Install Dependencies
-              run: |
-                  npm ci
+              run: npm ci
             - name: Download Site
               uses: actions/download-artifact@v3
               with:
                   name: site
                   path: _site/
             - name: Run End to End Tests
-              run: |
-                  bash .github/scripts/run-e2e-tests.sh
+              run: bash .github/scripts/run-e2e-tests.sh
               env:
                   TEST_BROWSER: ${{ matrix.browser }}
                   WEBSITE_BUILD_DIR: _site
@@ -313,7 +307,7 @@ jobs:
         needs:
             - run-super-linter
             - run-codeql-analysis
-            - run-ossar-analysis
+            - run-vulnerability-analysis
             - run-unit-tests
             - run-e2e-tests
             - build-site
@@ -338,5 +332,4 @@ jobs:
                   dry-run: ${{ github.event_name != 'push' }}
                   branch: gh-pages
                   folder: _site
-                  commit-message: |
-                      [Automated] Update Site (Source Commit: ${{ github.sha }})
+                  commit-message: "[Automated] Update Site (Source Commit: ${{ github.sha }})"
