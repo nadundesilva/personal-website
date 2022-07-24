@@ -25,7 +25,7 @@ const Photo = ({ photo, float }: PhotoProps): React.ReactElement => (
     <Box
         sx={{
             position: "relative",
-            float: float,
+            float,
             height: "auto",
             width: { xs: "100%", md: "20vw" },
             my: 2,
