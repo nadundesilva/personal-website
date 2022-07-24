@@ -150,7 +150,7 @@ describe.each([
         const pageHeight = DIV_HEIGHT * 4 + 1000;
         return {
             name: "page height greater twice div height, with div at viewport middle",
-            pageHeight: pageHeight,
+            pageHeight,
             divTop: pageHeight / 2 - DIV_HEIGHT / 2,
         };
     })(),
@@ -841,7 +841,7 @@ describe.each([
                             name:
                                 "viewport bottom below div bottom, with viewport top between div halfway point and div bottom, " +
                                 "with viewport halfway point below div bottom",
-                            viewportTop: viewportTop,
+                            viewportTop,
                             direction: isDirectionBelow ? -1 : 0,
                             offset: isDirectionBelow
                                 ? (viewportHeight / 2 + DIV_HEIGHT / 2) /
@@ -912,8 +912,8 @@ describe.each([
                         });
 
                         await testHook({
-                            direction: direction,
-                            offset: offset,
+                            direction,
+                            offset,
                         });
                     },
                 );

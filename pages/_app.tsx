@@ -92,7 +92,7 @@ export function reportWebVitals({
     startTime,
 }: NextWebVitalsMetric): void {
     (window as any).gtag("event", name, {
-        value: value,
+        value,
         // Custom parameters
         metric_id: id,
         metric_label: label,
