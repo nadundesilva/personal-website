@@ -11,26 +11,11 @@
  * limitations under the License.
  */
 
-const withPlugins = require("next-compose-plugins");
-
-const pwa = require("next-pwa");
+const withPWA = require("next-pwa");
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: process.env.ANALYZE === "true",
 });
-
-const plugins = [
-    [
-        pwa,
-        {
-            pwa: {
-                dest: "public",
-                register: true,
-            },
-        },
-    ],
-    [withBundleAnalyzer],
-];
 
 const nextConfig = {
     eslint: {
@@ -43,4 +28,12 @@ const nextConfig = {
     productionBrowserSourceMaps: true,
 };
 
-module.exports = withPlugins(plugins, nextConfig);
+module.exports = withBundleAnalyzer(
+    withPWA({
+        ...nextConfig,
+        pwa: {
+            dest: "public",
+            register: true,
+        },
+    }),
+);
