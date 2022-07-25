@@ -17,23 +17,31 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: process.env.ANALYZE === "true",
 });
 
-const nextConfig = {
-    eslint: {
-        ignoreDuringBuilds: process.env["BUILD_TYPE"] == "test",
+const withMDX = require("@next/mdx")({
+    extension: /\.mdx?$/,
+    options: {
+        remarkPlugins: [],
+        rehypePlugins: [],
+        providerImportSource: "@mdx-js/react",
     },
-    images: {
-        loader: "imgix",
-        path: "https://nadundesilva.imgix.net/",
-    },
-    productionBrowserSourceMaps: true,
-};
+});
 
-module.exports = withBundleAnalyzer(
-    withPWA({
-        ...nextConfig,
-        pwa: {
-            dest: "public",
-            register: true,
-        },
-    }),
+module.exports = withMDX(
+    withBundleAnalyzer(
+        withPWA({
+            pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+            eslint: {
+                ignoreDuringBuilds: process.env["BUILD_TYPE"] == "test",
+            },
+            images: {
+                loader: "imgix",
+                path: "https://nadundesilva.imgix.net/",
+            },
+            productionBrowserSourceMaps: true,
+            pwa: {
+                dest: "public",
+                register: true,
+            },
+        }),
+    ),
 );
