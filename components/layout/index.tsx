@@ -10,10 +10,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import BlogPostLayout from "./BlogPostLayout";
 import Layout from "./Layout";
 import LayoutContent from "./LayoutContent";
 import useScrollOffset from "./scrolling";
 
 export default Layout;
 
-export { LayoutContent, useScrollOffset };
+export { BlogPostLayout, LayoutContent, useScrollOffset };
