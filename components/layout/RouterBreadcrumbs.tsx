@@ -17,7 +17,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { Routes, Route } from "@/constants/routes";
+import { Routes, Route, ANY_ROUTE } from "@/constants/routes";
 
 const RouterBreadcrumbs = (): React.ReactElement | null => {
     const router = useRouter();
@@ -39,8 +39,8 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
                 const currentSubPath = "/" + currentPathnames[0];
                 if (currentSubPath in currentRoutes) {
                     const route = currentRoutes[currentSubPath];
-                    const currentPath = currentBasePath + currentSubPath;
                     if (currentPathnames.length > 1) {
+                        const currentPath = currentBasePath + currentSubPath;
                         breadcrumbs.push({
                             name: route.name,
                             path: currentPath,
@@ -57,6 +57,11 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
                             name: route.name,
                         });
                     }
+                } else if (ANY_ROUTE in currentRoutes) {
+                    const route = currentRoutes[ANY_ROUTE];
+                    breadcrumbs.push({
+                        name: route.name,
+                    });
                 }
             }
         };

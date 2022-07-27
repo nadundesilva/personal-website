@@ -15,6 +15,8 @@ export interface Route {
     subRoutes?: { [key: string]: Route };
 }
 
+export const ANY_ROUTE = "*";
+
 export const Routes: { [key: string]: Route } = {
     "/experience": {
         name: "Experience",
