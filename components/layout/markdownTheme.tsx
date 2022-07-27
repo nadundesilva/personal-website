@@ -18,15 +18,6 @@ const HeadingOne = ({
     children,
     ...props
 }: React.HTMLAttributes<HTMLHeadingElement>): React.ReactElement => (
-    <Typography variant="h4" component="h1" sx={{ pt: 2 }} {...props}>
-        {children}
-    </Typography>
-);
-
-const HeadingTwo = ({
-    children,
-    ...props
-}: React.HTMLAttributes<HTMLHeadingElement>): React.ReactElement => (
     <Typography variant="h6" component="h2" sx={{ pt: 2 }} {...props}>
         {children}
     </Typography>
@@ -55,7 +46,6 @@ const MarkdownThemeProvider = ({
 }: MarkdownThemeProviderProps): React.ReactElement => {
     const markdownComponents = {
         h1: HeadingOne,
-        h2: HeadingTwo,
         p: Paragraph,
     };
 
