@@ -12,8 +12,10 @@
  */
 import { Typography, Container } from "@mui/material";
 import Head from "next/head";
+import Image from "next/image";
 
 import Layout, { LayoutContent } from "@/components/layout";
+import { ImageAssertFromSource } from "@/constants/images";
 
 interface BlogPostTitleProps {
     children: React.ReactNode;
@@ -22,13 +24,18 @@ interface BlogPostTitleProps {
 const BlogPostTitle = ({
     children,
 }: BlogPostTitleProps): React.ReactElement => (
-    <Typography variant="h4" component="h1" sx={{ pt: 2 }}>
+    <Typography
+        variant="h3"
+        component="h1"
+        sx={{ pt: 2, fontWeight: "bold", fontSize: 35 }}
+    >
         {children}
     </Typography>
 );
 
 interface BlogPostMetadata {
     title: string;
+    mainImage: ImageAssertFromSource;
 }
 
 interface BlogPostLayoutProps {
@@ -48,6 +55,19 @@ const BlogPostLayout = ({
         <Layout>
             <LayoutContent>
                 <BlogPostTitle>{metadata.title}</BlogPostTitle>
+                <Container
+                    sx={{ position: "relative", height: 400, my: 2 }}
+                    disableGutters
+                >
+                    <Image
+                        layout="fill"
+                        objectFit="cover"
+                        src={metadata.mainImage.src}
+                        alt={metadata.mainImage.alt}
+                        placeholder="blur"
+                        blurDataURL={metadata.mainImage.blurDataURL}
+                    />
+                </Container>
                 {children}
             </LayoutContent>
         </Layout>
