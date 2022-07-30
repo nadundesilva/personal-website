@@ -33,8 +33,10 @@ const BlogPostTitle = ({
     </Typography>
 );
 
-interface BlogPostMetadata {
+export interface BlogPostMetadata {
     title: string;
+    description: string;
+    publishedDate: string;
     mainImage: ImageAssertFromSource;
 }
 
