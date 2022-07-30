@@ -32,4 +32,12 @@ export const Routes: { [key: string]: Route } = {
             },
         },
     },
+    "/blog": {
+        name: "Blog",
+        subRoutes: {
+            [ANY_ROUTE]: {
+                name: "Post",
+            },
+        },
+    },
 };
