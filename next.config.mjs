@@ -11,22 +11,25 @@
  * limitations under the License.
  */
 
-const withPWA = require("next-pwa");
+import withPWA from "next-pwa";
+import remarkUnwrapImages from "remark-unwrap-images";
+import nextMDX from "@next/mdx";
+import NextBundleAnalyzer from "@next/bundle-analyzer";
 
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
+const withBundleAnalyzer = NextBundleAnalyzer({
     enabled: process.env.ANALYZE === "true",
 });
 
-const withMDX = require("@next/mdx")({
+const withMDX = nextMDX({
     extension: /\.mdx?$/,
     options: {
-        remarkPlugins: [],
+        remarkPlugins: [remarkUnwrapImages],
         rehypePlugins: [],
         providerImportSource: "@mdx-js/react",
     },
 });
 
-module.exports = withMDX(
+export default withMDX(
     withBundleAnalyzer(
         withPWA({
             pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],

@@ -12,6 +12,7 @@
  */
 import { MDXProvider } from "@mdx-js/react";
 import { Box, Container, Link, Typography } from "@mui/material";
+import Image from "next/image";
 import React from "react";
 
 const HeadingOneElement = ({
@@ -85,6 +86,15 @@ const AnchorElement = ({
     </Link>
 );
 
+const ImageElement = ({
+    src,
+    alt,
+}: React.HTMLProps<HTMLImageElement>): React.ReactElement => (
+    <Container sx={{ position: "relative", height: 500, my: 2 }} disableGutters>
+        <Image layout="fill" objectFit="cover" src={src ?? ""} alt={alt} />
+    </Container>
+);
+
 const PreElement = ({
     children,
     ...props
@@ -136,6 +146,7 @@ const MarkdownThemeProvider = ({
         hr: HorizontalLineElement,
         p: ParagraphElement,
         a: AnchorElement,
+        img: ImageElement,
         pre: PreElement,
         code: CodeElement,
     };
