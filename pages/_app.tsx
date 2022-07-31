@@ -20,7 +20,8 @@ import React, { useEffect, useState } from "react";
 
 import MarkdownThemeProvider from "@/components/layout/markdownTheme";
 import WebsiteThemeProvider from "@/components/layout/theme";
-import "@/styles.css";
+import "@/styles/main.css";
+import "@/styles/syntax-highlighting.css";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createCache({ key: "css" });
