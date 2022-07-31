@@ -76,8 +76,8 @@ const AboutMe = (): React.ReactElement => {
                     WSO2. I have several years of working experience as a
                     Software Engineer working on multiple Research &amp;
                     Development projects at WSO2. I love learning about new
-                    technologies and is particularly interested in Deep
-                    Learning.
+                    technologies and is particularly interested in Cloud
+                    Technologoes &amp; Deep Learning.
                 </Typography>
                 <ItemDivider />
                 <Typography>Bachelor of Science in Engineering</Typography>
