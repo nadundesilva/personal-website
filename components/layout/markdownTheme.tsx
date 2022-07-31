@@ -102,7 +102,10 @@ const PreElement = ({
     return (
         <Box
             sx={{
+                "backgroundColor": "#242633",
+                "color": "#f8f8f2",
                 "& code": {
+                    backgroundColor: "transparent !important",
                     display: "block",
                     px: 1,
                     py: 1,
