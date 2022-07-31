@@ -13,6 +13,7 @@
 
 import withPWA from "next-pwa";
 import remarkUnwrapImages from "remark-unwrap-images";
+import rehypePrism from "rehype-prism-plus";
 import nextMDX from "@next/mdx";
 import NextBundleAnalyzer from "@next/bundle-analyzer";
 
@@ -24,7 +25,9 @@ const withMDX = nextMDX({
     extension: /\.mdx?$/,
     options: {
         remarkPlugins: [remarkUnwrapImages],
-        rehypePlugins: [],
+        rehypePlugins: [
+            [rehypePrism, { ignoreMissing: true, showLineNumbers: true }],
+        ],
         providerImportSource: "@mdx-js/react",
     },
 });

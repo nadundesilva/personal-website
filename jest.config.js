@@ -24,7 +24,7 @@ const customJestConfig = {
     moduleNameMapper: {
         "@/components/(.*)": ["<rootDir>/components/$1"],
         "@/constants/(.*)": ["<rootDir>/constants/$1"],
-        "@/styles.css": ["<rootDir>/styles.css"],
+        "@/styles/(.*)": ["<rootDir>/styles/$1"],
     },
     setupFilesAfterEnv: ["<rootDir>/jest-setup.js"],
     transform: {
