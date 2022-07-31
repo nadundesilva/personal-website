@@ -58,7 +58,7 @@ const BlogPostLayout = ({
             <LayoutContent>
                 <BlogPostTitle>{metadata.title}</BlogPostTitle>
                 <Container
-                    sx={{ position: "relative", height: 400, my: 2 }}
+                    sx={{ position: "relative", height: 500, my: 2 }}
                     disableGutters
                 >
                     <Image
