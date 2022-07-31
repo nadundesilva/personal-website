@@ -109,7 +109,7 @@ const Layout = ({ children, window }: LayoutProps): React.ReactElement => {
                                 variant="text"
                                 color="primary"
                                 disableElevation
-                                sx={{ color: "#ffffff" }}
+                                sx={{ color: "#ffffff", pl: 2 }}
                             >
                                 {route.name}
                             </Button>
