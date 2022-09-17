@@ -11,15 +11,11 @@
  * limitations under the License.
  */
 
-import withPWA from "next-pwa";
+import nextPwa from "next-pwa";
 import remarkUnwrapImages from "remark-unwrap-images";
 import rehypePrism from "rehype-prism-plus";
 import nextMDX from "@next/mdx";
 import NextBundleAnalyzer from "@next/bundle-analyzer";
-
-const withBundleAnalyzer = NextBundleAnalyzer({
-    enabled: process.env.ANALYZE === "true",
-});
 
 const withMDX = nextMDX({
     extension: /\.mdx?$/,
@@ -30,6 +26,15 @@ const withMDX = nextMDX({
         ],
         providerImportSource: "@mdx-js/react",
     },
+});
+
+const withBundleAnalyzer = NextBundleAnalyzer({
+    enabled: process.env.ANALYZE === "true",
+});
+
+const withPWA = nextPwa({
+    dest: "public",
+    register: true,
 });
 
 export default withMDX(
@@ -44,10 +49,6 @@ export default withMDX(
                 path: "https://nadundesilva.imgix.net/",
             },
             productionBrowserSourceMaps: true,
-            pwa: {
-                dest: "public",
-                register: true,
-            },
         }),
     ),
 );
