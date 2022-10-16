@@ -32,6 +32,9 @@ export const Routes: { [key: string]: Route } = {
             },
         },
     },
+    "/projects": {
+        name: "Projects",
+    },
     "/blog": {
         name: "Blog",
         subRoutes: {

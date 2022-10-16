@@ -14,7 +14,8 @@ import BlogPostLayout from "./BlogPostLayout";
 import Layout from "./Layout";
 import LayoutContent from "./LayoutContent";
 import useScrollOffset from "./scrolling";
+import { useWebsiteTheme } from "./theme";
 
 export default Layout;
 
-export { BlogPostLayout, LayoutContent, useScrollOffset };
+export { BlogPostLayout, LayoutContent, useScrollOffset, useWebsiteTheme };
