@@ -105,7 +105,7 @@ const Achievements = (): React.ReactElement => {
     return (
         <Container maxWidth={false} disableGutters>
             <Head>
-                <title>Achievements of Nadun De Silva</title>
+                <title>Nadun De Silva | Achievements</title>
             </Head>
             <Layout>
                 <LayoutContent>
