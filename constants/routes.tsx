@@ -34,6 +34,11 @@ export const Routes: { [key: string]: Route } = {
     },
     "/projects": {
         name: "Projects",
+        subRoutes: {
+            "/personal": {
+                name: "Personal Projects",
+            },
+        },
     },
     "/blog": {
         name: "Blog",

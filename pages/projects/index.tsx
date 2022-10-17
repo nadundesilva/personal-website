@@ -10,8 +10,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Container, Link } from "@mui/material";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, Container, Link } from "@mui/material";
 import Head from "next/head";
+import NextLink from "next/link";
 import React from "react";
 
 import {
@@ -84,6 +87,15 @@ const Projects = (): React.ReactElement => {
             </Head>
             <Layout>
                 <LayoutContent>
+                    <NextLink passHref href={"/projects/personal"}>
+                        <Button
+                            size="small"
+                            variant="outlined"
+                            endIcon={<FontAwesomeIcon icon={faArrowRight} />}
+                        >
+                            View Personal Projects
+                        </Button>
+                    </NextLink>
                     <Section>
                         <SectionHeading>Choreo</SectionHeading>
                         {choreoLogo}
