@@ -67,10 +67,16 @@ const Projects = (): React.ReactElement => {
             Istio
         </Link>
     );
+    const Siddhi = (
+        <Link target={"_blank"} href={"https://siddhi.io/"}>
+            Siddhi
+        </Link>
+    );
 
     const choreoLogo = <Logo logo={Logos.Choreo} height={"2em"} />;
     const ballerinaLogo = <Logo logo={Logos.Ballerina} height={"1.5em"} />;
     const celleryLogo = <Logo logo={Logos.Cellery} height={"2.5em"} />;
+    const siddhiLogo = <Logo logo={Logos.Siddhi} height={"2.3em"} />;
     return (
         <Container maxWidth={false} disableGutters>
             <Head>
@@ -313,6 +319,59 @@ const Projects = (): React.ReactElement => {
                                 which allows users to view a cell and all of its
                                 dependencies (this was later adopted into the VS
                                 Code plugin as well).
+                            </li>
+                        </HighlightsSection>
+                    </Section>
+                    <Section>
+                        <SectionHeading>Siddhi</SectionHeading>
+                        {siddhiLogo}
+                        <Timespan
+                            value={
+                                new TimeRange(
+                                    new Time(2016, "July"),
+                                    new Time(2016, "December"),
+                                )
+                            }
+                        />
+                        <Paragraph>
+                            {Siddhi} is a fully open source, cloud native,
+                            scalable, streaming, and complex event processing
+                            system capable of building event-driven applications
+                            for use cases such as real-time analytics, data
+                            integration, notification management, and adaptive
+                            decision-making. Siddhi was developed within {WSO2}{" "}
+                            and maintained for a long time along with other
+                            solutions to provide analytics for otheer {WSO2}{" "}
+                            products as well.
+                        </Paragraph>
+                        <Paragraph>
+                            {Siddhi} has extensions model which adds many
+                            capabilities to the streaming engine. While working
+                            as a Software Engineering intern, I worked on the
+                            initial implementation of {Siddhi} extensions within
+                            the extrema namespace, which included extensions for
+                            finding the maximum and minimum values in various
+                            ways in continuous event streams. Moreover, during
+                            the Google Summer of Code project, I worked on an
+                            autocomplete solution for the {Siddhi} editor for
+                            providing completetions for siddhi syntax along with
+                            the data about the extensions.
+                        </Paragraph>
+                        <HighlightsSection>
+                            <li>
+                                Designed and implemented a maven plugin for
+                                automatically generating documentation for
+                                Siddhi extensions using annotated data written
+                                in the java code.
+                            </li>
+                            <li>
+                                Implemented a Notebook prototype for analytics
+                                and visualizations using the WSO2 Data Analytics
+                                Server.
+                            </li>
+                            <li>
+                                Implemented six extensions for Siddhi, Stream
+                                Processing Engine.
                             </li>
                         </HighlightsSection>
                     </Section>
