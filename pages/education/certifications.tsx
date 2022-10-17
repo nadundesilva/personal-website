@@ -80,7 +80,7 @@ const Certifications = (): React.ReactElement => {
     return (
         <Container maxWidth={false} disableGutters>
             <Head>
-                <title>Certifications of Nadun De Silva</title>
+                <title>Nadun De Silva | Certifications</title>
             </Head>
             <Layout>
                 <LayoutContent>

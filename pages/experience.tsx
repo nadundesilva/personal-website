@@ -89,7 +89,7 @@ const Experience = (): React.ReactElement => {
     return (
         <Container maxWidth={false} disableGutters>
             <Head>
-                <title>Experience of Nadun De Silva</title>
+                <title>Nadun De Silva | Experience</title>
             </Head>
             <Layout>
                 <LayoutContent>

@@ -51,7 +51,7 @@ const BlogPostLayout = ({
 }: BlogPostLayoutProps): React.ReactElement => (
     <Container maxWidth={false} disableGutters>
         <Head>
-            <title>{metadata.title}</title>
+            <title>Nadun De Silva | Blog - {metadata.title}</title>
         </Head>
 
         <Layout>
