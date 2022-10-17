@@ -80,7 +80,7 @@ const Projects = (): React.ReactElement => {
     return (
         <Container maxWidth={false} disableGutters>
             <Head>
-                <title>Projects of Nadun De Silva</title>
+                <title>Nadun De Silva | Projects</title>
             </Head>
             <Layout>
                 <LayoutContent>

@@ -75,7 +75,7 @@ const Education = (): React.ReactElement => {
     return (
         <Container maxWidth={false} disableGutters>
             <Head>
-                <title>Education of Nadun De Silva</title>
+                <title>Nadun De Silva | Education</title>
             </Head>
             <Layout>
                 <LayoutContent>
