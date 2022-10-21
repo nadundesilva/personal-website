@@ -22,13 +22,17 @@ jobs:
               uses: actions/setup-node@v2
               with:
                   node-version: "16.17.0"
-            - name: Run End to End Tests
+            - name: Install NPM Dependencies
               run: |
                   npm ci
-                  docker run -t -v "${PWD}:/test" -w /test cypress/included:9.6.1 \
-                      run \
-                    --headless \
-                    --browser ${{ matrix.browser }}
+            - name: Run E2E Tests
+              uses: cypress-io/github-action@v4.2.0
+              with:
+                  record: true
+                  tag: deployment-check-in-browser-${{ matrix.browser }}
+              env:
+                  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Upload artifacts
               if: always()
               uses: actions/upload-artifact@v3
