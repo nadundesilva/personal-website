@@ -31,6 +31,7 @@ jobs:
                   LINTER_RULES_PATH: .
                   VALIDATE_ALL_CODEBASE: "true"
                   VALIDATE_CSS: "false"
+                  VALIDATE_HTML: "false"
                   TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.json
                   TYPESCRIPT_DEFAULT_STYLE: prettier
                   JAVASCRIPT_DEFAULT_STYLE: prettier
@@ -128,12 +129,19 @@ jobs:
                   npm run build
               env:
                   BUILD_TYPE: test
-            - name: Run End to End Tests
-              run: |
-                  bash .github/scripts/run-e2e-tests.sh
+            - name: Run E2E Tests
+              uses: cypress-io/github-action@v4.2.0
+              with:
+                  start: bash .github/scripts/start-server.sh
+                  browser: ${{ matrix.browser }}
+                  record: true
+                  tag: prebuild-test-in-browser-${{ matrix.browser }}
               env:
-                  TEST_BROWSER: ${{ matrix.browser }}
                   WEBSITE_BUILD_DIR: out
+                  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+                  tag: deployment-check-in-browser-${{ matrix.browser }}
+            - name: Shutdown Test Server
+              run: bash .github/scripts/stop-server.sh
             - name: Upload Code Coverage to CodeCov
               if: ${{ github.event_name == 'push' }}
               uses: codecov/codecov-action@v2
@@ -204,8 +212,7 @@ jobs:
                   path: _site/
             - name: Start Server
               run: |
-                  source .github/scripts/utils.sh
-                  startServer
+                  ./.github/scripts/start-server.sh
                   echo "SERVE_PID=${SERVE_PID}" >> "${GITHUB_ENV}"
               env:
                   WEBSITE_BUILD_DIR: _site
@@ -217,8 +224,7 @@ jobs:
                   fail: true
             - name: Stop Server
               run: |
-                  source .github/scripts/utils.sh
-                  stopServer
+                  ./.github/scripts/stop-server.sh
               env:
                   WEBSITE_BUILD_DIR: _site
             - name: Upload Link Checker Report
@@ -251,11 +257,19 @@ jobs:
               with:
                   name: site
                   path: _site/
-            - name: Run End to End Tests
-              run: bash .github/scripts/run-e2e-tests.sh
+            - name: Run E2E Tests
+              uses: cypress-io/github-action@v4.2.0
+              with:
+                  start: bash .github/scripts/start-server.sh
+                  browser: ${{ matrix.browser }}
+                  record: true
+                  tag: check-site-build-in-browser-${{ matrix.browser }}
               env:
-                  TEST_BROWSER: ${{ matrix.browser }}
                   WEBSITE_BUILD_DIR: _site
+                  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Shutdown Test Server
+              run: bash .github/scripts/stop-server.sh
             - name: Upload artifacts
               if: always()
               uses: actions/upload-artifact@v3
@@ -285,13 +299,12 @@ jobs:
               run: |
                   npm install -g @lhci/cli@0.9.x
                   sudo apt install -y ca-certificates
-                  source .github/scripts/utils.sh
 
-                  startServer
+                  ./.github/scripts/start-server.sh
                   sudo cp "${NODE_EXTRA_CA_CERTS}" /usr/local/share/ca-certificates
                   sudo update-ca-certificates
                   lhci autorun
-                  stopServer
+                  ./.github/scripts/stop-server.sh
               env:
                   LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Upload artifacts
