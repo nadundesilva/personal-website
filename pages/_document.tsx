@@ -91,7 +91,6 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
             ],
             "font-src": [
                 "https://fonts.gstatic.com",
-                "https://script.hotjar.com",
             ],
             "script-src": [
                 "'self'",
@@ -99,16 +98,12 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                 "http://www.googletagmanager.com",
                 "'sha256-zGXNhnZec+38XK4g2xHGdVAURhFrFDpw+SmUnNuuFr4='",
                 "'sha256-CnLuI7DefZ5avS8yKkus4bsgcDh4kOpq8JeXI+hBkuo='",
-                "https://static.hotjar.com",
-                "https://script.hotjar.com",
             ],
             "connect-src": [
                 "'self'",
                 "https://www.google-analytics.com",
-                "https://in.hotjar.com",
             ],
             "prefetch-src": ["'self'"],
-            "frame-src": ["https://vars.hotjar.com"],
         };
         if (
             process.env.NODE_ENV === "development" ||
@@ -233,22 +228,6 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                                 "name": FULL_NAME,
                                 "@context": "https://schema.org",
                             }),
-                        }}
-                    />
-
-                    {/* Hotjar Tracking Code for Personal Website */}
-                    <script
-                        dangerouslySetInnerHTML={{
-                            __html: `
-                        (function(h,o,t,j,a,r){
-                            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                            h._hjSettings={hjid:2956846,hjsv:6};
-                            a=o.getElementsByTagName('head')[0];
-                            r=o.createElement('script');r.async=1;
-                            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-                            a.appendChild(r);
-                        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-                        `,
                         }}
                     />
 
