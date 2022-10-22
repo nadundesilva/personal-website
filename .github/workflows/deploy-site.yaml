@@ -212,8 +212,7 @@ jobs:
                   path: _site/
             - name: Start Server
               run: |
-                  ./.github/scripts/start-server.sh
-                  echo "SERVE_PID=${SERVE_PID}" >> "${GITHUB_ENV}"
+                  source ./.github/scripts/start-server.sh
               env:
                   WEBSITE_BUILD_DIR: _site
             - name: Link Checker
@@ -224,7 +223,7 @@ jobs:
                   fail: true
             - name: Stop Server
               run: |
-                  ./.github/scripts/stop-server.sh
+                  source ./.github/scripts/stop-server.sh
               env:
                   WEBSITE_BUILD_DIR: _site
             - name: Upload Link Checker Report
@@ -298,13 +297,9 @@ jobs:
             - name: Run Lighthouse Audit
               run: |
                   npm install -g @lhci/cli@0.9.x
-                  sudo apt install -y ca-certificates
-
-                  ./.github/scripts/start-server.sh
-                  sudo cp "${NODE_EXTRA_CA_CERTS}" /usr/local/share/ca-certificates
-                  sudo update-ca-certificates
+                  source ./.github/scripts/start-server.sh
                   lhci autorun
-                  ./.github/scripts/stop-server.sh
+                  source ./.github/scripts/stop-server.sh
               env:
                   LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Upload artifacts
