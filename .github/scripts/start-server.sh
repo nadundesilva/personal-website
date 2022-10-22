@@ -26,6 +26,11 @@ export NODE_EXTRA_CA_CERTS="${PWD}/server.crt"
 echo
 echo "Starting website server"
 sudo echo "127.0.0.1 nadundesilva.github.io" | sudo tee -a /etc/hosts
+echo
+echo
+cat /etc/hosts
+echo
+echo
 npx serve "${WEBSITE_BUILD_DIR}" \
     --no-port-switching \
     --debug \
@@ -36,3 +41,7 @@ npx serve "${WEBSITE_BUILD_DIR}" \
 echo "SERVE_PID=${!}" >> "${GITHUB_ENV}"
 sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 443 -j REDIRECT --to-port 8080
 npx wait-on -t 10000 -i 1000 --verbose https://nadundesilva.github.io
+
+sudo apt install -y ca-certificates
+sudo cp "${NODE_EXTRA_CA_CERTS}" /usr/local/share/ca-certificates
+sudo update-ca-certificates
