@@ -139,6 +139,7 @@ jobs:
               env:
                   WEBSITE_BUILD_DIR: out
                   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   tag: deployment-check-in-browser-${{ matrix.browser }}
             - name: Shutdown Test Server
               run: bash .github/scripts/stop-server.sh
