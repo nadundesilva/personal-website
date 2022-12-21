@@ -91,7 +91,15 @@ const ImageElement = ({
     alt,
 }: React.HTMLProps<HTMLImageElement>): React.ReactElement => (
     <Container sx={{ position: "relative", height: 500, my: 2 }} disableGutters>
-        <Image layout="fill" objectFit="cover" src={src ?? ""} alt={alt} />
+        <Image
+            src={src ?? ""}
+            alt={alt ?? ""}
+            fill
+            sizes="100vw"
+            style={{
+                objectFit: "cover",
+            }}
+        />
     </Container>
 );
 
