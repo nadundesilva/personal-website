@@ -45,8 +45,8 @@ export default withMDX(
                 ignoreDuringBuilds: process.env["BUILD_TYPE"] == "test",
             },
             images: {
-                loader: "imgix",
-                path: "https://nadundesilva.imgix.net/",
+                loader: "custom",
+                loaderFile: "./nextImageLoader.js",
             },
             productionBrowserSourceMaps: true,
         }),
