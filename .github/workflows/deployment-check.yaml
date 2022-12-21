@@ -26,7 +26,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v2
               with:
-                  node-version: "16.17.0"
+                  node-version: "18.12.1"
             - name: Install NPM Dependencies
               run: |
                   npm ci
@@ -75,7 +75,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v2
               with:
-                  node-version: "16.17.0"
+                  node-version: "18.12.1"
             - name: Run Lighthouse Audit
               run: |
                   npm install -g @lhci/cli@0.9.x
