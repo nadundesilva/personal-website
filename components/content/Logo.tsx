@@ -26,10 +26,13 @@ const Logo = ({ logo, height }: LogoProps): React.ReactElement => {
         <Box sx={{ position: "relative", height: height ?? "3em", my: 1 }}>
             <Image
                 alt={logo.alt}
-                layout="fill"
-                objectFit="scale-down"
-                objectPosition="left top"
                 src={logo.src(theme.palette.mode)}
+                fill
+                sizes="100vw"
+                style={{
+                    objectFit: "scale-down",
+                    objectPosition: "left top",
+                }}
             />
         </Box>
     );

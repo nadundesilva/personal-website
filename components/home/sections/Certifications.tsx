@@ -101,12 +101,14 @@ const Certifications = (): React.ReactElement => {
                                             >
                                                 <Image
                                                     alt={certification.logo.alt}
-                                                    layout="fill"
                                                     src={certification.logo.src(
                                                         theme.palette.mode,
                                                     )}
+                                                    fill
                                                     sizes={imageSizes}
-                                                    objectFit="contain"
+                                                    style={{
+                                                        objectFit: "contain",
+                                                    }}
                                                 />
                                             </Container>
                                         )}

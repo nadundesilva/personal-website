@@ -62,12 +62,15 @@ const BlogPostLayout = ({
                     disableGutters
                 >
                     <Image
-                        layout="fill"
-                        objectFit="cover"
                         src={metadata.mainImage.src}
                         alt={metadata.mainImage.alt}
                         placeholder="blur"
                         blurDataURL={metadata.mainImage.blurDataURL}
+                        fill
+                        sizes="100vw"
+                        style={{
+                            objectFit: "cover",
+                        }}
                     />
                 </Container>
                 {children}
