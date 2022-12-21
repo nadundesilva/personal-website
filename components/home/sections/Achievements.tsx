@@ -128,11 +128,13 @@ const Achievements = (): React.ReactElement => {
                         <Image
                             src={achievementSection.photo.src}
                             alt={achievementSection.photo.alt}
-                            layout="fill"
-                            objectFit="cover"
-                            sizes={`${Math.ceil(100 / totalColumns)}vw`}
                             placeholder="blur"
                             blurDataURL={achievementSection.photo.blurDataURL}
+                            fill
+                            sizes={`${Math.ceil(100 / totalColumns)}vw`}
+                            style={{
+                                objectFit: "cover",
+                            }}
                         />
                     </Box>
                 </Grow>

@@ -89,9 +89,7 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                 "'unsafe-inline'",
                 "https://fonts.googleapis.com",
             ],
-            "font-src": [
-                "https://fonts.gstatic.com",
-            ],
+            "font-src": ["https://fonts.gstatic.com"],
             "script-src": [
                 "'self'",
                 "https://www.googletagmanager.com",
@@ -99,10 +97,7 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                 "'sha256-zGXNhnZec+38XK4g2xHGdVAURhFrFDpw+SmUnNuuFr4='",
                 "'sha256-CnLuI7DefZ5avS8yKkus4bsgcDh4kOpq8JeXI+hBkuo='",
             ],
-            "connect-src": [
-                "'self'",
-                "https://www.google-analytics.com",
-            ],
+            "connect-src": ["'self'", "https://www.google-analytics.com"],
             "prefetch-src": ["'self'"],
         };
         if (

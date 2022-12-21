@@ -34,13 +34,16 @@ const Photo = ({ photo, float }: PhotoProps): React.ReactElement => (
         }}
     >
         <Image
-            layout="intrinsic"
             width={photo.width}
             height={photo.height}
             src={photo.src}
             alt={photo.alt}
             placeholder="blur"
             blurDataURL={photo.blurDataURL}
+            style={{
+                maxWidth: "100%",
+                height: "auto",
+            }}
         />
     </Box>
 );

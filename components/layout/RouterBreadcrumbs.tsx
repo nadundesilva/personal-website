@@ -83,9 +83,7 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
                     </Typography>
                 ) : (
                     <Link passHref href={breadcrumb.path} key={breadcrumb.name}>
-                        <BreadcrumbLink color="inherit">
-                            {breadcrumb.name}
-                        </BreadcrumbLink>
+                        {breadcrumb.name}
                     </Link>
                 );
             })}
