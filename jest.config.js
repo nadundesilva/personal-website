@@ -27,14 +27,6 @@ const customJestConfig = {
         "@/styles/(.*)": ["<rootDir>/styles/$1"],
     },
     setupFilesAfterEnv: ["<rootDir>/jest-setup.js"],
-    transform: {
-        "^.+\\.(js|jsx|ts|tsx)$": [
-            "babel-jest",
-            {
-                presets: ["next/babel"],
-            },
-        ],
-    },
     testEnvironment: "jest-environment-jsdom",
 };
 
