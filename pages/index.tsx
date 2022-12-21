@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 import { Box, CircularProgress, Container, styled } from "@mui/material";
-import dynamic from "next/dynamic";
+import dynamic, { DynamicOptionsLoadingProps } from "next/dynamic";
 import Head from "next/head";
 import React, { useRef, useState } from "react";
 
@@ -23,42 +23,60 @@ const SectionContainer = styled(Container)(({ theme }) => ({
     paddingTop: `${theme.mixins.toolbar.minHeight ?? 0}px`,
 }));
 
-const dynamicOptions = {
-    loading: () => (
-        <Box sx={{ display: "flex", justifyContent: "center", py: 5 }}>
-            <CircularProgress />
-        </Box>
-    ),
-    ssr: false,
-};
+const pageLoader = (opt: DynamicOptionsLoadingProps): JSX.Element => (
+    <Box sx={{ display: "flex", justifyContent: "center", py: 5 }}>
+        <CircularProgress />
+    </Box>
+);
 
 const AboutMe = dynamic<{}>(
     async () => await import("@/components/home/AboutMe"),
-    dynamicOptions,
+    {
+        loading: pageLoader,
+        ssr: false,
+    },
 );
 const Achievements = dynamic<{}>(
     async () => await import("@/components/home/sections/Achievements"),
-    dynamicOptions,
+    {
+        loading: pageLoader,
+        ssr: false,
+    },
 );
 const ContributedProjects = dynamic<{}>(
     async () => await import("@/components/home/sections/ContributedProjects"),
-    dynamicOptions,
+    {
+        loading: pageLoader,
+        ssr: false,
+    },
 );
 const Certifications = dynamic<{}>(
     async () => await import("@/components/home/sections/Certifications"),
-    dynamicOptions,
+    {
+        loading: pageLoader,
+        ssr: false,
+    },
 );
 const Experience = dynamic<{}>(
     async () => await import("@/components/home/sections/Experience"),
-    dynamicOptions,
+    {
+        loading: pageLoader,
+        ssr: false,
+    },
 );
 const Profiles = dynamic<{}>(
     async () => await import("@/components/home/sections/Profiles"),
-    dynamicOptions,
+    {
+        loading: pageLoader,
+        ssr: false,
+    },
 );
 const Skills = dynamic<{}>(
     async () => await import("@/components/home/sections/Skills"),
-    dynamicOptions,
+    {
+        loading: pageLoader,
+        ssr: false,
+    },
 );
 
 interface Section {
