@@ -13,6 +13,7 @@
 import createCache from "@emotion/cache";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import { Box, CircularProgress } from "@mui/material";
+import { Roboto } from "@next/font/google";
 import type { AppProps, NextWebVitalsMetric } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -25,6 +26,11 @@ import "@/styles/syntax-highlighting.css";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createCache({ key: "css" });
+
+const roboto = Roboto({
+    weight: "400",
+    subsets: ["latin"],
+});
 
 export interface WebsiteAppProps extends AppProps {
     emotionCache?: EmotionCache;
@@ -57,34 +63,36 @@ function WebsiteApp({
     });
 
     return (
-        <React.StrictMode>
-            <Head>
-                <meta
-                    name="viewport"
-                    content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
-                />
-            </Head>
-            <CacheProvider value={emotionCache}>
-                <WebsiteThemeProvider>
-                    {isLoading ? (
-                        <Box
-                            sx={{
-                                display: "flex",
-                                justifyContent: "center",
-                                pt: "25%",
-                                height: "100vh",
-                            }}
-                        >
-                            <CircularProgress />
-                        </Box>
-                    ) : (
-                        <MarkdownThemeProvider>
-                            <Component {...pageProps} />
-                        </MarkdownThemeProvider>
-                    )}
-                </WebsiteThemeProvider>
-            </CacheProvider>
-        </React.StrictMode>
+        <main className={roboto.className}>
+            <React.StrictMode>
+                <Head>
+                    <meta
+                        name="viewport"
+                        content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
+                    />
+                </Head>
+                <CacheProvider value={emotionCache}>
+                    <WebsiteThemeProvider>
+                        {isLoading ? (
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    pt: "25%",
+                                    height: "100vh",
+                                }}
+                            >
+                                <CircularProgress />
+                            </Box>
+                        ) : (
+                            <MarkdownThemeProvider>
+                                <Component {...pageProps} />
+                            </MarkdownThemeProvider>
+                        )}
+                    </WebsiteThemeProvider>
+                </CacheProvider>
+            </React.StrictMode>
+        </main>
     );
 }
 

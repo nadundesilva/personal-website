@@ -84,12 +84,8 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                 "https://www.googletagmanager.com",
             ],
             "style-src": ["'unsafe-inline'"],
-            "style-src-elem": [
-                "'self'",
-                "'unsafe-inline'",
-                "https://fonts.googleapis.com",
-            ],
-            "font-src": ["https://fonts.gstatic.com"],
+            "style-src-elem": ["'self'", "'unsafe-inline'"],
+            "font-src": ["'self'"],
             "script-src": [
                 "'self'",
                 "https://www.googletagmanager.com",
@@ -150,10 +146,6 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                     <link
                         rel="preconnect"
                         href="https://nadundesilva.imgix.net"
-                    />
-                    <link
-                        rel="stylesheet"
-                        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
                     />
 
                     <link
