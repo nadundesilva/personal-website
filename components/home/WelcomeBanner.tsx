@@ -117,8 +117,8 @@ const WelcomeBanner = (): React.ReactElement => {
                 <BannerImage
                     src={Images.WelcomeBanner.src}
                     alt={Images.WelcomeBanner.alt}
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{ objectFit: "cover" }}
                     priority={true}
                     placeholder="blur"
                     blurDataURL={Images.WelcomeBanner.blurDataURL}
