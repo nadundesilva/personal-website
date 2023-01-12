@@ -46,8 +46,14 @@ const Experience = (): React.ReactElement => {
 
     const experienceItems: ExperienceItem[] = [
         {
+            name: "Senior Software Engineer",
+            timePeriod: "Nov 2022 to Now",
+            description: "Joined as a Senior Software Engineer at Orion Health",
+            institute: "Orion Health, Auckland, New Zealand",
+        },
+        {
             name: "Associate Technical Lead",
-            timePeriod: "June 2021 to Now",
+            timePeriod: "June 2021 to Nov 2022",
             description:
                 "Lead Choreo Observability Team as well as other Teams in Choreo",
             institute: "WSO2, Colombo 03, Sri Lanka",
@@ -91,7 +97,7 @@ const Experience = (): React.ReactElement => {
             {experienceItems.map((item: ExperienceItem, index: number) => {
                 const isOnLeft = isTimelineLeftAligned || index % 2 === 0;
                 return (
-                    <TimelineItem key={item.name}>
+                    <TimelineItem key={item.timePeriod}>
                         <TimelineOppositeContent>
                             <Typography variant="body2" color="textSecondary">
                                 {item.timePeriod}
