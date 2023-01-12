@@ -72,12 +72,12 @@ const AboutMe = (): React.ReactElement => {
             {profilePhoto(12, { display: { xs: "block", md: "none" } })}
             <Grid item xs={12} md={8}>
                 <Typography align={"justify"}>
-                    I am currently leading the Observability area of Choreo at
-                    WSO2. I have several years of working experience as a
-                    Software Engineer working on multiple Research &amp;
-                    Development projects at WSO2. I love learning about new
-                    technologies and is particularly interested in Cloud
-                    Technologoes &amp; Deep Learning.
+                    I am currently working as a Senior Software Engineer at
+                    Orion Health. I have several years of working experience as
+                    a Software Engineer working on multiple Research &amp;
+                    Development projects as well as leading few of them. I love
+                    learning about new technologies and is particularly
+                    interested in Cloud Technologoes &amp; Deep Learning.
                 </Typography>
                 <ItemDivider />
                 <Typography>Bachelor of Science in Engineering</Typography>
