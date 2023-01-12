@@ -10,19 +10,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Box, Grid, Slide, styled, useTheme } from "@mui/material";
+import { Box, Grid, Slide, useTheme } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 
 import { useScrollOffset } from "@/components/layout";
 import { Logos, LogoAsset } from "@/constants/logos";
-
-const ProjectLogo = styled(Image)(({ theme }) => ({
-    display: "block",
-    margin: "auto",
-    padding: theme.spacing(5),
-    width: "100%",
-}));
 
 const ContributedProjects = (): React.ReactElement => {
     const theme = useTheme();
@@ -39,15 +32,15 @@ const ContributedProjects = (): React.ReactElement => {
                 <Box
                     sx={{
                         position: "relative",
-                        height: (theme) => theme.spacing(5),
+                        height: 200,
                         marginLeft: 5,
                         marginRight: 5,
                     }}
                 >
-                    <ProjectLogo
+                    <Image
                         alt={logo.alt}
-                        layout="fill"
-                        objectFit="contain"
+                        fill
+                        style={{ objectFit: "contain" }}
                         sizes={imageSizes}
                         src={logo.src(theme.palette.mode)}
                     />
