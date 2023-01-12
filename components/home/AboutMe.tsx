@@ -52,8 +52,8 @@ const AboutMe = (): React.ReactElement => {
                     alt={Photos.ProfilePhoto.alt}
                     sizes={`${100 * (gridWidth / 12)}vw`}
                     placeholder="blur"
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{ objectFit: "cover" }}
                     blurDataURL={Photos.ProfilePhoto.blurDataURL}
                 />
             </Avatar>
