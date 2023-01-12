@@ -88,7 +88,7 @@ const WelcomeBanner = (): React.ReactElement => {
                         component="h2"
                         sx={{ fontSize: "3vh" }}
                     >
-                        Associate Technical Lead &amp; Deep Learning Enthusiast
+                        Senior Software Engineer &amp; Deep Learning Enthusiast
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
