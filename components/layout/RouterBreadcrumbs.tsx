@@ -31,7 +31,7 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
     ];
     if (pathnames.length > 0) {
         const visitRoutes = (
-            currentRoutes: { [key: string]: Route },
+            currentRoutes: Record<string, Route>,
             currentPathnames: string[],
             currentBasePath: string,
         ): void => {

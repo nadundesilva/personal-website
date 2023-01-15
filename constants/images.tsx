@@ -18,7 +18,7 @@ export interface ImageAsset {
     blurDataURL: string;
 }
 
-export const Photos: { [key: string]: ImageAsset } = {
+export const Photos: Record<string, ImageAsset> = {
     ProfilePhoto: {
         src: "/assets/profile-photo.jpg",
         alt: "Nadun De Silva",
@@ -93,7 +93,7 @@ export const Photos: { [key: string]: ImageAsset } = {
     },
 };
 
-export const Images: { [key: string]: ImageAsset } = {
+export const Images: Record<string, ImageAsset> = {
     WelcomeBanner: {
         src: "/assets/banner.jpg",
         alt: "Nadun De Silva's Website Welcome Banner",

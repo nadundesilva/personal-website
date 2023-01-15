@@ -102,8 +102,9 @@ const WebsiteThemeProvider = ({
     };
     useEffect(() => {
         window.addEventListener("storage", storageListener);
-        return (): void =>
+        return (): void => {
             window.removeEventListener("storage", storageListener);
+        };
     });
 
     const theme = useMemo(() => createWebsiteTheme(colorScheme), [colorScheme]);
