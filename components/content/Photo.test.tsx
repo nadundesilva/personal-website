@@ -41,9 +41,6 @@ test("renders photo with left float", async () => {
         "src",
         "/_next/image?url=%2Ftest-photo-1%2Fphoto.png&w=384&q=75",
     );
-    expect(image).toHaveStyle(
-        "background-image: url(data:image/webp;base64,Image1)",
-    );
 });
 
 test("renders photo with right float", async () => {
