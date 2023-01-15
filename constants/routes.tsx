@@ -12,12 +12,12 @@
  */
 export interface Route {
     name: string;
-    subRoutes?: { [key: string]: Route };
+    subRoutes?: Record<string, Route>;
 }
 
 export const ANY_ROUTE = "*";
 
-export const Routes: { [key: string]: Route } = {
+export const Routes: Record<string, Route> = {
     "/experience": {
         name: "Experience",
     },

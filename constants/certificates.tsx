@@ -23,7 +23,7 @@ export interface Certificate {
     completedOn: Time;
 }
 
-export const Certificates: { [key: string]: Certificate } = {
+export const Certificates: Record<string, Certificate> = {
     DeepLearningSpecialization: {
         name: "Deep Learning",
         type: "Specialization",

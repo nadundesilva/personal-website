@@ -16,7 +16,7 @@ export interface Person {
     profile: string;
 }
 
-export const People: { [key: string]: Person } = {
+export const People: Record<string, Person> = {
     AndrewNg: {
         name: "Andrew Ng",
         profile: "https://en.wikipedia.org/wiki/Andrew_Ng",

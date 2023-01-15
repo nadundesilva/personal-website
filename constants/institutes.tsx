@@ -16,7 +16,7 @@ export interface Institute {
     link: string;
 }
 
-export const Institutes: { [key: string]: Institute } = {
+export const Institutes: Record<string, Institute> = {
     StJosephsCollegeColombo10: {
         name: "St. Joseph's College",
         link: "https://www.stjosephscollege.lk/",
