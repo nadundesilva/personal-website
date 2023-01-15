@@ -42,7 +42,7 @@ const generateResolveSrcFunc = (image: {
     };
 };
 
-export const Logos: { [key: string]: LogoAsset } = {
+export const Logos: Record<string, LogoAsset> = {
     StJosephsCollegeColombo10: {
         src: generateResolveSrcFunc({
             src: ST_JOSEPHS_COLLEGE_COLOMBO_10_LOGO_SRC,

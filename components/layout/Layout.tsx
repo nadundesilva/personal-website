@@ -51,11 +51,15 @@ const Layout = ({ children, window }: LayoutProps): React.ReactElement => {
     const scrollToTopRef = useRef<HTMLDivElement>(null);
 
     const [isDrawerOpen, setDrawerOpen] = React.useState<boolean>(false);
-    const toggleDrawer = (): void => setDrawerOpen(!isDrawerOpen);
+    const toggleDrawer = (): void => {
+        setDrawerOpen(!isDrawerOpen);
+    };
 
     const { colorScheme, setColorScheme } = useWebsiteTheme();
     const nextColorScheme = colorScheme === "dark" ? "light" : "dark";
-    const onThemeToggleChange = (): void => setColorScheme(nextColorScheme);
+    const onThemeToggleChange = (): void => {
+        setColorScheme(nextColorScheme);
+    };
 
     const drawer = (
         <React.Fragment>

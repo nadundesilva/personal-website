@@ -72,9 +72,9 @@ const ScrollingComponent = (
             <TextField
                 label="viewport-top"
                 value={viewportTop}
-                onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    setViewportTop(parseFloat(event.target.value))
-                }
+                onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                    setViewportTop(parseFloat(event.target.value));
+                }}
             />
 
             <Box data-testid={"scrolling-data-direction"}>{direction}</Box>
@@ -124,7 +124,9 @@ const testHook = async (data: {
 
 beforeEach(() => {
     const requestAnimationFrameMock = jest.fn();
-    requestAnimationFrameMock.mockImplementation((func: () => void) => func());
+    requestAnimationFrameMock.mockImplementation((func: () => void) => {
+        func();
+    });
     window.requestAnimationFrame = requestAnimationFrameMock;
 
     const addEventListenerMock = jest.fn();
