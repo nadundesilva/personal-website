@@ -10,8 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { LocationCity } from "@mui/icons-material";
 import {
     Avatar,
     Divider,
@@ -31,7 +30,7 @@ const ProfilePhoto = styled(Image)({
     height: "auto",
 });
 
-const InstituteIcon = styled(FontAwesomeIcon)(({ theme }) => ({
+const InstituteIcon = styled(LocationCity)(({ theme }) => ({
     marginRight: theme.spacing(1),
 }));
 
@@ -82,8 +81,7 @@ const AboutMe = (): React.ReactElement => {
                 <ItemDivider />
                 <Typography>Bachelor of Science in Engineering</Typography>
                 <Typography display="inline" color="textSecondary">
-                    <InstituteIcon icon={faMapMarkerAlt} /> University of
-                    Moratuwa
+                    <InstituteIcon /> University of Moratuwa
                 </Typography>
                 <ItemDivider />
                 <Grid container spacing={3} justifyContent="center">

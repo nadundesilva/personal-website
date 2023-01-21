@@ -10,8 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { KeyboardArrowDown } from "@mui/icons-material";
 import {
     Box,
     Button,
@@ -139,7 +138,7 @@ const WelcomeBanner = (): React.ReactElement => {
                 >
                     Scroll down to learn more
                 </Typography>
-                <FontAwesomeIcon icon={faChevronDown} />
+                <KeyboardArrowDown />
             </Box>
         </Container>
     );
