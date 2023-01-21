@@ -10,8 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { LocationCity } from "@mui/icons-material";
 import {
     Timeline,
     TimelineItem,
@@ -87,7 +86,7 @@ const Experience = (): React.ReactElement => {
             institute: "WSO2, Colombo 03, Sri Lanka",
         },
     ];
-    const locationIcon = <FontAwesomeIcon icon={faMapMarkerAlt} />;
+    const locationIcon = <LocationCity />;
 
     return (
         <Timeline

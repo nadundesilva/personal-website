@@ -10,8 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { KeyboardArrowRight } from "@mui/icons-material";
 import { Breadcrumbs, Typography } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -72,9 +71,7 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
         <Breadcrumbs
             aria-label="breadcrumb"
             sx={{ margin: 3 }}
-            separator={
-                <FontAwesomeIcon icon={faChevronRight} transform={"shrink-4"} />
-            }
+            separator={<KeyboardArrowRight />}
         >
             {breadcrumbs.map((breadcrumb) => {
                 return breadcrumb.path === undefined ? (

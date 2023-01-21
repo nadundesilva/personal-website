@@ -10,29 +10,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import {
-    faFacebook,
-    faGithub,
-    faInstagram,
-    faLinkedin,
-    faMedium,
-    faTwitter,
-} from "@fortawesome/free-brands-svg-icons";
-import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Container, Grid, Grow, Link, styled, Typography } from "@mui/material";
+    Facebook,
+    GitHub,
+    Instagram,
+    LinkedIn,
+    Article,
+    Twitter,
+    School,
+} from "@mui/icons-material";
+import {
+    Container,
+    Grid,
+    Grow,
+    Link,
+    SvgIcon,
+    Typography,
+} from "@mui/material";
 import React from "react";
 
 import { useScrollOffset } from "@/components/layout";
 
-const ProfileIcon = styled(FontAwesomeIcon)(({ theme }) => ({
-    margin: theme.spacing(1),
-}));
-
 interface Profile {
     name: string;
-    icon: IconDefinition;
+    Icon: typeof SvgIcon;
     link: string;
 }
 
@@ -42,37 +43,37 @@ const Profiles = (): React.ReactElement => {
     const profiles: Profile[] = [
         {
             name: "LinkedIn",
-            icon: faLinkedin,
+            Icon: LinkedIn,
             link: "https://www.linkedin.com/in/nadundesilva",
         },
         {
             name: "GitHub",
-            icon: faGithub,
+            Icon: GitHub,
             link: "https://github.com/nadundesilva",
         },
         {
             name: "Medium",
-            icon: faMedium,
+            Icon: Article,
             link: "https://medium.com/@nadundesilva",
         },
         {
             name: "Google Scholar",
-            icon: faGraduationCap,
+            Icon: School,
             link: "https://scholar.google.com/citations?user=CdXo_YQAAAAJ&hl=en&oi=ao",
         },
         {
             name: "Facebook",
-            icon: faFacebook,
+            Icon: Facebook,
             link: "https://www.facebook.com/nadunrds",
         },
         {
             name: "Instagram",
-            icon: faInstagram,
+            Icon: Instagram,
             link: "https://www.instagram.com/nadunrds",
         },
         {
             name: "Twitter",
-            icon: faTwitter,
+            Icon: Twitter,
             link: "https://twitter.com/nadunrds",
         },
     ];
@@ -84,13 +85,9 @@ const Profiles = (): React.ReactElement => {
             justifyContent="center"
             alignItems="center"
         >
-            {profiles.map((profile) => (
-                <Grid item xs={12} sm={3} key={profile.name}>
-                    <Link
-                        target={"_blank"}
-                        href={profile.link}
-                        aria-label={profile.name}
-                    >
+            {profiles.map(({ name, Icon, link }) => (
+                <Grid item xs={12} sm={3} key={name}>
+                    <Link target={"_blank"} href={link} aria-label={name}>
                         <Grid
                             container
                             direction="column"
@@ -121,9 +118,11 @@ const Profiles = (): React.ReactElement => {
                                             textAlign: "center",
                                         }}
                                     >
-                                        <ProfileIcon
-                                            icon={profile.icon}
-                                            size="3x"
+                                        <Icon
+                                            sx={{
+                                                margin: 1,
+                                            }}
+                                            fontSize="large"
                                         />
                                     </Grid>
                                     <Grid
@@ -135,7 +134,7 @@ const Profiles = (): React.ReactElement => {
                                         }}
                                     >
                                         <Typography sx={{ fontWeight: "bold" }}>
-                                            {profile.name}
+                                            {name}
                                         </Typography>
                                     </Grid>
                                 </Container>

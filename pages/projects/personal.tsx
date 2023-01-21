@@ -10,8 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { GitHub } from "@mui/icons-material";
 import { Box, Button, Container, Link, Typography } from "@mui/material";
 import Head from "next/head";
 import React from "react";
@@ -35,7 +34,7 @@ const ViewOnGitHubButton = (
             sx={{ color: "#000000" }}
             size="small"
             variant="outlined"
-            endIcon={<FontAwesomeIcon icon={faGithub} />}
+            endIcon={<GitHub />}
         >
             View on GitHub
         </Button>
