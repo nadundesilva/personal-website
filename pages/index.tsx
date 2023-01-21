@@ -29,49 +29,46 @@ const pageLoader = (opt: DynamicOptionsLoadingProps): JSX.Element => (
     </Box>
 );
 
-const AboutMe = dynamic<{}>(
-    async () => await import("@/components/home/AboutMe"),
-    {
-        loading: pageLoader,
-        ssr: false,
-    },
-);
-const Achievements = dynamic<{}>(
+const AboutMe = dynamic(async () => await import("@/components/home/AboutMe"), {
+    loading: pageLoader,
+    ssr: false,
+});
+const Achievements = dynamic(
     async () => await import("@/components/home/sections/Achievements"),
     {
         loading: pageLoader,
         ssr: false,
     },
 );
-const ContributedProjects = dynamic<{}>(
+const ContributedProjects = dynamic(
     async () => await import("@/components/home/sections/ContributedProjects"),
     {
         loading: pageLoader,
         ssr: false,
     },
 );
-const Certifications = dynamic<{}>(
+const Certifications = dynamic(
     async () => await import("@/components/home/sections/Certifications"),
     {
         loading: pageLoader,
         ssr: false,
     },
 );
-const Experience = dynamic<{}>(
+const Experience = dynamic(
     async () => await import("@/components/home/sections/Experience"),
     {
         loading: pageLoader,
         ssr: false,
     },
 );
-const Profiles = dynamic<{}>(
+const Profiles = dynamic(
     async () => await import("@/components/home/sections/Profiles"),
     {
         loading: pageLoader,
         ssr: false,
     },
 );
-const Skills = dynamic<{}>(
+const Skills = dynamic(
     async () => await import("@/components/home/sections/Skills"),
     {
         loading: pageLoader,
@@ -82,14 +79,14 @@ const Skills = dynamic<{}>(
 interface Section {
     name: string;
     ref: React.RefObject<HTMLDivElement>;
-    Component: React.ComponentType<{}>;
+    Component: React.ComponentType;
     sectionId: string;
 }
 
 const Home = (): React.ReactElement => {
     const [isWelcomeBannerLoaded, setWelcomeBannerLoaded] =
         useState<boolean>(false);
-    const WelcomeBanner = dynamic<{}>(
+    const WelcomeBanner = dynamic(
         async () =>
             await import("@/components/home/WelcomeBanner").then(
                 async (component) => {
