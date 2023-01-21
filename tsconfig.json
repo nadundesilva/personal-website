@@ -1,5 +1,8 @@
 {
     "compilerOptions": {
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
         "baseUrl": ".",
         "paths": {
             "@/components/*": ["components/*"],
@@ -7,7 +10,7 @@
             "@/styles/*": ["styles/*"]
         },
         "target": "es5",
-        "lib": ["dom", "dom.iterable", "esnext"],
+        "lib": ["es6", "dom", "dom.iterable", "esnext"],
         "types": [
             "cypress",
             "@testing-library/cypress",
