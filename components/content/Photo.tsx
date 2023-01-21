@@ -41,6 +41,7 @@ const Photo = ({ photo, float }: PhotoProps): React.ReactElement => (
             placeholder="blur"
             blurDataURL={photo.blurDataURL}
             style={{
+                height: "auto",
                 maxWidth: "100%",
             }}
         />
