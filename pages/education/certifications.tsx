@@ -10,8 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { faExternalLink } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { OpenInNew } from "@mui/icons-material";
 import { Box, Button, Container, Link } from "@mui/material";
 import Head from "next/head";
 import React from "react";
@@ -67,7 +66,7 @@ const Certifications = (): React.ReactElement => {
                 <Button
                     size="small"
                     variant="outlined"
-                    endIcon={<FontAwesomeIcon icon={faExternalLink} />}
+                    endIcon={<OpenInNew />}
                     href={certificate.link}
                     target={"_blank"}
                 >

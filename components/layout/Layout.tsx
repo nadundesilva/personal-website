@@ -10,9 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { faChevronUp, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Menu as MenuIcon } from "@mui/icons-material";
+import { DarkMode, KeyboardArrowUp, LightMode, Menu as MenuIcon } from "@mui/icons-material";
 import {
     AppBar,
     Box,
@@ -126,10 +124,11 @@ const Layout = ({ children, window }: LayoutProps): React.ReactElement => {
                         size="small"
                         onClick={onThemeToggleChange}
                     >
-                        <FontAwesomeIcon
-                            icon={nextColorScheme === "dark" ? faMoon : faSun}
-                            transform={"grow-4"}
-                        />
+                        {nextColorScheme === "dark" ? (
+                            <DarkMode />
+                        ) : (
+                            <LightMode />
+                        )}
                     </IconButton>
                 </Tooltip>
             </Toolbar>
@@ -183,7 +182,7 @@ const Layout = ({ children, window }: LayoutProps): React.ReactElement => {
                         size="small"
                         aria-label="scroll back to top"
                     >
-                        <FontAwesomeIcon icon={faChevronUp} />
+                        <KeyboardArrowUp />
                     </Fab>
                 </Box>
             </Zoom>

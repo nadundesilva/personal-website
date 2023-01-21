@@ -10,8 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { KeyboardArrowRight } from "@mui/icons-material";
 import { Button, Container, Link } from "@mui/material";
 import Head from "next/head";
 import NextLink from "next/link";
@@ -91,7 +90,7 @@ const Projects = (): React.ReactElement => {
                         <Button
                             size="small"
                             variant="outlined"
-                            endIcon={<FontAwesomeIcon icon={faArrowRight} />}
+                            endIcon={<KeyboardArrowRight />}
                         >
                             View Personal Projects
                         </Button>
