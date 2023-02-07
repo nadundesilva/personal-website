@@ -26,19 +26,21 @@ interface ViewOnGitHubButtonProps {
 const ViewOnGitHubButton = (
     props: ViewOnGitHubButtonProps,
 ): React.ReactElement => (
-    <Link
-        target={"_blank"}
-        href={`https://github.com/${props.repoOrg}/${props.repoName}`}
-    >
-        <Button
-            sx={{ color: "#000000" }}
-            size="small"
-            variant="outlined"
-            endIcon={<GitHub />}
+    <Box sx={{ pt: 1 }}>
+        <Link
+            target={"_blank"}
+            href={`https://github.com/${props.repoOrg}/${props.repoName}`}
         >
-            View on GitHub
-        </Button>
-    </Link>
+            <Button
+                sx={{ color: "#000000" }}
+                size="small"
+                variant="outlined"
+                endIcon={<GitHub />}
+            >
+                View on GitHub
+            </Button>
+        </Link>
+    </Box>
 );
 
 interface UseCasesSectionProps {
