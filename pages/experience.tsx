@@ -98,7 +98,12 @@ const Experience = (): React.ReactElement => {
                             Associate Technical Lead
                         </SectionHeading>
                         <Timespan
-                            value={new TimeRange(new Time(2021, "June"), Now)}
+                            value={
+                                new TimeRange(
+                                    new Time(2021, "June"),
+                                    new Time(2022, "November"),
+                                )
+                            }
                         />
                         {wso2Logo}
                         <Paragraph>
