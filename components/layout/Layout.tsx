@@ -10,7 +10,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { DarkMode, KeyboardArrowUp, LightMode, Menu as MenuIcon } from "@mui/icons-material";
+import {
+    DarkMode,
+    KeyboardArrowUp,
+    LightMode,
+    Menu as MenuIcon,
+} from "@mui/icons-material";
 import {
     AppBar,
     Box,

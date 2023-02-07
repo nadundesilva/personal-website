@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-import { FormattableTime, Now, Time, TimeRange } from "./commons";
+import { type FormattableTime, Now, Time, TimeRange } from "./commons";
 
 test.each([
     {

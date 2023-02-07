@@ -11,8 +11,8 @@
  * limitations under the License.
  */
 import { Time } from "./commons";
-import { Institute, Institutes } from "./institutes";
-import { LogoAsset, Logos } from "./logos";
+import { type Institute, Institutes } from "./institutes";
+import { type LogoAsset, Logos } from "./logos";
 
 export interface Certificate {
     name: string;

@@ -18,7 +18,7 @@ import {
     Grid,
     Link,
     styled,
-    Theme,
+    type Theme,
     Typography,
     useMediaQuery,
     useTheme,

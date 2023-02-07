@@ -24,7 +24,7 @@ import {
     Grid,
     Grow,
     Link,
-    SvgIcon,
+    type SvgIcon,
     Typography,
 } from "@mui/material";
 import React from "react";

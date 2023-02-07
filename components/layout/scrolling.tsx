@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { MutableRefObject, useEffect, useState, useRef } from "react";
+import { type MutableRefObject, useEffect, useState, useRef } from "react";
 
 // -1 -> div partially or completely above viewport
 //  0 -> div visible in viewport
