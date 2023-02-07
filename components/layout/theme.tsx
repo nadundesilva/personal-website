@@ -51,6 +51,7 @@ const createWebsiteTheme = (colorScheme: ColorScheme): Theme => {
                 styleOverrides: {
                     root: {
                         color: grey[700],
+                        textDecoration: "none",
                     },
                 },
             },
