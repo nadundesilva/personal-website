@@ -15,7 +15,7 @@ import Head from "next/head";
 import Image from "next/image";
 
 import Layout, { LayoutContent } from "@/components/layout";
-import { ImageAssertFromSource } from "@/constants/images";
+import type { ImageAssertFromSource } from "@/constants/images";
 
 interface BlogPostTitleProps {
     children: React.ReactNode;

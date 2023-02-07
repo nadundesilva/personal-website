@@ -14,7 +14,10 @@ import { Box, Button } from "@mui/material";
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import React, { useState } from "react";
 
-import WebsiteThemeProvider, { ColorScheme, useWebsiteTheme } from "./theme";
+import WebsiteThemeProvider, {
+    type ColorScheme,
+    useWebsiteTheme,
+} from "./theme";
 
 const mediaQueryHook = { result: false };
 jest.mock(

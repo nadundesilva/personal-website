@@ -26,7 +26,7 @@ import Image from "next/image";
 import React from "react";
 
 import { useScrollOffset } from "@/components/layout";
-import { Photos, ImageAsset } from "@/constants/images";
+import { Photos, type ImageAsset } from "@/constants/images";
 
 const PREFIX = "Home-Achievements";
 const classes = {

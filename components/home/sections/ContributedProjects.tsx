@@ -15,7 +15,7 @@ import Image from "next/image";
 import React from "react";
 
 import { useScrollOffset } from "@/components/layout";
-import { Logos, LogoAsset } from "@/constants/logos";
+import { Logos, type LogoAsset } from "@/constants/logos";
 
 const ContributedProjects = (): React.ReactElement => {
     const theme = useTheme();

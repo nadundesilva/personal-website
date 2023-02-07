@@ -28,7 +28,7 @@ import Image from "next/image";
 import React from "react";
 
 import { useScrollOffset } from "@/components/layout";
-import { Certificate, Certificates } from "@/constants/certificates";
+import { type Certificate, Certificates } from "@/constants/certificates";
 
 const Certifications = (): React.ReactElement => {
     const theme = useTheme();

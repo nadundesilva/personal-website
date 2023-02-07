@@ -12,7 +12,7 @@
  */
 import { Box, TextField } from "@mui/material";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { type ChangeEvent, useEffect, useState } from "react";
 
 import useScrollOffset from "./scrolling";
 

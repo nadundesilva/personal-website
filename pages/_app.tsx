@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 import createCache from "@emotion/cache";
-import { CacheProvider, EmotionCache } from "@emotion/react";
+import { CacheProvider, type EmotionCache } from "@emotion/react";
 import { Box, CircularProgress } from "@mui/material";
 import { Roboto } from "@next/font/google";
 import type { AppProps, NextWebVitalsMetric } from "next/app";

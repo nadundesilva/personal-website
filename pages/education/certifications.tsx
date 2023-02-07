@@ -23,9 +23,9 @@ import {
     Timespan,
 } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/layout";
-import { Certificate, Certificates } from "@/constants/certificates";
-import { Institute, Institutes } from "@/constants/institutes";
-import { People, Person } from "@/constants/people";
+import { type Certificate, Certificates } from "@/constants/certificates";
+import { type Institute, Institutes } from "@/constants/institutes";
+import { People, type Person } from "@/constants/people";
 
 const Certifications = (): React.ReactElement => {
     const generateInstituteLink = (
