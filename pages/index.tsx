@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 import { Box, CircularProgress, Container, styled } from "@mui/material";
-import dynamic, { DynamicOptionsLoadingProps } from "next/dynamic";
+import dynamic, { type DynamicOptionsLoadingProps } from "next/dynamic";
 import Head from "next/head";
 import React, { useRef, useState } from "react";
 

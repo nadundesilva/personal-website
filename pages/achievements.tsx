@@ -25,7 +25,7 @@ import {
 import Layout, { LayoutContent } from "@/components/layout";
 import { Time, TimeRange } from "@/constants/commons";
 import { Photos } from "@/constants/images";
-import { Institute, Institutes } from "@/constants/institutes";
+import { type Institute, Institutes } from "@/constants/institutes";
 import { Logos } from "@/constants/logos";
 
 const Achievements = (): React.ReactElement => {

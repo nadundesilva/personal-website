@@ -14,7 +14,7 @@ import { CalendarMonth } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
-import { FormattableTime } from "@/constants/commons";
+import type { FormattableTime } from "@/constants/commons";
 
 interface TimespanProps {
     value: FormattableTime;

@@ -26,7 +26,7 @@ import {
 } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/layout";
 import { Time, TimeRange } from "@/constants/commons";
-import { Institute, Institutes } from "@/constants/institutes";
+import { type Institute, Institutes } from "@/constants/institutes";
 import { Logos } from "@/constants/logos";
 
 const Education = (): React.ReactElement => {

@@ -16,10 +16,10 @@ import {
     Divider,
     Grid,
     styled,
-    Theme,
+    type Theme,
     Typography,
 } from "@mui/material";
-import { SxProps } from "@mui/system";
+import type { SxProps } from "@mui/system";
 import Image from "next/image";
 import React from "react";
 

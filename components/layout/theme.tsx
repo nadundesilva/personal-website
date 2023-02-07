@@ -14,7 +14,7 @@ import {
     createTheme,
     CssBaseline,
     StyledEngineProvider,
-    Theme,
+    type Theme,
     ThemeProvider,
     useMediaQuery,
 } from "@mui/material";

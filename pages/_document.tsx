@@ -13,8 +13,8 @@
 import createCache from "@emotion/cache";
 import createEmotionServer from "@emotion/server/create-instance";
 import Document, {
-    DocumentContext,
-    DocumentInitialProps,
+    type DocumentContext,
+    type DocumentInitialProps,
     Html,
     Head,
     Main,

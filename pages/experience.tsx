@@ -23,7 +23,7 @@ import {
     Timespan,
 } from "@/components/content";
 import Layout, { LayoutContent } from "@/components/layout";
-import { Now, Time, TimeRange } from "@/constants/commons";
+import { Time, TimeRange } from "@/constants/commons";
 import { Logos } from "@/constants/logos";
 
 const Experience = (): React.ReactElement => {

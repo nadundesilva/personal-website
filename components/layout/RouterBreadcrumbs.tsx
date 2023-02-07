@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { Routes, Route, ANY_ROUTE } from "@/constants/routes";
+import { Routes, type Route, ANY_ROUTE } from "@/constants/routes";
 
 const RouterBreadcrumbs = (): React.ReactElement | null => {
     const router = useRouter();
