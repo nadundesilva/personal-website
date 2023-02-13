@@ -10,7 +10,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Typography, Container } from "@mui/material";
+import { Article } from "@mui/icons-material";
+import { Typography, Container, Box, Link, Button } from "@mui/material";
 import Head from "next/head";
 import Image from "next/image";
 
@@ -33,11 +34,40 @@ const BlogPostTitle = ({
     </Typography>
 );
 
+interface ViewOnMediumButtonProps {
+    postId: string;
+}
+
+const ViewOnMediumButton = ({
+    postId,
+}: ViewOnMediumButtonProps): React.ReactElement => (
+    <Box sx={{ pt: 1 }}>
+        <Link
+            target={"_blank"}
+            href={`https://nadundesilva.medium.com/${postId}`}
+        >
+            <Button
+                sx={{ color: "#000000" }}
+                size="small"
+                variant="outlined"
+                endIcon={<Article />}
+            >
+                View on Medium
+            </Button>
+        </Link>
+    </Box>
+);
+
+export interface CrossBloggingData {
+    mediumPostId?: string;
+}
+
 export interface BlogPostMetadata {
     title: string;
     description: string;
     publishedDate: string;
     mainImage: ImageAssertFromSource;
+    crossBlogging: CrossBloggingData;
 }
 
 interface BlogPostLayoutProps {
@@ -57,6 +87,11 @@ const BlogPostLayout = ({
         <Layout>
             <LayoutContent>
                 <BlogPostTitle>{metadata.title}</BlogPostTitle>
+                {metadata.crossBlogging.mediumPostId !== undefined ? (
+                    <ViewOnMediumButton
+                        postId={metadata.crossBlogging.mediumPostId}
+                    />
+                ) : null}
                 <Container
                     sx={{ position: "relative", height: 500, my: 2 }}
                     disableGutters
