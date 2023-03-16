@@ -41,8 +41,8 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
         const cache = createCache({ key: "css" });
         const { extractCriticalToChunks } = createEmotionServer(cache);
 
-        ctx.renderPage = () =>
-            originalRenderPage({
+        ctx.renderPage = async () =>
+            await originalRenderPage({
                 enhanceApp: (App: any) =>
                     function EnhancedApp(props) {
                         return <App emotionCache={cache} {...props} />;
