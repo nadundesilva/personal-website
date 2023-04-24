@@ -40,12 +40,4 @@ export const Routes: Record<string, Route> = {
             },
         },
     },
-    "/blog": {
-        name: "Blog",
-        subRoutes: {
-            [ANY_ROUTE]: {
-                name: "Post",
-            },
-        },
-    },
 };
