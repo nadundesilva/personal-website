@@ -33,6 +33,7 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 });
 
 const withPWA = nextPwa({
+    disable: process.env.NODE_ENV === "development",
     dest: "public",
     register: true,
 });
@@ -40,6 +41,7 @@ const withPWA = nextPwa({
 export default withMDX(
     withBundleAnalyzer(
         withPWA({
+            output: "export",
             pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
             eslint: {
                 ignoreDuringBuilds: process.env["BUILD_TYPE"] == "test",
