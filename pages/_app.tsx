@@ -13,8 +13,8 @@
 import createCache from "@emotion/cache";
 import { CacheProvider, type EmotionCache } from "@emotion/react";
 import { Box, CircularProgress } from "@mui/material";
-import { Roboto } from "@next/font/google";
 import type { AppProps, NextWebVitalsMetric } from "next/app";
+import { Roboto } from "next/font/google";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
