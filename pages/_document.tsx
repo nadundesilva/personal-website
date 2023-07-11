@@ -1,14 +1,16 @@
 /*
- * Copyright (c) 2021, Nadun De Silva. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *   http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Nadun De Silva - All Rights Reserved
+ *
+ * This source code and its associated files are the
+ * confidential and proprietary information of Nadun De Silva.
+ * Unauthorized reproduction, distribution, or disclosure
+ * in any form, in whole or in part, is strictly prohibited
+ * except as explicitly provided under a separate license
+ * agreement with Nadun De Silva.
+ *
+ * Website: https://nadundesilva.github.io
+ *
+ * © 2023 Nadun De Silva. All rights reserved.
  */
 import createCache from "@emotion/cache";
 import createEmotionServer from "@emotion/server/create-instance";
@@ -27,6 +29,9 @@ const PUBLIC_URL = process.env.PUBLIC_URL ?? "https://nadundesilva.github.io";
 const DESCRIPTION = `${FULL_NAME} is an aspiring Software Engineer interested in Deep Learning, Observability, Anomaly Detection &amp; Cloud Technologies.`;
 
 const GA_TRACKING_ID = "GTM-T9KX7B4";
+const GOOGLE_SITE_VERIFICATION = "M8dg6gzVYU0noXFvsPOqknm_WjREFeNE212YeUk0g30";
+const YANDEX_VERIFICATION = "acbc45e5d9645cf0";
+const FB_APP_ID = "567329184466353";
 
 interface WebsiteDocumentProps {
     currentPath: string;
@@ -90,11 +95,9 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                 "'self'",
                 "https://www.googletagmanager.com",
                 "http://www.googletagmanager.com",
-                "'sha256-zGXNhnZec+38XK4g2xHGdVAURhFrFDpw+SmUnNuuFr4='",
-                "'sha256-CnLuI7DefZ5avS8yKkus4bsgcDh4kOpq8JeXI+hBkuo='",
+                "'sha256-zGXNhnZec+38XK4g2xHGdVAURhFrFDpw+SmUnNuuFr4='", // Google Tag Manager Script
             ],
             "connect-src": ["'self'", "https://www.google-analytics.com"],
-            "prefetch-src": ["'self'"],
         };
         if (
             process.env.NODE_ENV === "development" ||
@@ -152,7 +155,7 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                         rel="apple-touch-icon"
                         href={`${PUBLIC_URL}/assets/profile-photo.jpg`}
                     />
-                    <meta property="fb:app_id" content="567329184466353" />
+                    <meta property="fb:app_id" content={FB_APP_ID} />
 
                     <meta property="og:title" content={FULL_NAME} />
                     <meta property="og:site_name" content={FULL_NAME} />
@@ -184,11 +187,11 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
 
                     <meta
                         name="google-site-verification"
-                        content="M8dg6gzVYU0noXFvsPOqknm_WjREFeNE212YeUk0g30"
+                        content={GOOGLE_SITE_VERIFICATION}
                     />
                     <meta
                         name="yandex-verification"
-                        content="acbc45e5d9645cf0"
+                        content={YANDEX_VERIFICATION}
                     />
 
                     <script
@@ -240,6 +243,19 @@ class WebsiteDocument extends Document<WebsiteDocumentProps> {
                     />
                 </Head>
                 <body>
+                    {/* Google Tag Manager (noscript) */}
+                    <noscript>
+                        <iframe
+                            src={`https://www.googletagmanager.com/ns.html?id=${GA_TRACKING_ID}`}
+                            height="0"
+                            width="0"
+                            style={{
+                                display: "none",
+                                visibility: "hidden",
+                            }}
+                        ></iframe>
+                    </noscript>
+                    {/* End Google Tag Manager (noscript) */}
                     <Main />
                     <NextScript />
                 </body>
