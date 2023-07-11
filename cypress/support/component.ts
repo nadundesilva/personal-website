@@ -1,30 +1,21 @@
-// ***********************************************************
-// This example support/component.ts is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
+/*
+ * Nadun De Silva - All Rights Reserved
+ *
+ * This source code and its associated files are the
+ * confidential and proprietary information of Nadun De Silva.
+ * Unauthorized reproduction, distribution, or disclosure
+ * in any form, in whole or in part, is strictly prohibited
+ * except as explicitly provided under a separate license
+ * agreement with Nadun De Silva.
+ *
+ * Website: https://nadundesilva.github.io
+ *
+ * © 2023 Nadun De Silva. All rights reserved.
+ */
 
-// Import commands.js using ES2015 syntax:
 import "./commands";
-
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
-
 import { mount } from "cypress/react18";
 
-// Augment the Cypress namespace to include type definitions for
-// your custom command.
-// Alternatively, can be defined in cypress/support/component.d.ts
-// with a <reference path="./component" /> at the top of your spec.
 declare global {
     namespace Cypress {
         interface Chainable {
@@ -34,6 +25,3 @@ declare global {
 }
 
 Cypress.Commands.add("mount", mount);
-
-// Example use:
-// cy.mount(<MyComponent />)
