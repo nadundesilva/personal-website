@@ -1,4 +1,4 @@
-## All Rights Reserved
+# All Rights Reserved
 
 The following terms and conditions govern the use of the software and source code ("the Software") developed and owned by Nadun De Silva ("the Owner"). By using the Software, you acknowledge and agree to be bound by these terms and conditions. If you do not agree with these terms and conditions, you must not use the Software.
 
