@@ -83,9 +83,8 @@ const renderTestComponent = async (
     );
     expect(colorSchemeDiv.innerHTML).toBe(initialTheme);
 
-    const themeDataErrorDiv = await within(themeDataGroupDiv).findByTestId(
-        "theme-data-error",
-    );
+    const themeDataErrorDiv =
+        await within(themeDataGroupDiv).findByTestId("theme-data-error");
     expect(
         await within(themeDataErrorDiv).queryByText(
             "Setting color theme not implemented",
@@ -111,9 +110,8 @@ test("fails when provider is not present", async () => {
     act(() => {
         fireEvent.click(setColorSchemeButton);
     });
-    const themeDataErrorDiv = await within(themeDataGroupDiv).findByTestId(
-        "theme-data-error",
-    );
+    const themeDataErrorDiv =
+        await within(themeDataGroupDiv).findByTestId("theme-data-error");
     await within(themeDataErrorDiv).findByText(
         "Setting color theme not implemented",
     );
@@ -163,9 +161,8 @@ const testTogglingTheme = async (
     });
     expect(colorSchemeDiv.innerHTML).toBe(newTheme);
 
-    const themeDataErrorDiv = await within(themeDataGroupDiv).findByTestId(
-        "theme-data-error",
-    );
+    const themeDataErrorDiv =
+        await within(themeDataGroupDiv).findByTestId("theme-data-error");
     expect(
         await within(themeDataErrorDiv).queryByText(
             "Setting color theme not implemented",
@@ -176,9 +173,8 @@ const testTogglingTheme = async (
 };
 
 test("toggles color scheme", async () => {
-    const { themeDataGroupDiv, colorSchemeDiv } = await renderTestComponent(
-        "light",
-    );
+    const { themeDataGroupDiv, colorSchemeDiv } =
+        await renderTestComponent("light");
     const setColorSchemeButton = await testTogglingTheme(
         themeDataGroupDiv,
         colorSchemeDiv,
@@ -195,9 +191,8 @@ const testChangingColorSchemeInLocalStorage = async (
     newLocalStorageTheme: Theme | null,
     expectedNewTheme: Theme,
 ): Promise<void> => {
-    const { themeDataGroupDiv, colorSchemeDiv } = await renderTestComponent(
-        "light",
-    );
+    const { themeDataGroupDiv, colorSchemeDiv } =
+        await renderTestComponent("light");
     await testTogglingTheme(themeDataGroupDiv, colorSchemeDiv, "dark");
 
     const localStorageGetItemMock = jest.fn();

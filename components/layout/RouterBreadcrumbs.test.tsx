@@ -191,9 +191,8 @@ describe.each(levelOneRoutes)(
                     }
 
                     test("renders router breadcrumbs page", async () => {
-                        const breadcrumbs = await renderLevelTwoBreadCrumbs(
-                            levelTwoPath,
-                        );
+                        const breadcrumbs =
+                            await renderLevelTwoBreadCrumbs(levelTwoPath);
 
                         const levelTwoLink = within(breadcrumbs).queryByRole(
                             "link",
