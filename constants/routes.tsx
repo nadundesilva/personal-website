@@ -26,19 +26,22 @@ export const Routes: Record<string, Route> = {
     "/achievements": {
         name: "Achievements",
     },
-    "/education": {
-        name: "Education",
-        subRoutes: {
-            "/certifications": {
-                name: "Certifications",
-            },
-        },
-    },
     "/projects": {
         name: "Projects",
         subRoutes: {
             "/personal": {
                 name: "Personal Projects",
+            },
+        },
+    },
+    "/blog-articles": {
+        name: "Blog Articles",
+    },
+    "/education": {
+        name: "Education",
+        subRoutes: {
+            "/certifications": {
+                name: "Certifications",
             },
         },
     },

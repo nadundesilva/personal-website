@@ -27,7 +27,7 @@ import {
     Fab,
     IconButton,
     List,
-    ListItem,
+    ListItemButton,
     ListItemText,
     Toolbar,
     Tooltip,
@@ -92,9 +92,9 @@ const Layout = ({ children, window }: LayoutProps): React.ReactElement => {
                     <List>
                         {Object.entries(Routes).map(([path, route]) => (
                             <Link key={path} href={path} passHref>
-                                <ListItem button>
+                                <ListItemButton sx={{ pl: { xs: 2, md: 5 } }}>
                                     <ListItemText primary={route.name} />
-                                </ListItem>
+                                </ListItemButton>
                             </Link>
                         ))}
                     </List>
