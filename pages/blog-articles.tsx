@@ -182,7 +182,7 @@ const BlogArticles = (): React.ReactElement => (
                     spacing={2}
                 >
                     {blogArticles.map((blogArticle) => (
-                        <Card key={blogArticle.url}>
+                        <Card key={blogArticle.url} raised>
                             <CardActionArea
                                 href={blogArticle.url}
                                 target="_blank"

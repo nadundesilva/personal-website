@@ -23,7 +23,7 @@ import {
     TimelineContent,
 } from "@mui/lab";
 import {
-    Paper,
+    Card,
     Slide,
     Typography,
     useMediaQuery,
@@ -114,9 +114,10 @@ const Experience = (): React.ReactElement => {
                                 in={offset > 0.5}
                                 timeout={1000}
                             >
-                                <Paper
+                                <Card
                                     elevation={3}
                                     sx={{ padding: 2, marginBottom: 5 }}
+                                    raised
                                 >
                                     <Typography
                                         variant="body1"
@@ -148,7 +149,7 @@ const Experience = (): React.ReactElement => {
                                             </React.Fragment>
                                         )}
                                     </Typography>
-                                </Paper>
+                                </Card>
                             </Slide>
                         </TimelineContent>
                     </TimelineItem>
