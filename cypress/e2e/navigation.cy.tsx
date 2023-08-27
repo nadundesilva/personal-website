@@ -12,24 +12,44 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+import { Routes, type Route } from "@/constants/routes";
 
 describe("navigation between pages", () => {
     it("validates navigation between pages", () => {
         cy.loadPage("/");
 
-        cy.clickNavLink("experience");
-        cy.clickBreadcrumb("home");
+        const visitSubRoutes = (
+            currentRoutes: Record<string, Route>,
+            currentRouteName: string,
+        ) => {
+            Object.values(currentRoutes).forEach((route) => {
+                const breadcrumb = cy.findByRole("link", {
+                    name: new RegExp(`View ${route.name}`, "i"),
+                });
+                breadcrumb.should("exist");
+                breadcrumb.click({ waitForAnimations: true });
+                cy.findByRole("progressbar").should("not.exist");
 
-        cy.clickNavLink("achievement");
-        cy.clickBreadcrumb("home");
-
-        cy.clickNavLink("education");
-        cy.findByRole("link", { name: /view certifications/i }).click();
-        cy.clickBreadcrumb("education");
-        cy.clickBreadcrumb("home");
-
-        cy.clickNavLink("education");
-        cy.findByRole("link", { name: /view certifications/i }).click();
-        cy.clickBreadcrumb("home");
+                if (route.subRoutes !== undefined) {
+                    throw new Error(
+                        "Nesting three levels of navigation is not supported",
+                    );
+                }
+                cy.clickBreadcrumb(currentRouteName);
+            });
+        };
+        const visitNavLink = (
+            currentRoutes: Record<string, Route>,
+            currentRouteName: string,
+        ) => {
+            Object.values(currentRoutes).forEach((route) => {
+                cy.clickNavLink(route.name);
+                if (route.subRoutes !== undefined) {
+                    visitSubRoutes(route.subRoutes, route.name);
+                }
+                cy.clickBreadcrumb(currentRouteName);
+            });
+        };
+        visitNavLink(Routes, "Home");
     });
 });

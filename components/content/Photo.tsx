@@ -40,7 +40,7 @@ const Photo = ({ photo, float }: PhotoProps): React.ReactElement => (
             height={photo.height}
             src={photo.src}
             alt={photo.alt}
-            placeholder="blur"
+            placeholder={photo.blurDataURL === undefined ? undefined : "blur"}
             blurDataURL={photo.blurDataURL}
             style={{
                 height: "auto",

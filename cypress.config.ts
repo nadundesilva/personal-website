@@ -48,7 +48,7 @@ export default defineConfig({
             });
             return config;
         },
-        baseUrl: "https://nadundesilva.github.io",
+        baseUrl: "http://localhost:3000",
     },
 
     component: {

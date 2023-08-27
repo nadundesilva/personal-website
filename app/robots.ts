@@ -12,10 +12,19 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import Layout from "./Layout";
-import RouterBreadcrumbs from "./RouterBreadcrumbs";
-import useScrollOffset from "./scrolling";
 
-export default Layout;
+import { type MetadataRoute } from "next";
 
-export { RouterBreadcrumbs, useScrollOffset };
+const PUBLIC_URL = process.env.PUBLIC_URL ?? "https://nadundesilva.github.io";
+
+export default function robots(): MetadataRoute.Robots {
+    return {
+        rules: {
+            userAgent: "*",
+            allow: "/",
+        },
+        sitemap: `${
+            PUBLIC_URL.endsWith("/") ? PUBLIC_URL : `${PUBLIC_URL}/`
+        }sitemap.xml`,
+    };
+}

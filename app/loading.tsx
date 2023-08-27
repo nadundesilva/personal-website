@@ -12,10 +12,19 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import Layout from "./Layout";
-import RouterBreadcrumbs from "./RouterBreadcrumbs";
-import useScrollOffset from "./scrolling";
+import { Box, CircularProgress } from "@mui/material";
 
-export default Layout;
+const Loading = (): React.ReactElement => (
+    <Box
+        sx={{
+            display: "flex",
+            justifyContent: "center",
+            pt: "25%",
+            height: "100vh",
+        }}
+    >
+        <CircularProgress />
+    </Box>
+);
 
-export { RouterBreadcrumbs, useScrollOffset };
+export default Loading;

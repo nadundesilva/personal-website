@@ -1,3 +1,4 @@
+"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -36,26 +37,33 @@ import {
     Zoom,
 } from "@mui/material";
 import Link from "next/link";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import { useWebsiteTheme } from "./theme";
+import { useWebsiteTheme } from "@/components/theme";
 import { Routes } from "@/constants/routes";
 
 interface LayoutProps {
-    children: NonNullable<React.ReactNode>;
-    window?: () => Window;
+    children: React.ReactNode;
 }
 
-const Layout = ({ children, window }: LayoutProps): React.ReactElement => {
+const Layout = ({ children }: LayoutProps): React.ReactElement => {
+    const [windowObject, setWindowObject] = useState<Window | undefined>(
+        undefined,
+    );
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setWindowObject(window);
+        }
+    }, []);
     const trigger = useScrollTrigger({
         disableHysteresis: true,
         threshold: 0,
-        target: window !== undefined ? window() : undefined,
+        target: windowObject,
     });
 
     const scrollToTopRef = useRef<HTMLDivElement>(null);
 
-    const [isDrawerOpen, setDrawerOpen] = React.useState<boolean>(false);
+    const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
     const toggleDrawer = (): void => {
         setDrawerOpen(!isDrawerOpen);
     };
@@ -90,8 +98,8 @@ const Layout = ({ children, window }: LayoutProps): React.ReactElement => {
                     onKeyDown={toggleDrawer}
                 >
                     <List>
-                        {Object.entries(Routes).map(([path, route]) => (
-                            <Link key={path} href={path} passHref>
+                        {Object.values(Routes).map((route) => (
+                            <Link key={route.path} href={route.path} passHref>
                                 <ListItemButton sx={{ pl: { xs: 2, md: 5 } }}>
                                     <ListItemText primary={route.name} />
                                 </ListItemButton>
@@ -112,8 +120,12 @@ const Layout = ({ children, window }: LayoutProps): React.ReactElement => {
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: { xs: "none", md: "block" } }}>
-                    {Object.entries(Routes).map(([path, route]) => (
-                        <Link key={path} href={path} passHref={true}>
+                    {Object.values(Routes).map((route) => (
+                        <Link
+                            key={route.path}
+                            href={route.path}
+                            passHref={true}
+                        >
                             <Button
                                 variant="text"
                                 color="primary"

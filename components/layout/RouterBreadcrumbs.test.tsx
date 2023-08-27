@@ -13,40 +13,53 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { act, render, screen, within } from "@testing-library/react";
-import singletonRouter from "next/router";
 
 import RouterBreadcrumbs from "./RouterBreadcrumbs";
-import { Routes, ANY_ROUTE } from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 
-jest.mock("next/dist/client/router", () => require("next-router-mock"));
+const singletonRouter = {
+    currentRoute: "/",
+};
+jest.mock("next/navigation", () => ({
+    ...require("next-router-mock"),
+    usePathname: () => singletonRouter.currentRoute,
+}));
 jest.mock("@/constants/routes", () => ({
     Routes: {
         "/test-page-1": {
             name: "Test Page 1",
+            path: "/test-page-1",
         },
         "/test-page-2": {
             name: "Test Page 2",
+            path: "/test-page-2",
             subRoutes: {
-                "/test-page-2-a": {
+                "/test-page-2/test-page-2-a": {
                     name: "Test Page 2 A",
+                    path: "/test-page-2/test-page-2-a",
                 },
             },
         },
         "/test-page-3": {
             name: "Test Page 3",
+            path: "/test-page-3",
             subRoutes: {
-                "/test-page-3-a": {
+                "/test-page-3/test-page-3-a": {
                     name: "Test Page 3 A",
+                    path: "/test-page-3/test-page-3-a",
                 },
-                "/test-page-3-b": {
+                "/test-page-3/test-page-3-b": {
                     name: "Test Page 3 B",
+                    path: "/test-page-3/test-page-3-b",
                     subRoutes: {},
                 },
-                "/test-page-3-c": {
+                "/test-page-3/test-page-3-c": {
                     name: "Test Page 3 C",
+                    path: "/test-page-3/test-page-3-c",
                     subRoutes: {
-                        "/test-page-3-c-i": {
+                        "/test-page-3/test-page-3-c/test-page-3-c-i": {
                             name: "Test Page 3 C I",
+                            path: "/test-page-3/test-page-3-c/test-page-3-c-i",
                         },
                     },
                 },
@@ -54,20 +67,9 @@ jest.mock("@/constants/routes", () => ({
         },
         "/test-page-4": {
             name: "Test Page 4",
-        },
-        "/test-page-5": {
-            name: "Test Page 5",
-            subRoutes: {
-                "*": {
-                    name: "Test Any Page 1",
-                },
-            },
-        },
-        "*": {
-            name: "Test Any Page 2",
+            path: "/test-page-4",
         },
     },
-    ANY_ROUTE: "*",
 }));
 
 afterEach(() => {
@@ -80,7 +82,7 @@ afterAll(() => {
 
 const renderBreadcrumbs = async (url: string): Promise<HTMLElement> => {
     await act(async () => {
-        await singletonRouter.push(url);
+        singletonRouter.currentRoute = url;
     });
     render(<RouterBreadcrumbs />);
 
@@ -105,40 +107,20 @@ interface TestRoute {
     path: string;
 }
 
-const levelOneRoutes = Object.entries(Routes).map(([key, value]) => ({
+const levelOneRoutes = Object.values(Routes).map((value) => ({
     name: value.name,
-    path: key,
+    path: value.path,
 }));
 
 describe.each(levelOneRoutes)(
     "level one routes at <root>$path",
     ({ name: levelOneName, path: levelOnePath }: TestRoute) => {
-        if (levelOnePath === ANY_ROUTE) {
-            test("renders router breadcrumbs any page", async () => {
-                const randomPath = `/any-path-${Math.random()}`;
-                const breadcrumbs = await renderBreadcrumbs(randomPath);
-
-                const homeLink = await within(breadcrumbs).findByRole("link", {
-                    name: /home/i,
-                });
-                expect(homeLink).toHaveAttribute("href", "/");
-
-                const levelOneLink = within(breadcrumbs).queryByRole("link", {
-                    name: new RegExp(levelOneName, "i"),
-                });
-                expect(levelOneLink).toBeNull();
-
-                await within(breadcrumbs).findByText(levelOneName);
-            });
-            return;
-        }
-
         const levelOneSubRoutes = Routes[levelOnePath].subRoutes;
         if (levelOneSubRoutes !== undefined) {
-            const levelTwoRoutes = Object.entries(levelOneSubRoutes).map(
-                ([key, value]) => ({
+            const levelTwoRoutes = Object.values(levelOneSubRoutes).map(
+                (value) => ({
                     name: value.name,
-                    path: levelOnePath + key,
+                    path: value.path,
                 }),
             );
 
@@ -170,25 +152,6 @@ describe.each(levelOneRoutes)(
 
                         return breadcrumbs;
                     };
-
-                    if (levelTwoPath === levelOnePath + ANY_ROUTE) {
-                        test("renders router breadcrumbs any page", async () => {
-                            const randomPath = `/any-path-${Math.random()}`;
-                            const breadcrumbs = await renderLevelTwoBreadCrumbs(
-                                levelOnePath + randomPath,
-                            );
-
-                            const levelTwoLink = within(
-                                breadcrumbs,
-                            ).queryByRole("link", {
-                                name: new RegExp(levelTwoName, "i"),
-                            });
-                            expect(levelTwoLink).toBeNull();
-
-                            await within(breadcrumbs).findByText(levelTwoName);
-                        });
-                        return;
-                    }
 
                     test("renders router breadcrumbs page", async () => {
                         const breadcrumbs =

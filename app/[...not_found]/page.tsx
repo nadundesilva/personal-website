@@ -12,10 +12,9 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import Layout from "./Layout";
-import RouterBreadcrumbs from "./RouterBreadcrumbs";
-import useScrollOffset from "./scrolling";
+import { redirect } from "next/navigation";
+import type React from "react";
 
-export default Layout;
+const NotFound = (): React.ReactElement => redirect("/");
 
-export { RouterBreadcrumbs, useScrollOffset };
+export default NotFound;
