@@ -13,21 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import nextPwa from "next-pwa";
-import remarkUnwrapImages from "remark-unwrap-images";
-import rehypePrism from "rehype-prism-plus";
-import nextMDX from "@next/mdx";
 import NextBundleAnalyzer from "@next/bundle-analyzer";
-
-const withMDX = nextMDX({
-    extension: /\.mdx?$/,
-    options: {
-        remarkPlugins: [remarkUnwrapImages],
-        rehypePlugins: [
-            [rehypePrism, { ignoreMissing: true, showLineNumbers: true }],
-        ],
-        providerImportSource: "@mdx-js/react",
-    },
-});
 
 const withBundleAnalyzer = NextBundleAnalyzer({
     enabled: process.env.ANALYZE === "true",
@@ -39,19 +25,17 @@ const withPWA = nextPwa({
     register: true,
 });
 
-export default withMDX(
-    withBundleAnalyzer(
-        withPWA({
-            output: "export",
-            pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
-            eslint: {
-                ignoreDuringBuilds: process.env["BUILD_TYPE"] == "test",
-            },
-            images: {
-                loader: "custom",
-                loaderFile: "./nextImageLoader.js",
-            },
-            productionBrowserSourceMaps: true,
-        }),
-    ),
+export default withBundleAnalyzer(
+    withPWA({
+        output: "export",
+        pageExtensions: ["ts", "tsx", "js", "jsx"],
+        eslint: {
+            ignoreDuringBuilds: process.env["BUILD_TYPE"] == "test",
+        },
+        images: {
+            loader: "custom",
+            loaderFile: "./nextImageLoader.js",
+        },
+        productionBrowserSourceMaps: true,
+    }),
 );

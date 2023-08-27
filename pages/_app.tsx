@@ -21,7 +21,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
-import MarkdownThemeProvider from "@/components/layout/markdownTheme";
 import WebsiteThemeProvider from "@/components/layout/theme";
 import "@/styles/main.css";
 import "@/styles/syntax-highlighting.css";
@@ -87,9 +86,7 @@ function WebsiteApp({
                                 <CircularProgress />
                             </Box>
                         ) : (
-                            <MarkdownThemeProvider>
-                                <Component {...pageProps} />
-                            </MarkdownThemeProvider>
+                            <Component {...pageProps} />
                         )}
                     </WebsiteThemeProvider>
                 </CacheProvider>
