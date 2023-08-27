@@ -1,3 +1,4 @@
+"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -45,7 +46,7 @@ function useScrollOffset<T extends Element>(): UseScrollOffsetReturnValue<T> {
                 newOffset = 0;
             } else if (refBBox.top > viewportHeight / 2) {
                 const fullPageHeight = document.documentElement.offsetHeight;
-                const yOffset = window.pageYOffset;
+                const yOffset = window.scrollY;
                 const pageBottomOffset =
                     (yOffset + viewportHeight * 1.5 - fullPageHeight) /
                     (viewportHeight / 2);

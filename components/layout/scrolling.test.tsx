@@ -61,7 +61,7 @@ const ScrollingComponent = (
         }
 
         window.innerHeight = viewportHeight;
-        window.pageYOffset = viewportTop;
+        window.scrollY = viewportTop;
         jest.spyOn(
             document.documentElement,
             "offsetHeight",

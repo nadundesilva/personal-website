@@ -16,7 +16,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { useState } from "react";
 
 import Layout from "./Layout";
-import WebsiteThemeProvider from "./theme";
+import { WebsiteThemeProvider } from "@/components/theme";
 import { Routes } from "@/constants/routes";
 
 const scrollState = {
@@ -34,30 +34,38 @@ jest.mock("@/constants/routes", () => ({
     Routes: {
         "/test-page-1": {
             name: "Test Page 1",
+            path: "/test-page-1",
         },
         "/test-page-2": {
             name: "Test Page 2",
+            path: "/test-page-2",
             subRoutes: {
                 "/test-page-2-a": {
                     name: "Test Page 2 A",
+                    path: "/test-page-2-a",
                 },
             },
         },
         "/test-page-3": {
             name: "Test Page 3",
+            path: "/test-page-3",
             subRoutes: {
                 "/test-page-3-a": {
                     name: "Test Page 3 A",
+                    path: "/test-page-3-a",
                 },
                 "/test-page-3-b": {
                     name: "Test Page 3 B",
+                    path: "/test-page-3-b",
                     subRoutes: {},
                 },
                 "/test-page-3-c": {
                     name: "Test Page 3 C",
+                    path: "/test-page-3-c",
                     subRoutes: {
                         "/test-page-3-c-i": {
                             name: "Test Page 3 C I",
+                            path: "/test-page-3-c-i",
                         },
                     },
                 },
@@ -65,6 +73,7 @@ jest.mock("@/constants/routes", () => ({
         },
         "/test-page-4": {
             name: "Test Page 4",
+            path: "/test-page-4",
         },
     },
 }));
@@ -184,21 +193,13 @@ test("change theme", async () => {
 });
 
 test("render layout with window function", async () => {
-    render(
-        <Layout window={() => window}>
-            Test Layout children written by Nadun De Silva
-        </Layout>,
-    );
+    render(<Layout>Test Layout children written by Nadun De Silva</Layout>);
 
     await validateLayout("dark", "initial");
 });
 
 test("renders navigation panel", async () => {
-    render(
-        <Layout window={() => window}>
-            Test Layout children written by Nadun De Silva
-        </Layout>,
-    );
+    render(<Layout>Test Layout children written by Nadun De Silva</Layout>);
 
     Object.entries(Routes).map(async ([key, value]) => {
         const link = await screen.findByRole("link", {

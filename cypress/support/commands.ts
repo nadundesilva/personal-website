@@ -29,25 +29,29 @@ Cypress.Commands.add("loadPage", (url: string): void => {
 });
 
 Cypress.Commands.add("clickNavLink", (name: string): void => {
-    cy.findByTestId("app-bar").within(() => {
+    const appBar = cy.findByTestId("app-bar");
+    appBar.should("exist");
+    appBar.within(() => {
         const link = cy.findByRole("link", {
             name: new RegExp(name, "i"),
         });
         link.should("exist");
-        link.click();
+        link.click({ waitForAnimations: true });
         cy.findByRole("progressbar").should("not.exist");
     });
 });
 
 Cypress.Commands.add("clickBreadcrumb", (name: string): void => {
-    cy.findByRole("navigation", {
+    const navigation = cy.findByRole("navigation", {
         name: /breadcrumb/i,
-    }).within(() => {
+    });
+    navigation.should("exist");
+    navigation.within(() => {
         const breadcrumb = cy.findByRole("link", {
             name: new RegExp(name, "i"),
         });
         breadcrumb.should("exist");
-        breadcrumb.click();
+        breadcrumb.click({ waitForAnimations: true });
         cy.findByRole("progressbar").should("not.exist");
     });
 });
