@@ -25,17 +25,32 @@ const withPWA = nextPwa({
     register: true,
 });
 
-export default withBundleAnalyzer(
-    withPWA({
-        output: "export",
-        pageExtensions: ["ts", "tsx", "js", "jsx"],
-        eslint: {
-            ignoreDuringBuilds: process.env["BUILD_TYPE"] == "test",
+// @ts-check
+
+/**
+ * @type {import('next').NextConfig}
+ **/
+const nextConfig = {
+    output: "export",
+    pageExtensions: ["ts", "tsx", "js", "jsx"],
+    eslint: {
+        ignoreDuringBuilds: process.env["BUILD_TYPE"] == "test",
+    },
+    modularizeImports: {
+        "@mui/icons-material": {
+            transform: "@mui/icons-material/{{member}}",
         },
-        images: {
-            loader: "custom",
-            loaderFile: "./nextImageLoader.js",
-        },
-        productionBrowserSourceMaps: true,
-    }),
-);
+    },
+    images: {
+        loader: "custom",
+        loaderFile: "./nextImageLoader.js",
+    },
+    experimental: {
+        typedRoutes: true,
+    },
+    productionBrowserSourceMaps: true,
+    reactStrictMode: true,
+    swcMinify: true,
+};
+
+export default withBundleAnalyzer(withPWA(nextConfig));

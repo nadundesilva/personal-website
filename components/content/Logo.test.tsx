@@ -28,10 +28,10 @@ test("renders logo with default height", async () => {
         >
             <Logo
                 logo={{
-                    src: (mode) =>
-                        mode === "light"
-                            ? "/test-logo-1/light.png"
-                            : "/test-logo-1/dark.png",
+                    src: {
+                        light: "/test-logo-1/light.png",
+                        dark: "/test-logo-1/dark.png",
+                    },
                     alt: "Test Logo 1 Alt",
                     width: 142,
                     height: 251,
@@ -67,10 +67,10 @@ test("renders logo with specific height", async () => {
             <Logo
                 height={"4.5em"}
                 logo={{
-                    src: (mode) =>
-                        mode === "light"
-                            ? "/test-logo-2/light.png"
-                            : "/test-logo-2/dark.png",
+                    src: {
+                        light: "/test-logo-2/light.png",
+                        dark: "/test-logo-2/dark.png",
+                    },
                     alt: "Test Logo 2 Alt",
                     width: 144,
                     height: 257,
@@ -105,10 +105,10 @@ test("renders logo with dark theme", async () => {
         >
             <Logo
                 logo={{
-                    src: (mode) =>
-                        mode === "light"
-                            ? "/test-logo-3/light.png"
-                            : "/test-logo-3/dark.png",
+                    src: {
+                        light: "/test-logo-3/light.png",
+                        dark: "/test-logo-3/dark.png",
+                    },
                     alt: "Test Logo 3 Alt",
                     width: 149,
                     height: 253,

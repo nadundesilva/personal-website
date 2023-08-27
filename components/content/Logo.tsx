@@ -1,3 +1,4 @@
+"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -24,11 +25,12 @@ interface LogoProps {
 
 const Logo = ({ logo, height }: LogoProps): React.ReactElement => {
     const theme = useTheme();
+    const src = logo.src[theme.palette.mode];
     return (
         <Box sx={{ position: "relative", height: height ?? "3em", my: 1 }}>
             <Image
                 alt={logo.alt}
-                src={logo.src(theme.palette.mode)}
+                src={src}
                 fill
                 sizes="100vw"
                 style={{

@@ -12,10 +12,6 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import Layout from "./Layout";
-import RouterBreadcrumbs from "./RouterBreadcrumbs";
-import useScrollOffset from "./scrolling";
+import WebsiteThemeProvider, { useWebsiteTheme } from "./WebsiteThemeProvider";
 
-export default Layout;
-
-export { RouterBreadcrumbs, useScrollOffset };
+export { WebsiteThemeProvider, useWebsiteTheme };

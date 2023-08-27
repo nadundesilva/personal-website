@@ -26,7 +26,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: "18.12.1"
+                  node-version: "18.17.1"
             - name: Install NPM Dependencies
               run: |
                   npm ci
@@ -37,6 +37,7 @@ jobs:
                   tag: deployment-check-in-browser-${{ matrix.browser }}
               env:
                   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+                  CYPRESS_BASE_URL: https://nadundesilva.github.io
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Upload artifacts
               if: always()
@@ -75,7 +76,7 @@ jobs:
     #         - name: Setup Node.js
     #           uses: actions/setup-node@v3
     #           with:
-    #               node-version: "18.12.1"
+    #               node-version: "18.17.1"
     #         - name: Run Lighthouse Audit
     #           run: |
     #               npm install -g @lhci/cli@0.10.x

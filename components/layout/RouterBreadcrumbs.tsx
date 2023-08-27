@@ -1,3 +1,4 @@
+"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -14,17 +15,19 @@
  */
 import { KeyboardArrowRight } from "@mui/icons-material";
 import { Breadcrumbs, Typography } from "@mui/material";
+import type { Route as NextRoute } from "next";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import React from "react";
 
-import { Routes, type Route, ANY_ROUTE } from "@/constants/routes";
+import { Routes, type Route } from "@/constants/routes";
 
 const RouterBreadcrumbs = (): React.ReactElement | null => {
-    const router = useRouter();
-    const pathnames = router.pathname.split("/").filter((x) => x);
+    const pathname = usePathname();
+    const pathnames =
+        pathname == null ? [] : pathname.split("/").filter((x) => x);
 
-    const breadcrumbs: Array<{ name: string; path?: string }> = [
+    const breadcrumbs: Array<{ name: string; path?: NextRoute<string> }> = [
         {
             name: "Home",
             path: pathnames.length > 0 ? "/" : undefined,
@@ -37,20 +40,20 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
             currentBasePath: string,
         ): void => {
             if (currentPathnames.length > 0) {
-                const currentSubPath = "/" + currentPathnames[0];
+                const currentSubPath =
+                    currentBasePath + "/" + currentPathnames[0];
                 if (currentSubPath in currentRoutes) {
                     const route = currentRoutes[currentSubPath];
                     if (currentPathnames.length > 1) {
-                        const currentPath = currentBasePath + currentSubPath;
                         breadcrumbs.push({
                             name: route.name,
-                            path: currentPath,
+                            path: currentSubPath as NextRoute<string>,
                         });
                         if (route.subRoutes !== undefined) {
                             visitRoutes(
                                 route.subRoutes,
                                 currentPathnames.slice(1),
-                                currentPath,
+                                currentSubPath,
                             );
                         }
                     } else {
@@ -58,11 +61,6 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
                             name: route.name,
                         });
                     }
-                } else if (ANY_ROUTE in currentRoutes) {
-                    const route = currentRoutes[ANY_ROUTE];
-                    breadcrumbs.push({
-                        name: route.name,
-                    });
                 }
             }
         };
