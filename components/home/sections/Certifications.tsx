@@ -77,7 +77,7 @@ const Certifications = (): React.ReactElement => {
                         timeout={1000}
                     >
                         <Link target={"_blank"} href={certification.link}>
-                            <Card sx={{ height: "100%" }}>
+                            <Card sx={{ height: "100%" }} raised>
                                 <CardActionArea
                                     sx={{
                                         height: "100%",

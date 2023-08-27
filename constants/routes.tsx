@@ -34,6 +34,9 @@ export const Routes: Record<string, Route> = {
             },
         },
     },
+    "/testimonials": {
+        name: "Testimonials",
+    },
     "/blog-articles": {
         name: "Blog Articles",
     },
