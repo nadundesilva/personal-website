@@ -27,6 +27,10 @@ const urls = [
     "/nadundesilva-cv.pdf",
     "/experience",
     "/achievements",
+    "/projects",
+    "/projects/personal",
+    "/testimonials",
+    "/blog-articles",
     "/education",
     "/education/certifications",
 ].map((url) => ({
