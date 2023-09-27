@@ -87,7 +87,6 @@ const AboutMe = (): React.ReactElement => {
                 </Typography>
                 <ItemDivider />
                 <Grid container spacing={3} justifyContent="center">
-                    {contactItem("Phone", "+94 778 222 607")}
                     {contactItem("Email", "nadunrds@gmail.com")}
                     {contactItem("Website", "nadundesilva.github.io")}
                 </Grid>
