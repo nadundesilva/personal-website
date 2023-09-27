@@ -164,6 +164,13 @@ const blogArticles: BlogArticle[] = [
         image: "/assets/blog-articles/kubernetes.jpg",
         url: "https://faun.pub/kubernetes-the-right-way-observability-with-opentelemetry-collector-7d54ecb38638",
     },
+    {
+        title: "Kubernetes the Right Way: Minimizing Workload Downtime",
+        description:
+            "Achieving nearly zero downtime in your Kubernetes Applications requires careful design and proper Site Reliability Engineering.",
+        image: "/assets/blog-articles/zero-downtime.webp",
+        url: "https://faun.pub/kubernetes-the-right-way-zero-downtime-workloads-5edeea221e69",
+    },
 ].reverse();
 
 export const metadata: Metadata = {
