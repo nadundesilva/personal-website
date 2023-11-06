@@ -12,7 +12,7 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { type Metadata } from "next";
+import type { Viewport, Metadata } from "next";
 import { Roboto } from "next/font/google";
 import Script from "next/script";
 import React from "react";
@@ -50,25 +50,6 @@ export const metadata: Metadata = {
         "Software Engineer",
     ],
     referrer: "origin",
-    themeColor: [
-        {
-            media: "(prefers-color-scheme: light)",
-            color: "#3f51b5",
-        },
-        {
-            media: "(prefers-color-scheme: dark)",
-            color: "#000000",
-        },
-    ],
-    colorScheme: "light",
-    viewport: {
-        minimumScale: 1,
-        initialScale: 1,
-        width: "device-width",
-        userScalable: true,
-        viewportFit: "cover",
-        interactiveWidget: "resizes-visual",
-    },
     robots: `${PUBLIC_URL}/robots.txt`,
     alternates: {
         canonical: PUBLIC_URL,
@@ -131,6 +112,26 @@ export const metadata: Metadata = {
         email: true,
         url: true,
     },
+};
+
+export const viewport: Viewport = {
+    themeColor: [
+        {
+            media: "(prefers-color-scheme: light)",
+            color: "#3f51b5",
+        },
+        {
+            media: "(prefers-color-scheme: dark)",
+            color: "#000000",
+        },
+    ],
+    colorScheme: "light",
+    minimumScale: 1,
+    initialScale: 1,
+    width: "device-width",
+    userScalable: true,
+    viewportFit: "cover",
+    interactiveWidget: "resizes-visual",
 };
 
 const createCspValues = (): string[] => {

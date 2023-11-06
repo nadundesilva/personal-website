@@ -47,6 +47,7 @@ const nextConfig = {
     },
     experimental: {
         typedRoutes: true,
+        webpackBuildWorker: true,
     },
     productionBrowserSourceMaps: true,
     reactStrictMode: true,
