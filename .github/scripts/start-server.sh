@@ -37,7 +37,7 @@ npx serve "${WEBSITE_BUILD_DIR}" \
     --ssl-cert "${PWD}/server.crt" \
     --ssl-key "${PWD}/server.key" \
     --listen tcp://nadundesilva.github.io:8080 </dev/null &
-echo "SERVE_PID=${!}" >> "${GITHUB_ENV}"
+echo "SERVE_PID=${!}" >>"${GITHUB_ENV}"
 sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 443 -j REDIRECT --to-port 8080
 npx wait-on -t 10000 -i 1000 --verbose https://nadundesilva.github.io
 

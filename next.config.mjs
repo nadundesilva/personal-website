@@ -14,6 +14,7 @@
  */
 import nextPwa from "next-pwa";
 import NextBundleAnalyzer from "@next/bundle-analyzer";
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
 
 const withBundleAnalyzer = NextBundleAnalyzer({
     enabled: process.env.ANALYZE === "true",
@@ -25,33 +26,37 @@ const withPWA = nextPwa({
     register: true,
 });
 
-// @ts-check
-
-/**
- * @type {import('next').NextConfig}
- **/
-const nextConfig = {
-    output: "export",
-    pageExtensions: ["ts", "tsx", "js", "jsx"],
-    eslint: {
-        ignoreDuringBuilds: process.env["BUILD_TYPE"] == "test",
-    },
-    modularizeImports: {
-        "@mui/icons-material": {
-            transform: "@mui/icons-material/{{member}}",
+export default (phase, { defaultConfig }) => {
+    /**
+     * @type {import('next').NextConfig}
+     **/
+    const nextConfig = {
+        ...defaultConfig,
+        pageExtensions: ["ts", "tsx", "js", "jsx"],
+        eslint: {
+            ignoreDuringBuilds: process.env["BUILD_TYPE"] == "test",
         },
-    },
-    images: {
-        loader: "custom",
-        loaderFile: "./nextImageLoader.js",
-    },
-    experimental: {
-        typedRoutes: true,
-        webpackBuildWorker: true,
-    },
-    productionBrowserSourceMaps: true,
-    reactStrictMode: true,
-    swcMinify: true,
-};
+        modularizeImports: {
+            "@mui/icons-material": {
+                transform: "@mui/icons-material/{{member}}",
+            },
+        },
+        images: {
+            loader: "custom",
+            loaderFile: "./nextImageLoader.js",
+        },
+        experimental: {
+            typedRoutes: true,
+            webpackBuildWorker: true,
+        },
+        productionBrowserSourceMaps: true,
+        reactStrictMode: true,
+        swcMinify: true,
+    };
 
-export default withBundleAnalyzer(withPWA(nextConfig));
+    if (phase !== PHASE_DEVELOPMENT_SERVER) {
+        nextConfig.output = "export";
+    }
+
+    return withBundleAnalyzer(withPWA(nextConfig));
+};
