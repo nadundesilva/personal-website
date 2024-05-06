@@ -1,5 +1,3 @@
 {
-    "configurations": {
-        "ignore": [".github/workflows/*.yaml"]
-    }
+    "ignore": [".github/workflows/*.yaml", "**/node_modules/**", "**/.git/**"]
 }

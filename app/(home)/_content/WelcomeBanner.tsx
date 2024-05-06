@@ -42,8 +42,8 @@ const WelcomeBanner = (): React.ReactElement => {
     const downloadButtonSize = isLarge
         ? "large"
         : isMedium
-        ? "medium"
-        : "small";
+          ? "medium"
+          : "small";
 
     return (
         <Container

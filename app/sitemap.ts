@@ -31,8 +31,11 @@ const PUBLIC_URL =
     process.env.PUBLIC_URL === undefined
         ? "https://nadundesilva.github.io"
         : process.env.PUBLIC_URL.endsWith("/")
-        ? process.env.PUBLIC_URL.substring(0, process.env.PUBLIC_URL.length - 1)
-        : process.env.PUBLIC_URL;
+          ? process.env.PUBLIC_URL.substring(
+                0,
+                process.env.PUBLIC_URL.length - 1,
+            )
+          : process.env.PUBLIC_URL;
 const time = new Date();
 
 const sitemap = (): MetadataRoute.Sitemap =>

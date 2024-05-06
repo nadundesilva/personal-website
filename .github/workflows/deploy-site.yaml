@@ -8,25 +8,29 @@ on:
         branches:
             - main
 
+permissions: read-all
+
 jobs:
     run-super-linter:
         name: Run GitHub Super Linter
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: read
+            statuses: write
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   fetch-depth: 0
             - name: Setup Node.js
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
-                  node-version: "18.17.1"
+                  node-version: "20.12.2"
             - name: Install Dependencies
               run: npm ci
-            - name: Build NextJS types
-              run: npm run build
             - name: Lint Code Base
-              uses: super-linter/super-linter@v5
+              uses: super-linter/super-linter@v6
               env:
                   DEFAULT_BRANCH: main
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -47,15 +51,15 @@ jobs:
             security-events: write
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
             - name: Initialize CodeQL
-              uses: github/codeql-action/init@v2
+              uses: github/codeql-action/init@v3
               with:
                   languages: javascript
             - name: Autobuild
-              uses: github/codeql-action/autobuild@v2
+              uses: github/codeql-action/autobuild@v3
             - name: Perform CodeQL Analysis
-              uses: github/codeql-action/analyze@v2
+              uses: github/codeql-action/analyze@v3
 
     run-vulnerability-analysis:
         name: Run Vulnerability Analysis
@@ -64,7 +68,7 @@ jobs:
             security-events: write
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
             - name: Run Trivy vulnerability scanner
               uses: aquasecurity/trivy-action@master
               with:
@@ -74,7 +78,7 @@ jobs:
                   format: sarif
                   output: trivy-results.sarif
             - name: Upload Trivy scan results to GitHub Security tab
-              uses: github/codeql-action/upload-sarif@v2
+              uses: github/codeql-action/upload-sarif@v3
               if: always()
               with:
                   sarif_file: trivy-results.sarif
@@ -84,26 +88,28 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
             - name: Setup Node.js
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
-                  node-version: "18.17.1"
+                  node-version: "20.12.2"
             - name: Install Dependencies
               run: npm ci
             - name: Running Unit Tests
               run: npm run test:ci
             - name: Upload Code Coverage to CodeCov
               if: ${{ github.event_name == 'push' }}
-              uses: codecov/codecov-action@v3
+              uses: codecov/codecov-action@v4
               with:
                   token: ${{ secrets.CODECOV_TOKEN }}
                   name: coverage-reports
                   flags: unit-tests
                   fail_ci_if_error: true
                   verbose: true
+              env:
+                  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
             - name: Upload Code Coverage Report Artifacts
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: unit-tests-coverage
                   path: coverage/
@@ -118,11 +124,11 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
             - name: Setup Node.js
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
-                  node-version: "18.17.1"
+                  node-version: "20.12.2"
             - name: Install Dependencies
               run: npm ci
             - name: Instrument Website for Code Coverage
@@ -133,7 +139,7 @@ jobs:
               env:
                   BUILD_TYPE: test
             - name: Run E2E Tests
-              uses: cypress-io/github-action@v5
+              uses: cypress-io/github-action@v6
               with:
                   start: bash .github/scripts/start-server.sh
                   browser: ${{ matrix.browser }}
@@ -149,22 +155,24 @@ jobs:
               run: bash .github/scripts/stop-server.sh
             - name: Upload Code Coverage to CodeCov
               if: ${{ github.event_name == 'push' }}
-              uses: codecov/codecov-action@v3
+              uses: codecov/codecov-action@v4
               with:
                   name: coverage-reports
                   flags: e2e-tests
                   fail_ci_if_error: true
                   verbose: true
+              env:
+                  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
             - name: Upload Test Results Artifacts
               if: always()
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: e2e-test-results-${{ matrix.browser }}
                   path: |
                       cypress/videos/
                       cypress/screenshots/
             - name: Upload Code Coverage Report Artifacts
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: e2e-tests-coverage-${{ matrix.browser }}
                   path: coverage/
@@ -174,10 +182,10 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
-            - uses: actions/setup-node@v3
+              uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
               with:
-                  node-version: "18.17.1"
+                  node-version: "20.12.2"
             - name: Install Dependencies
               run: npm ci
             - name: Build Site
@@ -187,12 +195,12 @@ jobs:
               env:
                   PUBLIC_URL: https://nadundesilva.github.io
             - name: Upload Site
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: site
                   path: out/
             - name: Upload Unit Tests Code Coverage Report
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: unit-tests-coverage
                   path: coverage/
@@ -203,15 +211,15 @@ jobs:
         needs: build-site
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
             - name: Setup Node.js
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
-                  node-version: "18.17.1"
+                  node-version: "20.12.2"
             - name: Install Dependencies
               run: npm ci
             - name: Download Site
-              uses: actions/download-artifact@v3
+              uses: actions/download-artifact@v4
               with:
                   name: site
                   path: _site/
@@ -222,7 +230,7 @@ jobs:
                   WEBSITE_BUILD_DIR: _site
             - name: Link Checker
               id: lychee
-              uses: lycheeverse/lychee-action@v1.8.0
+              uses: lycheeverse/lychee-action@v1
               with:
                   args: --verbose --no-progress https://nadundesilva.github.io/
                   fail: true
@@ -233,7 +241,7 @@ jobs:
                   WEBSITE_BUILD_DIR: _site
             - name: Upload Link Checker Report
               if: always()
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: Link Checker Report
                   path: ./lychee/out.md
@@ -249,20 +257,20 @@ jobs:
         needs: build-site
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
             - name: Setup Node.js
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
-                  node-version: "18.17.1"
+                  node-version: "20.12.2"
             - name: Install Dependencies
               run: npm ci
             - name: Download Site
-              uses: actions/download-artifact@v3
+              uses: actions/download-artifact@v4
               with:
                   name: site
                   path: _site/
             - name: Run E2E Tests
-              uses: cypress-io/github-action@v5
+              uses: cypress-io/github-action@v6
               with:
                   start: bash .github/scripts/start-server.sh
                   browser: ${{ matrix.browser }}
@@ -277,7 +285,7 @@ jobs:
               run: bash .github/scripts/stop-server.sh
             - name: Upload artifacts
               if: always()
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: site-build-e2e-test-results-${{ matrix.browser }}
                   path: |
@@ -290,16 +298,16 @@ jobs:
     #     needs: build-site
     #     steps:
     #         - name: Checkout
-    #           uses: actions/checkout@v3
+    #           uses: actions/checkout@v4
     #         - name: Download Site
-    #           uses: actions/download-artifact@v3
+    #           uses: actions/download-artifact@v4
     #           with:
     #               name: site
     #               path: _site/
     #         - name: Setup Node.js
-    #           uses: actions/setup-node@v3
+    #           uses: actions/setup-node@v4
     #           with:
-    #               node-version: "18.17.1"
+    #               node-version: "20.12.2"
     #         - name: Run Lighthouse Audit
     #           run: |
     #               npm install -g @lhci/cli@0.10.x
@@ -310,7 +318,7 @@ jobs:
     #               LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     #         - name: Upload artifacts
     #           if: always()
-    #           uses: actions/upload-artifact@v3
+    #           uses: actions/upload-artifact@v4
     #           with:
     #               name: website-audit
     #               path: ./lhci-out
@@ -333,16 +341,16 @@ jobs:
             - check-site-build
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
             - name: Download Site
-              uses: actions/download-artifact@v3
+              uses: actions/download-artifact@v4
               with:
                   name: site
                   path: _site/
             - name: Setup Node.js
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
-                  node-version: "18.17.1"
+                  node-version: "20.12.2"
             - name: Deploy
               uses: JamesIves/github-pages-deploy-action@v4
               with:
