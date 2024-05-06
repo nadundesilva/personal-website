@@ -11,6 +11,8 @@ on:
     schedule:
         - cron: 0 0 * * *
 
+permissions: read-all
+
 jobs:
     deployment-validation:
         strategy:
@@ -22,16 +24,16 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
             - name: Setup Node.js
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
-                  node-version: "18.17.1"
+                  node-version: "20.12.2"
             - name: Install NPM Dependencies
               run: |
                   npm ci
             - name: Run E2E Tests
-              uses: cypress-io/github-action@v5
+              uses: cypress-io/github-action@v6
               with:
                   record: true
                   tag: deployment-check-in-browser-${{ matrix.browser }}
@@ -41,7 +43,7 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Upload artifacts
               if: always()
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: test-results-${{ matrix.browser }}
                   path: |
@@ -53,16 +55,16 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
             - name: Link Checker
               id: lychee
-              uses: lycheeverse/lychee-action@v1.8.0
+              uses: lycheeverse/lychee-action@v1
               with:
                   args: --verbose --no-progress https://nadundesilva.github.io/
                   fail: true
             - name: Upload Link Checker Report
               if: always()
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: Link Checker Report
                   path: ./lychee/out.md
@@ -72,11 +74,11 @@ jobs:
     #     runs-on: ubuntu-20.04
     #     steps:
     #         - name: Checkout
-    #           uses: actions/checkout@v3
+    #           uses: actions/checkout@v4
     #         - name: Setup Node.js
-    #           uses: actions/setup-node@v3
+    #           uses: actions/setup-node@v4
     #           with:
-    #               node-version: "18.17.1"
+    #               node-version: "20.12.2"
     #         - name: Run Lighthouse Audit
     #           run: |
     #               npm install -g @lhci/cli@0.10.x
@@ -86,7 +88,7 @@ jobs:
     #               VALIDATING_LIVE_SITE: "true"
     #         - name: Upload artifacts
     #           if: always()
-    #           uses: actions/upload-artifact@v3
+    #           uses: actions/upload-artifact@v4
     #           with:
     #               name: website-audit
     #               path: ./lhci-out
@@ -98,7 +100,7 @@ jobs:
             security-events: write
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
             - name: Run Trivy vulnerability scanner
               uses: aquasecurity/trivy-action@master
               with:
@@ -108,7 +110,7 @@ jobs:
                   format: sarif
                   output: trivy-results.sarif
             - name: Upload Trivy scan results to GitHub Security tab
-              uses: github/codeql-action/upload-sarif@v2
+              uses: github/codeql-action/upload-sarif@v3
               if: always()
               with:
                   sarif_file: trivy-results.sarif
