@@ -15,6 +15,7 @@
 import nextPwa from "next-pwa";
 import NextBundleAnalyzer from "@next/bundle-analyzer";
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
+import { withSentryConfig } from "@sentry/nextjs";
 
 const withBundleAnalyzer = NextBundleAnalyzer({
     enabled: process.env.ANALYZE === "true",
@@ -26,6 +27,25 @@ const withPWA = nextPwa({
     register: true,
 });
 
+const sentryConfig = {
+    // For all available options, see:
+    // https://github.com/getsentry/sentry-webpack-plugin#options
+
+    org: "nadundesilva",
+    project: "nadundesilva-website",
+    authToken: process.env.SENTRY_AUTH_TOKEN,
+
+    hideSourceMaps: true,
+    widenClientFileUpload: true,
+    transpileClientSDK: true,
+
+    silent: !process.env.CI,
+    disableLogger: true,
+
+    automaticVercelMonitors: false,
+    autoInstrumentServerFunctions: false,
+};
+
 export default (phase, { defaultConfig }) => {
     /**
      * @type {import('next').NextConfig}
@@ -34,7 +54,7 @@ export default (phase, { defaultConfig }) => {
         ...defaultConfig,
         pageExtensions: ["ts", "tsx", "js", "jsx"],
         eslint: {
-            ignoreDuringBuilds: process.env["BUILD_TYPE"] == "test",
+            ignoreDuringBuilds: process.env.BUILD_TYPE == "test",
         },
         modularizeImports: {
             "@mui/icons-material": {
@@ -58,5 +78,8 @@ export default (phase, { defaultConfig }) => {
         nextConfig.output = "export";
     }
 
-    return withBundleAnalyzer(withPWA(nextConfig));
+    return withSentryConfig(
+        withBundleAnalyzer(withPWA(nextConfig)),
+        sentryConfig,
+    );
 };

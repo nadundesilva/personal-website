@@ -154,7 +154,13 @@ const createCspValues = (): string[] => {
             "http://www.googletagmanager.com",
             "'unsafe-inline'",
         ],
-        "connect-src": ["'self'", "https://www.google-analytics.com"],
+        "worker-src": ["'self'", "blob:"],
+        "child-src": ["'self'", "blob:"],
+        "connect-src": [
+            "'self'",
+            "https://www.google-analytics.com",
+            "https://o4507214991917056.ingest.us.sentry.io",
+        ],
     };
     if (
         process.env.NODE_ENV === "development" ||
