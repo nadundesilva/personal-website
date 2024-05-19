@@ -194,6 +194,8 @@ jobs:
                   touch ./out/.nojekyll
               env:
                   PUBLIC_URL: https://nadundesilva.github.io
+                  SENTRY_RELEASE: ${{ github.sha }}
+                  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
             - name: Upload Site
               uses: actions/upload-artifact@v4
               with:
