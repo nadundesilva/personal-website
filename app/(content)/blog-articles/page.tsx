@@ -171,6 +171,13 @@ const blogArticles: BlogArticle[] = [
         image: "/assets/blog-articles/zero-downtime.webp",
         url: "https://faun.pub/kubernetes-the-right-way-zero-downtime-workloads-5edeea221e69",
     },
+    {
+        title: "Kubernetes the Right Way: Pod Security",
+        description:
+            "When you deploy a containerized application you developed, in a Kubernetes Cluster, there are some security-related aspects to remember.",
+        image: "/assets/blog-articles/pod-security.webp",
+        url: "https://medium.com/faun/kubernetes-the-right-way-security-checklist-c38650898807",
+    },
 ].reverse();
 
 export const metadata: Metadata = {
