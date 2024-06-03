@@ -13,9 +13,8 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
+import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 import { type MetadataRoute } from "next";
-
-const PUBLIC_URL = process.env.PUBLIC_URL ?? "https://nadundesilva.github.io";
 
 export default function robots(): MetadataRoute.Robots {
     return {
@@ -23,8 +22,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: "*",
             allow: "/",
         },
-        sitemap: `${
-            PUBLIC_URL.endsWith("/") ? PUBLIC_URL : `${PUBLIC_URL}/`
-        }sitemap.xml`,
+        sitemap: `${WEBSITE_PUBLIC_URL}/sitemap.xml`,
     };
 }

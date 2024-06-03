@@ -29,9 +29,11 @@ import {
 import { Time, TimeRange } from "@/constants/commons";
 import { type Institute, Institutes } from "@/constants/institutes";
 import { Logos } from "@/constants/logos";
+import { FULL_NAME } from "@/constants/metadata";
 
 export const metadata: Metadata = {
-    title: "Nadun De Silva | Education",
+    title: `${FULL_NAME} | Education`,
+    description: `Educational qualifications of ${FULL_NAME}.`,
 };
 
 const Education = (): React.ReactElement => {

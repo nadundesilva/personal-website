@@ -28,9 +28,11 @@ import {
 } from "@/components/content";
 import { Time, TimeRange } from "@/constants/commons";
 import { Logos } from "@/constants/logos";
+import { FULL_NAME } from "@/constants/metadata";
 
 export const metadata: Metadata = {
-    title: "Nadun De Silva | Projects",
+    title: `${FULL_NAME} | Projects`,
+    description: `Various projects done by ${FULL_NAME} throughout his career.`,
 };
 
 const Projects = (): React.ReactElement => {

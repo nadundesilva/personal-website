@@ -26,6 +26,7 @@ import Image from "next/image";
 import React from "react";
 
 import { Photos } from "@/constants/images";
+import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
 const ProfilePhoto = styled(Image)({
     width: "100%",
@@ -61,8 +62,12 @@ const AboutMe = (): React.ReactElement => {
         </Grid>
     );
 
-    const contactItem = (name: string, value: string): React.ReactElement => (
-        <Grid item xs={12} md={4}>
+    const contactItem = (
+        name: string,
+        value: string,
+        gridColumns: number,
+    ): React.ReactElement => (
+        <Grid item xs={12} md={gridColumns}>
             <Typography sx={{ fontWeight: "bold" }}>{name}:</Typography>
             <Typography>{value}</Typography>
         </Grid>
@@ -86,9 +91,9 @@ const AboutMe = (): React.ReactElement => {
                     <InstituteIcon /> University of Moratuwa
                 </Typography>
                 <ItemDivider />
-                <Grid container spacing={3} justifyContent="center">
-                    {contactItem("Email", "nadunrds@gmail.com")}
-                    {contactItem("Website", "nadundesilva.github.io")}
+                <Grid container spacing={4} justifyContent="space-between">
+                    {contactItem("Email", "nadunrds@gmail.com", 3)}
+                    {contactItem("Website", WEBSITE_PUBLIC_URL, 6)}
                 </Grid>
             </Grid>
             {profilePhoto(4, { display: { xs: "none", md: "block" } })}
