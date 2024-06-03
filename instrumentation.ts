@@ -10,6 +10,7 @@ export async function register() {
     if (process.env.NEXT_RUNTIME === "nodejs") {
         Sentry.init({
             ...defaultSentryInitConfig,
+            enabled: false,
             spotlight: process.env.NODE_ENV === "development",
         });
     }

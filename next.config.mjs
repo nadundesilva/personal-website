@@ -16,6 +16,7 @@ import nextPwa from "next-pwa";
 import NextBundleAnalyzer from "@next/bundle-analyzer";
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
 import { withSentryConfig } from "@sentry/nextjs";
+import nextMDX from "@next/mdx";
 
 const withBundleAnalyzer = NextBundleAnalyzer({
     enabled: process.env.ANALYZE === "true",
@@ -25,6 +26,10 @@ const withPWA = nextPwa({
     disable: process.env.NODE_ENV === "development",
     dest: "public",
     register: true,
+});
+
+const withMDX = nextMDX({
+    extension: /\.mdx?$/,
 });
 
 const sentryConfig = {
@@ -52,7 +57,7 @@ export default (phase, { defaultConfig }) => {
      **/
     const nextConfig = {
         ...defaultConfig,
-        pageExtensions: ["ts", "tsx", "js", "jsx"],
+        pageExtensions: ["ts", "tsx", "md", "mdx", "js", "jsx"],
         eslint: {
             ignoreDuringBuilds: process.env.BUILD_TYPE == "test",
         },
@@ -79,7 +84,7 @@ export default (phase, { defaultConfig }) => {
     }
 
     return withSentryConfig(
-        withBundleAnalyzer(withPWA(nextConfig)),
+        withBundleAnalyzer(withPWA(withMDX(nextConfig))),
         sentryConfig,
     );
 };
