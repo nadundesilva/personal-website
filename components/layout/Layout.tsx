@@ -41,6 +41,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { useWebsiteTheme } from "@/components/theme";
 import { Routes } from "@/constants/routes";
+import { FULL_NAME } from "@/constants/metadata";
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -116,7 +117,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement => {
             <Toolbar>
                 {drawer}
                 <Typography variant="h5" component="h1">
-                    Nadun De Silva
+                    {FULL_NAME}
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: { xs: "none", md: "block" } }}>
@@ -184,7 +185,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement => {
                     color: "#666666",
                 }}
             >
-                &copy; 2021 Nadun De Silva
+                &copy; 2021 {FULL_NAME}
             </Container>
             <Zoom in={trigger}>
                 <Box

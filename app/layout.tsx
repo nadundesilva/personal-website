@@ -22,10 +22,7 @@ import { WebsiteThemeProvider } from "@/components/theme";
 import WebVitals from "@/components/WebVitals";
 import "@/styles/main.css";
 import "@/styles/syntax-highlighting.css";
-
-const FULL_NAME = "Nadun De Silva";
-const DESCRIPTION = `${FULL_NAME} is an aspiring Software Engineer interested in Deep Learning, Observability, Anomaly Detection &amp; Cloud Technologies.`;
-const PUBLIC_URL = process.env.PUBLIC_URL ?? "https://nadundesilva.github.io";
+import { FULL_NAME, WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
 const GA_TRACKING_ID = "GTM-T9KX7B4";
 const GOOGLE_SITE_VERIFICATION = "M8dg6gzVYU0noXFvsPOqknm_WjREFeNE212YeUk0g30";
@@ -33,11 +30,9 @@ const YANDEX_VERIFICATION = "acbc45e5d9645cf0";
 const FB_APP_ID = "567329184466353";
 
 export const metadata: Metadata = {
-    title: `${FULL_NAME} | An aspiring Senior Software Engineer and Cloud Computing Enthusiast`,
-    description: DESCRIPTION,
-    metadataBase: new URL(PUBLIC_URL),
+    metadataBase: new URL(WEBSITE_PUBLIC_URL),
     applicationName: FULL_NAME,
-    authors: { name: FULL_NAME, url: PUBLIC_URL },
+    authors: { name: FULL_NAME, url: WEBSITE_PUBLIC_URL },
     creator: FULL_NAME,
     publisher: FULL_NAME,
     generator: "Next.js",
@@ -51,57 +46,24 @@ export const metadata: Metadata = {
         "Software Engineer",
     ],
     referrer: "origin",
-    robots: `${PUBLIC_URL}/robots.txt`,
+    robots: `${WEBSITE_PUBLIC_URL}/robots.txt`,
     alternates: {
-        canonical: PUBLIC_URL,
+        canonical: WEBSITE_PUBLIC_URL,
     },
     icons: {
-        icon: `${PUBLIC_URL}/icon-maskable-x512.png`,
-        shortcut: `${PUBLIC_URL}/icon-maskable-x512.png`,
-        apple: `${PUBLIC_URL}/assets/profile-photo.jpg`,
+        icon: `${WEBSITE_PUBLIC_URL}/icon-maskable-x512.png`,
+        shortcut: `${WEBSITE_PUBLIC_URL}/icon-maskable-x512.png`,
+        apple: `${WEBSITE_PUBLIC_URL}/assets/profile-photo.jpg`,
     },
-    manifest: `${PUBLIC_URL}/manifest.webmanifest`,
-    openGraph: {
-        type: "profile",
-        firstName: "Nadun",
-        lastName: "De Silva",
-        gender: "Male",
-        title: FULL_NAME,
-        description: DESCRIPTION,
-        url: PUBLIC_URL,
-        siteName: FULL_NAME,
-        locale: "en_US",
-        images: {
-            url: `${PUBLIC_URL}/assets/profile-photo.jpg`,
-            alt: FULL_NAME,
-            type: "image/jpeg",
-            width: 1960,
-            height: 1960,
-        },
-    },
-    twitter: {
-        card: "summary",
-        site: "@nadunrds",
-        creator: "@nadunrds",
-        title: FULL_NAME,
-        description: DESCRIPTION,
-        images: {
-            url: `${PUBLIC_URL}/assets/profile-photo.jpg`,
-            alt: FULL_NAME,
-            type: "image/jpeg",
-            width: 1960,
-            height: 1960,
-        },
-    },
+    manifest: `${WEBSITE_PUBLIC_URL}/manifest.webmanifest`,
     verification: {
         google: GOOGLE_SITE_VERIFICATION,
         yandex: YANDEX_VERIFICATION,
     },
     appleWebApp: {
         capable: true,
-        title: FULL_NAME,
         startupImage: {
-            url: `${PUBLIC_URL}/assets/profile-photo.jpg`,
+            url: `${WEBSITE_PUBLIC_URL}/assets/profile-photo.jpg`,
             media: "image/jpeg",
         },
         statusBarStyle: "black-translucent",
@@ -210,34 +172,6 @@ const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
 
                 <meta property="fb:app_id" content={FB_APP_ID} />
                 <meta property="og:fb:profile_id" content="nadunrds" />
-
-                <Script
-                    id="json-for-linking-data"
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify({
-                            "@type": "Person",
-                            "image": {
-                                "height": "1960",
-                                "width": "1960",
-                                "url": `${PUBLIC_URL}/assets/profile-photo.jpg`,
-                                "@type": "imageObject",
-                            },
-                            "url": PUBLIC_URL,
-                            "sameAs": [
-                                "https://www.facebook.com/nadunrds",
-                                "https://www.linkedin.com/in/nadundesilva",
-                                "https://www.instagram.com/nadunrds",
-                                "https://github.com/nadundesilva",
-                                "https://twitter.com/nadunrds",
-                                "https://scholar.google.com/citations?user=CdXo_YQAAAAJ",
-                            ],
-                            "description": DESCRIPTION,
-                            "name": FULL_NAME,
-                            "@context": "https://schema.org",
-                        }),
-                    }}
-                />
 
                 {/* Google Tag Manager */}
                 <Script

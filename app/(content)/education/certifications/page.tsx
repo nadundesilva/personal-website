@@ -27,9 +27,11 @@ import {
 import { type Certificate, Certificates } from "@/constants/certificates";
 import { type Institute, Institutes } from "@/constants/institutes";
 import { People, type Person } from "@/constants/people";
+import { FULL_NAME } from "@/constants/metadata";
 
 export const metadata: Metadata = {
-    title: "Nadun De Silva | Certifications",
+    title: `${FULL_NAME} | Certifications`,
+    description: `Various certifications obtained by ${FULL_NAME}.`,
 };
 
 const Certifications = (): React.ReactElement => {

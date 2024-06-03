@@ -12,13 +12,13 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+import { FULL_NAME, MAIN_DESCRIPTION } from "@/constants/metadata";
 import { type MetadataRoute } from "next";
 
 const manifest = (): MetadataRoute.Manifest => ({
-    name: "Nadun De Silva",
-    short_name: "Nadun De Silva",
-    description:
-        "Nadun De Silva is an aspiring Software Engineer interested in Deep Learning, Observability, Anomaly Detection &amp; Cloud Technologies.",
+    name: FULL_NAME,
+    short_name: FULL_NAME,
+    description: MAIN_DESCRIPTION,
     start_url: "/",
     background_color: "#ffffff",
     theme_color: "#000000",
