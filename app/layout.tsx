@@ -47,6 +47,7 @@ export const metadata: Metadata = {
         "De Silva",
         "Nadun De Silva",
         "Nadun Rusiru De Silva",
+        "Kurukulasuriya Patabandige Nadun Rusiru De Silva",
         "Software Engineer",
     ],
     referrer: "origin",
