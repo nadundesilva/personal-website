@@ -15,6 +15,7 @@
 import { type MetadataRoute } from "next";
 
 import { Routes, type Route } from "@/constants/routes";
+import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
 const buildSitemapUrls = (currentRoutes: Record<string, Route>): string[] => {
     let urls: string[] = [];
@@ -27,22 +28,13 @@ const buildSitemapUrls = (currentRoutes: Record<string, Route>): string[] => {
     return urls;
 };
 
-const PUBLIC_URL =
-    process.env.PUBLIC_URL === undefined
-        ? "https://nadundesilva.github.io"
-        : process.env.PUBLIC_URL.endsWith("/")
-          ? process.env.PUBLIC_URL.substring(
-                0,
-                process.env.PUBLIC_URL.length - 1,
-            )
-          : process.env.PUBLIC_URL;
 const time = new Date();
 
 const sitemap = (): MetadataRoute.Sitemap =>
     ["/", "/nadundesilva-cv.pdf"]
         .concat(buildSitemapUrls(Routes))
         .map((url) => ({
-            url: `${PUBLIC_URL}${url}`,
+            url: `${WEBSITE_PUBLIC_URL}${url}`,
             lastModified: time,
             changeFrequency: "daily",
         }));

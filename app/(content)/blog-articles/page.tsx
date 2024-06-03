@@ -12,6 +12,7 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+import { FULL_NAME } from "@/constants/metadata";
 import {
     Card,
     CardActionArea,
@@ -181,7 +182,8 @@ const blogArticles: BlogArticle[] = [
 ].reverse();
 
 export const metadata: Metadata = {
-    title: "Nadun De Silva | Blog Articles",
+    title: `${FULL_NAME} | Blog Articles`,
+    description: `Various blog articles written by ${FULL_NAME}`,
 };
 
 const BlogArticles = (): React.ReactElement => (

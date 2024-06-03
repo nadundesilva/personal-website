@@ -19,6 +19,7 @@ import { type Metadata } from "next";
 import React from "react";
 
 import { Paragraph } from "@/components/content";
+import { FULL_NAME } from "@/constants/metadata";
 
 enum Relationship {
     ManagedDirectly,
@@ -91,7 +92,8 @@ const Testimonial = ({
 );
 
 export const metadata: Metadata = {
-    title: "Nadun De Silva | Testimonials",
+    title: `${FULL_NAME} | Testimonials`,
+    description: `Testimonials provided by various professionals throughout the career of ${FULL_NAME}.`,
 };
 
 const Testimonials = (): React.ReactElement => {

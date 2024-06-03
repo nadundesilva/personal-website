@@ -28,9 +28,11 @@ import { Time, TimeRange } from "@/constants/commons";
 import { Photos } from "@/constants/images";
 import { type Institute, Institutes } from "@/constants/institutes";
 import { Logos } from "@/constants/logos";
+import { FULL_NAME } from "@/constants/metadata";
 
 export const metadata: Metadata = {
-    title: "Nadun De Silva | Achievements",
+    title: `${FULL_NAME} | Achievements`,
+    description: `Various notable achievements of ${FULL_NAME}.`,
 };
 
 const Achievements = (): React.ReactElement => {

@@ -12,6 +12,8 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+import { FULL_NAME } from "./metadata";
+
 export interface ImageAsset {
     src: string;
     alt: string;
@@ -23,7 +25,7 @@ export interface ImageAsset {
 export const Photos: Record<string, ImageAsset> = {
     ProfilePhoto: {
         src: "/assets/profile-photo.jpg",
-        alt: "Nadun De Silva",
+        alt: FULL_NAME,
         width: 1960,
         height: 1960,
         blurDataURL:
@@ -98,7 +100,7 @@ export const Photos: Record<string, ImageAsset> = {
 export const Images: Record<string, ImageAsset> = {
     WelcomeBanner: {
         src: "/assets/banner.jpg",
-        alt: "Nadun De Silva's Website Welcome Banner",
+        alt: `${FULL_NAME}'s Website Welcome Banner`,
         width: 2048,
         height: 1367,
         blurDataURL:
