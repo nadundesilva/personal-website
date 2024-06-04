@@ -13,7 +13,6 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import type { Viewport, Metadata } from "next";
-import { Roboto } from "next/font/google";
 import Script from "next/script";
 import React from "react";
 
@@ -138,11 +137,6 @@ const createCspValues = (): string[] => {
     return csps;
 };
 
-const roboto = Roboto({
-    weight: "400",
-    subsets: ["latin"],
-});
-
 interface RootLayoutProps {
     children: React.ReactNode;
 }
@@ -209,7 +203,7 @@ const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
                     ></iframe>
                 </noscript>
                 {/* End Google Tag Manager (noscript) */}
-                <main className={roboto.className}>
+                <main>
                     <React.StrictMode>
                         <WebVitals />
                         <WebsiteThemeProvider>
