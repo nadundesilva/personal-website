@@ -22,9 +22,9 @@ import {
     useMediaQuery,
 } from "@mui/material";
 import { grey, indigo } from "@mui/material/colors";
+import { Roboto } from "next/font/google";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import React, { useMemo, useEffect, useState, useContext } from "react";
-
-import EmotionCacheProvider from "./EmotionCacheProvider";
 
 export type ColorScheme = "dark" | "light";
 const colorSchemes = ["dark", "light"];
@@ -44,8 +44,17 @@ const getStoredColorScheme = (): ColorScheme | null => {
         : null;
 };
 
+const roboto = Roboto({
+    weight: "400",
+    subsets: ["latin"],
+    display: "swap",
+});
+
 const createWebsiteTheme = (colorScheme: ColorScheme): Theme => {
     return createTheme({
+        typography: {
+            fontFamily: roboto.style.fontFamily,
+        },
         palette: {
             mode: colorScheme,
             primary: indigo,
@@ -115,7 +124,7 @@ const WebsiteThemeProvider = ({
 
     const theme = useMemo(() => createWebsiteTheme(colorScheme), [colorScheme]);
     return (
-        <EmotionCacheProvider>
+        <AppRouterCacheProvider>
             <StyledEngineProvider injectFirst>
                 <ThemeProvider theme={theme}>
                     <CssBaseline />
@@ -140,7 +149,7 @@ const WebsiteThemeProvider = ({
                     </WebsiteTheme.Provider>
                 </ThemeProvider>
             </StyledEngineProvider>
-        </EmotionCacheProvider>
+        </AppRouterCacheProvider>
     );
 };
 
