@@ -10,12 +10,15 @@ export async function register() {
     if (process.env.NEXT_RUNTIME === "nodejs") {
         Sentry.init({
             ...defaultSentryInitConfig,
-            enabled: false,
+            enabled: process.env.NODE_ENV === "production",
             spotlight: process.env.NODE_ENV === "development",
         });
     }
 
     if (process.env.NEXT_RUNTIME === "edge") {
-        Sentry.init(defaultSentryInitConfig);
+        Sentry.init({
+            ...defaultSentryInitConfig,
+            enabled: process.env.NODE_ENV === "production",
+        });
     }
 }

@@ -26,8 +26,8 @@ import {
 } from "@/components/content";
 import { type Certificate, Certificates } from "@/constants/certificates";
 import { type Institute, Institutes } from "@/constants/institutes";
-import { People, type Person } from "@/constants/people";
 import { FULL_NAME } from "@/constants/metadata";
+import { People, type Person } from "@/constants/people";
 
 export const metadata: Metadata = {
     title: `${FULL_NAME} | Certifications`,

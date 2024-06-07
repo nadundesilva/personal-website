@@ -12,8 +12,9 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { FULL_NAME, MAIN_DESCRIPTION } from "@/constants/metadata";
 import { type MetadataRoute } from "next";
+
+import { FULL_NAME, MAIN_DESCRIPTION } from "@/constants/metadata";
 
 const manifest = (): MetadataRoute.Manifest => ({
     name: FULL_NAME,

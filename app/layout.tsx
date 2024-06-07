@@ -19,9 +19,9 @@ import React from "react";
 import Layout from "@/components/layout";
 import { WebsiteThemeProvider } from "@/components/theme";
 import WebVitals from "@/components/WebVitals";
+import { FULL_NAME, WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 import "@/styles/main.css";
 import "@/styles/syntax-highlighting.css";
-import { FULL_NAME, WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
 const GA_TRACKING_ID = "GTM-T9KX7B4";
 const GOOGLE_SITE_VERIFICATION = "M8dg6gzVYU0noXFvsPOqknm_WjREFeNE212YeUk0g30";
