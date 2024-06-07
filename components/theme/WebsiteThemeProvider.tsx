@@ -13,36 +13,16 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import {
-    createTheme,
-    CssBaseline,
-    StyledEngineProvider,
-    type Theme,
-    ThemeProvider,
-    useMediaQuery,
-} from "@mui/material";
+import { CssBaseline, StyledEngineProvider } from "@mui/material";
 import { grey, indigo } from "@mui/material/colors";
-import { Roboto } from "next/font/google";
+import {
+    CssVarsTheme,
+    experimental_extendTheme as extendTheme,
+    Experimental_CssVarsProvider as CssVarsProvider,
+} from "@mui/material/styles";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
-import React, { useMemo, useEffect, useState, useContext } from "react";
-
-export type ColorScheme = "dark" | "light";
-const colorSchemes = ["dark", "light"];
-
-const COLOR_SCHEME_KEY = "COLOR_SCHEME";
-
-const getStoredColorScheme = (): ColorScheme | null => {
-    let storedColorScheme: string | null;
-    try {
-        storedColorScheme = localStorage.getItem(COLOR_SCHEME_KEY);
-    } catch {
-        storedColorScheme = null;
-    }
-    return storedColorScheme !== null &&
-        colorSchemes.includes(storedColorScheme)
-        ? (storedColorScheme as ColorScheme)
-        : null;
-};
+import { Roboto } from "next/font/google";
+import React from "react";
 
 const roboto = Roboto({
     weight: "400",
@@ -50,42 +30,34 @@ const roboto = Roboto({
     display: "swap",
 });
 
-const createWebsiteTheme = (colorScheme: ColorScheme): Theme => {
-    return createTheme({
-        typography: {
-            fontFamily: roboto.style.fontFamily,
+const websiteTheme: CssVarsTheme = extendTheme({
+    typography: {
+        fontFamily: roboto.style.fontFamily,
+        fontSize: 17,
+    },
+    colorSchemes: {
+        dark: {
+            palette: {
+                primary: indigo,
+                secondary: indigo,
+            },
         },
-        palette: {
-            mode: colorScheme,
-            primary: indigo,
-            secondary: indigo,
+        light: {
+            palette: {
+                primary: indigo,
+                secondary: indigo,
+            },
         },
-        components: {
-            MuiLink: {
-                styleOverrides: {
-                    root: {
-                        color: grey[700],
-                        textDecoration: "none",
-                    },
+    },
+    components: {
+        MuiLink: {
+            styleOverrides: {
+                root: {
+                    color: grey[700],
+                    textDecoration: "none",
                 },
             },
         },
-    });
-};
-
-interface WebsiteThemeContext {
-    theme: Theme;
-    colorScheme: ColorScheme;
-    setColorScheme: (newColorScheme: ColorScheme) => void;
-}
-
-const defaultColorScheme = getStoredColorScheme() ?? "light";
-
-const WebsiteTheme = React.createContext<WebsiteThemeContext>({
-    theme: createWebsiteTheme(defaultColorScheme),
-    colorScheme: defaultColorScheme,
-    setColorScheme: () => {
-        throw Error("Setting color theme not implemented");
     },
 });
 
@@ -96,65 +68,16 @@ interface WebsiteThemeProviderProps {
 const WebsiteThemeProvider = ({
     children,
 }: WebsiteThemeProviderProps): React.ReactElement => {
-    const preferedColorScheme: ColorScheme = useMediaQuery(
-        "(prefers-color-scheme: dark)",
-    )
-        ? "dark"
-        : "light";
-    const initialStoredColorScheme = getStoredColorScheme();
-
-    const [colorScheme, setColorScheme] = useState<ColorScheme>(
-        initialStoredColorScheme === null
-            ? preferedColorScheme
-            : initialStoredColorScheme,
-    );
-
-    const storageListener = (): void => {
-        const storedColorScheme = getStoredColorScheme();
-        if (storedColorScheme !== null) {
-            setColorScheme(storedColorScheme);
-        }
-    };
-    useEffect(() => {
-        window.addEventListener("storage", storageListener);
-        return (): void => {
-            window.removeEventListener("storage", storageListener);
-        };
-    });
-
-    const theme = useMemo(() => createWebsiteTheme(colorScheme), [colorScheme]);
     return (
         <AppRouterCacheProvider>
             <StyledEngineProvider injectFirst>
-                <ThemeProvider theme={theme}>
+                <CssVarsProvider theme={websiteTheme}>
                     <CssBaseline />
-                    <WebsiteTheme.Provider
-                        value={{
-                            theme,
-                            colorScheme,
-                            setColorScheme: (
-                                newColorScheme: ColorScheme,
-                            ): void => {
-                                try {
-                                    localStorage.setItem(
-                                        COLOR_SCHEME_KEY,
-                                        newColorScheme,
-                                    );
-                                } catch {}
-                                setColorScheme(newColorScheme);
-                            },
-                        }}
-                    >
-                        {children}
-                    </WebsiteTheme.Provider>
-                </ThemeProvider>
+                    {children}
+                </CssVarsProvider>
             </StyledEngineProvider>
         </AppRouterCacheProvider>
     );
-};
-
-export const useWebsiteTheme = (): WebsiteThemeContext => {
-    return useContext(WebsiteTheme);
 };
 
 export default WebsiteThemeProvider;

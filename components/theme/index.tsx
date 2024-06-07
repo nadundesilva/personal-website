@@ -12,6 +12,6 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import WebsiteThemeProvider, { useWebsiteTheme } from "./WebsiteThemeProvider";
+import WebsiteThemeProvider from "./WebsiteThemeProvider";
 
-export { WebsiteThemeProvider, useWebsiteTheme };
+export { WebsiteThemeProvider };
