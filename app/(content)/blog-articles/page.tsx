@@ -12,7 +12,6 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { FULL_NAME } from "@/constants/metadata";
 import {
     Card,
     CardActionArea,
@@ -23,6 +22,8 @@ import {
 } from "@mui/material";
 import { type Metadata } from "next";
 import React from "react";
+
+import { FULL_NAME } from "@/constants/metadata";
 
 interface BlogArticle {
     title: string;

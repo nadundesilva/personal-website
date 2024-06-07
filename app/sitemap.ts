@@ -14,8 +14,8 @@
  */
 import { type MetadataRoute } from "next";
 
-import { Routes, type Route } from "@/constants/routes";
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
+import { Routes, type Route } from "@/constants/routes";
 
 const buildSitemapUrls = (currentRoutes: Record<string, Route>): string[] => {
     let urls: string[] = [];

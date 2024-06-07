@@ -13,8 +13,9 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
-import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 import { type MetadataRoute } from "next";
+
+import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
 export default function robots(): MetadataRoute.Robots {
     return {

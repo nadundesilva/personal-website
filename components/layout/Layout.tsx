@@ -33,15 +33,16 @@ import {
     Toolbar,
     Tooltip,
     Typography,
+    useMediaQuery,
     useScrollTrigger,
     Zoom,
 } from "@mui/material";
+import { SupportedColorScheme, useColorScheme } from "@mui/material/styles";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 
-import { useWebsiteTheme } from "@/components/theme";
-import { Routes } from "@/constants/routes";
 import { FULL_NAME } from "@/constants/metadata";
+import { Routes } from "@/constants/routes";
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -69,11 +70,16 @@ const Layout = ({ children }: LayoutProps): React.ReactElement => {
         setDrawerOpen(!isDrawerOpen);
     };
 
-    const { colorScheme, setColorScheme } = useWebsiteTheme();
-    const nextColorScheme = colorScheme === "dark" ? "light" : "dark";
-    const onThemeToggleChange = (): void => {
-        setColorScheme(nextColorScheme);
-    };
+    const { colorScheme, setColorScheme } = useColorScheme();
+
+    const preferedColorScheme: SupportedColorScheme = useMediaQuery(
+        "(prefers-color-scheme: dark)",
+    )
+        ? "dark"
+        : "light";
+    const currentColorScheme =
+        colorScheme == undefined ? preferedColorScheme : colorScheme;
+    const nextColorScheme = currentColorScheme === "light" ? "dark" : "light";
 
     const drawer = (
         <React.Fragment>
@@ -142,7 +148,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement => {
                     <IconButton
                         sx={{ marginLeft: 5 }}
                         size="small"
-                        onClick={onThemeToggleChange}
+                        onClick={() => setColorScheme(nextColorScheme)}
                     >
                         {nextColorScheme === "dark" ? (
                             <DarkMode />

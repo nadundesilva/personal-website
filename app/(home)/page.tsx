@@ -13,15 +13,15 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { Container } from "@mui/material";
+import { Metadata } from "next";
 import React from "react";
 
-import { Metadata } from "next";
+import PageContent from "./_content/PageContent";
 import {
     FULL_NAME,
     MAIN_DESCRIPTION,
     WEBSITE_PUBLIC_URL,
 } from "@/constants/metadata";
-import PageContent from "./_content/PageContent";
 
 export const metadata: Metadata = {
     title: `${FULL_NAME} | An aspiring Senior Software Engineer and Cloud Computing Enthusiast`,
