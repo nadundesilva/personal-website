@@ -34,12 +34,11 @@ const ProfilePhoto = styled(Image)({
 });
 
 const InstituteIcon = styled(LocationCity)(({ theme }) => ({
-    marginRight: theme.spacing(1),
+    mr: theme.spacing(1),
 }));
 
 const ItemDivider = styled(Divider)(({ theme }) => ({
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    my: theme.spacing(2),
 }));
 
 const AboutMe = (): React.ReactElement => {

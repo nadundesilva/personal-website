@@ -142,13 +142,12 @@ const Certifications = (): React.ReactElement => {
                                             color="secondary"
                                             size="small"
                                             sx={{
-                                                marginTop: 2,
-                                                marginBottom: 2,
+                                                my: 2,
                                             }}
                                         />
                                         <Typography
                                             color="textSecondary"
-                                            sx={{ marginTop: 2 }}
+                                            sx={{ mt: 2 }}
                                         >
                                             Issued by
                                             <br />

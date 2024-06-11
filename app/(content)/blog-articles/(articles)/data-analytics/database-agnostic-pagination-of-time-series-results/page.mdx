@@ -1,0 +1,133 @@
+import idea from "@/assets/blog-articles/data-analytics/idea.webp";
+
+export const blogMetadata = {
+    image: "/assets/blog-articles/time.webp",
+    mediumUrl:
+        "https://faun.pub/database-agnostic-pagination-of-time-series-results-c1e9723291e5",
+    publishedDate: new Date("2022-01-02"),
+    keywords: [
+        "Timeseries Database",
+        "Pagination",
+        "Azure Data Explorer",
+        "Data Science",
+        "Chunking",
+    ],
+};
+
+export const metadata = {
+    title: "Database Agnostic Pagination of Time-Series Results",
+    description:
+        "A way to paginate time series results in the DB side even when the DB itself doesn’t support it.",
+};
+
+export default function Layout({ children }) {
+    return (
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
+            {children}
+        </BlogArticleLayout>
+    );
+}
+
+If you are working with Observability or any Data Science field, chances are that you have to work with time-series data at one point or the other. This is because most practical applications of data science will include a time dimension and it is generally useful to preserve this information in many cases.
+
+A common issue when dealing with such time-series data is the sheer volume of data that is collected and the challenges that come along with dealing with such data.
+
+Today in this article, I will be focusing on one such issue, which is paginating time series data. Pagination is important in any solution and helps clients process or visualize data without getting overwhelmed by the sheer volume of all the relevant data.
+
+Moreover, most large-scale time-series databases have hard limits on the number of results that can be returned in a single query (For Azure Data Explorer this was set at 500,000 rows or 64 MB (whichever is lower) at the time I was writing the article). This can result in problems if you wish to query large amounts of data through the REST APIs.
+
+In this article, I will be walking you through a solution that we had to implement due to the lack of database-side pagination support in Azure Data Explorer and other products powered by it. However, the approach used in this article is **database agnostic** and it should work with any time-series database out there.
+
+---
+
+Now let’s take a look at how to implement pagination in time-series data even without any support for it from the time-series database itself.
+
+**Note:** I have assumed that the time series database will return an error when database limits are hit along with a partial result set. This is simply to follow the behavior of the Azure Data Explorer that I tested this with. However, if only an error is returned without a partial result set, the algorithm can still be modified to address it.
+
+<Image
+    alt="Idea"
+    src={idea}
+    creator={{
+        name: "AbsolutVision",
+        href: "https://unsplash.com/@freegraphictoday",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/s/photos/idea",
+        },
+    }}
+/>
+
+# Pseudo Code for Chunking of Time-series Query Results
+
+```
+Input:
+* start_time - The last timestamp (inclusive) to include in results
+* end_time   - The last timestamp (exclusive) to include in results
+* limit      - The maximum number of rows to fetch in a single query
+
+Utility Functions:
+* query_database             - Query the database and return results in ascending order
+* process                    - Process an array of results
+* size_of                    - Get length of an array
+* timestamp_of               - Get the timestamp of a row of results
+* is_server_side_limit_error - Returns true if the error passed in is the server side limit error
+
+Algorithm:
+ 1: current_start_time = start_time
+ 2: while True:
+ 3:    has_reached_server_side_limit = False
+ 4:    rows = []
+ 5:    try:
+ 6:       rows = query_database(current_start_time, end_time, limit)
+ 7:    except Exception as err:
+ 8:       if is_server_side_limit_error(err):
+ 9:          has_reached_server_limit = True
+10:          rows = err.partial_results.rows  # Partial results set
+11:       else:
+12:          raise err
+13:    row_count = size_of(rows)
+14:    if row_count == limit or has_reached_server_side_limit:
+15:       last_timestamp = timestamp_of(rows[row_count - 1])
+16:       i = size_of(rows)
+17:       while i > 0 && timestamp_of(rows[i-1]) == last_timestamp:
+18:         i--
+19:       if i == 0:
+20:         raise Error("Unsupported condition: limit too small")
+21:       rows = rows[0:i] # Dropping all rows with last timestamp
+22:       current_start_time = last_timestamp
+23:       process(rows)
+24:    else:
+25:       if row_count > 0:
+26:          process(rows)
+27:       break
+```
+
+# Explanation
+
+The most important aspect of any pagination algorithm is how to continue from the last results chunk. In this algorithm, this is achieved by querying the results in ascending order and using the last timestamp of the previous results chunk as the start timestamp of the next results chunk.
+
+However, to avoid any overlaps due to repeated timestamps in multiple rows, we need to always drop the last timestamp in the chunk so that we can fetch results starting from that point to the end of the time range (Lines 14–21). There is an inherent limitation because of this approach, which is explained below.
+
+The terminating condition of the querying is detected when the number of returned data is less than the limit specified and if there were no database size limit errors (Lines 24–27).
+
+# Limitations & ways to overcome them
+
+While this algorithm will work for many cases, if your data contains multiple repeated timestamps in rows, the algorithm may fail. This can happen if the limit applied to the results chunk is smaller than the maximum number of repeated timestamps as we are always removing the last. The algorithm will raise an error if this condition is reached (Lines 19–20).
+
+However, in many real-world applications repeating timestamps in multiple events will be rare. However, there can be some cases where there are repeated timestamps due to the implementation of how these data points were recorded. (e.g.:- multiple sensor readings which have the same timestamp, to simplify the sensor reading implementation, even though they were read at least several milliseconds apart).
+
+One approach to overcome these limitations in such scenarios would be to group these events into a single row using the time-series database query itself.
+
+---
+
+# Conclusion
+
+As you have witnessed above, this approach would work with almost any database without any issues.
+
+However, I would like to emphasize the fact that, **we should not try to query all data in this manner unless it is necessary**. Querying data in this manner will put a lot of strain on the database as well as the client.
+
+You should always try to **aggregate and process the data within the database itself using database queries**. Most of the time-series databases available today include rich enough syntax to perform such processing on the database side itself.
+
+However, in those rare occasions when you have no other alternative (e.g.:- if you are storing logs in an Azure Data Explorer and would like to implement a logs viewer), I hope this approach will save your day.
+
+P. S. — I would love to hear about your use cases where loading all data in chunks was useful.

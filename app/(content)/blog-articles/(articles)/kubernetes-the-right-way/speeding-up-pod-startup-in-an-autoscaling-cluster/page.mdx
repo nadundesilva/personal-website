@@ -1,0 +1,171 @@
+export const blogMetadata = {
+    image: "/assets/blog-articles/kubernetes-cluster.webp",
+    mediumUrl:
+        "https://faun.pub/speeding-up-pod-startup-in-an-autoscaling-kubernetes-cluster-fb98dbca88ba",
+    publishedDate: new Date("2023-06-08"),
+    keywords: [
+        "Kubernetes",
+        "Kubernetes Cluster",
+        "Scaleup",
+        "K8s",
+        "Kubernetes Autoscaling",
+    ],
+};
+
+export const metadata = {
+    title: "Kubernetes the Right Way: Speeding Up Pod Startup in an Autoscaling Cluster",
+    description:
+        "At K8s Cluster scale-up time the new Pods have a high startup time as the Node startup time adds up to the Pod startup time. This article outlines how you can work around that and reduce the overall startup time.",
+};
+
+export default function Layout({ children }) {
+    return (
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
+            {children}
+        </BlogArticleLayout>
+    );
+}
+
+In most of the managed Kubernetes Clusters provided by Cloud Providers, you can enable autoscaling of the K8s Cluster so that when new workloads are added into the cluster, if there is no space in the existing nodes in the cluster, new nodes are added to the Cluster automatically. This is generally done using the [K8s Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler) provided by Kubernetes itself.
+
+One of the key aspects to note here is that the new nodes are added to the cluster after a Pod fails to schedule due to insufficient resources being available in the cluster. This allows us to add nodes only when required saving some money for us.
+
+However, there is one downside to it as the Node startup time now adds up to the Pod startup time. While in most cases, this is sufficient, it can sometimes be problematic (For example in Operator-based deployments where we have to provision new Pods dynamically to serve new users upon request). This article outlines how you can work around this problem by having a set of buffer Pods over-provisioning Nodes slightly, which will step out of the way and provide space for the actual workloads if required.
+
+---
+
+# Using Priority Classes
+
+The Priority Classes provide the capability for us to specify the relative priority between Pods in scheduling them into Nodes. On top of that, when a higher priority Pod needs to be scheduled, the K8s scheduler will preempt any lower priority Pod as required to make space for the higher priority Pod. At this point, the preempted less-priority Pods would enter a `Pending` state until space to schedule them is available within the K8s cluster.
+
+We can utilize this behavior to schedule some Pods to act as buffer space which can be utilized by the actual Pods whenever required. Whenever the cluster runs out of space and the buffer Pods enter the Pending state, the K8s Cluster Autoscaler would startup a node and try to schedule the Buffer Pods again. While this is happening, the actual workload Pods would be scheduled into the space left out by the Buffer Pods which went into Pending state.
+
+This in a way lets us transfer the Node startup time penalty away from the workload Pod startup time and move it to the startup time of the Buffer Pods. This results in the Workload startup time to reduce.
+
+_Let’s see how we can implement this._
+
+---
+
+# Buffer Pods
+
+Let’s first define a Priority Class for the Buffer Pods. We need to give a name for the class as well as a `value` representing the priority that should be given to any Pod which has the Priority Class. Pods with a Priority Class with a higher `value` is given higher priority compared to others. Although in the example below, I have set this to zero, it can have any value that you wish (The `value` needs to be between -2,147,483,648 and 1,000,000,000 inclusive).
+
+```yaml
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+    name: buffering-priority
+value: 0
+description: "This Priority Class lowers the priority of Buffer Pods"
+```
+
+The next step is to create Pods and signal to the K8s Pod scheduler the Priority Class they belong to. It can be done by specifying the Priority Class name in the `priorityClassName` field in the Pod spec. You can also add any other required resources (such as Services, Ingresses, and Network Policies) as you wish.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: buffer-deployment
+    labels:
+        app: buffer
+spec:
+    replicas: 2
+    selector:
+        matchLabels:
+            app: buffer
+    template:
+        metadata:
+            labels:
+                app: buffer
+        spec:
+            priorityClassName: buffering-priority
+            containers:
+                - name: pause
+                  image: google/pause
+                  resources:
+                      requests:
+                          memory: "1Gi"
+                          cpu: "500m"
+                      limits:
+                          memory: "1Gi"
+                          cpu: "500m"
+```
+
+It is also important to specify the resource limits and requests accordingly so that these buffer Pods will allocate the correct amount of additional resources, which will be reserved for your actual workload Pods. This can be as high or low as you like and the number of replicas can be also used to control the reserved resources.
+
+If you have one type of workload, my recommendation is to match the resource requests and limits exactly to the workload resource requests and limits so that you can control the maximum spike of new Pods created that the cluster can handle by using `replicas` in a more predictable manner. Also, I would recommend using the `google/pause` container image or a similar image, which wouldn’t do any actual work, for the buffer Pods.
+
+# Workload Pods
+
+The Priority Class for the workload Pods can be created similarly. The only requirement is that the `value` of this Priority Class should be higher than the Priority Class of the Buffer Pods (greater than 0 according to our example).
+
+```yaml
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+    name: normal-priority
+value: 100
+description: "This Priority Class increases the priority of other workload pods"
+```
+
+The workload Deployment (or any other K8s resource which creates Pods), can be created similarly and the `priorityClassName` field should point to the above Priority Class.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: workload-deployment
+    labels:
+        app: workload
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: workload
+    template:
+        metadata:
+            labels:
+                app: workload
+        spec:
+            priorityClassName: normal-priority
+            containers:
+                - name: nginx
+                  image: nginx:1.25.0
+                  ports:
+                      - containerPort: 80
+                  resources:
+                      requests:
+                          memory: "1Gi"
+                          cpu: "500m"
+                      limits:
+                          memory: "1Gi"
+                          cpu: "500m"
+```
+
+Now we are all set. If you create the above resources, you can see how the Buffer Pods will move to `Pending` state immediately whenever a workload Pod does not have enough space within the K8s Cluster. I have written down the [K8s resources](https://github.com/nadundesilva/blog-support/tree/main/articles/speeding-up-pod-startup-in-an-autoscaling-kubernetes-cluster) which you can use to test this out yourself if you wish. After creating the resources, try to scale up the workload Deployment and note how once the K8s Cluster is full, the Buffer Pods would start to back off and let the Workload Pods run.
+
+# Global Priority Class
+
+If you are creating many different Pods, it might get troublesome to specify the `priorityClassName` for all workload Pods. If that is the case, you can set the default priority for all Pods at a global level by creating a Global Priority Class.
+
+This can be done by creating a Priority Class similar to before and setting the `globalDefault` to `true` in it. There can only be one Priority Class with `globalDefault` set to `true` within one Cluster.
+
+```yaml
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+    name: default-priority
+value: 100
+globalDefault: true
+description: "This Priority Class set the default priority level for all Pods"
+```
+
+According to the above example, all Pods which does not have the `priorityClassName` field would have a priority value of `100`.
+
+---
+
+While this technique, would overprovision resources in your cluster in the form of Buffer Pods, it also helps in speeding up the startup time when K8s Cluster Autoscaler’s scaleup events occur. In situations where you are dynamically provisioning Pods to serve users and you want the Pods to startup fast to avoid harming the end-user experience, you can use this technique.
+
+---
+
+If you liked this article and would love to learn more about best practices on implementing, deploying, and maintaining applications on Kubernetes, read my article series [Kubernetes the Right Way](./).

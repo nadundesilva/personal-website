@@ -1,0 +1,186 @@
+import microk8sStatusOutput from "@/assets/blog-articles/cellery/microk8s-status-output.webp";
+import microk8sDnsEnableOutput from "@/assets/blog-articles/cellery/microk8s-dns-enable-output.webp";
+import kubectlConfigCurrentContextOutput from "@/assets/blog-articles/cellery/kubectl-config-current-context-output.webp";
+import microk8sInspectOutput from "@/assets/blog-articles/cellery/microk8s-inspect-output.webp";
+import celleryVersionOutput from "@/assets/blog-articles/cellery/cellery-version-output.webp";
+import k8sLoadBalancerServiceYaml from "@/assets/blog-articles/cellery/k8s-load-balancer-service-yaml.webp";
+import cellerySetupCreateExistingOutput from "@/assets/blog-articles/cellery/cellery-setup-create-existing-output.webp";
+import celleryRunCellOutput from "@/assets/blog-articles/cellery/cellery-run-cell-output.webp";
+import celleryListInstancesOutput from "@/assets/blog-articles/cellery/cellery-list-instances-output.webp";
+import cellFrontend from "@/assets/blog-articles/cellery/cell-frontend.webp";
+
+export const blogMetadata = {
+    image: "/assets/blog-articles/cellery-on-microk8s.webp",
+    mediumUrl:
+        "https://medium.com/wso2-cellery/cellery-on-microk8s-e7bc19320f46",
+    publishedDate: new Date("2019-10-6"),
+    keywords: ["Kubernetes", "Cellery", "Istio", "Microk8s", "Microservices"],
+};
+
+export const metadata = {
+    title: "Cellery on MicroK8s",
+    description:
+        "A guide for deploying Cellery using MicroK8s for Development purposes.",
+};
+
+export default function Layout({ children }) {
+    return (
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
+            {children}
+        </BlogArticleLayout>
+    );
+}
+
+There had been a lot of buzz around microservices, Kubernetes, and Istio recently. [Cellery](https://github.com/wso2/cellery), a newcomer to this space, brings together some of these technologies and gives you a simplified approach to building, running, testing, and managing code-first composites on Kubernetes. Cellery can be deployed on top of any Kubernetes cluster and can provide you with many useful capabilities without much of a hassle.
+
+This article will focus on deploying Cellery on [MircoK8s](https://microk8s.io/). MicroK8s is a quite handy tool introduced by Canonical for spinning up a single-node Kubernetes cluster for development purposes in your computer. If you are a developer using Cellery, MicroK8s is a good option to get started in your Cellery journey.
+
+**Note:** If you are new to K8s and wish to get started quickly with Cellery, please use the [local setup option](https://github.com/wso2-cellery/sdk#quickstart-guide) as this is more convenient for new users.
+
+# Setting up MicroK8s
+
+**Note:** This article is focused on _Cellery v0.4.0_ and the requirements such as the K8s version mentioned here may change in later versions. You can check the requirements from the [Cellery SDK repository](https://github.com/wso2-cellery/sdk) if you need to use a different version.
+
+## Creating K8s Cluster
+
+**Note:** You can skip this section if you already have a running MicroK8s cluster.
+
+To get started, we first need to [install MicroK8s](https://microk8s.io/) (channel 1.14/stable) by following the quick start guide. By default, the MicroK8s cluster will start up right after the installation.
+
+After finishing the above steps, run the following command to check if the K8s cluster is running.
+
+```shell
+microk8s.status
+```
+
+<Image alt="MicroK8s Status Output" src={microk8sStatusOutput} />
+
+If you get a message saying **microk8s is running** your single node K8s cluster is successfully up and running.
+
+To proceed with working with MicroK8s, the following command should be run to enable the MicroK8s DNS plugin. This will enable us to resolve K8s service names inside the K8s cluster.
+
+```shell
+microk8s.enable dns
+```
+
+<Image alt="MicroK8s Enable DNS Output" src={microk8sDnsEnableOutput} />
+
+The next step is to update the default Kubernetes configuration so that kubectl will point to the MicroK8s cluster.
+
+## Setting up Kube config
+
+Since MicroK8s installs and configures its own CLI (microk8s.kubectl) for accessing the K8s cluster, the configuration in the user home needs to be updated to provide access for the default kubectl CLI (If you do not have kubectl installed, please follow the [official documentation](https://kubernetes.io/docs/tasks/tools/install-kubectl/) for installing the CLI).
+
+To get started let’s back up the existing Kube config (If this is your first time using kubectl, you may not have an existing configuration) and then copy the microk8s configuration to the default Kube config location.
+
+```shell
+mv $HOME/.kube/config $HOME/.kube/config.back
+microk8s.kubectl config view --raw > $HOME/.kube/config
+```
+
+Now you should be able to access the MicroK8s cluster using kubectl. You can verify by running the following commands.
+
+```shell
+kubectl config current-context
+kubectl get nodes
+```
+
+<Image
+    alt="Kubectl Config Current Context Output"
+    src={kubectlConfigCurrentContextOutput}
+/>
+
+Now we are ready to get started with setting up Cellery!
+
+## Enabling packet forwarding to/from the pod network interface to/from the default interface on the host
+
+To enable inter-pod communication you may need to enable packet forwarding to/from the pod network interface to/from the default interface on the host. You can check whether this is required by running the following command.
+
+```shell
+microk8s.inspect
+```
+
+<Image alt="MicroK8s Inspect Output" src={microk8sInspectOutput} />
+
+If this command gives you the above warning about packet forwarding, please run the following command as mentioned in the command output.
+
+```shell
+sudo iptables -P FORWARD ACCEPT
+```
+
+The next step is to install Cellery on top of this K8s cluster.
+
+# Installing Cellery on MicroK8s
+
+## Installing Cellery CLI
+
+To get started with Cellery, please install the CLI from the [Cellery SDK](https://github.com/wso2-cellery/sdk) repository. After the installation process finishes, the installation can be verified by running the following command.
+
+```shell
+cellery version
+```
+
+<Image alt="Cellery Version Output" src={celleryVersionOutput} />
+
+**Note:** You can also install the optional dependency (required for developing Cells), [BallerinaLang](https://ballerina.io/downloads/). _BallerinaLang v0.991.0_ is required for _Cellery v0.4.0_.
+
+## Setting the IP of MicroK8s
+
+As the first step, we need to find out the IP of the node running MicroK8s. If you are running MicroK8s on multipass, you can find this out by running the `multipass list` command. If you are using Linux, you can use the IP of any of the interfaces available on your machine other than localhost.
+
+After figuring out the IP, the `<CELLERY_INSTALLATION_LOCATION>/k8s-artefacts/system/service-nodeport.yaml` file needs to be edited and the IP should be added to `spec.externalIPs` list (The default Cellery installation location in Linux is `/usr/share/cellery` and in MacOS it is `/Library/Cellery`).
+
+<Image alt="K8s Load Balancer Service Yaml" src={k8sLoadBalancerServiceYaml} />
+
+Also, for accessing the cluster from your machine, host entries need to be added by adding a new line to the `/etc/hosts` file.
+
+```
+<EXTERNAL_IP_USED>  wso2-apim-gateway wso2-apim cellery-dashboard wso2sp-observability-api cellery-k8s-metrics idp.cellery-system pet-store.com
+```
+
+## Installing Cellery run-time on MicroK8s
+
+To get started with installing the cellery run-time on the MicroK8s, we need to execute the following command. The command will exit after making sure all the Cellery pods are up and running.
+
+**Note:** This will install a basic volatile installation of Cellery. and this is mostly used for development purposes.
+
+```shell
+cellery setup create existing
+```
+
+<Image
+    alt="Cellery Setup Create Existing Output"
+    src={cellerySetupCreateExistingOutput}
+/>
+
+_Voila!_ Now you have a _basic Cellery run-time_ running in your machine.
+
+# Trying out Cellery
+
+This article so far took you through installing a basic Cellery installation that doesn’t have most of the advanced features (Observability, Auto Scaling including scale-to-zero capability, API Management) provided by Cellery. Therefore, let’s try out the new Cellery run-time with the Cellery Pet Store.
+
+To run the Cell, simply run the following command (This will pull the Cell Image from [Cellery Hub](https://github.com/wso2/cellery-hub) including its dependencies, and startup the Cell and its dependencies in the appropriate order).
+
+```shell
+cellery run wso2cellery/pet-fe-cell:0.4.0 -d -n pet-fe -l petStoreBackend:pet-be
+```
+
+<Image alt="Cellery Run Cell Output" src={celleryRunCellOutput} />
+
+After the run command completes, you can check the Cell instances running on the run-time by running the following command.
+
+```shell
+cellery list instances
+```
+
+<Image alt="Cellery List Instances Output" src={celleryListInstancesOutput} />
+
+To access the application we deployed, visit http://pet-store.com using your browser.
+
+<Image alt="Cell Frontend" src={cellFrontend} />
+
+If you see the above page, you have successfully deployed the Pet Store application on Cellery.
+
+What we have done above is deploy a simple web application along with its back-end micro-services as Cells. We have used a Basic installation of Cellery without most of its powerful capabilities such as Observability, Auto Scaling, Zero Scaling, and many more features. Cellery brings you all these capabilities along with the ease of deploying proper composites on Kubernetes clusters with ease.
+
+Don’t forget to try out the [Samples](https://github.com/wso2-cellery/samples) which walk you through most of the features of Cellery.

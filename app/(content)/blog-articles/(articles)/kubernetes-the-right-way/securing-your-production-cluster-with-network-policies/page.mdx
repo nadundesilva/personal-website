@@ -1,0 +1,233 @@
+import doNotEnter from "@/assets/blog-articles/miscellaneous/do-not-enter.webp";
+import hacker3 from "@/assets/blog-articles/security/hacker-3.webp";
+
+export const blogMetadata = {
+    image: "/assets/blog-articles/networking.webp",
+    mediumUrl:
+        "https://faun.pub/3-steps-to-securing-your-kubernetes-cluster-with-network-policies-99155bf4df96",
+    publishedDate: new Date("2023-06-22"),
+    keywords: [
+        "Kubernetes",
+        "Kubernetes Cluster",
+        "Security",
+        "K8s",
+        "Networking",
+    ],
+};
+
+export const metadata = {
+    title: "Kubernetes the Right Way: Securing Your Production Cluster with Network Policies",
+    description:
+        "Kubernetes Network Policies is an important tool at your disposal for improving the Security of your Kubernetes Cluster.",
+};
+
+export default function Layout({ children }) {
+    return (
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
+            {children}
+        </BlogArticleLayout>
+    );
+}
+
+Security is an important aspect of any production deployment. One of the most important aspects of preventing as well as mitigating the impact of a security breach is controlling the network traffic of your environment.
+
+Properly adding rules to control network access helps reduce the attack surface. On top of that, if some parts of your deployment become compromised by a malicious attacker, and if the proper Network rules are in place, it can help in limiting the impact radius. All of this makes improving Security using Network Policies quite important for your production Kubernetes Cluster.
+
+_So without further ado, let’s get started!_
+
+---
+
+# What are K8s Network Policies?
+
+_Note: If you already know what a Kubernetes Network Policy is and how it works, you can skip this section. This is only a short introduction to Network Policies._
+
+<Image
+    alt="Do not Enter"
+    src={doNotEnter}
+    creator={{
+        name: "Kevin Burnell",
+        href: "https://www.pexels.com/@kevin-b-222950695/",
+        platform: {
+            name: "Pexels",
+            href: "https://www.pexels.com/photo/road-in-the-country-with-no-entry-sign-15633723/",
+        },
+    }}
+/>
+
+Kubernetes Network Policies allow us to define a set of rules which specifies what network traffic is allowed to and from a Kubernetes Pod. The default behavior of Kubernetes is that it allows and facilitates the communication between all Pods within the Cluster (if no Network Policies are applied to the Pods). However, once a Network Policy is applied to a Pod, all traffic coming in and out of the Pod is blocked except for the traffic defined in the Network Policy.
+
+In a Network Policy, the `podSelector` field needs to be specified pointing to the pods to which the Network Policy should apply. The `policyTypes`, `egress` and `ingress` fields allow us to define the exact rules that are applied to the Pod.
+
+One pod can have multiple Network Policies that are applied to it based on the selectors being used. Whenever Kubernetes allows or denies a request (or even a single packet of data) to or from a Pod, it will look at the Network Policies applied to the Pod. If at least one Network Policy is applied to it and if at least one of them allows the request, it will be allowed. Otherwise, it will be denied.
+
+---
+
+# Leveraging Network Policies
+
+## Deny All Traffic
+
+One of the important things that you should do in your Kubernetes cluster is having a deny-all policy selecting all Pods (with an empty Pod selector; {}) that will block all ingress and egress traffic. This prevents all communication within the Namespaces. Even if your application needs access to the internet (even to arbitrary IP addresses), this Policy still should be added for both incoming and outgoing traffic.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    name: default-deny-all
+spec:
+    podSelector: {}
+    policyTypes:
+        - Ingress
+        - Egress
+```
+
+_Wait! But then how would my actual application traffic get through?_
+
+For your applications, you can add separate Network Policies as needed to allow access. This changes the default behavior of Kubernetes Networking and implements a whitelisting-based approach to allowing network access.
+
+This is important if a malicious user somehow manages to deploy a Pod into the namespace (e.g.:- By exploiting a security loophole in a Pod with the ability to do so), that Pod will be limited and won’t be able to do any network calls.
+
+## Allow Traffic to and from Pods at a Granular Level
+
+When we get to actually allowing the application traffic from one Pod to another, you will need to create Network Policies for each different set of Pods.
+
+While it may be tempting to create one Network Policy covering all your application Pods, it should be avoided. At the same time, creating a Network Policy for each deployment could be quite tiring if you have a large cluster. It is important to strike a balance between these two extremes and group your Pods properly using labels. You can then create Network Policies, selecting these pod labels as well as namespace labels to allow your application traffic.
+
+It would be even better to specify ports and protocols in the allowed traffic. You can even specify a port range using `port` and `endPort` fields. This helps in reducing the attack surface even further.
+
+Let’s take a look at the example below of a Network Policy applied to a frontend server with server-side rendering. The frontend needs to accept incoming traffic from Nginx Ingress Controller and also it needs to call the backend for fetching data and the IdP (Identity Provider) for authentication and authorization.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    name: allow-frontend
+spec:
+    podSelector:
+        matchLabels:
+            app: myapp
+            component: frontend
+    policyTypes:
+        - Ingress
+        - Egress
+    ingress:
+        - from:
+              - namespaceSelector:
+                    matchLabels:
+                        kubernetes.io/metadata.name: ingress-nginx
+                podSelector:
+                    matchLabels:
+                        app: controller
+    egress:
+        - to:
+              - namespaceSelector:
+                    matchLabels:
+                        app: myapp
+                        component: backend
+          ports:
+              - protocol: TCP
+                port: 8080
+        - to:
+              - namespaceSelector:
+                    matchLabels:
+                        app: myapp
+                        component: idp
+          ports:
+              - protocol: TCP
+                port: 9090
+```
+
+You can use any combination of Network Policies according to what suits your application. Within a Network Policy, you can use any combination of `podSelector` and `namespaceSelector` to allow traffic between pods.
+
+-   If a `podSelector` is only present, then the pods within the same namespace the Network Policy is in will be selected.
+-   If a `namespaceSelector` is only provided, all the pods within a namespace are selected.
+-   If both `podSelector` and `namespaceSelector` are provided, all the pods which match the `podSelector` within the namespaces that match the `namespaceSelector` will be selected.
+
+I would suggest not using `namespaceSelector` alone as it is far too permissive. You can use the other two approaches in allowing your application traffic in a concise manner. Even the traffic that comes from your Ingress Controllers into your application Pods can be limited accordingly in this manner (This is only if the Ingress Controller traffic is routed through a Pod in the Cluster. If not, you can use an IP range based policy as explained in the section below).
+
+One important technique that will come in handy in allowing cross-namespace traffic, is using the `kubernetes.io/metadata.name` label for selecting a namespace by its name. This label is automatically applied to all namespaces by the Kubernetes API Server automatically.
+
+## Allow Traffic to and from Specific IP ranges
+
+After you have secured all the traffic within your Kubernetes Cluster, the next steps are to allow the traffic to and from the internet. This can be done by using `ipBlock` based policies.
+
+For allowing traffic into your applications, you would generally need to allow traffic from your load balancers into the Ingress Controller Pods (or to the Pods themselves depending on how your Ingress Controller works). Once this is done, end users would be able to access your application.
+
+On the other hand, in some cases, your application might need to connect to external services outside your Kubernetes Cluster. In many of those cases, you would know the exact IP ranges that you would be calling.
+
+It would be best to only allow these IP ranges so that in a scenario where your Pods are compromised, the attackers would not be able to use your Pods to launch attacks such as DDoS, on other external systems.
+
+Let’s take a look at the example below where we are only allowing traffic to the CIDR block `13.108.14.15/24` on port 80.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    name: allow-ip-range
+spec:
+    podSelector:
+        matchLabels:
+            app: myapp
+            component: backend
+    policyTypes:
+        - Egress
+    egress:
+        - to:
+              - ipBlock:
+                    cidr: "13.108.14.15/24"
+          ports:
+              - protocol: TCP
+                port: 80
+```
+
+In some applications, depending on the use cases, it might be harder to use a whitelisting approach (e.g.:- You are deploying a SaaS application providing CI/CD pipeline capabilities, where end users run their custom build scripts). In that case, you can approach this in a different way and block the IP ranges that might pose a threat (e.g.:- [Azure Instance Metadata Service](https://learn.microsoft.com/en-us/azure/virtual-machines/instance-metadata-service?tabs=linux)).
+
+Let’s take a look at an example.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    name: deny-ip-range
+spec:
+    podSelector:
+        matchLabels:
+            app: myapp
+            component: backend
+    policyTypes:
+        - Egress
+    egress:
+        - to:
+              - ipBlock:
+                    cidr: "0.0.0.0/0"
+                    except:
+                        - "169.254.169.254/32"
+```
+
+This Network Policy allows you to block a specific address or address range (`169.254.169.254` IP in this example). In this way, you will be able to limit your external traffic properly as well.
+
+It would probably be a good idea to include the IP ranges used by the Kubernetes Cluster as well in the `except` section above so that you do not accidentally allow access to all Kubernetes Pods with the above approach.
+
+---
+
+In this manner, using Network Policies, you can draw a very strong Network perimeter around your Kubernetes Pods and your Kubernetes Cluster. If some of the ideas in this article might be too extreme for your deployment, you can try to modify the approaches as it fits.
+
+However, keep in mind that it is always best to reduce the attack surface as much as possible and always _Think like a Hacker_ who is trying to get into your Kubernetes Cluster and exploit it.
+
+After all, that’s what an actual attacker would be trying to do 🥷.
+
+<Image
+    alt="Hacker"
+    src={hacker3}
+    creator={{
+        name: "cottonbro studio",
+        href: "https://www.pexels.com/@cottonbro/",
+        platform: {
+            name: "Pexels",
+            href: "https://www.pexels.com/photo/woman-using-a-computer-5473302/",
+        },
+    }}
+/>
+
+---
+
+If you liked this article and would love to learn more about best practices on implementing, deploying, and maintaining applications on Kubernetes, read my article series [Kubernetes the Right Way](./).

@@ -1,0 +1,171 @@
+import dataAnalyst01 from "@/assets/blog-articles/data-analytics/data-analyst-01.webp";
+import hacker1 from "@/assets/blog-articles/security/hacker-1.webp";
+import analytics from "@/assets/blog-articles/data-analytics/analytics.webp";
+import strategy from "@/assets/blog-articles/engineering/strategy.webp";
+import insight from "@/assets/blog-articles/data-analytics/insight.webp";
+
+export const blogMetadata = {
+    image: "/assets/blog-articles/gold.webp",
+    mediumUrl: "https://faun.pub/data-is-the-new-gold-e6dd42e5b048",
+    publishedDate: new Date("2023-04-27"),
+    keywords: [
+        "Data",
+        "Data Collection",
+        "Insights",
+        "Data Science",
+        "Data Lifecycle Management",
+    ],
+};
+
+export const metadata = {
+    title: "Data Is the New Gold",
+    description:
+        "A guide outlining the importance of collecting data and considerations to be taken if you do so.",
+};
+
+export default function Layout({ children }) {
+    return (
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
+            {children}
+        </BlogArticleLayout>
+    );
+}
+
+In a world where ChatGPT (and many other data-driven tools) are roaming around, data had become one of the most important aspects of running any business.
+
+At the same time, many systems nowadays generate a vast amount of data in many forms, such as telemetry, audit trails, logs, traces, etc. This could be the function of the system itself as well when they are designed to take measurements from the real world itself (e.g.:- sensors and surveillance cameras).
+
+In this blog post, I will be sharing some of my thoughts on the importance of data and how it can help us improve operations for the better. This itself should encourage all of us to think about how we can record, store and analyze data for any system that we wish to use or maintain.
+
+---
+
+# Opportunities
+
+While the list of many opportunities that are created from data is too long to mention in a single article, these are a few of them that stand out amongst others.
+
+## Data-driven Decision Making
+
+In any venture, there will be a multitude of decisions taken, that form its future. While the scope of the decisions can vary, we always have to rely on the available data to make a calculated decision. This makes having any amount of data, important, and naturally more data results in better decisions.
+
+<Image
+    alt="Data Analytics"
+    src={dataAnalyst01}
+    creator={{
+        name: "Chris Liverani",
+        href: "https://unsplash.com/@chrisliverani",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/photos/NDfqqq_7QWM",
+        },
+    }}
+/>
+
+While the data collected shows us information about the past only, this allows us to see important patterns so that we can avoid past mistakes and build on past successes. This could be taken one step further by utilizing Data Science and Machine Learning, to get insights based on patterns that are in general overlooked by the naked human eye.
+
+## Audit Trails, Access Logs & Security
+
+_Not many are of a pure heart and the world is full of Hackers with ill will._
+
+<Image
+    alt="Hacker"
+    src={hacker1}
+    creator={{
+        name: "Clint Patterson",
+        href: "https://unsplash.com/@cbpsc1",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/photos/dYEuFB8KQJk",
+        },
+    }}
+/>
+
+While many companies focus on features, go-to-market strategies, and the bottom lines, security breaches are a real threat that we all should be worried about.
+
+Especially if you are dealing with customer data or information valuable to the company itself, it is quite important to have proper security measures in place. However, security breaches cannot be always prevented and thus we need to be able to detect them as soon as they occur.
+
+Gathering and analyzing data about network traffic patterns, access logs, and audit logs can become quite useful in addressing such breaches proactively. Detecting anomalies in these data using Machine Learning models which had already been trained to learn the normal behaviors can be used to detect breaches in a short time and take action against them.
+
+## Root Cause Analysis
+
+While most businesses have the means to get to know when something goes wrong, very few want to find the reason for it and even fewer have the means to do it.
+
+<Image
+    alt="Root Cause Analysis"
+    src={analytics}
+    creator={{
+        name: "Shane Aldendorff",
+        href: "https://unsplash.com/@pluyar",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/photos/mQHEgroKw2k",
+        },
+    }}
+/>
+
+Finding the root cause of a problem at hand would require us to look into what happened in detail. We would not be able to do this unless we have information about what actually occurred. Having traces and logs collected and stored for the incident period would allow us to see exactly what had occurred.
+
+If we go one step further and store historical data across a long time period, we would be able to compare the incident time period with the historical data to detect any anomalies in the data.
+
+---
+
+# Handling data
+
+## Responsible Data Collection
+
+While data gives us a lot of power to take control of our future and drive it toward success, collecting and storing data involves a lot of responsibility as well. This is especially important when Personal Identifiable Information (PII) data or sensitive data such as Personal Health Information (PHI) is being stored.
+
+There are even various standards and regulations such as GDPR governing data collection due to this reason. Companies that mishandle data could even get fined millions of dollars based on the severity of the data breaches that might occur due to it. Even if you are within a company that can withstand such large fines, the bad reputation gained from such incidents will still have long-term adverse effects.
+
+It is also important to understand what this data will be used for and only collect what is necessary at the moment and what will eventually generate value. Simply collecting vast amounts of data without value is only going to hurt the bottom line in the end.
+
+## Data Curation Strategy
+
+A very specific strategy outlining collection, storage, maintenance, and purging should be created from the start if you decide to collect any data. Data without a plan to handle it could lead to many problems in the long run.
+
+<Image
+    alt="Stratefy"
+    src={strategy}
+    creator={{
+        name: "JESHOOTS.COM",
+        href: "https://unsplash.com/@jeshoots",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/photos/fzOITuS1DIQ",
+        },
+    }}
+/>
+
+The direct storage costs alone could pile up to large numbers against the revenue of the company if it is not filtered before storing and purged when it is no longer relevant. You definitely do not want to end up in a scenario where you have no idea where the data is coming from but only know the huge credit card bill of storage costs. Then many valuable hours of engineers would need to be spent to identify and reduce the costs which could instead be used for R&D, creating a huge opportunity cost on top of everything.
+
+## Data Lifecycle Management
+
+Data itself has a lifecycle from collection to the purging of old data. The collected data needs to be stored after filtering, modifying, and anonymizing the data. The exact storage mechanism should be chosen carefully considering the requirements.
+
+Many of the storage options with faster access times in general have higher costs associated with them, while the slower storages have lower costs. Therefore, based on how often you access the data, and the speed at which they are required to be available a proper type of storage should be chosen. Many vendors (e.g.:- Azure, AWS) provide different types of storage to cater to these different requirements.
+
+Moreover, more often than not, the most recent data is required to be accessed faster, while the older data does not have such urgency. In such cases, the older data could be transferred to slower storage after a specific time period had elapsed since they were collected. In some cases when only a summarised view of very old data is required, it could even be possible to roll it up by summarizing them into different values that represent the general distribution of the data (e.g.:- A combination of sum, count, standard deviation, min, max values at different granularities such as weeks, months or even years based on the requirements).
+
+## Gaining Insights
+
+Once you have a proper data collection mechanism in place, it is important to utilize it well. As explained above, there are many opportunities to use the data to help improve your businesses. Your imagination is only what limits the possibilities that it presents. However, as mentioned above, it should be done so responsibly to avoid any harm to the businesses as well as the customers.
+
+<Image
+    alt="Insight"
+    src={insight}
+    creator={{
+        name: "Diego PH",
+        href: "https://unsplash.com/es/@jdiegoph",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/photos/fIq0tET6llw",
+        },
+    }}
+/>
+
+---
+
+# Conclusion
+
+While there is a lot of responsibility and planning required to properly collect data, the benefits of doing so greatly outweigh the overhead of doing it. Properly planned collection of relevant data could guide a business towards its success as well as help navigate any unexpected problems that come its way.
+
+_Happy Collecting !!!_
