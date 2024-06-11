@@ -1,0 +1,153 @@
+import softwareEngineer1 from "@/assets/blog-articles/engineering/software-engineer-1.webp";
+import problem1 from "@/assets/blog-articles/engineering/problem-1.webp";
+import softwareEngineer2 from "@/assets/blog-articles/engineering/software-engineer-2.webp";
+import scalaImplicitConversions from "@/assets/blog-articles/programming/scala-implicit-conversions.webp";
+import parallelizedScoverageReport1 from "@/assets/blog-articles/programming/parallelized-scoverage-report-1.webp";
+import parallelizedScoverageReport2 from "@/assets/blog-articles/programming/parallelized-scoverage-report-2.webp";
+
+export const blogMetadata = {
+    image: "/assets/blog-articles/programming-05.webp",
+    mediumUrl:
+        "https://faun.pub/scoverage-in-maven-parallel-builds-a00440b03be2",
+    publishedDate: new Date("2023-05-23"),
+    keywords: [
+        "Scala",
+        "Maven",
+        "Software Development",
+        "Programming",
+        "Software Engineering",
+    ],
+};
+
+export const metadata = {
+    title: "SCoverage in Maven Parallel Builds",
+    description:
+        "The SCoverage report goal, like some of the other Maven plugin goals out there, is not truly thread-safe. This article covers how you can solve this issue.",
+};
+
+export default function Layout({ children }) {
+    return (
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
+            {children}
+        </BlogArticleLayout>
+    );
+}
+
+In this article, I will be focussing on solving a problem that I encountered while running the [SCoverage maven plugin](https://github.com/scoverage/scoverage-maven-plugin)’s report goal in a Maven parallel build. However, the solution is relatable to other plugins which have a similar structure such as Maven Surefire Plugin.
+
+Let’s get started with how to enable parallel building in a Maven-based project and then move on to the problem and solution.
+
+---
+
+If you are working on a large code base with multiple modules and dependencies, chances are that you have tried to speed up your builds. Valuable developer hours and money on CI/CD pipelines will be spent on an otherwise slow and time-consuming build.
+
+<Image
+    alt="Software Engineer"
+    src={softwareEngineer1}
+    creator={{
+        name: "bruce mars",
+        href: "https://unsplash.com/@brucemars",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/photos/xj8qrWvuOEs",
+        },
+    }}
+/>
+
+# Parallelize?
+
+One such way to reduce the time taken by Maven builds is to parallelize the build so that multiple modules can be built in parallel. This can be achieved by passing in the `-T` flag specifying the number of threads to use.
+
+-   `-T 1C`, `-T 2C` - Use 1 or 2 threads per available core, respectively.
+-   `-T 1`, `-T 2` - Use 1 or 2 threads in total, respectively.
+
+Especially by using the flag `-T 1C` (or a higher number of threads per core based on performance), you can utilize all the cores in the machine and therefore run your builds much faster.
+
+_Here come the problems!_
+
+<Image alt="Problem" src={problem1} />
+
+# Plugins with non-thread-safe Maven goals
+
+When you run your build with the `-T` flag for the first time, if you are lucky, the build will succeed without any issues. However, more often than not, you would notice warning logs similar to the below logs.
+
+```
+[WARNING] *****************************************************************
+[WARNING] * Your build is requesting parallel execution, but project      *
+[WARNING] * contains the following plugin(s) that have goals not marked   *
+[WARNING] * as @threadSafe to support parallel building.                  *
+[WARNING] * While this /may/ work fine, please look for plugin updates    *
+[WARNING] * and/or request plugins be made thread-safe.                   *
+[WARNING] * If reporting an issue, report it against the plugin in        *
+[WARNING] * question, not against maven-core                              *
+[WARNING] *****************************************************************
+[WARNING] The following plugins are not marked @threadSafe in scoverage-in-maven-parallel-builds:
+[WARNING] org.scoverage:scoverage-maven-plugin:1.4.11
+[WARNING] Enable debug to see more precisely which goals are not marked @threadSafe.
+[WARNING] *****************************************************************
+```
+
+Lookout for such logs once you enable multi-threaded Maven builds and make sure you investigate. While some of these warnings might simply be due to the maintainers not marking them thread-safe even though they are, some plugins (such as the report goals in Maven SCoverage Plugin and `Maven Surefire Plugin`) are truly not designed to be thread-safe.
+
+The final outcome would be an incorrect test coverage report, as the plugin would create reports with less test coverage than the actual test coverage, due to the final aggregation running before all the tests in all modules are complete.
+
+# Can we not use SCoverage in Maven Parallel Builds then?
+
+The short answer is No, we can use SCoverage with Maven Parallel Builds. However, there is a specific way it is meant to be used to avoid running into any multi-threading issues.
+
+The `scoverage:test` plugin goal is marked as thread-safe and therefore can be used in a parallel maven build. By running this goal, which in general is the most time-consuming task during a build, with the `-T` flag to parallelize the build, it will cut down the build time immensely, while making sure that tests are run and the coverage data is collected.
+
+Once it is completed, you can execute the `scoverage:report-only` goal without the `-T` flag, to generate the report from the collected test coverage data. This generally does not take much time and therefore would not get in the way of reducing the build time. Therefore it boils down to running the following two commands one after the other, to parallelize the build with coverage running properly without messing up the results.
+
+```shell
+mvn -T 1C scoverage:test
+mvn -Dscoverage.aggregateOnly=true  scoverage:report-only
+```
+
+---
+
+<Image
+    alt="Software Engineer"
+    src={softwareEngineer2}
+    creator={{
+        name: "Danial Igdery",
+        href: "https://unsplash.com/@ricaros",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/photos/FCHlYvR5gJI",
+        },
+    }}
+/>
+
+# Let’s try it out
+
+I have prepared an [example](https://github.com/nadundesilva/blog-support/tree/main/articles/scoverage-in-maven-parallel-builds) that can demonstrate how a parallel build of Maven running `scoverage:report` could lead to the plugin not working as it is intended to work. Please feel free to clone the [repository](https://github.com/nadundesilva/blog-support/tree/main/articles/scoverage-in-maven-parallel-builds) and try it out yourself.
+
+When you run the following command, the build will successfully run to completion and it will generate the test coverage report in the `<REPOSITORY_DIR>/scoverage-in-maven-parallel-builds/target/site/scoverage` directory similar to a normal single-threaded build.
+
+```shell
+mvn -T 1C -Dscoverage.aggregate=true -Dscoverage.aggregateOnly=true scoverage:report
+```
+
+However, if you examine the report closely, you will notice that the `module-b`, which contains a simulated long-running test, has 0 test coverage.
+
+<Image alt="Parallelized SCoverage Report" src={parallelizedScoverageReport1} />
+
+After clearing the generated artifacts during the build (by running `mvn clean`), let’s run the two commands that we discussed above to solve the issue.
+
+```shell
+mvn -T 1C scoverage:test
+mvn -Dscoverage.aggregateOnly=true  scoverage:report-only
+```
+
+_Voila!_ The correct test coverage is shown in the report now
+
+<Image alt="Parallelized SCoverage Report" src={parallelizedScoverageReport2} />
+
+---
+
+# Conclusion
+
+As shown above, some Maven SCoverage Plugin goals (as well as some Maven Surefire Plugin goals and possibly many other plugin goals) are not thread-safe. However, most of the mature Maven plugins have approaches to address these.
+
+So if you do decide to use the `-T` flag to speed up your builds, and keep an eye out for the warning logs about non-thread safe goals being used. While it may take a while to figure out how to work around these issues, the speedup is definitely worth it. If one of the goals that you had trouble with was the Maven SCoverage Plugin, I hope this article helped you through it.

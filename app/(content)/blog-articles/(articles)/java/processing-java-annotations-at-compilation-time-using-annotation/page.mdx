@@ -1,0 +1,116 @@
+export const blogMetadata = {
+    image: "/assets/blog-articles/programming-01.webp",
+    mediumUrl:
+        "https://medium.com/javarevisited/reading-annotations-at-compile-time-using-java-annotation-processors-f5a7604bb2f7",
+    publishedDate: new Date("2018-10-28"),
+    keywords: ["Java", "Annotations", "Annotation Processor"],
+};
+
+export const metadata = {
+    title: "Processing Java Annotations at compilation time using Annotation",
+    description:
+        "A guide for reading custom annotations at compile-time for generating code, validating, etc., which is part of a three-article series.",
+};
+
+export default function Layout({ children }) {
+    return (
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
+            {children}
+        </BlogArticleLayout>
+    );
+}
+
+[Java annotations](https://www.java67.com/2018/12/top-5-spring-cloud-annotations-for-java.html) can be used for storing metadata that would have an impact on how the programs would be executed. Apart from the annotations that are available in Java, you can write your own [Custom Annotations](./unleashing-the-power-of-java-custom-annotations) as well. However, these annotations would not have any effect on their own.
+
+To make use of the annotations, using Java Annotation Processors they need to be available at compile time. However, the good news is no specific modification needs to be done to achieve this.
+
+---
+
+# Let’s Start Coding
+
+## Implementing an Annotation Processor
+
+An annotation processor can be implemented by extending the `javax.annotation.processing.AbstractProcessor{:java}` class. The annotation processors are invoked during compile time and we can generate code, validate, etc. using it.
+
+```java
+public class AnnotationProcessorExample extends AbstractProcessor {
+    @Override
+    public synchronized void init(ProcessingEnvironment env) {
+        // Initialize the processor
+    }
+    @Override
+    public boolean process(Set<? extends TypeElement> set,
+                           RoundEnvironment roundEnv) {
+        // Process the annotation
+    }
+    @Override
+    public Set<String> getSupportedAnnotationTypes() {
+        // Return the set of annotations supported
+    }
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        // Return the Java version supported
+    }
+}
+```
+
+**init():** This gives you instances of different utilities which are useful for code generation.
+
+-   _Filler:_ Used to create a new source, class, or auxiliary files.
+-   _Messager:_ Used to report errors, warnings, and other notices.
+-   _Element Utils:_ Utility methods used for operating on elements.
+-   _Type Utils:_ Utility methods used for operating on types.
+-   _Locale:_ If a Locale is in effect it will be provided. This can be useful if you are developing a Locale-specific application.
+
+**process():** We will have access to the class elements in this method. We can perform any changes to the source files, validate code, generate code, etc. using this method.
+
+**getSupportedAnnotationTypes():** We need to return the list of annotations that are supported by this processor. The elements to which the annotation processor will have access are determined by this.
+
+**getSupportedSourceVersion():** The Java version the annotation processor is supposed to support.
+
+# Engaging the Annotation Processor
+
+## Using the Compiler Key
+
+If you are compiling your Java source code by invoking the `javac{:shell}` command, you can use the `-processor{:shell}` argument to engage the annotation processors. A comma-separated list of annotation processors needs to be passed to use the annotation processors at compile time.
+
+```shell
+javac -processor com.foo.FooProcessor,com.bar.BarProcessor MyClassWithAnnotations.java
+```
+
+## Using Maven
+
+If you are using Maven for building the source files, the following can be added to you `pom.xml` file to engage the annotation processor.
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.5.1</version>
+            <configuration>
+                <!-- Other configurations -->
+                <annotationProcessors>
+                    <annotationProcessor>
+                        com.foo.FooProcessor
+                    </annotationProcessor>
+                </annotationProcessors>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```
+
+## Adding the Processor to the classpath
+
+If you prefer the annotation processor to be picked up automatically, we need to add the fully qualified class names of the Annotation Processors to the `META-INF/services/javax.annotation.processing.Processor` file.
+
+```
+com.foo.FooProcessor
+com.bar.BarProcessor
+```
+
+The annotation processor is a really powerful tool in Java. It can enable the users to do advance manipulations and validations to the Java source at compile time. Don’t be disappointed if it seems to be hard at first. But with practice, you will be able to use the annotation processor to reduce the required code lines significantly.
+
+Hope this was helpful.

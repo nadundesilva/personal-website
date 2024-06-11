@@ -28,7 +28,7 @@ const ContentLayout = ({
         maxWidth={false}
         disableGutters
         sx={{
-            marginBottom: 5,
+            mb: 5,
             px: {
                 xs: 0,
                 lg: 20,
