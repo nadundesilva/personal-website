@@ -1,0 +1,211 @@
+export const blogMetadata = {
+    image: "/assets/blog-articles/programming-03.webp",
+    mediumUrl:
+        "https://medium.com/javarevisited/java-custom-annotation-99eaf3b6cd7e",
+    publishedDate: new Date("2018-10-28"),
+    keywords: ["Java", "Annotations", "Metaprogramming"],
+};
+
+export const metadata = {
+    title: "Unleashing the Power of Java Custom Annotations",
+    description:
+        "A guide for writing Java custom annotations, which is part of a three-article series.",
+};
+
+export default function Layout({ children }) {
+    return (
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
+            {children}
+        </BlogArticleLayout>
+    );
+}
+
+I am quite certain that everyone is familiar with Java Annotations and at least you must have used the `@Override{:java}` annotation which is used to hint to the compiler that you have overridden the method in the parent class. In this post, I will be explaining how to write your annotations so that you can make use of the power of annotations to improve your programs.
+
+---
+
+# Why Custom Annotations?
+
+The first thing you need to understand about annotations is that they do not add any new functionality on their own, but is only used for indicating some important information about the element that is annotated with it. Then why do we need annotations?
+
+Although annotations alone cannot do anything on their own, annotated data can be read using Java Reflections API at run-time or using Annotation Processors at compile-time. Moreover, like the `@Override{:java}` annotation, the annotations applied can be information for the Java compiler as well. This makes Annotations a powerful tool that is available to you as a Java programmer. (Don't worry if you do not know what are [Annotation Processors](./processing-java-annotations-at-compilation-time-using-annotation) or [Java Reflections API](./reading-java-annotations-on-the-fly). You can check my posts on them if you wish to learn more.)
+
+Moreover, If you are writing Java libraries to be used by other programmers, Java Annotations will be quite handy. Especially, if you are writing a library that requires certain configurations to be made after extending an interface/abstract class you are providing, you can provide annotations that can be added to the child class rather than making the user make several function calls to make the configurations. This will provide a much cleaner code for the programmers using your library.
+
+However, this is not the only scenario where annotations can be useful. Whatever way you use them, the power of the annotations is that it helps you to not repeat code and simply generate them at compile time or run specific code at run-time based on the annotations.
+
+---
+
+# Let’s Start Coding
+
+## A Simple Annotation
+
+Creating a custom annotation is as simple as writing a new class. The only difference is that `@interface{:java}` keyword needs to be used instead of the `class{:java}` keyword. Moreover, you will notice how the annotation type elements in the Annotations declaration (The method-like declarations inside the annotation declaration) are written differently.
+
+```java
+public @interface MyFirstAnnotation {
+    String foo();
+    int bar();
+}
+```
+
+Now that you have written your first custom annotation declaration, it is time to annotate a class with this annotation.
+
+```java
+@MyFirstAnnotation(foo = "Foo Value", bar = 100)
+public class MyFirstAnnotatedClass {
+    // Class Elements
+}
+```
+
+You should notice how the annotation type elements we defined in the annotation declaration need to be passed when annotating.
+
+Congratulations! You now know how to create a custom annotation class. However, there is more to creating an annotation than what is shown above.
+
+---
+
+# Diving deeper into Annotations
+
+## Annotations with Single Annotation Type Element
+
+You may have noticed that when applying the annotation we created, the annotation type elements need to be passed as `typeName = typeValue`. However, if only one annotation type element is present in the annotation you can declare the annotation as follows so that only the value needs to be passed.
+
+```java
+public @interface SingleElementAnnotation {
+    String value();
+}
+
+@SingleElementAnnotation("Single Value")
+public class AnnotatedClass {
+    // Class Elements
+}
+```
+
+Note that the annotation type element in the annotation you created needs to be named as `value{:java}`. Otherwise, the value needs to be passed the same way as before as shown below.
+
+```java
+public @interface SingleElementAnnotation {
+    String foo();
+}
+
+@SingleElementAnnotation(foo = "Single Value")
+public class AnnotatedClass {
+    // Class Elements
+}
+```
+
+## Specifying the Target Element
+
+In the first example, although we added the annotation to a class, it can be applied to any element; class, interface, method, parameter, constructor, etc. This is the default behavior of the annotations.
+
+However, in most of the scenarios you come across, there will be a specific type of element that will be annotated by the annotation, and annotating any other element will be invalid. In this case, you can restrict the target element by using the [`@Target`](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html) annotation. This annotation needs to be applied to the annotation declaration (Yes guys you heard me right. Annotations can be applied to annotation declarations as well.) and the target [element types](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html) should be passed into it. A small example is shown below.
+
+```java
+@Target(ElementType.TYPE)
+public @interface TargetRestrictedAnnotation {
+    String foo();
+    int bar();
+}
+```
+
+The annotation shown above can only be applied to classes, interfaces, and annotation declarations.
+
+Several element types can be passed into the `@Target{:java}` annotation restricting the target element types.
+
+-   ANNOTATION_TYPE — Annotation type declaration
+-   CONSTRUCTOR — Constructor declaration
+-   FIELD — Field declaration (including enum constants)
+-   LOCAL_VARIABLE — Local variable declaration
+-   METHOD — Method declaration
+-   PACKAGE — Package declaration
+-   PARAMETER — Parameter declaration
+-   TYPE — Class, interface (including annotation type), or enum declaration
+
+You can even pass an array of element types as well when the annotation can be applied to more than one of the element types.
+
+```java
+@Target({ElementType.FIELD, ElementType.METHOD})
+public @interface TargetRestrictedAnnotation {
+    String foo();
+    int bar();
+}
+```
+
+Moreover, there can be scenarios where you have annotations declared solely to be passed into other complex annotations and they should not be applied to any element directly. This can be addressed by passing an empty array to the `@Target{:java}` annotation as shown below.
+
+```java
+@Target({})
+public @interface SimpleAnnotation {
+    int count();
+}
+
+@Target(ElementType.TYPE)
+public @interface ComplexAnnotation {
+    String foo();
+    SimpleAnnotation bar();
+}
+
+@ComplexAnnotation(
+    foo = "Foo Value",
+    bar = @SimpleAnnotation(count = 100)
+)
+public class MyAnnotatedClass {
+    // Class Elements
+}
+```
+
+If the `@Target{:java}` annotation had not been used, the default behavior will be available for the annotation you have created, i.e. the annotation you created can be applied to any element type.
+
+## Specifying the Retention Policy
+
+The retention policy refers to how long the annotations will be retained. The annotations we created until now are stored in the class files by the compiler after the sources are compiled, but they are not loaded into the JVM at runtime. This is the default behavior of the annotations.
+
+However, we may need to specify the retention policy where we might not need the annotations in the class files or we need them at runtime to be read by a program. This can be done by adding the [`@Retention{:java}`](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html) annotation and passing the [retention policy](https://docs.oracle.com/javase/7/docs/api/java/lang/annotation/RetentionPolicy.html) into it.
+
+```java
+@Retention(RetentionPolicy.SOURCE)
+public @interface RetentionRestrictedAnnotation {
+    String foo();
+    int bar();
+}
+```
+
+The annotation shown above will not be added to the class files generated by the compiler.
+
+Three types of retention policies can be specified for the custom annotations that you create.
+
+-   SOURCE — Discarded by the compiler
+-   CLASS — Recorded in the class files by the compiler but not retained by the JVM at run-time
+-   RUNTIME — Recorded in the class file by the compiler and retained by the JVM at run-time
+
+I will be writing another post to introduce you to Reflections API which can be used for reading annotations at run time when the `@Retention(RetentionPolicy.RUNTIME){:java}` annotation is used.
+
+When the `@Retention(RetentionPolicy.SOURCE){:java}` annotation is used, since they are not added to the class files, an Annotation Processor would normally be used so that the annotations can be read at compile time and either an error could be thrown or extra byte code could be generated using the annotated data.
+
+## Repeatable Annotations
+
+The annotations we created until now can be applied only once to a particular class declaration. i.e. the annotations cannot be repeated in the same class declaration by default.
+
+However, you may find scenarios where you may want to allow multiple annotations to be applied to the same class declaration by adding the [`@Repeatable{:java}`](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Repeatable.html) annotation. To use this annotation, a "containing annotation type" is required which has a single annotation type element with the name as value and type as an array of the annotation type you created that needs to be repeated. Moreover, the containing annotation class object needs to be passed into the `@Repeatable{:java}` annotation. An example is shown below.
+
+```java
+public @interface Parameters {
+    Parameter[] value();
+}
+
+@Repeatable(Parameters.class)
+public @interface Parameter {
+    String name();
+    String type();
+}
+
+@Parameter(name = "timestamp", type = "datetime")
+@Parameter(name = "username", type = "string")
+public class FunctionOperation {
+    // Class Elements
+}
+```
+
+In the above example, `@Parameter{:java}` is the actual repeatable annotation and the `@Parameters{:java}` is the container annotation created for it.
+
+That concludes this post. Please feel free to contact me if there are any problems. Don’t forget to clap a few times if this was useful.

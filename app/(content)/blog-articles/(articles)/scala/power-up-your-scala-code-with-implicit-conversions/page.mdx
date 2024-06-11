@@ -1,0 +1,157 @@
+import scalaImplicitConversions from "@/assets/blog-articles/programming/scala-implicit-conversions.webp";
+
+export const blogMetadata = {
+    image: "/assets/blog-articles/programming-06.webp",
+    mediumUrl:
+        "https://faun.pub/power-up-your-scala-code-with-implicit-conversions-b23e3c04643a",
+    publishedDate: new Date("2023-06-07"),
+    keywords: [
+        "Scala",
+        "Software Engineering",
+        "Programming",
+        "Coding",
+        "Clean Code",
+    ],
+};
+
+export const metadata = {
+    title: "Power Up your Scala Code with Implicit Conversions",
+    description:
+        "Scala has many powerful capabilities. Implicit conversions stand out among them with the ability to avoid most of the boilerplate code.",
+};
+
+export default function Layout({ children }) {
+    return (
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
+            {children}
+        </BlogArticleLayout>
+    );
+}
+
+Scala has many powerful capabilities making it one of the most powerful languages out there. Especially if you are from a Java programming background, you will notice the many powerful capabilities it offers on top of all the goodness of Java. However, it can be quite daunting for new Scala programmers to get the hang of these powerful features. In this article, I am explaining one such feature; Scala Implicit Conversions, and its benefits.
+
+For the scope of this article, I will be using Scala version 2.13 (However, I have added some links to the sites where you can learn about the corresponding language feature in Scala 3).
+
+---
+
+There are two main types of Scala Implicit Conversions:
+
+-   Passing an argument of a different type as if it were the correct type.
+-   Extending classes (even final classes) by adding new members to them (This is replaced by extension methods in Scala 3).
+
+Both of these can be used to make your code much simpler and more concise when used properly.
+
+_Let’s get started!_
+
+To make the explanations much easier, I will be using the following two case classes throughout the article (Let’s also make them final to make it more interesting).
+
+```scala
+final case class Seconds(value: Int)
+final case class Minutes(value: Int)
+```
+
+---
+
+# Passing an argument of a different type as if it were the correct type
+
+Let’s assume we have written a function to format a `Seconds` object into a String.
+
+```scala
+private def format(seconds: Seconds): String = s"${seconds.value} second(s)"
+```
+
+If we wanted to reuse the same function for the `Minutes` object, without the help of implicit conversions, we would need to convert the `Minutes` to `Seconds` each time we call the `format` method (or write another `format` function which accepts `Minutes`).
+
+However, with the help of an implicit function, we can let the compiler do this work for us and convert the `Minutes` objects to `Seconds` objects automatically. We can signal to the compiler that it can automatically do the conversion by using the `implicit` keyword.
+
+```scala
+implicit def toSeconds(minutes: Minutes): Seconds = Seconds(minutes.value * 60)
+```
+
+The above function is called an implicit function and since it converts one type to another (`Minutes` to `Seconds`), it provides an implicit conversion. This allows the compiler to do the conversion automatically when it sees it is appropriate to do so. This allows us to write the following code without writing another format function for `Minutes`.
+
+```scala
+val threeMinutes = Minutes(3)
+println(s"Formatted Time: ${format(threeMinutes)}")
+```
+
+This gets automatically turned into the following by the compiler when it is compiled into executable code (That means that there will be no runtime performance penalty).
+
+_If you liked that, check out the next use of Implicit Conversions. Because it gets even cooler!_
+
+# Extending classes (even final classes) by adding new members
+
+While you can extend classes and add members to add more functionality, you can use implicit conversions for the same purpose as well. However, it is much more powerful as it can even add members to final classes and even primitives such as [Strings](https://www.scala-lang.org/api/2.12.7/scala/collection/immutable/StringOps.html).
+
+Let’s try to add some members to `Seconds` objects without extending them. To get started we should define an `Ops` class with the new members. The class should take in the target class (`Seconds`) as a parameter to the constructor so that it is available for all the members. Let’s start by trying to add an `add` function.
+
+```scala
+class SecondsOps(seconds: Seconds) {
+    def add(addition: Seconds): Seconds = seconds.copy(value = seconds.value + addition.value)
+}
+```
+
+To actually make the `Ops` class useful, we need to write an implicit function that can convert the `Seconds` object to an `SecondsOps` object.
+
+```scala
+implicit def secondsSyntax(seconds: Seconds): SecondsOps = new SecondsOps(seconds)
+```
+
+This again provides an implicit conversion from `Seconds` to `SecondsOps` which has the new members in it. Therefore, if we directly invoke the new member in `SecondsOps` class in the `Seconds` class itself, the compiler understands that a conversion is required, and it will perform the conversion. Thanks to this, we can now directly write our code as follows, as if it now actually has the add function.
+
+```scala
+val nineMinutes  = Minutes(9)
+val threeMinutes = Minutes(3)
+val sum          = nineMinutes.add(threeMinutes)
+```
+
+Under the hood, the compiler converts the above code to automatically convert the `Seconds` object to an `SecondsOps` object.
+
+```scala
+val nineMinutes  = Minutes(9)
+val threeMinutes = Minutes(3)
+val sum          = secondsSyntax(nineMinutes).add(threeMinutes)
+```
+
+In this way, we can even add members to final classes and even primitive types like Strings. This can become quite powerful in writing concise and readable code.
+
+If you wish to run and play around with the above code examples, I have added them to a [GitHub repository](https://github.com/nadundesilva/blog-support/tree/main/articles/power-up-your-scala-code-with-implicit-conversions).
+
+# Don’t be Ambiguous
+
+Similar to Scala Implicit parameter lists, in implicit conversions also, the compiler would fail with an error when there are two possible conversions it can choose and there is no way to exactly determine which one should be used. You can expect to see an error similar to the following error if it is the case.
+
+```
+type mismatch;
+ found   : io.github.nadundesilva.Minutes
+ required: io.github.nadundesilva.Seconds
+Note that implicit conversions are not applicable because they are ambiguous:
+ both method toSeconds in object App of type (minutes: io.github.nadundesilva.Minutes): io.github.nadundesilva.Seconds
+ and method toSecondsInAnotherWay in object App of type (minutes: io.github.nadundesilva.Minutes): io.github.nadundesilva.Seconds
+ are possible conversion functions from io.github.nadundesilva.Minutes to io.github.nadundesilva.Seconds
+```
+
+So we have to take care to only include one applicable implicit conversion within the scope.
+
+---
+
+# Implicit Conversions are quite Famous too
+
+Implicit conversions are not something new. In fact, it is heavily used in some of the Famous Scala libraries such as [Cats](https://typelevel.org/cats/), [ScalaTest](https://www.scalatest.org/), and [Monocle](https://www.optics.dev/Monocle/). Most of these packages add powerful capabilities using their syntax packages to Scala types.
+
+---
+
+# With Great Power comes Great responsibility
+
+Scala implicit conversions give programmers very powerful capabilities. However, it is also important to make the code readable as it will be read many more times, while it is only written once. Therefore, we have to use it just the right amount to remove those pesky boilerplate code lines go away and make the code nice and shiny. Overdoing it could make it really hard to read.
+
+However, it is always a good idea to use an IDE such as IntelliJ IDEA when writing code with Scala. IntelliJ IDEA especially can show you the exact Implicit Conversion being used when you enable the “Show Implicit Hints" feature.
+
+<Image
+    alt="Scala Implicit Conversions on Editor"
+    src={scalaImplicitConversions}
+/>
+
+---
+
+In conclusion, Implicit conversion provides a lot of benefits when used properly. With all this knowledge, please go forth and use these great capabilities and make your Scala code even better.

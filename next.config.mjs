@@ -17,6 +17,7 @@ import NextBundleAnalyzer from "@next/bundle-analyzer";
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
 import { withSentryConfig } from "@sentry/nextjs";
 import nextMDX from "@next/mdx";
+import rehypePrettyCode from "rehype-pretty-code";
 
 const withBundleAnalyzer = NextBundleAnalyzer({
     enabled: process.env.ANALYZE === "true",
@@ -30,6 +31,12 @@ const withPWA = nextPwa({
 
 const withMDX = nextMDX({
     extension: /\.mdx?$/,
+    options: {
+        remarkPlugins: [],
+        rehypePlugins: [
+            [rehypePrettyCode, { theme: "dracula", defaultLang: "plaintext" }],
+        ],
+    },
 });
 
 const sentryConfig = {

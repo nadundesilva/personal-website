@@ -122,9 +122,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement => {
         <AppBar data-testid={"app-bar"}>
             <Toolbar>
                 {drawer}
-                <Typography variant="h5" component="h1">
-                    {FULL_NAME}
-                </Typography>
+                <Typography sx={{ fontSize: 23 }}>{FULL_NAME}</Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: { xs: "none", md: "block" } }}>
                     {Object.values(Routes).map((route) => (
@@ -146,7 +144,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement => {
                 </Box>
                 <Tooltip title={`Change to ${nextColorScheme} theme`}>
                     <IconButton
-                        sx={{ marginLeft: 5 }}
+                        sx={{ ml: 5 }}
                         size="small"
                         onClick={() => setColorScheme(nextColorScheme)}
                     >

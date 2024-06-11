@@ -1,0 +1,176 @@
+export const blogMetadata = {
+    image: "/assets/blog-articles/programming-02.webp",
+    mediumUrl:
+        "https://medium.com/javarevisited/reading-annotations-at-run-time-using-the-java-reflections-api-ce175ba43b2",
+    publishedDate: new Date("2018-10-28"),
+    keywords: ["Java", "Annotations", "Reflection"],
+};
+
+export const metadata = {
+    title: "Reading Java Annotations on the fly",
+    description:
+        "A guide for using Java Reflections API to read annotations and perform actions based on them, which is part of a three-article series.",
+};
+
+export default function Layout({ children }) {
+    return (
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
+            {children}
+        </BlogArticleLayout>
+    );
+}
+
+Java Reflections API allows the code you write to inspect another piece of code. This gives you immense power over the programs you write, even to the extent of invoking private functions in a class. However, this kind of usage of the Java Reflections API is highly discouraged.
+
+In this post, we will be focusing on using the Java reflections API for reading the annotations applied to a class. This can be useful if your code needs data that is stored in the annotations applied such as metadata for configuring a library you are implementing.
+
+However, you should note that using the reflections API can have a performance impact and you should try as much as possible to use it less often (For example, if you are working on a performance-critical system that needs annotated data frequently, a possible solution might be to read the annotations at startup of the program and store them in memory to be accessed later).
+
+---
+
+# Let’s start Coding
+
+For us to use the reflections API to read annotations, the annotations should be stored in the class files by the compiler and loaded into the JVM at run-time.
+
+Annotations by default are retained in the class files but they are not loaded into the JVM at run-time. Therefore to make sure that the annotations are stored in the class files and that they are loaded into the JVM at run-time, the [`@Retention(RetentionPolicy.RUNTIME)`](https://docs.oracle.com/javase/7/docs/api/java/lang/annotation/RetentionPolicy.html#RUNTIME) annotation needs to be applied to the declaration of the annotation that you wish to read at compile time.
+
+```java
+@Retention(RetentionPolicy.RUNTIME)
+public @interface RuntimeRetainedAnnotation {
+    String foo();
+    int bar();
+}
+```
+
+Now, any data annotated with the `@RuntimeRetainedAnnotation{:java}` annotation can be read at runtime, using Java reflections.
+
+If you want to learn more about writing your own annotations, check my post explaining how to write Java [Custom Annotations](./unleashing-the-power-of-java-custom-annotations).
+
+## Reading Annotations
+
+All the elements to which annotations can be applied, by default, implement the `AnnotatedElement{:java}` interface. The `AnnotatedElement{:java}` interface has all the methods that are required for reading the annotations. Therefore for reading annotations we first need to get hold of the annotated element which contains the annotations that you wish to inspect.
+
+## Getting hold of the Annotated Element
+
+Getting hold of the annotation element can be done using the Java Reflections API as well.
+
+To show how to get hold of the Annotated Element, we will be using the following class as an example. Note that we need to get hold of the `fooValue{:java}` parameter in the `setFoo(Integer fooValue){:java}` method which is the annotated element that we need.
+
+```java
+public class MyClass {
+    private Integer fooValue;
+
+    public void setFoo(@MyAnnotation(bar = "BarValue", maxLength = 200) Integer fooValue) {
+        this.fooValue = fooValue;
+    }
+    // Other Class Elements
+}
+```
+
+You first need to get hold of the Class object. Which can be done as shown below.
+
+```java
+Class classElement = MyClass.class;
+```
+
+After getting hold of the class, you can inspect its elements to get hold of the Annotated Element. Since you know the Class you can directly access the `setFoo(int fooValue){:java}` method and from that the `fooValue{:java}` parameter as shown below.
+
+```java
+Parameter fooValueParameter = null;
+try {
+    // Getting the method object
+    Class[] args = new Class[1];
+    args[0] = Integer.class;
+    Method setFooMethod = classElement.getMethod("setFoo", args);
+    // Getting the parameter object
+    fooValueParameter = method.getParameters()[0];
+} catch () {
+    // Handle Exception
+}
+```
+
+Please note that depending on the element that is annotated you may have to call several methods to get hold of the element which could be different from what is shown above. But you can find all the relevant methods in the Reflection methods provided in Java.
+
+All the methods that can be used are not included here and only guidance is provided for getting hold of the relevant `AnnotatedElement{:java}`. You can find the relevant methods in Java documentation for each element when you need to access another element.
+
+## Reading the Annotations applied to an Annotated Element
+
+Now that you have the parameter object you can now get the annotation added to this element.
+
+As mentioned before all classes implementing the `AnnotatedElement{:java}` interface contains all the relevant methods required for reading annotations and all the classes of the objects we got hold of before, implement it like many other elements that can be acquired in that manner.
+
+Let's assume that the `MyAnnotation{:java}` annotation added to the `fooValue{:java}` parameter is defined as shown below.
+
+```java
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MyAnnotation {
+    String bar();
+    int maxLength();
+}
+```
+
+Since you have got hold of the `Parameter{:java}` object before, you can now do the following to read the `bar{:java}` and `maxLength{:java}` values annotated in the parameter.
+
+```java
+MyAnnotation annotation = fooValueParameter.getAnnotation(MyAnnotation.class);
+String bar = annotation.bar();
+int maxLength = annotation.maxLength();
+```
+
+## Reading Repeatable Annotations
+
+Before reading this section, if you are not familiar with Repeatable Annotations you can read the repeatable annotations section in my post; Java Custom Annotations.
+
+We will be using the following annotation declaration and class as an example.
+
+```java
+public @interface Parameters {
+    Parameter[] value();
+}
+
+@Repeatable(Parameters.class)
+public @interface Parameter {
+    String name();
+    String type();
+}
+
+@Parameter(name = "timestamp", type = "datetime")
+@Parameter(name = "username", type = "string")
+public class FunctionOperation {
+    // Class Elements
+}
+```
+
+To access the annotation object in the `FunctionOperation{:java}` class we can do the following.
+
+```java
+Class classElement = FunctionOperation.class;
+Parameters parameters = classElement.getAnnotation(Parameters.class);
+Parameter[] parameterArray = parameters.value();
+String timestampName = parameterArray[0].name();
+String timestampType = parameterArray[0].type();
+String usernameName = parameterArray[1].name();
+String usernameType = parameterArray[1].type();
+```
+
+Note that `Parameters{:java}` is the container annotation type of `Parameter{:java}` annotation type and that you have to access the repeated annotations using container annotation.
+
+If there’s only a single repeatable annotation applied to the class as shown below, the way you can access the annotation is a bit different.
+
+```java
+@Parameter(name = "username", type = "string")
+public class FunctionOperation {
+    // Class Elements
+}
+```
+
+If this is the case if you access the container annotation you will get `null{:java}`. Therefore you need to access the annotation the same way you did for non-repeatable annotations.
+
+```java
+Class classElement = FunctionOperation.class;
+Parameter parameter = classElement.getAnnotation(Parameter.class);
+String name = parameter.name();
+String type = parameter.type();
+```
+
+That concludes this post. Please feel free to contact me if there are any problems. Don’t forget to clap a few times if this was useful.

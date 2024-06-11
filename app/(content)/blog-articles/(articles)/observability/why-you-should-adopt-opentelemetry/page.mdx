@@ -1,0 +1,109 @@
+import openTelemetry from "@/assets/blog-articles/observability/open-telemetry.webp";
+import explaining from "@/assets/blog-articles/engineering/explaining.webp";
+import freedom from "@/assets/blog-articles/engineering/freedom.webp";
+
+export const blogMetadata = {
+    image: "/assets/blog-articles/telescope.jpg",
+    mediumUrl:
+        "https://faun.pub/5-reasons-why-you-should-adopt-opentelemetry-89ad209b730c",
+    publishedDate: new Date("2023-08-03"),
+    keywords: [
+        "Observability",
+        "DevOps",
+        "Site Reliability Engineer",
+        "Software Engineering",
+        "Software Development",
+    ],
+};
+
+export const metadata = {
+    title: "Why You Should Adopt OpenTelemetry",
+    description:
+        "OpenTelemtry had been gaining momentum across many Observability vendors and products and it is becoming the de facto standard.",
+};
+
+export default function Layout({ children }) {
+    return (
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
+            {children}
+        </BlogArticleLayout>
+    );
+}
+
+There are so many observability vendors and frameworks out there. Most of them offer quite competitive capabilities and picking one of them could be a daunting task. However, [OpenTelemtry](https://opentelemetry.io/) stands out among them. This article aims to highlight the benefits of adopting OpenTelemetry and why you should adopt it into your applications as soon as possible.
+
+---
+
+# What Is OpenTelemetry?
+
+<Image alt="Open Telemetry Logo" src={openTelemetry} />
+
+[OpenTelemetry](https://opentelemetry.io/) is a CNCF project which unifies and formalizes all aspects of Observability into one specification. The specification itself was incepted a few years back and it continues to evolve and gain momentum throughout the industry.
+
+You may have been working with [OpenTracing](https://opentracing.io/), [OpenCensus](https://opencensus.io/), [Prometheus](https://prometheus.io/), or some of the popular frameworks and tools out there for adding Observability to your applications. However, until [OpenTelemetry](https://opentelemetry.io/) came along, there was no one specification spanning across all three verticals of Observability (metrics, tracing, and logging), tying them together and correlating them appropriately.
+
+---
+
+# Unifies All the Pillars of Observability
+
+Previously there were few specifications for traces (OpenTracing) and metrics (Prometheus, Micrometer). However, some of these specifications such as Prometheus were vendor specific and all of them were created focussing on one area and not Observability as a whole.
+
+OpenTelemetry covers the three main types we discussed and adds common specifications such as attributes (contextual information) to all three of them. OpenTelemetry also provides libraries in many languages, on top of the specification itself. The libraries themselves add proper contextual information to properly correlate each other (For example trace ID to logs).
+
+# Clear Evolution From Existing Specifications/Frameworks
+
+If you have been using other popular specifications/frameworks such as OpenTracing and OpenCensus, you will feel quite at home in OpenTelemetry. They even provided shims and other tools allowing you to use the existing code in your applications with minimal changes. This will help you in migrating to OpenTelemetry quite easily.
+
+At the same time specifications like OpenTracing and OpenCensus had been deprecated in favor of OpenTelemetry and they are encouraging to move to OpenTelemetry. Therefore, it is important to switch to OpenTelemetry if you want a continuously improving framework.
+
+# Made by Observability Experts With Best Practices in Mind
+
+<Image
+    alt="Explaining"
+    src={explaining}
+    creator={{
+        name: "charlesdeluvio",
+        href: "https://unsplash.com/@charlesdeluvio",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/",
+        },
+    }}
+/>
+
+OpenTelemetry was created to replace OpenTracing and other standards for Observability. Most of the concepts are derived from the experience and knowledge gained from these other specifications and projects, and it was compiled by some of the experts in the field. Therefore, by using OpenTelemetry, you will be adopting the best practices in observability as well. You will be able to have a clear view of the system keeping the performance impact minimal.
+
+OpenTelemetry also offers components such as OpenTelemetry Collector which are designed to improve the data collection pipelines. All the components are well thought through and come with many features that will reinforce your data measurement and collection for the better.
+
+# A Large Number of Supported Vendors
+
+With the increasing adaptation of OpenTelemetry in both applications and observability providers, we now have a large number of vendors supporting OpenTelemetry with most of the big players in observability and cloud out there in it. You can view the [list on the OpenTelemetry website](https://opentelemetry.io/ecosystem/vendors/) itself.
+
+At the same time, since most of the [popular programming languages also have instrumentation support](https://opentelemetry.io/docs/instrumentation/), you will be able to have even a polyglot microservices deployment without much trouble and publish the data to any vendor of your preference.
+
+# Avoid Vendor Lock-In
+
+Another aspect that comes with the large number of vendors supporting OpenTelemetry is that you will be able to easily switch between an Observability provider with minimal changes to the code. If you are using an OpenTelemetry Collector, this would just be a configuration change.
+
+This is especially useful if you are just starting up and you have not selected an Observability provider. You can simply go ahead and include OpenTelemetry and later decide on the vendor to choose. You can even host your own OpenSource tools such as Prometheus and ELK stack in the beginning and later change to an observability vendor easily if you want to outsource observability data management.
+
+At the same time, if you are developing an off-the-shelf product that may be used by many users and if you want them to have the flexibility to choose an observability provider they like, OpenTelemetry is the best choice for you. It allows the end-user to configure your application so that it can publish observability data to a provider of their choice with minimal effort and changes on your side.
+
+Either way, having a vendor lock-in free deployment, gives you more leverage and can help protect you against price increases or any adverse actions from the vendors. This alone is enough reason to start adopting OpenTelemetry as soon as possible.
+
+<Image
+    alt="Explaining"
+    src={explaining}
+    creator={{
+        name: "KAL VISUALS",
+        href: "https://unsplash.com/@kalvisuals",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/",
+        },
+    }}
+/>
+
+---
+
+Overall, having OpenTelemetry which is developed by observability experts and which is gaining great momentum has no downsides. It did however take a while for them to reach general availability and this only points towards the meticulous effort taken by the designers and developers. In the end, the vendor lock-in free, state-of-the-art features that it offers will help you in having a great system in place for Observability.

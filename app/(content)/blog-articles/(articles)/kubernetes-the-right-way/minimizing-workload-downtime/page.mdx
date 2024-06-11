@@ -1,0 +1,174 @@
+import kubernetes1 from "@/assets/blog-articles/devops/kubernetes-1.webp";
+import softwareEngineer4 from "@/assets/blog-articles/engineering/software-engineer-4.webp";
+import discussion2 from "@/assets/blog-articles/engineering/discussion-2.webp";
+import meeting2 from "@/assets/blog-articles/engineering/meeting-2.webp";
+import achieved from "@/assets/blog-articles/miscellaneous/achieved.webp";
+
+export const blogMetadata = {
+    image: "/assets/blog-articles/zero-downtime.webp",
+    mediumUrl:
+        "https://faun.pub/kubernetes-the-right-way-zero-downtime-workloads-5edeea221e69",
+    publishedDate: new Date("2023-09-26"),
+    keywords: [
+        "Kubernetes",
+        "Kubernetes Cluster",
+        "K8s",
+        "DevOps",
+        "Zero Downtime Deployment",
+    ],
+};
+
+export const metadata = {
+    title: "Kubernetes the Right Way: Minimizing Workload Downtime",
+    description:
+        "Achieving nearly zero downtime in your Kubernetes Applications requires careful design and proper Site Reliability Engineering.",
+};
+
+export default function Layout({ children }) {
+    return (
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
+            {children}
+        </BlogArticleLayout>
+    );
+}
+
+Zero downtime deployments are a dream of everyone, and yet it is quite hard to achieve. Achieving zero downtime is almost impossible as there will be downtimes for various reasons, such as infrastructure failures and natural disasters, throughout the lifetime of a deployment.
+
+However, with some effort, the downtimes can be minimized, reducing the impact on your end users. Even upgrades to the application could be done with minimal downtimes with proper engineering. In this article, we will be going over steps you can take to reduce downtimes in your applications deployed on Kubernetes Clusters.
+
+---
+
+# Kubernetes Resources
+
+<Image
+    alt="Kubernetes"
+    src={kubernetes1}
+    creator={{
+        name: "Growtika",
+        href: "https://unsplash.com/@growtika",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/",
+        },
+    }}
+/>
+
+## Deployments with Rolling Updates and Health Probes
+
+Any application deployed in Kubernetes should be backed by a Deployment (or DaemonSet or StatefulSet depending on the mechanics of the application) and never should be run alone as a Pod. You will be mainly using Deployments (and sometimes StatefulSets) for your applications (DaemonSets are a special type of workload that schedules a pod in each node, and it is not generally useful unless you are creating a cluster-related application such as a log collector, monitoring agent, K8s networking plugin).
+
+These workload types have many features built in, that can help manage multiple pods of the same microservices efficiently. Once you have specified the number of replicas, they will create and delete pods to ensure that a healthy set of replicas is available to serve your traffic. In deployments especially, you can specify the way updates are rolled out. As a rule of thumb, I would suggest using Rolling updates which is the default value for the update strategy as well. Recreates could be useful if your application can’t function properly with recreates due to some reason. However, I believe that there is a fundamental design or implementation aspect that you would need to revisit if you are using Recreate.
+
+Moreover, a proper readiness and liveness probe should be configured which reflects the internal state of the application well. This allows Kubernetes to automatically restart any failed Pods and also perform rolling updates accurately, sending traffic into them only once they are ready to serve traffic. This allows Kubernetes to minimize the downtimes of your applications during deployment updates. As an additional benefit, Kubernetes will also know when a pod is unable to serve the traffic and it will stop traffic and restart the Pods as necessary based on the result of the health probes.
+
+## Pod Disruption Budget
+
+There can be different types of voluntary (performed by cluster administrators or application owners) and involuntary (occurring due to reasons beyond the control of cluster administrators and application owners) disruptions in an Application running on Kubernetes. A more common scenario that you might be familiar with would be Kubernetes cluster upgrades which require draining all pods in a node so that the node can be upgraded to the newer version.
+
+While involuntary disruptions cannot be avoided, we can take precautions to avoid voluntary disruptions by using Pod Disruption Budgets (PDB). PDB allows us to define how many of the pods need to be running for the application to function properly. This can be expressed as a percentage of all replicas or as an exact number of replicas. Especially if your application requires a quorum to function properly, this is how you can communicate that to Kubernetes.
+
+Whenever a voluntary action to stop a Pod is taken by Kubernetes, it will make sure that at least the number of Pods specified in the PDB is running at all times. If it cannot fulfill it, it will fail the action taken to cause the Pod to stop. However, PDB guarantees do not cover deleting a Pod and only cover the Pod eviction API which is generally used by actions causing voluntary disruptions such as draining a Kubernetes node.
+
+## Pod Anti Affinity — Tolerating Node Failures
+
+While we do not need to worry about the underlying VMs and other infrastructure running Kubernetes clusters in general (especially if you are using a managed service), failures in the said infrastructure are expected. When a failure such as a node failure occurs, Kubernetes will schedule the pods that were running in it into another Node.
+
+If your application has multiple replicas and at least one of them was not running in the failed node, your application will not be affected. However, the Kubernetes scheduler by default simply looks at the resource availability in Nodes when it is scheduling Pods. If we can spread the replicas of each application into multiple Nodes, we can minimize the downtimes resulting from Node failures. This is where Pod Anti Affinity comes into play.
+
+With Pod anti-affinity set to schedule pods to nodes that have no other pods with the same labels, you can spread the pods across multiple nodes increasing the tolerance against node failures. However, unless you set this to only prefer this rule during scheduling (not required during scheduling), you may run into some problems. Once the rules are properly set, they can help you in achieving higher robustness against node failures.
+
+## Pod Topology Spread Constraints
+
+Pod Topology Spread Constraints can help you go one step further and increase the availability of your workloads across more failure domains. This allows us to group nodes into failure domains using a Kubernetes node label (also referred to as the topology key). All nodes with the same value for the topology key are considered to be in the same failure domain and the scheduler will try to schedule pods so that they are evenly spread among these domains.
+
+With this capability combined with a node label added to specify the availability zones (or even regions if cloud providers one day support it), we can spread the Pods of a workload evenly across the availability zones allowing higher levels of availability.
+
+# Software Development Practices
+
+<Image
+    alt="Software Engineers"
+    src={softwareEngineer4}
+    creator={{
+        name: "Annie Spratt",
+        href: "https://unsplash.com/@anniespratt",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/",
+        },
+    }}
+/>
+
+While Kubernetes provides many features to reduce downtimes, it can only do it with developers implementing some best practices themselves. These need to be adhered to, across all applications deployed in Kubernetes to achieve near-zero downtime.
+
+## Graceful Shutdown
+
+Earlier, we discussed how Kubernetes can perform rolling updates well with ease and how it will ensure that traffic is only sent to pods once they are ready by using readiness probes. This applies while shutting down as well and it will not send any new requests to Pods in a Terminating state.
+
+However, during a rolling update, to gracefully shut down the pods from the older version (from the underlying replica set), the applications need to be able to handle the `SIGTERM` OS signal. When Kubernetes needs a Pod to shut down, it sends the `SIGTERM` signal to the process with PID 1 in each container. The container is expected to gracefully shut down within the next 30 seconds after that. If it is still running after that, Kubernetes will send a `SIGKILL` signal and kill the container immediately.
+
+Within these 30 seconds, the application should ensure that it completes all its ongoing requests as soon as possible to ensure that those users who initiated them, do not see failures. It should also perform all cleanup activities, and flush all data and states to a persistence medium if needed. This is only possible if the application listens to the `SIGTERM` OS signal and shuts down gracefully.
+
+## Plan for no downtimes in version upgrades
+
+<Image
+    alt="Teaching"
+    src={discussion2}
+    creator={{
+        name: "Scott Graham",
+        href: "https://unsplash.com/@homajob",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/photos/5fNmWej4tAA",
+        },
+    }}
+/>
+
+Throughout the lifecycle of an application, it will go through many version upgrades due to bugs, security vulnerabilities, and features. Many of them would be done without downtimes using a simple rolling update if there are changes only in your application code. However, there will come a time when you need to perform an upgrade which will look like you need a downtime window to achieve, especially if you are dealing with changes to a database.
+
+However, these can usually be avoided by performing a series of backward-compatible version upgrades instead of one major backward incompatible change. For example, if you need to update a database column, you can add a new column and remove the old column in a later version after ensuring all values are copied to the new column. Such an approach will need several application version upgrades, which will first start to use both columns and then switch to using the new column only.
+
+Based on your application architecture you may still be able to perform such a backward incompatible change in one version upgrade. For example, if you have CQRS (Command Query Responsibility Segregation) implemented with a queue for the commands, you could send them to another queue at the time of the upgrade so that you can use a blue-green update of the database, and apply the commands that were received after the data was copied into the new version of the database.
+
+No matter which approach you use, you need to get into a zero downtime upgrade mindset. The design and development of your application need to be done with this in mind. There may be situations where you need to postpone the development of such upgrade mechanisms due to deadlines due to various external factors such as competitors. However, it is always good to keep it in mind when you design your application architecture. Even something simple as always ensuring that your microservices on Kubernetes are as stateless as they can be will go a long way in the future.
+
+## Proper Incident Handling Procedures
+
+<Image
+    alt="Meeting"
+    src={meeting2}
+    creator={{
+        name: "Jason Goodman",
+        href: "https://unsplash.com/@jasongoodman_youxventures",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/",
+        },
+    }}
+/>
+
+Regardless of how much you plan and design to avoid downtimes, they are unavoidable as there are many uncontrollable external factors (e.g.:- infrastructure failures, bad weather such as major storms, etc.). Sometimes it can even be due to an unknown bug which causes the whole system to fail with an increase in load. That is why, you need to prepare for the worst and have proper incident handling and disaster recovery procedures in place.
+
+Proper incident handling requires you to have proper procedures in place to handle such an incident. You will also need to have enough information available on demand about the application by implementing Observability data collection mechanisms. I will not go into detail on how this should be done correctly, in this article. However, if you are interested, check out my article on [Handling Production Incidents like a Pro](../engineering/handling-production-incidents-like-a-pro).
+
+Disaster recovery is required in scenarios where the worst has happened and your application is completely down with no hope of starting it back up. While this is somewhat unlikely, this could happen due to entire data centers going down with bad weather. The only way to properly recover from this fast is by having backups of the data stored by your applications and having a reproducible and automated infrastructure creation procedure that can be used at a moment's notice.
+
+---
+
+In conclusion, while achieving zero downtimes is almost impossible due to various external factors, the approaches mentioned in this article will help you get to achieving almost zero downtimes, as long as you have a mindset that plans for having no downtimes from the moment you design your application to finally deploying it on Kubernetes.
+
+<Image
+    alt="Achieved"
+    src={achieved}
+    creator={{
+        name: "Chang Duong",
+        href: "https://unsplash.com/@iamchang",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/",
+        },
+    }}
+/>
+
+---
+
+If you liked this article and would love to learn more about best practices on implementing, deploying, and maintaining applications on Kubernetes, read my article series [Kubernetes the Right Way](./).

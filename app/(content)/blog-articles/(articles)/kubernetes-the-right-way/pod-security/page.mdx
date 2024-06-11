@@ -1,0 +1,204 @@
+import locked from "@/assets/blog-articles/miscellaneous/locked.webp";
+import cleaning from "@/assets/blog-articles/miscellaneous/cleaning.webp";
+import fence from "@/assets/blog-articles/miscellaneous/fence.webp";
+import magnifyingGlass from "@/assets/blog-articles/miscellaneous/magnifying-glass.webp";
+import winner from "@/assets/blog-articles/miscellaneous/winner.webp";
+
+export const blogMetadata = {
+    image: "/assets/blog-articles/pod-security.webp",
+    mediumUrl:
+        "https://medium.com/faun/kubernetes-the-right-way-security-checklist-c38650898807",
+    publishedDate: new Date("2024-02-22"),
+    keywords: [
+        "Kubernetes",
+        "Kubernetes Cluster",
+        "Security",
+        "K8s",
+        "Containers",
+    ],
+};
+
+export const metadata = {
+    title: "Kubernetes the Right Way: Pod Security",
+    description:
+        "When you deploy a containerized application that you developed, in a Kubernetes Cluster, there are some security-related aspects that you should implement. This article goes over some of the most important aspects of them all.",
+};
+
+export default function Layout({ children }) {
+    return (
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
+            {children}
+        </BlogArticleLayout>
+    );
+}
+
+In a world of hackers, security mitigations are mandatory in any production system. While it may seem like it is not that important amidst the deadlines that you may have in your company, the repercussions of a security breach outweigh the overhead.
+
+The security of the system needs to be well implemented on two fronts; Application Code & Kubernetes Pod. If you are a Software Engineer and want to know more about writing more Cloud Native and secure applications, please check my article on [Production Grade Code in the Cloud Era](../engineering/production-grade-code-in-the-cloud-era).
+
+In this article, we will be discussing the security measures that you can implement in a Kubernetes Cluster where your applications are running as Kubernetes workloads.
+
+# Don’t Containers Already Provide Security out of the Box?
+
+An application running in a container is started as a process within the host system. Then containers, true to their name, add many layers of isolation on top of it, using many mechanisms such as cgroups and chroot. Among many other things, this isolation layer ensures that,
+
+-   The application only sees itself and no other processes within the host (and of course, any other processes started by the application within the container).
+-   The application can only read/write the files within the subdirectory (which gets created within the host system) and thinks that the subdirectory is the root of its file system (i.e. cannot see the host system files).
+-   The application will be in its own network space and will be completely isolated from the host. Depending on how the container orchestrater works, the application may have a network built that routes traffic between the host and the container, allowing it to communicate with the host, seeing it as a separate host.
+
+In many ways, the containers are fully isolated from the host and act as separate virtual hosts located within the host.
+
+However, there are many evil-doers in the world (I am referring to hackers here of course) that are actively trying to break out of these isolation layers. Either due to out-of-date systems that are missing security fixes or due to even zero-day vulnerabilities (vulnerabilities that had not yet been discovered), these hackers might be able to gain access to your system. In this article, we talk about ways to reduce the probability of them getting through and also ways to reduce the impact of them hacking into your system and infrastructure.
+
+---
+
+# Lockdown Network Policies
+
+<Image
+    alt="Locked"
+    src={locked}
+    creator={{
+        name: "Gina Neri",
+        href: "https://unsplash.com/@gneri1713",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/photos/gray-metal-padlock-irM6LNDAe-0",
+        },
+    }}
+/>
+
+By default, any pod in any namespace can talk to any other Pod or IP that is accessible from it. While this makes it easier to get started working on a Kubernetes cluster, it can be a problem in terms of security. If an attacker gains access to a vulnerable pod (possibly due to an unavoidable reason such as a zero-day vulnerability), they would be able to talk to other pods within the cluster causing the blast radius to expand rapidly.
+
+While it cannot be completely avoided due to the Pods needing to talk to each other (especially in a microservices architecture), we can reduce the impact by restricting as much network communications as possible.
+
+Also, you might want to check your cloud provider’s documentation to identify any important (e.g.:- Metadata APIs), yet unused, IP ranges that should be blocked. Kubernetes Network Policies can help you achieve this. While I will not go into detail about how you can do this, if you are interested, you can read about how to achieve it, in my article; [Kubernetes the Right Way: Securing Your Production Cluster with Network Policies](./securing-your-production-cluster-with-network-policies).
+
+# Drop All Linux Capabilities
+
+In Linux systems, Linux capabilities are used to specify what a particular process could do. This is a division of the privileges which were traditionally associated with the Linux superuser, into separate units so that they can be granted at a more granular level.
+
+These are granted for each thread and they cover all the actions that a process could perform within the system. For example, granting `CAP_KILL` to a process allows the process to kill any process. These capabilities can be quite harmful and removing them can decrease the blast radius immensely.
+
+By default, all capabilities are granted to a container in Kubernetes and it could perform all actions the user running the process could perform. However, generally, most applications do not require any Linux capabilities (or at least would require only a few capabilities). Therefore, it is best to drop all capabilities explicitly and only grant the ones that are required by the container.
+
+With this in place even if an attacker breaks into your container (this is not completely preventable due to zero-day attacks), they would not be able to do much from there onwards.
+
+# Remove Unnecessary Libraries and Tools in the Container
+
+<Image
+    alt="Cleaning Up"
+    src={cleaning}
+    creator={{
+        name: "RDNE Stock project",
+        href: "https://www.pexels.com/@rdne/",
+        platform: {
+            name: "Pexels",
+            href: "https://www.pexels.com/photo/a-woman-sweeping-the-floor-5591853/",
+        },
+    }}
+/>
+
+Another underestimated yet effective measure against attacks is to remove all the unnecessary libraries and tools from the container. Generally, an attacker gains access to a container to either access the data available within that container or to launch an attack on another system from that container.
+
+However, if that container does not have the right tools, they would not be able to do anything else from within that container. Especially if the container does not have the tools to download (e.g.:- curl, wget) any further files as well, this becomes quite effective. Otherwise, they would be able to download the tools into the container and carry on from there onwards.
+
+While having some tools within a container is required for some use cases, removing everything else can help you reduce the attack surface or at least make it harder for the attackers to get in.
+
+# Read-Only Root File System
+
+When you run a Docker container, a writable file layer is added on top of all the Docker image’s read-only file layers created by Docker. The read-only file layers help to make sure that the docker containers are immutable from release to deployment, and the writable file layer allows your services to create files if needed within the docker container.
+
+If you deploy your service again or if your Pod restarts, a new writable layer is created for the containers within the Pod, making sure that each deployment only contains the original read-only layers when starting up. This also means that any files you write to this writable layer would only be temporary (if you wish to have persistent files, you would need to mount a volume).
+
+While this writable layer seems to be useful, it is not required at all. Even when you do need to write something to a file system, more often than not you would need to write to a persistent volume (this is not the ephemeral writable file layer we were talking about so far). Even if you just need a temporary directory to write to and if you do not want to go through the hassle of provisioning volumes, you can still use an `emptyDir` volume, which simply uses a random directory on the Node.
+
+This makes it possible to always lock down the file system by making it read-only and mounting volumes to the necessary directories when required. This prevents a malicious user who had gained access to a container from tampering with it, by manipulating the files on it (or even downloading other executable files into the container).
+
+# Add Pod Resource Limits
+
+<Image
+    alt="Fence"
+    src={fence}
+    creator={{
+        name: "Kendall Hoopes",
+        href: "https://www.pexels.com/@ken123films/",
+        platform: {
+            name: "Pexels",
+            href: "https://www.pexels.com/photo/gray-metal-chain-link-fence-close-up-photo-897651/",
+        },
+    }}
+/>
+
+Pod resource limits can help you in various ways. The main reason for this is isolating the different microservices so that the resources are fairly and effectively allocated so that an issue in one Pod does not affect the others.
+
+However, it can also help reduce the impact of an attack. Especially if the attackers are trying to bring down your system, specifying resource limits will ensure that any malicious resource-consuming commands that an attacker executes in one container will affect that specific pod only. While there are many other benefits in specifying resource limits (and even requests), pod resource limits help a little in making the system more robust against attacks.
+
+# Run as Non-Privileged Containers
+
+Containers run as non-privileged containers by default, and it isolates the containers well, compared to privileged containers. Privileged containers can communicate with the host (i.e. Kubernetes node), perform advanced operations, and access information about the host system which its counterparts cannot do.
+
+While there can be scenarios where running privileged containers could be useful (for example in security or observability-related agents), it should be vetted carefully. Especially if you are running a privileged container as part of a third-party tool, you have to accept that any vulnerabilities in those containers can affect your Kubernetes nodes. If you do decide that they are trustworthy and reliable tools make sure that you run a supported version of it and that you roll out all the security patches as soon as possible.
+
+In general, you have to be extra careful with privileged containers and whenever possible choose to run non-privileged containers.
+
+# Run as a Non-Root User
+
+The root user is special in Linux systems because they can perform all the operations to administer the system. If a hacker breaks out of an application that is running within a container and then out of the container itself onto the host system, if it was run as the root user, they would also be able to have all the permissions of a root user. Since they can now do almost anything within the system, the Kubernetes node and even the whole Kubernetes cluster would be fully compromised.
+
+While gaining this level of access requires some serious skills from the hacker’s side, we do not need to gamble with the possibility of them being able to do it. We can simply run the container as a non-root user, which ensures that even if a hacker breaks out of the container, they would only be able to gain the permissions of that non-root user at most.
+
+Of course, this is true only if your hosts / Kubernetes nodes are secure as there are many privilege escalation exploits that hackers take advantage of. While you can only minimize the attack surface and never make it 100% secure, every step should be taken to secure your system.
+
+---
+
+On top of these development time mitigations, you can also utilize scanners to avoid as well as detect threats in your Pods.
+
+<Image
+    alt="Magnifying Glass"
+    src={magnifyingGlass}
+    creator={{
+        name: "Emiliano Vittoriosi",
+        href: "https://unsplash.com/@emilianovittoriosi",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/photos/woman-wearing-black-collared-jacket-0N_azCmUmcg",
+        },
+    }}
+/>
+
+# Scanning Applications, Docker Images & K8s Yamls for Vulnerabilities
+
+While this is not a Kubernetes-specific improvement, this can help in preventing many security threats. Even in a perfectly secure system, we would need to still expose some ports to the internet which will serve your applications to your users.
+
+In current times, most of the applications are not built from scratch and therefore would use many third-party libraries. On top of that, the docker images we use may have some OS-level libraries as well. These third-party libraries may have security vulnerabilities and the maintainers of the libraries would generally roll out security patches and then publish information about their vulnerabilities so that we can use the new versions if the security vulnerability can impact us.
+
+_But how can we keep track of all the libraries and upgrade to the patched version every time a new vulnerability is discovered by the maintainers?_
+
+This is where application and Docker image scanners can come to your rescue. There are many popular scanners such as [Trivy](https://trivy.dev/) and [Snyk](https://snyk.io/), that can automatically detect all the libraries that are used in your applications and Docker images, and generate a report of all the vulnerabilities and the versions in which they are fixed.
+
+These can be integrated into your CI/CD pipelines so that they would automatically fail the pipelines if any vulnerabilities are found. You can even run scheduled pipelines to scan all the images that are being used in your Kubernetes cluster to detect vulnerabilities sooner. Doing so can greatly increase your chances of fixing many vulnerabilities as soon as they are found.
+
+Similarly, there are analyzers (e.g.:- https://www.checkov.io/) for scanning Kubernetes Yaml files that will analyze and report if they can be improved with a known best practice. This includes some of the best practices we have talked about in this article as well.
+
+---
+
+We have gone through many ways to prevent security threats as well as mitigate the impact. While it may not be possible to completely prevent an attack, it’s important to take all the possible precautions against security threats.
+
+Sometimes, it may not seem that important, however, once a security incident occurs, the resulting impact on your company, yourself, and your users is quite high. Therefore, we all need to do our best as Software Engineers or SRE or DevOps Engineers to mitigate these threats to the best of our abilities.
+
+<Image
+    alt="Winner"
+    src={winner}
+    creator={{
+        name: "Japheth Mast",
+        href: "https://unsplash.com/@japhethmast",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/photos/man-reaching-hands-up-high-taken-at-daytime-Ls3yexjyRpk",
+        },
+    }}
+/>
+
+---
+
+If you liked this article and would love to learn more about best practices on implementing, deploying, and maintaining applications on Kubernetes, read my article series [Kubernetes the Right Way](./).

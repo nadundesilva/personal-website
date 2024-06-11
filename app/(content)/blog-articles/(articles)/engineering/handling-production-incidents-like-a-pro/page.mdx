@@ -1,0 +1,258 @@
+import prepare from "@/assets/blog-articles/miscellaneous/prepare.webp";
+import record from "@/assets/blog-articles/miscellaneous/record.webp";
+import metrics from "@/assets/blog-articles/observability/metrics.webp";
+import meeting2 from "@/assets/blog-articles/engineering/meeting-2.webp";
+import problem2 from "@/assets/blog-articles/engineering/problem-2.webp";
+import help from "@/assets/blog-articles/miscellaneous/help.webp";
+import investigate from "@/assets/blog-articles/miscellaneous/investigate.webp";
+import discussion2 from "@/assets/blog-articles/engineering/discussion-2.webp";
+
+export const blogMetadata = {
+    image: "/assets/blog-articles/professional-02.jpg",
+    mediumUrl:
+        "https://faun.pub/handling-production-incidents-like-a-pro-203f5cb86d64",
+    publishedDate: new Date("2023-07-04"),
+    keywords: [
+        "Site Reliability Engineer",
+        "Software Engineering",
+        "DevOps",
+        "Professional Development",
+        "Operations",
+    ],
+};
+
+export const metadata = {
+    title: "Handling Production Incidents like a Pro",
+    description:
+        "If you have been a Developer or a Site Reliability Engineer working on an Application deployed in a production environment, you would probably know how hard it is to deal with a production incident. This article outlines some of the steps you can take to minimize the damage as well as how you can systematically find and solve the problem.",
+};
+
+export default function Layout({ children }) {
+    return (
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
+            {children}
+        </BlogArticleLayout>
+    );
+}
+
+As a Software Engineer or a Site Reliability Engineer, you might be working on many different products such as Tailored Software, off-the-shelf Products, SaaS offerings, etc. However, I will be mainly focusing on a SaaS-based Product that you will be managing yourself (or an operations team within your organization) in this article.
+
+I will be talking about some of the steps you can take proactively as well as things you can do when an actual incident occurs to get back up and running as soon as possible.
+
+This article talks about three main aspects related to handling an incident.
+
+-   Proactive Preparations
+-   Handling the Incident
+-   Postmortem
+
+All the areas are split into separate sections logically grouping them. Please feel free to skip any topic at your convenience.
+
+_Let’s get started._
+
+---
+
+# Proactive Preparations
+
+<Image
+    alt="Prepare"
+    src={prepare}
+    creator={{
+        name: "Alexander Redl",
+        href: "https://unsplash.com/@alexanderredl",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/",
+        },
+    }}
+/>
+
+There are many procedures and mechanisms that you should have in place to handle an incident properly and quickly.
+
+## Backups are your friend
+
+Backups are the most crucial mechanism that should be in place in your environment. Having a full backup (no matter what the frequency of the backup is) can help in achieving a good RTO (Recovery Time Objective — Time between the moment a failure occurs to the moment when operations resume). At the same time by increasing the frequency of backups you can achieve a good RPO (Recovery Point Objective — The maximum amount of acceptable data loss after an incident). You can take this even further by having geo-replicated backups which make the backups themselves more resilient to many incidents such as natural disasters wiping out entire Data Centres.
+
+_But what should be included in the backup?_
+
+Any data that cannot be regenerated from other data should be included in the backup so that the system can be up and running in the state the last backup was on after such an incident. At the same time, the system should be designed in such a way that the data that can be regenerated should be regenerated whenever it is missing in the system. A very good example of this is the caches managed by the system to speed up actions within a system.
+
+Backups are useful not only in incidents. Even during a massive upgrade if a proper backup is taken right before the upgrade process begins, in case something goes wrong, you can easily restore to the backup without trying to solve the problem then and there. Overall, backups of your system are a must-have capability that will save countless stressful hours trying to fix the problem, with users complaining in your support channels.
+
+## Record the Changes Applied to the Environment
+
+<Image
+    alt="Record Changes"
+    src={record}
+    creator={{
+        name: "Oleg Ivanov",
+        href: "https://unsplash.com/ko/@olegivanovpht",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/",
+        },
+    }}
+/>
+
+Another very useful information to have during an incident is the trail of changes that have been applied to the production environment and the exact time when they were applied. This knowledge combined with the time when the incident occurred can help in narrowing down the possible reasons for the issue. Even if you apply a temporary fix or workaround such as restarting your application, you can analyze the logs for the errors and then cross-check with the trail of changes to find the root cause.
+
+This requires a history of changes of the deployment artifacts as well as the source code changes and which releases of your application were deployed and at what time they were applied. One of the reasons why I love GitOps is because it revolves around having a history in Git itself. It is also important to have the exact versions (or Git or docker digests) instead of just deploying your latest version (For example using the latest docker tag) so that you can drill down to the lines of code that changed between two points of time in history in your production environment.
+
+With proper development and operations processes in place achieving this level of detail is not hard and you should have it for performing a successful Root Cause Analysis.
+
+## Observability
+
+<Image
+    alt="Metrics"
+    src={metrics}
+    creator={{
+        name: "Luke Chesser",
+        href: "https://unsplash.com/@lukechesser",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/",
+        },
+    }}
+/>
+
+Another important but sometimes overlooked aspect of a production deployment is proper centralized observability data collection of the overall system. Properly timestamped and correlated data can help you in identifying the root cause of a failure fast and with ease. This gets complemented by the trail of changes applied to the production environment as you can correlate the changes to the symptoms of the incident to identify the problem, and perhaps even a workaround to get you up and running as soon as possible.
+
+Observability mainly encompasses three main aspects; Logs, Traces & Metrics. These three have different uses and can greatly improve your chances of fixing a production incident fast. While how to get this correctly is out of the scope of this article, you need to properly correlate these three types of Observability data to get the maximum out of them.
+
+Once observability data is in place, the next step is to have alerts configured based on the collected data. These can be grouped into multiple groups of importance so that they can be attended immediately or within the next business day (or even much later when the teams have some spare time left). It is important to have a proper balance and to not trigger alerts unnecessarily and wake up Engineers, in the middle of the night, for no reason, as it can otherwise lead to ignoring alerts by the teams.
+
+Having proper plans on how and when the teams should tend to the alerts can help in prioritizing the issues and minimizing the impact on your users. While I cannot tell you exact guidelines for prioritizing them, you should take into consideration the importance of the use cases of the system and also which issues are temporary or can be automatically healed. Ultimately, incident handling procedures should be put in place around these alerts, and we should not wait till we receive support requests from the actual users who would be frustrated by the time they raise the concern.
+
+## Prepare Incident Handling Procedures
+
+<Image
+    alt="Meeting"
+    src={meeting2}
+    creator={{
+        name: "Jason Goodman",
+        href: "https://unsplash.com/@jasongoodman_youxventures",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/",
+        },
+    }}
+/>
+
+With all the above preparations in mind, the most important thing that you should have in place is the actual incident handling procedures. A problem in the system could come to your attention mainly through either a proactive alert you have set or through a user who had noticed it. Either way, based on the severity of the problem, you should have a procedure to handle it. We will go into more detail on how you might want to handle an incident below. However, it is important to get input from the product teams as well as operations teams and set formal procedures which anyone could follow even if they are half asleep after waking up in the middle of the night due to a [Pingdom](https://www.pingdom.com/) alert.
+
+<Image
+    alt="Incident"
+    src={problem2}
+    creator={{
+        name: "Julien L",
+        href: "https://unsplash.com/@julienlphoto",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/s/photos/frustrated",
+        },
+    }}
+/>
+
+# Handling the Incident
+
+You have taken all the precautions by now, including even rigorous testing before deploying a new version of the Application. But you cannot completely avoid production incidents. You might get woken up in the middle of the night with an alert or a call from another colleague. Probably with a little bit of panic in mind, you would need to fire up your laptop and start working on the incident.
+
+## Follow Procedures and Escalate Early if Required
+
+<Image
+    alt="Help Wanted"
+    src={help}
+    creator={{
+        name: "Tim Mossholder",
+        href: "https://unsplash.com/@timmossholder",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/",
+        },
+    }}
+/>
+
+Generally, a DevOps or Site Reliability Engineer would directly respond to an alert. If you have set the alerts correctly, the alert should contain some context about why it was triggered. Based on that, you need to check the logs and metrics for any errors, ranging from obvious errors such as network connectivity issues to even anomalies in metrics due to attacks from a hacker. If the problems are actually infrastructure related, you can take necessary action to mitigate the losses.
+
+However, sometimes a simple action such as restarting a server does not always fix the issue immediately. The actual problem could be related to a bug in the application itself. This is why it is important to escalate and engage the product teams when the issue does not seem to be an obvious failure. This also means that one or several members of the product team would need to be available on call to handle incidents.
+
+You can have a rotation among the team members (in both product and operations teams) for this and also have troubleshooting guides in the form of flow charts (or any kind of easy-to-follow diagrams or guides) which can be used by the operations teams before they reach out to the product teams. If things get worse you may even need to start a war room, with all the experts for the area in concern, to try and fix the issue at hand. It is important to escalate and get the right people involved soon.
+
+## Eliminate the Impossible
+
+<Image
+    alt="Investigate"
+    src={investigate}
+    creator={{
+        name: "cottonbro studio",
+        href: "https://www.pexels.com/@cottonbro/",
+        platform: {
+            name: "Pexels",
+            href: "https://www.pexels.com/photo/photo-of-person-taking-down-notes-7319070/",
+        },
+    }}
+/>
+
+Once you as an Engineer (from the product team or operations team) start to look at the logs, metrics, and symptoms of the failure, isolating the problem could seem daunting. With some luck you might see the error easily or the error itself could be a known issue. However, lady luck does not come to production incidents that often.
+
+> “When you have eliminated all which is impossible then whatever remains, however improbable, must be the truth.”
+>
+> ~ Sherlock Holmes
+
+If you feel like you are going down the rabbit hole without no obvious way out, start to look at the changes that went into the system and try to figure out whether any of them could be related to the symptoms you are seeing in the system. By eliminating the possible causes, you might be able to figure out the root cause.
+
+You can also check the logs for any logs (starting from filtered error logs since the incident started) that may suggest a failure in the system and the cause for it. It is also important to not get stuck in the details and see the whole picture (with all the Observability data, trail of changes, and the symptoms of the system) and try to see patterns. Then only you would be able to figure out the cause or even a solution fast.
+
+## Add Workaround and Skip to Postmortem
+
+When you start to debug an issue you may find yourself going down a rabbit hole trying to find the root cause. If you are a perfectionist like me, you might even find yourself trying to find the perfect solution for the problem at hand.
+
+However, it is important to remember that, at that moment, you are only trying to get the system back up and running at sufficient performance to reduce the impact on the users. If the right solution is going to take too much time, you should think of a workaround that will temporarily fix the problem, even if it is something as cliche as a system restart. However, it should be stable enough that it does not trigger another alarm in a short while.
+
+That being said, you should not add the workaround and forget about the incident. But rather, you should be performing a postmortem.
+
+# Postmortem
+
+<Image
+    alt="Working on Postmortem"
+    src={discussion2}
+    creator={{
+        name: "Scott Graham",
+        href: "https://unsplash.com/@homajob",
+        platform: {
+            name: "Unsplash",
+            href: "https://unsplash.com/photos/5fNmWej4tAA",
+        },
+    }}
+/>
+After the problems are fixed (possibly after a good night’s sleep if you were
+woken up in the middle of the night by an alert), you need to think about
+analyzing the incident. It is very important because only then will we be able
+to learn from our mistakes and improve.
+
+You should try to identify the following key things about the incident during your Postmortem phase.
+
+## Root Cause of the Incident With Evidence
+
+More often than not, you may need to add a workaround to temporarily fix the problem in the production incident. However, it is important to find the exact root cause of the problem, after the panic of the production Incident is over. Even if you already found it while handling the incident, you should go over it and ensure that what you found, possibly half asleep in the middle of the night, is correct. Afterward, necessary actions should be taken to avoid such failures in the future.
+
+## What Went Wrong and What Went Right?
+
+Improving your procedures is a never-ending process. More and more incidents you go through over time, you will see ways to improve the procedures for the better (For example changing the composition of the first level of responders to alerts or the procedures for granting access to the environment).
+
+It is important to have an action list containing these and carry them out. If we do not learn from these, we will be repeating the same situations in the future and you cannot expect to do better next time. After all, the definition of insanity is doing the same thing over and over, and expecting different results.
+
+## Let Your Users Know
+
+Once you have found the root cause and also prepared the actions to take to avoid future failures, it is important to let the users know about the incident and that you are taking precautions to mitigate such outages in the future.
+
+Communicating about the outages could be done in the form of a status page or any other form of communication that you prefer. A status page that is updated in real-time especially can help the users as they can check it when they notice an issue without retrying to use your service ending in frustration.
+
+It is important to have the status page and the origin of the health checks used to maintain the status page, isolated from your main application and its infrastructure. After all, you do not want your status page to be unavailable during the incidents. You can use a separate service such as [Site 24x7](https://www.site24x7.com/) to achieve this.
+
+Ultimately, it is almost impossible to hide an incident from your users (especially if they are active within your system) and chances are that they have already noticed the failure on their own. Being honest in this manner and also at the same time showing that you are taking action can go a long way in winning your customers' hearts.
+
+---
+
+Overall, during the chaos of a production incident, you may need to take quick and calculated actions. It does need some experience and knowledge to handle one successfully as well. However, you can do better by following the guidelines that I have outlined in this article.
+
+On a closing note, I hope you do not have any Production Incidents in your systems. But if you do, take a deep breath and focus on getting the system up and running.

@@ -58,6 +58,26 @@ const websiteTheme: CssVarsTheme = extendTheme({
                 },
             },
         },
+        MuiTypography: {
+            styleOverrides: {
+                h1: {
+                    fontSize: 35,
+                },
+                h2: {
+                    fontSize: 30,
+                },
+                h3: {
+                    fontSize: 25,
+                },
+                h4: {
+                    fontSize: 20,
+                },
+                h5: {
+                    fontSize: 20,
+                    color: grey[700],
+                },
+            },
+        },
     },
 });
 

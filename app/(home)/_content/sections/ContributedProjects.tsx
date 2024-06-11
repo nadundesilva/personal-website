@@ -35,8 +35,7 @@ const ContributedProjects = (): React.ReactElement => {
                     sx={{
                         position: "relative",
                         height: 200,
-                        marginLeft: 5,
-                        marginRight: 5,
+                        mx: 5,
                     }}
                 >
                     <Image
