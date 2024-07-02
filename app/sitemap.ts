@@ -12,27 +12,41 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+import { globSync } from "glob";
 import { type MetadataRoute } from "next";
 
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 import { Routes, type Route } from "@/constants/routes";
 
-const buildSitemapUrls = (currentRoutes: Record<string, Route>): string[] => {
+const buildMainSitemapUrls = (
+    currentRoutes: Record<string, Route>,
+): string[] => {
     let urls: string[] = [];
     Object.values(currentRoutes).forEach((route) => {
         urls.push(route.path);
         if (route.subRoutes !== undefined) {
-            urls = urls.concat(buildSitemapUrls(route.subRoutes));
+            urls = urls.concat(buildMainSitemapUrls(route.subRoutes));
         }
     });
     return urls;
 };
 
+const blogArticles = globSync(
+    "app/(content)/blog-articles/(articles)/**/page.mdx",
+).map(
+    (filePath) =>
+        "/blog-articles/" +
+        filePath
+            .replace(/^(app\/\(content\)\/blog-articles\/\(articles\)\/)/, "")
+            .replace(/\/page\.mdx$/, ""),
+);
+
 const time = new Date();
 
 const sitemap = (): MetadataRoute.Sitemap =>
     ["/", "/nadundesilva-cv.pdf"]
-        .concat(buildSitemapUrls(Routes))
+        .concat(buildMainSitemapUrls(Routes))
+        .concat(blogArticles)
         .map((url) => ({
             url: `${WEBSITE_PUBLIC_URL}${url}`,
             lastModified: time,
