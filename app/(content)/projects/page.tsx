@@ -25,6 +25,7 @@ import {
     Section,
     SectionHeading,
     Timespan,
+    Title,
 } from "@/components/content";
 import { Time, TimeRange } from "@/constants/commons";
 import { Logos } from "@/constants/logos";
@@ -88,11 +89,13 @@ const Projects = (): React.ReactElement => {
     const siddhiLogo = <Logo logo={Logos.Siddhi} height={"2.3em"} />;
     return (
         <React.Fragment>
+            <Title>Projects</Title>
             <NextLink passHref href={"/projects/personal"}>
                 <Button
                     size="small"
                     variant="outlined"
                     endIcon={<KeyboardArrowRight />}
+                    sx={{ mb: 3 }}
                 >
                     View Personal Projects
                 </Button>

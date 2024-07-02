@@ -1,4 +1,3 @@
-"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -13,12 +12,16 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, styled } from "@mui/material";
+import { Typography } from "@mui/material";
 
-const Section = styled(Box)(({ theme }) => ({
-    margin: 0,
-    marginBottom: theme.spacing(8),
-    clear: "both",
-}));
+interface TitleProps {
+    children: React.ReactNode;
+}
 
-export default Section;
+const Title = ({ children }: TitleProps): React.ReactElement => (
+    <Typography variant="h1" sx={{ mb: 5 }}>
+        {children}
+    </Typography>
+);
+
+export default Title;

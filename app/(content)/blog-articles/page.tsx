@@ -15,9 +15,13 @@
 import React from "react";
 
 import ArticlesList from "@/components/blog-articles/ArticlesList";
+import { Title } from "@/components/content";
 
 const BlogArticles = async (): Promise<React.ReactElement> => (
-    <ArticlesList pathPattern="app/(content)/blog-articles/(articles)/**/page.mdx" />
+    <React.Fragment>
+        <Title>Blog Articles</Title>
+        <ArticlesList pathPattern="app/(content)/blog-articles/(articles)/**/page.mdx" />
+    </React.Fragment>
 );
 
 export default BlogArticles;

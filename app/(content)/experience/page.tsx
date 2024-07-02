@@ -23,6 +23,7 @@ import {
     Section,
     SectionHeading,
     Timespan,
+    Title,
 } from "@/components/content";
 import { Time, TimeRange } from "@/constants/commons";
 import { Logos } from "@/constants/logos";
@@ -95,6 +96,7 @@ const Experience = (): React.ReactElement => {
 
     return (
         <React.Fragment>
+            <Title>Experience</Title>
             <Section>
                 <SectionHeading>Associate Technical Lead</SectionHeading>
                 <Timespan

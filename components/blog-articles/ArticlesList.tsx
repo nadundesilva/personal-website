@@ -103,8 +103,8 @@ const ArticlesList = async ({
                             <CardContent>
                                 <Typography
                                     gutterBottom
-                                    variant="h6"
-                                    component="div"
+                                    variant="h2"
+                                    sx={{ pb: 1 }}
                                 >
                                     {blogArticle.title}
                                 </Typography>

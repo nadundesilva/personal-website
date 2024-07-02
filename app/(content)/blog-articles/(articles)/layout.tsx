@@ -1,4 +1,3 @@
-"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -13,12 +12,18 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, styled } from "@mui/material";
+import React from "react";
 
-const Section = styled(Box)(({ theme }) => ({
-    margin: 0,
-    marginBottom: theme.spacing(8),
-    clear: "both",
-}));
+import "@/styles/blog-articles.css";
 
-export default Section;
+interface BlogArticlesLayoutProps {
+    children: React.ReactNode;
+}
+
+const BlogArticlesLayout = ({
+    children,
+}: BlogArticlesLayoutProps): React.ReactElement => (
+    <React.Fragment>{children}</React.Fragment>
+);
+
+export default BlogArticlesLayout;
