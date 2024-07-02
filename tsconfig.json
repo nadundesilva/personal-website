@@ -14,8 +14,7 @@
         "lib": ["es6", "dom", "dom.iterable", "esnext"],
         "types": [
             "cypress",
-            "@testing-library/cypress",
-            "@testing-library/jest-dom"
+            "@testing-library/cypress"
         ],
         "allowJs": true,
         "skipLibCheck": true,
