@@ -15,6 +15,7 @@
 import React from "react";
 
 import ArticlesList from "@/components/blog-articles/ArticlesList";
+import { Title } from "@/components/content";
 
 export const metadata = {
     title: "Kubernetes the Right Way",
@@ -23,7 +24,10 @@ export const metadata = {
 };
 
 const BlogArticles = async (): Promise<React.ReactElement> => (
-    <ArticlesList pathPattern="app/(content)/blog-articles/(articles)/kubernetes-the-right-way/**/page.mdx" />
+    <React.Fragment>
+        <Title>Kubernetes the Right Way</Title>
+        <ArticlesList pathPattern="app/(content)/blog-articles/(articles)/kubernetes-the-right-way/**/page.mdx" />
+    </React.Fragment>
 );
 
 export default BlogArticles;

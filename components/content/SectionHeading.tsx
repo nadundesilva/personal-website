@@ -21,7 +21,7 @@ interface SectionHeadingProps {
 const SectionHeading = ({
     children,
 }: SectionHeadingProps): React.ReactElement => (
-    <Typography variant="h6" component="h2" sx={{ pt: 2 }}>
+    <Typography variant="h2" sx={{ mb: 3 }}>
         {children}
     </Typography>
 );

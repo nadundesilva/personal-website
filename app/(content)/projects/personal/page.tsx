@@ -17,7 +17,12 @@ import { Box, Button, Link, Typography } from "@mui/material";
 import { type Metadata } from "next";
 import React from "react";
 
-import { Paragraph, Section, SectionHeading } from "@/components/content";
+import {
+    Paragraph,
+    Section,
+    SectionHeading,
+    Title,
+} from "@/components/content";
 
 interface ViewOnGitHubButtonProps {
     repoOrg: string;
@@ -93,6 +98,7 @@ const PersonalProjects = (): React.ReactElement => {
     );
     return (
         <React.Fragment>
+            <Title>Personal Projects</Title>
             <Section>
                 <SectionHeading>K8s Replicator</SectionHeading>
                 <ViewOnGitHubButton

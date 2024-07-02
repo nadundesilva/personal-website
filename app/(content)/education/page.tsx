@@ -25,6 +25,7 @@ import {
     Section,
     SectionHeading,
     Timespan,
+    Title,
 } from "@/components/content";
 import { Time, TimeRange } from "@/constants/commons";
 import { type Institute, Institutes } from "@/constants/institutes";
@@ -80,11 +81,13 @@ const Education = (): React.ReactElement => {
 
     return (
         <React.Fragment>
+            <Title>Education</Title>
             <NextLink passHref href={"/education/certifications"}>
                 <Button
                     size="small"
                     variant="outlined"
                     endIcon={<KeyboardArrowRight />}
+                    sx={{ mb: 3 }}
                 >
                     View Certifications
                 </Button>

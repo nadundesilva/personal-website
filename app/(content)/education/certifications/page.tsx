@@ -23,6 +23,7 @@ import {
     Section,
     SectionHeading,
     Timespan,
+    Title,
 } from "@/components/content";
 import { type Certificate, Certificates } from "@/constants/certificates";
 import { type Institute, Institutes } from "@/constants/institutes";
@@ -66,6 +67,7 @@ const Certifications = (): React.ReactElement => {
         certificate: Certificate,
     ): React.ReactNode => (
         <React.Fragment>
+            <Title>Certifications</Title>
             <SectionHeading>{certificate.name}</SectionHeading>
             <Timespan value={certificate.completedOn} />
             <Logo height={"5em"} logo={certificate.logo} />
