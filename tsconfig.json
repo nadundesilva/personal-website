@@ -12,10 +12,7 @@
         },
         "target": "es5",
         "lib": ["es6", "dom", "dom.iterable", "esnext"],
-        "types": [
-            "cypress",
-            "@testing-library/cypress"
-        ],
+        "types": ["cypress", "@testing-library/cypress"],
         "allowJs": true,
         "skipLibCheck": true,
         "esModuleInterop": true,
