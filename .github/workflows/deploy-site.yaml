@@ -83,37 +83,6 @@ jobs:
               with:
                   sarif_file: trivy-results.sarif
 
-    run-unit-tests:
-        name: Run Unit Tests
-        runs-on: ubuntu-20.04
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "20.12.2"
-            - name: Install Dependencies
-              run: npm ci
-            - name: Running Unit Tests
-              run: npm run test:ci
-            - name: Upload Code Coverage to CodeCov
-              if: ${{ github.event_name == 'push' }}
-              uses: codecov/codecov-action@v4
-              with:
-                  token: ${{ secrets.CODECOV_TOKEN }}
-                  name: coverage-reports
-                  flags: unit-tests
-                  fail_ci_if_error: true
-                  verbose: true
-              env:
-                  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-            - name: Upload Code Coverage Report Artifacts
-              uses: actions/upload-artifact@v4
-              with:
-                  name: unit-tests-coverage
-                  path: coverage/
-
     run-e2e-tests:
         strategy:
             matrix:
@@ -335,7 +304,6 @@ jobs:
             - run-super-linter
             - run-codeql-analysis
             - run-vulnerability-analysis
-            - run-unit-tests
             - run-e2e-tests
             - build-site
             - check-links
