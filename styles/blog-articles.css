@@ -1,0 +1,23 @@
+/*
+ * Nadun De Silva - All Rights Reserved
+ *
+ * This source code and its associated files are the
+ * property of Nadun De Silva. Any unauthorized use,
+ * reproduction, or distribution is strictly prohibited.
+ *
+ * Website: https://nadundesilva.github.io
+ * 
+ * © 2023 Nadun De Silva. All rights reserved.
+ */
+
+hr {
+    border: 0;
+    text-align: center;
+    padding-bottom: 2em;
+
+    &::before {
+        content: "\2022\2800\2022\2800\2022";
+        font-size: 2rem;
+        color: #666;
+    }
+}

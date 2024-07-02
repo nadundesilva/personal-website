@@ -19,6 +19,7 @@ import Photo from "./Photo";
 import Section from "./Section";
 import SectionHeading from "./SectionHeading";
 import Timespan from "./Timespan";
+import Title from "./Title";
 
 export {
     HighlightsSection,
@@ -28,4 +29,5 @@ export {
     Section,
     SectionHeading,
     Timespan,
+    Title,
 };

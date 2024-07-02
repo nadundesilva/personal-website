@@ -23,6 +23,7 @@ import {
     Section,
     SectionHeading,
     Timespan,
+    Title,
 } from "@/components/content";
 import { Time, TimeRange } from "@/constants/commons";
 import { Photos } from "@/constants/images";
@@ -111,6 +112,7 @@ const Achievements = (): React.ReactElement => {
 
     return (
         <React.Fragment>
+            <Title>Achievements</Title>
             <Section>
                 <SectionHeading>
                     WSO2 Sustained Outstanding Contribution Award

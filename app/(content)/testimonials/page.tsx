@@ -18,7 +18,7 @@ import { grey } from "@mui/material/colors";
 import { type Metadata } from "next";
 import React from "react";
 
-import { Paragraph } from "@/components/content";
+import { Paragraph, Title } from "@/components/content";
 import { FULL_NAME } from "@/constants/metadata";
 
 enum Relationship {
@@ -74,7 +74,9 @@ const Testimonial = ({
             htmlColor={grey[600]}
             sx={{ transform: "rotate(180deg) scale(2)", m: 0.5 }}
         />
-        <Typography variant="h5">{recomender}</Typography>
+        <Typography variant="h2" sx={{ pb: 1 }}>
+            {recomender}
+        </Typography>
         <Typography
             variant="body2"
             color={grey[700]}
@@ -83,7 +85,7 @@ const Testimonial = ({
         >
             {recomenderPosition} at {recomenderCompany}
         </Typography>
-        <Typography variant="body2" color={grey[700]}>
+        <Typography variant="body2" color={grey[700]} sx={{ pb: 1 }}>
             {renderRelationShip(recomender, relationship)} when Nadun was a{" "}
             {position} at {company}
         </Typography>
@@ -99,6 +101,7 @@ export const metadata: Metadata = {
 const Testimonials = (): React.ReactElement => {
     return (
         <React.Fragment>
+            <Title>Testimonials</Title>
             <Testimonial
                 position="Associate Technical Lead"
                 company="WSO2"
