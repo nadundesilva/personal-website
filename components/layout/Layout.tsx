@@ -33,11 +33,10 @@ import {
     Toolbar,
     Tooltip,
     Typography,
-    useMediaQuery,
     useScrollTrigger,
     Zoom,
 } from "@mui/material";
-import { SupportedColorScheme, useColorScheme } from "@mui/material/styles";
+import { useColorScheme } from "@mui/material/styles";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -48,7 +47,7 @@ interface LayoutProps {
     children: React.ReactNode;
 }
 
-const Layout = ({ children }: LayoutProps): React.ReactElement => {
+const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
     const [windowObject, setWindowObject] = useState<Window | undefined>(
         undefined,
     );
@@ -71,15 +70,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement => {
     };
 
     const { colorScheme, setColorScheme } = useColorScheme();
-
-    const preferedColorScheme: SupportedColorScheme = useMediaQuery(
-        "(prefers-color-scheme: dark)",
-    )
-        ? "dark"
-        : "light";
-    const currentColorScheme =
-        colorScheme == undefined ? preferedColorScheme : colorScheme;
-    const nextColorScheme = currentColorScheme === "light" ? "dark" : "light";
+    const nextColorScheme = colorScheme === "light" ? "dark" : "light";
 
     const drawer = (
         <React.Fragment>
@@ -169,7 +160,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement => {
         });
     };
 
-    return (
+    return colorScheme ? (
         <React.Fragment>
             {appBar}
             <Toolbar ref={scrollToTopRef} />
@@ -211,7 +202,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement => {
                 </Box>
             </Zoom>
         </React.Fragment>
-    );
+    ) : null;
 };
 
 export default Layout;

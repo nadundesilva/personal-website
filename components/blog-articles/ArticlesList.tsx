@@ -17,7 +17,7 @@ import {
     CardActionArea,
     CardContent,
     CardMedia,
-    Grid,
+    Grid2 as Grid,
     Typography,
 } from "@mui/material";
 import { glob } from "glob";
@@ -88,7 +88,10 @@ const ArticlesList = async ({
             spacing={2}
         >
             {blogArticles.reverse().map((blogArticle) => (
-                <Grid key={blogArticle.url} item xs={12} sm={6} md={4} lg={3}>
+                <Grid
+                    key={blogArticle.url}
+                    size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+                >
                     <Card raised sx={{ height: "100%" }}>
                         <CardActionArea
                             LinkComponent={NextLink}

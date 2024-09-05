@@ -12,7 +12,7 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, Grid, Slide, useTheme } from "@mui/material";
+import { Box, Grid2 as Grid, Slide, useTheme } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 
@@ -29,7 +29,7 @@ const ContributedProjects = (): React.ReactElement => {
     const imageSizes = `(min-width: ${xsWidth}px) 100vw, (min-width: ${smWidth}px) 34vw, 
         (min-width: ${mdWidth}px) 25vw`;
     const renderCarouselItem = (logo: LogoAsset): React.ReactElement => (
-        <Grid item xs={12} sm={4} md={3}>
+        <Grid size={{ xs: 12, sm: 4, md: 3 }}>
             <Slide direction={"up"} in={offset > 0.5} timeout={2000}>
                 <Box
                     sx={{

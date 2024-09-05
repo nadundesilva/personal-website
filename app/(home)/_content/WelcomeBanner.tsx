@@ -17,7 +17,7 @@ import {
     Box,
     Button,
     Container,
-    Grid,
+    Grid2 as Grid,
     Link,
     styled,
     type Theme,
@@ -67,7 +67,7 @@ const WelcomeBanner = (): React.ReactElement => {
                     zIndex: 2,
                 }}
             >
-                <Grid item xs={12}>
+                <Grid size={12}>
                     <Typography
                         variant="h2"
                         component="p"
@@ -83,7 +83,7 @@ const WelcomeBanner = (): React.ReactElement => {
                         De Silva
                     </Typography>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                     <Typography
                         variant="h2"
                         component="div"
@@ -92,7 +92,7 @@ const WelcomeBanner = (): React.ReactElement => {
                         Senior Software Engineer &amp; Deep Learning Enthusiast
                     </Typography>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                     <Link target={"_blank"} href={"/nadundesilva-cv.pdf"}>
                         <Button
                             variant="contained"

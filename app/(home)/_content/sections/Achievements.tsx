@@ -15,7 +15,7 @@
 import {
     Box,
     Container,
-    Grid,
+    Grid2 as Grid,
     Grow,
     ImageList,
     ImageListItem,
@@ -121,7 +121,7 @@ const Achievements = (): React.ReactElement => {
                             alignItems="center"
                             className={classes.imageListItemImageOverlay}
                         >
-                            <Grid item xs={6}>
+                            <Grid size={6}>
                                 <Typography sx={{ fontWeight: "bold" }}>
                                     {achievementSection.title}
                                 </Typography>

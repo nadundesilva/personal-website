@@ -13,7 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import {
-    Grid,
+    Grid2 as Grid,
     LinearProgress,
     styled,
     Typography,
@@ -92,7 +92,7 @@ const Skills = (): React.ReactElement => {
             .toLowerCase()
             .replace(/\s/g, "-")}-progressbar-label`;
         return (
-            <Grid item xs={12} md={6} style={{ opacity: currentOpacity }}>
+            <Grid size={{ xs: 12, md: 6 }} style={{ opacity: currentOpacity }}>
                 <Typography id={labelId} sx={{ fontWeight: "bold" }}>
                     {skill.name}
                 </Typography>
@@ -102,7 +102,7 @@ const Skills = (): React.ReactElement => {
                     justifyContent="center"
                     alignItems="center"
                 >
-                    <Grid item xs={8} sm={10}>
+                    <Grid size={{ xs: 8, sm: 10 }}>
                         <BorderLinearProgress
                             aria-labelledby={labelId}
                             variant="determinate"
@@ -112,9 +112,7 @@ const Skills = (): React.ReactElement => {
                             value={skill.percentage * currentOffset}
                         />
                     </Grid>
-                    <Grid item xs={4} sm={2}>
-                        {skill.percentage} %
-                    </Grid>
+                    <Grid size={{ xs: 4, sm: 2 }}>{skill.percentage} %</Grid>
                 </Grid>
             </Grid>
         );

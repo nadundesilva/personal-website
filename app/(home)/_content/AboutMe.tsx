@@ -16,7 +16,7 @@ import { LocationCity } from "@mui/icons-material";
 import {
     Avatar,
     Divider,
-    Grid,
+    Grid2 as Grid,
     styled,
     type Theme,
     Typography,
@@ -46,7 +46,7 @@ const AboutMe = (): React.ReactElement => {
         gridWidth: 4 | 12,
         sx: SxProps<Theme>,
     ): React.ReactElement => (
-        <Grid item xs={gridWidth} sx={sx}>
+        <Grid size={gridWidth} sx={sx}>
             <Avatar sx={{ width: "100%", paddingTop: "100%" }}>
                 <ProfilePhoto
                     src={Photos.ProfilePhoto.src}
@@ -66,7 +66,7 @@ const AboutMe = (): React.ReactElement => {
         value: string,
         gridColumns: number,
     ): React.ReactElement => (
-        <Grid item xs={12} md={gridColumns}>
+        <Grid size={{ xs: 12, md: gridColumns }}>
             <Typography sx={{ fontWeight: "bold" }}>{name}:</Typography>
             <Typography>{value}</Typography>
         </Grid>
@@ -75,7 +75,7 @@ const AboutMe = (): React.ReactElement => {
     return (
         <Grid container spacing={3} justifyContent="center" alignItems="center">
             {profilePhoto(12, { display: { xs: "block", md: "none" } })}
-            <Grid item xs={12} md={8}>
+            <Grid size={{ xs: 12, md: 8 }}>
                 <Typography align={"justify"}>
                     I am currently working as a Senior Software Engineer at
                     Orion Health. I have several years of working experience as
