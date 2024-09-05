@@ -20,7 +20,7 @@ import {
     CardMedia,
     Chip,
     Container,
-    Grid,
+    Grid2 as Grid,
     Link,
     Slide,
     Typography,
@@ -64,11 +64,8 @@ const Certifications = (): React.ReactElement => {
         >
             {certifications.map((certification, index) => (
                 <Grid
-                    item
-                    xs={12}
-                    sm={6}
-                    md={4}
                     key={index}
+                    size={{ xs: 12, sm: 6, md: 4 }}
                     sx={{ padding: 2 }}
                 >
                     <Slide

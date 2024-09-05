@@ -15,11 +15,7 @@
  */
 import { CssBaseline, StyledEngineProvider } from "@mui/material";
 import { grey, indigo } from "@mui/material/colors";
-import {
-    CssVarsTheme,
-    experimental_extendTheme as extendTheme,
-    Experimental_CssVarsProvider as CssVarsProvider,
-} from "@mui/material/styles";
+import { Theme, createTheme, ThemeProvider } from "@mui/material/styles";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { Roboto } from "next/font/google";
 import React from "react";
@@ -30,11 +26,7 @@ const roboto = Roboto({
     display: "swap",
 });
 
-const websiteTheme: CssVarsTheme = extendTheme({
-    typography: {
-        fontFamily: roboto.style.fontFamily,
-        fontSize: 17,
-    },
+const websiteTheme: Theme = createTheme({
     colorSchemes: {
         dark: {
             palette: {
@@ -48,6 +40,10 @@ const websiteTheme: CssVarsTheme = extendTheme({
                 secondary: indigo,
             },
         },
+    },
+    typography: {
+        fontFamily: roboto.style.fontFamily,
+        fontSize: 17,
     },
     components: {
         MuiLink: {
@@ -95,10 +91,10 @@ const WebsiteThemeProvider = ({
     return (
         <AppRouterCacheProvider>
             <StyledEngineProvider injectFirst>
-                <CssVarsProvider theme={websiteTheme}>
+                <ThemeProvider theme={websiteTheme}>
                     <CssBaseline />
                     {children}
-                </CssVarsProvider>
+                </ThemeProvider>
             </StyledEngineProvider>
         </AppRouterCacheProvider>
     );

@@ -13,7 +13,7 @@
  * © 2024 Nadun De Silva. All rights reserved.
  */
 import { OpenInNew } from "@mui/icons-material";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid2 as Grid, Typography } from "@mui/material";
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -121,7 +121,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 alignItems="center"
                 paddingY={3}
             >
-                <Grid item sx={{ textAlign: "center" }}>
+                <Grid sx={{ textAlign: "center" }}>
                     <Image
                         src={src}
                         alt={alt}
@@ -134,7 +134,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                     />
                 </Grid>
                 {creator && (
-                    <Grid item>
+                    <Grid>
                         <Typography sx={{ fontSize: "0.8em" }}>
                             Photo by Clint{" "}
                             <Link href={new URL(creator.href)}>

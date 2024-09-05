@@ -23,7 +23,7 @@ import {
 } from "@mui/icons-material";
 import {
     Container,
-    Grid,
+    Grid2 as Grid,
     Grow,
     Link,
     type SvgIcon,
@@ -88,7 +88,7 @@ const Profiles = (): React.ReactElement => {
             alignItems="center"
         >
             {profiles.map(({ name, Icon, link }) => (
-                <Grid item xs={12} sm={3} key={name}>
+                <Grid size={{ xs: 12, sm: 3 }} key={name}>
                     <Link target={"_blank"} href={link} aria-label={name}>
                         <Grid
                             container
@@ -113,8 +113,7 @@ const Profiles = (): React.ReactElement => {
                             <Grow in={offset > 0.5} timeout={1000}>
                                 <Container disableGutters>
                                     <Grid
-                                        item
-                                        xs={6}
+                                        size={6}
                                         sx={{
                                             margin: "auto",
                                             textAlign: "center",
@@ -128,8 +127,7 @@ const Profiles = (): React.ReactElement => {
                                         />
                                     </Grid>
                                     <Grid
-                                        item
-                                        xs={6}
+                                        size={6}
                                         sx={{
                                             margin: "auto",
                                             textAlign: "center",

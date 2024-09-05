@@ -38,7 +38,6 @@ const ViewOnGitHubButton = (
             href={`https://github.com/${props.repoOrg}/${props.repoName}`}
         >
             <Button
-                sx={{ color: "#000000" }}
                 size="small"
                 variant="outlined"
                 // TODO: Switch to GitHub icon
