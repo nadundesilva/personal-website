@@ -13,7 +13,15 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
-const PATHS = ["/", "/achievements", "/experience"];
+const PATHS = [
+    "/",
+    "/experience",
+    "/achievements",
+    "/projects",
+    "/testimonials",
+    "/blog-articles",
+    "/education",
+];
 
 let LIVE_SITE_ASSERTIONS = {};
 if (process.env["VALIDATING_LIVE_SITE"] === "true") {
@@ -21,16 +29,20 @@ if (process.env["VALIDATING_LIVE_SITE"] === "true") {
         ...LIVE_SITE_ASSERTIONS,
         ...{
             "unsized-images": ["warn"],
-            "uses-responsive-images": ["warn"],
             "errors-in-console": ["warn"],
         },
     };
 }
 
+let TARGET_BASE_URL = process.env["TARGET_BASE_URL"];
+if (TARGET_BASE_URL === undefined) {
+    TARGET_BASE_URL = "https://nadundesilva.github.io";
+}
+
 module.exports = {
     ci: {
         collect: {
-            url: PATHS.map((path) => "https://nadundesilva.github.io" + path),
+            url: PATHS.map((path) => TARGET_BASE_URL + path),
             isSinglePageApplication: true,
             numberOfRuns: 5,
             settings: {
@@ -52,6 +64,12 @@ module.exports = {
                 "offscreen-images": ["warn"],
                 "preload-lcp-image": ["warn"],
                 "unused-javascript": ["warn"],
+                "uses-responsive-images": ["warn"],
+                "uses-rel-preconnect": ["warn"],
+                "total-byte-weight": ["warn"],
+                "link-in-text-block": ["warn"],
+                "lcp-lazy-loaded": ["warn"],
+                "prioritize-lcp-image": ["warn"],
                 ...LIVE_SITE_ASSERTIONS,
             },
         },
