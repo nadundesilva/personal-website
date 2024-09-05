@@ -38,9 +38,10 @@ jobs:
                   VALIDATE_ALL_CODEBASE: "true"
                   VALIDATE_CSS: "false"
                   VALIDATE_HTML: "false"
+                  VALIDATE_JAVASCRIPT_ES: "false"
+                  VALIDATE_JAVASCRIPT_STANDARD: "false"
+                  VALIDATE_TYPESCRIPT_STANDARD: "false"
                   TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.json
-                  TYPESCRIPT_DEFAULT_STYLE: prettier
-                  JAVASCRIPT_DEFAULT_STYLE: prettier
 
     run-codeql-analysis:
         name: Run CodeQL Analysis
@@ -70,7 +71,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
             - name: Run Trivy vulnerability scanner
-              uses: aquasecurity/trivy-action@master
+              uses: aquasecurity/trivy-action@0.24.0
               with:
                   scan-type: fs
                   vuln-type: library

@@ -15,7 +15,7 @@
  */
 import { Box, styled } from "@mui/material";
 
-const Section = styled(Box)(({ theme }) => ({
+const Section = styled("div")(({ theme }) => ({
     margin: 0,
     marginBottom: theme.spacing(8),
     clear: "both",
