@@ -215,7 +215,7 @@ jobs:
               if: always()
               uses: actions/upload-artifact@v4
               with:
-                  name: Link Checker Report
+                  name: link-checker-report
                   path: ./lychee/out.md
 
     check-site-build:
@@ -264,36 +264,37 @@ jobs:
                       cypress/videos/
                       cypress/screenshots/
 
-    # run-website-audit:
-    #     name: Run Website Audit
-    #     runs-on: ubuntu-20.04
-    #     needs: build-site
-    #     steps:
-    #         - name: Checkout
-    #           uses: actions/checkout@v4
-    #         - name: Download Site
-    #           uses: actions/download-artifact@v4
-    #           with:
-    #               name: site
-    #               path: _site/
-    #         - name: Setup Node.js
-    #           uses: actions/setup-node@v4
-    #           with:
-    #               node-version: "20.17.0"
-    #         - name: Run Lighthouse Audit
-    #           run: |
-    #               npm install -g @lhci/cli@0.10.x
-    #               source ./.github/scripts/start-server.sh
-    #               lhci autorun
-    #               source ./.github/scripts/stop-server.sh
-    #           env:
-    #               LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #         - name: Upload artifacts
-    #           if: always()
-    #           uses: actions/upload-artifact@v4
-    #           with:
-    #               name: website-audit
-    #               path: ./lhci-out
+    run-website-audit:
+        name: Run Website Audit
+        runs-on: ubuntu-20.04
+        needs: build-site
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Download Site
+              uses: actions/download-artifact@v4
+              with:
+                  name: site
+                  path: _site/
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20.17.0"
+            - name: Run Lighthouse Audit
+              run: |
+                  npm install -g @lhci/cli@0.14.x
+                  source ./.github/scripts/start-server.sh
+                  lhci autorun
+                  source ./.github/scripts/stop-server.sh
+              env:
+                  WEBSITE_BUILD_DIR: _site
+                  LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Upload artifacts
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: website-audit
+                  path: ./lhci-out
 
     deploy-site:
         name: Deploy Site
@@ -308,7 +309,7 @@ jobs:
             - run-e2e-tests
             - build-site
             - check-links
-            # - run-website-audit
+            - run-website-audit
             - check-site-build
         steps:
             - name: Checkout

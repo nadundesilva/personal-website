@@ -12,10 +12,17 @@
  *
  * © 2024 Nadun De Silva. All rights reserved.
  */
+import { type Metadata } from "next";
 import React from "react";
 
 import ArticlesList from "@/components/blog-articles/ArticlesList";
 import { Title } from "@/components/content";
+import { FULL_NAME } from "@/constants/metadata";
+
+export const metadata: Metadata = {
+    title: `${FULL_NAME} | Blog Articles`,
+    description: `Blog Articles written by ${FULL_NAME}.`,
+};
 
 const BlogArticles = async (): Promise<React.ReactElement> => (
     <React.Fragment>
