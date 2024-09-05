@@ -69,29 +69,29 @@ jobs:
                   name: Link Checker Report
                   path: ./lychee/out.md
 
-    # website-audit:
-    #     name: Run Website Audit
-    #     runs-on: ubuntu-20.04
-    #     steps:
-    #         - name: Checkout
-    #           uses: actions/checkout@v4
-    #         - name: Setup Node.js
-    #           uses: actions/setup-node@v4
-    #           with:
-    #               node-version: "20.17.0"
-    #         - name: Run Lighthouse Audit
-    #           run: |
-    #               npm install -g @lhci/cli@0.10.x
-    #               lhci autorun
-    #           env:
-    #               LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #               VALIDATING_LIVE_SITE: "true"
-    #         - name: Upload artifacts
-    #           if: always()
-    #           uses: actions/upload-artifact@v4
-    #           with:
-    #               name: website-audit
-    #               path: ./lhci-out
+    website-audit:
+        name: Run Website Audit
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20.17.0"
+            - name: Run Lighthouse Audit
+              run: |
+                  npm install -g @lhci/cli@0.14.x
+                  lhci autorun
+              env:
+                  LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  VALIDATING_LIVE_SITE: "true"
+            - name: Upload artifacts
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: website-audit
+                  path: ./lhci-out
 
     run-vulnerability-analysis:
         name: Run Vulnerability Analysis
