@@ -30,7 +30,7 @@ const ContributedProjects = (): React.ReactElement => {
         (min-width: ${mdWidth}px) 25vw`;
     const renderCarouselItem = (logo: LogoAsset): React.ReactElement => (
         <Grid size={{ xs: 12, sm: 4, md: 3 }}>
-            <Slide direction={"up"} in={offset > 0.5} timeout={2000}>
+            <Slide direction="up" in={offset > 0.5} timeout={2000}>
                 <Box
                     sx={{
                         position: "relative",

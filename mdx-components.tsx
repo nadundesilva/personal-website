@@ -13,11 +13,13 @@
  * © 2024 Nadun De Silva. All rights reserved.
  */
 import { OpenInNew } from "@mui/icons-material";
-import { Box, Button, Grid2 as Grid, Typography } from "@mui/material";
+import { Box, Button, Divider, Grid2 as Grid, Typography } from "@mui/material";
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
+
+import { Link } from "@/components/content";
+import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
 interface BlogMetadata {
     image: string;
@@ -51,7 +53,16 @@ interface ImageProps {
 export function useMDXComponents(components: MDXComponents): MDXComponents {
     return {
         ...components,
-        a: (props) => <a {...props} target="_blank" />,
+        a: ({ href, children }) =>
+            href ? (
+                <Link
+                    href={href}
+                    baseUrl={`${WEBSITE_PUBLIC_URL}/blog-articles/`}
+                    target="_blank"
+                >
+                    {children}
+                </Link>
+            ) : null,
         h1: ({ children }) => (
             <Typography variant="h2" gutterBottom>
                 {children}
@@ -61,6 +72,20 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             <Typography variant="h3" gutterBottom>
                 {children}
             </Typography>
+        ),
+        hr: () => (
+            <Divider
+                sx={{
+                    "border": 0,
+                    "textAlign": "center",
+                    "pb": "2em",
+                    "&::before": {
+                        content: "'\\2022\\2800\\2022\\2800\\2022'",
+                        fontSize: "2rem",
+                        color: "#666",
+                    },
+                }}
+            />
         ),
         BlogArticleLayout({
             children,
@@ -98,16 +123,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                         {pageMetadata.description}
                     </Typography>
                     <Box sx={{ mb: 5 }}>
-                        <Button
-                            size="small"
-                            variant="outlined"
-                            LinkComponent={Link}
-                            href={blogMetadata.mediumUrl}
-                            target="_blank"
-                            endIcon={<OpenInNew />}
-                        >
-                            Medium
-                        </Button>
+                        <Link href={blogMetadata.mediumUrl} target="_blank">
+                            <Button
+                                size="small"
+                                variant="outlined"
+                                endIcon={<OpenInNew />}
+                            >
+                                Medium
+                            </Button>
+                        </Link>
                     </Box>
                     {children}
                 </Box>
@@ -119,7 +143,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 direction="column"
                 justifyContent="center"
                 alignItems="center"
-                paddingY={3}
+                py={3}
             >
                 <Grid sx={{ textAlign: "center" }}>
                     <Image
@@ -137,11 +161,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                     <Grid>
                         <Typography sx={{ fontSize: "0.8em" }}>
                             Photo by Clint{" "}
-                            <Link href={new URL(creator.href)}>
+                            <Link href={creator.href} target="_blank">
                                 {creator.name}
                             </Link>{" "}
                             on{" "}
-                            <Link href={new URL(creator.platform.href)}>
+                            <Link href={creator.platform.href} target="_blank">
                                 {creator.platform.name}
                             </Link>
                         </Typography>

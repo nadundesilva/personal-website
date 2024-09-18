@@ -25,12 +25,12 @@ import {
     Container,
     Grid2 as Grid,
     Grow,
-    Link,
     type SvgIcon,
     Typography,
 } from "@mui/material";
 import React from "react";
 
+import { Link } from "@/components/content";
 import { useScrollOffset } from "@/components/layout";
 
 interface Profile {
@@ -89,14 +89,14 @@ const Profiles = (): React.ReactElement => {
         >
             {profiles.map(({ name, Icon, link }) => (
                 <Grid size={{ xs: 12, sm: 3 }} key={name}>
-                    <Link target={"_blank"} href={link} aria-label={name}>
+                    <Link href={link} target="_blank" aria-label={name}>
                         <Grid
                             container
                             direction="column"
                             justifyContent="center"
                             alignItems="center"
                             sx={{
-                                "padding": (theme) => theme.spacing(4),
+                                "p": (theme) => theme.spacing(4),
                                 "cursor": "pointer",
                                 "&:hover": {
                                     background: (theme) =>

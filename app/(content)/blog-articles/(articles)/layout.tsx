@@ -14,8 +14,6 @@
  */
 import React from "react";
 
-import "@/styles/blog-articles.css";
-
 interface BlogArticlesLayoutProps {
     children: React.ReactNode;
 }

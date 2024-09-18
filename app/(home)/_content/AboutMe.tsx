@@ -47,7 +47,7 @@ const AboutMe = (): React.ReactElement => {
         sx: SxProps<Theme>,
     ): React.ReactElement => (
         <Grid size={gridWidth} sx={sx}>
-            <Avatar sx={{ width: "100%", paddingTop: "100%" }}>
+            <Avatar sx={{ width: "100%", pt: "100%" }}>
                 <ProfilePhoto
                     src={Photos.ProfilePhoto.src}
                     alt={Photos.ProfilePhoto.alt}
@@ -76,7 +76,7 @@ const AboutMe = (): React.ReactElement => {
         <Grid container spacing={3} justifyContent="center" alignItems="center">
             {profilePhoto(12, { display: { xs: "block", md: "none" } })}
             <Grid size={{ xs: 12, md: 8 }}>
-                <Typography align={"justify"}>
+                <Typography align="justify">
                     I am currently working as a Senior Software Engineer at
                     Orion Health. I have several years of working experience as
                     a Software Engineer working on multiple Research &amp;
@@ -90,8 +90,8 @@ const AboutMe = (): React.ReactElement => {
                     <InstituteIcon /> University of Moratuwa
                 </Typography>
                 <ItemDivider />
-                <Grid container spacing={4} justifyContent="space-between">
-                    {contactItem("Email", "nadunrds@gmail.com", 3)}
+                <Grid container justifyContent="space-between">
+                    {contactItem("Email", "nadunrds@gmail.com", 6)}
                     {contactItem("Website", WEBSITE_PUBLIC_URL, 6)}
                 </Grid>
             </Grid>

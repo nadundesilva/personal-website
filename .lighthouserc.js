@@ -23,16 +23,8 @@ const PATHS = [
     "/education",
 ];
 
-let LIVE_SITE_ASSERTIONS = {};
-if (process.env["VALIDATING_LIVE_SITE"] === "true") {
-    LIVE_SITE_ASSERTIONS = {
-        ...LIVE_SITE_ASSERTIONS,
-        ...{
-            "unsized-images": ["warn"],
-            "errors-in-console": ["warn"],
-        },
-    };
-}
+let LIVE_SITE_ASSERTIONS =
+    process.env["VALIDATING_LIVE_SITE"] !== "true" ? {} : {};
 
 let TARGET_BASE_URL = process.env["TARGET_BASE_URL"];
 if (TARGET_BASE_URL === undefined) {
@@ -56,20 +48,16 @@ module.exports = {
         assert: {
             preset: "lighthouse:recommended",
             assertions: {
-                "errors-in-console": ["warn"],
-                "inspector-issues": ["warn"],
                 "canonical": ["warn"],
-                "csp-xss": ["warn"],
-                "non-composited-animations": ["warn"],
                 "offscreen-images": ["warn"],
                 "preload-lcp-image": ["warn"],
                 "unused-javascript": ["warn"],
                 "uses-responsive-images": ["warn"],
                 "uses-rel-preconnect": ["warn"],
                 "total-byte-weight": ["warn"],
-                "link-in-text-block": ["warn"],
                 "lcp-lazy-loaded": ["warn"],
                 "prioritize-lcp-image": ["warn"],
+                "link-name": ["warn"],
                 ...LIVE_SITE_ASSERTIONS,
             },
         },

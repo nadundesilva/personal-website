@@ -114,11 +114,7 @@ const Experience = (): React.ReactElement => {
                                 in={offset > 0.5}
                                 timeout={1000}
                             >
-                                <Card
-                                    elevation={3}
-                                    sx={{ padding: 2, mb: 5 }}
-                                    raised
-                                >
+                                <Card elevation={3} sx={{ p: 2, mb: 5 }} raised>
                                     <Typography
                                         variant="body1"
                                         component="h2"
