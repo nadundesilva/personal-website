@@ -27,8 +27,7 @@ const Heading = (props: HeadingProps): React.ReactElement => (
             align="center"
             sx={{
                 fontWeight: "bold",
-                paddingTop: 5,
-                paddingBottom: 5,
+                py: 5,
             }}
         >
             {props.children}

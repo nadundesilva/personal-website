@@ -13,11 +13,12 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { Launch } from "@mui/icons-material";
-import { Box, Button, Link, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { type Metadata } from "next";
 import React from "react";
 
 import {
+    Link,
     Paragraph,
     Section,
     SectionHeading,
@@ -34,8 +35,8 @@ const ViewOnGitHubButton = (
 ): React.ReactElement => (
     <Box sx={{ pt: 1 }}>
         <Link
-            target={"_blank"}
             href={`https://github.com/${props.repoOrg}/${props.repoName}`}
+            target="_blank"
         >
             <Button
                 size="small"
@@ -67,33 +68,22 @@ export const metadata: Metadata = {
 };
 
 const PersonalProjects = (): React.ReactElement => {
-    const Secret = (
-        <Link
-            target={"_blank"}
-            href={"https://kubernetes.io/docs/concepts/configuration/secret/"}
-        >
-            Secret
+    const generateLink = (text: string, href: string): React.ReactElement => (
+        <Link href={href} target="_blank">
+            {text}
         </Link>
     );
-    const ConfigMap = (
-        <Link
-            target={"_blank"}
-            href={
-                "https://kubernetes.io/docs/concepts/configuration/configmap/"
-            }
-        >
-            Config Map
-        </Link>
+    const Secret = generateLink(
+        "Secret",
+        "https://kubernetes.io/docs/concepts/configuration/secret/",
     );
-    const NetworkPolicy = (
-        <Link
-            target={"_blank"}
-            href={
-                "https://kubernetes.io/docs/concepts/services-networking/network-policies/"
-            }
-        >
-            Network Policy
-        </Link>
+    const ConfigMap = generateLink(
+        "Config Map",
+        "https://kubernetes.io/docs/concepts/configuration/configmap/",
+    );
+    const NetworkPolicy = generateLink(
+        "Network Policy",
+        "https://kubernetes.io/docs/concepts/services-networking/network-policies/",
     );
     return (
         <React.Fragment>

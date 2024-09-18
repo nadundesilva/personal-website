@@ -37,9 +37,9 @@ import {
     Zoom,
 } from "@mui/material";
 import { useColorScheme } from "@mui/material/styles";
-import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 
+import { Link } from "@/components/content";
 import { FULL_NAME } from "@/constants/metadata";
 import { Routes } from "@/constants/routes";
 
@@ -89,7 +89,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
             >
                 <MenuIcon />
             </IconButton>
-            <Drawer anchor={"top"} open={isDrawerOpen} onClose={toggleDrawer}>
+            <Drawer anchor="top" open={isDrawerOpen} onClose={toggleDrawer}>
                 <Box
                     sx={{ width: "auto" }}
                     onClick={toggleDrawer}
@@ -97,7 +97,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                 >
                     <List>
                         {Object.values(Routes).map((route) => (
-                            <Link key={route.path} href={route.path} passHref>
+                            <Link key={route.path} href={route.path} internal>
                                 <ListItemButton sx={{ pl: { xs: 2, md: 5 } }}>
                                     <ListItemText primary={route.name} />
                                 </ListItemButton>
@@ -110,18 +110,14 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
     );
 
     const appBar = React.cloneElement(
-        <AppBar data-testid={"app-bar"}>
+        <AppBar data-testid="app-bar">
             <Toolbar>
                 {drawer}
                 <Typography sx={{ fontSize: 23 }}>{FULL_NAME}</Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: { xs: "none", md: "block" } }}>
                     {Object.values(Routes).map((route) => (
-                        <Link
-                            key={route.path}
-                            href={route.path}
-                            passHref={true}
-                        >
+                        <Link key={route.path} href={route.path} internal>
                             <Button
                                 variant="text"
                                 color="primary"
@@ -175,8 +171,8 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                 maxWidth={false}
                 sx={{
                     textAlign: "center",
-                    paddingTop: 10,
-                    paddingBottom: 5,
+                    pt: 10,
+                    pb: 5,
                     color: "#666666",
                 }}
             >

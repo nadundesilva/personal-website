@@ -46,10 +46,18 @@ const websiteTheme: Theme = createTheme({
         fontSize: 17,
     },
     components: {
+        MuiDivider: {
+            styleOverrides: {
+                root: {
+                    marginTop: 10,
+                    marginBottom: 20,
+                },
+            },
+        },
         MuiLink: {
             styleOverrides: {
                 root: {
-                    color: grey[700],
+                    color: grey[900],
                     textDecoration: "none",
                 },
             },

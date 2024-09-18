@@ -26,9 +26,11 @@ import {
     useTheme,
 } from "@mui/material";
 import Image from "next/image";
+import NextLink from "next/link";
 import React from "react";
 
 import { Images } from "@/constants/images";
+import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
 const BannerImage = styled(Image)({
     zIndex: 1,
@@ -89,11 +91,15 @@ const WelcomeBanner = (): React.ReactElement => {
                         component="div"
                         sx={{ fontSize: "3vh" }}
                     >
-                        Senior Software Engineer &amp; Deep Learning Enthusiast
+                        Senior Software Engineer &amp; Cloud Computing
+                        Enthusiast
                     </Typography>
                 </Grid>
                 <Grid size={12}>
-                    <Link target={"_blank"} href={"/nadundesilva-cv.pdf"}>
+                    <Link
+                        href={`${WEBSITE_PUBLIC_URL}/nadundesilva-cv.pdf`}
+                        target="_blank"
+                    >
                         <Button
                             variant="contained"
                             color="primary"

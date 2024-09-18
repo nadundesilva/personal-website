@@ -14,10 +14,10 @@
  */
 
 export const FULL_NAME = "Nadun De Silva";
-export const MAIN_DESCRIPTION = `${FULL_NAME} is an aspiring Software Engineer interested in Deep Learning, Observability, Anomaly Detection &amp; Cloud Technologies.`;
+export const MAIN_DESCRIPTION = `${FULL_NAME} is an aspiring Senior Software Engineer specialising Cloud Technologies.`;
 
 const unsanitizedWebsiteUrl =
-    process.env.PUBLIC_URL ?? "https://nadundesilva.github.io";
+    process.env.NEXT_PUBLIC_WEBSITE_URL ?? "https://nadundesilva.github.io";
 export const WEBSITE_PUBLIC_URL = unsanitizedWebsiteUrl.endsWith("/")
     ? unsanitizedWebsiteUrl.substring(0, unsanitizedWebsiteUrl.length - 1)
     : unsanitizedWebsiteUrl;

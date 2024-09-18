@@ -13,13 +13,13 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { KeyboardArrowRight } from "@mui/icons-material";
-import { Box, Button, Link, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { type Metadata } from "next";
-import NextLink from "next/link";
 import React from "react";
 
 import {
     HighlightsSection,
+    Link,
     Logo,
     Paragraph,
     Section,
@@ -41,7 +41,7 @@ const Education = (): React.ReactElement => {
     const generateInstituteLink = (
         institute: Institute,
     ): React.ReactElement => (
-        <Link target={"_blank"} href={institute.link}>
+        <Link href={institute.link} target="_blank">
             {institute.name}
         </Link>
     );
@@ -54,8 +54,8 @@ const Education = (): React.ReactElement => {
 
     const GanBasedAnomalyDetectionInIndustrialSoftwareSystems = (
         <Link
-            target={"_blank"}
-            href={"https://ieeexplore.ieee.org/document/8818750"}
+            href="https://ieeexplore.ieee.org/document/8818750"
+            target="_blank"
         >
             &quot;Generative Adversarial Networks (GAN) based Anomaly Detection
             in Industrial Software Systems&quot; published in 2019 at Moratuwa
@@ -64,8 +64,8 @@ const Education = (): React.ReactElement => {
     );
     const AnomalyDetectionInIndustialSoftwareSystemsUsingVae = (
         <Link
-            target={"_blank"}
-            href={"https://www.scitepress.org/Papers/2018/66003/pdf/index.html"}
+            href="https://www.scitepress.org/Papers/2018/66003/pdf/index.html"
+            target="_blank"
         >
             &quot;Anomaly Detection in Industrial Software Systems — Using
             Variational Autoencoders&quot; published in 2017 at the Proceedings
@@ -74,15 +74,15 @@ const Education = (): React.ReactElement => {
         </Link>
     );
 
-    const uomLogo = <Logo height={"4em"} logo={Logos.UniversityOfMoratuwa} />;
+    const uomLogo = <Logo height="4em" logo={Logos.UniversityOfMoratuwa} />;
     const sjcLogo = (
-        <Logo height={"4em"} logo={Logos.StJosephsCollegeColombo10} />
+        <Logo height="4em" logo={Logos.StJosephsCollegeColombo10} />
     );
 
     return (
         <React.Fragment>
             <Title>Education</Title>
-            <NextLink passHref href={"/education/certifications"}>
+            <Link href="/education/certifications" internal>
                 <Button
                     size="small"
                     variant="outlined"
@@ -91,7 +91,7 @@ const Education = (): React.ReactElement => {
                 >
                     View Certifications
                 </Button>
-            </NextLink>
+            </Link>
             <Section>
                 <SectionHeading>
                     B.Sc. (Hons.) in Engineering (Computer Science and
