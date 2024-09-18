@@ -12,12 +12,12 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Link } from "@mui/material";
 import { type Metadata } from "next";
 import React from "react";
 
 import {
     HighlightsSection,
+    Link,
     Logo,
     Paragraph,
     Section,
@@ -35,63 +35,33 @@ export const metadata: Metadata = {
 };
 
 const Experience = (): React.ReactElement => {
-    const Siddhi = (
-        <Link target={"_blank"} href={"https://siddhi.io/"}>
-            Siddhi
+    const generateLink = (text: string, href: string): React.ReactElement => (
+        <Link href={href} target="_blank">
+            {text}
         </Link>
     );
-    const MkDocs = (
-        <Link target={"_blank"} href={"https://www.mkdocs.org/"}>
-            MkDocs
-        </Link>
+    const Siddhi = generateLink("Siddhi", "https://siddhi.io/");
+    const MkDocs = generateLink("MkDocs", "https://www.mkdocs.org/");
+    const Wso2IdentityServer = generateLink(
+        "WSO2 Identity Server",
+        "https://wso2.com/identity-server/",
     );
-    const Wso2IdentityServer = (
-        <Link target={"_blank"} href={"https://wso2.com/identity-server/"}>
-            WSO2 Identity Server
-        </Link>
+    const ReactJs = generateLink("React", "https://reactjs.org/");
+    const ApacheOpenWhisk = generateLink(
+        "Apache OpenWhisk",
+        "https://openwhisk.apache.org/",
     );
-    const ReactJs = (
-        <Link target={"_blank"} href={"https://reactjs.org/"}>
-            React
-        </Link>
-    );
-    const ApacheOpenWhisk = (
-        <Link target={"_blank"} href={"https://openwhisk.apache.org/"}>
-            Apache OpenWhisk
-        </Link>
-    );
-    const KNative = (
-        <Link target={"_blank"} href={"https://knative.dev/docs/"}>
-            Knative
-        </Link>
-    );
-    const Cellery = (
-        <Link target={"_blank"} href={"https://cellery.io/"}>
-            Cellery
-        </Link>
-    );
-    const Ballerina = (
-        <Link target={"_blank"} href={"https://ballerina.io/"}>
-            Ballerina
-        </Link>
-    );
-    const Choreo = (
-        <Link target={"_blank"} href={"https://wso2.com/choreo/"}>
-            Choreo
-        </Link>
-    );
-    const WSO2 = (
-        <Link target={"_blank"} href={"https://wso2.com/"}>
-            WSO2
-        </Link>
-    );
-    const GoogleSummerOfCode = (
-        <Link target={"_blank"} href={"https://summerofcode.withgoogle.com/"}>
-            Google Summer of Code
-        </Link>
+    const KNative = generateLink("Knative", "https://knative.dev/docs/");
+    const Cellery = generateLink("Cellery", "https://cellery.io/");
+    const Ballerina = generateLink("Ballerina", "https://ballerina.io/");
+    const Choreo = generateLink("Choreo", "https://wso2.com/choreo/");
+    const WSO2 = generateLink("WSO2", "https://wso2.com/");
+    const GoogleSummerOfCode = generateLink(
+        "Google Summer of Code",
+        "https://summerofcode.withgoogle.com/",
     );
 
-    const wso2Logo = <Logo logo={Logos.WSO2} height={"2.5em"} />;
+    const wso2Logo = <Logo logo={Logos.WSO2} height="2.5em" />;
     const gsocLogo = <Logo logo={Logos.GoogleSummerOfCode} />;
 
     return (

@@ -13,11 +13,12 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { OpenInNew } from "@mui/icons-material";
-import { Box, Button, Link } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { type Metadata } from "next";
 import React from "react";
 
 import {
+    Link,
     Logo,
     Paragraph,
     Section,
@@ -36,13 +37,14 @@ export const metadata: Metadata = {
 };
 
 const Certifications = (): React.ReactElement => {
-    const generateInstituteLink = (
-        institute: Institute,
-    ): React.ReactElement => (
-        <Link target={"_blank"} href={institute.link}>
-            {institute.name}
+    const generateLink = (text: string, href: string): React.ReactElement => (
+        <Link href={href} target="_blank">
+            {text}
         </Link>
     );
+
+    const generateInstituteLink = (institute: Institute): React.ReactElement =>
+        generateLink(institute.name, institute.link);
     const AlbertaMachineIntelligenceInstitute = generateInstituteLink(
         Institutes.AlbertaMachineIntelligenceInstitute,
     );
@@ -53,11 +55,8 @@ const Certifications = (): React.ReactElement => {
     const Coursera = generateInstituteLink(Institutes.Coursera);
     const LinuxFoundation = generateInstituteLink(Institutes.LinuxFoundation);
 
-    const generatePersonLink = (person: Person): React.ReactElement => (
-        <Link target={"_blank"} href={person.profile}>
-            {person.name}
-        </Link>
-    );
+    const generatePersonLink = (person: Person): React.ReactElement =>
+        generateLink(person.name, person.profile);
     const AndrewNg = generatePersonLink(People.AndrewNg);
     const SharonZhou = generatePersonLink(People.SharonZhou);
     const AdamWhite = generatePersonLink(People.AdamWhite);
@@ -70,17 +69,17 @@ const Certifications = (): React.ReactElement => {
             <Title>Certifications</Title>
             <SectionHeading>{certificate.name}</SectionHeading>
             <Timespan value={certificate.completedOn} />
-            <Logo height={"5em"} logo={certificate.logo} />
+            <Logo height="5em" logo={certificate.logo} />
             <Box sx={{ m: 0, pt: 2 }}>
-                <Button
-                    size="small"
-                    variant="outlined"
-                    endIcon={<OpenInNew />}
-                    href={certificate.link}
-                    target={"_blank"}
-                >
-                    View Credential
-                </Button>
+                <Link href={certificate.link} target="_blank">
+                    <Button
+                        size="small"
+                        variant="outlined"
+                        endIcon={<OpenInNew />}
+                    >
+                        View Credential
+                    </Button>
+                </Link>
             </Box>
         </React.Fragment>
     );

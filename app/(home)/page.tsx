@@ -58,7 +58,7 @@ export const metadata: Metadata = {
 
 const Home = (): React.ReactElement => {
     return (
-        <Container maxWidth={false} disableGutters data-testid={"home-page"}>
+        <Container maxWidth={false} disableGutters data-testid="home-page">
             <PageContent />
         </Container>
     );

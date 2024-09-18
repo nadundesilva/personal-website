@@ -16,10 +16,11 @@
 import { KeyboardArrowRight } from "@mui/icons-material";
 import { Breadcrumbs, Typography } from "@mui/material";
 import type { Route as NextRoute } from "next";
-import Link from "next/link";
+import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
+import { Link } from "@/components/content";
 import { Routes, type Route } from "@/constants/routes";
 
 const RouterBreadcrumbs = (): React.ReactElement | null => {
@@ -79,7 +80,7 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
                         {breadcrumb.name}
                     </Typography>
                 ) : (
-                    <Link passHref href={breadcrumb.path} key={breadcrumb.name}>
+                    <Link key={breadcrumb.name} href={breadcrumb.path} internal>
                         {breadcrumb.name}
                     </Link>
                 );

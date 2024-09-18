@@ -66,7 +66,7 @@ export default (phase, { defaultConfig }) => {
         ...defaultConfig,
         pageExtensions: ["ts", "tsx", "md", "mdx", "js", "jsx"],
         eslint: {
-            ignoreDuringBuilds: process.env.BUILD_TYPE == "test",
+            ignoreDuringBuilds: process.env.BUILD_TYPE === "test",
         },
         modularizeImports: {
             "@mui/icons-material": {

@@ -22,9 +22,9 @@ import {
 } from "@mui/material";
 import { glob } from "glob";
 import { type Metadata } from "next";
-import NextLink from "next/link";
 import React from "react";
 
+import { Link } from "@/components/content";
 import { FULL_NAME } from "@/constants/metadata";
 
 interface BlogArticle {
@@ -93,32 +93,37 @@ const ArticlesList = async ({
                     size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
                 >
                     <Card raised sx={{ height: "100%" }}>
-                        <CardActionArea
-                            LinkComponent={NextLink}
-                            href={blogArticle.url}
-                        >
-                            <CardMedia
-                                component="img"
-                                alt={"Article"}
-                                height="140"
-                                image={blogArticle.image}
-                            />
-                            <CardContent>
-                                <Typography
-                                    gutterBottom
-                                    variant="h2"
-                                    sx={{ pb: 1 }}
-                                >
-                                    {blogArticle.title}
-                                </Typography>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                >
-                                    {blogArticle.description}
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
+                        <Link href={blogArticle.url} internal>
+                            <CardActionArea
+                                sx={{
+                                    height: "100%",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                }}
+                            >
+                                <CardMedia
+                                    component="img"
+                                    alt="Article"
+                                    height="140"
+                                    image={blogArticle.image}
+                                />
+                                <CardContent sx={{ flex: "auto" }}>
+                                    <Typography
+                                        gutterBottom
+                                        variant="h2"
+                                        sx={{ pb: 1 }}
+                                    >
+                                        {blogArticle.title}
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        color="text.secondary"
+                                    >
+                                        {blogArticle.description}
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                        </Link>
                     </Card>
                 </Grid>
             ))}

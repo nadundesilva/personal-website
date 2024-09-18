@@ -13,13 +13,13 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { KeyboardArrowRight } from "@mui/icons-material";
-import { Button, Link } from "@mui/material";
+import { Button } from "@mui/material";
 import { type Metadata } from "next";
-import NextLink from "next/link";
 import React from "react";
 
 import {
     HighlightsSection,
+    Link,
     Logo,
     Paragraph,
     Section,
@@ -37,60 +37,32 @@ export const metadata: Metadata = {
 };
 
 const Projects = (): React.ReactElement => {
-    const Choreo = (
-        <Link target={"_blank"} href={"https://wso2.com/choreo/"}>
-            Choreo
+    const generateLink = (text: string, href: string): React.ReactElement => (
+        <Link href={href} target="_blank">
+            {text}
         </Link>
     );
-    const Ballerina = (
-        <Link target={"_blank"} href={"https://ballerina.io/"}>
-            Ballerina
-        </Link>
+    const Choreo = generateLink("Choreo", "https://wso2.com/choreo/");
+    const Ballerina = generateLink("Ballerina", "https://ballerina.io/");
+    const WSO2 = generateLink("WSO2", "https://wso2.com/");
+    const OpenTracing = generateLink("OpenTracing", "https://opentracing.io/");
+    const OpenTelemetry = generateLink(
+        "OpenTelemetry",
+        "https://opentelemetry.io/",
     );
-    const WSO2 = (
-        <Link target={"_blank"} href={"https://wso2.com/"}>
-            WSO2
-        </Link>
-    );
-    const OpenTracing = (
-        <Link target={"_blank"} href={"https://opentracing.io/"}>
-            OpenTracing
-        </Link>
-    );
-    const OpenTelemetry = (
-        <Link target={"_blank"} href={"https://opentelemetry.io/"}>
-            OpenTelemetry
-        </Link>
-    );
-    const Cellery = (
-        <Link target={"_blank"} href={"https://cellery.io/"}>
-            Cellery
-        </Link>
-    );
-    const Kubernetes = (
-        <Link target={"_blank"} href={"https://kubernetes.io/"}>
-            Kubernetes
-        </Link>
-    );
-    const Istio = (
-        <Link target={"_blank"} href={"https://istio.io/"}>
-            Istio
-        </Link>
-    );
-    const Siddhi = (
-        <Link target={"_blank"} href={"https://siddhi.io/"}>
-            Siddhi
-        </Link>
-    );
+    const Cellery = generateLink("Cellery", "https://cellery.io/");
+    const Kubernetes = generateLink("Kubernetes", "https://kubernetes.io/");
+    const Istio = generateLink("Istio", "https://istio.io/");
+    const Siddhi = generateLink("Siddhi", "https://siddhi.io/");
 
-    const choreoLogo = <Logo logo={Logos.Choreo} height={"2em"} />;
-    const ballerinaLogo = <Logo logo={Logos.Ballerina} height={"1.5em"} />;
-    const celleryLogo = <Logo logo={Logos.Cellery} height={"2.5em"} />;
-    const siddhiLogo = <Logo logo={Logos.Siddhi} height={"2.3em"} />;
+    const choreoLogo = <Logo logo={Logos.Choreo} height="2em" />;
+    const ballerinaLogo = <Logo logo={Logos.Ballerina} height="1.5em" />;
+    const celleryLogo = <Logo logo={Logos.Cellery} height="2.5em" />;
+    const siddhiLogo = <Logo logo={Logos.Siddhi} height="2.3em" />;
     return (
         <React.Fragment>
             <Title>Projects</Title>
-            <NextLink passHref href={"/projects/personal"}>
+            <Link href="/projects/personal" internal>
                 <Button
                     size="small"
                     variant="outlined"
@@ -99,7 +71,7 @@ const Projects = (): React.ReactElement => {
                 >
                     View Personal Projects
                 </Button>
-            </NextLink>
+            </Link>
             <Section>
                 <SectionHeading>Choreo</SectionHeading>
                 {choreoLogo}

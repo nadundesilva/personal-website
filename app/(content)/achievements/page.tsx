@@ -14,6 +14,7 @@
  */
 import { Box, Link } from "@mui/material";
 import { type Metadata } from "next";
+import NextLink from "next/link";
 import React from "react";
 
 import {
@@ -36,60 +37,33 @@ export const metadata: Metadata = {
     description: `Various notable achievements of ${FULL_NAME}.`,
 };
 
-const Achievements = (): React.ReactElement => {
-    const NasaSpaceAppsChallenge = (
-        <Link target={"_blank"} href={"https://www.spaceappschallenge.org/"}>
-            NASA Space Apps Challenge
+const Achievements = (): React.ReactNode => {
+    const generateLink = (text: string, href: string): React.ReactElement => (
+        <Link href={href} target="_blank">
+            {text}
         </Link>
     );
-    const OurEcologicalNeighborhood = (
-        <Link
-            href={
-                "https://2017.spaceappschallenge.org/challenges/our-ecological-neighborhood/"
-            }
-            target={"_blank"}
-        >
-            Our Ecological Neighborhood
-        </Link>
+    const NasaSpaceAppsChallenge = generateLink(
+        "NASA Space Apps Challenge",
+        "https://www.spaceappschallenge.org/",
     );
-    const WhereTheGenesFlow = (
-        <Link
-            target={"_blank"}
-            href={
-                "https://2017.spaceappschallenge.org/challenges/our-ecological-neighborhood/where-genes-flow"
-            }
-        >
-            Where the Genes Flow
-        </Link>
+    const OurEcologicalNeighborhood = generateLink(
+        "Our Ecological Neighborhood",
+        "https://2017.spaceappschallenge.org/challenges/our-ecological-neighborhood/",
     );
-    const TeamCodon = (
-        <Link
-            target={"_blank"}
-            href={
-                "https://2017.spaceappschallenge.org/challenges/our-ecological-neighborhood/where-genes-flow/teams/codon"
-            }
-        >
-            Team Codon
-        </Link>
+    const WhereTheGenesFlow = generateLink(
+        "Where the Genes Flow",
+        "https://2017.spaceappschallenge.org/challenges/our-ecological-neighborhood/where-genes-flow",
     );
-    const HackaDev = (
-        <Link target={"_blank"} href={"https://www.hackadev.lk/"}>
-            HackaDev
-        </Link>
+    const TeamCodon = generateLink(
+        "Team Codon",
+        "https://2017.spaceappschallenge.org/challenges/our-ecological-neighborhood/where-genes-flow/teams/codon",
     );
-    const AngelHack = (
-        <Link target={"_blank"} href={"https://angelhack.com/"}>
-            Angel Hack
-        </Link>
-    );
+    const HackaDev = generateLink("HackaDev", "https://www.hackadev.lk/");
+    const AngelHack = generateLink("Angel Hack", "https://angelhack.com/");
 
-    const generateInstituteLink = (
-        institute: Institute,
-    ): React.ReactElement => (
-        <Link target={"_blank"} href={institute.link}>
-            {institute.name}
-        </Link>
-    );
+    const generateInstituteLink = (institute: Institute): React.ReactElement =>
+        generateLink(institute.name, institute.link);
     const UniversityOfMoratuwa = generateInstituteLink(
         Institutes.UniversityOfMoratuwa,
     );
@@ -99,15 +73,15 @@ const Achievements = (): React.ReactElement => {
     );
     const WSO2 = generateInstituteLink(Institutes.WSO2);
 
-    const wso2Logo = <Logo height={"2.5em"} logo={Logos.WSO2} />;
-    const uomLogo = <Logo height={"4em"} logo={Logos.UniversityOfMoratuwa} />;
+    const wso2Logo = <Logo height="2.5em" logo={Logos.WSO2} />;
+    const uomLogo = <Logo height="4em" logo={Logos.UniversityOfMoratuwa} />;
     const nasaSpaceAppsChallengeLogo = (
         <Logo logo={Logos.NASASpaceAppsChallenge} />
     );
-    const angelHackLogo = <Logo height={"2.5em"} logo={Logos.AngelHack} />;
-    const hackaDevLogo = <Logo height={"4.5em"} logo={Logos.HackaDev} />;
+    const angelHackLogo = <Logo height="2.5em" logo={Logos.AngelHack} />;
+    const hackaDevLogo = <Logo height="4.5em" logo={Logos.HackaDev} />;
     const britishCouncilLogo = (
-        <Logo height={"2.5em"} logo={Logos.BritishCouncil} />
+        <Logo height="2.5em" logo={Logos.BritishCouncil} />
     );
 
     return (
@@ -122,7 +96,7 @@ const Achievements = (): React.ReactElement => {
                 />
                 {wso2Logo}
                 <Photo
-                    float={"right"}
+                    float="right"
                     photo={Photos.WSO2OutstandingContributor2019}
                 />
                 <Paragraph>
@@ -151,7 +125,7 @@ const Achievements = (): React.ReactElement => {
                     value={new TimeRange(new Time(2014), new Time(2018))}
                 />
                 {uomLogo}
-                <Photo float={"right"} photo={Photos.UOMDeansList2017} />
+                <Photo float="right" photo={Photos.UOMDeansList2017} />
                 <Paragraph>
                     During my B.Sc. (Hons.) in Engineering (Computer Science and
                     Engineering) degree at the University of Moratuwa, I was
@@ -182,7 +156,7 @@ const Achievements = (): React.ReactElement => {
                 <Timespan value={new Time(2017)} />
                 {nasaSpaceAppsChallengeLogo}
                 <Photo
-                    float={"right"}
+                    float="right"
                     photo={Photos.NASASpaceAppsChallenge2017Newspaper}
                 />
                 <Paragraph>
@@ -193,10 +167,7 @@ const Achievements = (): React.ReactElement => {
                     {OurEcologicalNeighborhood} category to solve the{" "}
                     {WhereTheGenesFlow} challenge.
                 </Paragraph>
-                <Photo
-                    float={"left"}
-                    photo={Photos.NASASpaceAppsChallenge2017}
-                />
+                <Photo float="left" photo={Photos.NASASpaceAppsChallenge2017} />
                 <Paragraph>
                     We came up with a platform to map and compare population
                     genetics of a species with landscape features, climate
@@ -229,14 +200,14 @@ const Achievements = (): React.ReactElement => {
                 <SectionHeading>Angel Hack - Finalist</SectionHeading>
                 <Timespan value={new Time(2016)} />
                 {angelHackLogo}
-                <Photo float={"right"} photo={Photos.AngelHack2016} />
+                <Photo float="right" photo={Photos.AngelHack2016} />
                 <Paragraph>
                     In {AngelHack} 2016, our team developed a smart workout
                     system which combined a virtual reality game with an
                     exercise bicycle fitted with a sensor to encourage people to
                     workout more.
                 </Paragraph>
-                <Photo float={"left"} photo={Photos.AngelHack2016Bike} />
+                <Photo float="left" photo={Photos.AngelHack2016Bike} />
                 <Paragraph>
                     The game maps the user&lsquo;s movement on the bicycle to
                     movements on the game. The user is presented with targets
@@ -281,7 +252,7 @@ const Achievements = (): React.ReactElement => {
                 <Timespan value={new Time(2015)} />
                 {britishCouncilLogo}
                 <Photo
-                    float={"right"}
+                    float="right"
                     photo={Photos.HSBCYouthEnterpriseAwards2015}
                 />
                 <Paragraph>
@@ -292,7 +263,7 @@ const Achievements = (): React.ReactElement => {
                     revolutionizing education.
                 </Paragraph>
                 <Photo
-                    float={"left"}
+                    float="left"
                     photo={Photos.HSBCYouthEnterpriseAwards2015Discussion}
                 />
                 <Paragraph>

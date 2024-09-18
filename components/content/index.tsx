@@ -13,6 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import HighlightsSection from "./HighlightsSection";
+import Link from "./Link";
 import Logo from "./Logo";
 import Paragraph from "./Paragraph";
 import Photo from "./Photo";
@@ -23,6 +24,7 @@ import Title from "./Title";
 
 export {
     HighlightsSection,
+    Link,
     Logo,
     Paragraph,
     Photo,

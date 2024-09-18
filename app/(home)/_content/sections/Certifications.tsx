@@ -21,7 +21,6 @@ import {
     Chip,
     Container,
     Grid2 as Grid,
-    Link,
     Slide,
     Typography,
     useTheme,
@@ -29,6 +28,7 @@ import {
 import Image from "next/image";
 import React from "react";
 
+import { Link } from "@/components/content";
 import { useScrollOffset } from "@/components/layout";
 import { type Certificate, Certificates } from "@/constants/certificates";
 
@@ -63,23 +63,19 @@ const Certifications = (): React.ReactElement => {
             alignItems="stretch"
         >
             {certifications.map((certification, index) => (
-                <Grid
-                    key={index}
-                    size={{ xs: 12, sm: 6, md: 4 }}
-                    sx={{ padding: 2 }}
-                >
+                <Grid key={index} size={{ xs: 12, sm: 6, md: 4 }} sx={{ p: 2 }}>
                     <Slide
                         direction={direction === -1 ? "down" : "up"}
                         in={offset > 0.5}
                         timeout={1000}
                     >
-                        <Link target={"_blank"} href={certification.link}>
-                            <Card sx={{ height: "100%" }} raised>
+                        <Card sx={{ height: "100%" }} raised>
+                            <Link href={certification.link} target="_blank">
                                 <CardActionArea
                                     sx={{
                                         height: "100%",
                                         width: "100%",
-                                        padding: 1,
+                                        p: 1,
                                         display: "flex",
                                         flexDirection: "column",
                                     }}
@@ -151,8 +147,8 @@ const Certifications = (): React.ReactElement => {
                                         </Typography>
                                     </CardContent>
                                 </CardActionArea>
-                            </Card>
-                        </Link>
+                            </Link>
+                        </Card>
                     </Slide>
                 </Grid>
             ))}
