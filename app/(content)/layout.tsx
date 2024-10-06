@@ -26,7 +26,6 @@ const ContentLayout = ({
 }: ContentLayoutProps): React.ReactElement => (
     <Container
         maxWidth={false}
-        disableGutters
         sx={{
             mb: 5,
             px: {

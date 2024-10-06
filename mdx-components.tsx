@@ -18,7 +18,15 @@ import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import React from "react";
 
-import { Link } from "@/components/content";
+import {
+    Link,
+    List,
+    ListItem,
+    Paragraph,
+    SectionHeading,
+    SubsectionHeading,
+    Title,
+} from "@/components/content";
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
 interface BlogMetadata {
@@ -63,22 +71,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                     {children}
                 </Link>
             ) : null,
-        h1: ({ children }) => (
-            <Typography variant="h2" gutterBottom>
-                {children}
-            </Typography>
-        ),
-        h2: ({ children }) => (
-            <Typography variant="h3" gutterBottom>
-                {children}
-            </Typography>
-        ),
+        h1: ({ children }) => <SectionHeading>{children}</SectionHeading>,
+        h2: ({ children }) => <SubsectionHeading>{children}</SubsectionHeading>,
         hr: () => (
             <Divider
                 sx={{
                     "border": 0,
                     "textAlign": "center",
-                    "pb": "2em",
+                    "pt": "2em",
                     "&::before": {
                         content: "'\\2022\\2800\\2022\\2800\\2022'",
                         fontSize: "2rem",
@@ -86,6 +86,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                     },
                 }}
             />
+        ),
+        p: ({ children }) => <Paragraph>{children}</Paragraph>,
+        ul: ({ children }) => <List component="ul">{children}</List>,
+        ol: ({ children }) => <List component="ol">{children}</List>,
+        li: ({ children }) => (
+            <ListItem>
+                <Typography>{children}</Typography>
+            </ListItem>
         ),
         BlogArticleLayout({
             children,
@@ -103,9 +111,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             };
             return (
                 <Box>
-                    <Typography variant="h1" gutterBottom>
-                        {pageMetadata.title}
-                    </Typography>
+                    <Title>{pageMetadata.title}</Title>
                     <Typography
                         variant="body2"
                         sx={{ mb: 2, color: "#888888" }}

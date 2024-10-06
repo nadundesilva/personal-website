@@ -58,6 +58,7 @@ module.exports = {
                 "lcp-lazy-loaded": ["warn"],
                 "prioritize-lcp-image": ["warn"],
                 "link-name": ["warn"],
+                "heading-order": ["warn"],
                 ...LIVE_SITE_ASSERTIONS,
             },
         },

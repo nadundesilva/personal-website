@@ -117,7 +117,7 @@ const Experience = (): React.ReactElement => {
                                 <Card elevation={3} sx={{ p: 2, mb: 5 }} raised>
                                     <Typography
                                         variant="body1"
-                                        component="h2"
+                                        component="h3"
                                         sx={{ fontWeight: "bold" }}
                                     >
                                         {item.name}

@@ -110,7 +110,7 @@ const ArticlesList = async ({
                                 <CardContent sx={{ flex: "auto" }}>
                                     <Typography
                                         gutterBottom
-                                        variant="h2"
+                                        variant="h4"
                                         sx={{ pb: 1 }}
                                     >
                                         {blogArticle.title}

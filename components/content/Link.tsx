@@ -34,12 +34,12 @@ type CustomLinkProps = (InternalLink | ExternalLink) & {
     internal?: boolean;
 };
 
-function CustomLink({
+const CustomLink = ({
     children,
     target,
     internal,
     ...props
-}: CustomLinkProps): React.ReactElement {
+}: CustomLinkProps): React.ReactElement => {
     let url;
     if (internal) {
         const { href } = props as InternalLink;
@@ -54,6 +54,6 @@ function CustomLink({
             <Link target={target}>{children}</Link>
         </NextLink>
     );
-}
+};
 
 export default CustomLink;
