@@ -14,22 +14,25 @@
  */
 import HighlightsSection from "./HighlightsSection";
 import Link from "./Link";
+import List, { CustomListItem as ListItem } from "./List";
 import Logo from "./Logo";
 import Paragraph from "./Paragraph";
 import Photo from "./Photo";
-import Section from "./Section";
 import SectionHeading from "./SectionHeading";
+import SubsectionHeading from "./SubsectionHeading";
 import Timespan from "./Timespan";
 import Title from "./Title";
 
 export {
     HighlightsSection,
     Link,
+    List,
+    ListItem,
     Logo,
     Paragraph,
     Photo,
-    Section,
     SectionHeading,
+    SubsectionHeading,
     Timespan,
     Title,
 };

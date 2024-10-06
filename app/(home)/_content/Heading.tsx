@@ -23,7 +23,7 @@ const Heading = (props: HeadingProps): React.ReactElement => (
     <Container maxWidth={false} disableGutters sx={{ my: 2 }}>
         <Divider />
         <Typography
-            variant="h2"
+            variant="h3"
             align="center"
             sx={{
                 fontWeight: "bold",

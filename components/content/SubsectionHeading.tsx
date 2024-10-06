@@ -1,4 +1,3 @@
-"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -11,14 +10,20 @@
  *
  * Website: https://nadundesilva.github.io
  *
- * © 2023 Nadun De Silva. All rights reserved.
+ * © 2024 Nadun De Silva. All rights reserved.
  */
-import { Box, styled } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
-const Section = styled("div")(({ theme }) => ({
-    margin: 0,
-    marginBottom: theme.spacing(8),
-    clear: "both",
-}));
+interface SectionHeadingProps {
+    children: React.ReactNode;
+}
 
-export default Section;
+const SectionHeading = ({
+    children,
+}: SectionHeadingProps): React.ReactElement => (
+    <Box sx={{ pt: 8, pb: 3 }}>
+        <Typography variant="h4">{children}</Typography>
+    </Box>
+);
+
+export default SectionHeading;

@@ -36,7 +36,7 @@ import {
     useScrollTrigger,
     Zoom,
 } from "@mui/material";
-import { useColorScheme } from "@mui/material/styles";
+import { Theme, useColorScheme } from "@mui/material/styles";
 import React, { useEffect, useRef, useState } from "react";
 
 import { Link } from "@/components/content";
@@ -110,10 +110,15 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
     );
 
     const appBar = React.cloneElement(
-        <AppBar data-testid="app-bar">
+        <AppBar component="header" sx={{ px: 2 }} data-testid="app-bar">
             <Toolbar>
                 {drawer}
-                <Typography sx={{ fontSize: 23 }}>{FULL_NAME}</Typography>
+                <Typography
+                    component="h1"
+                    sx={{ fontSize: 23, color: "#ffffff" }}
+                >
+                    {FULL_NAME}
+                </Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: { xs: "none", md: "block" } }}>
                     {Object.values(Routes).map((route) => (
@@ -135,10 +140,10 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                         size="small"
                         onClick={() => setColorScheme(nextColorScheme)}
                     >
-                        {nextColorScheme === "dark" ? (
-                            <DarkMode />
-                        ) : (
+                        {nextColorScheme === "light" ? (
                             <LightMode />
+                        ) : (
+                            <DarkMode />
                         )}
                     </IconButton>
                 </Tooltip>
@@ -161,22 +166,29 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
             {appBar}
             <Toolbar ref={scrollToTopRef} />
             <Container
-                maxWidth={false}
                 disableGutters
-                sx={{ overflowX: "hidden" }}
+                maxWidth={false}
+                sx={{
+                    overflow: "hidden",
+                    background: (theme: Theme) =>
+                        theme.palette.background.default,
+                }}
             >
                 {children}
             </Container>
             <Container
                 maxWidth={false}
+                component="footer"
                 sx={{
                     textAlign: "center",
-                    pt: 10,
-                    pb: 5,
-                    color: "#666666",
+                    pt: 3,
+                    pb: 6,
+                    bottom: 0,
+                    background: (theme: Theme) =>
+                        theme.palette.background.default,
                 }}
             >
-                &copy; 2021 {FULL_NAME}
+                <Typography fontSize={15}>&copy; 2021 {FULL_NAME}</Typography>
             </Container>
             <Zoom in={trigger}>
                 <Box
@@ -184,7 +196,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                     role="presentation"
                     sx={{
                         position: "fixed",
-                        bottom: 10,
+                        bottom: 40,
                         right: 10,
                     }}
                 >

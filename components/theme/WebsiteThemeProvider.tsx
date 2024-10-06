@@ -14,8 +14,13 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { CssBaseline, StyledEngineProvider } from "@mui/material";
-import { grey, indigo } from "@mui/material/colors";
-import { Theme, createTheme, ThemeProvider } from "@mui/material/styles";
+import { indigo } from "@mui/material/colors";
+import {
+    Theme,
+    createTheme,
+    responsiveFontSizes,
+    ThemeProvider,
+} from "@mui/material/styles";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { Roboto } from "next/font/google";
 import React from "react";
@@ -26,68 +31,78 @@ const roboto = Roboto({
     display: "swap",
 });
 
-const websiteTheme: Theme = createTheme({
-    colorSchemes: {
-        dark: {
-            palette: {
-                primary: indigo,
-                secondary: indigo,
+const websiteTheme: Theme = responsiveFontSizes(
+    createTheme({
+        colorSchemes: {
+            dark: {
+                palette: {
+                    primary: indigo,
+                    secondary: indigo,
+                },
             },
-        },
-        light: {
-            palette: {
-                primary: indigo,
-                secondary: indigo,
-            },
-        },
-    },
-    typography: {
-        fontFamily: roboto.style.fontFamily,
-        fontSize: 17,
-    },
-    components: {
-        MuiDivider: {
-            styleOverrides: {
-                root: {
-                    marginTop: 10,
-                    marginBottom: 20,
+            light: {
+                palette: {
+                    primary: indigo,
+                    secondary: indigo,
                 },
             },
         },
-        MuiLink: {
-            styleOverrides: {
-                root: {
-                    color: grey[900],
-                    textDecoration: "none",
+        typography: {
+            fontFamily: roboto.style.fontFamily,
+        },
+        components: {
+            MuiDivider: {
+                styleOverrides: {
+                    root: {
+                        marginTop: 10,
+                        marginBottom: 20,
+                    },
+                },
+            },
+            MuiLink: {
+                styleOverrides: {
+                    root: {
+                        textDecoration: "none",
+                    },
+                },
+            },
+            MuiTypography: {
+                styleOverrides: {
+                    root: ({ theme }: { theme: Theme }) => ({
+                        color:
+                            theme.palette.mode == "light"
+                                ? "#000000"
+                                : "#ffffff",
+                    }),
+                    h1: {
+                        fontSize: 45,
+                    },
+                    h2: {
+                        fontSize: 42,
+                    },
+                    h3: {
+                        fontSize: 39,
+                    },
+                    h4: {
+                        fontSize: 36,
+                    },
+                    h5: {
+                        fontSize: 33,
+                    },
+                    h6: {
+                        fontSize: 30,
+                    },
+                    body1: {
+                        fontSize: 25,
+                    },
+                    body2: {
+                        fontSize: 25,
+                    },
                 },
             },
         },
-        MuiTypography: {
-            styleOverrides: {
-                h1: {
-                    fontSize: 30,
-                },
-                h2: {
-                    fontSize: 25,
-                },
-                h3: {
-                    fontSize: 20,
-                },
-                h4: {
-                    fontSize: 15,
-                },
-                h5: {
-                    fontSize: 10,
-                    color: grey[700],
-                },
-                h6: {
-                    fontSize: 10,
-                    color: grey[700],
-                },
-            },
-        },
-    },
-});
+    }),
+);
 
 interface WebsiteThemeProviderProps {
     children: React.ReactNode;
