@@ -64,18 +64,18 @@ const WelcomeBanner = (): React.ReactElement => {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    pt: "17vh",
-                    px: "3vh",
+                    pt: 17,
+                    px: 3,
                     zIndex: 2,
                 }}
             >
                 <Grid size={12}>
                     <Typography
-                        variant="h2"
                         component="p"
                         sx={{
+                            color: "white",
                             fontWeight: "bold",
-                            fontSize: "6vh",
+                            fontSize: 50,
                         }}
                     >
                         Hi, I am
@@ -87,9 +87,11 @@ const WelcomeBanner = (): React.ReactElement => {
                 </Grid>
                 <Grid size={12}>
                     <Typography
-                        variant="h2"
                         component="div"
-                        sx={{ fontSize: "3vh" }}
+                        sx={{
+                            color: "white",
+                            fontSize: 30,
+                        }}
                     >
                         Senior Software Engineer &amp; Cloud Computing
                         Enthusiast

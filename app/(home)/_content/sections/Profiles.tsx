@@ -28,6 +28,7 @@ import {
     type SvgIcon,
     Typography,
 } from "@mui/material";
+import { Theme } from "@mui/material/styles";
 import React from "react";
 
 import { Link } from "@/components/content";
@@ -96,15 +97,15 @@ const Profiles = (): React.ReactElement => {
                             justifyContent="center"
                             alignItems="center"
                             sx={{
-                                "p": (theme) => theme.spacing(4),
+                                "p": (theme: Theme) => theme.spacing(4),
                                 "cursor": "pointer",
                                 "&:hover": {
-                                    background: (theme) =>
+                                    background: (theme: Theme) =>
                                         theme.palette.mode === "light"
                                             ? "#cccccc"
                                             : "#444444",
                                 },
-                                "color": (theme) =>
+                                "color": (theme: Theme) =>
                                     theme.palette.mode === "light"
                                         ? "black"
                                         : "white",

@@ -20,9 +20,10 @@ import React from "react";
 import {
     HighlightsSection,
     Link,
+    List,
+    ListItem,
     Logo,
     Paragraph,
-    Section,
     SectionHeading,
     Timespan,
     Title,
@@ -92,52 +93,65 @@ const Education = (): React.ReactElement => {
                     View Certifications
                 </Button>
             </Link>
-            <Section>
-                <SectionHeading>
-                    B.Sc. (Hons.) in Engineering (Computer Science and
-                    Engineering)
-                </SectionHeading>
-                <Timespan
-                    value={
-                        new TimeRange(
-                            new Time(2014, "March"),
-                            new Time(2017, "June"),
-                        )
-                    }
-                />
-                {uomLogo}
-                <Paragraph>
-                    I studied for my four year bachelor&apos;s degree at the{" "}
-                    {UniversityOfMoratuwa}. The degree covered many in depth
-                    areas (e.g.:- Computer Architecture, Operating Systems,
-                    Compiler Theory, Database Internals) as well as noval
-                    technical areas (e.g.:- Machine Learning, Deep Learning,
-                    Data Mining &amp; Information Retrieval). The degree covered
-                    many other aspects such as general engineering knowledge,
-                    ethics and professional conduct.
-                </Paragraph>
-                <HighlightsSection>
-                    <li>Academic Standing: First Class</li>
-                    <li>Overall CGPA - 3.85 / 4.20</li>
-                    <li>Final Academic Year CGPA: 4.02 / 4.20</li>
-                    <li>Dean&apos;s List Placements in 6 out of 8 semesters</li>
-                </HighlightsSection>
-                <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
-                    <Typography sx={{ fontWeight: "bold" }}>
-                        Publications:
+            <SectionHeading>
+                B.Sc. (Hons.) in Engineering (Computer Science and Engineering)
+            </SectionHeading>
+            <Timespan
+                value={
+                    new TimeRange(
+                        new Time(2014, "March"),
+                        new Time(2017, "June"),
+                    )
+                }
+            />
+            {uomLogo}
+            <Paragraph>
+                I studied for my four year bachelor&apos;s degree at the{" "}
+                {UniversityOfMoratuwa}. The degree covered many in depth areas
+                (e.g.:- Computer Architecture, Operating Systems, Compiler
+                Theory, Database Internals) as well as noval technical areas
+                (e.g.:- Machine Learning, Deep Learning, Data Mining &amp;
+                Information Retrieval). The degree covered many other aspects
+                such as general engineering knowledge, ethics and professional
+                conduct.
+            </Paragraph>
+            <HighlightsSection>
+                <ListItem>
+                    <Typography>Academic Standing: First Class</Typography>
+                </ListItem>
+                <ListItem>
+                    <Typography>Overall CGPA - 3.85 / 4.20</Typography>
+                </ListItem>
+                <ListItem>
+                    <Typography>
+                        Final Academic Year CGPA: 4.02 / 4.20
                     </Typography>
-                    <ul>
-                        <li>
+                </ListItem>
+                <ListItem>
+                    <Typography>
+                        Dean&apos;s List Placements in 6 out of 8 semesters
+                    </Typography>
+                </ListItem>
+            </HighlightsSection>
+            <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
+                <Typography sx={{ fontWeight: "bold" }}>
+                    Publications:
+                </Typography>
+                <List>
+                    <ListItem>
+                        <Typography>
                             {
                                 GanBasedAnomalyDetectionInIndustrialSoftwareSystems
                             }
-                        </li>
-                        <li>
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
                             {AnomalyDetectionInIndustialSoftwareSystemsUsingVae}
-                        </li>
-                    </ul>
-                </Box>
-            </Section>
+                        </Typography>
+                    </ListItem>
+                </List>
+            </Box>
             <SectionHeading>G.C.E. Advanced Level</SectionHeading>
             <Timespan value={new Time(2012)} />
             {sjcLogo}
@@ -149,13 +163,25 @@ const Education = (): React.ReactElement => {
                 {UniversityOfMoratuwa} as well.
             </Paragraph>
             <HighlightsSection>
-                <li>Z - Score: 2.2441</li>
-                <li>Main Subjects: Combined Mathematics, Physics, Chemistry</li>
-                <li>
-                    Other Subjects: General IT, General English, General
-                    Knowledge
-                </li>
-                <li>Editor of the Science Union 2011/2012</li>
+                <ListItem>
+                    <Typography>Z - Score: 2.2441</Typography>
+                </ListItem>
+                <ListItem>
+                    <Typography>
+                        Main Subjects: Combined Mathematics, Physics, Chemistry
+                    </Typography>
+                </ListItem>
+                <ListItem>
+                    <Typography>
+                        Other Subjects: General IT, General English, General
+                        Knowledge
+                    </Typography>
+                </ListItem>
+                <ListItem>
+                    <Typography>
+                        Editor of the Science Union 2011/2012
+                    </Typography>
+                </ListItem>
             </HighlightsSection>
         </React.Fragment>
     );

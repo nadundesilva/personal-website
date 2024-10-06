@@ -74,7 +74,7 @@ const Testimonial = ({
             htmlColor={grey[600]}
             sx={{ transform: "rotate(180deg) scale(2)", m: 0.5 }}
         />
-        <Typography variant="h2" sx={{ pb: 1 }}>
+        <Typography variant="h3" sx={{ pb: 1 }}>
             {recomender}
         </Typography>
         <Typography

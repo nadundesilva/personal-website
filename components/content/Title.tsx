@@ -19,7 +19,7 @@ interface TitleProps {
 }
 
 const Title = ({ children }: TitleProps): React.ReactElement => (
-    <Typography variant="h1" sx={{ mb: 5 }}>
+    <Typography variant="h2" sx={{ mb: 5 }}>
         {children}
     </Typography>
 );

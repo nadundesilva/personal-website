@@ -12,7 +12,7 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 interface SectionHeadingProps {
     children: React.ReactNode;
@@ -21,9 +21,9 @@ interface SectionHeadingProps {
 const SectionHeading = ({
     children,
 }: SectionHeadingProps): React.ReactElement => (
-    <Typography variant="h2" sx={{ mb: 3 }}>
-        {children}
-    </Typography>
+    <Box sx={{ pt: 8, pb: 3 }}>
+        <Typography variant="h3">{children}</Typography>
+    </Box>
 );
 
 export default SectionHeading;

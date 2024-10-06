@@ -14,6 +14,8 @@
  */
 import { Box, Typography } from "@mui/material";
 
+import { List } from "@/components/content";
+
 interface HighlightsSectionProps {
     children: React.ReactNode;
 }
@@ -23,7 +25,7 @@ const HighlightsSection = ({
 }: HighlightsSectionProps): React.ReactElement => (
     <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
         <Typography sx={{ fontWeight: "bold" }}>Highlights:</Typography>
-        <ul>{children}</ul>
+        <List>{children}</List>
     </Box>
 );
 
