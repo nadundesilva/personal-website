@@ -122,7 +122,7 @@ const Certifications = (): React.ReactElement => {
                                         }}
                                     >
                                         <Typography
-                                            variant="h3"
+                                            variant="h4"
                                             align="center"
                                             sx={{ width: "100%" }}
                                         >
