@@ -133,9 +133,9 @@ At the same time adding a trace ID (which is part of the trace Context) to logs 
 
 Another very important aspect of a distributed or microservices architecture is to have proper tracing that is coordinated across all your services involved with a request. To achieve this, you need to propagate the trace context and ensure the following in your tracing configuration.
 
--   All services should use the received tracing contexts and keep the link going by passing the tracing data to all outgoing calls. This tracing context contains a trace ID and it helps in ensuring that all the data can be viewed together.
--   The starting service at the edge needs to take the tracing decision and should discard any sampling decisions received in the trace context— This is necessary if you want to avoid an attack where a malicious user would send trace contexts to forcefully record all requests to overload your Observability infrastructure.
--   When a request is sampled to be recorded or not recorded by the starting service, the same needs to be done by all the services — otherwise, you will see completely disjoint pieces of traces all around your system).
+- All services should use the received tracing contexts and keep the link going by passing the tracing data to all outgoing calls. This tracing context contains a trace ID and it helps in ensuring that all the data can be viewed together.
+- The starting service at the edge needs to take the tracing decision and should discard any sampling decisions received in the trace context— This is necessary if you want to avoid an attack where a malicious user would send trace contexts to forcefully record all requests to overload your Observability infrastructure.
+- When a request is sampled to be recorded or not recorded by the starting service, the same needs to be done by all the services — otherwise, you will see completely disjoint pieces of traces all around your system).
 
 All of this combined will give you traces spanning across the application end to end.
 

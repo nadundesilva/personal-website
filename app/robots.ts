@@ -17,7 +17,7 @@ import { type MetadataRoute } from "next";
 
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
-export default function robots(): MetadataRoute.Robots {
+const robots = (): MetadataRoute.Robots => {
     return {
         rules: {
             userAgent: "*",
@@ -25,4 +25,7 @@ export default function robots(): MetadataRoute.Robots {
         },
         sitemap: `${WEBSITE_PUBLIC_URL}/sitemap.xml`,
     };
-}
+};
+
+export default robots;
+export const dynamic = "force-static";

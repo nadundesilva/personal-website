@@ -12,18 +12,18 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { buildURL } from "react-imgix";
+import ImgixClient from "@imgix/js-core";
+
+const client = new ImgixClient({
+    domain: "nadundesilva.imgix.net",
+    useHTTPS: true,
+});
 
 export default function nextImageLoader({ src, width, quality }) {
     return src.startsWith("/_next/static/media/")
         ? src
-        : buildURL(
-              "https://nadundesilva.imgix.net" +
-                  (src.startsWith("/") ? "" : "/") +
-                  src,
-              {
-                  q: quality,
-                  w: width,
-              },
-          );
+        : client.buildURL((src.startsWith("/") ? "" : "/") + src, {
+              q: quality,
+              w: width,
+          });
 }

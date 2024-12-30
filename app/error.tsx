@@ -14,29 +14,37 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { Button, Typography, type Theme, Container, Box } from "@mui/material";
-import React from "react";
+import * as Sentry from "@sentry/nextjs";
+import React, { useEffect } from "react";
 
 interface ErrorProps {
     reset: () => void;
+    error: Error & { digest?: string };
 }
 
-const Error = ({ reset }: ErrorProps): React.ReactElement => (
-    <Container
-        sx={{
-            height: (theme: Theme) =>
-                `calc(100vh - ${theme.spacing(15)} - ${
-                    theme.typography.fontSize
-                }px - ${theme.mixins.toolbar.minHeight ?? 0}px)`,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-        }}
-    >
-        <Box sx={{ textAlign: "center" }}>
-            <Typography sx={{ my: 2 }}>Something went wrong</Typography>
-            <Button onClick={reset}>Try Again</Button>
-        </Box>
-    </Container>
-);
+const Error = ({ reset, error }: ErrorProps): React.ReactElement => {
+    useEffect(() => {
+        Sentry.captureException(error);
+    }, [error]);
+
+    return (
+        <Container
+            sx={{
+                height: (theme: Theme) =>
+                    `calc(100vh - ${theme.spacing(15)} - ${
+                        theme.typography.fontSize
+                    }px - ${theme.mixins.toolbar.minHeight ?? 0}px)`,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <Box sx={{ textAlign: "center" }}>
+                <Typography sx={{ my: 2 }}>Something went wrong</Typography>
+                <Button onClick={reset}>Try Again</Button>
+            </Box>
+        </Container>
+    );
+};
 
 export default Error;

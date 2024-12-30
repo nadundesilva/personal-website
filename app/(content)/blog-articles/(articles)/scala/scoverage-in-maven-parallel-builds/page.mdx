@@ -58,8 +58,8 @@ If you are working on a large code base with multiple modules and dependencies, 
 
 One such way to reduce the time taken by Maven builds is to parallelize the build so that multiple modules can be built in parallel. This can be achieved by passing in the `-T` flag specifying the number of threads to use.
 
--   `-T 1C`, `-T 2C` - Use 1 or 2 threads per available core, respectively.
--   `-T 1`, `-T 2` - Use 1 or 2 threads in total, respectively.
+- `-T 1C`, `-T 2C` - Use 1 or 2 threads per available core, respectively.
+- `-T 1`, `-T 2` - Use 1 or 2 threads in total, respectively.
 
 Especially by using the flag `-T 1C` (or a higher number of threads per core based on performance), you can utilize all the cores in the machine and therefore run your builds much faster.
 
