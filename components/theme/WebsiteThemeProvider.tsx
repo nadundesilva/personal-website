@@ -75,28 +75,28 @@ const websiteTheme: Theme = responsiveFontSizes(
                                 : "#ffffff",
                     }),
                     h1: {
-                        fontSize: 45,
-                    },
-                    h2: {
-                        fontSize: 42,
-                    },
-                    h3: {
-                        fontSize: 39,
-                    },
-                    h4: {
                         fontSize: 36,
                     },
-                    h5: {
+                    h2: {
                         fontSize: 33,
                     },
-                    h6: {
+                    h3: {
                         fontSize: 30,
                     },
+                    h4: {
+                        fontSize: 27,
+                    },
+                    h5: {
+                        fontSize: 24,
+                    },
+                    h6: {
+                        fontSize: 21,
+                    },
                     body1: {
-                        fontSize: 25,
+                        fontSize: 18,
                     },
                     body2: {
-                        fontSize: 25,
+                        fontSize: 18,
                     },
                 },
             },
