@@ -52,6 +52,12 @@ interface Creator {
     platform: CreatorPlatform;
 }
 
+interface BlogArticleLayoutProps {
+    children: React.ReactNode;
+    blogMetadata: BlogMetadata;
+    pageMetadata: PageMetadata;
+}
+
 interface ImageProps {
     src: string;
     alt: string;
@@ -99,11 +105,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             children,
             blogMetadata,
             pageMetadata,
-        }: {
-            children: React.ReactNode;
-            blogMetadata: BlogMetadata;
-            pageMetadata: PageMetadata;
-        }): React.ReactElement {
+        }: BlogArticleLayoutProps): React.ReactElement {
             const options: Intl.DateTimeFormatOptions = {
                 year: "numeric",
                 month: "short",

@@ -17,7 +17,6 @@ import NextBundleAnalyzer from "@next/bundle-analyzer";
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
 import { withSentryConfig } from "@sentry/nextjs";
 import nextMDX from "@next/mdx";
-import rehypePrettyCode from "rehype-pretty-code";
 
 const withBundleAnalyzer = NextBundleAnalyzer({
     enabled: process.env.ANALYZE === "true",
@@ -34,7 +33,10 @@ const withMDX = nextMDX({
     options: {
         remarkPlugins: [],
         rehypePlugins: [
-            [rehypePrettyCode, { theme: "dracula", defaultLang: "plaintext" }],
+            [
+                "rehype-pretty-code",
+                { theme: "dracula", defaultLang: "plaintext" },
+            ],
         ],
     },
 });
@@ -42,6 +44,8 @@ const withMDX = nextMDX({
 const sentryConfig = {
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options
+
+    enabled: process.env.NODE_ENV !== "development",
 
     org: "nadundesilva",
     project: "nadundesilva-website",
@@ -83,7 +87,6 @@ export default (phase, { defaultConfig }) => {
         },
         productionBrowserSourceMaps: true,
         reactStrictMode: true,
-        swcMinify: true,
     };
 
     if (phase !== PHASE_DEVELOPMENT_SERVER) {

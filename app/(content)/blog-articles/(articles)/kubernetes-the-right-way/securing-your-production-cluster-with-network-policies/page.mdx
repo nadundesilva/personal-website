@@ -138,9 +138,9 @@ spec:
 
 You can use any combination of Network Policies according to what suits your application. Within a Network Policy, you can use any combination of `podSelector` and `namespaceSelector` to allow traffic between pods.
 
--   If a `podSelector` is only present, then the pods within the same namespace the Network Policy is in will be selected.
--   If a `namespaceSelector` is only provided, all the pods within a namespace are selected.
--   If both `podSelector` and `namespaceSelector` are provided, all the pods which match the `podSelector` within the namespaces that match the `namespaceSelector` will be selected.
+- If a `podSelector` is only present, then the pods within the same namespace the Network Policy is in will be selected.
+- If a `namespaceSelector` is only provided, all the pods within a namespace are selected.
+- If both `podSelector` and `namespaceSelector` are provided, all the pods which match the `podSelector` within the namespaces that match the `namespaceSelector` will be selected.
 
 I would suggest not using `namespaceSelector` alone as it is far too permissive. You can use the other two approaches in allowing your application traffic in a concise manner. Even the traffic that comes from your Ingress Controllers into your application Pods can be limited accordingly in this manner (This is only if the Ingress Controller traffic is routed through a Pod in the Cluster. If not, you can use an IP range based policy as explained in the section below).
 

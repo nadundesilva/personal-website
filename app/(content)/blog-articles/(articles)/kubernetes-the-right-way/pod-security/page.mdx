@@ -42,9 +42,9 @@ In this article, we will be discussing the security measures that you can implem
 
 An application running in a container is started as a process within the host system. Then containers, true to their name, add many layers of isolation on top of it, using many mechanisms such as cgroups and chroot. Among many other things, this isolation layer ensures that,
 
--   The application only sees itself and no other processes within the host (and of course, any other processes started by the application within the container).
--   The application can only read/write the files within the subdirectory (which gets created within the host system) and thinks that the subdirectory is the root of its file system (i.e. cannot see the host system files).
--   The application will be in its own network space and will be completely isolated from the host. Depending on how the container orchestrater works, the application may have a network built that routes traffic between the host and the container, allowing it to communicate with the host, seeing it as a separate host.
+- The application only sees itself and no other processes within the host (and of course, any other processes started by the application within the container).
+- The application can only read/write the files within the subdirectory (which gets created within the host system) and thinks that the subdirectory is the root of its file system (i.e. cannot see the host system files).
+- The application will be in its own network space and will be completely isolated from the host. Depending on how the container orchestrater works, the application may have a network built that routes traffic between the host and the container, allowing it to communicate with the host, seeing it as a separate host.
 
 In many ways, the containers are fully isolated from the host and act as separate virtual hosts located within the host.
 
