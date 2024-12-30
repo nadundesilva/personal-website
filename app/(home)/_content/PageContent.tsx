@@ -16,7 +16,7 @@
 
 import { Box, CircularProgress, Container, styled } from "@mui/material";
 import dynamic, { type DynamicOptionsLoadingProps } from "next/dynamic";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, type JSX } from "react";
 
 import Heading from "./Heading";
 
@@ -70,7 +70,7 @@ const SkillsSection = dynamic(async () => await import("./sections/Skills"), {
 
 interface Section {
     name: string;
-    ref: React.RefObject<HTMLDivElement>;
+    ref: React.RefObject<HTMLDivElement | null>;
     Component: React.ComponentType;
     sectionId: string;
 }

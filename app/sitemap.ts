@@ -54,3 +54,4 @@ const sitemap = (): MetadataRoute.Sitemap =>
         }));
 
 export default sitemap;
+export const dynamic = "force-static";

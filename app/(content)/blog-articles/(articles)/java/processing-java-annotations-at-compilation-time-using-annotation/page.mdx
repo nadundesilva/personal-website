@@ -56,11 +56,11 @@ public class AnnotationProcessorExample extends AbstractProcessor {
 
 **init():** This gives you instances of different utilities which are useful for code generation.
 
--   _Filler:_ Used to create a new source, class, or auxiliary files.
--   _Messager:_ Used to report errors, warnings, and other notices.
--   _Element Utils:_ Utility methods used for operating on elements.
--   _Type Utils:_ Utility methods used for operating on types.
--   _Locale:_ If a Locale is in effect it will be provided. This can be useful if you are developing a Locale-specific application.
+- _Filler:_ Used to create a new source, class, or auxiliary files.
+- _Messager:_ Used to report errors, warnings, and other notices.
+- _Element Utils:_ Utility methods used for operating on elements.
+- _Type Utils:_ Utility methods used for operating on types.
+- _Locale:_ If a Locale is in effect it will be provided. This can be useful if you are developing a Locale-specific application.
 
 **process():** We will have access to the class elements in this method. We can perform any changes to the source files, validate code, generate code, etc. using this method.
 
