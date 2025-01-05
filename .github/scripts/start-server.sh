@@ -6,7 +6,7 @@
 # property of Nadun De Silva. Any unauthorized use,
 # reproduction, or distribution is strictly prohibited.
 #
-# Website: https://nadundesilva.github.io
+# Website: https://nadundesilva.com
 #
 # © 2023 Nadun De Silva. All rights reserved.
 
@@ -18,7 +18,7 @@ openssl req -newkey rsa:4096 \
     -days 3650 \
     -nodes \
     -out "${PWD}/server.crt" \
-    -subj "/C=AU/ST=NSW/L=Sydney/O=nadunrds/OU=nadun/CN=nadundesilva.github.io/emailAddress=nadunrds@gmail.com" \
+    -subj "/C=AU/ST=NSW/L=Sydney/O=nadunrds/OU=nadun/CN=nadundesilva.com/emailAddress=nadunrds@gmail.com" \
     -keyout "${PWD}/server.key"
 export NODE_EXTRA_CA_CERTS="${PWD}/server.crt"
 
@@ -29,7 +29,7 @@ ls -lha "${WEBSITE_BUILD_DIR}"
 
 echo
 echo "Starting website server"
-sudo echo "127.0.0.1 nadundesilva.github.io" | sudo tee -a /etc/hosts
+sudo echo "127.0.0.1 nadundesilva.com" | sudo tee -a /etc/hosts
 echo
 echo
 cat /etc/hosts
@@ -40,11 +40,11 @@ npx serve "${WEBSITE_BUILD_DIR}" \
     --debug \
     --ssl-cert "${PWD}/server.crt" \
     --ssl-key "${PWD}/server.key" \
-    --listen tcp://nadundesilva.github.io:8080 </dev/null &
+    --listen tcp://nadundesilva.com:8080 </dev/null &
 echo "SERVE_PID=${!}" >>"${GITHUB_ENV}"
 export SERVE_PID="${!}"
 sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 443 -j REDIRECT --to-port 8080
-npx wait-on -t 10000 -i 1000 --verbose https://nadundesilva.github.io
+npx wait-on -t 10000 -i 1000 --verbose https://nadundesilva.com
 
 sudo apt install -y ca-certificates
 sudo cp "${NODE_EXTRA_CA_CERTS}" /usr/local/share/ca-certificates

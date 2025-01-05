@@ -118,7 +118,7 @@ jobs:
               env:
                   WEBSITE_BUILD_DIR: out
                   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-                  CYPRESS_BASE_URL: https://nadundesilva.github.io
+                  CYPRESS_BASE_URL: https://nadundesilva.com
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   tag: deployment-check-in-browser-${{ matrix.browser }}
             - name: Shutdown Test Server
@@ -160,10 +160,12 @@ jobs:
               run: npm ci
             - name: Build Site
               run: |
+                  export PUBLIC_URL="https://${DOMAIN_NAME}"
                   npm run build
                   touch ./out/.nojekyll
+                  echo "${DOMAIN_NAME}" > ./out/CNAME
               env:
-                  PUBLIC_URL: https://nadundesilva.github.io
+                  DOMAIN_NAME: nadundesilva.com
                   SENTRY_RELEASE: ${{ github.sha }}
                   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
             - name: Upload Site
@@ -204,7 +206,7 @@ jobs:
               id: lychee
               uses: lycheeverse/lychee-action@v1
               with:
-                  args: --verbose --no-progress https://nadundesilva.github.io/
+                  args: --verbose --no-progress https://nadundesilva.com/
                   fail: true
             - name: Stop Server
               run: |
@@ -251,7 +253,7 @@ jobs:
               env:
                   WEBSITE_BUILD_DIR: _site
                   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-                  CYPRESS_BASE_URL: https://nadundesilva.github.io
+                  CYPRESS_BASE_URL: https://nadundesilva.com
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Shutdown Test Server
               run: bash .github/scripts/stop-server.sh
