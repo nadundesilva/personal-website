@@ -8,7 +8,7 @@
  * except as explicitly provided under a separate license
  * agreement with Nadun De Silva.
  *
- * Website: https://nadundesilva.github.io
+ * Website: https://nadundesilva.com
  *
  * © 2024 Nadun De Silva. All rights reserved.
  */

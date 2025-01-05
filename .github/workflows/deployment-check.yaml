@@ -39,7 +39,7 @@ jobs:
                   tag: deployment-check-in-browser-${{ matrix.browser }}
               env:
                   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-                  CYPRESS_BASE_URL: https://nadundesilva.github.io
+                  CYPRESS_BASE_URL: https://nadundesilva.com
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Upload artifacts
               if: always()
@@ -60,7 +60,7 @@ jobs:
               id: lychee
               uses: lycheeverse/lychee-action@v1
               with:
-                  args: --verbose --no-progress https://nadundesilva.github.io/
+                  args: --verbose --no-progress https://nadundesilva.com/
                   fail: true
             - name: Upload Link Checker Report
               if: always()
