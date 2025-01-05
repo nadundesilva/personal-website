@@ -8,7 +8,7 @@
  * except as explicitly provided under a separate license
  * agreement with Nadun De Silva.
  *
- * Website: https://nadundesilva.github.io
+ * Website: https://nadundesilva.com
  *
  * © 2024 Nadun De Silva. All rights reserved.
  */
@@ -17,7 +17,7 @@ export const FULL_NAME = "Nadun De Silva";
 export const MAIN_DESCRIPTION = `${FULL_NAME} is an aspiring Senior Software Engineer specialising Cloud Technologies.`;
 
 const unsanitizedWebsiteUrl =
-    process.env.NEXT_PUBLIC_WEBSITE_URL ?? "https://nadundesilva.github.io";
+    process.env.NEXT_PUBLIC_WEBSITE_URL ?? "https://nadundesilva.com";
 export const WEBSITE_PUBLIC_URL = unsanitizedWebsiteUrl.endsWith("/")
     ? unsanitizedWebsiteUrl.substring(0, unsanitizedWebsiteUrl.length - 1)
     : unsanitizedWebsiteUrl;

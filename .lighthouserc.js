@@ -8,7 +8,7 @@
  * except as explicitly provided under a separate license
  * agreement with Nadun De Silva.
  *
- * Website: https://nadundesilva.github.io
+ * Website: https://nadundesilva.com
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
@@ -28,7 +28,7 @@ let LIVE_SITE_ASSERTIONS =
 
 let TARGET_BASE_URL = process.env["TARGET_BASE_URL"];
 if (TARGET_BASE_URL === undefined) {
-    TARGET_BASE_URL = "https://nadundesilva.github.io";
+    TARGET_BASE_URL = "https://nadundesilva.com";
 }
 
 module.exports = {
