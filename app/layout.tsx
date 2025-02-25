@@ -15,11 +15,17 @@
 import type { Viewport, Metadata } from "next";
 import Script from "next/script";
 import React from "react";
+import type { Person, WithContext } from "schema-dts";
 
 import Layout from "@/components/layout";
 import { WebsiteThemeProvider } from "@/components/theme";
 import WebVitals from "@/components/WebVitals";
-import { FULL_NAME, WEBSITE_PUBLIC_URL } from "@/constants/metadata";
+import {
+    FULL_NAME,
+    MAIN_DESCRIPTION,
+    WEBSITE_PUBLIC_URL,
+} from "@/constants/metadata";
+import Profiles from "@/constants/profiles";
 import "@/styles/main.css";
 import "@/styles/syntax-highlighting.css";
 
@@ -31,6 +37,7 @@ const FB_APP_ID = "567329184466353";
 export const metadata: Metadata = {
     metadataBase: new URL(WEBSITE_PUBLIC_URL),
     applicationName: FULL_NAME,
+    description: MAIN_DESCRIPTION,
     authors: { name: FULL_NAME, url: WEBSITE_PUBLIC_URL },
     creator: FULL_NAME,
     publisher: FULL_NAME,
@@ -94,6 +101,33 @@ export const viewport: Viewport = {
     userScalable: true,
     viewportFit: "cover",
     interactiveWidget: "resizes-visual",
+};
+
+const jsonLd: WithContext<Person> = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": FULL_NAME,
+    "description": MAIN_DESCRIPTION,
+    "image": `${WEBSITE_PUBLIC_URL}/assets/profile-photo.jpg`,
+    "gender": "male",
+    "birthPlace": "Colombo, Sri Lanka",
+    "jobTitle": "Senior Software Engineer",
+    "url": WEBSITE_PUBLIC_URL,
+    "sameAs": Profiles.map((p) => p.link),
+    "alumniOf": [
+        {
+            "@type": "CollegeOrUniversity",
+            "name": "University of Moratuwa",
+            "sameAs": "https://uom.lk/",
+        },
+    ],
+    "worksFor": [
+        {
+            "@type": "Organization",
+            "name": "Orion Health",
+            "sameAs": ["https://orionhealth.com/"],
+        },
+    ],
 };
 
 const createCspValues = (): string[] => {
@@ -187,6 +221,11 @@ const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
                             });
                         `,
                     }}
+                />
+                <Script
+                    id="json-ld"
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
             </head>
             <body>
