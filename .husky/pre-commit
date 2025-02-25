@@ -1,6 +1,3 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
 npx lint-staged@latest
 npm run format:check
 npx update-browserslist-db@latest
