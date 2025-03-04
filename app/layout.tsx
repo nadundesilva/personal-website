@@ -53,9 +53,6 @@ export const metadata: Metadata = {
     ],
     referrer: "origin",
     robots: `${WEBSITE_PUBLIC_URL}/robots.txt`,
-    alternates: {
-        canonical: WEBSITE_PUBLIC_URL,
-    },
     icons: {
         icon: `${WEBSITE_PUBLIC_URL}/icon-maskable-x512.png`,
         shortcut: `${WEBSITE_PUBLIC_URL}/icon-maskable-x512.png`,
