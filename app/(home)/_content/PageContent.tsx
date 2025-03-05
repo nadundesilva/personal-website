@@ -19,6 +19,7 @@ import dynamic, { type DynamicOptionsLoadingProps } from "next/dynamic";
 import React, { useRef, useState, type JSX } from "react";
 
 import Heading from "./Heading";
+import WelcomeBanner from "./WelcomeBanner";
 
 const SectionContainer = styled(Container)(({ theme }) => ({
     margin: 0,
@@ -74,21 +75,6 @@ interface Section {
     Component: React.ComponentType;
     sectionId: string;
 }
-
-const WelcomeBanner = dynamic(async () => await import("./WelcomeBanner"), {
-    loading: () => (
-        <Box
-            sx={{
-                display: "flex",
-                justifyContent: "center",
-                height: "100vh",
-            }}
-        >
-            <CircularProgress sx={{ margin: "auto" }} />
-        </Box>
-    ),
-    ssr: false,
-});
 
 const PageContent = (): React.ReactElement => {
     const pageSections: Section[] = [
