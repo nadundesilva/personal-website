@@ -16,7 +16,9 @@ import { OpenInNew } from "@mui/icons-material";
 import { Box, Button, Divider, Grid2 as Grid, Typography } from "@mui/material";
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
+import Script from "next/script";
 import React from "react";
+import type { BlogPosting, Person, WithContext } from "schema-dts";
 
 import {
     Link,
@@ -111,9 +113,34 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 month: "short",
                 day: "numeric",
             };
+            const author: Person = {
+                "@type": "Person",
+                "name": "Nadun De Silva",
+                "url": WEBSITE_PUBLIC_URL,
+            };
+            const jsonLd: WithContext<BlogPosting> = {
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                "headline": pageMetadata.title,
+                "image": blogMetadata.image,
+                "inLanguage": "en-US",
+                "datePublished": blogMetadata.publishedDate.toISOString(),
+                "accountablePerson": author,
+                "author": author,
+                "creator": author,
+                "keywords": blogMetadata.keywords,
+                "sameAs": [blogMetadata.mediumUrl],
+            };
             return (
                 <Box>
                     <Title>{pageMetadata.title}</Title>
+                    <Script
+                        id="json-ld"
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{
+                            __html: JSON.stringify(jsonLd),
+                        }}
+                    />
                     <Typography
                         variant="body2"
                         sx={{ mb: 2, color: "#888888" }}
