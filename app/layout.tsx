@@ -220,7 +220,7 @@ const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
                     }}
                 />
                 <Script
-                    id="json-ld"
+                    id="json-ld-person"
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
