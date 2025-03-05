@@ -135,7 +135,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 <Box>
                     <Title>{pageMetadata.title}</Title>
                     <Script
-                        id="json-ld"
+                        id="json-ld-blog"
                         type="application/ld+json"
                         dangerouslySetInnerHTML={{
                             __html: JSON.stringify(jsonLd),
