@@ -26,7 +26,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: "20.17.0"
+                  node-version: "20.19.0"
             - name: Install Dependencies
               run: npm ci
             - name: Lint Code Base
@@ -72,7 +72,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
             - name: Run Trivy vulnerability scanner
-              uses: aquasecurity/trivy-action@0.24.0
+              uses: aquasecurity/trivy-action@0.30.0
               with:
                   scan-type: fs
                   vuln-type: library
@@ -99,7 +99,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: "20.17.0"
+                  node-version: "20.19.0"
             - name: Install Dependencies
               run: npm ci
             - name: Instrument Website for Code Coverage
@@ -126,7 +126,7 @@ jobs:
               run: bash .github/scripts/stop-server.sh
             - name: Upload Code Coverage to CodeCov
               if: ${{ github.event_name == 'push' }}
-              uses: codecov/codecov-action@v4
+              uses: codecov/codecov-action@v5
               with:
                   name: coverage-reports
                   flags: e2e-tests
@@ -156,7 +156,7 @@ jobs:
               uses: actions/checkout@v4
             - uses: actions/setup-node@v4
               with:
-                  node-version: "20.17.0"
+                  node-version: "20.19.0"
             - name: Install Dependencies
               run: npm ci
             - name: Build Site
@@ -190,7 +190,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: "20.17.0"
+                  node-version: "20.19.0"
             - name: Install Dependencies
               run: npm ci
             - name: Download Site
@@ -205,7 +205,7 @@ jobs:
                   WEBSITE_BUILD_DIR: _site
             - name: Link Checker
               id: lychee
-              uses: lycheeverse/lychee-action@v1
+              uses: lycheeverse/lychee-action@v2
               with:
                   args: --verbose --no-progress https://nadundesilva.com/
                   fail: true
@@ -236,7 +236,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: "20.17.0"
+                  node-version: "20.19.0"
             - name: Install Dependencies
               run: npm ci
             - name: Download Site
@@ -282,7 +282,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: "20.17.0"
+                  node-version: "20.19.0"
             - name: Run Lighthouse Audit
               run: |
                   npm install -g @lhci/cli@0.14.x
@@ -325,7 +325,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: "20.17.0"
+                  node-version: "20.19.0"
             - name: Deploy
               uses: JamesIves/github-pages-deploy-action@v4
               with:
