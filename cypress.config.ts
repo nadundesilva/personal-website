@@ -20,6 +20,9 @@ export default defineConfig({
     viewportWidth: 1024,
     viewportHeight: 768,
 
+    video: true,
+    videoCompression: true,
+
     e2e: {
         setupNodeEvents(
             on: Cypress.PluginEvents,
@@ -49,6 +52,7 @@ export default defineConfig({
             return config;
         },
         baseUrl: "http://localhost:3000",
+        testIsolation: true,
     },
 
     component: {

@@ -13,7 +13,7 @@
  * © 2024 Nadun De Silva. All rights reserved.
  */
 import { OpenInNew } from "@mui/icons-material";
-import { Box, Button, Divider, Grid2 as Grid, Typography } from "@mui/material";
+import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import Script from "next/script";

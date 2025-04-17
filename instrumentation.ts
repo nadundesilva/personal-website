@@ -6,6 +6,8 @@ const defaultSentryInitConfig = {
     debug: false,
 };
 
+export const onRequestError = Sentry.captureRequestError;
+
 export async function register() {
     if (process.env.NEXT_RUNTIME === "nodejs") {
         Sentry.init({

@@ -41,7 +41,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { Link } from "@/components/content";
 import { FULL_NAME } from "@/constants/metadata";
-import { Routes } from "@/constants/routes";
+import { WebsiteHome } from "@/constants/routes";
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -96,13 +96,25 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                     onKeyDown={toggleDrawer}
                 >
                     <List>
-                        {Object.values(Routes).map((route) => (
-                            <Link key={route.path} href={route.path} internal>
-                                <ListItemButton sx={{ pl: { xs: 2, md: 5 } }}>
-                                    <ListItemText primary={route.name} />
-                                </ListItemButton>
-                            </Link>
-                        ))}
+                        {WebsiteHome.subRoutes
+                            ? Object.values(WebsiteHome.subRoutes).map(
+                                  (route) => (
+                                      <Link
+                                          key={route.path}
+                                          href={route.path}
+                                          internal
+                                      >
+                                          <ListItemButton
+                                              sx={{ pl: { xs: 2, md: 5 } }}
+                                          >
+                                              <ListItemText
+                                                  primary={route.name}
+                                              />
+                                          </ListItemButton>
+                                      </Link>
+                                  ),
+                              )
+                            : null}
                     </List>
                 </Box>
             </Drawer>
@@ -121,18 +133,20 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: { xs: "none", md: "block" } }}>
-                    {Object.values(Routes).map((route) => (
-                        <Link key={route.path} href={route.path} internal>
-                            <Button
-                                variant="text"
-                                color="primary"
-                                disableElevation
-                                sx={{ color: "#ffffff", pl: 2 }}
-                            >
-                                {route.name}
-                            </Button>
-                        </Link>
-                    ))}
+                    {WebsiteHome.subRoutes
+                        ? Object.values(WebsiteHome.subRoutes).map((route) => (
+                              <Link key={route.path} href={route.path} internal>
+                                  <Button
+                                      variant="text"
+                                      color="primary"
+                                      disableElevation
+                                      sx={{ color: "#ffffff", pl: 2 }}
+                                  >
+                                      {route.name}
+                                  </Button>
+                              </Link>
+                          ))
+                        : null}
                 </Box>
                 <Tooltip title={`Change to ${nextColorScheme} theme`}>
                     <IconButton

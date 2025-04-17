@@ -16,12 +16,11 @@
 import { KeyboardArrowRight } from "@mui/icons-material";
 import { Breadcrumbs, Typography } from "@mui/material";
 import type { Route as NextRoute } from "next";
-import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
 import { Link } from "@/components/content";
-import { Routes, type Route } from "@/constants/routes";
+import { WebsiteHome, type Route } from "@/constants/routes";
 
 const RouterBreadcrumbs = (): React.ReactElement | null => {
     const pathname = usePathname();
@@ -36,11 +35,11 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
     ];
     if (pathnames.length > 0) {
         const visitRoutes = (
-            currentRoutes: Record<string, Route>,
+            currentRoutes: Record<string, Route> | undefined,
             currentPathnames: string[],
             currentBasePath: string,
         ): void => {
-            if (currentPathnames.length > 0) {
+            if (currentRoutes && currentPathnames.length > 0) {
                 const currentSubPath =
                     currentBasePath + "/" + currentPathnames[0];
                 if (currentSubPath in currentRoutes) {
@@ -50,13 +49,11 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
                             name: route.name,
                             path: currentSubPath as NextRoute<string>,
                         });
-                        if (route.subRoutes !== undefined) {
-                            visitRoutes(
-                                route.subRoutes,
-                                currentPathnames.slice(1),
-                                currentSubPath,
-                            );
-                        }
+                        visitRoutes(
+                            route.subRoutes,
+                            currentPathnames.slice(1),
+                            currentSubPath,
+                        );
                     } else {
                         breadcrumbs.push({
                             name: route.name,
@@ -65,7 +62,7 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
                 }
             }
         };
-        visitRoutes(Routes, pathnames, "");
+        visitRoutes(WebsiteHome.subRoutes, pathnames, "");
     }
 
     return (

@@ -16,18 +16,20 @@ import { globSync } from "glob";
 import { type MetadataRoute } from "next";
 
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
-import { Routes, type Route } from "@/constants/routes";
+import { WebsiteHome, type Route } from "@/constants/routes";
 
 const buildMainSitemapUrls = (
-    currentRoutes: Record<string, Route>,
+    currentRoutes: Record<string, Route> | undefined,
 ): string[] => {
     let urls: string[] = [];
-    Object.values(currentRoutes).forEach((route) => {
-        urls.push(route.path);
-        if (route.subRoutes !== undefined) {
-            urls = urls.concat(buildMainSitemapUrls(route.subRoutes));
-        }
-    });
+    if (currentRoutes) {
+        Object.values(currentRoutes).forEach((route) => {
+            urls.push(route.path);
+            if (route.subRoutes !== undefined) {
+                urls = urls.concat(buildMainSitemapUrls(route.subRoutes));
+            }
+        });
+    }
     return urls;
 };
 
@@ -45,7 +47,7 @@ const time = new Date();
 
 const sitemap = (): MetadataRoute.Sitemap =>
     ["/", "/nadundesilva-cv.pdf"]
-        .concat(buildMainSitemapUrls(Routes))
+        .concat(buildMainSitemapUrls(WebsiteHome.subRoutes))
         .concat(blogArticles)
         .map((url) => ({
             url: `${WEBSITE_PUBLIC_URL}${url}`,

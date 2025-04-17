@@ -12,7 +12,7 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Container, Grid2 as Grid, Grow, Typography } from "@mui/material";
+import { Container, Grid, Grow, Typography } from "@mui/material";
 import { Theme } from "@mui/material/styles";
 import React from "react";
 

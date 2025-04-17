@@ -13,45 +13,58 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import "@testing-library/cypress/add-commands";
+import { WebsiteHome } from "@/constants/routes";
 
 Cypress.Commands.add("loadPage", (url: string): void => {
-    cy.clearLocalStorage();
-
     const viewportWidth = Cypress.config("viewportWidth");
     const viewportHeight = Cypress.config("viewportHeight");
     cy.viewport(viewportWidth, viewportHeight);
     cy.log(`Changed viewport to ${viewportWidth}x${viewportHeight}`);
 
     cy.visit(url);
+    cy.scrollTo(0, 0, { duration: 1000 });
     cy.log(`Loaded ${url} page`);
     window.localStorage.setItem("COLOR_SCHEME", "light");
-    cy.findByRole("progressbar").should("not.exist");
+
+    if (url !== WebsiteHome.path) {
+        cy.wait(1000);
+        cy.findAllByRole("progressbar").should("not.exist");
+    }
 });
 
 Cypress.Commands.add("clickNavLink", (name: string): void => {
-    const appBar = cy.findByTestId("app-bar");
-    appBar.should("exist");
-    appBar.within(() => {
-        const link = cy.findByRole("link", {
-            name: new RegExp(name, "i"),
+    cy.findByTestId("app-bar")
+        .should("be.visible")
+        .within(() => {
+            cy.findByRole("link", {
+                name: new RegExp(name, "i"),
+            })
+                .as("navlink")
+                .should("be.visible");
+            cy.get("@navlink").click({ waitForAnimations: true });
         });
-        link.should("exist");
-        link.click({ waitForAnimations: true });
-        cy.findByRole("progressbar").should("not.exist");
-    });
+
+    cy.wait(1000);
+    cy.findAllByRole("progressbar").should("not.exist");
 });
 
 Cypress.Commands.add("clickBreadcrumb", (name: string): void => {
-    const navigation = cy.findByRole("navigation", {
+    cy.findByRole("navigation", {
         name: /breadcrumb/i,
-    });
-    navigation.should("exist");
-    navigation.within(() => {
-        const breadcrumb = cy.findByRole("link", {
-            name: new RegExp(name, "i"),
+    })
+        .should("be.visible")
+        .within(() => {
+            cy.findByRole("link", {
+                name: new RegExp(name, "i"),
+            })
+                .as("breadcrumb")
+                .should("be.visible");
+            cy.scrollTo(0, 0, { duration: 1000 });
+            cy.get("@breadcrumb").click({ waitForAnimations: true });
         });
-        breadcrumb.should("exist");
-        breadcrumb.click({ waitForAnimations: true });
-        cy.findByRole("progressbar").should("not.exist");
-    });
+
+    if (name !== WebsiteHome.name) {
+        cy.wait(1000);
+        cy.findAllByRole("progressbar").should("not.exist");
+    }
 });
