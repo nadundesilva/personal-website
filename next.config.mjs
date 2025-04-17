@@ -81,10 +81,6 @@ export default (phase, { defaultConfig }) => {
             loader: "custom",
             loaderFile: "./nextImageLoader.js",
         },
-        experimental: {
-            typedRoutes: true,
-            webpackBuildWorker: true,
-        },
         productionBrowserSourceMaps: true,
         reactStrictMode: true,
     };

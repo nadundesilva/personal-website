@@ -21,3 +21,5 @@ Sentry.init({
     replaysOnErrorSampleRate: 1.0,
     replaysSessionSampleRate: 0.1,
 });
+
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

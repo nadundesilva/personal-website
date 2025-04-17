@@ -17,7 +17,7 @@ import {
     Box,
     Button,
     Container,
-    Grid2 as Grid,
+    Grid,
     Link,
     styled,
     type Theme,
@@ -26,7 +26,6 @@ import {
     useTheme,
 } from "@mui/material";
 import Image from "next/image";
-import NextLink from "next/link";
 import React from "react";
 
 import { Images } from "@/constants/images";

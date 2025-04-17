@@ -88,4 +88,8 @@ const buildRoutes = (currentRoutes: _Route[]): Record<string, Route> => {
     return routesMap;
 };
 
-export const Routes: Record<string, Route> = buildRoutes(_Routes);
+export const WebsiteHome: Route = {
+    name: "Home",
+    path: "/",
+    subRoutes: buildRoutes(_Routes),
+};

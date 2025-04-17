@@ -17,7 +17,7 @@ import {
     CardActionArea,
     CardContent,
     CardMedia,
-    Grid2 as Grid,
+    Grid,
     Typography,
 } from "@mui/material";
 import { glob } from "glob";
