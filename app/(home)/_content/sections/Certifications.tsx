@@ -20,7 +20,7 @@ import {
     CardMedia,
     Chip,
     Container,
-    Grid2 as Grid,
+    Grid,
     Slide,
     Typography,
     useTheme,

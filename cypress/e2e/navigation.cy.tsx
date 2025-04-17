@@ -12,22 +12,34 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Routes, type Route } from "@/constants/routes";
+import { WebsiteHome, type Route } from "@/constants/routes";
 
 describe("navigation between pages", () => {
-    it("validates navigation between pages", () => {
-        cy.loadPage("/");
+    it("properly navigates through the main nav links", () => {
+        cy.loadPage(WebsiteHome.path);
+
+        Object.values(WebsiteHome.subRoutes).forEach((route) => {
+            cy.clickNavLink(route.name);
+        });
+    });
+
+    it("properly navigates to pages and back using breadcrumbs", () => {
+        cy.loadPage(WebsiteHome.path);
 
         const visitSubRoutes = (
             currentRoutes: Record<string, Route>,
             currentRouteName: string,
         ) => {
             Object.values(currentRoutes).forEach((route) => {
-                const breadcrumb = cy.findByRole("link", {
+                cy.findByRole("link", {
                     name: new RegExp(`View ${route.name}`, "i"),
-                });
-                breadcrumb.should("exist");
-                breadcrumb.click({ waitForAnimations: true });
+                })
+                    .as("navlink")
+                    .should("be.visible");
+                cy.scrollTo(0, 0, { duration: 1000 });
+                cy.get("@navlink").click({ waitForAnimations: true });
+
+                cy.wait(1000);
                 cy.findByRole("progressbar").should("not.exist");
 
                 if (route.subRoutes !== undefined) {
@@ -38,6 +50,7 @@ describe("navigation between pages", () => {
                 cy.clickBreadcrumb(currentRouteName);
             });
         };
+
         const visitNavLink = (
             currentRoutes: Record<string, Route>,
             currentRouteName: string,
@@ -50,6 +63,7 @@ describe("navigation between pages", () => {
                 cy.clickBreadcrumb(currentRouteName);
             });
         };
-        visitNavLink(Routes, "Home");
+
+        visitNavLink(WebsiteHome.subRoutes, WebsiteHome.name);
     });
 });

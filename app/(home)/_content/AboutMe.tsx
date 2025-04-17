@@ -16,7 +16,7 @@ import { LocationCity } from "@mui/icons-material";
 import {
     Avatar,
     Divider,
-    Grid2 as Grid,
+    Grid,
     styled,
     type Theme,
     Typography,

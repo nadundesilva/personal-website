@@ -13,11 +13,11 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Link } from "@mui/material";
+import { Link, LinkProps } from "@mui/material";
 import NextLink from "next/link";
-import React from "react";
+import React, { forwardRef, Ref } from "react";
 
-type WebsiteRoute = __next_route_internal_types__.RouteImpl<string>;
+type WebsiteRoute = string;
 
 interface InternalLink {
     href: WebsiteRoute;
@@ -25,7 +25,7 @@ interface InternalLink {
 
 interface ExternalLink {
     href: string;
-    baseUrl?: string;
+    baseUrl: string;
 }
 
 type CustomLinkProps = (InternalLink | ExternalLink) & {
@@ -38,22 +38,34 @@ const CustomLink = ({
     children,
     target,
     internal,
-    ...props
-}: CustomLinkProps): React.ReactElement => {
-    let url;
-    if (internal) {
-        const { href } = props as InternalLink;
-        url = href;
-    } else {
-        const { href, baseUrl } = props as ExternalLink;
-        url = new URL(href, baseUrl);
-    }
-
-    return (
-        <NextLink href={url} passHref legacyBehavior>
-            <Link target={target}>{children}</Link>
-        </NextLink>
-    );
-};
+    ...customLinkProps
+}: CustomLinkProps): React.ReactElement => (
+    <Link
+        target={target}
+        component={forwardRef(function CustomLinkComponent(
+            {
+                children: customLinkCompChildren,
+                ...customLinkCompProps
+            }: LinkProps,
+            ref: Ref<HTMLAnchorElement>,
+        ) {
+            let href: URL | WebsiteRoute;
+            if (internal) {
+                const internalLink = customLinkProps as InternalLink;
+                href = internalLink.href;
+            } else {
+                const externalLink = customLinkProps as ExternalLink;
+                href = new URL(externalLink.href, externalLink.baseUrl);
+            }
+            return (
+                <NextLink href={href} ref={ref} {...customLinkCompProps}>
+                    {customLinkCompChildren}
+                </NextLink>
+            );
+        })}
+    >
+        {children}
+    </Link>
+);
 
 export default CustomLink;

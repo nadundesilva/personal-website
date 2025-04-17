@@ -15,7 +15,7 @@
 import {
     Box,
     Container,
-    Grid2 as Grid,
+    Grid,
     Grow,
     ImageList,
     ImageListItem,

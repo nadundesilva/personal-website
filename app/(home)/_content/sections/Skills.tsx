@@ -13,7 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import {
-    Grid2 as Grid,
+    Grid,
     LinearProgress,
     styled,
     Typography,
