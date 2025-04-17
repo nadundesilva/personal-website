@@ -21,7 +21,7 @@ jobs:
                     - electron
                     - chrome
         name: Ubuntu Deployment Check (${{ matrix.browser }})
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-latest
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -52,7 +52,7 @@ jobs:
 
     links-check:
         name: Check Links in Website
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-latest
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -71,7 +71,7 @@ jobs:
 
     website-audit:
         name: Run Website Audit
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-latest
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -95,7 +95,7 @@ jobs:
 
     run-vulnerability-analysis:
         name: Run Vulnerability Analysis
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-latest
         permissions:
             security-events: write
         steps:
