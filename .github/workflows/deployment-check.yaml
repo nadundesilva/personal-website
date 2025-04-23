@@ -20,6 +20,8 @@ jobs:
                 browser:
                     - electron
                     - chrome
+                    - firefox
+                    - edge
         name: Ubuntu Deployment Check (${{ matrix.browser }})
         runs-on: ubuntu-latest
         steps:

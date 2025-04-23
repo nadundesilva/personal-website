@@ -87,6 +87,8 @@ jobs:
                 browser:
                     - electron
                     - chrome
+                    - firefox
+                    - edge
         name: Run E2E Tests (${{ matrix.browser }})
         runs-on: ubuntu-latest
         steps:
@@ -223,6 +225,8 @@ jobs:
                 browser:
                     - electron
                     - chrome
+                    - firefox
+                    - edge
         name: Check Site Build (${{ matrix.browser }})
         runs-on: ubuntu-latest
         needs: build-site
