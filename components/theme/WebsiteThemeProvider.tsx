@@ -15,12 +15,7 @@
  */
 import { CssBaseline, StyledEngineProvider } from "@mui/material";
 import { indigo } from "@mui/material/colors";
-import {
-    Theme,
-    createTheme,
-    responsiveFontSizes,
-    ThemeProvider,
-} from "@mui/material/styles";
+import { Theme, createTheme, ThemeProvider } from "@mui/material/styles";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { Roboto } from "next/font/google";
 import React from "react";
@@ -31,78 +26,82 @@ const roboto = Roboto({
     display: "swap",
 });
 
-const websiteTheme: Theme = responsiveFontSizes(
-    createTheme({
-        colorSchemes: {
-            dark: {
-                palette: {
-                    primary: indigo,
-                    secondary: indigo,
-                },
+const websiteTheme: Theme = createTheme({
+    colorSchemes: {
+        dark: {
+            palette: {
+                primary: indigo,
+                secondary: indigo,
             },
-            light: {
-                palette: {
-                    primary: indigo,
-                    secondary: indigo,
+        },
+        light: {
+            palette: {
+                primary: indigo,
+                secondary: indigo,
+            },
+        },
+    },
+    typography: {
+        fontFamily: roboto.style.fontFamily,
+    },
+    components: {
+        MuiDivider: {
+            styleOverrides: {
+                root: {
+                    marginTop: 10,
+                    marginBottom: 20,
                 },
             },
         },
-        typography: {
-            fontFamily: roboto.style.fontFamily,
-        },
-        components: {
-            MuiDivider: {
-                styleOverrides: {
-                    root: {
-                        marginTop: 10,
-                        marginBottom: 20,
-                    },
-                },
-            },
-            MuiLink: {
-                styleOverrides: {
-                    root: {
-                        textDecoration: "none",
-                    },
-                },
-            },
-            MuiTypography: {
-                styleOverrides: {
-                    root: ({ theme }: { theme: Theme }) => ({
-                        color:
-                            theme.palette.mode == "light"
-                                ? "#000000"
-                                : "#ffffff",
-                    }),
-                    h1: {
-                        fontSize: 36,
-                    },
-                    h2: {
-                        fontSize: 33,
-                    },
-                    h3: {
-                        fontSize: 30,
-                    },
-                    h4: {
-                        fontSize: 27,
-                    },
-                    h5: {
-                        fontSize: 24,
-                    },
-                    h6: {
-                        fontSize: 21,
-                    },
-                    body1: {
-                        fontSize: 18,
-                    },
-                    body2: {
-                        fontSize: 18,
-                    },
+        MuiLink: {
+            styleOverrides: {
+                root: {
+                    textDecoration: "none",
                 },
             },
         },
-    }),
-);
+        MuiTypography: {
+            styleOverrides: {
+                root: ({ theme }: { theme: Theme }) => ({
+                    color:
+                        theme.palette.mode == "light" ? "#000000" : "#ffffff",
+                }),
+                h1: {
+                    fontWeight: "bolder",
+                    fontSize: 27,
+                },
+                h2: {
+                    fontWeight: "bolder",
+                    fontSize: 25,
+                },
+                h3: {
+                    fontWeight: "bolder",
+                    fontSize: 21,
+                },
+                h4: {
+                    fontWeight: "normal",
+                    fontSize: 21,
+                },
+                h5: {
+                    fontWeight: "bolder",
+                    fontSize: 17,
+                },
+                h6: {
+                    fontWeight: "normal",
+                    fontSize: 17,
+                },
+                body1: {
+                    fontWeight: "normal",
+                    fontSize: 15,
+                },
+                body2: {
+                    fontWeight: "normal",
+                    fontSize: 15,
+                },
+            },
+        },
+    },
+});
 
 interface WebsiteThemeProviderProps {
     children: React.ReactNode;
