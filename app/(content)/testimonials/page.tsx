@@ -18,7 +18,12 @@ import { grey } from "@mui/material/colors";
 import { type Metadata } from "next";
 import React from "react";
 
-import { Paragraph, Title } from "@/components/content";
+import {
+    Paragraph,
+    Section,
+    SectionHeading,
+    Title,
+} from "@/components/content";
 import { FULL_NAME } from "@/constants/metadata";
 
 enum Relationship {
@@ -70,26 +75,21 @@ const Testimonial = ({
     relationship,
 }: TestimonialProps): React.ReactElement => (
     <Card sx={{ my: 2, p: 2 }} raised>
-        <FormatQuote
-            htmlColor={grey[600]}
-            sx={{ transform: "rotate(180deg) scale(2)", m: 0.5 }}
-        />
-        <Typography variant="h3" sx={{ pb: 1 }}>
-            {recomender}
-        </Typography>
-        <Typography
-            variant="body2"
-            color={grey[700]}
-            fontSize={17}
-            sx={{ pb: 0.5 }}
-        >
-            {recomenderPosition} at {recomenderCompany}
-        </Typography>
-        <Typography variant="body2" color={grey[700]} sx={{ pb: 1 }}>
-            {renderRelationShip(recomender, relationship)} when Nadun was a{" "}
-            {position} at {company}
-        </Typography>
-        {children}
+        <Section>
+            <FormatQuote
+                htmlColor={grey[600]}
+                sx={{ transform: "rotate(180deg) scale(2)", m: 0.5 }}
+            />
+            <SectionHeading>{recomender}</SectionHeading>
+            <Typography variant="body2" color={grey[700]} sx={{ pb: 0.5 }}>
+                {recomenderPosition} at {recomenderCompany}
+            </Typography>
+            <Typography variant="body2" color={grey[700]} sx={{ pb: 1 }}>
+                {renderRelationShip(recomender, relationship)} when Nadun was a{" "}
+                {position} at {company}
+            </Typography>
+            {children}
+        </Section>
     </Card>
 );
 

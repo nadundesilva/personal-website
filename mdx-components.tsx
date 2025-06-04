@@ -157,7 +157,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                     >
                         {pageMetadata.description}
                     </Typography>
-                    <Box sx={{ mb: 5 }}>
+                    <Box>
                         <Link href={blogMetadata.mediumUrl} target="_blank">
                             <Button
                                 size="small"

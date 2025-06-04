@@ -18,6 +18,7 @@ import List, { CustomListItem as ListItem } from "./List";
 import Logo from "./Logo";
 import Paragraph from "./Paragraph";
 import Photo from "./Photo";
+import Section from "./Section";
 import SectionHeading from "./SectionHeading";
 import SubsectionHeading from "./SubsectionHeading";
 import Timespan from "./Timespan";
@@ -31,6 +32,7 @@ export {
     Logo,
     Paragraph,
     Photo,
+    Section,
     SectionHeading,
     SubsectionHeading,
     Timespan,

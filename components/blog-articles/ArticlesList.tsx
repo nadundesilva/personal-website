@@ -86,6 +86,7 @@ const ArticlesList = async ({
             justifyContent="flex-start"
             alignItems="stretch"
             spacing={2}
+            sx={{ mt: 2 }}
         >
             {blogArticles.reverse().map((blogArticle) => (
                 <Grid
@@ -110,7 +111,7 @@ const ArticlesList = async ({
                                 <CardContent sx={{ flex: "auto" }}>
                                     <Typography
                                         gutterBottom
-                                        variant="h4"
+                                        variant="h3"
                                         sx={{ pb: 1 }}
                                     >
                                         {blogArticle.title}

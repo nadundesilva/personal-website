@@ -125,12 +125,14 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
         <AppBar component="header" sx={{ px: 2 }} data-testid="app-bar">
             <Toolbar>
                 {drawer}
-                <Typography
-                    component="h1"
-                    sx={{ fontSize: 23, color: "#ffffff" }}
-                >
-                    {FULL_NAME}
-                </Typography>
+                <Link href={"/"} internal>
+                    <Typography
+                        component="h1"
+                        sx={{ fontSize: 23, color: "#ffffff" }}
+                    >
+                        {FULL_NAME}
+                    </Typography>
+                </Link>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: { xs: "none", md: "block" } }}>
                     {WebsiteHome.subRoutes

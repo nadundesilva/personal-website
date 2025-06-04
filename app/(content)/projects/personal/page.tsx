@@ -22,6 +22,7 @@ import {
     List,
     ListItem,
     Paragraph,
+    Section,
     SectionHeading,
     Title,
 } from "@/components/content";
@@ -34,7 +35,7 @@ interface ViewOnGitHubButtonProps {
 const ViewOnGitHubButton = (
     props: ViewOnGitHubButtonProps,
 ): React.ReactElement => (
-    <Box sx={{ pt: 1 }}>
+    <Box sx={{ pt: 2 }}>
         <Link
             href={`https://github.com/${props.repoOrg}/${props.repoName}`}
             target="_blank"
@@ -89,71 +90,77 @@ const PersonalProjects = (): React.ReactElement => {
     return (
         <React.Fragment>
             <Title>Personal Projects</Title>
-            <SectionHeading>K8s Replicator</SectionHeading>
-            <ViewOnGitHubButton
-                repoOrg="nadundesilva"
-                repoName="k8s-replicator"
-            />
-            <Paragraph>
-                In Kubernetes deployments when the same {Secret}, {ConfigMap} or{" "}
-                {NetworkPolicy} needs to be accessed across multiple namespaces,
-                it needs to be manually created in all of them, this handy
-                Kubernetes controller can come to your rescue. It will
-                automatically watch the namespaces and create the resources in
-                them as soon as they are created. By doing so, this will allow
-                removing some of the burden on the operational aspects
-            </Paragraph>
-            <UseCasesSection>
-                <ListItem>
-                    <Typography>
-                        Use a wildcard TLS Secret across namespaces.
-                    </Typography>
-                </ListItem>
-                <ListItem>
-                    <Typography>
-                        Use a Config Map containing configurations for
-                        connecting into a DB across namespaces.
-                    </Typography>
-                </ListItem>
-                <ListItem>
-                    <Typography>
-                        Aply common network level restrictions using Network
-                        POlicies across namespaces.
-                    </Typography>
-                </ListItem>
-            </UseCasesSection>
-            <SectionHeading>Mesh Manager</SectionHeading>
-            <ViewOnGitHubButton
-                repoOrg="nadundesilva"
-                repoName="mesh-manager"
-            />
-            <Paragraph>
-                When working with a large deployment based on a microservices
-                architecture, it can get quite complex when the number of
-                microservices grows to a very large number. This controller
-                allows the users to declaratively specify the microservices
-                including its dependencies so that the controller will properly
-                manage them.
-            </Paragraph>
-            <UseCasesSection>
-                <ListItem>
-                    <Typography>
-                        Ensuring that dependencies are not removed when
-                        microservices using it is still using them.
-                    </Typography>
-                </ListItem>
-                <ListItem>
-                    <Typography>
-                        Ensuring the order of startup based on the dependencies.
-                    </Typography>
-                </ListItem>
-                <ListItem>
-                    <Typography>
-                        Finding all the microservices that depends on a given
-                        microservice.
-                    </Typography>
-                </ListItem>
-            </UseCasesSection>
+            <Section>
+                <SectionHeading>K8s Replicator</SectionHeading>
+                <ViewOnGitHubButton
+                    repoOrg="nadundesilva"
+                    repoName="k8s-replicator"
+                />
+                <Paragraph>
+                    In Kubernetes deployments when the same {Secret},{" "}
+                    {ConfigMap} or {NetworkPolicy} needs to be accessed across
+                    multiple namespaces, it needs to be manually created in all
+                    of them, this handy Kubernetes controller can come to your
+                    rescue. It will automatically watch the namespaces and
+                    create the resources in them as soon as they are created. By
+                    doing so, this will allow removing some of the burden on the
+                    operational aspects
+                </Paragraph>
+                <UseCasesSection>
+                    <ListItem>
+                        <Typography>
+                            Use a wildcard TLS Secret across namespaces.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Use a Config Map containing configurations for
+                            connecting into a DB across namespaces.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Aply common network level restrictions using Network
+                            Policies across namespaces.
+                        </Typography>
+                    </ListItem>
+                </UseCasesSection>
+            </Section>
+            <Section>
+                <SectionHeading>Mesh Manager</SectionHeading>
+                <ViewOnGitHubButton
+                    repoOrg="nadundesilva"
+                    repoName="mesh-manager"
+                />
+                <Paragraph>
+                    When working with a large deployment based on a
+                    microservices architecture, it can get quite complex when
+                    the number of microservices grows to a very large number.
+                    This controller allows the users to declaratively specify
+                    the microservices including its dependencies so that the
+                    controller will properly manage them.
+                </Paragraph>
+                <UseCasesSection>
+                    <ListItem>
+                        <Typography>
+                            Ensuring that dependencies are not removed when
+                            microservices using it is still using them.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Ensuring the order of startup based on the
+                            dependencies.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Finding all the microservices that depends on a
+                            given microservice.
+                        </Typography>
+                    </ListItem>
+                </UseCasesSection>
+            </Section>
         </React.Fragment>
     );
 };

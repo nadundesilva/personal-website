@@ -23,6 +23,7 @@ import {
     ListItem,
     Logo,
     Paragraph,
+    Section,
     SectionHeading,
     Timespan,
     Title,
@@ -67,7 +68,6 @@ const Certifications = (): React.ReactElement => {
         certificate: Certificate,
     ): React.ReactNode => (
         <React.Fragment>
-            <Title>Certifications</Title>
             <SectionHeading>{certificate.name}</SectionHeading>
             <Timespan value={certificate.completedOn} />
             <Logo height="5em" logo={certificate.logo} />
@@ -87,76 +87,91 @@ const Certifications = (): React.ReactElement => {
 
     return (
         <React.Fragment>
-            {generateSectionHeader(
-                Certificates.FundamentalsOfReinforcementLearning,
-            )}
-            <Paragraph>
-                This course is offered by {AlbertaMachineIntelligenceInstitute}{" "}
-                at the {UniversityOfAlberta} on {Coursera}, taught mainly by{" "}
-                {AdamWhite} &amp; {MarthaWhite}. It covers the basics of
-                Reinforcement Learning.
-            </Paragraph>
-            {generateSectionHeader(
-                Certificates.BuildBasicGenerativeAdversarialNetworks,
-            )}
-            <Paragraph>
-                This course is offered by {DeepLearningAi} on {Coursera}, taught
-                mainly by {SharonZhou}. It covers the how the Generative
-                Adversarial Networks work as well as some of the latest
-                developments in this Neural Network architecture.
-            </Paragraph>
-            {generateSectionHeader(Certificates.DeepLearningSpecialization)}
-            <Paragraph>
-                Deep Learning specialization is offered by {DeepLearningAi} on{" "}
-                {Coursera}, taught mainly by {AndrewNg}. It is an excellent
-                specialization consisting of five courses covering a deep dive
-                into Deep Learning as well as many novel Deep Learning
-                architectures. The specialization included coursework as well as
-                MCQ and Lab based hands-on evaluations.
-            </Paragraph>
-            <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
-                <List>
-                    <ListItem>
-                        <Typography>
-                            Neural Networks and Deep Learning
-                        </Typography>
-                    </ListItem>
-                    <ListItem>
-                        <Typography>
-                            Improving Deep Neural Networks: Hyperparameter
-                            Tuning, Regularization and Optimization
-                        </Typography>
-                    </ListItem>
-                    <ListItem>
-                        <Typography>
-                            Structuring Machine Learning Projects
-                        </Typography>
-                    </ListItem>
-                    <ListItem>
-                        <Typography>Convolutional Neural Networks</Typography>
-                    </ListItem>
-                    <ListItem>
-                        <Typography>Sequence Models</Typography>
-                    </ListItem>
-                </List>
-            </Box>
-            {generateSectionHeader(
-                Certificates.CertifiedKubernetesAdministrator,
-            )}
-            <Paragraph>
-                Certified Kubernetes Administrator is offered and governed by
-                the {LinuxFoundation}. This covers the administrative aspects
-                and in depth knowledge about Kubernetes Clusters includign ETCD
-                clusters.
-            </Paragraph>
-            {generateSectionHeader(
-                Certificates.CertifiedKubernetesApplicationDeveloper,
-            )}
-            <Paragraph>
-                Certified Kubernetes Application Developer is offered and
-                governed by the {LinuxFoundation}. This covers aspects related
-                to developing applications to be run on Kubernetes.
-            </Paragraph>
+            <Title>Certifications</Title>
+            <Section>
+                {generateSectionHeader(
+                    Certificates.FundamentalsOfReinforcementLearning,
+                )}
+                <Paragraph>
+                    This course is offered by{" "}
+                    {AlbertaMachineIntelligenceInstitute} at the{" "}
+                    {UniversityOfAlberta} on {Coursera}, taught mainly by{" "}
+                    {AdamWhite} &amp; {MarthaWhite}. It covers the basics of
+                    Reinforcement Learning.
+                </Paragraph>
+            </Section>
+            <Section>
+                {generateSectionHeader(
+                    Certificates.BuildBasicGenerativeAdversarialNetworks,
+                )}
+                <Paragraph>
+                    This course is offered by {DeepLearningAi} on {Coursera},
+                    taught mainly by {SharonZhou}. It covers the how the
+                    Generative Adversarial Networks work as well as some of the
+                    latest developments in this Neural Network architecture.
+                </Paragraph>
+            </Section>
+            <Section>
+                {generateSectionHeader(Certificates.DeepLearningSpecialization)}
+                <Paragraph>
+                    Deep Learning specialization is offered by {DeepLearningAi}{" "}
+                    on {Coursera}, taught mainly by {AndrewNg}. It is an
+                    excellent specialization consisting of five courses covering
+                    a deep dive into Deep Learning as well as many novel Deep
+                    Learning architectures. The specialization included
+                    coursework as well as MCQ and Lab based hands-on
+                    evaluations.
+                </Paragraph>
+                <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
+                    <List>
+                        <ListItem>
+                            <Typography>
+                                Neural Networks and Deep Learning
+                            </Typography>
+                        </ListItem>
+                        <ListItem>
+                            <Typography>
+                                Improving Deep Neural Networks: Hyperparameter
+                                Tuning, Regularization and Optimization
+                            </Typography>
+                        </ListItem>
+                        <ListItem>
+                            <Typography>
+                                Structuring Machine Learning Projects
+                            </Typography>
+                        </ListItem>
+                        <ListItem>
+                            <Typography>
+                                Convolutional Neural Networks
+                            </Typography>
+                        </ListItem>
+                        <ListItem>
+                            <Typography>Sequence Models</Typography>
+                        </ListItem>
+                    </List>
+                </Box>
+            </Section>
+            <Section>
+                {generateSectionHeader(
+                    Certificates.CertifiedKubernetesAdministrator,
+                )}
+                <Paragraph>
+                    Certified Kubernetes Administrator is offered and governed
+                    by the {LinuxFoundation}. This covers the administrative
+                    aspects and in depth knowledge about Kubernetes Clusters
+                    includign ETCD clusters.
+                </Paragraph>
+            </Section>
+            <Section>
+                {generateSectionHeader(
+                    Certificates.CertifiedKubernetesApplicationDeveloper,
+                )}
+                <Paragraph>
+                    Certified Kubernetes Application Developer is offered and
+                    governed by the {LinuxFoundation}. This covers aspects
+                    related to developing applications to be run on Kubernetes.
+                </Paragraph>
+            </Section>
         </React.Fragment>
     );
 };

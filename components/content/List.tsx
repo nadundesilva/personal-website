@@ -25,7 +25,9 @@ const CustomList = ({
     children,
     component,
 }: CustomListProps): React.ReactNode => (
-    <Box component={component ?? "ul"}>{children}</Box>
+    <Box component={component ?? "ul"} sx={{ my: 0 }}>
+        {children}
+    </Box>
 );
 
 interface CustomListItemProps {
