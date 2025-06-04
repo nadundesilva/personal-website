@@ -8,6 +8,7 @@
         ":reviewer(nadundesilva)"
     ],
     "labels": ["Type/DependencyUpdate"],
+    "ignoreDeps": ["eslint"],
     "packageRules": [
         {
             "matchUpdateTypes": ["patch", "minor"],

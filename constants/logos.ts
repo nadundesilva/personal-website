@@ -13,11 +13,14 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
+import { SxProps, Theme } from "@mui/material";
+
 export interface LogoAsset {
     src: Record<"light" | "dark", string>;
     alt: string;
     width: number;
     height: number;
+    recommendedSx?: SxProps<Theme>;
 }
 
 const CKAD_LOGO_SRC = "/assets/certifications/ckad-logo.png";
@@ -150,6 +153,9 @@ export const Logos: Record<string, LogoAsset> = {
         alt: "Siddhi",
         width: 3192,
         height: 3192,
+        recommendedSx: {
+            my: 2,
+        },
     },
     Cellery: {
         src: {
@@ -159,6 +165,9 @@ export const Logos: Record<string, LogoAsset> = {
         alt: "Cellery",
         width: 3192,
         height: 3192,
+        recommendedSx: {
+            my: 2,
+        },
     },
     Ballerina: {
         src: {
@@ -168,6 +177,9 @@ export const Logos: Record<string, LogoAsset> = {
         alt: "Ballerina",
         width: 3192,
         height: 3192,
+        recommendedSx: {
+            my: 2,
+        },
     },
     Choreo: {
         src: {
@@ -177,5 +189,8 @@ export const Logos: Record<string, LogoAsset> = {
         alt: "Choreo",
         width: 3192,
         height: 3192,
+        recommendedSx: {
+            my: 2,
+        },
     },
 };

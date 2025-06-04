@@ -27,7 +27,14 @@ const Logo = ({ logo, height }: LogoProps): React.ReactElement => {
     const theme = useTheme();
     const src = logo.src[theme.palette.mode];
     return (
-        <Box sx={{ position: "relative", height: height ?? "3em", my: 1 }}>
+        <Box
+            sx={{
+                ...logo.recommendedSx,
+                position: "relative",
+                height: height ?? "3em",
+                py: 1,
+            }}
+        >
             <Image
                 alt={logo.alt}
                 src={src}

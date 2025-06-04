@@ -10,20 +10,22 @@
  *
  * Website: https://nadundesilva.com
  *
- * © 2024 Nadun De Silva. All rights reserved.
+ * © 2025 Nadun De Silva. All rights reserved.
  */
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
-interface SectionHeadingProps {
+interface SectionProps {
     children: React.ReactNode;
 }
 
-const SubsectionHeading = ({
-    children,
-}: SectionHeadingProps): React.ReactElement => (
-    <Box sx={{ p: 0, mt: 2, mb: 0 }}>
-        <Typography variant="h4">{children}</Typography>
+const Section = ({ children }: SectionProps): React.ReactElement => (
+    <Box
+        sx={{
+            clear: "both", // Keep preceding floating elements off sections
+        }}
+    >
+        {children}
     </Box>
 );
 
-export default SubsectionHeading;
+export default Section;
