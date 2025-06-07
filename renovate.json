@@ -9,6 +9,8 @@
     ],
     "labels": ["Type/DependencyUpdate"],
     "ignoreDeps": ["eslint"],
+    "rangeStrategy": "bump",
+    "pinDigests": true,
     "packageRules": [
         {
             "matchUpdateTypes": ["patch", "minor"],
