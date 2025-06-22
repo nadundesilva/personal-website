@@ -83,7 +83,7 @@ jobs:
                   node-version: "22.16.0"
             - name: Run Lighthouse Audit
               run: |
-                  npm install -g @lhci/cli@0.14.x
+                  npm install -g @lhci/cli@0.15.x
                   lhci autorun
               env:
                   LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
