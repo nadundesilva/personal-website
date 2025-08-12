@@ -26,7 +26,7 @@ jobs:
             - name: Install Dependencies
               run: npm ci
             - name: Lint Code Base
-              uses: super-linter/super-linter@12150456a73e248bdc94d0794898f94e23127c88 # v7
+              uses: super-linter/super-linter@5119dcd8011e92182ce8219d9e9efc82f16fddb6 # v8
               env:
                   DEFAULT_BRANCH: main
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
