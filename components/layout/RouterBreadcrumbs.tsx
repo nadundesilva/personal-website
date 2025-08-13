@@ -27,7 +27,7 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
     const pathnames =
         pathname == null ? [] : pathname.split("/").filter((x) => x);
 
-    const breadcrumbs: Array<{ name: string; path?: NextRoute<string> }> = [
+    const breadcrumbs: { name: string; path?: NextRoute<string> }[] = [
         {
             name: "Home",
             path: pathnames.length > 0 ? "/" : undefined,

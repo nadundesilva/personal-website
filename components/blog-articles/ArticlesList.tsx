@@ -36,9 +36,7 @@ interface BlogArticle {
     image: string;
 }
 
-async function getBlogArticles(
-    pathPattern: string,
-): Promise<Array<BlogArticle>> {
+async function getBlogArticles(pathPattern: string): Promise<BlogArticle[]> {
     return Promise.all(
         (await glob(pathPattern)).map(async (filePath) => {
             const relativePath = filePath
