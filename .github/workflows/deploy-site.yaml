@@ -38,7 +38,7 @@ jobs:
                   VALIDATE_JAVASCRIPT_STANDARD: "false"
                   VALIDATE_TYPESCRIPT_STANDARD: "false"
                   VALIDATE_CSS_PRETTIER: "false"
-                  TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.json
+                  TYPESCRIPT_ES_CONFIG_FILE: eslint.config.js
 
     run-vulnerability-analysis:
         name: Run Vulnerability Analysis
@@ -255,6 +255,11 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+              with:
+                  sparse-checkout-cone-mode: false
+                  sparse-checkout: |
+                      .github
+                      .lighthouserc.js
             - name: Download Site
               uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
               with:
@@ -266,6 +271,7 @@ jobs:
                   node-version: "22.18.0"
             - name: Run Lighthouse Audit
               run: |
+                  ls -la
                   npm install -g @lhci/cli@0.15.x
                   source ./.github/scripts/start-server.sh
                   lhci autorun

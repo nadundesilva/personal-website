@@ -15,8 +15,8 @@
  */
 
 import { Box, CircularProgress, Container, styled } from "@mui/material";
-import dynamic, { type DynamicOptionsLoadingProps } from "next/dynamic";
-import React, { useRef, useState, type JSX } from "react";
+import dynamic from "next/dynamic";
+import React, { useRef, type JSX } from "react";
 
 import Heading from "./Heading";
 import WelcomeBanner from "./WelcomeBanner";
@@ -26,7 +26,7 @@ const SectionContainer = styled(Container)(({ theme }) => ({
     pt: `${theme.mixins.toolbar.minHeight ?? 0}px`,
 }));
 
-const pageLoader = (opt: DynamicOptionsLoadingProps): JSX.Element => (
+const pageLoader = (): JSX.Element => (
     <Box sx={{ display: "flex", justifyContent: "center", py: 5 }}>
         <CircularProgress />
     </Box>
