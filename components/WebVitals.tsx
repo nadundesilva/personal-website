@@ -16,9 +16,13 @@
 import { useReportWebVitals } from "next/web-vitals";
 import React from "react";
 
+interface Window {
+    gtag: Gtag.Gtag;
+}
+
 const WebVitals = (): React.ReactElement => {
     useReportWebVitals((metric) => {
-        (window as any).gtag("event", metric.name, {
+        (window as Window).gtag("event", metric.name, {
             value: Math.round(
                 metric.name === "CLS" ? metric.value * 1000 : metric.value,
             ),

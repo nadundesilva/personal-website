@@ -18,6 +18,7 @@ import {
     CardActionArea,
     CardContent,
     CardMedia,
+    CardMediaProps,
     Chip,
     Container,
     Grid,
@@ -81,7 +82,7 @@ const Certifications = (): React.ReactElement => {
                                     }}
                                 >
                                     <CardMedia
-                                        component={(props: any) => (
+                                        component={(props: CardMediaProps) => (
                                             <Container
                                                 {...props}
                                                 maxWidth={false}

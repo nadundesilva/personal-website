@@ -1,6 +1,7 @@
 {
     "name": "nadundesilva-website",
     "version": "0.1.0",
+    "type": "module",
     "private": true,
     "scripts": {
         "dev": "NODE_ENV='development' NEXT_PUBLIC_WEBSITE_URL='http://localhost:3000' next dev -p 3000",
@@ -46,23 +47,28 @@
     },
     "devDependencies": {
         "@cypress/code-coverage": "3.14.5",
+        "@eslint/js": "^9.33.0",
         "@istanbuljs/nyc-config-typescript": "1.0.2",
         "@mdx-js/loader": "3.1.0",
         "@mdx-js/react": "3.1.0",
         "@next/bundle-analyzer": "15.4.6",
+        "@next/eslint-plugin-next": "^15.4.6",
         "@next/mdx": "15.4.6",
         "@testing-library/cypress": "10.0.3",
         "@testing-library/react": "16.3.0",
         "@testing-library/user-event": "14.6.1",
         "@types/cypress__code-coverage": "3.10.2",
+        "@types/ga-gtag": "^1.2.0",
         "@types/mdx": "2.0.13",
         "@types/node": "24.2.1",
         "@types/react": "19.1.10",
         "@types/react-dom": "19.1.7",
         "cypress": "14.5.4",
-        "eslint": "9.33.0",
+        "eslint": "^9.33.0",
         "eslint-config-next": "15.4.6",
         "eslint-config-prettier": "10.1.8",
+        "eslint-config-react": "^1.1.7",
+        "eslint-plugin-prettier": "^5.5.4",
         "husky": "9.1.7",
         "lint-staged": "16.1.5",
         "next-pwa": "5.6.0",
@@ -73,7 +79,8 @@
         "schema-dts": "1.1.5",
         "stylelint": "16.23.1",
         "stylelint-config-standard": "39.0.0",
-        "typescript": "5.9.2"
+        "typescript": "^5.9.2",
+        "typescript-eslint": "^8.39.1"
     },
     "lint-staged": {
         "*.{tsx,ts,js}": "eslint --no-cache --fix",
