@@ -24,7 +24,7 @@ import {
 } from "@/constants/metadata";
 
 export const metadata: Metadata = {
-    title: `${FULL_NAME} | An aspiring Senior Software Engineer and Cloud Computing Enthusiast`,
+    title: `${FULL_NAME} | An aspiring Lead Software Engineer and Cloud Computing Enthusiast`,
     description: MAIN_DESCRIPTION,
     openGraph: {
         type: "profile",

@@ -47,30 +47,37 @@ const Experience = (): React.ReactElement => {
 
     const experienceItems: ExperienceItem[] = [
         {
+            name: "Lead Software Engineer",
+            timePeriod: "Apr 2024 to Now",
+            description: "Leading the SRE aspects of Indexity data-planes.",
+            institute: "McCrae Tech, Auckland, New Zealand",
+        },
+        {
             name: "Senior Software Engineer",
-            timePeriod: "Nov 2022 to Now",
-            description: "Joined as a Senior Software Engineer at Orion Health",
+            timePeriod: "Nov 2022 to Apr 2024",
+            description:
+                "Spearheaded the deployment of Indexity data-planes on AWS.",
             institute: "Orion Health, Auckland, New Zealand",
         },
         {
             name: "Associate Technical Lead",
             timePeriod: "June 2021 to Nov 2022",
             description:
-                "Lead Choreo Observability Team as well as other Teams in Choreo",
+                "Led Choreo Observability Team as well as other Teams in Choreo.",
             institute: "WSO2, Colombo 03, Sri Lanka",
         },
         {
             name: "Senior Software Engineer",
             timePeriod: "July 2019 to June 2021",
             description:
-                "Lead Choreo Observability Team in creating the initial PoC as well as the Platform",
+                "Led Choreo Observability Team in creating the initial PoC as well as the Platform.",
             institute: "WSO2, Colombo 03, Sri Lanka",
         },
         {
             name: "Software Engineer",
             timePeriod: "Jan 2018 to July 2019",
             description:
-                "Designed & developed several components in middle-ware & cloud projects",
+                "Designed & developed several components in middle-ware & cloud projects.",
             institute: "WSO2, Colombo 03, Sri Lanka",
         },
         {
@@ -84,7 +91,7 @@ const Experience = (): React.ReactElement => {
             name: "Software Engineering Trainee",
             timePeriod: "July 2016 to Dec 2019",
             description:
-                "Implemented a Notebook prototype for the Data Analytics Server",
+                "Implemented a Notebook prototype for the Data Analytics Server.",
             institute: "WSO2, Colombo 03, Sri Lanka",
         },
     ];
