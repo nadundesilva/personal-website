@@ -77,12 +77,13 @@ const AboutMe = (): React.ReactElement => {
             {profilePhoto(12, { display: { xs: "block", md: "none" } })}
             <Grid size={{ xs: 12, md: 8 }}>
                 <Typography align="justify">
-                    I am currently working as a Senior Software Engineer at
-                    Orion Health. I have several years of working experience as
-                    a Software Engineer working on multiple Research &amp;
-                    Development projects as well as leading few of them. I love
-                    learning about new technologies and is particularly
-                    interested in Cloud Technologoes &amp; Deep Learning.
+                    Lead Software Engineer with 7.5 years of experience in
+                    cloud-native application development in Kubernetes and other
+                    cloud platforms. Background in architecture, user experience
+                    (UX), development, and deployment of cloud-native
+                    applications in production environments. Experience in
+                    owning the technical direction of product areas and leading
+                    a team of engineers.
                 </Typography>
                 <ItemDivider />
                 <Typography>Bachelor of Science in Engineering</Typography>

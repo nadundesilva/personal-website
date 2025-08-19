@@ -92,8 +92,7 @@ const WelcomeBanner = (): React.ReactElement => {
                             fontSize: 30,
                         }}
                     >
-                        Senior Software Engineer &amp; Cloud Computing
-                        Enthusiast
+                        Lead Software Engineer &amp; Cloud Computing Enthusiast
                     </Typography>
                 </Grid>
                 <Grid size={12}>
