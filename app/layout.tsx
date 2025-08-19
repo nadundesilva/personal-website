@@ -108,7 +108,7 @@ const jsonLd: WithContext<Person> = {
     "image": `${WEBSITE_PUBLIC_URL}/assets/profile-photo.jpg`,
     "gender": "male",
     "birthPlace": "Colombo, Sri Lanka",
-    "jobTitle": "Senior Software Engineer",
+    "jobTitle": "Lead Software Engineer",
     "url": WEBSITE_PUBLIC_URL,
     "sameAs": Profiles.map((p) => p.link),
     "alumniOf": [
@@ -121,8 +121,8 @@ const jsonLd: WithContext<Person> = {
     "worksFor": [
         {
             "@type": "Organization",
-            "name": "Orion Health",
-            "sameAs": ["https://orionhealth.com/"],
+            "name": "McCrae Tech",
+            "sameAs": ["https://mccrae.tech/"],
         },
     ],
 };
