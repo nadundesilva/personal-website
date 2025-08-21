@@ -40,7 +40,7 @@
         "@mui/material-nextjs": "^7.3.0",
         "@sentry/nextjs": "^10.5.0",
         "glob": "^11.0.3",
-        "next": "15.4.6",
+        "next": "15.4.7",
         "react": "19.1.1",
         "react-dom": "19.1.1",
         "sharp": "^0.34.3"
@@ -51,9 +51,9 @@
         "@istanbuljs/nyc-config-typescript": "1.0.2",
         "@mdx-js/loader": "3.1.0",
         "@mdx-js/react": "3.1.0",
-        "@next/bundle-analyzer": "15.4.6",
-        "@next/eslint-plugin-next": "15.4.6",
-        "@next/mdx": "15.4.6",
+        "@next/bundle-analyzer": "15.4.7",
+        "@next/eslint-plugin-next": "15.4.7",
+        "@next/mdx": "15.4.7",
         "@testing-library/cypress": "10.0.3",
         "@testing-library/react": "16.3.0",
         "@testing-library/user-event": "14.6.1",
@@ -65,7 +65,7 @@
         "@types/react-dom": "19.1.7",
         "cypress": "14.5.4",
         "eslint": "9.33.0",
-        "eslint-config-next": "15.4.6",
+        "eslint-config-next": "15.4.7",
         "eslint-config-prettier": "10.1.8",
         "eslint-config-react": "1.1.7",
         "eslint-plugin-prettier": "5.5.4",
@@ -80,7 +80,7 @@
         "stylelint": "16.23.1",
         "stylelint-config-standard": "39.0.0",
         "typescript": "5.9.2",
-        "typescript-eslint": "8.39.1"
+        "typescript-eslint": "8.40.0"
     },
     "lint-staged": {
         "*.{tsx,ts,js}": "eslint --no-cache --fix",
