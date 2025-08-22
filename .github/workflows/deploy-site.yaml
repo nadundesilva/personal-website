@@ -96,7 +96,7 @@ jobs:
               env:
                   BUILD_TYPE: test
             - name: Run E2E Tests
-              uses: cypress-io/github-action@v6.10.2
+              uses: cypress-io/github-action@b8ba51a856ba5f4c15cf39007636d4ab04f23e3c # v6.10.2
               with:
                   start: bash .github/scripts/start-server.sh
                   browser: ${{ matrix.browser }}
@@ -242,7 +242,7 @@ jobs:
                   name: site
                   path: _site/
             - name: Run E2E Tests
-              uses: cypress-io/github-action@v6.10.2
+              uses: cypress-io/github-action@b8ba51a856ba5f4c15cf39007636d4ab04f23e3c # v6.10.2
               with:
                   start: bash .github/scripts/start-server.sh
                   browser: ${{ matrix.browser }}
