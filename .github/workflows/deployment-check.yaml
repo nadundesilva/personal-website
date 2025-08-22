@@ -34,7 +34,7 @@ jobs:
               run: |
                   npm ci
             - name: Run E2E Tests
-              uses: cypress-io/github-action@v6.10.2
+              uses: cypress-io/github-action@b8ba51a856ba5f4c15cf39007636d4ab04f23e3c # v6.10.2
               with:
                   record: true
                   tag: deployment-check-in-browser-${{ matrix.browser }}
