@@ -22,7 +22,7 @@ jobs:
                   fetch-depth: 0
                   persist-credentials: false
             - name: Setup Node.js
-              uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+              uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
                   node-version: "22.18.0"
             - name: Install Dependencies
@@ -83,7 +83,7 @@ jobs:
                   fetch-depth: 0
                   persist-credentials: false
             - name: Setup Node.js
-              uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+              uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
                   node-version: "22.18.0"
             - name: Install Dependencies
@@ -143,7 +143,7 @@ jobs:
               with:
                   fetch-depth: 0
                   persist-credentials: false
-            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+            - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
                   node-version: "22.18.0"
             - name: Install Dependencies
@@ -180,7 +180,7 @@ jobs:
                   fetch-depth: 0
                   persist-credentials: false
             - name: Setup Node.js
-              uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+              uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
                   node-version: "22.18.0"
             - name: Install Dependencies
@@ -231,7 +231,7 @@ jobs:
                   fetch-depth: 0
                   persist-credentials: false
             - name: Setup Node.js
-              uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+              uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
                   node-version: "22.18.0"
             - name: Install Dependencies
@@ -284,7 +284,7 @@ jobs:
                   name: site
                   path: _site/
             - name: Setup Node.js
-              uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+              uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
                   node-version: "22.18.0"
             - name: Run Lighthouse Audit
@@ -330,7 +330,7 @@ jobs:
                   name: site
                   path: _site/
             - name: Setup Node.js
-              uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+              uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
                   node-version: "22.18.0"
             - name: Deploy
