@@ -62,7 +62,7 @@ jobs:
                   persist-credentials: false
             - name: Link Checker
               id: lychee
-              uses: lycheeverse/lychee-action@5c4ee84814c983aa7164eaee476f014e53ff3963 # v2
+              uses: lycheeverse/lychee-action@885c65f3dc543b57c898c8099f4e08c8afd178a2 # v2
               with:
                   args: --verbose --no-progress https://nadundesilva.com/
                   fail: true
@@ -123,7 +123,7 @@ jobs:
                   format: sarif
                   output: trivy-results.sarif
             - name: Upload Trivy scan results to GitHub Security tab
-              uses: github/codeql-action/upload-sarif@96f518a34f7a870018057716cc4d7a5c014bd61c # v3
+              uses: github/codeql-action/upload-sarif@192325c86100d080feab897ff886c34abd4c83a3 # v3
               if: always()
               with:
                   sarif_file: trivy-results.sarif
