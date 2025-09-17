@@ -24,7 +24,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
-                  node-version: "22.18.0"
+                  node-version: "22.19.0"
             - name: Install Dependencies
               run: npm ci
             - name: Lint Code Base
@@ -53,7 +53,7 @@ jobs:
               with:
                   persist-credentials: false
             - name: Run Trivy vulnerability scanner
-              uses: aquasecurity/trivy-action@dc5a429b52fcf669ce959baa2c2dd26090d2a6c4 # 0.32.0
+              uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 # 0.33.1
               with:
                   scan-type: fs
                   vuln-type: library
@@ -85,7 +85,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
-                  node-version: "22.18.0"
+                  node-version: "22.19.0"
             - name: Install Dependencies
               run: npm ci
             - name: Instrument Website for Code Coverage
@@ -145,7 +145,7 @@ jobs:
                   persist-credentials: false
             - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
-                  node-version: "22.18.0"
+                  node-version: "22.19.0"
             - name: Install Dependencies
               run: npm ci
             - name: Build Site
@@ -182,7 +182,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
-                  node-version: "22.18.0"
+                  node-version: "22.19.0"
             - name: Install Dependencies
               run: npm ci
             - name: Download Site
@@ -233,7 +233,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
-                  node-version: "22.18.0"
+                  node-version: "22.19.0"
             - name: Install Dependencies
               run: npm ci
             - name: Download Site
@@ -286,7 +286,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
-                  node-version: "22.18.0"
+                  node-version: "22.19.0"
             - name: Run Lighthouse Audit
               run: |
                   ls -la
@@ -332,7 +332,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
-                  node-version: "22.18.0"
+                  node-version: "22.19.0"
             - name: Deploy
               uses: JamesIves/github-pages-deploy-action@6c2d9db40f9296374acc17b90404b6e8864128c8 # v4
               with:
