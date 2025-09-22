@@ -38,16 +38,16 @@
         "@mui/lab": "^7.0.0-beta.17",
         "@mui/material": "^7.3.2",
         "@mui/material-nextjs": "^7.3.2",
-        "@sentry/nextjs": "^10.11.0",
+        "@sentry/nextjs": "^10.12.0",
         "glob": "^11.0.3",
         "next": "15.5.3",
         "react": "19.1.1",
         "react-dom": "19.1.1",
-        "sharp": "^0.34.3"
+        "sharp": "^0.34.4"
     },
     "devDependencies": {
         "@cypress/code-coverage": "3.14.6",
-        "@eslint/js": "9.35.0",
+        "@eslint/js": "9.36.0",
         "@istanbuljs/nyc-config-typescript": "1.0.2",
         "@mdx-js/loader": "3.1.1",
         "@mdx-js/react": "3.1.1",
@@ -60,11 +60,11 @@
         "@types/cypress__code-coverage": "3.10.2",
         "@types/ga-gtag": "1.2.0",
         "@types/mdx": "2.0.13",
-        "@types/node": "24.4.0",
+        "@types/node": "24.5.2",
         "@types/react": "19.1.13",
         "@types/react-dom": "19.1.9",
         "cypress": "15.2.0",
-        "eslint": "9.35.0",
+        "eslint": "9.36.0",
         "eslint-config-next": "15.5.3",
         "eslint-config-prettier": "10.1.8",
         "eslint-config-react": "1.1.7",
@@ -80,7 +80,7 @@
         "stylelint": "16.24.0",
         "stylelint-config-standard": "39.0.0",
         "typescript": "5.9.2",
-        "typescript-eslint": "8.43.0"
+        "typescript-eslint": "8.44.0"
     },
     "lint-staged": {
         "*.{tsx,ts,js}": "eslint --no-cache --fix",
