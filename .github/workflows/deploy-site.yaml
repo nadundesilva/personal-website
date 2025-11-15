@@ -25,7 +25,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
-                  node-version: "22.20.0"
+                  node-version: "24.11.1"
             - name: Install Dependencies
               run: npm ci
             - name: Lint Code Base
@@ -88,7 +88,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
-                  node-version: "22.20.0"
+                  node-version: "24.11.1"
             - name: Install Dependencies
               run: npm ci
             - name: Instrument Website for Code Coverage
@@ -148,7 +148,7 @@ jobs:
                   persist-credentials: false
             - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
-                  node-version: "22.20.0"
+                  node-version: "24.11.1"
             - name: Install Dependencies
               run: npm ci
             - name: Build Site
@@ -185,7 +185,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
-                  node-version: "22.20.0"
+                  node-version: "24.11.1"
             - name: Install Dependencies
               run: npm ci
             - name: Download Site
@@ -236,7 +236,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
-                  node-version: "22.20.0"
+                  node-version: "24.11.1"
             - name: Install Dependencies
               run: npm ci
             - name: Download Site
@@ -289,7 +289,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
-                  node-version: "22.20.0"
+                  node-version: "24.11.1"
             - name: Run Lighthouse Audit
               run: |
                   ls -la
@@ -335,7 +335,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
               with:
-                  node-version: "22.20.0"
+                  node-version: "24.11.1"
             - name: Deploy
               uses: JamesIves/github-pages-deploy-action@6c2d9db40f9296374acc17b90404b6e8864128c8 # v4.7.3
               with:
