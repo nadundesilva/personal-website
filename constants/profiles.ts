@@ -21,7 +21,7 @@ import {
     Twitter,
     School,
 } from "@mui/icons-material";
-import { type SvgIcon } from "@mui/material";
+import type { SvgIcon } from "@mui/material";
 
 export interface Profile {
     name: string;

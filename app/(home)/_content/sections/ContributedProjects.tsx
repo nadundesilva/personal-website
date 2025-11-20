@@ -14,7 +14,7 @@
  */
 import { Box, Grid, Slide, useTheme } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import type React from "react";
 
 import { useScrollOffset } from "@/components/layout";
 import { Logos, type LogoAsset } from "@/constants/logos";

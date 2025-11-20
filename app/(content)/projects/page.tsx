@@ -14,7 +14,7 @@
  */
 import { KeyboardArrowRight } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 import React from "react";
 
 import {
