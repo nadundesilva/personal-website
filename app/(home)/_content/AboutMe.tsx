@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import type { SxProps } from "@mui/system";
 import Image from "next/image";
-import React from "react";
+import type React from "react";
 
 import { Photos } from "@/constants/images";
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
