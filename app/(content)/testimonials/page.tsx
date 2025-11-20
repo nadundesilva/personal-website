@@ -15,7 +15,7 @@
 import { FormatQuote } from "@mui/icons-material";
 import { Card, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 import React from "react";
 
 import {

@@ -25,7 +25,7 @@ import {
     useTheme,
 } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import type React from "react";
 
 import { useScrollOffset } from "@/components/layout";
 import { Photos, type ImageAsset } from "@/constants/images";

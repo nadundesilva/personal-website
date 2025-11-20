@@ -26,7 +26,7 @@ import {
     useTheme,
 } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import type React from "react";
 
 import { Images } from "@/constants/images";
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";

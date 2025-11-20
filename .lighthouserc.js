@@ -23,10 +23,10 @@ const PATHS = [
     "/education",
 ];
 
-let LIVE_SITE_ASSERTIONS =
-    process.env["VALIDATING_LIVE_SITE"] !== "true" ? {} : {};
+const LIVE_SITE_ASSERTIONS =
+    process.env.VALIDATING_LIVE_SITE !== "true" ? {} : {};
 
-let TARGET_BASE_URL = process.env["TARGET_BASE_URL"];
+let TARGET_BASE_URL = process.env.TARGET_BASE_URL;
 if (TARGET_BASE_URL === undefined) {
     TARGET_BASE_URL = "https://nadundesilva.com";
 }

@@ -131,11 +131,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 "keywords": blogMetadata.keywords,
                 "sameAs": [blogMetadata.mediumUrl],
             };
+            const renderingId = React.useId();
             return (
                 <Box>
                     <Title>{pageMetadata.title}</Title>
                     <Script
-                        id="json-ld-blog"
+                        id={`json-ld-blog-${renderingId}`}
                         type="application/ld+json"
                         dangerouslySetInnerHTML={{
                             __html: JSON.stringify(jsonLd),

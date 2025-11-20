@@ -33,6 +33,8 @@ jobs:
               env:
                   DEFAULT_BRANCH: main
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  IGNORE_GITIGNORED_FILES: "true"
+                  TYPESCRIPT_ES_CONFIG_FILE: eslint.config.js
                   LINTER_RULES_PATH: .
                   VALIDATE_ALL_CODEBASE: "true"
                   VALIDATE_CSS: "false"
@@ -41,7 +43,7 @@ jobs:
                   VALIDATE_JAVASCRIPT_STANDARD: "false"
                   VALIDATE_TYPESCRIPT_STANDARD: "false"
                   VALIDATE_CSS_PRETTIER: "false"
-                  TYPESCRIPT_ES_CONFIG_FILE: eslint.config.js
+                  VALIDATE_BIOME_FORMAT: "false"
 
     run-vulnerability-analysis:
         name: Run Vulnerability Analysis
@@ -64,7 +66,7 @@ jobs:
                   format: sarif
                   output: trivy-results.sarif
             - name: Upload Trivy scan results to GitHub Security tab
-              uses: github/codeql-action/upload-sarif@192325c86100d080feab897ff886c34abd4c83a3 # v3
+              uses: github/codeql-action/upload-sarif@c3d42c5d08633d8b33635fbd94b000a0e2585b3c # v3.31.4
               if: always()
               with:
                   sarif_file: trivy-results.sarif
