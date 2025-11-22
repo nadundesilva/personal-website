@@ -13,6 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { Box, CircularProgress } from "@mui/material";
+import React from "react";
 
 const Loading = (): React.ReactElement => (
     <Box

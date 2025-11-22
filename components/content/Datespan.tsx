@@ -15,17 +15,18 @@
 import { CalendarMonth } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import React from "react";
 
-import type { FormattableTime } from "@/constants/commons";
+import type { FormattableDate } from "@/constants/date";
 
-interface TimespanProps {
-    value: FormattableTime;
+interface DatespanProps {
+    value: FormattableDate;
 }
 
-const Timespan = ({ value }: TimespanProps): React.ReactElement => (
+const Datespan = ({ value }: DatespanProps): React.ReactElement => (
     <Typography variant="body1" sx={{ pt: 1, pb: 1, color: grey[700] }}>
-        <CalendarMonth /> {value.format()}
+        <CalendarMonth aria-label={value.type} /> {value.format()}
     </Typography>
 );
 
-export default Timespan;
+export default Datespan;

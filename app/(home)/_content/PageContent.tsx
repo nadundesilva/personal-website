@@ -16,7 +16,7 @@
 
 import { Box, CircularProgress, Container, styled } from "@mui/material";
 import dynamic from "next/dynamic";
-import React, { useRef, type JSX } from "react";
+import React, { type JSX } from "react";
 
 import Heading from "./Heading";
 import WelcomeBanner from "./WelcomeBanner";
@@ -71,7 +71,6 @@ const SkillsSection = dynamic(async () => await import("./sections/Skills"), {
 
 interface Section {
     name: string;
-    ref: React.RefObject<HTMLDivElement | null>;
     Component: React.ComponentType;
     sectionId: string;
 }
@@ -80,37 +79,31 @@ const PageContent = (): React.ReactElement => {
     const pageSections: Section[] = [
         {
             name: "Experience",
-            ref: useRef<HTMLDivElement>(null),
             Component: ExperienceSection,
             sectionId: "experience",
         },
         {
             name: "Achievements",
-            ref: useRef<HTMLDivElement>(null),
             Component: AchievementsSection,
             sectionId: "achievements",
         },
         {
             name: "Skills",
-            ref: useRef<HTMLDivElement>(null),
             Component: SkillsSection,
             sectionId: "skills",
         },
         {
             name: "Certifications",
-            ref: useRef<HTMLDivElement>(null),
             Component: CertificationsSection,
             sectionId: "certifications",
         },
         {
             name: "Profiles",
-            ref: useRef<HTMLDivElement>(null),
             Component: ProfilesSection,
             sectionId: "profiles",
         },
         {
             name: "Contributed Projects",
-            ref: useRef<HTMLDivElement>(null),
             Component: ContributedProjectsSection,
             sectionId: "contributed-projects",
         },
@@ -130,7 +123,7 @@ const PageContent = (): React.ReactElement => {
     );
 
     return (
-        <React.Fragment>
+        <>
             <WelcomeBanner />
             <Container
                 maxWidth={false}
@@ -168,7 +161,7 @@ const PageContent = (): React.ReactElement => {
                     ))}
                 </Container>
             </Container>
-        </React.Fragment>
+        </>
     );
 };
 

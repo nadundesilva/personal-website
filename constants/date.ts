@@ -26,50 +26,57 @@ type Month =
     | "November"
     | "December";
 
-export interface FormattableTime {
+export interface FormattableDate {
+    type: "Date" | "DateRange";
     format: () => string;
 }
 
-export class Time implements FormattableTime {
+export class Date implements FormattableDate {
     year: number;
     month?: Month;
 
     constructor(year: number, month?: Month) {
         if (year < 1994) {
             throw Error(
-                `Invalid year; expected to be greater than year of birth (${year})`,
+                `Invalid year; expected to be greater than or equal to year of birth (1994), but got ${year}`,
             );
         }
         this.year = year;
         this.month = month;
     }
 
+    type: "Date" = "Date" as const;
+
     format(): string {
-        let time = "";
+        let date = "";
         if (this.month !== undefined) {
-            time += this.month + " ";
+            date += this.month + " ";
         }
-        time += this.year.toString();
-        return time;
+        date += this.year.toString();
+        return date;
     }
 }
 
-class NowTime implements FormattableTime {
+class NowDate implements FormattableDate {
+    type: "Date" = "Date" as const;
+
     format(): string {
         return "Now";
     }
 }
 
-export const Now = new NowTime();
+export const Now = new NowDate();
 
-export class TimeRange implements FormattableTime {
-    from: Time | NowTime;
-    to: Time | NowTime;
+export class DateRange implements FormattableDate {
+    from: Date;
+    to: Date | NowDate;
 
-    constructor(from: Time, to: Time | NowTime) {
+    constructor(from: Date, to: Date | NowDate) {
         this.from = from;
         this.to = to;
     }
+
+    type: "DateRange" = "DateRange" as const;
 
     format(): string {
         return this.from.format() + " to " + this.to.format();

@@ -24,10 +24,10 @@ import {
     Paragraph,
     Section,
     SectionHeading,
-    Timespan,
+    Datespan,
     Title,
 } from "@/components/content";
-import { Time, TimeRange } from "@/constants/commons";
+import { Date, DateRange } from "@/constants/date";
 import { Logos } from "@/constants/logos";
 import { FULL_NAME } from "@/constants/metadata";
 
@@ -67,15 +67,15 @@ const Experience = (): React.ReactElement => {
     const gsocLogo = <Logo logo={Logos.GoogleSummerOfCode} />;
 
     return (
-        <React.Fragment>
+        <>
             <Title>Experience</Title>
             <Section>
                 <SectionHeading>Associate Technical Lead</SectionHeading>
-                <Timespan
+                <Datespan
                     value={
-                        new TimeRange(
-                            new Time(2021, "June"),
-                            new Time(2022, "November"),
+                        new DateRange(
+                            new Date(2021, "June"),
+                            new Date(2022, "November"),
                         )
                     }
                 />
@@ -146,11 +146,11 @@ const Experience = (): React.ReactElement => {
             </Section>
             <Section>
                 <SectionHeading>Senior Software Engineer</SectionHeading>
-                <Timespan
+                <Datespan
                     value={
-                        new TimeRange(
-                            new Time(2019, "July"),
-                            new Time(2021, "June"),
+                        new DateRange(
+                            new Date(2019, "July"),
+                            new Date(2021, "June"),
                         )
                     }
                 />
@@ -250,11 +250,11 @@ const Experience = (): React.ReactElement => {
             </Section>
             <Section>
                 <SectionHeading>Software Engineer</SectionHeading>
-                <Timespan
+                <Datespan
                     value={
-                        new TimeRange(
-                            new Time(2018, "January"),
-                            new Time(2019, "July"),
+                        new DateRange(
+                            new Date(2018, "January"),
+                            new Date(2019, "July"),
                         )
                     }
                 />
@@ -354,11 +354,11 @@ const Experience = (): React.ReactElement => {
             </Section>
             <Section>
                 <SectionHeading>Google Summer of Code Intern</SectionHeading>
-                <Timespan
+                <Datespan
                     value={
-                        new TimeRange(
-                            new Time(2017, "May"),
-                            new Time(2017, "September"),
+                        new DateRange(
+                            new Date(2017, "May"),
+                            new Date(2017, "September"),
                         )
                     }
                 />
@@ -378,11 +378,11 @@ const Experience = (): React.ReactElement => {
             </Section>
             <Section>
                 <SectionHeading>Software Engineering Trainee</SectionHeading>
-                <Timespan
+                <Datespan
                     value={
-                        new TimeRange(
-                            new Time(2016, "July"),
-                            new Time(2016, "December"),
+                        new DateRange(
+                            new Date(2016, "July"),
+                            new Date(2016, "December"),
                         )
                     }
                 />
@@ -409,7 +409,7 @@ const Experience = (): React.ReactElement => {
                     as well before the end of my internship.
                 </Paragraph>
             </Section>
-        </React.Fragment>
+        </>
     );
 };
 

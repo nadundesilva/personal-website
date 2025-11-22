@@ -20,8 +20,6 @@ interface BlogArticlesLayoutProps {
 
 const BlogArticlesLayout = ({
     children,
-}: BlogArticlesLayoutProps): React.ReactElement => (
-    <React.Fragment>{children}</React.Fragment>
-);
+}: BlogArticlesLayoutProps): React.ReactElement => <>{children}</>;
 
 export default BlogArticlesLayout;

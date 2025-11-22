@@ -19,6 +19,12 @@ const client = new ImgixClient({
     useHTTPS: true,
 });
 
+/**
+ * @param {string} src - The image source path
+ * @param {number} width - The desired image width
+ * @param {number} quality - The image quality (0-100)
+ * @returns {string} The processed image URL
+ */
 export default function nextImageLoader({ src, width, quality }) {
     return src.startsWith("/_next/static/media/")
         ? src

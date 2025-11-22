@@ -29,7 +29,6 @@ import Image from "next/image";
 import type React from "react";
 
 import { Images } from "@/constants/images";
-import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
 const BannerImage = styled(Image)({
     zIndex: 1,
@@ -96,10 +95,7 @@ const WelcomeBanner = (): React.ReactElement => {
                     </Typography>
                 </Grid>
                 <Grid size={12}>
-                    <Link
-                        href={`${WEBSITE_PUBLIC_URL}/nadundesilva-cv.pdf`}
-                        target="_blank"
-                    >
+                    <Link href="/nadundesilva-cv.pdf" target="_blank">
                         <Button
                             variant="contained"
                             color="primary"

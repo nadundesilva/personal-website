@@ -25,7 +25,7 @@ import {
     Paragraph,
     Section,
     SectionHeading,
-    Timespan,
+    Datespan,
     Title,
 } from "@/components/content";
 import { type Certificate, Certificates } from "@/constants/certificates";
@@ -66,10 +66,10 @@ const Certifications = (): React.ReactElement => {
 
     const generateSectionHeader = (
         certificate: Certificate,
-    ): React.ReactNode => (
-        <React.Fragment>
+    ): React.ReactElement => (
+        <>
             <SectionHeading>{certificate.name}</SectionHeading>
-            <Timespan value={certificate.completedOn} />
+            <Datespan value={certificate.completedOn} />
             <Logo height="5em" logo={certificate.logo} />
             <Box sx={{ m: 0, pt: 2 }}>
                 <Link href={certificate.link} target="_blank">
@@ -82,11 +82,11 @@ const Certifications = (): React.ReactElement => {
                     </Button>
                 </Link>
             </Box>
-        </React.Fragment>
+        </>
     );
 
     return (
-        <React.Fragment>
+        <>
             <Title>Certifications</Title>
             <Section>
                 {generateSectionHeader(
@@ -159,7 +159,7 @@ const Certifications = (): React.ReactElement => {
                     Certified Kubernetes Administrator is offered and governed
                     by the {LinuxFoundation}. This covers the administrative
                     aspects and in depth knowledge about Kubernetes Clusters
-                    includign ETCD clusters.
+                    including ETCD clusters.
                 </Paragraph>
             </Section>
             <Section>
@@ -172,7 +172,7 @@ const Certifications = (): React.ReactElement => {
                     related to developing applications to be run on Kubernetes.
                 </Paragraph>
             </Section>
-        </React.Fragment>
+        </>
     );
 };
 

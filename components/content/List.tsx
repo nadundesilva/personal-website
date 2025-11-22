@@ -15,6 +15,7 @@
  */
 import { Box } from "@mui/material";
 import { Theme } from "@mui/material/styles";
+import React from "react";
 
 interface CustomListProps {
     component?: "ul" | "ol";
@@ -24,7 +25,7 @@ interface CustomListProps {
 const CustomList = ({
     children,
     component,
-}: CustomListProps): React.ReactNode => (
+}: CustomListProps): React.ReactElement => (
     <Box component={component ?? "ul"} sx={{ my: 0 }}>
         {children}
     </Box>
@@ -36,13 +37,13 @@ interface CustomListItemProps {
 
 export const CustomListItem = ({
     children,
-}: CustomListItemProps): React.ReactNode => (
+}: CustomListItemProps): React.ReactElement => (
     <Box
         component="li"
         sx={{
             "&::marker": {
                 color: (theme: Theme) =>
-                    theme.palette.mode == "light" ? "#000000" : "#ffffff",
+                    theme.palette.mode === "light" ? "#000000" : "#ffffff",
             },
         }}
     >

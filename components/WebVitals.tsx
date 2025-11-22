@@ -20,7 +20,7 @@ interface Window {
     gtag: Gtag.Gtag;
 }
 
-const WebVitals = (): React.ReactElement => {
+const WebVitals = (): React.ReactElement | null => {
     useReportWebVitals((metric) => {
         (window as Window).gtag("event", metric.name, {
             value: Math.round(
@@ -30,7 +30,7 @@ const WebVitals = (): React.ReactElement => {
             non_interaction: true,
         });
     });
-    return <React.Fragment />;
+    return null;
 };
 
 export default WebVitals;

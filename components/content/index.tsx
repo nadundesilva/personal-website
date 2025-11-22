@@ -21,7 +21,7 @@ import Photo from "./Photo";
 import Section from "./Section";
 import SectionHeading from "./SectionHeading";
 import SubsectionHeading from "./SubsectionHeading";
-import Timespan from "./Timespan";
+import Datespan from "./Datespan";
 import Title from "./Title";
 
 export {
@@ -35,6 +35,6 @@ export {
     Section,
     SectionHeading,
     SubsectionHeading,
-    Timespan,
+    Datespan,
     Title,
 };
