@@ -120,8 +120,8 @@ const PersonalProjects = (): React.ReactElement => {
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Aply common network level restrictions using Network
-                            Policies across namespaces.
+                            Apply common network level restrictions using
+                            Network Policies across namespaces.
                         </Typography>
                     </ListItem>
                 </UseCasesSection>
