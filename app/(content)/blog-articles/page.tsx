@@ -25,10 +25,10 @@ export const metadata: Metadata = {
 };
 
 const BlogArticles = async (): Promise<React.ReactElement> => (
-    <React.Fragment>
+    <>
         <Title>Blog Articles</Title>
         <ArticlesList pathPattern="app/(content)/blog-articles/(articles)/**/page.mdx" />
-    </React.Fragment>
+    </>
 );
 
 export default BlogArticles;

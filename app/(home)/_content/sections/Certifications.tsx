@@ -53,8 +53,7 @@ const Certifications = (): React.ReactElement => {
     const smWidth = theme.breakpoints.values.sm;
     const mdWidth = theme.breakpoints.values.md;
     const xlWidth = theme.breakpoints.values.xl;
-    const imageSizes = `(min-width: ${xsWidth}px) 100vw, (min-width: ${smWidth}px) 50vw, 
-        (min-width: ${mdWidth}px) 34vw, (min-width: ${xlWidth}px) 25vw`;
+    const imageSizes = `(min-width: ${xsWidth}px) 100vw, (min-width: ${smWidth}px) 50vw, (min-width: ${mdWidth}px) 34vw, (min-width: ${xlWidth}px) 25vw`;
 
     return (
         <Grid
@@ -63,8 +62,12 @@ const Certifications = (): React.ReactElement => {
             justifyContent="center"
             alignItems="stretch"
         >
-            {certifications.map((certification, index) => (
-                <Grid key={index} size={{ xs: 12, sm: 6, md: 4 }} sx={{ p: 2 }}>
+            {certifications.map((certification) => (
+                <Grid
+                    key={certification.name}
+                    size={{ xs: 12, sm: 6, md: 4 }}
+                    sx={{ p: 2 }}
+                >
                     <Slide
                         direction={direction === -1 ? "down" : "up"}
                         in={offset > 0.5}

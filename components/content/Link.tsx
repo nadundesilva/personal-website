@@ -17,31 +17,20 @@ import { Link, LinkProps } from "@mui/material";
 import NextLink from "next/link";
 import React, { forwardRef, Ref } from "react";
 
-type WebsiteRoute = string;
-
-interface InternalLink {
-    href: WebsiteRoute;
-}
-
-interface ExternalLink {
-    href: string;
-    baseUrl: string;
-}
-
-type CustomLinkProps = (InternalLink | ExternalLink) & {
+type CustomLinkProps = {
+    href: string | URL;
     children: React.ReactNode;
     target?: string;
-    internal?: boolean;
 };
 
 const CustomLink = ({
+    href,
     children,
     target,
-    internal,
-    ...customLinkProps
 }: CustomLinkProps): React.ReactElement => (
     <Link
         target={target}
+        rel={target === "_blank" ? "noopener noreferrer" : undefined}
         component={forwardRef(function CustomLinkComponent(
             {
                 children: customLinkCompChildren,
@@ -49,16 +38,8 @@ const CustomLink = ({
             }: LinkProps,
             ref: Ref<HTMLAnchorElement>,
         ) {
-            let href: URL | WebsiteRoute;
-            if (internal) {
-                const internalLink = customLinkProps as InternalLink;
-                href = internalLink.href;
-            } else {
-                const externalLink = customLinkProps as ExternalLink;
-                href = new URL(externalLink.href, externalLink.baseUrl);
-            }
             return (
-                <NextLink href={href} ref={ref} {...customLinkCompProps}>
+                <NextLink {...customLinkCompProps} href={href} ref={ref}>
                     {customLinkCompChildren}
                 </NextLink>
             );

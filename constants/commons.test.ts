@@ -13,64 +13,65 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
-import { type FormattableTime, Now, Time, TimeRange } from "./commons";
+import { type FormattableDate, Now, Date, DateRange } from "./date";
 
 test.each([
     {
-        time: new Time(2022, "January"),
-        formattedTime: "January 2022",
+        date: new Date(2022, "January"),
+        formattedDate: "January 2022",
     },
     {
-        time: new Time(2020),
-        formattedTime: "2020",
+        date: new Date(2020),
+        formattedDate: "2020",
     },
     {
-        time: Now,
-        formattedTime: "Now",
+        date: Now,
+        formattedDate: "Now",
     },
 ])(
-    "Test time formats (time: $time)",
+    "Test date formats (date: $date)",
     ({
-        time,
-        formattedTime,
+        date,
+        formattedDate,
     }: {
-        time: FormattableTime;
-        formattedTime: string;
+        date: FormattableDate;
+        formattedDate: string;
     }) => {
-        expect(time.format()).toBe(formattedTime);
+        expect(date.format()).toBe(formattedDate);
     },
 );
 
-test("Test invalid time", () => {
+test("Test invalid date", () => {
     expect(() => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const time = new Time(1993);
+        new Date(1993);
     }).toThrowError(
-        Error("Invalid year; expected to be greater than year of birth (1993)"),
+        Error(
+            "Invalid year; expected to be greater than or equal to year of birth (1994), but got 1993",
+        ),
     );
 });
 
 test.each([
     {
-        timeRange: new TimeRange(new Time(2020, "January"), Now),
-        formattedTime: "January 2020 to Now",
+        dateRange: new DateRange(new Date(2020, "January"), Now),
+        formattedDate: "January 2020 to Now",
     },
     {
-        timeRange: new TimeRange(
-            new Time(2020, "January"),
-            new Time(2021, "February"),
+        dateRange: new DateRange(
+            new Date(2020, "January"),
+            new Date(2021, "February"),
         ),
-        formattedTime: "January 2020 to February 2021",
+        formattedDate: "January 2020 to February 2021",
     },
 ])(
-    "Test time ranges (timeRange: $timeRange)",
+    "Test date ranges (dateRange: $dateRange)",
     ({
-        timeRange,
-        formattedTime,
+        dateRange,
+        formattedDate,
     }: {
-        timeRange: TimeRange;
-        formattedTime: string;
+        dateRange: DateRange;
+        formattedDate: string;
     }) => {
-        expect(timeRange.format()).toBe(formattedTime);
+        expect(dateRange.format()).toBe(formattedDate);
     },
 );

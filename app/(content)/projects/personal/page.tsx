@@ -88,7 +88,7 @@ const PersonalProjects = (): React.ReactElement => {
         "https://kubernetes.io/docs/concepts/services-networking/network-policies/",
     );
     return (
-        <React.Fragment>
+        <>
             <Title>Personal Projects</Title>
             <Section>
                 <SectionHeading>K8s Replicator</SectionHeading>
@@ -161,7 +161,7 @@ const PersonalProjects = (): React.ReactElement => {
                     </ListItem>
                 </UseCasesSection>
             </Section>
-        </React.Fragment>
+        </>
     );
 };
 

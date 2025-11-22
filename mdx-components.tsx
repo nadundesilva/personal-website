@@ -72,8 +72,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         a: ({ href, children }) =>
             href ? (
                 <Link
-                    href={href}
-                    baseUrl={`${WEBSITE_PUBLIC_URL}/blog-articles/`}
+                    href={new URL(href, `${WEBSITE_PUBLIC_URL}/blog-articles/`)}
                     target="_blank"
                 >
                     {children}
@@ -179,7 +178,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 direction="column"
                 justifyContent="center"
                 alignItems="center"
-                py={3}
+                sx={{ py: 3 }}
             >
                 <Grid sx={{ textAlign: "center" }}>
                     <Image
@@ -196,7 +195,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 {creator && (
                     <Grid>
                         <Typography sx={{ fontSize: "0.8em" }}>
-                            Photo by Clint{" "}
+                            Photo by{" "}
                             <Link href={creator.href} target="_blank">
                                 {creator.name}
                             </Link>{" "}

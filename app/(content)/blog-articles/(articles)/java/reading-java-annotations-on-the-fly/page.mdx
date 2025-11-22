@@ -84,7 +84,7 @@ try {
     Method setFooMethod = classElement.getMethod("setFoo", args);
     // Getting the parameter object
     fooValueParameter = method.getParameters()[0];
-} catch () {
+} catch (Exception e) {
     // Handle Exception
 }
 ```

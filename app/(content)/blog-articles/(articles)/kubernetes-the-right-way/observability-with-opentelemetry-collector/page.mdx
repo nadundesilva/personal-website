@@ -8,10 +8,10 @@ export const blogMetadata = {
         "https://faun.pub/kubernetes-the-right-way-observability-with-opentelemetry-collector-7d54ecb38638",
     publishedDate: new Date("2023-08-18"),
     keywords: [
-        "Observation",
+        "Observability",
         "Kubernetes",
         "Kubernetes Cluster",
-        "Opentelemetry",
+        "OpenTelemetry",
         "DevOps",
     ],
 };
@@ -92,7 +92,7 @@ You can even use the OpenTelemetry Collector if your cluster contains different 
 
 OpenTelemetry Collector also supports using exporters to publish your data to many different observability providers after processing them. You can maintain the tokens and other configurations related to publishing within the Collector deployment without requiring all your services to directly authenticate with the providers.
 
-This capability, combined with the ability to receive data from different frameworks and process them, allows you to use the OpenTelemwtry Collector as a vendor-agnostic integration engine as well as a Stream Processor for your Observability data.
+This capability, combined with the ability to receive data from different frameworks and process them, allows you to use the OpenTelemetry Collector as a vendor-agnostic integration engine as well as a Stream Processor for your Observability data.
 
 You can even publish your data to other OpenTelemetry Collectors and implement fan-out and fan-in architectures to process your data in a scalable manner.
 

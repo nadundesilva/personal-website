@@ -43,7 +43,7 @@ const blogArticles = globSync(
             .replace(/\/page\.mdx$/, ""),
 );
 
-const time = new Date();
+const currentTime = new Date();
 
 const sitemap = (): MetadataRoute.Sitemap =>
     ["/", "/nadundesilva-cv.pdf"]
@@ -51,7 +51,7 @@ const sitemap = (): MetadataRoute.Sitemap =>
         .concat(blogArticles)
         .map((url) => ({
             url: `${WEBSITE_PUBLIC_URL}${url}`,
-            lastModified: time,
+            lastModified: currentTime,
             changeFrequency: "daily",
         }));
 

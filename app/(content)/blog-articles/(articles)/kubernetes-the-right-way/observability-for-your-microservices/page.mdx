@@ -143,7 +143,7 @@ All of this combined will give you traces spanning across the application end to
 
 Another important aspect to consider when you are working on a large microservices deployment is to have a consistent but machine-readable logging format. The general pattern encouraged in Kubernetes is to write all logs to sysout and syserr so that they are recorded in each Kubernetes node in their corresponding logging directories. This is generally collected by a logs agent (such as [Fluentd](https://www.fluentd.org/)), parsed, and sent to a centralized log collection system, to be analyzed based on the requirements.
 
-As you can understand, without a consistent and machine parable format, you may end up with a large number of different rules/queries to parse and analyze your logs increasing the overhead on your team. Most loggers allow you to change the format and also have context as key-value pairs, and this should be used from the start, and enforced across all microservices, to avoid any problems in the future when you scale up.
+As you can understand, without a consistent and machine-readable format, you may end up with a large number of different rules/queries to parse and analyze your logs increasing the overhead on your team. Most loggers allow you to change the format and also have context as key-value pairs, and this should be used from the start, and enforced across all microservices, to avoid any problems in the future when you scale up.
 
 ---
 

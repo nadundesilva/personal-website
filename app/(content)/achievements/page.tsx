@@ -12,11 +12,12 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, Link, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import type { Metadata } from "next";
 import React from "react";
 
 import {
+    Link,
     Logo,
     List,
     ListItem,
@@ -24,10 +25,10 @@ import {
     Photo,
     Section,
     SectionHeading,
-    Timespan,
+    Datespan,
     Title,
 } from "@/components/content";
-import { Time, TimeRange } from "@/constants/commons";
+import { Date, DateRange } from "@/constants/date";
 import { Photos } from "@/constants/images";
 import { type Institute, Institutes } from "@/constants/institutes";
 import { Logos } from "@/constants/logos";
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     description: `Various notable achievements of ${FULL_NAME}.`,
 };
 
-const Achievements = (): React.ReactNode => {
+const Achievements = (): React.ReactElement => {
     const generateLink = (text: string, href: string): React.ReactElement => (
         <Link href={href} target="_blank">
             {text}
@@ -86,14 +87,14 @@ const Achievements = (): React.ReactNode => {
     );
 
     return (
-        <React.Fragment>
+        <>
             <Title>Achievements</Title>
             <Section>
                 <SectionHeading>
                     WSO2 Sustained Outstanding Contribution Award
                 </SectionHeading>
-                <Timespan
-                    value={new TimeRange(new Time(2019), new Time(2021))}
+                <Datespan
+                    value={new DateRange(new Date(2019), new Date(2021))}
                 />
                 {wso2Logo}
                 <Photo
@@ -122,8 +123,8 @@ const Achievements = (): React.ReactNode => {
                     Placements in the Dean&lsquo;s List at the University of
                     Moratuwa
                 </SectionHeading>
-                <Timespan
-                    value={new TimeRange(new Time(2014), new Time(2018))}
+                <Datespan
+                    value={new DateRange(new Date(2014), new Date(2018))}
                 />
                 {uomLogo}
                 <Photo float="right" photo={Photos.UOMDeansList2017} />
@@ -166,7 +167,7 @@ const Achievements = (): React.ReactNode => {
                     NASA Space Apps Challenge - Galactic Impact - Global
                     Finalist
                 </SectionHeading>
-                <Timespan value={new Time(2017)} />
+                <Datespan value={new Date(2017)} />
                 {nasaSpaceAppsChallengeLogo}
                 <Photo
                     float="right"
@@ -195,7 +196,7 @@ const Achievements = (): React.ReactNode => {
                 <SectionHeading>
                     WSO2 Internal Hackathon - Honorable Mention
                 </SectionHeading>
-                <Timespan value={new Time(2017)} />
+                <Datespan value={new Date(2017)} />
                 {wso2Logo}
                 <Paragraph>
                     {WSO2} Internal Hackathon (WHack) was held for the first
@@ -211,7 +212,7 @@ const Achievements = (): React.ReactNode => {
             </Section>
             <Section>
                 <SectionHeading>Angel Hack - Finalist</SectionHeading>
-                <Timespan value={new Time(2016)} />
+                <Datespan value={new Date(2016)} />
                 {angelHackLogo}
                 <Photo float="right" photo={Photos.AngelHack2016} />
                 <Paragraph>
@@ -244,7 +245,7 @@ const Achievements = (): React.ReactNode => {
             </Section>
             <Section>
                 <SectionHeading>HackaDev - Finalist</SectionHeading>
-                <Timespan value={new Time(2015)} />
+                <Datespan value={new Date(2015)} />
                 {hackaDevLogo}
                 <Paragraph>
                     {HackaDev} is a competition which provides a platform for
@@ -262,7 +263,7 @@ const Achievements = (): React.ReactNode => {
                 <SectionHeading>
                     British Council HSBC Youth Enterprise Awards - Finalist
                 </SectionHeading>
-                <Timespan value={new Time(2015)} />
+                <Datespan value={new Date(2015)} />
                 {britishCouncilLogo}
                 <Photo
                     float="right"
@@ -287,7 +288,7 @@ const Achievements = (): React.ReactNode => {
                     using augmented reality to help students study them easily.
                 </Paragraph>
             </Section>
-        </React.Fragment>
+        </>
     );
 };
 
