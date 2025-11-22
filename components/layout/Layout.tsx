@@ -37,7 +37,7 @@ import {
     Zoom,
 } from "@mui/material";
 import { Theme, useColorScheme } from "@mui/material/styles";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { Link } from "@/components/content";
 import { FULL_NAME } from "@/constants/metadata";
@@ -48,18 +48,9 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
-    const [windowObject, setWindowObject] = useState<Window | undefined>(
-        undefined,
-    );
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            setWindowObject(window);
-        }
-    }, []);
     const trigger = useScrollTrigger({
         disableHysteresis: true,
         threshold: 0,
-        target: windowObject,
     });
 
     const scrollToTopRef = useRef<HTMLDivElement>(null);
@@ -121,8 +112,13 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
         </React.Fragment>
     );
 
-    const appBar = React.cloneElement(
-        <AppBar component="header" sx={{ px: 2 }} data-testid="app-bar">
+    const appBar = (
+        <AppBar
+            component="header"
+            sx={{ px: 2 }}
+            data-testid="app-bar"
+            elevation={trigger ? 4 : 0}
+        >
             <Toolbar>
                 {drawer}
                 <Link href={"/"} internal>
@@ -164,10 +160,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                     </IconButton>
                 </Tooltip>
             </Toolbar>
-        </AppBar>,
-        {
-            elevation: trigger ? 4 : 0,
-        },
+        </AppBar>
     );
 
     const handleClick = (): void => {
@@ -204,7 +197,9 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                         theme.palette.background.default,
                 }}
             >
-                <Typography fontSize={15}>&copy; 2021 {FULL_NAME}</Typography>
+                <Typography fontSize={15}>
+                    &copy; 2021-{new Date().getFullYear()} {FULL_NAME}
+                </Typography>
             </Container>
             <Zoom in={trigger}>
                 <Box

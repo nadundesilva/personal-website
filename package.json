@@ -9,10 +9,10 @@
         "build:analyze": "NODE_ENV=production ANALYZE=true next build",
         "start": "NODE_ENV=production next start",
         "lint": "npm run lint:ts && npm run lint:css",
-        "lint:ts": "next lint",
+        "lint:ts": "eslint .",
         "lint:css": "stylelint *.css **/*.css",
         "format:check": "prettier . --check",
-        "format": "npm run format:check -- --write",
+        "format": "prettier . --write",
         "cypress:open": "cypress open",
         "cypress:run": "cypress run",
         "prepare": "husky"
@@ -47,12 +47,10 @@
     },
     "devDependencies": {
         "@cypress/code-coverage": "3.14.7",
-        "@eslint/js": "9.39.1",
         "@istanbuljs/nyc-config-typescript": "1.0.2",
         "@mdx-js/loader": "3.1.1",
         "@mdx-js/react": "3.1.1",
         "@next/bundle-analyzer": "15.5.6",
-        "@next/eslint-plugin-next": "15.5.6",
         "@next/mdx": "15.5.6",
         "@testing-library/cypress": "10.1.0",
         "@testing-library/react": "16.3.0",
@@ -67,8 +65,6 @@
         "eslint": "9.39.1",
         "eslint-config-next": "16.0.3",
         "eslint-config-prettier": "10.1.8",
-        "eslint-config-react": "1.1.7",
-        "eslint-plugin-prettier": "5.5.4",
         "husky": "9.1.7",
         "lint-staged": "16.2.7",
         "next-pwa": "5.6.0",
@@ -79,8 +75,7 @@
         "schema-dts": "1.1.5",
         "stylelint": "16.25.0",
         "stylelint-config-standard": "39.0.1",
-        "typescript": "5.9.3",
-        "typescript-eslint": "8.47.0"
+        "typescript": "5.9.3"
     },
     "lint-staged": {
         "*.{tsx,ts,js}": "eslint --no-cache --fix",

@@ -62,7 +62,7 @@ const sentryConfig = {
     autoInstrumentServerFunctions: false,
 };
 
-export default (phase, { defaultConfig }) => {
+const nextConfig = (phase, { defaultConfig }) => {
     /**
      * @type {import('next').NextConfig}
      **/
@@ -94,3 +94,5 @@ export default (phase, { defaultConfig }) => {
         sentryConfig,
     );
 };
+
+export default nextConfig;

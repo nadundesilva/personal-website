@@ -1,39 +1,21 @@
-import react from "eslint-config-react";
-import eslint from "@eslint/js";
-import tseslint from "typescript-eslint";
-import globals from "globals";
-import prettierRecommended from "eslint-plugin-prettier/recommended";
-import next from "@next/eslint-plugin-next";
 import { defineConfig, globalIgnores } from "eslint/config";
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+import prettier from "eslint-config-prettier/flat";
 
-export default defineConfig([
-    eslint.configs.recommended,
-    tseslint.configs.strict,
-    tseslint.configs.stylistic,
-    prettierRecommended,
-    next.flatConfig.coreWebVitals,
+const eslintConfig = defineConfig([
+    ...nextCoreWebVitals,
+    ...nextTs,
+    prettier,
     globalIgnores([
+        "next-env.d.ts",
+        "public/**",
         "node_modules/**",
-        "cypress/**",
+        ".next/**",
+        "out/**",
+        "build/**",
         "coverage/**",
-        "**/*.js",
-        "**/*.d.ts",
     ]),
-    {
-        languageOptions: {
-            parserOptions: {
-                project: "./tsconfig.json",
-                ecmaFeatures: {
-                    jsx: true,
-                },
-                ecmaVersion: 12,
-                sourceType: "module",
-                globals: {
-                    ...globals.browser,
-                    ...globals.es2021,
-                },
-            },
-        },
-        plugins: { react },
-    },
 ]);
+
+export default eslintConfig;
