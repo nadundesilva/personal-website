@@ -127,14 +127,14 @@ jobs:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
             - name: Upload Test Results Artifacts
               if: always()
-              uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
               with:
                   name: e2e-test-results-${{ matrix.browser }}
                   path: |
                       cypress/videos/
                       cypress/screenshots/
             - name: Upload Code Coverage Report Artifacts
-              uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
               with:
                   name: e2e-tests-coverage-${{ matrix.browser }}
                   path: coverage/
@@ -164,12 +164,12 @@ jobs:
                   SENTRY_RELEASE: ${{ github.sha }}
                   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
             - name: Upload Site
-              uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
               with:
                   name: site
                   path: out/
             - name: Upload Unit Tests Code Coverage Report
-              uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
               with:
                   name: unit-tests-coverage
                   path: coverage/
@@ -191,7 +191,7 @@ jobs:
             - name: Install Dependencies
               run: npm ci
             - name: Download Site
-              uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+              uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
               with:
                   name: site
                   path: _site/
@@ -213,7 +213,7 @@ jobs:
                   WEBSITE_BUILD_DIR: _site
             - name: Upload Link Checker Report
               if: always()
-              uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
               with:
                   name: link-checker-report
                   path: ./lychee/out.md
@@ -242,7 +242,7 @@ jobs:
             - name: Install Dependencies
               run: npm ci
             - name: Download Site
-              uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+              uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
               with:
                   name: site
                   path: _site/
@@ -262,7 +262,7 @@ jobs:
               run: bash .github/scripts/stop-server.sh
             - name: Upload artifacts
               if: always()
-              uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
               with:
                   name: site-build-e2e-test-results-${{ matrix.browser }}
                   path: |
@@ -284,7 +284,7 @@ jobs:
                       .github
                       .lighthouserc.js
             - name: Download Site
-              uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+              uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
               with:
                   name: site
                   path: _site/
@@ -304,7 +304,7 @@ jobs:
                   LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Upload artifacts
               if: always()
-              uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
               with:
                   name: website-audit
                   path: ./lhci-out
@@ -330,7 +330,7 @@ jobs:
                   fetch-depth: 0
                   persist-credentials: false
             - name: Download Site
-              uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+              uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
               with:
                   name: site
                   path: _site/
