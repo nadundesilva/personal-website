@@ -81,7 +81,7 @@ Algorithm:
  6:       rows = query_database(current_start_time, end_time, limit)
  7:    except Exception as err:
  8:       if is_server_side_limit_error(err):
- 9:          has_reached_server_limit = True
+ 9:          has_reached_server_side_limit = True
 10:          rows = err.partial_results.rows  # Partial results set
 11:       else:
 12:          raise err

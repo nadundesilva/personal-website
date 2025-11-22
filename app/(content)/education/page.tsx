@@ -26,10 +26,10 @@ import {
     Paragraph,
     Section,
     SectionHeading,
-    Timespan,
+    Datespan,
     Title,
 } from "@/components/content";
-import { Time, TimeRange } from "@/constants/commons";
+import { Date, DateRange } from "@/constants/date";
 import { type Institute, Institutes } from "@/constants/institutes";
 import { Logos } from "@/constants/logos";
 import { FULL_NAME } from "@/constants/metadata";
@@ -82,10 +82,10 @@ const Education = (): React.ReactElement => {
     );
 
     return (
-        <React.Fragment>
+        <>
             <Title>Education</Title>
             <Box sx={{ pt: 2 }}>
-                <Link href="/education/certifications" internal>
+                <Link href="/education/certifications">
                     <Button
                         size="small"
                         variant="outlined"
@@ -100,11 +100,11 @@ const Education = (): React.ReactElement => {
                     B.Sc. (Hons.) in Engineering (Computer Science and
                     Engineering)
                 </SectionHeading>
-                <Timespan
+                <Datespan
                     value={
-                        new TimeRange(
-                            new Time(2014, "March"),
-                            new Time(2017, "June"),
+                        new DateRange(
+                            new Date(2014, "March"),
+                            new Date(2017, "June"),
                         )
                     }
                 />
@@ -113,7 +113,7 @@ const Education = (): React.ReactElement => {
                     I studied for my four year bachelor&apos;s degree at the{" "}
                     {UniversityOfMoratuwa}. The degree covered many in depth
                     areas (e.g.:- Computer Architecture, Operating Systems,
-                    Compiler Theory, Database Internals) as well as noval
+                    Compiler Theory, Database Internals) as well as novel
                     technical areas (e.g.:- Machine Learning, Deep Learning,
                     Data Mining &amp; Information Retrieval). The degree covered
                     many other aspects such as general engineering knowledge,
@@ -161,7 +161,7 @@ const Education = (): React.ReactElement => {
             </Section>
             <Section>
                 <SectionHeading>G.C.E. Advanced Level</SectionHeading>
-                <Timespan value={new Time(2012)} />
+                <Datespan value={new Date(2012)} />
                 {sjcLogo}
                 <Paragraph>
                     I attended school at {StJosephsCollegeColombo10} where I
@@ -193,7 +193,7 @@ const Education = (): React.ReactElement => {
                     </ListItem>
                 </HighlightsSection>
             </Section>
-        </React.Fragment>
+        </>
     );
 };
 

@@ -89,7 +89,7 @@ const Experience = (): React.ReactElement => {
         },
         {
             name: "Software Engineering Trainee",
-            timePeriod: "July 2016 to Dec 2019",
+            timePeriod: "July 2016 to Dec 2016",
             description:
                 "Implemented a Notebook prototype for the Data Analytics Server.",
             institute: "WSO2, Colombo 03, Sri Lanka",
@@ -139,18 +139,9 @@ const Experience = (): React.ReactElement => {
                                         variant="body2"
                                         color="textSecondary"
                                     >
-                                        {isOnLeft && (
-                                            <React.Fragment>
-                                                {locationIcon}{" "}
-                                            </React.Fragment>
-                                        )}
+                                        {isOnLeft && <>{locationIcon} </>}
                                         {item.institute}
-                                        {!isOnLeft && (
-                                            <React.Fragment>
-                                                {" "}
-                                                {locationIcon}
-                                            </React.Fragment>
-                                        )}
+                                        {!isOnLeft && <> {locationIcon}</>}
                                     </Typography>
                                 </Card>
                             </Slide>

@@ -64,7 +64,7 @@ const websiteTheme: Theme = createTheme({
             styleOverrides: {
                 root: ({ theme }: { theme: Theme }) => ({
                     color:
-                        theme.palette.mode == "light" ? "#000000" : "#ffffff",
+                        theme.palette.mode === "light" ? "#000000" : "#ffffff",
                 }),
                 h1: {
                     fontWeight: "bolder",

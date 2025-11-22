@@ -13,14 +13,15 @@
  * © 2024 Nadun De Silva. All rights reserved.
  */
 import { Box, Typography } from "@mui/material";
+import React from "react";
 
-interface SectionHeadingProps {
+interface SubsectionHeadingProps {
     children: React.ReactNode;
 }
 
 const SubsectionHeading = ({
     children,
-}: SectionHeadingProps): React.ReactElement => (
+}: SubsectionHeadingProps): React.ReactElement => (
     <Box sx={{ p: 0, mt: 2, mb: 0 }}>
         <Typography variant="h4">{children}</Typography>
     </Box>

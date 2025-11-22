@@ -25,10 +25,10 @@ import {
     Paragraph,
     Section,
     SectionHeading,
-    Timespan,
+    Datespan,
     Title,
 } from "@/components/content";
-import { Time, TimeRange } from "@/constants/commons";
+import { Date, DateRange } from "@/constants/date";
 import { Logos } from "@/constants/logos";
 import { FULL_NAME } from "@/constants/metadata";
 
@@ -61,10 +61,10 @@ const Projects = (): React.ReactElement => {
     const celleryLogo = <Logo logo={Logos.Cellery} height="2.0em" />;
     const siddhiLogo = <Logo logo={Logos.Siddhi} height="1.8em" />;
     return (
-        <React.Fragment>
+        <>
             <Title>Projects</Title>
             <Box sx={{ pt: 2 }}>
-                <Link href="/projects/personal" internal>
+                <Link href="/projects/personal">
                     <Button
                         size="small"
                         variant="outlined"
@@ -77,11 +77,11 @@ const Projects = (): React.ReactElement => {
             <Section>
                 <SectionHeading>Choreo</SectionHeading>
                 {choreoLogo}
-                <Timespan
+                <Datespan
                     value={
-                        new TimeRange(
-                            new Time(2020, "January"),
-                            new Time(2022, "November"),
+                        new DateRange(
+                            new Date(2020, "January"),
+                            new Date(2022, "November"),
                         )
                     }
                 />
@@ -102,7 +102,7 @@ const Projects = (): React.ReactElement => {
                     across languages. However, it provides more capabilities for{" "}
                     {Ballerina} which was originally built within {WSO2}. From
                     development to deployment and production, there are many
-                    featuers which adds values to the users if the users are
+                    features which adds values to the users if the users are
                     using {Ballerina}. I worked on the Choreo project since it
                     was initially started and was part of the initial team who
                     worked on the foundation of it. During my employment at{" "}
@@ -190,11 +190,11 @@ const Projects = (): React.ReactElement => {
             <Section>
                 <SectionHeading>Ballerina Observability</SectionHeading>
                 {ballerinaLogo}
-                <Timespan
+                <Datespan
                     value={
-                        new TimeRange(
-                            new Time(2020, "January"),
-                            new Time(2022, "June"),
+                        new DateRange(
+                            new Date(2020, "January"),
+                            new Date(2022, "June"),
                         )
                     }
                 />
@@ -208,7 +208,7 @@ const Projects = (): React.ReactElement => {
                     the compilation. The instructions are added to the incoming
                     and outgoing functions of {Ballerina}. This is made easy by
                     the keywords and annotations in {Ballerina} which marks them
-                    explcitly with constructs such as services, resources and
+                    explicitly with constructs such as services, resources and
                     remote functions.
                 </Paragraph>
                 <HighlightsSection>
@@ -241,11 +241,11 @@ const Projects = (): React.ReactElement => {
             <Section>
                 <SectionHeading>Cellery</SectionHeading>
                 {celleryLogo}
-                <Timespan
+                <Datespan
                     value={
-                        new TimeRange(
-                            new Time(2018, "September"),
-                            new Time(2019, "December"),
+                        new DateRange(
+                            new Date(2018, "September"),
+                            new Date(2019, "December"),
                         )
                     }
                 />
@@ -336,11 +336,11 @@ const Projects = (): React.ReactElement => {
             <Section>
                 <SectionHeading>Siddhi</SectionHeading>
                 {siddhiLogo}
-                <Timespan
+                <Datespan
                     value={
-                        new TimeRange(
-                            new Time(2016, "July"),
-                            new Time(2016, "December"),
+                        new DateRange(
+                            new Date(2016, "July"),
+                            new Date(2016, "December"),
                         )
                     }
                 />
@@ -351,7 +351,7 @@ const Projects = (): React.ReactElement => {
                     real-time analytics, data integration, notification
                     management, and adaptive decision-making. Siddhi was
                     developed within {WSO2} and maintained for a long time along
-                    with other solutions to provide analytics for otheer {WSO2}{" "}
+                    with other solutions to provide analytics for other {WSO2}{" "}
                     products as well.
                 </Paragraph>
                 <Paragraph>
@@ -389,7 +389,7 @@ const Projects = (): React.ReactElement => {
                     </ListItem>
                 </HighlightsSection>
             </Section>
-        </React.Fragment>
+        </>
     );
 };
 

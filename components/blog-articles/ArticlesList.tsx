@@ -21,11 +21,9 @@ import {
     Typography,
 } from "@mui/material";
 import { glob } from "glob";
-import type { Metadata } from "next";
 import React from "react";
 
 import { Link } from "@/components/content";
-import { FULL_NAME } from "@/constants/metadata";
 
 interface BlogArticle {
     title: string;
@@ -37,7 +35,7 @@ interface BlogArticle {
 }
 
 async function getBlogArticles(pathPattern: string): Promise<BlogArticle[]> {
-    return Promise.all(
+    const articles = await Promise.all(
         (await glob(pathPattern)).map(async (filePath) => {
             const relativePath = filePath
                 .replace(
@@ -58,17 +56,11 @@ async function getBlogArticles(pathPattern: string): Promise<BlogArticle[]> {
                 image: blogMetadata.image as string,
             };
         }),
-    ).then((articles) =>
-        articles.sort(
-            (a, b) => a.publishedDate.getTime() - b.publishedDate.getTime(),
-        ),
+    );
+    return articles.sort(
+        (a, b) => b.publishedDate.getTime() - a.publishedDate.getTime(),
     );
 }
-
-export const metadata: Metadata = {
-    title: `${FULL_NAME} | Blog Articles`,
-    description: `Various blog articles written by ${FULL_NAME}`,
-};
 
 const ArticlesList = async ({
     pathPattern,
@@ -86,13 +78,13 @@ const ArticlesList = async ({
             spacing={2}
             sx={{ mt: 2 }}
         >
-            {blogArticles.reverse().map((blogArticle) => (
+            {blogArticles.map((blogArticle) => (
                 <Grid
                     key={blogArticle.url}
                     size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
                 >
                     <Card raised sx={{ height: "100%" }}>
-                        <Link href={blogArticle.url} internal>
+                        <Link href={blogArticle.url}>
                             <CardActionArea
                                 sx={{
                                     height: "100%",
@@ -102,7 +94,7 @@ const ArticlesList = async ({
                             >
                                 <CardMedia
                                     component="img"
-                                    alt="Article"
+                                    alt={blogArticle.title}
                                     height="140"
                                     image={blogArticle.image}
                                 />

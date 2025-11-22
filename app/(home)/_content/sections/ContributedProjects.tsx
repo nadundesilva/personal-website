@@ -26,8 +26,7 @@ const ContributedProjects = (): React.ReactElement => {
     const xsWidth = theme.breakpoints.values.xs;
     const smWidth = theme.breakpoints.values.sm;
     const mdWidth = theme.breakpoints.values.md;
-    const imageSizes = `(min-width: ${xsWidth}px) 100vw, (min-width: ${smWidth}px) 34vw, 
-        (min-width: ${mdWidth}px) 25vw`;
+    const imageSizes = `(min-width: ${xsWidth}px) 100vw, (min-width: ${smWidth}px) 34vw, (min-width: ${mdWidth}px) 25vw`;
     const renderCarouselItem = (logo: LogoAsset): React.ReactElement => (
         <Grid size={{ xs: 12, sm: 4, md: 3 }}>
             <Slide direction="up" in={offset > 0.5} timeout={2000}>

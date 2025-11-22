@@ -144,7 +144,6 @@ const createCspValues = (): string[] => {
         "script-src": [
             "'self'",
             "https://www.googletagmanager.com",
-            "http://www.googletagmanager.com",
             "'unsafe-inline'",
         ],
         "worker-src": ["'self'", "blob:"],

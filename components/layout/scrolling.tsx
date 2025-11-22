@@ -13,7 +13,13 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { type MutableRefObject, useEffect, useState, useRef } from "react";
+import {
+    type RefObject,
+    useCallback,
+    useEffect,
+    useState,
+    useRef,
+} from "react";
 
 // -1 -> div partially or completely above viewport
 //  0 -> div visible in viewport
@@ -21,7 +27,7 @@ import { type MutableRefObject, useEffect, useState, useRef } from "react";
 type Direction = -1 | 0 | 1;
 
 interface UseScrollOffsetReturnValue<T> {
-    ref: MutableRefObject<T | null>;
+    ref: RefObject<T | null>;
     direction: Direction;
     offset: number;
 }
@@ -31,7 +37,7 @@ function useScrollOffset<T extends Element>(): UseScrollOffsetReturnValue<T> {
     const [direction, setDirection] = useState<Direction>(0);
     const [offset, setOffset] = useState<number>(0);
 
-    const updateOffset = (): void => {
+    const updateOffset = useCallback((): void => {
         if (ref.current !== null) {
             const refBBox = ref.current.getBoundingClientRect();
             const viewportHeight = window.innerHeight;
@@ -67,19 +73,19 @@ function useScrollOffset<T extends Element>(): UseScrollOffsetReturnValue<T> {
             setDirection(0);
             setOffset(0);
         }
-    };
-
-    const handleScroll = (): void => {
-        window.requestAnimationFrame(updateOffset);
-    };
+    }, []);
 
     useEffect(() => {
+        const handleScroll = (): void => {
+            window.requestAnimationFrame(updateOffset);
+        };
+
         window.requestAnimationFrame(updateOffset);
         window.addEventListener("scroll", handleScroll);
         return (): void => {
             window.removeEventListener("scroll", handleScroll);
         };
-    });
+    }, [updateOffset]);
 
     return {
         ref,

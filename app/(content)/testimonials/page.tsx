@@ -59,9 +59,9 @@ interface TestimonialProps {
     children: React.ReactNode;
     position: string;
     company: string;
-    recomender: string;
-    recomenderPosition: string;
-    recomenderCompany: string;
+    recommender: string;
+    recommenderPosition: string;
+    recommenderCompany: string;
     relationship: Relationship;
 }
 
@@ -69,9 +69,9 @@ const Testimonial = ({
     children,
     position,
     company,
-    recomender,
-    recomenderPosition,
-    recomenderCompany,
+    recommender,
+    recommenderPosition,
+    recommenderCompany,
     relationship,
 }: TestimonialProps): React.ReactElement => (
     <Card sx={{ my: 2, p: 2 }} raised>
@@ -80,12 +80,12 @@ const Testimonial = ({
                 htmlColor={grey[600]}
                 sx={{ transform: "rotate(180deg) scale(2)", m: 0.5 }}
             />
-            <SectionHeading>{recomender}</SectionHeading>
+            <SectionHeading>{recommender}</SectionHeading>
             <Typography variant="body2" color={grey[700]} sx={{ pb: 0.5 }}>
-                {recomenderPosition} at {recomenderCompany}
+                {recommenderPosition} at {recommenderCompany}
             </Typography>
             <Typography variant="body2" color={grey[700]} sx={{ pb: 1 }}>
-                {renderRelationShip(recomender, relationship)} when Nadun was a{" "}
+                {renderRelationShip(recommender, relationship)} when Nadun was a{" "}
                 {position} at {company}
             </Typography>
             {children}
@@ -100,14 +100,14 @@ export const metadata: Metadata = {
 
 const Testimonials = (): React.ReactElement => {
     return (
-        <React.Fragment>
+        <>
             <Title>Testimonials</Title>
             <Testimonial
                 position="Associate Technical Lead"
                 company="WSO2"
-                recomender="Tishan Dahanayakage"
-                recomenderPosition="Senior Technical Lead & Engineering Manager"
-                recomenderCompany="WSO2"
+                recommender="Tishan Dahanayakage"
+                recommenderPosition="Senior Technical Lead & Engineering Manager"
+                recommenderCompany="WSO2"
                 relationship={Relationship.ManagedDirectly}
             >
                 <Paragraph>
@@ -126,9 +126,9 @@ const Testimonials = (): React.ReactElement => {
             <Testimonial
                 position="Associate Technical Lead"
                 company="WSO2"
-                recomender="Malith Jayasinghe"
-                recomenderPosition="Vice President & Head of Research & AI"
-                recomenderCompany="WSO2"
+                recommender="Malith Jayasinghe"
+                recommenderPosition="Vice President & Head of Research & AI"
+                recommenderCompany="WSO2"
                 relationship={Relationship.ManagedDirectly}
             >
                 <Paragraph>
@@ -157,9 +157,9 @@ const Testimonials = (): React.ReactElement => {
             <Testimonial
                 position="Associate Technical Lead"
                 company="WSO2"
-                recomender="Isuru Haththotuwa"
-                recomenderPosition="Senior Technical Lead"
-                recomenderCompany="WSO2"
+                recommender="Isuru Haththotuwa"
+                recommenderPosition="Senior Technical Lead"
+                recommenderCompany="WSO2"
                 relationship={Relationship.Senior}
             >
                 <Paragraph>
@@ -186,9 +186,9 @@ const Testimonials = (): React.ReactElement => {
             <Testimonial
                 position="Associate Technical Lead"
                 company="WSO2"
-                recomender="Duneesha Fernando"
-                recomenderPosition="Senior Software Engineer - Machine Learning"
-                recomenderCompany="WSO2"
+                recommender="Duneesha Fernando"
+                recommenderPosition="Senior Software Engineer - Machine Learning"
+                recommenderCompany="WSO2"
                 relationship={Relationship.Senior}
             >
                 <Paragraph>
@@ -233,9 +233,9 @@ const Testimonials = (): React.ReactElement => {
             <Testimonial
                 position="Associate Technical Lead"
                 company="WSO2"
-                recomender="Srinath Perera"
-                recomenderPosition="Chief Architect"
-                recomenderCompany="WSO2"
+                recommender="Srinath Perera"
+                recommenderPosition="Chief Architect"
+                recommenderCompany="WSO2"
                 relationship={Relationship.Senior}
             >
                 <Paragraph>
@@ -249,9 +249,9 @@ const Testimonials = (): React.ReactElement => {
             <Testimonial
                 position="Associate Technical Lead"
                 company="WSO2"
-                recomender="Binura Gunasekara"
-                recomenderPosition="Technical Lead"
-                recomenderCompany="WSO2"
+                recommender="Binura Gunasekara"
+                recommenderPosition="Technical Lead"
+                recommenderCompany="WSO2"
                 relationship={Relationship.Senior}
             >
                 <Paragraph>
@@ -270,9 +270,9 @@ const Testimonials = (): React.ReactElement => {
             <Testimonial
                 position="Associate Technical Lead"
                 company="WSO2"
-                recomender="Kanchana Wickremasinghe"
-                recomenderPosition="VP & GM Choreo Business Unit"
-                recomenderCompany="WSO2"
+                recommender="Kanchana Wickremasinghe"
+                recommenderPosition="VP & GM Choreo Business Unit"
+                recommenderCompany="WSO2"
                 relationship={Relationship.Senior}
             >
                 <Paragraph>
@@ -289,9 +289,9 @@ const Testimonials = (): React.ReactElement => {
             <Testimonial
                 position="Senior Software Engineer"
                 company="WSO2"
-                recomender="Nuwan Bandara"
-                recomenderPosition="Senior Director, Head of Product - Integration Cloud"
-                recomenderCompany="WSO2"
+                recommender="Nuwan Bandara"
+                recommenderPosition="Senior Director, Head of Product - Integration Cloud"
+                recommenderCompany="WSO2"
                 relationship={Relationship.ManagedDirectly}
             >
                 <Paragraph>
@@ -311,9 +311,9 @@ const Testimonials = (): React.ReactElement => {
             <Testimonial
                 position="Senior Software Engineer"
                 company="WSO2"
-                recomender="Sinthuja Rajendran Suhothayan"
-                recomenderPosition="Architect/Associate Director"
-                recomenderCompany="WSO2"
+                recommender="Sinthuja Rajendran Suhothayan"
+                recommenderPosition="Architect/Associate Director"
+                recommenderCompany="WSO2"
                 relationship={Relationship.ManagedDirectly}
             >
                 <Paragraph>
@@ -339,7 +339,7 @@ const Testimonials = (): React.ReactElement => {
                     challenging technical positions in the IT field.
                 </Paragraph>
             </Testimonial>
-        </React.Fragment>
+        </>
     );
 };
 

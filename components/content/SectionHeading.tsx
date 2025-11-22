@@ -13,6 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { Box, Typography } from "@mui/material";
+import React from "react";
 
 interface SectionHeadingProps {
     children: React.ReactNode;

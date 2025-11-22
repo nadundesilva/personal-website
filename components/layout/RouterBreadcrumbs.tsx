@@ -25,7 +25,7 @@ import { WebsiteHome, type Route } from "@/constants/routes";
 const RouterBreadcrumbs = (): React.ReactElement | null => {
     const pathname = usePathname();
     const pathnames =
-        pathname == null ? [] : pathname.split("/").filter((x) => x);
+        pathname === null ? [] : pathname.split("/").filter((x) => x);
 
     const breadcrumbs: { name: string; path?: NextRoute<string> }[] = [
         {
@@ -77,7 +77,7 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
                         {breadcrumb.name}
                     </Typography>
                 ) : (
-                    <Link key={breadcrumb.name} href={breadcrumb.path} internal>
+                    <Link key={breadcrumb.name} href={breadcrumb.path}>
                         {breadcrumb.name}
                     </Link>
                 );

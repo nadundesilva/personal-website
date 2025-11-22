@@ -64,7 +64,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
     const nextColorScheme = colorScheme === "light" ? "dark" : "light";
 
     const drawer = (
-        <React.Fragment>
+        <>
             <IconButton
                 color="inherit"
                 aria-label="open drawer"
@@ -87,29 +87,17 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                     onKeyDown={toggleDrawer}
                 >
                     <List>
-                        {WebsiteHome.subRoutes
-                            ? Object.values(WebsiteHome.subRoutes).map(
-                                  (route) => (
-                                      <Link
-                                          key={route.path}
-                                          href={route.path}
-                                          internal
-                                      >
-                                          <ListItemButton
-                                              sx={{ pl: { xs: 2, md: 5 } }}
-                                          >
-                                              <ListItemText
-                                                  primary={route.name}
-                                              />
-                                          </ListItemButton>
-                                      </Link>
-                                  ),
-                              )
-                            : null}
+                        {Object.values(WebsiteHome.subRoutes).map((route) => (
+                            <Link key={route.path} href={route.path}>
+                                <ListItemButton sx={{ pl: { xs: 2, md: 5 } }}>
+                                    <ListItemText primary={route.name} />
+                                </ListItemButton>
+                            </Link>
+                        ))}
                     </List>
                 </Box>
             </Drawer>
-        </React.Fragment>
+        </>
     );
 
     const appBar = (
@@ -121,7 +109,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
         >
             <Toolbar>
                 {drawer}
-                <Link href={"/"} internal>
+                <Link href={"/"}>
                     <Typography
                         component="h1"
                         sx={{ fontSize: 23, color: "#ffffff" }}
@@ -131,20 +119,18 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                 </Link>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: { xs: "none", md: "block" } }}>
-                    {WebsiteHome.subRoutes
-                        ? Object.values(WebsiteHome.subRoutes).map((route) => (
-                              <Link key={route.path} href={route.path} internal>
-                                  <Button
-                                      variant="text"
-                                      color="primary"
-                                      disableElevation
-                                      sx={{ color: "#ffffff", pl: 2 }}
-                                  >
-                                      {route.name}
-                                  </Button>
-                              </Link>
-                          ))
-                        : null}
+                    {Object.values(WebsiteHome.subRoutes).map((route) => (
+                        <Link key={route.path} href={route.path}>
+                            <Button
+                                variant="text"
+                                color="primary"
+                                disableElevation
+                                sx={{ color: "#ffffff", pl: 2 }}
+                            >
+                                {route.name}
+                            </Button>
+                        </Link>
+                    ))}
                 </Box>
                 <Tooltip title={`Change to ${nextColorScheme} theme`}>
                     <IconButton
@@ -171,7 +157,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
     };
 
     return colorScheme ? (
-        <React.Fragment>
+        <>
             {appBar}
             <Toolbar ref={scrollToTopRef} />
             <Container
@@ -220,7 +206,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                     </Fab>
                 </Box>
             </Zoom>
-        </React.Fragment>
+        </>
     ) : null;
 };
 
