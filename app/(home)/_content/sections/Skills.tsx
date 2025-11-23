@@ -21,8 +21,6 @@ import {
 } from "@mui/material";
 import React from "react";
 
-import { useScrollOffset } from "@/components/layout";
-
 const BorderLinearProgress = styled(LinearProgress)({
     height: 10,
     borderRadius: 5,
@@ -37,12 +35,6 @@ interface Skill {
 }
 
 const Skills = (): React.ReactElement => {
-    const {
-        ref: rootRef,
-        direction,
-        offset,
-    } = useScrollOffset<HTMLDivElement>();
-
     const leftSideSkills: Skill[] = [
         {
             name: "Programming",
@@ -80,19 +72,12 @@ const Skills = (): React.ReactElement => {
         },
     ];
 
-    const animationOffset = 0.2;
-    const currentOffset =
-        direction === 1 ? Math.min(offset + animationOffset, 1) : 1;
-    const currentOpacity =
-        direction === -1
-            ? Math.max(offset - animationOffset, 0) / (1 - animationOffset)
-            : 1;
     const renderPercentage = (skill: Skill): React.ReactElement => {
         const labelId = `skill-${skill.name
             .toLowerCase()
             .replace(/\s/g, "-")}-progressbar-label`;
         return (
-            <Grid size={{ xs: 12, md: 6 }} style={{ opacity: currentOpacity }}>
+            <Grid size={{ xs: 12, md: 6 }}>
                 <Typography id={labelId} sx={{ fontWeight: "bold" }}>
                     {skill.name}
                 </Typography>
@@ -109,7 +94,7 @@ const Skills = (): React.ReactElement => {
                             aria-valuemin={0}
                             aria-valuemax={100}
                             aria-valuenow={skill.percentage}
-                            value={skill.percentage * currentOffset}
+                            value={skill.percentage}
                         />
                     </Grid>
                     <Grid size={{ xs: 4, sm: 2 }}>{skill.percentage} %</Grid>
@@ -119,13 +104,7 @@ const Skills = (): React.ReactElement => {
     };
 
     return (
-        <Grid
-            ref={rootRef}
-            container
-            spacing={3}
-            justifyContent="center"
-            alignItems="center"
-        >
+        <Grid container spacing={3} justifyContent="center" alignItems="center">
             {leftSideSkills.map((leftSideSkill, index) => (
                 <React.Fragment key={leftSideSkill.name}>
                     {renderPercentage(leftSideSkill)}
