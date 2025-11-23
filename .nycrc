@@ -2,8 +2,8 @@
     "extends": "@istanbuljs/nyc-config-typescript",
     "check-coverage": true,
     "all": true,
-    "include": ["{components,pages}/**/!(*.test.*).[tj]s?(x)"],
-    "exclude": ["./_tests_/**/*.*"],
+    "include": ["{components,app,constants}/**/!(*.test.*).[tj]s?(x)"],
+    "exclude": ["./_tests_/**/*.*", "app/{manifest,robots,sitemap}.ts"],
     "reporter": ["clover", "json", "html", "text-summary"],
     "report-dir": "coverage"
 }
