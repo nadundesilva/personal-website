@@ -22,16 +22,8 @@ import {
     TimelineConnector,
     TimelineContent,
 } from "@mui/lab";
-import {
-    Card,
-    Slide,
-    Typography,
-    useMediaQuery,
-    useTheme,
-} from "@mui/material";
+import { Card, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
-
-import { useScrollOffset } from "@/components/layout";
 
 interface ExperienceItem {
     name: string;
@@ -41,7 +33,6 @@ interface ExperienceItem {
 }
 
 const Experience = (): React.ReactElement => {
-    const { ref: rootRef, offset } = useScrollOffset<HTMLUListElement>();
     const theme = useTheme();
     const isTimelineLeftAligned = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -98,10 +89,7 @@ const Experience = (): React.ReactElement => {
     const locationIcon = <LocationCity />;
 
     return (
-        <Timeline
-            ref={rootRef}
-            position={isTimelineLeftAligned ? "left" : "alternate"}
-        >
+        <Timeline position={isTimelineLeftAligned ? "left" : "alternate"}>
             {experienceItems.map((item: ExperienceItem, index: number) => {
                 const isOnLeft = isTimelineLeftAligned || index % 2 === 0;
                 return (
@@ -116,35 +104,29 @@ const Experience = (): React.ReactElement => {
                             <TimelineConnector />
                         </TimelineSeparator>
                         <TimelineContent>
-                            <Slide
-                                direction={isOnLeft ? "left" : "right"}
-                                in={offset > 0.5}
-                                timeout={1000}
-                            >
-                                <Card elevation={3} sx={{ p: 2, mb: 5 }} raised>
-                                    <Typography
-                                        variant="body1"
-                                        component="h2"
-                                        sx={{ fontWeight: "bold" }}
-                                    >
-                                        {item.name}
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        color="textSecondary"
-                                    >
-                                        {item.description}
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        color="textSecondary"
-                                    >
-                                        {isOnLeft && <>{locationIcon} </>}
-                                        {item.institute}
-                                        {!isOnLeft && <> {locationIcon}</>}
-                                    </Typography>
-                                </Card>
-                            </Slide>
+                            <Card elevation={3} sx={{ p: 2, mb: 5 }} raised>
+                                <Typography
+                                    variant="body1"
+                                    component="h2"
+                                    sx={{ fontWeight: "bold" }}
+                                >
+                                    {item.name}
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    color="textSecondary"
+                                >
+                                    {item.description}
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    color="textSecondary"
+                                >
+                                    {isOnLeft && <>{locationIcon} </>}
+                                    {item.institute}
+                                    {!isOnLeft && <> {locationIcon}</>}
+                                </Typography>
+                            </Card>
                         </TimelineContent>
                     </TimelineItem>
                 );

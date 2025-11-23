@@ -16,7 +16,6 @@ import {
     Box,
     Container,
     Grid,
-    Grow,
     ImageList,
     ImageListItem,
     styled,
@@ -27,7 +26,6 @@ import {
 import Image from "next/image";
 import type React from "react";
 
-import { useScrollOffset } from "@/components/layout";
 import { Photos, type ImageAsset } from "@/constants/images";
 
 const PREFIX = "Home-Achievements";
@@ -55,8 +53,6 @@ interface AchievementSection {
 const ROW_HEIGHT = 300;
 
 const Achievements = (): React.ReactElement => {
-    const { ref: rootRef, offset } = useScrollOffset<HTMLDivElement>();
-
     const achievementSections: AchievementSection[] = [
         {
             title: "Global Finalist - Galactic Impact - NASA Space Apps Challenge 2017",
@@ -110,36 +106,31 @@ const Achievements = (): React.ReactElement => {
                     },
                 }}
             >
-                <Grow
-                    in={offset > 0.3}
-                    timeout={1000 * achievementSection.animationTimeoutFactor}
-                >
-                    <Box sx={{ height: "100%", position: "relative" }}>
-                        <ImageListItemImageOverlay
-                            container
-                            justifyContent="center"
-                            alignItems="center"
-                            className={classes.imageListItemImageOverlay}
-                        >
-                            <Grid size={6}>
-                                <Typography sx={{ fontWeight: "bold" }}>
-                                    {achievementSection.title}
-                                </Typography>
-                            </Grid>
-                        </ImageListItemImageOverlay>
-                        <Image
-                            src={achievementSection.photo.src}
-                            alt={achievementSection.photo.alt}
-                            placeholder="blur"
-                            blurDataURL={achievementSection.photo.blurDataURL}
-                            fill
-                            sizes={`${Math.ceil(100 / totalColumns)}vw`}
-                            style={{
-                                objectFit: "cover",
-                            }}
-                        />
-                    </Box>
-                </Grow>
+                <Box sx={{ height: "100%", position: "relative" }}>
+                    <ImageListItemImageOverlay
+                        container
+                        justifyContent="center"
+                        alignItems="center"
+                        className={classes.imageListItemImageOverlay}
+                    >
+                        <Grid size={6}>
+                            <Typography sx={{ fontWeight: "bold" }}>
+                                {achievementSection.title}
+                            </Typography>
+                        </Grid>
+                    </ImageListItemImageOverlay>
+                    <Image
+                        src={achievementSection.photo.src}
+                        alt={achievementSection.photo.alt}
+                        placeholder="blur"
+                        blurDataURL={achievementSection.photo.blurDataURL}
+                        fill
+                        sizes={`${Math.ceil(100 / totalColumns)}vw`}
+                        style={{
+                            objectFit: "cover",
+                        }}
+                    />
+                </Box>
             </FullSizeImageListItem>
         );
     };
@@ -150,7 +141,7 @@ const Achievements = (): React.ReactElement => {
     const LARGE_SCREEN_COLUMN_COUNT = 3;
     const SMALL_SCREEN_COLUMN_COUNT = 1;
     return (
-        <Container maxWidth={false} disableGutters ref={rootRef}>
+        <Container maxWidth={false} disableGutters>
             {isAboveMd ? (
                 <ImageList
                     rowHeight={ROW_HEIGHT}
