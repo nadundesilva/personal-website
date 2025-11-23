@@ -12,16 +12,14 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, Grid, Slide, useTheme } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 import Image from "next/image";
 import type React from "react";
 
-import { useScrollOffset } from "@/components/layout";
 import { Logos, type LogoAsset } from "@/constants/logos";
 
 const ContributedProjects = (): React.ReactElement => {
     const theme = useTheme();
-    const { ref: rootRef, offset } = useScrollOffset<HTMLDivElement>();
 
     const xsWidth = theme.breakpoints.values.xs;
     const smWidth = theme.breakpoints.values.sm;
@@ -29,34 +27,26 @@ const ContributedProjects = (): React.ReactElement => {
     const imageSizes = `(min-width: ${xsWidth}px) 100vw, (min-width: ${smWidth}px) 34vw, (min-width: ${mdWidth}px) 25vw`;
     const renderCarouselItem = (logo: LogoAsset): React.ReactElement => (
         <Grid size={{ xs: 12, sm: 4, md: 3 }}>
-            <Slide direction="up" in={offset > 0.5} timeout={2000}>
-                <Box
-                    sx={{
-                        position: "relative",
-                        height: 200,
-                        mx: 5,
-                    }}
-                >
-                    <Image
-                        alt={logo.alt}
-                        fill
-                        style={{ objectFit: "contain" }}
-                        sizes={imageSizes}
-                        src={logo.src[theme.palette.mode]}
-                    />
-                </Box>
-            </Slide>
+            <Box
+                sx={{
+                    position: "relative",
+                    height: 200,
+                    mx: 5,
+                }}
+            >
+                <Image
+                    alt={logo.alt}
+                    fill
+                    style={{ objectFit: "contain" }}
+                    sizes={imageSizes}
+                    src={logo.src[theme.palette.mode]}
+                />
+            </Box>
         </Grid>
     );
 
     return (
-        <Grid
-            ref={rootRef}
-            container
-            spacing={3}
-            justifyContent="center"
-            alignItems="center"
-        >
+        <Grid container spacing={3} justifyContent="center" alignItems="center">
             {renderCarouselItem(Logos.Choreo)}
             {renderCarouselItem(Logos.Ballerina)}
             {renderCarouselItem(Logos.Cellery)}
