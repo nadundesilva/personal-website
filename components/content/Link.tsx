@@ -22,12 +22,13 @@ type CustomLinkProps = {
     href: string | URL;
     children: React.ReactNode;
     target?: string;
-};
+} & Record<string, unknown>;
 
 const CustomLink = ({
     href,
     children,
     target,
+    ...otherProps
 }: CustomLinkProps): React.ReactElement => (
     <Link
         target={target}
@@ -40,7 +41,12 @@ const CustomLink = ({
             ref: Ref<HTMLAnchorElement>,
         ) {
             return (
-                <NextLink {...customLinkCompProps} href={href} ref={ref}>
+                <NextLink
+                    {...customLinkCompProps}
+                    {...otherProps}
+                    href={href}
+                    ref={ref}
+                >
                     {customLinkCompChildren}
                 </NextLink>
             );

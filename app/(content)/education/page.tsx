@@ -128,11 +128,6 @@ const Education = (): React.ReactElement => {
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Final Academic Year CGPA: 4.02 / 4.20
-                        </Typography>
-                    </ListItem>
-                    <ListItem>
-                        <Typography>
                             Dean&apos;s List Placements in 6 out of 8 semesters
                         </Typography>
                     </ListItem>
@@ -176,19 +171,43 @@ const Education = (): React.ReactElement => {
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Main Subjects: Combined Mathematics, Physics,
-                            Chemistry
+                            Main Subjects:
+                            <List>
+                                <ListItem>
+                                    <Typography>
+                                        Combined Mathematics - A
+                                    </Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <Typography>Physics - A</Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <Typography>Chemistry - A</Typography>
+                                </ListItem>
+                            </List>
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Other Subjects: General IT, General English, General
-                            Knowledge
+                            Other Subjects:
+                            <List>
+                                <ListItem>
+                                    <Typography>General IT - A</Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <Typography>General English - A</Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <Typography>
+                                        General Knowledge - A
+                                    </Typography>
+                                </ListItem>
+                            </List>
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Editor of the Science Union 2011/2012
+                            Editor of the Science Union 2011 / 2012
                         </Typography>
                     </ListItem>
                 </HighlightsSection>

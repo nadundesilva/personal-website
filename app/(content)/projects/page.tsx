@@ -31,6 +31,7 @@ import {
 import { Date, DateRange } from "@/constants/date";
 import { Logos } from "@/constants/logos";
 import { FULL_NAME } from "@/constants/metadata";
+import { Projects as ProjectDetails } from "@/constants/projects";
 
 export const metadata: Metadata = {
     title: `${FULL_NAME} | Projects`,
@@ -43,18 +44,18 @@ const Projects = (): React.ReactElement => {
             {text}
         </Link>
     );
-    const Choreo = generateLink("Choreo", "https://wso2.com/choreo/");
-    const Ballerina = generateLink("Ballerina", "https://ballerina.io/");
+    const Choreo = generateLink("Choreo", ProjectDetails.Choreo.link);
+    const Ballerina = generateLink("Ballerina", ProjectDetails.Ballerina.link);
     const WSO2 = generateLink("WSO2", "https://wso2.com/");
     const OpenTracing = generateLink("OpenTracing", "https://opentracing.io/");
     const OpenTelemetry = generateLink(
         "OpenTelemetry",
         "https://opentelemetry.io/",
     );
-    const Cellery = generateLink("Cellery", "https://cellery.io/");
+    const Cellery = generateLink("Cellery", ProjectDetails.Cellery.link);
     const Kubernetes = generateLink("Kubernetes", "https://kubernetes.io/");
     const Istio = generateLink("Istio", "https://istio.io/");
-    const Siddhi = generateLink("Siddhi", "https://siddhi.io/");
+    const Siddhi = generateLink("Siddhi", ProjectDetails.Siddhi.link);
 
     const choreoLogo = <Logo logo={Logos.Choreo} height="1.5em" />;
     const ballerinaLogo = <Logo logo={Logos.Ballerina} height="1.0em" />;

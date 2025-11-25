@@ -73,11 +73,19 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
         >
             {breadcrumbs.map((breadcrumb) => {
                 return breadcrumb.path === undefined ? (
-                    <Typography color="textPrimary" key={breadcrumb.name}>
+                    <Typography
+                        color="textPrimary"
+                        key={breadcrumb.name}
+                        data-testid="breadcrumb-item"
+                    >
                         {breadcrumb.name}
                     </Typography>
                 ) : (
-                    <Link key={breadcrumb.name} href={breadcrumb.path}>
+                    <Link
+                        key={breadcrumb.name}
+                        href={breadcrumb.path}
+                        data-testid="breadcrumb-item"
+                    >
                         {breadcrumb.name}
                     </Link>
                 );

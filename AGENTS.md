@@ -18,6 +18,7 @@ This document contains knowledge gained from comprehensive codebase reviews. For
 - [CI/CD Pipeline](#cicd-pipeline)
 - [Project-Specific Patterns](#project-specific-patterns)
 - [Theme and Styling](#theme-and-styling)
+- [Testing](#testing)
 - [Known Issues & Solutions](#known-issues--solutions)
 
 ## CI/CD Pipeline
@@ -67,6 +68,18 @@ Always use theme-aware color tokens (e.g., `text.secondary`, `text.primary`, `pa
 ### Component Styling Patterns
 
 Reusable component styles should be centralized in the theme's `components` section to maintain consistency across the site rather than being defined inline in individual components.
+
+**Important**: Do not move styles into constants. Keep style values inline even if they are duplicated. However, Material-UI styled-components (using the `styled` utility) can be used when necessary for reusable styled-components. Only move styles to the theme object if they are truly reusable across multiple components. Component-specific styles (e.g., Timeline components only used in one place) should remain in the component rather than being moved to the theme.
+
+## Testing
+
+### Cypress End-to-End Testing
+
+The project uses Cypress with `@testing-library/cypress` for end-to-end tests. See [cypress/e2e/](./cypress/e2e/) for test files and [cypress/support/commands.ts](./cypress/support/commands.ts) for custom commands.
+
+**Viewport Configuration**: The Cypress viewport is set to `1280x768` in [cypress.config.ts](./cypress.config.ts) to match Material-UI's `lg` breakpoint (`1200px`). Using a smaller viewport causes the desktop navigation to be hidden and mobile drawer to appear, breaking navigation tests.
+
+**Custom Commands**: Custom Cypress commands use Testing Library queries (`findByRole`, `findByTestId`, etc.) and should prefer role-based queries with `name` matchers over attribute checks when possible. See [cypress/support/commands.ts](./cypress/support/commands.ts) for examples.
 
 ## Known Issues & Solutions
 

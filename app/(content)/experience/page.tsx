@@ -30,6 +30,7 @@ import {
 import { Date, DateRange } from "@/constants/date";
 import { Logos } from "@/constants/logos";
 import { FULL_NAME } from "@/constants/metadata";
+import { Projects } from "@/constants/projects";
 
 export const metadata: Metadata = {
     title: `${FULL_NAME} | Experience`,
@@ -42,7 +43,7 @@ const Experience = (): React.ReactElement => {
             {text}
         </Link>
     );
-    const Siddhi = generateLink("Siddhi", "https://siddhi.io/");
+    const Siddhi = generateLink("Siddhi", Projects.Siddhi.link);
     const MkDocs = generateLink("MkDocs", "https://www.mkdocs.org/");
     const Wso2IdentityServer = generateLink(
         "WSO2 Identity Server",
@@ -54,9 +55,9 @@ const Experience = (): React.ReactElement => {
         "https://openwhisk.apache.org/",
     );
     const KNative = generateLink("Knative", "https://knative.dev/docs/");
-    const Cellery = generateLink("Cellery", "https://cellery.io/");
-    const Ballerina = generateLink("Ballerina", "https://ballerina.io/");
-    const Choreo = generateLink("Choreo", "https://wso2.com/choreo/");
+    const Cellery = generateLink("Cellery", Projects.Cellery.link);
+    const Ballerina = generateLink("Ballerina", Projects.Ballerina.link);
+    const Choreo = generateLink("Choreo", Projects.Choreo.link);
     const WSO2 = generateLink("WSO2", "https://wso2.com/");
     const GoogleSummerOfCode = generateLink(
         "Google Summer of Code",

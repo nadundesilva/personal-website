@@ -18,7 +18,7 @@ import {
     Instagram,
     LinkedIn,
     Article,
-    Twitter,
+    X,
     School,
 } from "@mui/icons-material";
 import type { SvgIcon } from "@mui/material";
@@ -29,42 +29,42 @@ export interface Profile {
     link: string;
 }
 
-const Profiles: Profile[] = [
-    {
+const Profiles: Record<string, Profile> = {
+    LinkedIn: {
         name: "LinkedIn",
         Icon: LinkedIn,
         link: "https://www.linkedin.com/in/nadundesilva",
     },
-    {
+    GitHub: {
         name: "GitHub",
         Icon: GitHub,
         link: "https://github.com/nadundesilva",
     },
-    {
+    Medium: {
         name: "Medium",
         Icon: Article,
         link: "https://medium.com/@nadundesilva",
     },
-    {
+    GoogleScholar: {
         name: "Google Scholar",
         Icon: School,
         link: "https://scholar.google.com/citations?user=CdXo_YQAAAAJ&hl=en&oi=ao",
     },
-    {
+    Facebook: {
         name: "Facebook",
         Icon: Facebook,
         link: "https://www.facebook.com/nadunrds",
     },
-    {
+    Instagram: {
         name: "Instagram",
         Icon: Instagram,
         link: "https://www.instagram.com/nadunrds",
     },
-    {
-        name: "Twitter",
-        Icon: Twitter,
-        link: "https://twitter.com/nadunrds",
+    X: {
+        name: "X",
+        Icon: X,
+        link: "https://x.com/nadunrds",
     },
-];
+};
 
 export default Profiles;

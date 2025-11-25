@@ -76,7 +76,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                     mr: 2,
                     display: {
                         xs: "block",
-                        md: "none",
+                        lg: "none",
                     },
                 }}
             >
@@ -193,7 +193,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                 {drawer}
                 <Box
                     onClick={() => isDrawerOpen && toggleDrawer()}
-                    sx={{ display: "inline-block" }}
+                    display="inline-block"
                 >
                     <Link href={"/"}>
                         <Typography
@@ -213,20 +213,15 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                 </Box>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box
-                    sx={{
-                        display: {
-                            xs: "none",
-                            md: "flex",
-                        },
-                        gap: 1,
-                        alignItems: "center",
-                    }}
+                    display={{ xs: "none", lg: "flex" }}
+                    gap={1}
+                    alignItems="center"
                 >
                     {Object.values(WebsiteHome.subRoutes).map((route) => (
                         <Box
                             key={route.path}
                             onClick={() => isDrawerOpen && toggleDrawer()}
-                            sx={{ display: "inline-block" }}
+                            display="inline-block"
                         >
                             <Link href={route.path}>
                                 <Button
@@ -273,13 +268,13 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                     placement="bottom"
                 >
                     <IconButton
-                        sx={{
-                            ml: { xs: 2, md: 3 },
-                            color: "#ffffff",
-                        }}
                         size="medium"
                         onClick={() => setColorScheme(nextColorScheme)}
                         aria-label={`Switch to ${nextColorScheme} theme`}
+                        sx={{
+                            ml: 3,
+                            color: "#ffffff",
+                        }}
                     >
                         {nextColorScheme === "light" ? (
                             <LightMode />
@@ -336,8 +331,8 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                     role="presentation"
                     sx={{
                         position: "fixed",
-                        bottom: 40,
-                        right: 10,
+                        bottom: 24,
+                        right: 24,
                     }}
                 >
                     <Fab

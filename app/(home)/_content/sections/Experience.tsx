@@ -12,6 +12,7 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+import { DateRange, Date, Now } from "@/constants/date";
 import { LocationCity } from "@mui/icons-material";
 import {
     Timeline,
@@ -22,110 +23,251 @@ import {
     TimelineConnector,
     TimelineContent,
 } from "@mui/lab";
-import { Card, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Card, Typography, useMediaQuery } from "@mui/material";
 import type React from "react";
 
 interface ExperienceItem {
     name: string;
-    timePeriod: string;
+    timePeriod: DateRange;
     description: string;
     institute: string;
 }
 
 const Experience = (): React.ReactElement => {
-    const theme = useTheme();
-    const isTimelineLeftAligned = useMediaQuery(theme.breakpoints.down("sm"));
+    const isAllContentRightAligned = useMediaQuery((theme) =>
+        theme.breakpoints.down("sm"),
+    );
 
     const experienceItems: ExperienceItem[] = [
         {
             name: "Lead Software Engineer",
-            timePeriod: "Apr 2024 to Now",
+            timePeriod: new DateRange(new Date(2024, "April"), Now),
             description: "Leading the SRE aspects of Indexity data-planes.",
             institute: "McCrae Tech, Auckland, New Zealand",
         },
         {
             name: "Senior Software Engineer",
-            timePeriod: "Nov 2022 to Apr 2024",
+            timePeriod: new DateRange(
+                new Date(2022, "November"),
+                new Date(2024, "April"),
+            ),
             description:
                 "Spearheaded the deployment of Indexity data-planes on AWS.",
             institute: "Orion Health, Auckland, New Zealand",
         },
         {
             name: "Associate Technical Lead",
-            timePeriod: "June 2021 to Nov 2022",
+            timePeriod: new DateRange(
+                new Date(2021, "June"),
+                new Date(2022, "November"),
+            ),
             description:
                 "Led Choreo Observability Team as well as other Teams in Choreo.",
             institute: "WSO2, Colombo 03, Sri Lanka",
         },
         {
             name: "Senior Software Engineer",
-            timePeriod: "July 2019 to June 2021",
+            timePeriod: new DateRange(
+                new Date(2019, "July"),
+                new Date(2021, "June"),
+            ),
             description:
                 "Led Choreo Observability Team in creating the initial PoC as well as the Platform.",
             institute: "WSO2, Colombo 03, Sri Lanka",
         },
         {
             name: "Software Engineer",
-            timePeriod: "Jan 2018 to July 2019",
+            timePeriod: new DateRange(
+                new Date(2018, "January"),
+                new Date(2019, "July"),
+            ),
             description:
                 "Designed & developed several components in middle-ware & cloud projects.",
             institute: "WSO2, Colombo 03, Sri Lanka",
         },
         {
             name: "Google Summer of Code Intern",
-            timePeriod: "May 2017 to Sep 2017",
+            timePeriod: new DateRange(
+                new Date(2017, "May"),
+                new Date(2017, "September"),
+            ),
             description:
-                "Designed and implemented a maven plugin for automatically generating documentation for Siddhi extensions using annotated data written in the java code.",
+                "Designed and implemented a maven plugin for automatically generating documentation for Siddhi extensions using annotated data written in the Java code.",
             institute: "WSO2, Colombo 03, Sri Lanka",
         },
         {
             name: "Software Engineering Trainee",
-            timePeriod: "July 2016 to Dec 2016",
+            timePeriod: new DateRange(
+                new Date(2016, "July"),
+                new Date(2016, "December"),
+            ),
             description:
                 "Implemented a Notebook prototype for the Data Analytics Server.",
             institute: "WSO2, Colombo 03, Sri Lanka",
         },
     ];
-    const locationIcon = <LocationCity />;
 
     return (
-        <Timeline position={isTimelineLeftAligned ? "left" : "alternate"}>
+        <Timeline
+            position={isAllContentRightAligned ? "right" : "alternate"}
+            sx={{ px: 0 }}
+        >
             {experienceItems.map((item: ExperienceItem, index: number) => {
-                const isOnLeft = isTimelineLeftAligned || index % 2 === 0;
+                const isContentOnRight =
+                    isAllContentRightAligned || index % 2 === 0;
                 return (
-                    <TimelineItem key={item.timePeriod}>
-                        <TimelineOppositeContent>
-                            <Typography variant="body2" color="textSecondary">
-                                {item.timePeriod}
+                    <TimelineItem key={item.timePeriod.format()}>
+                        <TimelineOppositeContent
+                            sx={{
+                                ...(isAllContentRightAligned && {
+                                    maxWidth: "40px",
+                                    flex: "0 0 40px",
+                                    display: "flex",
+                                    alignItems: "flex-start",
+                                    justifyContent: "flex-end",
+                                    pt: 2,
+                                    pl: 0,
+                                }),
+                                ...(isContentOnRight && { pl: 0 }),
+                                ...(!isContentOnRight && { pr: 0 }),
+                            }}
+                        >
+                            <Typography
+                                variant="body2"
+                                color="text.secondary"
+                                sx={{
+                                    fontSize: { xs: 11, md: 12 },
+                                    fontWeight: 300,
+                                    letterSpacing: "0.04em",
+                                    opacity: 0.7,
+                                    textTransform: "uppercase",
+                                    ...(isAllContentRightAligned && {
+                                        writingMode: "vertical-rl",
+                                        textOrientation: "mixed",
+                                        transform: "rotate(180deg)",
+                                        whiteSpace: "nowrap",
+                                    }),
+                                }}
+                            >
+                                {item.timePeriod.format()}
                             </Typography>
                         </TimelineOppositeContent>
                         <TimelineSeparator>
-                            <TimelineDot color="primary" />
-                            <TimelineConnector />
+                            <TimelineDot
+                                sx={{
+                                    "backgroundColor": "primary.main",
+                                    "width": 18,
+                                    "height": 18,
+                                    "boxShadow": "none",
+                                    "border": "3.5px solid",
+                                    "borderColor": "background.paper",
+                                    "transition":
+                                        "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                                    "&:hover": {
+                                        transform: "scale(1.1)",
+                                        boxShadow: (theme) =>
+                                            `0 0 0 4px ${theme.palette.primary.main}1A`,
+                                    },
+                                }}
+                            />
+                            <TimelineConnector
+                                sx={{
+                                    backgroundColor: "divider",
+                                    opacity: 0.25,
+                                    width: 1,
+                                }}
+                            />
                         </TimelineSeparator>
-                        <TimelineContent>
-                            <Card elevation={3} sx={{ p: 2, mb: 5 }} raised>
+                        <TimelineContent
+                            sx={{
+                                ...(isContentOnRight && { pr: 0 }),
+                                ...(!isContentOnRight && { pl: 0 }),
+                            }}
+                        >
+                            <Card
+                                sx={{
+                                    p: 4.5,
+                                    mb: 7,
+                                    ...(isContentOnRight
+                                        ? {
+                                              borderLeft: "3px solid",
+                                              borderLeftColor: "primary.main",
+                                              pl: 4.5,
+                                          }
+                                        : {
+                                              borderRight: "3px solid",
+                                              borderRightColor: "primary.main",
+                                              pr: 4.5,
+                                          }),
+                                }}
+                            >
                                 <Typography
-                                    variant="body1"
+                                    variant="h6"
                                     component="h2"
-                                    sx={{ fontWeight: "bold" }}
+                                    mb={2.5}
+                                    fontWeight={500}
+                                    sx={{
+                                        textAlign: isContentOnRight
+                                            ? "left"
+                                            : "right",
+                                        fontSize: { xs: 19, md: 20 },
+                                        letterSpacing: "-0.02em",
+                                        lineHeight: 1.3,
+                                    }}
                                 >
                                     {item.name}
                                 </Typography>
                                 <Typography
                                     variant="body2"
-                                    color="textSecondary"
+                                    mb={3}
+                                    color="text.secondary"
+                                    sx={{
+                                        textAlign: isContentOnRight
+                                            ? "left"
+                                            : "right",
+                                        lineHeight: 1.8,
+                                        fontWeight: 300,
+                                    }}
                                 >
                                     {item.description}
                                 </Typography>
-                                <Typography
-                                    variant="body2"
-                                    color="textSecondary"
+                                <Box
+                                    display="flex"
+                                    alignItems="center"
+                                    gap={1.25}
+                                    justifyContent={
+                                        isContentOnRight
+                                            ? "flex-start"
+                                            : "flex-end"
+                                    }
+                                    pt={1}
                                 >
-                                    {isOnLeft && <>{locationIcon} </>}
-                                    {item.institute}
-                                    {!isOnLeft && <> {locationIcon}</>}
-                                </Typography>
+                                    {isContentOnRight && (
+                                        <LocationCity
+                                            fontSize="small"
+                                            sx={{ opacity: 0.6 }}
+                                        />
+                                    )}
+                                    <Typography
+                                        variant="body2"
+                                        color="text.secondary"
+                                        sx={{
+                                            lineHeight: 1.3,
+                                            fontSize: { xs: 13 },
+                                            opacity: 0.75,
+                                            fontWeight: 300,
+                                            letterSpacing: "0em",
+                                        }}
+                                    >
+                                        {item.institute}
+                                    </Typography>
+                                    {!isContentOnRight && (
+                                        <LocationCity
+                                            fontSize="small"
+                                            sx={{ opacity: 0.6 }}
+                                        />
+                                    )}
+                                </Box>
                             </Card>
                         </TimelineContent>
                     </TimelineItem>
