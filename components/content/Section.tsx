@@ -13,7 +13,7 @@
  * © 2025 Nadun De Silva. All rights reserved.
  */
 import { Box } from "@mui/material";
-import React from "react";
+import type React from "react";
 
 interface SectionProps {
     children: React.ReactNode;

@@ -27,7 +27,6 @@ export async function register() {
         Sentry.init({
             ...defaultSentryInitConfig,
             enabled: process.env.NODE_ENV === "production",
-            spotlight: process.env.NODE_ENV === "development",
         });
     }
 

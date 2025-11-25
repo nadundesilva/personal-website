@@ -15,7 +15,8 @@
  */
 import { Button, Typography, type Theme, Container, Box } from "@mui/material";
 import * as Sentry from "@sentry/nextjs";
-import React, { useEffect } from "react";
+import type React from "react";
+import { useEffect } from "react";
 
 interface ErrorProps {
     reset: () => void;

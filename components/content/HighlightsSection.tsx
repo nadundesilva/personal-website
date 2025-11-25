@@ -13,7 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import type React from "react";
 
 import { List } from "@/components/content";
 

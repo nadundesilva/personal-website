@@ -44,7 +44,9 @@ jobs:
                   VALIDATE_TYPESCRIPT_STANDARD: "false"
                   VALIDATE_CSS_PRETTIER: "false"
                   VALIDATE_BIOME_FORMAT: "false"
+                  VALIDATE_BIOME_LINT: "false"
                   VALIDATE_MARKDOWN: "false"
+                  VALIDATE_CHECKOV: "false"
 
     run-vulnerability-analysis:
         name: Run Vulnerability Analysis

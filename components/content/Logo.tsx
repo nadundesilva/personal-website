@@ -15,7 +15,7 @@
  */
 import { Box, useTheme } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import type React from "react";
 
 import type { LogoAsset } from "@/constants/logos";
 

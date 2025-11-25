@@ -17,6 +17,7 @@ This document contains knowledge gained from comprehensive codebase reviews. For
 
 - [CI/CD Pipeline](#cicd-pipeline)
 - [Project-Specific Patterns](#project-specific-patterns)
+- [Theme and Styling](#theme-and-styling)
 - [Known Issues & Solutions](#known-issues--solutions)
 
 ## CI/CD Pipeline
@@ -52,6 +53,20 @@ MDX links automatically open in new tabs and are resolved relative to `/blog-art
 ### Static Site Generation
 
 The project uses static export (`output: "export"`) for all builds except development. Static route handlers (`sitemap.ts`, `robots.ts`, `manifest.ts`) use `export const dynamic = "force-static"` to ensure static generation. See [next.config.mjs](./next.config.mjs) for the configuration.
+
+## Theme and Styling
+
+### Styling Through MUI Theme
+
+**All styling should be done through the MUI theme as much as possible** to maintain consistency and ensure proper theme-aware behavior (light/dark mode support). The theme configuration is centralized in [components/theme/WebsiteThemeProvider.tsx](./components/theme/WebsiteThemeProvider.tsx).
+
+### Theme-Aware Colors
+
+Always use theme-aware color tokens (e.g., `text.secondary`, `text.primary`, `palette.primary.main`) instead of hardcoded colors to ensure proper contrast in both light and dark modes.
+
+### Component Styling Patterns
+
+Reusable component styles should be centralized in the theme's `components` section to maintain consistency across the site rather than being defined inline in individual components.
 
 ## Known Issues & Solutions
 

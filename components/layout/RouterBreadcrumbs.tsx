@@ -17,7 +17,7 @@ import { KeyboardArrowRight } from "@mui/icons-material";
 import { Breadcrumbs, Typography } from "@mui/material";
 import type { Route as NextRoute } from "next";
 import { usePathname } from "next/navigation";
-import React from "react";
+import type React from "react";
 
 import { Link } from "@/components/content";
 import { WebsiteHome, type Route } from "@/constants/routes";

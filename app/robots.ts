@@ -13,7 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
-import { type MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
