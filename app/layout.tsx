@@ -50,6 +50,8 @@ export const metadata: Metadata = {
         "Nadun Rusiru De Silva",
         "Kurukulasuriya Patabandige Nadun Rusiru De Silva",
         "Software Engineer",
+        "Lead Software Engineer",
+        "Senior Software Engineer",
     ],
     referrer: "origin",
     robots: `${WEBSITE_PUBLIC_URL}/robots.txt`,
@@ -110,7 +112,7 @@ const jsonLd: WithContext<Person> = {
     "birthPlace": "Colombo, Sri Lanka",
     "jobTitle": "Lead Software Engineer",
     "url": WEBSITE_PUBLIC_URL,
-    "sameAs": Profiles.map((p) => p.link),
+    "sameAs": Object.values(Profiles).map((p) => p.link),
     "alumniOf": [
         {
             "@type": "CollegeOrUniversity",

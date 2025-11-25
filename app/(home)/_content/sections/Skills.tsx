@@ -12,108 +12,65 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import {
-    Grid,
-    LinearProgress,
-    styled,
-    Typography,
-    linearProgressClasses,
-} from "@mui/material";
-import React from "react";
+import { Box, Chip, Typography } from "@mui/material";
+import type React from "react";
 
-const BorderLinearProgress = styled(LinearProgress)({
-    height: 10,
-    borderRadius: 5,
-    [`&.${linearProgressClasses.bar}`]: {
-        borderRadius: 5,
-    },
-});
-
-interface Skill {
-    name: string;
-    percentage: number;
-}
+import SkillGroups from "@/constants/skills";
 
 const Skills = (): React.ReactElement => {
-    const leftSideSkills: Skill[] = [
-        {
-            name: "Programming",
-            percentage: 90,
-        },
-        {
-            name: "Time-series Analysis",
-            percentage: 80,
-        },
-        {
-            name: "Databases",
-            percentage: 85,
-        },
-        {
-            name: "Cloud Computing",
-            percentage: 80,
-        },
-    ];
-    const rightSideSkills: Skill[] = [
-        {
-            name: "Leadership",
-            percentage: 80,
-        },
-        {
-            name: "Teamwork",
-            percentage: 95,
-        },
-        {
-            name: "Communication",
-            percentage: 95,
-        },
-        {
-            name: "Attention to Detail",
-            percentage: 90,
-        },
-    ];
-
-    const renderPercentage = (skill: Skill): React.ReactElement => {
-        const labelId = `skill-${skill.name
-            .toLowerCase()
-            .replace(/\s/g, "-")}-progressbar-label`;
-        return (
-            <Grid size={{ xs: 12, md: 6 }}>
-                <Typography id={labelId} sx={{ fontWeight: "bold" }}>
-                    {skill.name}
-                </Typography>
-                <Grid
-                    container
-                    spacing={3}
-                    justifyContent="center"
-                    alignItems="center"
-                >
-                    <Grid size={{ xs: 8, sm: 10 }}>
-                        <BorderLinearProgress
-                            aria-labelledby={labelId}
-                            variant="determinate"
-                            aria-valuemin={0}
-                            aria-valuemax={100}
-                            aria-valuenow={skill.percentage}
-                            value={skill.percentage}
-                        />
-                    </Grid>
-                    <Grid size={{ xs: 4, sm: 2 }}>{skill.percentage} %</Grid>
-                </Grid>
-            </Grid>
-        );
-    };
-
     return (
-        <Grid container spacing={3} justifyContent="center" alignItems="center">
-            {leftSideSkills.map((leftSideSkill, index) => (
-                <React.Fragment key={leftSideSkill.name}>
-                    {renderPercentage(leftSideSkill)}
-                    {index < rightSideSkills.length
-                        ? renderPercentage(rightSideSkills[index])
-                        : null}
-                </React.Fragment>
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: { xs: 4, md: 5 },
+            }}
+        >
+            {SkillGroups.map((group) => (
+                <Box key={group.category} sx={{ mt: 2 }}>
+                    <Typography
+                        variant="h6"
+                        align="center"
+                        sx={{
+                            fontWeight: 400,
+                            fontSize: { xs: 18, md: 20 },
+                            letterSpacing: "-0.01em",
+                            lineHeight: 1.3,
+                            mb: { xs: 0.5, md: 1 },
+                            color: "text.secondary",
+                        }}
+                    >
+                        {group.category}
+                    </Typography>
+                    <Box
+                        sx={{
+                            pt: 1,
+                            display: "flex",
+                            flexWrap: "wrap",
+                            gap: 1.5,
+                            justifyContent: "center",
+                        }}
+                    >
+                        {group.skills.map((skill) => (
+                            <Chip
+                                key={skill}
+                                label={skill}
+                                variant="outlined"
+                                sx={{
+                                    "transition":
+                                        "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                                    "&:hover": {
+                                        transform: "translateY(-2px)",
+                                        borderColor: "primary.main",
+                                        backgroundColor: "action.hover",
+                                    },
+                                }}
+                            />
+                        ))}
+                    </Box>
+                </Box>
             ))}
-        </Grid>
+        </Box>
     );
 };
 

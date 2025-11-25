@@ -12,66 +12,60 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Container, Grid, Typography } from "@mui/material";
-import type { Theme } from "@mui/material/styles";
+import { Box, Grid, Typography } from "@mui/material";
 import type React from "react";
 
 import { Link } from "@/components/content";
 import profiles from "@/constants/profiles";
 
 const Profiles = (): React.ReactElement => (
-    <Grid container justifyContent="center" alignItems="center">
-        {profiles.map(({ name, Icon, link }) => (
-            <Grid size={{ xs: 12, sm: 3 }} key={name}>
+    <Grid container justifyContent="center" alignItems="stretch" spacing={2}>
+        {Object.values(profiles).map(({ name, Icon, link }) => (
+            <Grid key={name} size={{ xs: 6, sm: 3 }}>
                 <Link href={link} target="_blank" aria-label={name}>
-                    <Grid
-                        container
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="center"
+                    <Box
                         sx={{
-                            "p": (theme: Theme) => theme.spacing(4),
-                            "cursor": "pointer",
+                            "display": "flex",
+                            "flexDirection": "column",
+                            "alignItems": "center",
+                            "justifyContent": "center",
+                            "height": "100%",
+                            "p": 4,
+                            "borderRadius": 2,
+                            "transition":
+                                "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                            "border": "1px solid",
+                            "borderColor": "divider",
                             "&:hover": {
-                                background: (theme: Theme) =>
-                                    theme.palette.mode === "light"
-                                        ? "#cccccc"
-                                        : "#444444",
+                                "backgroundColor": "action.hover",
+                                "transform": "translateY(-1px)",
+                                "borderColor": "primary.main",
+                                "& .MuiSvgIcon-root": {
+                                    transform: "scale(1.05)",
+                                },
                             },
-                            "color": (theme: Theme) =>
-                                theme.palette.mode === "light"
-                                    ? "black"
-                                    : "white",
                         }}
                     >
-                        <Container disableGutters>
-                            <Grid
-                                size={6}
-                                sx={{
-                                    margin: "auto",
-                                    textAlign: "center",
-                                }}
-                            >
-                                <Icon
-                                    sx={{
-                                        margin: 1,
-                                    }}
-                                    fontSize="large"
-                                />
-                            </Grid>
-                            <Grid
-                                size={6}
-                                sx={{
-                                    margin: "auto",
-                                    textAlign: "center",
-                                }}
-                            >
-                                <Typography sx={{ fontWeight: "bold" }}>
-                                    {name}
-                                </Typography>
-                            </Grid>
-                        </Container>
-                    </Grid>
+                        <Icon
+                            sx={{
+                                fontSize: 40,
+                                mb: 2,
+                                transition:
+                                    "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                                color: "text.secondary",
+                            }}
+                        />
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                fontWeight: 500,
+                                letterSpacing: "0em",
+                                textAlign: "center",
+                            }}
+                        >
+                            {name}
+                        </Typography>
+                    </Box>
                 </Link>
             </Grid>
         ))}

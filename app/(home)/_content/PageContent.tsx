@@ -19,11 +19,11 @@ import dynamic from "next/dynamic";
 import type React from "react";
 import type { JSX } from "react";
 
-import Heading from "./Heading";
-import WelcomeBanner from "./WelcomeBanner";
+import Heading from "./common/Heading";
+import WelcomeBanner from "./sections/WelcomeBanner";
 
 const SectionContainer = styled(Container)(({ theme }) => ({
-    margin: 0,
+    m: 0,
     pt: `${theme.mixins.toolbar.minHeight ?? 0}px`,
 }));
 
@@ -33,7 +33,7 @@ const pageLoader = (): JSX.Element => (
     </Box>
 );
 
-const AboutMeSection = dynamic(async () => await import("./AboutMe"), {
+const AboutMeSection = dynamic(async () => await import("./sections/AboutMe"), {
     loading: pageLoader,
 });
 const AchievementsSection = dynamic(
@@ -84,6 +84,11 @@ const PageContent = (): React.ReactElement => {
             sectionId: "experience",
         },
         {
+            name: "Contributed Projects",
+            Component: ContributedProjectsSection,
+            sectionId: "contributed-projects",
+        },
+        {
             name: "Achievements",
             Component: AchievementsSection,
             sectionId: "achievements",
@@ -103,11 +108,6 @@ const PageContent = (): React.ReactElement => {
             Component: ProfilesSection,
             sectionId: "profiles",
         },
-        {
-            name: "Contributed Projects",
-            Component: ContributedProjectsSection,
-            sectionId: "contributed-projects",
-        },
     ];
 
     const generateSection = (
@@ -115,9 +115,14 @@ const PageContent = (): React.ReactElement => {
         section: React.ReactElement,
         testId: string,
     ): React.ReactElement => (
-        <Container maxWidth={false} disableGutters data-testid={testId}>
+        <Container
+            maxWidth={false}
+            disableGutters
+            data-testid={testId}
+            sx={{ my: { xs: 3, md: 6 } }}
+        >
             <Heading>{title}</Heading>
-            <Container maxWidth={false} disableGutters sx={{ py: 3 }}>
+            <Container maxWidth={false} disableGutters sx={{ py: 4 }}>
                 {section}
             </Container>
         </Container>
@@ -130,9 +135,10 @@ const PageContent = (): React.ReactElement => {
                 maxWidth={false}
                 disableGutters
                 sx={{
-                    mb: 5,
+                    pt: { xs: 3, md: 6 },
                     px: {
-                        xs: 0,
+                        xs: 1,
+                        md: 4,
                         lg: 20,
                         xl: 40,
                     },

@@ -40,7 +40,7 @@ describe("navigation between pages", () => {
                 cy.get("@navlink").click({ waitForAnimations: true });
 
                 cy.wait(1000);
-                cy.findByRole("progressbar").should("not.exist");
+                cy.findAllByRole("progressbar").should("not.exist");
 
                 if (route.subRoutes !== undefined) {
                     throw new Error(

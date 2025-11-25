@@ -72,17 +72,16 @@ export const metadata: Metadata = {
 };
 
 const PersonalProjects = (): React.ReactElement => {
+    const k8sReplicatorLogo = (
+        <Logo logo={Logos.K8sReplicator} height="3.5em" />
+    );
+    const meshManagerLogo = <Logo logo={Logos.MeshManager} height="4.5em" />;
+
     const generateLink = (text: string, href: string): React.ReactElement => (
         <Link href={href} target="_blank">
             {text}
         </Link>
     );
-
-    const k8sReplicatorLogo = (
-        <Logo logo={Logos.K8sReplicator} height="1.5em" />
-    );
-    const meshManagerLogo = <Logo logo={Logos.MeshManager} height="1.0em" />;
-
     const Secret = generateLink(
         "Secret",
         "https://kubernetes.io/docs/concepts/configuration/secret/",
