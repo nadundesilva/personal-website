@@ -14,7 +14,7 @@
  */
 
 export const FULL_NAME = "Nadun De Silva";
-export const MAIN_DESCRIPTION = `${FULL_NAME} is an aspiring Lead Software Engineer specialising Cloud Technologies.`;
+export const MAIN_DESCRIPTION = `${FULL_NAME} is a Lead Software Engineer specialising in Cloud Technologies.`;
 
 const unsanitizedWebsiteUrl =
     process.env.NEXT_PUBLIC_WEBSITE_URL ?? "https://nadundesilva.com";

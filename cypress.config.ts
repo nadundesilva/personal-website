@@ -17,7 +17,7 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
     projectId: "w712w3",
-    viewportWidth: 1024,
+    viewportWidth: 1280,
     viewportHeight: 768,
 
     video: true,

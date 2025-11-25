@@ -21,7 +21,6 @@ import {
     styled,
     Typography,
     useMediaQuery,
-    useTheme,
 } from "@mui/material";
 import Image from "next/image";
 import type React from "react";
@@ -43,45 +42,46 @@ const ImageListItemImageOverlay = styled(Grid)(({ theme }) => ({
     backgroundColor:
         theme.palette.mode === "light"
             ? "rgba(255, 255, 255, 0.85)"
-            : "rgba(0, 0, 0, 0.8)",
+            : "rgba(0, 0, 0, 0.85)",
     position: "absolute",
     textAlign: "center",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    opacity: 0,
+    backdropFilter: "blur(6px)",
+    transition: "opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
 }));
 
 interface AchievementSection {
     title: string;
     photo: ImageAsset;
-    animationTimeoutFactor: number;
 }
 
-const ROW_HEIGHT = 300;
+const ROW_HEIGHT = 320;
 
 const Achievements = (): React.ReactElement => {
     const achievementSections: AchievementSection[] = [
         {
             title: "Global Finalist - Galactic Impact - NASA Space Apps Challenge 2017",
             photo: Photos.NASASpaceAppsChallenge2017,
-            animationTimeoutFactor: 1.75,
         },
         {
             title: "Placements in Dean's List",
             photo: Photos.UOMDeansList2017,
-            animationTimeoutFactor: 1,
         },
         {
             title: "WSO2 Sustained Outstanding Contribution Award - Consecutive years from 2019 to 2021",
             photo: Photos.WSO2OutstandingContributor2019,
-            animationTimeoutFactor: 2,
         },
         {
             title: "Finalist - British Council HSBC Youth Enterprise Awards 2015",
             photo: Photos.HSBCYouthEnterpriseAwards2015,
-            animationTimeoutFactor: 1.5,
         },
         {
             title: "Finalist - Angel Hack 2016",
             photo: Photos.AngelHack2016,
-            animationTimeoutFactor: 1.25,
         },
     ];
 
@@ -98,13 +98,14 @@ const Achievements = (): React.ReactElement => {
                 cols={1}
                 sx={{
                     "position": "relative",
+                    "overflow": "hidden",
                     "&:hover": {
                         [`& .${classes.imageListItemImageOverlay}`]: {
-                            top: 0,
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
+                            opacity: 1,
                             zIndex: 1,
+                        },
+                        "& img": {
+                            transform: "scale(1.03)",
                         },
                     },
                 }}
@@ -116,8 +117,18 @@ const Achievements = (): React.ReactElement => {
                         alignItems="center"
                         className={classes.imageListItemImageOverlay}
                     >
-                        <Grid size={6}>
-                            <Typography sx={{ fontWeight: "bold" }}>
+                        <Grid size={{ xs: 10, md: 8 }}>
+                            <Typography
+                                variant="h6"
+                                component="h3"
+                                fontWeight={500}
+                                sx={{
+                                    fontSize: { xs: 16, md: 18 },
+                                    letterSpacing: "-0.02em",
+                                    lineHeight: 1.4,
+                                    textShadow: "0 2px 12px rgba(0, 0, 0, 0.2)",
+                                }}
+                            >
                                 {achievementSection.title}
                             </Typography>
                         </Grid>
@@ -131,6 +142,8 @@ const Achievements = (): React.ReactElement => {
                         sizes={`${Math.ceil(100 / totalColumns)}vw`}
                         style={{
                             objectFit: "cover",
+                            transition:
+                                "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                         }}
                     />
                 </Box>
@@ -138,61 +151,35 @@ const Achievements = (): React.ReactElement => {
         );
     };
 
-    const theme = useTheme();
-    const isAboveMd = useMediaQuery(theme.breakpoints.up("md"));
-
-    const LARGE_SCREEN_COLUMN_COUNT = 3;
-    const SMALL_SCREEN_COLUMN_COUNT = 1;
+    const isAboveMd = useMediaQuery((theme) => theme.breakpoints.up("md"));
     return (
-        <Container maxWidth={false} disableGutters>
+        <>
             {isAboveMd ? (
-                <ImageList
-                    rowHeight={ROW_HEIGHT}
-                    cols={LARGE_SCREEN_COLUMN_COUNT}
-                >
+                <ImageList rowHeight={ROW_HEIGHT} cols={3}>
                     <FullSizeImageListItem rows={2} cols={1}>
                         <ImageList rowHeight={ROW_HEIGHT} cols={1}>
-                            {renderImageListItem(
-                                0,
-                                1,
-                                LARGE_SCREEN_COLUMN_COUNT,
-                            )}
-                            {renderImageListItem(
-                                1,
-                                1,
-                                LARGE_SCREEN_COLUMN_COUNT,
-                            )}
+                            {renderImageListItem(0, 1, 3)}
+                            {renderImageListItem(1, 1, 3)}
                         </ImageList>
                     </FullSizeImageListItem>
-                    {renderImageListItem(2, 2, LARGE_SCREEN_COLUMN_COUNT)}
+                    {renderImageListItem(2, 2, 3)}
                     <FullSizeImageListItem rows={2} cols={1}>
                         <ImageList rowHeight={ROW_HEIGHT} cols={1}>
-                            {renderImageListItem(
-                                3,
-                                1,
-                                LARGE_SCREEN_COLUMN_COUNT,
-                            )}
-                            {renderImageListItem(
-                                4,
-                                1,
-                                LARGE_SCREEN_COLUMN_COUNT,
-                            )}
+                            {renderImageListItem(3, 1, 3)}
+                            {renderImageListItem(4, 1, 3)}
                         </ImageList>
                     </FullSizeImageListItem>
                 </ImageList>
             ) : (
-                <ImageList
-                    rowHeight={ROW_HEIGHT}
-                    cols={SMALL_SCREEN_COLUMN_COUNT}
-                >
-                    {renderImageListItem(0, 1, SMALL_SCREEN_COLUMN_COUNT)}
-                    {renderImageListItem(1, 1, SMALL_SCREEN_COLUMN_COUNT)}
-                    {renderImageListItem(2, 1, SMALL_SCREEN_COLUMN_COUNT)}
-                    {renderImageListItem(3, 1, SMALL_SCREEN_COLUMN_COUNT)}
-                    {renderImageListItem(4, 1, SMALL_SCREEN_COLUMN_COUNT)}
+                <ImageList rowHeight={ROW_HEIGHT} cols={1}>
+                    {renderImageListItem(0, 1, 1)}
+                    {renderImageListItem(1, 1, 1)}
+                    {renderImageListItem(2, 1, 1)}
+                    {renderImageListItem(3, 1, 1)}
+                    {renderImageListItem(4, 1, 1)}
                 </ImageList>
             )}
-        </Container>
+        </>
     );
 };
 
