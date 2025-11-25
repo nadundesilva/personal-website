@@ -23,7 +23,7 @@ import {
     TimelineContent,
 } from "@mui/lab";
 import { Card, Typography, useMediaQuery, useTheme } from "@mui/material";
-import React from "react";
+import type React from "react";
 
 interface ExperienceItem {
     name: string;

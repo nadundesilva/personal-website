@@ -21,7 +21,7 @@ import {
     Typography,
 } from "@mui/material";
 import { glob } from "glob";
-import React from "react";
+import type React from "react";
 
 import { Link } from "@/components/content";
 

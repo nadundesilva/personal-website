@@ -14,7 +14,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { useReportWebVitals } from "next/web-vitals";
-import React from "react";
+import type React from "react";
 
 interface Window {
     gtag: Gtag.Gtag;

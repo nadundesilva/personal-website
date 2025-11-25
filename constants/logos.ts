@@ -13,7 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
-import { SxProps, Theme } from "@mui/material";
+import type { SxProps, Theme } from "@mui/material";
 
 export interface LogoAsset {
     src: Record<"light" | "dark", string>;

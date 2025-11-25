@@ -13,7 +13,7 @@
  * © 2024 Nadun De Silva. All rights reserved.
  */
 import type { Metadata } from "next";
-import React from "react";
+import type React from "react";
 
 import ArticlesList from "@/components/blog-articles/ArticlesList";
 import { Title } from "@/components/content";

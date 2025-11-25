@@ -12,7 +12,7 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import React from "react";
+import type React from "react";
 
 interface BlogArticlesLayoutProps {
     children: React.ReactNode;
