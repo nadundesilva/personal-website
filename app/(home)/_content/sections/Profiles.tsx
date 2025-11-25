@@ -13,8 +13,8 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { Container, Grid, Typography } from "@mui/material";
-import { Theme } from "@mui/material/styles";
-import React from "react";
+import type { Theme } from "@mui/material/styles";
+import type React from "react";
 
 import { Link } from "@/components/content";
 import profiles from "@/constants/profiles";

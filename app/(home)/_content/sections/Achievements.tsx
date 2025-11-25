@@ -38,11 +38,15 @@ const FullSizeImageListItem = styled(ImageListItem)({
     height: "auto",
 });
 
-const ImageListItemImageOverlay = styled(Grid)({
-    color: "#ffffff",
+const ImageListItemImageOverlay = styled(Grid)(({ theme }) => ({
+    color: theme.palette.mode === "light" ? "#000000" : "#ffffff",
+    backgroundColor:
+        theme.palette.mode === "light"
+            ? "rgba(255, 255, 255, 0.85)"
+            : "rgba(0, 0, 0, 0.8)",
     position: "absolute",
     textAlign: "center",
-});
+}));
 
 interface AchievementSection {
     title: string;
@@ -100,7 +104,6 @@ const Achievements = (): React.ReactElement => {
                             bottom: 0,
                             left: 0,
                             right: 0,
-                            backgroundColor: "rgba(0, 0, 0, 0.6)",
                             zIndex: 1,
                         },
                     },

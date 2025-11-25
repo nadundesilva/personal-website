@@ -16,7 +16,8 @@
 
 import { Box, CircularProgress, Container, styled } from "@mui/material";
 import dynamic from "next/dynamic";
-import React, { type JSX } from "react";
+import type React from "react";
+import type { JSX } from "react";
 
 import Heading from "./Heading";
 import WelcomeBanner from "./WelcomeBanner";

@@ -13,9 +13,10 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Link, LinkProps } from "@mui/material";
+import { Link, type LinkProps } from "@mui/material";
 import NextLink from "next/link";
-import React, { forwardRef, Ref } from "react";
+import type React from "react";
+import { forwardRef, type Ref } from "react";
 
 type CustomLinkProps = {
     href: string | URL;

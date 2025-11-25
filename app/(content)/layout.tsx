@@ -14,7 +14,7 @@
  */
 
 import { Container } from "@mui/material";
-import React from "react";
+import type React from "react";
 
 import { RouterBreadcrumbs } from "@/components/layout";
 

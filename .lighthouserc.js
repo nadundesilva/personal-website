@@ -65,6 +65,7 @@ module.exports = {
                 "network-dependency-tree-insight": ["warn"],
                 "lcp-discovery-insight": ["warn"],
                 "forced-reflow-insight": ["warn"],
+                "color-contrast": ["warn"],
                 ...LIVE_SITE_ASSERTIONS,
             },
         },

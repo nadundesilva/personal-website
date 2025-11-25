@@ -18,7 +18,7 @@ import {
     CardActionArea,
     CardContent,
     CardMedia,
-    CardMediaProps,
+    type CardMediaProps,
     Chip,
     Container,
     Grid,
@@ -26,7 +26,7 @@ import {
     useTheme,
 } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import type React from "react";
 
 import { Link } from "@/components/content";
 import { type Certificate, Certificates } from "@/constants/certificates";
