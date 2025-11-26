@@ -29,7 +29,7 @@ jobs:
             - name: Install Dependencies
               run: npm ci
             - name: Lint Code Base
-              uses: super-linter/super-linter@ffde3b2b33b745cb612d787f669ef9442b1339a6 # v8.1.0
+              uses: super-linter/super-linter@2bdd90ed3262e023ac84bf8fe35dc480721fc1f2 # v8.2.1
               env:
                   DEFAULT_BRANCH: main
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -104,7 +104,7 @@ jobs:
               env:
                   BUILD_TYPE: test
             - name: Run E2E Tests
-              uses: cypress-io/github-action@b8ba51a856ba5f4c15cf39007636d4ab04f23e3c # v6.10.2
+              uses: cypress-io/github-action@7ef72e250a9e564efb4ed4c2433971ada4cc38b4 # v6.10.4
               with:
                   start: bash .github/scripts/start-server.sh
                   browser: ${{ matrix.browser }}
@@ -204,7 +204,7 @@ jobs:
                   WEBSITE_BUILD_DIR: _site
             - name: Link Checker
               id: lychee
-              uses: lycheeverse/lychee-action@885c65f3dc543b57c898c8099f4e08c8afd178a2 # v2.6.1
+              uses: lycheeverse/lychee-action@a8c4c7cb88f0c7386610c35eb25108e448569cb0 # v2.7.0
               with:
                   args: --verbose --no-progress https://nadundesilva.com/
                   fail: true
@@ -249,7 +249,7 @@ jobs:
                   name: site
                   path: _site/
             - name: Run E2E Tests
-              uses: cypress-io/github-action@b8ba51a856ba5f4c15cf39007636d4ab04f23e3c # v6.10.2
+              uses: cypress-io/github-action@7ef72e250a9e564efb4ed4c2433971ada4cc38b4 # v6.10.4
               with:
                   start: bash .github/scripts/start-server.sh
                   browser: ${{ matrix.browser }}
@@ -341,7 +341,7 @@ jobs:
               with:
                   node-version: "24.11.1"
             - name: Deploy
-              uses: JamesIves/github-pages-deploy-action@6c2d9db40f9296374acc17b90404b6e8864128c8 # v4.7.3
+              uses: JamesIves/github-pages-deploy-action@4a3abc783e1a24aeb44c16e869ad83caf6b4cc23 # v4.7.4
               with:
                   dry-run: ${{ github.event_name != 'push' }}
                   branch: gh-pages
