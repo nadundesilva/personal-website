@@ -35,7 +35,7 @@ jobs:
               run: |
                   npm ci
             - name: Run E2E Tests
-              uses: cypress-io/github-action@b8ba51a856ba5f4c15cf39007636d4ab04f23e3c # v6.10.2
+              uses: cypress-io/github-action@7ef72e250a9e564efb4ed4c2433971ada4cc38b4 # v6.10.4
               with:
                   record: true
                   tag: deployment-check-in-browser-${{ matrix.browser }}
@@ -63,7 +63,7 @@ jobs:
                   persist-credentials: false
             - name: Link Checker
               id: lychee
-              uses: lycheeverse/lychee-action@885c65f3dc543b57c898c8099f4e08c8afd178a2 # v2.6.1
+              uses: lycheeverse/lychee-action@a8c4c7cb88f0c7386610c35eb25108e448569cb0 # v2.7.0
               with:
                   args: --verbose --no-progress https://nadundesilva.com/
                   fail: true
