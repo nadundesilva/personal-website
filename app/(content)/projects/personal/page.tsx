@@ -21,11 +21,13 @@ import {
     Link,
     List,
     ListItem,
+    Logo,
     Paragraph,
     Section,
     SectionHeading,
     Title,
 } from "@/components/content";
+import { Logos } from "@/constants/logos";
 
 interface ViewOnGitHubButtonProps {
     repoOrg: string;
@@ -75,6 +77,12 @@ const PersonalProjects = (): React.ReactElement => {
             {text}
         </Link>
     );
+
+    const k8sReplicatorLogo = (
+        <Logo logo={Logos.K8sReplicator} height="1.5em" />
+    );
+    const meshManagerLogo = <Logo logo={Logos.MeshManager} height="1.0em" />;
+
     const Secret = generateLink(
         "Secret",
         "https://kubernetes.io/docs/concepts/configuration/secret/",
@@ -92,6 +100,7 @@ const PersonalProjects = (): React.ReactElement => {
             <Title>Personal Projects</Title>
             <Section>
                 <SectionHeading>K8s Replicator</SectionHeading>
+                {k8sReplicatorLogo}
                 <ViewOnGitHubButton
                     repoOrg="nadundesilva"
                     repoName="k8s-replicator"
@@ -128,6 +137,7 @@ const PersonalProjects = (): React.ReactElement => {
             </Section>
             <Section>
                 <SectionHeading>Mesh Manager</SectionHeading>
+                {meshManagerLogo}
                 <ViewOnGitHubButton
                     repoOrg="nadundesilva"
                     repoName="mesh-manager"

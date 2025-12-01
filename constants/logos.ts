@@ -145,6 +145,8 @@ export const Logos: Record<string, LogoAsset> = {
         width: 3192,
         height: 3192,
     },
+
+    // Projects
     Siddhi: {
         src: {
             light: "/assets/projects/siddhi-logo.svg",
@@ -192,5 +194,25 @@ export const Logos: Record<string, LogoAsset> = {
         recommendedSx: {
             my: 2,
         },
+    },
+
+    // Personal Projects
+    K8sReplicator: {
+        src: {
+            light: "/assets/projects/personal/k8s-replicator-logo.png",
+            dark: "/assets/projects/personal/k8s-replicator-logo.png",
+        },
+        alt: "K8s Replicator",
+        width: 609,
+        height: 219,
+    },
+    MeshManager: {
+        src: {
+            light: "/assets/projects/personal/mesh-manager-logo.png",
+            dark: "/assets/projects/personal/mesh-manager-logo.png",
+        },
+        alt: "Mesh Manager",
+        width: 588,
+        height: 425,
     },
 };
