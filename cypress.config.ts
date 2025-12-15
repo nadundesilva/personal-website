@@ -13,6 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import runCoverageTask from "@cypress/code-coverage/task";
+import { glob } from "glob";
 import { defineConfig } from "cypress";
 
 export default defineConfig({
@@ -29,6 +30,23 @@ export default defineConfig({
             config: Cypress.PluginConfigOptions,
         ) {
             runCoverageTask(on, config);
+
+            on("task", {
+                discoverBlogArticles(): string[] {
+                    const pathPattern =
+                        "app/(content)/blog-articles/(articles)/**/page.mdx";
+                    const articleFiles = glob.sync(pathPattern);
+                    return articleFiles.map((filePath) => {
+                        const relativePath = filePath
+                            .replace(
+                                /^(app\/\(content\)\/blog-articles\/\(articles\)\/)/,
+                                "",
+                            )
+                            .replace(/\/page\.mdx$/, "");
+                        return `/blog-articles/${relativePath}`;
+                    });
+                },
+            });
 
             on("before:browser:launch", (browser, launchOptions) => {
                 if (browser.name === "chrome" && browser.isHeadless) {

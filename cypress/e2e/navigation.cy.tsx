@@ -32,7 +32,7 @@ describe("navigation between pages", () => {
         ) => {
             Object.values(currentRoutes).forEach((route) => {
                 cy.findByRole("link", {
-                    name: new RegExp(`View ${route.name}`, "i"),
+                    name: new RegExp(`^View ${route.name}$`, "i"),
                 })
                     .as("navlink")
                     .should("be.visible");
@@ -65,5 +65,52 @@ describe("navigation between pages", () => {
         };
 
         visitNavLink(WebsiteHome.subRoutes, WebsiteHome.name);
+    });
+
+    it("properly navigates to all blog articles", () => {
+        cy.task<string[]>("discoverBlogArticles").then((discoveredArticles) => {
+            cy.log(`Discovered ${discoveredArticles.length} blog articles`);
+
+            cy.loadPage("/blog-articles");
+            cy.wait(1000);
+            cy.findAllByRole("progressbar").should("not.exist");
+
+            // Count article links on the page
+            cy.findAllByRole("link").then(($links) => {
+                const articleLinks = Array.from($links).filter((link) => {
+                    const href = link.getAttribute("href");
+                    return href?.startsWith("/blog-articles/") ?? false;
+                });
+                const articleCount = articleLinks.length;
+                cy.log(`Found ${articleCount} article links on page`);
+
+                expect(articleCount).to.equal(
+                    discoveredArticles.length,
+                    `Expected ${discoveredArticles.length} articles but found ${articleCount}`,
+                );
+            });
+
+            // Navigate to each discovered article
+            discoveredArticles.forEach((articleUrl) => {
+                cy.log(`Navigating to article: ${articleUrl}`);
+
+                // Find the article link by href using attribute selector
+                cy.get(`a[href="${articleUrl}"]`)
+                    .as("articleLink")
+                    .should("be.visible");
+
+                cy.scrollTo(0, 0, { duration: 1000 });
+                cy.get("@articleLink").click({ waitForAnimations: true });
+
+                cy.wait(1000);
+                cy.findAllByRole("progressbar").should("not.exist");
+
+                // Verify we're on the article page by checking URL
+                cy.url().should("include", articleUrl);
+
+                // Navigate back to blog articles page using breadcrumbs
+                cy.clickBreadcrumb("Blog Articles");
+            });
+        });
     });
 });
