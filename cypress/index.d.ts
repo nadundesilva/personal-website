@@ -22,6 +22,10 @@ declare global {
             loadPage(url: string): void;
             clickNavLink(name: string): Chainable<JQuery<Element>>;
             clickBreadcrumb(name: string): Chainable<JQuery<Element>>;
+            task<T = unknown>(
+                event: "discoverBlogArticles",
+                arg?: unknown,
+            ): Chainable<T>;
         }
     }
 }
