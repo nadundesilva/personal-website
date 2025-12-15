@@ -37,7 +37,7 @@ Cypress.Commands.add("clickNavLink", (name: string): void => {
         .should("be.visible")
         .within(() => {
             cy.findByRole("link", {
-                name: new RegExp(name, "i"),
+                name: new RegExp(`^${name}$`, "i"),
             })
                 .as("navlink")
                 .should("be.visible");
@@ -55,7 +55,7 @@ Cypress.Commands.add("clickBreadcrumb", (name: string): void => {
         .should("be.visible")
         .within(() => {
             cy.findByRole("link", {
-                name: new RegExp(name, "i"),
+                name: new RegExp(`^${name}$`, "i"),
             })
                 .as("breadcrumb")
                 .should("be.visible");
