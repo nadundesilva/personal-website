@@ -72,7 +72,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         a: ({ href, children }) =>
             href ? (
                 <Link
-                    href={new URL(href, `${WEBSITE_PUBLIC_URL}/blog-articles/`)}
+                    href={new URL(
+                        href,
+                        `${WEBSITE_PUBLIC_URL}/blog-articles/`,
+                    ).toString()}
                     target="_blank"
                 >
                     {children}
@@ -99,7 +102,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         ol: ({ children }) => <List component="ol">{children}</List>,
         li: ({ children }) => (
             <ListItem>
-                <Typography>{children}</Typography>
+                <Typography component="div">{children}</Typography>
             </ListItem>
         ),
         BlogArticleLayout({
@@ -132,7 +135,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             };
             const renderingId = React.useId();
             return (
-                <Box>
+                <Box component="article">
                     <Title>{pageMetadata.title}</Title>
                     <Script
                         id={`json-ld-blog-${renderingId}`}
