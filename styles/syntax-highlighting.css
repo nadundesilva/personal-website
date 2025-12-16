@@ -18,6 +18,11 @@ figure[data-rehype-pretty-code-figure] {
     margin: 0;
 }
 
+code[data-theme],
+code[data-theme] * {
+    font-family: Roboto, sans-serif;
+}
+
 pre > code {
     overflow-x: auto;
     padding: 1rem;
@@ -50,4 +55,5 @@ pre > code[data-line-numbers-max-digits="3"] > [data-line]::before {
 
 span[data-rehype-pretty-code-figure] > code {
     padding: 0.25rem;
+    font-family: Roboto, sans-serif;
 }

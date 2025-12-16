@@ -18,7 +18,7 @@ import React from "react";
 import type { Person, WithContext } from "schema-dts";
 
 import Layout from "@/components/layout";
-import { WebsiteThemeProvider } from "@/components/theme";
+import { WebsiteThemeProvider, roboto } from "@/components/theme";
 import WebVitals from "@/components/WebVitals";
 import {
     FULL_NAME,
@@ -243,7 +243,9 @@ const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
                 <main>
                     <React.StrictMode>
                         <WebVitals />
-                        <WebsiteThemeProvider>
+                        <WebsiteThemeProvider
+                            fontFamily={roboto.style.fontFamily}
+                        >
                             <Layout>{children}</Layout>
                         </WebsiteThemeProvider>
                     </React.StrictMode>

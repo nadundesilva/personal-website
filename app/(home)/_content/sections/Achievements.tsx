@@ -14,7 +14,6 @@
  */
 import {
     Box,
-    Container,
     Grid,
     ImageList,
     ImageListItem,
