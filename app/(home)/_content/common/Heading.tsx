@@ -12,7 +12,7 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, Container, Typography, useTheme } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import type React from "react";
 
 interface HeadingProps {
@@ -20,8 +20,6 @@ interface HeadingProps {
 }
 
 const Heading = (props: HeadingProps): React.ReactElement => {
-    const theme = useTheme();
-
     return (
         <Container maxWidth={false} disableGutters>
             <Box

@@ -170,7 +170,7 @@ const Education = (): React.ReactElement => {
                         <Typography>Z - Score: 2.2441</Typography>
                     </ListItem>
                     <ListItem>
-                        <Typography>
+                        <Typography component="div">
                             Main Subjects:
                             <List>
                                 <ListItem>
@@ -188,7 +188,7 @@ const Education = (): React.ReactElement => {
                         </Typography>
                     </ListItem>
                     <ListItem>
-                        <Typography>
+                        <Typography component="div">
                             Other Subjects:
                             <List>
                                 <ListItem>

@@ -10,9 +10,12 @@
  *
  * Website: https://nadundesilva.com
  *
- * © 2023 Nadun De Silva. All rights reserved.
+ * © 2025 Nadun De Silva. All rights reserved.
  */
-import WebsiteThemeProvider from "./WebsiteThemeProvider";
-import { roboto } from "./fonts";
+import { Roboto } from "next/font/google";
 
-export { WebsiteThemeProvider, roboto };
+export const roboto = Roboto({
+    weight: "400",
+    subsets: ["latin"],
+    display: "swap",
+});

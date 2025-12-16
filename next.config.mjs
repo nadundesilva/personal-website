@@ -56,10 +56,14 @@ const sentryConfig = {
     transpileClientSDK: true,
 
     silent: !process.env.CI,
-    disableLogger: true,
 
-    automaticVercelMonitors: false,
-    autoInstrumentServerFunctions: false,
+    webpack: {
+        treeshake: {
+            removeDebugLogging: true,
+        },
+        automaticVercelMonitors: false,
+        autoInstrumentServerFunctions: false,
+    },
 };
 
 const nextConfig = (phase, { defaultConfig }) => {
@@ -69,9 +73,6 @@ const nextConfig = (phase, { defaultConfig }) => {
     const nextConfig = {
         ...defaultConfig,
         pageExtensions: ["ts", "tsx", "md", "mdx", "js", "jsx"],
-        eslint: {
-            ignoreDuringBuilds: process.env.BUILD_TYPE === "test",
-        },
         modularizeImports: {
             "@mui/icons-material": {
                 transform: "@mui/icons-material/{{member}}",

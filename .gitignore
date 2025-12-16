@@ -5,6 +5,7 @@ node_modules
 
 # Next JS
 .next
+next-env.d.ts
 *.env
 out
 

@@ -25,7 +25,9 @@ const HighlightsSection = ({
     children,
 }: HighlightsSectionProps): React.ReactElement => (
     <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
-        <Typography sx={{ fontWeight: "bold" }}>Highlights:</Typography>
+        <Typography component="span" sx={{ fontWeight: "bold" }}>
+            Highlights:
+        </Typography>
         <List>{children}</List>
     </Box>
 );
