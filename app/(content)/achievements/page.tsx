@@ -25,7 +25,6 @@ import {
     Photo,
     Section,
     SectionHeading,
-    Datespan,
     Title,
 } from "@/components/content";
 import { Date, DateRange } from "@/constants/date";
@@ -90,13 +89,12 @@ const Achievements = (): React.ReactElement => {
         <>
             <Title>Achievements</Title>
             <Section>
-                <SectionHeading>
+                <SectionHeading
+                    date={new DateRange(new Date(2019), new Date(2021))}
+                    logo={wso2Logo}
+                >
                     WSO2 Sustained Outstanding Contribution Award
                 </SectionHeading>
-                <Datespan
-                    value={new DateRange(new Date(2019), new Date(2021))}
-                />
-                {wso2Logo}
                 <Photo
                     float="right"
                     photo={Photos.WSO2OutstandingContributor2019}
@@ -104,42 +102,41 @@ const Achievements = (): React.ReactElement => {
                 <Paragraph>
                     Each year for employees who have performed exceptionally
                     throughout the year, the Sustained Outstanding Contribution
-                    Award is awarded. I was presented this award for several
-                    consecutive years at {WSO2}. Along with the award I had been
-                    commended many times for performing well above the expected
-                    level for many years.
+                    Award is awarded. I was presented with this award for
+                    several consecutive years at {WSO2}. Along with the award I
+                    had been commended many times for performing well above the
+                    expected level for many years.
                 </Paragraph>
                 <Paragraph>
                     In 2021, this award was changed to be only awarded for the
                     top 5% employees at {WSO2} making it extremely hard to
-                    achieve. In the year 2021, I was offered this award with
-                    only 18 other people in the whole company gaining the same
-                    award. This is the best award offered for an employee for
+                    achieve. In the year 2021, I was awarded this with only 18
+                    other people in the whole company gaining the same award.
+                    This is the best award offered for an employee for
                     exceptional performance at {WSO2}.
                 </Paragraph>
             </Section>
             <Section>
-                <SectionHeading>
-                    Placements in the Dean&lsquo;s List at the University of
+                <SectionHeading
+                    date={new DateRange(new Date(2014), new Date(2018))}
+                    logo={uomLogo}
+                >
+                    Placements on the Dean&lsquo;s List at the University of
                     Moratuwa
                 </SectionHeading>
-                <Datespan
-                    value={new DateRange(new Date(2014), new Date(2018))}
-                />
-                {uomLogo}
                 <Photo float="right" photo={Photos.UOMDeansList2017} />
                 <Paragraph>
                     During my B.Sc. (Hons.) in Engineering (Computer Science and
                     Engineering) degree at the University of Moratuwa, I was
-                    offered placements in the Dean&lsquo;s List for scoring a
-                    GPA above 3.8 (out of 4.2) for 6 out of the 8 semesters I
-                    studied at the {UniversityOfMoratuwa}.
+                    placed on the Dean&lsquo;s List for scoring a GPA above 3.8
+                    (out of 4.2) for 6 out of the 8 semesters I studied at the{" "}
+                    {UniversityOfMoratuwa}.
                 </Paragraph>
-                <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
-                    <Paragraph>
-                        The semester in which placements in the Dean&lsquo;s
-                        List was awarded (4.20 GPA Scale):
-                    </Paragraph>
+                <Paragraph>
+                    The semesters in which placements on the Dean&lsquo;s List
+                    were awarded (4.20 GPA Scale):
+                </Paragraph>
+                <Box sx={{ m: 0, pt: 2 }}>
                     <List>
                         <ListItem>
                             <Typography>Semester 02 (GPA - 3.82)</Typography>
@@ -163,12 +160,13 @@ const Achievements = (): React.ReactElement => {
                 </Box>
             </Section>
             <Section>
-                <SectionHeading>
+                <SectionHeading
+                    date={new Date(2017)}
+                    logo={nasaSpaceAppsChallengeLogo}
+                >
                     NASA Space Apps Challenge - Galactic Impact - Global
                     Finalist
                 </SectionHeading>
-                <Datespan value={new Date(2017)} />
-                {nasaSpaceAppsChallengeLogo}
                 <Photo
                     float="right"
                     photo={Photos.NASASpaceAppsChallenge2017Newspaper}
@@ -188,16 +186,14 @@ const Achievements = (): React.ReactElement => {
                     conditions, and human activities in a region to identify
                     potential barriers or facilitators to gene migration and
                     local adaptation. The platform at its core utilizes a
-                    clustering algorithm for identifying patterns for
-                    identifying any such barriers.
+                    clustering algorithm to identify patterns that indicate any
+                    such barriers.
                 </Paragraph>
             </Section>
             <Section>
-                <SectionHeading>
+                <SectionHeading date={new Date(2017)} logo={wso2Logo}>
                     WSO2 Internal Hackathon - Honorable Mention
                 </SectionHeading>
-                <Datespan value={new Date(2017)} />
-                {wso2Logo}
                 <Paragraph>
                     {WSO2} Internal Hackathon (WHack) was held for the first
                     time in 2017 which was open to all employees including
@@ -211,9 +207,9 @@ const Achievements = (): React.ReactElement => {
                 </Paragraph>
             </Section>
             <Section>
-                <SectionHeading>Angel Hack - Finalist</SectionHeading>
-                <Datespan value={new Date(2016)} />
-                {angelHackLogo}
+                <SectionHeading date={new Date(2016)} logo={angelHackLogo}>
+                    Angel Hack - Finalist
+                </SectionHeading>
                 <Photo float="right" photo={Photos.AngelHack2016} />
                 <Paragraph>
                     In {AngelHack} 2016, our team developed a smart workout
@@ -236,17 +232,17 @@ const Achievements = (): React.ReactElement => {
                     from the sensor attached to the exercise bicycle. The speed
                     at which the user pedaled the bicycle forward was mapped
                     into the speed at which the user moved within the game and
-                    the slight movements of the head was mapped into the bicycle
-                    making small turns. The path forward was designed to avoid
-                    too much strain on the neck, but to simply provide an
+                    the slight movements of the head were mapped into the
+                    bicycle making small turns. The path forward was designed to
+                    avoid too much strain on the neck, but to simply provide an
                     enjoyable game for the user to enjoy while they exercised
                     using the bicycle.
                 </Paragraph>
             </Section>
             <Section>
-                <SectionHeading>HackaDev - Finalist</SectionHeading>
-                <Datespan value={new Date(2015)} />
-                {hackaDevLogo}
+                <SectionHeading date={new Date(2015)} logo={hackaDevLogo}>
+                    HackaDev - Finalist
+                </SectionHeading>
                 <Paragraph>
                     {HackaDev} is a competition which provides a platform for
                     teams from within Sri Lanka to provide solutions for
@@ -254,17 +250,15 @@ const Achievements = (): React.ReactElement => {
                     with addressing problems which were faced by people in Uva
                     province in Sri Lanka. Our team presented a platform which
                     provided entrepreneurs a place to showcase their skills and
-                    products. The platform focussed on connecting entrepreneurs
+                    products. The platform focused on connecting entrepreneurs
                     with customers and investors to help bootstrap businesses in
                     the area.
                 </Paragraph>
             </Section>
             <Section>
-                <SectionHeading>
+                <SectionHeading date={new Date(2015)} logo={britishCouncilLogo}>
                     British Council HSBC Youth Enterprise Awards - Finalist
                 </SectionHeading>
-                <Datespan value={new Date(2015)} />
-                {britishCouncilLogo}
                 <Photo
                     float="right"
                     photo={Photos.HSBCYouthEnterpriseAwards2015}

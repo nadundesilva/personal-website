@@ -24,7 +24,6 @@ import {
     Paragraph,
     Section,
     SectionHeading,
-    Datespan,
     Title,
 } from "@/components/content";
 import { Date, DateRange } from "@/constants/date";
@@ -65,34 +64,35 @@ const Experience = (): React.ReactElement => {
     );
 
     const wso2Logo = <Logo logo={Logos.WSO2} height="2.5em" />;
-    const gsocLogo = <Logo logo={Logos.GoogleSummerOfCode} />;
+    const gsocLogo = <Logo logo={Logos.GoogleSummerOfCode} height="2.5em" />;
 
     return (
         <>
             <Title>Experience</Title>
             <Section>
-                <SectionHeading>Associate Technical Lead</SectionHeading>
-                <Datespan
-                    value={
+                <SectionHeading
+                    date={
                         new DateRange(
                             new Date(2021, "June"),
                             new Date(2022, "November"),
                         )
                     }
-                />
-                {wso2Logo}
+                    logo={wso2Logo}
+                >
+                    Associate Technical Lead
+                </SectionHeading>
                 <Paragraph>
-                    I led the Observability team in technical aspects and it was
-                    considered one of the most stable areas in the {Choreo}{" "}
+                    I led the technical aspects of the Observability area and it
+                    was considered one of the most stable areas in the {Choreo}{" "}
                     platform during that time. Moreover, I guided multiple
-                    engineers and helped them improve for the better. I also
-                    contributed to other areas such as growth hacking, UX, SRE
-                    and other aspects of the {Choreo} platform.
+                    engineers and helped them improve. I also contributed to
+                    other areas such as growth hacking, UX, SRE and other
+                    aspects of the {Choreo} platform.
                 </Paragraph>
                 <Paragraph>
                     Apart from the Observability Area, I also led the effort on
                     the Choreo Online VS Code Editor and implemented a
-                    significant portion of it. This feature also was finished on
+                    significant portion of it. This feature was also finished on
                     time while adhering to code quality, architectural and
                     security standards. This involved implementing a secure
                     environment for users to edit their code.
@@ -118,7 +118,7 @@ const Experience = (): React.ReactElement => {
                             Engineered the minimum viable features for Choreo
                             online editor&apos;s resource scheduling, within 1.5
                             months, leading another engineer, using Kubernetes
-                            and GoLang.
+                            and Go.
                         </Typography>
                     </ListItem>
                     <ListItem>
@@ -130,7 +130,7 @@ const Experience = (): React.ReactElement => {
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Reduced the MsSQL DB utilization by 60%, by
+                            Reduced the MS SQL Server DB utilization by 60%, by
                             introducing a Redis cache and randomization of cache
                             expiry times, increasing the number of users the
                             system can handle.
@@ -146,22 +146,23 @@ const Experience = (): React.ReactElement => {
                 </HighlightsSection>
             </Section>
             <Section>
-                <SectionHeading>Senior Software Engineer</SectionHeading>
-                <Datespan
-                    value={
+                <SectionHeading
+                    date={
                         new DateRange(
                             new Date(2019, "July"),
                             new Date(2021, "June"),
                         )
                     }
-                />
-                {wso2Logo}
+                    logo={wso2Logo}
+                >
+                    Senior Software Engineer
+                </SectionHeading>
                 <Paragraph>
                     I completely owned the Observability area of Cellery and
                     mentored a few interns as well as other junior engineers. I
-                    have also implemented parts of the CLI, VS Code Extension
+                    have also implemented parts of the CLI, VS Code extension
                     and other tools of {Cellery} which involved different new
-                    concepts and technologies which I learnt within short
+                    concepts and technologies which I learned within short
                     periods of time. Later when project {Choreo} was started,{" "}
                     {Cellery} was adopted by the initial version of it as well,
                     until later the project {Choreo} was rebooted and project{" "}
@@ -169,7 +170,7 @@ const Experience = (): React.ReactElement => {
                 </Paragraph>
                 <Paragraph>
                     When the {Choreo} project initially started (rebooted from
-                    the very first implementation), I was again selected to the
+                    the very first implementation), I was again selected for the
                     small team of engineers who were tasked to make it a
                     reality. Two more engineers were also added to the {Choreo}{" "}
                     Observability subteam and I was tasked with leading the
@@ -177,10 +178,9 @@ const Experience = (): React.ReactElement => {
                     core architecture of {Choreo} Observability and also worked
                     on improving {Ballerina} Observability to support {Choreo}{" "}
                     Observability better. While generally this level of
-                    responsibilities are not given to a Senior Software
-                    Engineer, I was trusted with it and I handled these
-                    responsibilities quite well, earning the top performance
-                    award for each year.
+                    responsibility is not given to a Senior Software Engineer, I
+                    was trusted with it and I handled these responsibilities
+                    quite well, earning the top performance award for each year.
                 </Paragraph>
                 <Paragraph>
                     The source code of {Ballerina} Observability was not
@@ -194,18 +194,18 @@ const Experience = (): React.ReactElement => {
                     had its limitations as these instructions were not aware of
                     scheduler level operations at this level. This resulted in
                     some of the instructions getting executed twice due to the
-                    way Ballerina scheduler handled IO bound operations. To
+                    way Ballerina scheduler handled I/O-bound operations. To
                     solve this issue, I worked on completely rewriting the
                     Observability instrumentation at {Ballerina} compiler
                     backend level by transforming the Ballerina Intermediate
                     Representation (BIR) during the compilation. While this task
                     was quite challenging due to the technologies it involved,
-                    the fact that almost no-one knew the source code well and
+                    the fact that almost no one knew the source code well and
                     the strict deadlines, I managed to complete this on time and
                     with good quality.
                 </Paragraph>
                 <Paragraph>
-                    After the initial PoC was complete, the {Choreo} product
+                    After the initial PoC was completed, the {Choreo} product
                     also evolved and the Observability Team also gained new
                     members. I was entrusted with continuing to lead the
                     Observability Team while some of the product management
@@ -250,16 +250,17 @@ const Experience = (): React.ReactElement => {
                 </HighlightsSection>
             </Section>
             <Section>
-                <SectionHeading>Software Engineer</SectionHeading>
-                <Datespan
-                    value={
+                <SectionHeading
+                    date={
                         new DateRange(
                             new Date(2018, "January"),
                             new Date(2019, "July"),
                         )
                     }
-                />
-                {wso2Logo}
+                    logo={wso2Logo}
+                >
+                    Software Engineer
+                </SectionHeading>
                 <Paragraph>
                     At the start of my employment, I worked in multiple teams as
                     part of the probation period. During one of these
@@ -281,7 +282,7 @@ const Experience = (): React.ReactElement => {
                     {ReactJs} which was quite new for me at that time as well.
                 </Paragraph>
                 <Paragraph>
-                    After getting instated as a permanent employee, I joined the
+                    After being instated as a permanent employee, I joined the
                     Cloud Team at {WSO2} and worked on the {WSO2}
                     Serverless Platform which was a new product being developed
                     at that time. I worked on the Observability aspects of the
@@ -290,7 +291,7 @@ const Experience = (): React.ReactElement => {
                     and implement a considerable amount of it along with another
                     engineer. I also contributed ideas for the platform as a
                     whole as well. The {WSO2} Serverless Platform was based on{" "}
-                    {ApacheOpenWhisk} and it allowed running any docker image in
+                    {ApacheOpenWhisk} and it allowed running any Docker image in
                     serverless mode which was a new concept at that time.
                     However, almost near the time when we completed a basic but
                     complete version of the platform, {KNative} which offered a
@@ -311,12 +312,12 @@ const Experience = (): React.ReactElement => {
                     ) which was aimed towards making deployments in Kubernetes
                     easier. I was selected to be part of the initial research
                     team to implement the product. I worked on this project for
-                    some time and it evolved and along with the Cell based
+                    some time and it evolved and along with the Cell-based
                     architecture, later became project {Cellery}. I mainly
                     worked on the Observability aspects of the platform, but I
                     contributed to almost all the other areas of the product
                     with thoughts and ideas as well. While working on project{" "}
-                    {Cellery}, I was able to gain in depth knowledge on
+                    {Cellery}, I was able to gain in-depth knowledge on
                     Kubernetes as well and this helped me immensely in my role
                     as a software engineer later in my career.
                 </Paragraph>
@@ -354,40 +355,42 @@ const Experience = (): React.ReactElement => {
                 </HighlightsSection>
             </Section>
             <Section>
-                <SectionHeading>Google Summer of Code Intern</SectionHeading>
-                <Datespan
-                    value={
+                <SectionHeading
+                    date={
                         new DateRange(
                             new Date(2017, "May"),
                             new Date(2017, "September"),
                         )
                     }
-                />
-                {gsocLogo}
+                    logo={gsocLogo}
+                >
+                    Google Summer of Code Intern
+                </SectionHeading>
                 <Paragraph>
                     During my last year at the University, in my spare time, I
                     worked as a {GoogleSummerOfCode} intern. I worked for {WSO2}{" "}
-                    during this period as well and developed a maven plugin for
+                    during this period as well and developed a Maven plugin for
                     automatically generating documentation for the {Siddhi}{" "}
                     extensions. The information for the documentation was
-                    scraped from the data annotated into the extensions using a
-                    maven plugin and the collected data was converted into html
+                    scraped from data annotated into the extensions using a
+                    Maven plugin and the collected data was converted into HTML
                     pages using {MkDocs}. This was used by {Siddhi} for
                     generating their documentation till it was decommissioned
                     several years later.
                 </Paragraph>
             </Section>
             <Section>
-                <SectionHeading>Software Engineering Trainee</SectionHeading>
-                <Datespan
-                    value={
+                <SectionHeading
+                    date={
                         new DateRange(
                             new Date(2016, "July"),
                             new Date(2016, "December"),
                         )
                     }
-                />
-                {wso2Logo}
+                    logo={wso2Logo}
+                >
+                    Software Engineering Trainee
+                </SectionHeading>
                 <Paragraph>
                     I worked as a Software Engineering intern at {WSO2} as a
                     required part of my B.Sc. (Hons.) in Engineering (Computer

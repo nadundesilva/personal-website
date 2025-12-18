@@ -67,7 +67,7 @@ const Achievements = (): React.ReactElement => {
             photo: Photos.NASASpaceAppsChallenge2017,
         },
         {
-            title: "Placements in Dean's List",
+            title: "Placements on the Dean's List",
             photo: Photos.UOMDeansList2017,
         },
         {

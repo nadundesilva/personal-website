@@ -38,6 +38,7 @@ import {
     Zoom,
 } from "@mui/material";
 import { type Theme, useColorScheme } from "@mui/material/styles";
+import { usePathname } from "next/navigation";
 import type React from "react";
 import { useRef, useState } from "react";
 
@@ -50,6 +51,7 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
+    const pathname = usePathname();
     const trigger = useScrollTrigger({
         disableHysteresis: true,
         threshold: 0,
@@ -64,6 +66,16 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
 
     const { colorScheme, setColorScheme } = useColorScheme();
     const nextColorScheme = colorScheme === "light" ? "dark" : "light";
+
+    const isRouteActive = (routePath: string): boolean => {
+        if (!pathname) return false;
+        // Exact match
+        if (pathname === routePath) return true;
+        // Check if current path starts with route path (for sub-routes)
+        // Only match if it's a sub-route (has additional path segments)
+        if (pathname.startsWith(routePath + "/")) return true;
+        return false;
+    };
 
     const drawer = (
         <>
@@ -113,61 +125,67 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                     onKeyDown={toggleDrawer}
                 >
                     <List sx={{ py: 0, gap: 0.25 }}>
-                        {Object.values(WebsiteHome.subRoutes).map((route) => (
-                            <Link key={route.path} href={route.path}>
-                                <ListItemButton
-                                    onClick={toggleDrawer}
-                                    sx={{
-                                        "px": 3,
-                                        "py": 2,
-                                        "minHeight": 56,
-                                        "color": "#ffffff",
-                                        "borderRadius": 2,
-                                        "position": "relative",
-                                        "display": "flex",
-                                        "justifyContent": "center",
-                                        "alignItems": "center",
-                                        "transition":
-                                            "background-color 0.2s ease-in-out, opacity 0.2s ease-in-out",
-                                        "&:hover": {
-                                            "backgroundColor":
-                                                "rgba(255, 255, 255, 0.08)",
-                                            "opacity": 0.9,
-                                            "&::after": {
-                                                width: "50%",
-                                            },
-                                        },
-                                        "&::after": {
-                                            content: '""',
-                                            position: "absolute",
-                                            bottom: 12,
-                                            left: "50%",
-                                            transform: "translateX(-50%)",
-                                            width: 0,
-                                            height: 1.5,
-                                            backgroundColor: "#ffffff",
-                                            opacity: 0.8,
-                                            borderRadius: 1,
-                                            transition:
-                                                "width 0.25s ease-in-out",
-                                        },
-                                    }}
-                                >
-                                    <ListItemText
-                                        primary={route.name}
-                                        slotProps={{
-                                            primary: {
-                                                variant: "body1",
-                                                sx: {
-                                                    color: "#ffffff",
-                                                    textAlign: "center",
+                        {Object.values(WebsiteHome.subRoutes).map((route) => {
+                            const isActive = isRouteActive(route.path);
+                            return (
+                                <Link key={route.path} href={route.path}>
+                                    <ListItemButton
+                                        onClick={toggleDrawer}
+                                        sx={{
+                                            "px": 3,
+                                            "py": 2,
+                                            "minHeight": 56,
+                                            "color": "#ffffff",
+                                            "borderRadius": 2,
+                                            "position": "relative",
+                                            "display": "flex",
+                                            "justifyContent": "center",
+                                            "alignItems": "center",
+                                            "transition":
+                                                "background-color 0.2s ease-in-out, opacity 0.2s ease-in-out",
+                                            "&:hover": {
+                                                "backgroundColor":
+                                                    "rgba(255, 255, 255, 0.08)",
+                                                "opacity": 0.9,
+                                                "&::after": {
+                                                    width: "50%",
                                                 },
                                             },
+                                            "&::after": {
+                                                content: '""',
+                                                position: "absolute",
+                                                bottom: 12,
+                                                left: "50%",
+                                                transform: "translateX(-50%)",
+                                                width: isActive ? "50%" : 0,
+                                                height: 1.5,
+                                                backgroundColor: "#ffffff",
+                                                opacity: isActive ? 1 : 0.8,
+                                                borderRadius: 1,
+                                                transition:
+                                                    "width 0.25s ease-in-out",
+                                            },
                                         }}
-                                    />
-                                </ListItemButton>
-                            </Link>
-                        ))}
+                                    >
+                                        <ListItemText
+                                            primary={route.name}
+                                            slotProps={{
+                                                primary: {
+                                                    variant: "body1",
+                                                    sx: {
+                                                        color: "#ffffff",
+                                                        textAlign: "center",
+                                                        fontWeight: isActive
+                                                            ? 500
+                                                            : 400,
+                                                    },
+                                                },
+                                            }}
+                                        />
+                                    </ListItemButton>
+                                </Link>
+                            );
+                        })}
                     </List>
                 </Box>
             </Drawer>
@@ -217,50 +235,55 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                     gap={1}
                     alignItems="center"
                 >
-                    {Object.values(WebsiteHome.subRoutes).map((route) => (
-                        <Box
-                            key={route.path}
-                            onClick={() => isDrawerOpen && toggleDrawer()}
-                            display="inline-block"
-                        >
-                            <Link href={route.path}>
-                                <Button
-                                    variant="text"
-                                    color="primary"
-                                    disableElevation
-                                    sx={{
-                                        "color": "#ffffff",
-                                        "px": 2.5,
-                                        "py": 1,
-                                        "minWidth": "auto",
-                                        "position": "relative",
-                                        "&:hover": {
-                                            "backgroundColor": "transparent",
-                                            "opacity": 0.85,
-                                            "&::after": {
-                                                width: "70%",
+                    {Object.values(WebsiteHome.subRoutes).map((route) => {
+                        const isActive = isRouteActive(route.path);
+                        return (
+                            <Box
+                                key={route.path}
+                                onClick={() => isDrawerOpen && toggleDrawer()}
+                                display="inline-block"
+                            >
+                                <Link href={route.path}>
+                                    <Button
+                                        variant="text"
+                                        color="primary"
+                                        disableElevation
+                                        sx={{
+                                            "color": "#ffffff",
+                                            "px": 2.5,
+                                            "py": 1,
+                                            "minWidth": "auto",
+                                            "position": "relative",
+                                            "fontWeight": isActive ? 500 : 400,
+                                            "&:hover": {
+                                                "backgroundColor":
+                                                    "transparent",
+                                                "opacity": 0.85,
+                                                "&::after": {
+                                                    width: "70%",
+                                                },
                                             },
-                                        },
-                                        "&::after": {
-                                            content: '""',
-                                            position: "absolute",
-                                            bottom: 10,
-                                            left: "50%",
-                                            transform: "translateX(-50%)",
-                                            width: 0,
-                                            height: 1.5,
-                                            backgroundColor: "#ffffff",
-                                            opacity: 0.8,
-                                            transition:
-                                                "width 0.25s ease-in-out",
-                                        },
-                                    }}
-                                >
-                                    {route.name}
-                                </Button>
-                            </Link>
-                        </Box>
-                    ))}
+                                            "&::after": {
+                                                content: '""',
+                                                position: "absolute",
+                                                bottom: 10,
+                                                left: "50%",
+                                                transform: "translateX(-50%)",
+                                                width: isActive ? "70%" : 0,
+                                                height: 1.5,
+                                                backgroundColor: "#ffffff",
+                                                opacity: isActive ? 1 : 0.8,
+                                                transition:
+                                                    "width 0.25s ease-in-out",
+                                            },
+                                        }}
+                                    >
+                                        {route.name}
+                                    </Button>
+                                </Link>
+                            </Box>
+                        );
+                    })}
                 </Box>
                 <Tooltip
                     title={`Change to ${nextColorScheme} theme`}
