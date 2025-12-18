@@ -31,9 +31,14 @@ const Logo = ({ logo, height }: LogoProps): React.ReactElement => {
         <Box
             sx={{
                 ...logo.recommendedSx,
-                position: "relative",
-                height: height ?? "3em",
-                py: 1,
+                "position": "relative",
+                "height": height ?? "3em",
+                "width": "100%",
+                "py": 1,
+                "& img": {
+                    objectFit: "scale-down",
+                    objectPosition: { xs: "left center", sm: "right center" },
+                },
             }}
         >
             <Image
@@ -43,7 +48,6 @@ const Logo = ({ logo, height }: LogoProps): React.ReactElement => {
                 sizes="100vw"
                 style={{
                     objectFit: "scale-down",
-                    objectPosition: "left top",
                 }}
             />
         </Box>

@@ -62,7 +62,7 @@ const Experience = (): React.ReactElement => {
                 new Date(2022, "November"),
             ),
             description:
-                "Led Choreo Observability Team as well as other Teams in Choreo.",
+                "Led Choreo Observability Team as well as other teams in Choreo.",
             institute: "WSO2, Colombo 03, Sri Lanka",
         },
         {
@@ -72,7 +72,7 @@ const Experience = (): React.ReactElement => {
                 new Date(2021, "June"),
             ),
             description:
-                "Led Choreo Observability Team in creating the initial PoC as well as the Platform.",
+                "Led Choreo Observability Team in creating the initial PoC as well as the platform.",
             institute: "WSO2, Colombo 03, Sri Lanka",
         },
         {
@@ -82,7 +82,7 @@ const Experience = (): React.ReactElement => {
                 new Date(2019, "July"),
             ),
             description:
-                "Designed & developed several components in middle-ware & cloud projects.",
+                "Designed & developed several components in middleware & cloud projects.",
             institute: "WSO2, Colombo 03, Sri Lanka",
         },
         {
@@ -92,7 +92,7 @@ const Experience = (): React.ReactElement => {
                 new Date(2017, "September"),
             ),
             description:
-                "Designed and implemented a maven plugin for automatically generating documentation for Siddhi extensions using annotated data written in the Java code.",
+                "Designed and implemented a Maven plugin for automatically generating documentation for Siddhi extensions using annotated data written in the Java code.",
             institute: "WSO2, Colombo 03, Sri Lanka",
         },
         {

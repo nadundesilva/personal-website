@@ -12,16 +12,15 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { FormatQuote } from "@mui/icons-material";
-import { Card, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { Business, FormatQuote, Launch, People } from "@mui/icons-material";
+import { Box, Card, Typography } from "@mui/material";
 import type { Metadata } from "next";
 import type React from "react";
 
 import {
+    LinkButton,
+    type LinkButtonProps,
     Paragraph,
-    Section,
-    SectionHeading,
     Title,
 } from "@/components/content";
 import { FULL_NAME } from "@/constants/metadata";
@@ -63,6 +62,7 @@ interface TestimonialProps {
     recommenderPosition: string;
     recommenderCompany: string;
     relationship: Relationship;
+    actionButton?: LinkButtonProps;
 }
 
 const Testimonial = ({
@@ -73,23 +73,113 @@ const Testimonial = ({
     recommenderPosition,
     recommenderCompany,
     relationship,
+    actionButton,
 }: TestimonialProps): React.ReactElement => (
-    <Card sx={{ my: 2, p: 2 }} raised>
-        <Section>
+    <Card sx={{ my: 3, p: 3.5 }}>
+        <Box
+            sx={{
+                mb: 3,
+            }}
+        >
             <FormatQuote
-                htmlColor={grey[600]}
-                sx={{ transform: "rotate(180deg) scale(2)", m: 0.5 }}
+                sx={{
+                    transform: "rotate(180deg)",
+                    fontSize: "2.5rem",
+                    color: "text.secondary",
+                    opacity: 0.2,
+                    mb: 1,
+                    ml: -1,
+                    display: "block",
+                }}
             />
-            <SectionHeading>{recommender}</SectionHeading>
-            <Typography variant="body2" color={grey[700]} sx={{ pb: 0.5 }}>
-                {recommenderPosition} at {recommenderCompany}
+            <Typography
+                variant="h4"
+                sx={{
+                    fontWeight: 500,
+                    letterSpacing: "-0.01em",
+                    lineHeight: 1.4,
+                    mb: 1.5,
+                    color: "text.primary",
+                }}
+            >
+                {recommender}
             </Typography>
-            <Typography variant="body2" color={grey[700]} sx={{ pb: 1 }}>
-                {renderRelationShip(recommender, relationship)} when Nadun was a{" "}
-                {position} at {company}
-            </Typography>
-            {children}
-        </Section>
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 0.75,
+                    mb: 1,
+                }}
+            >
+                <Business
+                    sx={{
+                        fontSize: "1rem",
+                        color: "text.secondary",
+                    }}
+                />
+                <Typography
+                    variant="body2"
+                    sx={{
+                        color: "text.primary",
+                        fontWeight: 500,
+                        letterSpacing: "0.01em",
+                    }}
+                >
+                    {recommenderPosition} at {recommenderCompany}
+                </Typography>
+            </Box>
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 0.75,
+                    mb: actionButton ? 2.5 : 0,
+                }}
+            >
+                <People
+                    sx={{
+                        fontSize: "1rem",
+                        color: "text.secondary",
+                        opacity: 0.85,
+                    }}
+                />
+                <Typography
+                    variant="body2"
+                    sx={{
+                        color: "text.secondary",
+                        fontWeight: 300,
+                        letterSpacing: "0.01em",
+                        opacity: 0.85,
+                    }}
+                >
+                    {renderRelationShip(recommender, relationship)} when Nadun
+                    was a {position} at {company}
+                </Typography>
+            </Box>
+        </Box>
+        {actionButton && (
+            <Box
+                sx={{
+                    "mb": 3,
+                    "pb": 2.5,
+                    "position": "relative",
+                    "&::after": {
+                        content: '""',
+                        position: "absolute",
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        height: "1px",
+                        backgroundColor: "divider",
+                        opacity: 0.12,
+                    },
+                }}
+            >
+                <LinkButton {...actionButton} target="_blank" />
+            </Box>
+        )}
+        {children}
     </Card>
 );
 
@@ -97,6 +187,9 @@ export const metadata: Metadata = {
     title: `${FULL_NAME} | Testimonials`,
     description: `Testimonials provided by various professionals throughout the career of ${FULL_NAME}.`,
 };
+
+const LINKEDIN_RECOMMENDATIONS_URL =
+    "https://www.linkedin.com/in/nadundesilva/details/recommendations/";
 
 const Testimonials = (): React.ReactElement => {
     return (
@@ -109,6 +202,11 @@ const Testimonials = (): React.ReactElement => {
                 recommenderPosition="Senior Technical Lead & Engineering Manager"
                 recommenderCompany="WSO2"
                 relationship={Relationship.ManagedDirectly}
+                actionButton={{
+                    icon: Launch,
+                    name: "View on LinkedIn",
+                    href: LINKEDIN_RECOMMENDATIONS_URL,
+                }}
             >
                 <Paragraph>
                     I have worked with Nadun directly on two occasions. Once
@@ -120,7 +218,7 @@ const Testimonials = (): React.ReactElement => {
                     solving skills. He has the ability to take a project from
                     design to delivery confirming to highest standards. Nadun
                     was repeatedly rated as an exceptional employee and I will
-                    always have him in my team
+                    always have him in my team.
                 </Paragraph>
             </Testimonial>
             <Testimonial
@@ -130,6 +228,11 @@ const Testimonials = (): React.ReactElement => {
                 recommenderPosition="Vice President & Head of Research & AI"
                 recommenderCompany="WSO2"
                 relationship={Relationship.ManagedDirectly}
+                actionButton={{
+                    icon: Launch,
+                    name: "View on LinkedIn",
+                    href: LINKEDIN_RECOMMENDATIONS_URL,
+                }}
             >
                 <Paragraph>
                     Nadun was the primary technical lead in Choreo observability
@@ -161,6 +264,11 @@ const Testimonials = (): React.ReactElement => {
                 recommenderPosition="Senior Technical Lead"
                 recommenderCompany="WSO2"
                 relationship={Relationship.Senior}
+                actionButton={{
+                    icon: Launch,
+                    name: "View on LinkedIn",
+                    href: LINKEDIN_RECOMMENDATIONS_URL,
+                }}
             >
                 <Paragraph>
                     I had the pleasure of working with Nadun closely in two
@@ -190,6 +298,11 @@ const Testimonials = (): React.ReactElement => {
                 recommenderPosition="Senior Software Engineer - Machine Learning"
                 recommenderCompany="WSO2"
                 relationship={Relationship.Senior}
+                actionButton={{
+                    icon: Launch,
+                    name: "View on LinkedIn",
+                    href: LINKEDIN_RECOMMENDATIONS_URL,
+                }}
             >
                 <Paragraph>
                     I worked with Nadun when he was serving WSO2 as a Senior
@@ -237,6 +350,11 @@ const Testimonials = (): React.ReactElement => {
                 recommenderPosition="Chief Architect"
                 recommenderCompany="WSO2"
                 relationship={Relationship.Senior}
+                actionButton={{
+                    icon: Launch,
+                    name: "View on LinkedIn",
+                    href: LINKEDIN_RECOMMENDATIONS_URL,
+                }}
             >
                 <Paragraph>
                     I have known Nadun for over 2+ years on his work at WSO2. He
@@ -253,6 +371,11 @@ const Testimonials = (): React.ReactElement => {
                 recommenderPosition="Technical Lead"
                 recommenderCompany="WSO2"
                 relationship={Relationship.Senior}
+                actionButton={{
+                    icon: Launch,
+                    name: "View on LinkedIn",
+                    href: LINKEDIN_RECOMMENDATIONS_URL,
+                }}
             >
                 <Paragraph>
                     I&apos;ve had the pleasure of crossing paths with Nadun on
@@ -274,6 +397,11 @@ const Testimonials = (): React.ReactElement => {
                 recommenderPosition="VP & GM Choreo Business Unit"
                 recommenderCompany="WSO2"
                 relationship={Relationship.Senior}
+                actionButton={{
+                    icon: Launch,
+                    name: "View on LinkedIn",
+                    href: LINKEDIN_RECOMMENDATIONS_URL,
+                }}
             >
                 <Paragraph>
                     I got to know Nadun when I joined WSO2 in June 2021. Nadun
@@ -293,6 +421,11 @@ const Testimonials = (): React.ReactElement => {
                 recommenderPosition="Senior Director, Head of Product - Integration Cloud"
                 recommenderCompany="WSO2"
                 relationship={Relationship.ManagedDirectly}
+                actionButton={{
+                    icon: Launch,
+                    name: "View on LinkedIn",
+                    href: LINKEDIN_RECOMMENDATIONS_URL,
+                }}
             >
                 <Paragraph>
                     Nadun was one of the key members of my team, during the last
@@ -315,6 +448,11 @@ const Testimonials = (): React.ReactElement => {
                 recommenderPosition="Architect/Associate Director"
                 recommenderCompany="WSO2"
                 relationship={Relationship.ManagedDirectly}
+                actionButton={{
+                    icon: Launch,
+                    name: "View on LinkedIn",
+                    href: LINKEDIN_RECOMMENDATIONS_URL,
+                }}
             >
                 <Paragraph>
                     I worked with Nadun for 1.5 years in an open source project

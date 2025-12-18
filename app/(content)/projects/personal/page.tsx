@@ -13,7 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { Launch } from "@mui/icons-material";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import type { Metadata } from "next";
 import type React from "react";
 
@@ -29,31 +29,6 @@ import {
 } from "@/components/content";
 import { Logos } from "@/constants/logos";
 
-interface ViewOnGitHubButtonProps {
-    repoOrg: string;
-    repoName: string;
-}
-
-const ViewOnGitHubButton = (
-    props: ViewOnGitHubButtonProps,
-): React.ReactElement => (
-    <Box sx={{ pt: 2 }}>
-        <Link
-            href={`https://github.com/${props.repoOrg}/${props.repoName}`}
-            target="_blank"
-        >
-            <Button
-                size="small"
-                variant="outlined"
-                // TODO: Switch to GitHub icon
-                endIcon={<Launch />}
-            >
-                View on GitHub
-            </Button>
-        </Link>
-    </Box>
-);
-
 interface UseCasesSectionProps {
     children: React.ReactNode;
 }
@@ -61,8 +36,16 @@ interface UseCasesSectionProps {
 const UseCasesSection = ({
     children,
 }: UseCasesSectionProps): React.ReactElement => (
-    <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
-        <Typography sx={{ fontWeight: "bold" }}>Use Cases:</Typography>
+    <Box sx={{ m: 0, pt: 2 }}>
+        <Typography
+            sx={{
+                fontWeight: 500,
+                letterSpacing: "-0.01em",
+                mb: 2,
+            }}
+        >
+            Use Cases:
+        </Typography>
         <List>{children}</List>
     </Box>
 );
@@ -98,21 +81,25 @@ const PersonalProjects = (): React.ReactElement => {
         <>
             <Title>Personal Projects</Title>
             <Section>
-                <SectionHeading>K8s Replicator</SectionHeading>
-                {k8sReplicatorLogo}
-                <ViewOnGitHubButton
-                    repoOrg="nadundesilva"
-                    repoName="k8s-replicator"
-                />
+                <SectionHeading
+                    logo={k8sReplicatorLogo}
+                    actionButton={{
+                        href: "https://github.com/nadundesilva/k8s-replicator",
+                        name: "View on GitHub",
+                        icon: Launch,
+                    }}
+                >
+                    K8s Replicator
+                </SectionHeading>
                 <Paragraph>
                     In Kubernetes deployments when the same {Secret},{" "}
                     {ConfigMap} or {NetworkPolicy} needs to be accessed across
                     multiple namespaces, it needs to be manually created in all
-                    of them, this handy Kubernetes controller can come to your
+                    of them. This handy Kubernetes controller can come to your
                     rescue. It will automatically watch the namespaces and
                     create the resources in them as soon as they are created. By
                     doing so, this will allow removing some of the burden on the
-                    operational aspects
+                    operational aspects.
                 </Paragraph>
                 <UseCasesSection>
                     <ListItem>
@@ -135,12 +122,16 @@ const PersonalProjects = (): React.ReactElement => {
                 </UseCasesSection>
             </Section>
             <Section>
-                <SectionHeading>Mesh Manager</SectionHeading>
-                {meshManagerLogo}
-                <ViewOnGitHubButton
-                    repoOrg="nadundesilva"
-                    repoName="mesh-manager"
-                />
+                <SectionHeading
+                    logo={meshManagerLogo}
+                    actionButton={{
+                        href: "https://github.com/nadundesilva/mesh-manager",
+                        name: "View on GitHub",
+                        icon: Launch,
+                    }}
+                >
+                    Mesh Manager
+                </SectionHeading>
                 <Paragraph>
                     When working with a large deployment based on a
                     microservices architecture, it can get quite complex when
@@ -153,7 +144,7 @@ const PersonalProjects = (): React.ReactElement => {
                     <ListItem>
                         <Typography>
                             Ensuring that dependencies are not removed when
-                            microservices using it is still using them.
+                            microservices are still using them.
                         </Typography>
                     </ListItem>
                     <ListItem>
@@ -164,8 +155,8 @@ const PersonalProjects = (): React.ReactElement => {
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Finding all the microservices that depends on a
-                            given microservice.
+                            Finding all the microservices that depend on a given
+                            microservice.
                         </Typography>
                     </ListItem>
                 </UseCasesSection>

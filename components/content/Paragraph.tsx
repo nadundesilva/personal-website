@@ -22,8 +22,12 @@ interface ParagraphProps {
 const Paragraph = ({ children }: ParagraphProps): React.ReactElement => (
     <Typography
         variant="body1"
-        gutterBottom
-        sx={{ m: 0, pt: 2, textAlign: "justify" }}
+        sx={{
+            m: 0,
+            mb: 2.5,
+            textAlign: "justify",
+            lineHeight: 1.75,
+        }}
     >
         {children}
     </Typography>

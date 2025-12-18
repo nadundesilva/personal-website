@@ -26,7 +26,19 @@ const CustomList = ({
     children,
     component,
 }: CustomListProps): React.ReactElement => (
-    <Box component={component ?? "ul"} sx={{ my: 0 }}>
+    <Box
+        component={component ?? "ul"}
+        sx={{
+            "my": 0,
+            "pl": 2.5,
+            "& li": {
+                "mb": 1.5,
+                "&:last-child": {
+                    mb: 0,
+                },
+            },
+        }}
+    >
         {children}
     </Box>
 );
@@ -43,7 +55,9 @@ export const CustomListItem = ({
         sx={{
             "&::marker": {
                 color: (theme: Theme) =>
-                    theme.palette.mode === "light" ? "#000000" : "#ffffff",
+                    theme.palette.mode === "light"
+                        ? "rgba(0, 0, 0, 0.6)"
+                        : "rgba(255, 255, 255, 0.6)",
             },
         }}
     >

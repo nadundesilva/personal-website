@@ -12,8 +12,8 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { OpenInNew } from "@mui/icons-material";
-import { Box, Button, Typography } from "@mui/material";
+import { Launch } from "@mui/icons-material";
+import { Box, Typography } from "@mui/material";
 import type { Metadata } from "next";
 import type React from "react";
 
@@ -25,7 +25,6 @@ import {
     Paragraph,
     Section,
     SectionHeading,
-    Datespan,
     Title,
 } from "@/components/content";
 import { type Certificate, Certificates } from "@/constants/certificates";
@@ -67,22 +66,17 @@ const Certifications = (): React.ReactElement => {
     const generateSectionHeader = (
         certificate: Certificate,
     ): React.ReactElement => (
-        <>
-            <SectionHeading>{certificate.name}</SectionHeading>
-            <Datespan value={certificate.completedOn} />
-            <Logo height="5em" logo={certificate.logo} />
-            <Box sx={{ m: 0, pt: 2 }}>
-                <Link href={certificate.link} target="_blank">
-                    <Button
-                        size="small"
-                        variant="outlined"
-                        endIcon={<OpenInNew />}
-                    >
-                        View Credential
-                    </Button>
-                </Link>
-            </Box>
-        </>
+        <SectionHeading
+            date={certificate.completedOn}
+            logo={<Logo height="5em" logo={certificate.logo} />}
+            actionButton={{
+                href: certificate.link,
+                name: "View Credential",
+                icon: Launch,
+            }}
+        >
+            {certificate.name}
+        </SectionHeading>
     );
 
     return (
@@ -106,9 +100,9 @@ const Certifications = (): React.ReactElement => {
                 )}
                 <Paragraph>
                     This course is offered by {DeepLearningAi} on {Coursera},
-                    taught mainly by {SharonZhou}. It covers the how the
-                    Generative Adversarial Networks work as well as some of the
-                    latest developments in this Neural Network architecture.
+                    taught mainly by {SharonZhou}. It covers how the Generative
+                    Adversarial Networks work as well as some of the latest
+                    developments in this Neural Network architecture.
                 </Paragraph>
             </Section>
             <Section>
@@ -119,10 +113,10 @@ const Certifications = (): React.ReactElement => {
                     excellent specialization consisting of five courses covering
                     a deep dive into Deep Learning as well as many novel Deep
                     Learning architectures. The specialization included
-                    coursework as well as MCQ and Lab based hands-on
+                    coursework as well as MCQ and Lab-based hands-on
                     evaluations.
                 </Paragraph>
-                <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
+                <Box sx={{ m: 0, pt: 2 }}>
                     <List>
                         <ListItem>
                             <Typography>
@@ -158,8 +152,8 @@ const Certifications = (): React.ReactElement => {
                 <Paragraph>
                     Certified Kubernetes Administrator is offered and governed
                     by the {LinuxFoundation}. This covers the administrative
-                    aspects and in depth knowledge about Kubernetes Clusters
-                    including ETCD clusters.
+                    aspects and in-depth knowledge about Kubernetes Clusters
+                    including etcd clusters.
                 </Paragraph>
             </Section>
             <Section>

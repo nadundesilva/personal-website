@@ -13,20 +13,20 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { KeyboardArrowRight } from "@mui/icons-material";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import type { Metadata } from "next";
 import type React from "react";
 
 import {
     HighlightsSection,
     Link,
+    LinkButton,
     List,
     ListItem,
     Logo,
     Paragraph,
     Section,
     SectionHeading,
-    Datespan,
     Title,
 } from "@/components/content";
 import { Date, DateRange } from "@/constants/date";
@@ -85,33 +85,28 @@ const Education = (): React.ReactElement => {
         <>
             <Title>Education</Title>
             <Box sx={{ pt: 2 }}>
-                <Link href="/education/certifications">
-                    <Button
-                        size="small"
-                        variant="outlined"
-                        endIcon={<KeyboardArrowRight />}
-                    >
-                        View Certifications
-                    </Button>
-                </Link>
+                <LinkButton
+                    href="/education/certifications"
+                    name="View Certifications"
+                    icon={KeyboardArrowRight}
+                />
             </Box>
             <Section>
-                <SectionHeading>
-                    B.Sc. (Hons.) in Engineering (Computer Science and
-                    Engineering)
-                </SectionHeading>
-                <Datespan
-                    value={
+                <SectionHeading
+                    date={
                         new DateRange(
                             new Date(2014, "March"),
                             new Date(2017, "June"),
                         )
                     }
-                />
-                {uomLogo}
+                    logo={uomLogo}
+                >
+                    B.Sc. (Hons.) in Engineering (Computer Science and
+                    Engineering)
+                </SectionHeading>
                 <Paragraph>
-                    I studied for my four year bachelor&apos;s degree at the{" "}
-                    {UniversityOfMoratuwa}. The degree covered many in depth
+                    I studied for my four-year bachelor&apos;s degree at the{" "}
+                    {UniversityOfMoratuwa}. The degree covered many in-depth
                     areas (e.g.:- Computer Architecture, Operating Systems,
                     Compiler Theory, Database Internals) as well as novel
                     technical areas (e.g.:- Machine Learning, Deep Learning,
@@ -128,42 +123,47 @@ const Education = (): React.ReactElement => {
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Dean&apos;s List Placements in 6 out of 8 semesters
+                            Dean&apos;s List Placements on 6 out of 8 semesters
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography component="div">
+                            Publications:
+                            <Box
+                                component="span"
+                                sx={{ display: "block", mt: 1 }}
+                            >
+                                <List>
+                                    <ListItem>
+                                        <Typography>
+                                            {
+                                                GanBasedAnomalyDetectionInIndustrialSoftwareSystems
+                                            }
+                                        </Typography>
+                                    </ListItem>
+                                    <ListItem>
+                                        <Typography>
+                                            {
+                                                AnomalyDetectionInIndustialSoftwareSystemsUsingVae
+                                            }
+                                        </Typography>
+                                    </ListItem>
+                                </List>
+                            </Box>
                         </Typography>
                     </ListItem>
                 </HighlightsSection>
-                <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
-                    <Typography sx={{ fontWeight: "bold" }}>
-                        Publications:
-                    </Typography>
-                    <List>
-                        <ListItem>
-                            <Typography>
-                                {
-                                    GanBasedAnomalyDetectionInIndustrialSoftwareSystems
-                                }
-                            </Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Typography>
-                                {
-                                    AnomalyDetectionInIndustialSoftwareSystemsUsingVae
-                                }
-                            </Typography>
-                        </ListItem>
-                    </List>
-                </Box>
             </Section>
             <Section>
-                <SectionHeading>G.C.E. Advanced Level</SectionHeading>
-                <Datespan value={new Date(2012)} />
-                {sjcLogo}
+                <SectionHeading date={new Date(2012)} logo={sjcLogo}>
+                    G.C.E. Advanced Level
+                </SectionHeading>
                 <Paragraph>
                     I attended school at {StJosephsCollegeColombo10} where I
-                    studied many subjects. At the end of my studies I passed the
-                    G.C.E. Advanced Level examination at the end of it with
-                    distinctions in all the subjects granting me entrance into
-                    the {UniversityOfMoratuwa} as well.
+                    studied many subjects. At the end of my studies, I passed
+                    the G.C.E. Advanced Level examination with distinctions in
+                    all the subjects granting me entrance into the{" "}
+                    {UniversityOfMoratuwa} as well.
                 </Paragraph>
                 <HighlightsSection>
                     <ListItem>
@@ -172,37 +172,49 @@ const Education = (): React.ReactElement => {
                     <ListItem>
                         <Typography component="div">
                             Main Subjects:
-                            <List>
-                                <ListItem>
-                                    <Typography>
-                                        Combined Mathematics - A
-                                    </Typography>
-                                </ListItem>
-                                <ListItem>
-                                    <Typography>Physics - A</Typography>
-                                </ListItem>
-                                <ListItem>
-                                    <Typography>Chemistry - A</Typography>
-                                </ListItem>
-                            </List>
+                            <Box
+                                component="span"
+                                sx={{ display: "block", mt: 1 }}
+                            >
+                                <List>
+                                    <ListItem>
+                                        <Typography>
+                                            Combined Mathematics - A
+                                        </Typography>
+                                    </ListItem>
+                                    <ListItem>
+                                        <Typography>Physics - A</Typography>
+                                    </ListItem>
+                                    <ListItem>
+                                        <Typography>Chemistry - A</Typography>
+                                    </ListItem>
+                                </List>
+                            </Box>
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography component="div">
                             Other Subjects:
-                            <List>
-                                <ListItem>
-                                    <Typography>General IT - A</Typography>
-                                </ListItem>
-                                <ListItem>
-                                    <Typography>General English - A</Typography>
-                                </ListItem>
-                                <ListItem>
-                                    <Typography>
-                                        General Knowledge - A
-                                    </Typography>
-                                </ListItem>
-                            </List>
+                            <Box
+                                component="span"
+                                sx={{ display: "block", mt: 1 }}
+                            >
+                                <List>
+                                    <ListItem>
+                                        <Typography>General IT - A</Typography>
+                                    </ListItem>
+                                    <ListItem>
+                                        <Typography>
+                                            General English - A
+                                        </Typography>
+                                    </ListItem>
+                                    <ListItem>
+                                        <Typography>
+                                            General Knowledge - A
+                                        </Typography>
+                                    </ListItem>
+                                </List>
+                            </Box>
                         </Typography>
                     </ListItem>
                     <ListItem>

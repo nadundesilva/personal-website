@@ -24,9 +24,33 @@ interface HighlightsSectionProps {
 const HighlightsSection = ({
     children,
 }: HighlightsSectionProps): React.ReactElement => (
-    <Box sx={{ m: 0, pt: 2, textAlign: "justify" }}>
-        <Typography component="span" sx={{ fontWeight: "bold" }}>
-            Highlights:
+    <Box
+        sx={{
+            "mt": 4,
+            "pt": 3.5,
+            "position": "relative",
+            "&::before": {
+                content: '""',
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                height: "1px",
+                backgroundColor: "divider",
+                opacity: 0.12,
+            },
+        }}
+    >
+        <Typography
+            variant="h6"
+            sx={{
+                mb: 2.5,
+                fontWeight: 500,
+                letterSpacing: "-0.01em",
+                lineHeight: 1.35,
+            }}
+        >
+            Highlights
         </Typography>
         <List>{children}</List>
     </Box>
