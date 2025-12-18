@@ -26,13 +26,19 @@ interface PhotoProps {
 const Photo = ({ photo, float }: PhotoProps): React.ReactElement => (
     <Box
         sx={{
-            position: "relative",
+            "position": "relative",
             float,
-            height: "auto",
-            width: { xs: "100%", md: "20vw" },
-            my: 2,
-            ml: float === "left" ? 0 : 2,
-            mr: float === "right" ? 0 : 2,
+            "height": "auto",
+            "width": { xs: "100%", md: "20vw" },
+            "my": 2.5,
+            "ml": float === "left" ? 0 : 2.5,
+            "mr": float === "right" ? 0 : 2.5,
+            "borderRadius": 1,
+            "overflow": "hidden",
+            "transition": "transform 0.3s ease-in-out",
+            "&:hover": {
+                transform: "translateY(-2px)",
+            },
         }}
     >
         <Image
@@ -45,6 +51,7 @@ const Photo = ({ photo, float }: PhotoProps): React.ReactElement => (
             style={{
                 height: "auto",
                 maxWidth: "100%",
+                display: "block",
             }}
         />
     </Box>

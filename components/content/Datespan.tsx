@@ -13,7 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { CalendarMonth } from "@mui/icons-material";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import type React from "react";
 
 import type { FormattableDate } from "@/constants/date";
@@ -23,19 +23,33 @@ interface DatespanProps {
 }
 
 const Datespan = ({ value }: DatespanProps): React.ReactElement => (
-    <Typography
-        variant="body1"
+    <Box
         sx={{
-            pt: 1,
-            pb: 1,
-            color: "text.secondary",
             display: "flex",
             alignItems: "center",
-            gap: 0.5,
+            gap: 0.875,
+            mt: 0.75,
+            mb: 2.5,
         }}
     >
-        <CalendarMonth aria-label={value.type} /> {value.format()}
-    </Typography>
+        <CalendarMonth
+            sx={{
+                color: "text.secondary",
+                fontSize: "1.125rem",
+            }}
+            aria-label={value.type}
+        />
+        <Typography
+            variant="body2"
+            sx={{
+                color: "text.secondary",
+                fontWeight: 300,
+                letterSpacing: "0.01em",
+            }}
+        >
+            {value.format()}
+        </Typography>
+    </Box>
 );
 
 export default Datespan;

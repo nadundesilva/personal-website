@@ -22,8 +22,17 @@ interface SubsectionHeadingProps {
 const SubsectionHeading = ({
     children,
 }: SubsectionHeadingProps): React.ReactElement => (
-    <Box sx={{ p: 0, mt: 2, mb: 0 }}>
-        <Typography variant="h4">{children}</Typography>
+    <Box sx={{ mt: 3, mb: 1.5 }}>
+        <Typography
+            variant="h4"
+            sx={{
+                fontWeight: 400,
+                letterSpacing: "0em",
+                lineHeight: 1.4,
+            }}
+        >
+            {children}
+        </Typography>
     </Box>
 );
 
