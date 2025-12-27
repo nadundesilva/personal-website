@@ -35,7 +35,7 @@ jobs:
               run: |
                   npm ci
             - name: Run E2E Tests
-              uses: cypress-io/github-action@d842ab15a88774cf1311cc07f0e7112024c3dbd7 # v6.10.6
+              uses: cypress-io/github-action@2ad32e649e4db26c07674ebae31a297601dbcbaf # v6.10.8
               with:
                   record: true
                   tag: deployment-check-in-browser-${{ matrix.browser }}
@@ -127,7 +127,7 @@ jobs:
                   output: trivy-results.sarif
                   ignore-unfixed: true
             - name: Upload Trivy scan results to GitHub Security tab
-              uses: github/codeql-action/upload-sarif@1b168cd39490f61582a9beae412bb7057a6b2c4e # v4.31.8
+              uses: github/codeql-action/upload-sarif@5d4e8d1aca955e8d8589aabd499c5cae939e33c7 # v4.31.9
               if: always()
               with:
                   sarif_file: trivy-results.sarif
