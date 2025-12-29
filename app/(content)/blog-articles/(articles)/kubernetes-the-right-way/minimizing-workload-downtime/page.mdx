@@ -129,7 +129,7 @@ However, these can usually be avoided by performing a series of backward-compati
 
 Based on your application architecture you may still be able to perform such a backward incompatible change in one version upgrade. For example, if you have CQRS (Command Query Responsibility Segregation) implemented with a queue for the commands, you could send them to another queue at the time of the upgrade so that you can use a blue-green update of the database, and apply the commands that were received after the data was copied into the new version of the database.
 
-No matter which approach you use, you need to get into a zero downtime upgrade mindset. The design and development of your application need to be done with this in mind. There may be situations where you need to postpone the development of such upgrade mechanisms due to deadlines due to various external factors such as competitors. However, it is always good to keep it in mind when you design your application architecture. Even something simple as always ensuring that your microservices on Kubernetes are as stateless as they can be will go a long way in the future.
+No matter which approach you use, you need to get into a zero downtime upgrade mindset. The design and development of your application need to be done with this in mind. There may be situations where you need to postpone the development of such upgrade mechanisms due to deadlines or various external factors such as competitors. However, it is always good to keep it in mind when you design your application architecture. Even something simple as always ensuring that your microservices on Kubernetes are as stateless as they can be will go a long way in the future.
 
 ## Proper Incident Handling Procedures
 

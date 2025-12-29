@@ -44,13 +44,17 @@ import { useRef, useState } from "react";
 
 import { Link } from "@/components/content";
 import { FULL_NAME } from "@/constants/metadata";
-import { WebsiteHome } from "@/constants/routes";
+import { Route } from "@/constants/routes";
 
 interface LayoutProps {
     children: React.ReactNode;
+    topLevelRoutes: Record<string, Route>;
 }
 
-const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
+const Layout = ({
+    children,
+    topLevelRoutes,
+}: LayoutProps): React.ReactElement | null => {
     const pathname = usePathname();
     const trigger = useScrollTrigger({
         disableHysteresis: true,
@@ -125,7 +129,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                     onKeyDown={toggleDrawer}
                 >
                     <List sx={{ py: 0, gap: 0.25 }}>
-                        {Object.values(WebsiteHome.subRoutes).map((route) => {
+                        {Object.values(topLevelRoutes).map((route) => {
                             const isActive = isRouteActive(route.path);
                             return (
                                 <Link key={route.path} href={route.path}>
@@ -235,7 +239,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement | null => {
                     gap={1}
                     alignItems="center"
                 >
-                    {Object.values(WebsiteHome.subRoutes).map((route) => {
+                    {Object.values(topLevelRoutes).map((route) => {
                         const isActive = isRouteActive(route.path);
                         return (
                             <Box

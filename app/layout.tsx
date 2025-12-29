@@ -28,6 +28,7 @@ import {
 import Profiles from "@/constants/profiles";
 import "@/styles/main.css";
 import "@/styles/syntax-highlighting.css";
+import { WebsiteHome } from "@/constants/routes";
 
 const GA_TRACKING_ID = "GTM-T9KX7B4";
 const GOOGLE_SITE_VERIFICATION = "M8dg6gzVYU0noXFvsPOqknm_WjREFeNE212YeUk0g30";
@@ -246,7 +247,9 @@ const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
                         <WebsiteThemeProvider
                             fontFamily={roboto.style.fontFamily}
                         >
-                            <Layout>{children}</Layout>
+                            <Layout topLevelRoutes={WebsiteHome.subRoutes}>
+                                {children}
+                            </Layout>
                         </WebsiteThemeProvider>
                     </React.StrictMode>
                 </main>

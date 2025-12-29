@@ -48,7 +48,7 @@ const renderRelationShip = (
         case Relationship.Senior:
             return `${firstName} was senior to Nadun`;
         case Relationship.Junior:
-            return `Nadun was Senior to ${firstName}`;
+            return `Nadun was senior to ${firstName}`;
         default:
             return null;
     }

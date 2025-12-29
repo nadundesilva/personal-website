@@ -26,7 +26,7 @@ I am quite certain that everyone is familiar with Java Annotations and at least 
 
 # Why Custom Annotations?
 
-The first thing you need to understand about annotations is that they do not add any new functionality on their own, but is only used for indicating some important information about the element that is annotated with it. Then why do we need annotations?
+The first thing you need to understand about annotations is that they do not add any new functionality on their own, but they are only used for indicating some important information about the element that is annotated with it. Then why do we need annotations?
 
 Although annotations alone cannot do anything on their own, annotated data can be read using Java Reflections API at run-time or using Annotation Processors at compile-time. Moreover, like the `@Override{:java}` annotation, the annotations applied can be information for the Java compiler as well. This makes Annotations a powerful tool that is available to you as a Java programmer. (Don't worry if you do not know what are [Annotation Processors](./java/processing-java-annotations-at-compilation-time-using-annotation) or [Java Reflections API](./java/reading-java-annotations-on-the-fly). You can check my posts on them if you wish to learn more.)
 
@@ -158,9 +158,9 @@ If the `@Target{:java}` annotation had not been used, the default behavior will 
 
 ## Specifying the Retention Policy
 
-The retention policy refers to how long the annotations will be retained. The annotations we created until now are stored in the class files by the compiler after the sources are compiled, but they are not loaded into the JVM at runtime. This is the default behavior of the annotations.
+The retention policy refers to how long the annotations will be retained. The annotations we created until now are stored in the class files by the compiler after the sources are compiled, but they are not loaded into the JVM at run-time. This is the default behavior of the annotations.
 
-However, we may need to specify the retention policy where we might not need the annotations in the class files or we need them at runtime to be read by a program. This can be done by adding the [`@Retention{:java}`](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html) annotation and passing the [retention policy](https://docs.oracle.com/javase/7/docs/api/java/lang/annotation/RetentionPolicy.html) into it.
+However, we may need to specify the retention policy where we might not need the annotations in the class files or we need them at run-time to be read by a program. This can be done by adding the [`@Retention{:java}`](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html) annotation and passing the [retention policy](https://docs.oracle.com/javase/7/docs/api/java/lang/annotation/RetentionPolicy.html) into it.
 
 ```java
 @Retention(RetentionPolicy.SOURCE)
@@ -178,7 +178,7 @@ Three types of retention policies can be specified for the custom annotations th
 - CLASS — Recorded in the class files by the compiler but not retained by the JVM at run-time
 - RUNTIME — Recorded in the class file by the compiler and retained by the JVM at run-time
 
-I will be writing another post to introduce you to Reflections API which can be used for reading annotations at run time when the `@Retention(RetentionPolicy.RUNTIME){:java}` annotation is used.
+I will be writing another post to introduce you to Reflections API which can be used for reading annotations at run-time when the `@Retention(RetentionPolicy.RUNTIME){:java}` annotation is used.
 
 When the `@Retention(RetentionPolicy.SOURCE){:java}` annotation is used, since they are not added to the class files, an Annotation Processor would normally be used so that the annotations can be read at compile time and either an error could be thrown or extra byte code could be generated using the annotated data.
 

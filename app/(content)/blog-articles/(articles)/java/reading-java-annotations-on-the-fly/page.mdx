@@ -32,7 +32,7 @@ However, you should note that using the reflections API can have a performance i
 
 For us to use the reflections API to read annotations, the annotations should be stored in the class files by the compiler and loaded into the JVM at run-time.
 
-Annotations by default are retained in the class files but they are not loaded into the JVM at run-time. Therefore to make sure that the annotations are stored in the class files and that they are loaded into the JVM at run-time, the [`@Retention(RetentionPolicy.RUNTIME)`](https://docs.oracle.com/javase/7/docs/api/java/lang/annotation/RetentionPolicy.html#RUNTIME) annotation needs to be applied to the declaration of the annotation that you wish to read at compile time.
+Annotations by default are retained in the class files but they are not loaded into the JVM at run-time. Therefore to make sure that the annotations are stored in the class files and that they are loaded into the JVM at run-time, the [`@Retention(RetentionPolicy.RUNTIME)`](https://docs.oracle.com/javase/7/docs/api/java/lang/annotation/RetentionPolicy.html#RUNTIME) annotation needs to be applied to the declaration of the annotation that you wish to read at run-time.
 
 ```java
 @Retention(RetentionPolicy.RUNTIME)
@@ -42,7 +42,7 @@ public @interface RuntimeRetainedAnnotation {
 }
 ```
 
-Now, any data annotated with the `@RuntimeRetainedAnnotation{:java}` annotation can be read at runtime, using Java reflections.
+Now, any data annotated with the `@RuntimeRetainedAnnotation{:java}` annotation can be read at run-time, using Java reflections.
 
 If you want to learn more about writing your own annotations, check my post explaining how to write Java [Custom Annotations](./java/unleashing-the-power-of-java-custom-annotations).
 
@@ -73,7 +73,7 @@ You first need to get hold of the Class object. Which can be done as shown below
 Class classElement = MyClass.class;
 ```
 
-After getting hold of the class, you can inspect its elements to get hold of the Annotated Element. Since you know the Class you can directly access the `setFoo(int fooValue){:java}` method and from that the `fooValue{:java}` parameter as shown below.
+After getting hold of the class, you can inspect its elements to get hold of the Annotated Element. Since you know the Class you can directly access the `setFoo(Integer fooValue){:java}` method and from that the `fooValue{:java}` parameter as shown below.
 
 ```java
 Parameter fooValueParameter = null;
@@ -83,7 +83,7 @@ try {
     args[0] = Integer.class;
     Method setFooMethod = classElement.getMethod("setFoo", args);
     // Getting the parameter object
-    fooValueParameter = method.getParameters()[0];
+    fooValueParameter = setFooMethod.getParameters()[0];
 } catch (Exception e) {
     // Handle Exception
 }
@@ -97,7 +97,7 @@ All the methods that can be used are not included here and only guidance is prov
 
 Now that you have the parameter object you can now get the annotation added to this element.
 
-As mentioned before all classes implementing the `AnnotatedElement{:java}` interface contains all the relevant methods required for reading annotations and all the classes of the objects we got hold of before, implement it like many other elements that can be acquired in that manner.
+As mentioned before, all classes implementing the `AnnotatedElement{:java}` interface contain all the relevant methods required for reading annotations. All the classes of the objects we got hold of before implement it, like many other elements that can be acquired in that manner.
 
 Let's assume that the `MyAnnotation{:java}` annotation added to the `fooValue{:java}` parameter is defined as shown below.
 

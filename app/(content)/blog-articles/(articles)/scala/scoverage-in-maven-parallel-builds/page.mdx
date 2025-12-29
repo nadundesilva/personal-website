@@ -33,7 +33,7 @@ export default function Layout({ children }) {
     );
 }
 
-In this article, I will be focussing on solving a problem that I encountered while running the [SCoverage maven plugin](https://github.com/scoverage/scoverage-maven-plugin)’s report goal in a Maven parallel build. However, the solution is relatable to other plugins which have a similar structure such as Maven Surefire Plugin.
+In this article, I will be focusing on solving a problem that I encountered while running the [SCoverage maven plugin](https://github.com/scoverage/scoverage-maven-plugin)'s report goal in a Maven parallel build. However, the solution is relatable to other plugins which have a similar structure such as Maven Surefire Plugin.
 
 Let’s get started with how to enable parallel building in a Maven-based project and then move on to the problem and solution.
 
@@ -150,4 +150,4 @@ _Voila!_ The correct test coverage is shown in the report now
 
 As shown above, some Maven SCoverage Plugin goals (as well as some Maven Surefire Plugin goals and possibly many other plugin goals) are not thread-safe. However, most of the mature Maven plugins have approaches to address these.
 
-So if you do decide to use the `-T` flag to speed up your builds, and keep an eye out for the warning logs about non-thread safe goals being used. While it may take a while to figure out how to work around these issues, the speedup is definitely worth it. If one of the goals that you had trouble with was the Maven SCoverage Plugin, I hope this article helped you through it.
+So if you do decide to use the `-T` flag to speed up your builds, make sure to keep an eye out for the warning logs about non-thread safe goals being used. While it may take a while to figure out how to work around these issues, the speedup is definitely worth it. If one of the goals that you had trouble with was the Maven SCoverage Plugin, I hope this article helped you through it.

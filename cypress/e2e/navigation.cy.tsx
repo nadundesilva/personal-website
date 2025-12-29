@@ -14,15 +14,22 @@
  */
 import { WebsiteHome, type Route } from "@/constants/routes";
 
+const extractArticleUrlsFromAllLinks = (
+    allLinks: JQuery<HTMLElement>,
+    allArticleUrls: string[],
+): string[] => {
+    const articleUrlsSet = new Set(allArticleUrls);
+    return Array.from(allLinks)
+        .map((link) => link.getAttribute("href"))
+        .filter(
+            (href): href is string =>
+                href !== null &&
+                href.startsWith("/blog-articles/") &&
+                articleUrlsSet.has(href),
+        );
+};
+
 describe("navigation between pages", () => {
-    it("properly navigates through the main nav links", () => {
-        cy.loadPage(WebsiteHome.path);
-
-        Object.values(WebsiteHome.subRoutes).forEach((route) => {
-            cy.clickNavLink(route.name);
-        });
-    });
-
     it("properly navigates to pages and back using breadcrumbs", () => {
         cy.loadPage(WebsiteHome.path);
 
@@ -36,7 +43,7 @@ describe("navigation between pages", () => {
                 })
                     .as("navlink")
                     .should("be.visible");
-                cy.scrollTo(0, 0, { duration: 1000 });
+                cy.scrollTo(0, 0, { duration: 1000, ensureScrollable: false });
                 cy.get("@navlink").click({ waitForAnimations: true });
 
                 cy.wait(1000);
@@ -47,7 +54,7 @@ describe("navigation between pages", () => {
                         "Nesting three levels of navigation is not supported",
                     );
                 }
-                cy.clickBreadcrumb(currentRouteName);
+                cy.clickBreadcrumbByName(currentRouteName);
             });
         };
 
@@ -60,57 +67,111 @@ describe("navigation between pages", () => {
                 if (route.subRoutes !== undefined) {
                     visitSubRoutes(route.subRoutes, route.name);
                 }
-                cy.clickBreadcrumb(currentRouteName);
+                cy.clickBreadcrumbByName(currentRouteName);
             });
         };
 
         visitNavLink(WebsiteHome.subRoutes, WebsiteHome.name);
     });
 
-    it("properly navigates to all blog articles", () => {
-        cy.task<string[]>("discoverBlogArticles").then((discoveredArticles) => {
-            cy.log(`Discovered ${discoveredArticles.length} blog articles`);
+    it("properly navigates to all blog articles and back using breadcrumbs", () => {
+        cy.task<string[]>("discoverBlogArticles", ".").then(
+            (discoveredArticles) => {
+                cy.log(`Discovered ${discoveredArticles.length} blog articles`);
 
-            cy.loadPage("/blog-articles");
-            cy.wait(1000);
-            cy.findAllByRole("progressbar").should("not.exist");
-
-            // Count article links on the page
-            cy.findAllByRole("link").then(($links) => {
-                const articleLinks = Array.from($links).filter((link) => {
-                    const href = link.getAttribute("href");
-                    return href?.startsWith("/blog-articles/") ?? false;
-                });
-                const articleCount = articleLinks.length;
-                cy.log(`Found ${articleCount} article links on page`);
-
-                expect(articleCount).to.equal(
-                    discoveredArticles.length,
-                    `Expected ${discoveredArticles.length} articles but found ${articleCount}`,
-                );
-            });
-
-            // Navigate to each discovered article
-            discoveredArticles.forEach((articleUrl) => {
-                cy.log(`Navigating to article: ${articleUrl}`);
-
-                // Find the article link by href using attribute selector
-                cy.get(`a[href="${articleUrl}"]`)
-                    .as("articleLink")
-                    .should("be.visible");
-
-                cy.scrollTo(0, 0, { duration: 1000 });
-                cy.get("@articleLink").click({ waitForAnimations: true });
-
+                cy.loadPage("/blog-articles");
                 cy.wait(1000);
                 cy.findAllByRole("progressbar").should("not.exist");
 
-                // Verify we're on the article page by checking URL
-                cy.url().should("include", articleUrl);
+                // Find all article links on the page (excluding category links)
+                cy.findAllByRole("link").then(($links) => {
+                    const articleUrls = extractArticleUrlsFromAllLinks(
+                        $links,
+                        discoveredArticles,
+                    );
 
-                // Navigate back to blog articles page using breadcrumbs
-                cy.clickBreadcrumb("Blog Articles");
-            });
-        });
+                    cy.log(`Found ${articleUrls.length} article links on page`);
+
+                    expect(articleUrls.length).to.equal(
+                        discoveredArticles.length,
+                        `Expected ${discoveredArticles.length} articles but found ${articleUrls.length}`,
+                    );
+
+                    // Navigate to each article found on the page
+                    articleUrls.forEach((articleUrl) => {
+                        cy.log(`Navigating to article: ${articleUrl}`);
+
+                        cy.clickLinkByHref(articleUrl);
+                        cy.location("pathname").should("eq", articleUrl);
+
+                        cy.clickBreadcrumbByName("Blog Articles");
+                    });
+                });
+            },
+        );
+    });
+
+    it("properly navigates to all blog articles from sub group pages and back using breadcrumbs", () => {
+        cy.task<string[]>("discoverBlogArticleSubGroups", ".").then(
+            (discoveredSubGroupPages) => {
+                cy.task<string[]>("discoverBlogArticles", ".").then(
+                    (discoveredArticles) => {
+                        cy.log(
+                            `Discovered ${discoveredSubGroupPages.length} sub group pages`,
+                        );
+                        cy.log(
+                            `Discovered ${discoveredArticles.length} blog articles`,
+                        );
+
+                        cy.loadPage("/blog-articles");
+                        cy.wait(1000);
+                        cy.findAllByRole("progressbar").should("not.exist");
+
+                        discoveredSubGroupPages.forEach((subGroupPage) => {
+                            cy.log(`Testing sub group page: ${subGroupPage}`);
+
+                            // Navigate to the group page by clicking the link from /blog-articles
+                            cy.clickLinkByHref(subGroupPage);
+                            cy.location("pathname").should("eq", subGroupPage);
+
+                            // Find all article links on the page (excluding category/group links)
+                            cy.findAllByRole("link").then(($links) => {
+                                const articleUrls =
+                                    extractArticleUrlsFromAllLinks(
+                                        $links,
+                                        discoveredArticles,
+                                    );
+
+                                // Navigate to each article found on this group page
+                                articleUrls.forEach((articleUrl) => {
+                                    cy.log(
+                                        `Navigating to article: ${articleUrl} from ${subGroupPage}`,
+                                    );
+
+                                    cy.clickLinkByHref(articleUrl);
+                                    cy.location("pathname").should(
+                                        "eq",
+                                        articleUrl,
+                                    );
+
+                                    // Go back to group page using breadcrumbs
+                                    cy.clickBreadcrumbByHref(subGroupPage);
+
+                                    cy.location("pathname").should(
+                                        "eq",
+                                        subGroupPage,
+                                    );
+                                });
+                            });
+
+                            // After testing all articles in this group, go back to /blog-articles
+                            cy.clickBreadcrumbByName("Blog Articles");
+                            cy.wait(1000);
+                            cy.findAllByRole("progressbar").should("not.exist");
+                        });
+                    },
+                );
+            },
+        );
     });
 });

@@ -135,13 +135,13 @@ Another very important aspect of a distributed or microservices architecture is 
 
 - All services should use the received tracing contexts and keep the link going by passing the tracing data to all outgoing calls. This tracing context contains a trace ID and it helps in ensuring that all the data can be viewed together.
 - The starting service at the edge needs to take the tracing decision and should discard any sampling decisions received in the trace context— This is necessary if you want to avoid an attack where a malicious user would send trace contexts to forcefully record all requests to overload your Observability infrastructure.
-- When a request is sampled to be recorded or not recorded by the starting service, the same needs to be done by all the services — otherwise, you will see completely disjoint pieces of traces all around your system).
+- When a request is sampled to be recorded or not recorded by the starting service, the same needs to be done by all the services — otherwise, you will see completely disjoint pieces of traces all around your system.
 
 All of this combined will give you traces spanning across the application end to end.
 
 # Use Structured Logging in a Machine-Readable Consistent Format
 
-Another important aspect to consider when you are working on a large microservices deployment is to have a consistent but machine-readable logging format. The general pattern encouraged in Kubernetes is to write all logs to sysout and syserr so that they are recorded in each Kubernetes node in their corresponding logging directories. This is generally collected by a logs agent (such as [Fluentd](https://www.fluentd.org/)), parsed, and sent to a centralized log collection system, to be analyzed based on the requirements.
+Another important aspect to consider when you are working on a large microservices deployment is to have a consistent but machine-readable logging format. The general pattern encouraged in Kubernetes is to write all logs to stdout and stderr so that they are recorded in each Kubernetes node in their corresponding logging directories. This is generally collected by a logs agent (such as [Fluentd](https://www.fluentd.org/)), parsed, and sent to a centralized log collection system, to be analyzed based on the requirements.
 
 As you can understand, without a consistent and machine-readable format, you may end up with a large number of different rules/queries to parse and analyze your logs increasing the overhead on your team. Most loggers allow you to change the format and also have context as key-value pairs, and this should be used from the start, and enforced across all microservices, to avoid any problems in the future when you scale up.
 
