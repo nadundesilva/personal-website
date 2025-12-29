@@ -15,6 +15,12 @@
 import runCoverageTask from "@cypress/code-coverage/task";
 import { glob } from "glob";
 import { defineConfig } from "cypress";
+import {
+    BLOG_ARTICLE_FILE,
+    BLOG_ARTICLES_DIRECTORY_PREFIX,
+    BLOG_ARTICLES_GROUP_FILE,
+    resolveWebsiteBlogArticlesSubPath,
+} from "./utils/blog-articles";
 
 export default defineConfig({
     projectId: "w712w3",
@@ -32,17 +38,21 @@ export default defineConfig({
             runCoverageTask(on, config);
 
             on("task", {
-                discoverBlogArticles(): string[] {
-                    const pathPattern =
-                        "app/(content)/blog-articles/(articles)/**/page.mdx";
+                discoverBlogArticles(subPath: string): string[] {
+                    const pathPattern = `${BLOG_ARTICLES_DIRECTORY_PREFIX}/${subPath}/**/${BLOG_ARTICLE_FILE}`;
                     const articleFiles = glob.sync(pathPattern);
                     return articleFiles.map((filePath) => {
-                        const relativePath = filePath
-                            .replace(
-                                /^(app\/\(content\)\/blog-articles\/\(articles\)\/)/,
-                                "",
-                            )
-                            .replace(/\/page\.mdx$/, "");
+                        const relativePath =
+                            resolveWebsiteBlogArticlesSubPath(filePath);
+                        return `/blog-articles/${relativePath}`;
+                    });
+                },
+                discoverBlogArticleSubGroups(subPath: string): string[] {
+                    const pathPattern = `${BLOG_ARTICLES_DIRECTORY_PREFIX}/${subPath}/*/**/${BLOG_ARTICLES_GROUP_FILE}`;
+                    const groupFiles = glob.sync(pathPattern);
+                    return groupFiles.map((filePath) => {
+                        const relativePath =
+                            resolveWebsiteBlogArticlesSubPath(filePath);
                         return `/blog-articles/${relativePath}`;
                     });
                 },

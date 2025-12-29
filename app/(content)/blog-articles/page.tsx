@@ -16,7 +16,6 @@ import type { Metadata } from "next";
 import type React from "react";
 
 import ArticlesList from "@/components/blog-articles/ArticlesList";
-import { Title } from "@/components/content";
 import { FULL_NAME } from "@/constants/metadata";
 
 export const metadata: Metadata = {
@@ -25,10 +24,7 @@ export const metadata: Metadata = {
 };
 
 const BlogArticles = async (): Promise<React.ReactElement> => (
-    <>
-        <Title>Blog Articles</Title>
-        <ArticlesList pathPattern="app/(content)/blog-articles/(articles)/**/page.mdx" />
-    </>
+    <ArticlesList subPath="." />
 );
 
 export default BlogArticles;

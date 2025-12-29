@@ -64,7 +64,7 @@ const Education = (): React.ReactElement => {
             Engineering Research Conference (MERCon)
         </Link>
     );
-    const AnomalyDetectionInIndustialSoftwareSystemsUsingVae = (
+    const AnomalyDetectionInIndustrialSoftwareSystemsUsingVae = (
         <Link
             href="https://www.scitepress.org/Papers/2018/66003/pdf/index.html"
             target="_blank"
@@ -144,7 +144,7 @@ const Education = (): React.ReactElement => {
                                     <ListItem>
                                         <Typography>
                                             {
-                                                AnomalyDetectionInIndustialSoftwareSystemsUsingVae
+                                                AnomalyDetectionInIndustrialSoftwareSystemsUsingVae
                                             }
                                         </Typography>
                                     </ListItem>

@@ -20,11 +20,19 @@ declare global {
     namespace Cypress {
         interface Chainable {
             loadPage(url: string): void;
+
             clickNavLink(name: string): Chainable<JQuery<Element>>;
-            clickBreadcrumb(name: string): Chainable<JQuery<Element>>;
+            clickBreadcrumbByName(name: string): Chainable<JQuery<Element>>;
+            clickBreadcrumbByHref(href: string): Chainable<JQuery<Element>>;
+            clickLinkByHref(href: string): Chainable<JQuery<Element>>;
+
             task<T = unknown>(
                 event: "discoverBlogArticles",
-                arg?: unknown,
+                arg: string,
+            ): Chainable<T>;
+            task<T = unknown>(
+                event: "discoverBlogArticleSubGroups",
+                arg: string,
             ): Chainable<T>;
         }
     }

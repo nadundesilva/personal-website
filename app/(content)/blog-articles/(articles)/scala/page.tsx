@@ -18,13 +18,12 @@ import type React from "react";
 import ArticlesList from "@/components/blog-articles/ArticlesList";
 
 export const metadata: Metadata = {
-    title: "Kubernetes the Right Way",
-    description:
-        "Kubernetes the Right Way series is about the best practices and techniques for improving your Kubernetes Clusters.",
+    title: "Scala",
+    description: "Articles about Scala programming and development.",
 };
 
 const BlogArticles = async (): Promise<React.ReactElement> => (
-    <ArticlesList subPath="./kubernetes-the-right-way" />
+    <ArticlesList subPath="./scala" />
 );
 
 export default BlogArticles;

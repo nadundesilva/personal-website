@@ -28,6 +28,7 @@ import {
     Title,
 } from "@/components/content";
 import { Logos } from "@/constants/logos";
+import { FULL_NAME } from "@/constants/metadata";
 
 interface UseCasesSectionProps {
     children: React.ReactNode;
@@ -51,7 +52,8 @@ const UseCasesSection = ({
 );
 
 export const metadata: Metadata = {
-    title: "Nadun De Silva | Personal Projects",
+    title: `${FULL_NAME} | Personal Projects`,
+    description: `Personal projects developed by ${FULL_NAME}.`,
 };
 
 const PersonalProjects = (): React.ReactElement => {

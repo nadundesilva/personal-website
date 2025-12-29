@@ -7,7 +7,7 @@ export const blogMetadata = {
 };
 
 export const metadata = {
-    title: "Processing Java Annotations at compilation time using Annotation",
+    title: "Processing Java Annotations at compile time using Annotation",
     description:
         "A guide for reading custom annotations at compile-time for generating code, validating, etc., which is part of a three-article series.",
 };
@@ -56,7 +56,7 @@ public class AnnotationProcessorExample extends AbstractProcessor {
 
 **init():** This gives you instances of different utilities which are useful for code generation.
 
-- _Filler:_ Used to create a new source, class, or auxiliary files.
+- _Filer:_ Used to create a new source, class, or auxiliary files.
 - _Messager:_ Used to report errors, warnings, and other notices.
 - _Element Utils:_ Utility methods used for operating on elements.
 - _Type Utils:_ Utility methods used for operating on types.
@@ -111,6 +111,6 @@ com.foo.FooProcessor
 com.bar.BarProcessor
 ```
 
-The annotation processor is a really powerful tool in Java. It can enable the users to do advance manipulations and validations to the Java source at compile time. Don’t be disappointed if it seems to be hard at first. But with practice, you will be able to use the annotation processor to reduce the required code lines significantly.
+The annotation processor is a really powerful tool in Java. It can enable the users to do advanced manipulations and validations to the Java source at compile time. Don't be disappointed if it seems to be hard at first. But with practice, you will be able to use the annotation processor to reduce the required code lines significantly.
 
 Hope this was helpful.

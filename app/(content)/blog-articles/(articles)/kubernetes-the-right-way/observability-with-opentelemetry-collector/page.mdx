@@ -57,9 +57,9 @@ With these capabilities, you can perform many actions such as filtering, transfo
 
 Have you ever had to choose between reducing the amount of tracing data and capturing as much information so that important traces (for example errors or latency spikes) are captured in them? The answer to this dilemma is Tail Sampling. Tail Sampling allows you to sample your traces after recording the data by looking at all or most of the spans in a trace. In this way, your sampling decisions can be more informed making your final stored data more relevant.
 
-Most of the tail-based samplers available today are implemented within the vendor’s infrastructure and you will be locked into these vendors once you buy into them. Also, it is impossible to achieve this without a central entity processing the data.
+Most of the tail-based samplers available today are implemented within the vendor's infrastructure and you will be locked into these vendors once you buy into them. Also, it is impossible to achieve this without a central entity processing the data.
 
-However, OpenTelemetry also provides a tail-based sampler that can be configured in your OpenTelemetry collector. While it requires some special considerations such as making sure one trace ends up in the same Collector especially if you are using multiple replicas of the Collector to process your data using a trace ID or Service Aware load balancer (as you may have guessed, it is also provided by OpenTelemetry).
+However, OpenTelemetry also provides a tail-based sampler that can be configured in your OpenTelemetry collector. It does require some special considerations such as making sure one trace ends up in the same Collector, especially if you are using multiple replicas of the Collector to process your data using a trace ID or Service Aware load balancer (as you may have guessed, it is also provided by OpenTelemetry).
 
 With all of these out-of-the-box components, you can implement your tail-based sampling strategy to reduce costs and at the same time have the relevant traces stored in preparation for any issues you may encounter.
 

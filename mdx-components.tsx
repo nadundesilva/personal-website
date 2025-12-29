@@ -88,11 +88,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 sx={{
                     "border": 0,
                     "textAlign": "center",
-                    "pt": "2em",
+                    "pt": 4,
                     "&::before": {
                         content: "'\\2022\\2800\\2022\\2800\\2022'",
-                        fontSize: "2rem",
-                        color: "#666",
+                        fontSize: { xs: "1.5rem", sm: "2rem" },
+                        color: "text.secondary",
+                        opacity: 0.4,
                     },
                 }}
             />
@@ -146,7 +147,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                     />
                     <Typography
                         variant="body2"
-                        sx={{ mb: 2, color: "#888888" }}
+                        sx={{
+                            mb: 2.5,
+                            color: "text.secondary",
+                            fontWeight: 300,
+                        }}
                     >
                         Published on{" "}
                         {blogMetadata.publishedDate.toLocaleDateString(
@@ -156,11 +161,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                     </Typography>
                     <Typography
                         variant="body2"
-                        sx={{ mb: 2, color: "#555555" }}
+                        sx={{
+                            mb: 3,
+                            color: "text.secondary",
+                            lineHeight: 1.6,
+                        }}
                     >
                         {pageMetadata.description}
                     </Typography>
-                    <Box>
+                    <Box sx={{ mb: 4 }}>
                         <Link href={blogMetadata.mediumUrl} target="_blank">
                             <Button
                                 size="small"
@@ -181,23 +190,44 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 direction="column"
                 justifyContent="center"
                 alignItems="center"
-                sx={{ py: 3 }}
+                sx={{ py: { xs: 3, sm: 4 } }}
             >
-                <Grid sx={{ textAlign: "center" }}>
-                    <Image
-                        src={src}
-                        alt={alt}
-                        unoptimized
-                        sizes="100vw"
-                        style={{
-                            width: "75%",
-                            height: "auto",
+                <Grid
+                    sx={{
+                        textAlign: "center",
+                        width: { xs: "100%", sm: "90%", md: "75%" },
+                    }}
+                >
+                    <Box
+                        sx={{
+                            borderRadius: 1,
+                            overflow: "hidden",
+                            display: "inline-block",
+                            width: "100%",
                         }}
-                    />
+                    >
+                        <Image
+                            src={src}
+                            alt={alt}
+                            unoptimized
+                            sizes="(min-width: 600px) 90vw, (min-width: 900px) 75vw, 100vw"
+                            style={{
+                                width: "100%",
+                                height: "auto",
+                                display: "block",
+                            }}
+                        />
+                    </Box>
                 </Grid>
                 {creator && (
-                    <Grid>
-                        <Typography sx={{ fontSize: "0.8em" }}>
+                    <Grid sx={{ mt: 2 }}>
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                color: "text.secondary",
+                                fontWeight: 300,
+                            }}
+                        >
                             Photo by{" "}
                             <Link href={creator.href} target="_blank">
                                 {creator.name}

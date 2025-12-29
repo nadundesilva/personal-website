@@ -15,30 +15,73 @@
 
 import { Container } from "@mui/material";
 import type React from "react";
+import type { Route as NextRoute } from "next";
 
 import { RouterBreadcrumbs } from "@/components/layout";
+import { Route, WebsiteHome } from "@/constants/routes";
+import {
+    type BlogArticleGroup,
+    getBlogArticleGroups,
+} from "@/utils/blog-articles";
+
+function buildBlogArticleRoutes(
+    subGroups: BlogArticleGroup[],
+): Record<string, Route> {
+    const routes: Record<string, Route> = {};
+
+    for (const subGroup of subGroups) {
+        const subRoutes: Record<string, Route> = {};
+        for (const article of subGroup.articles) {
+            subRoutes[`/blog-articles/${article.websiteSubPath}`] = {
+                name: article.title,
+                path: `/blog-articles/${article.websiteSubPath}` as NextRoute<string>,
+            };
+        }
+
+        routes[`/blog-articles/${subGroup.websiteSubPath}`] = {
+            name: subGroup.title,
+            path: `/blog-articles/${subGroup.websiteSubPath}` as NextRoute<string>,
+            subRoutes:
+                Object.keys(subRoutes).length > 0 ? subRoutes : undefined,
+        };
+    }
+
+    return routes;
+}
 
 interface ContentLayoutProps {
     children: React.ReactNode;
 }
 
-const ContentLayout = ({
+const ContentLayout = async ({
     children,
-}: ContentLayoutProps): React.ReactElement => (
-    <Container
-        maxWidth={false}
-        sx={{
-            mb: 5,
-            px: {
-                xs: 0,
-                lg: 20,
-                xl: 40,
-            },
-        }}
-    >
-        <RouterBreadcrumbs />
-        <Container maxWidth={false}>{children}</Container>
-    </Container>
-);
+}: ContentLayoutProps): Promise<React.ReactElement> => {
+    // Merge blog article routes into topLevelRoutes if provided
+    const { subGroups } = await getBlogArticleGroups(".");
+    const routes: Record<string, Route> = {
+        ...WebsiteHome.subRoutes,
+        "/blog-articles": {
+            ...WebsiteHome.subRoutes["/blog-articles"],
+            subRoutes: buildBlogArticleRoutes(subGroups),
+        },
+    };
+
+    return (
+        <Container
+            maxWidth={false}
+            sx={{
+                mb: 5,
+                px: {
+                    xs: 0,
+                    lg: 20,
+                    xl: 40,
+                },
+            }}
+        >
+            <RouterBreadcrumbs topLevelRoutes={routes} />
+            <Container maxWidth={false}>{children}</Container>
+        </Container>
+    );
+};
 
 export default ContentLayout;
