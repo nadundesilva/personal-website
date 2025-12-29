@@ -100,17 +100,17 @@ implicit def secondsSyntax(seconds: Seconds): SecondsOps = new SecondsOps(second
 This again provides an implicit conversion from `Seconds` to `SecondsOps` which has the new members in it. Therefore, if we directly invoke the new member in `SecondsOps` class in the `Seconds` class itself, the compiler understands that a conversion is required, and it will perform the conversion. Thanks to this, we can now directly write our code as follows, as if it now actually has the add function.
 
 ```scala
-val nineMinutes  = Minutes(9)
-val threeMinutes = Minutes(3)
-val sum          = nineMinutes.add(threeMinutes)
+val nineSeconds  = Seconds(9)
+val threeSeconds = Seconds(3)
+val sum          = nineSeconds.add(threeSeconds)
 ```
 
 Under the hood, the compiler converts the above code to automatically convert the `Seconds` object to an `SecondsOps` object.
 
 ```scala
-val nineMinutes  = Minutes(9)
-val threeMinutes = Minutes(3)
-val sum          = secondsSyntax(nineMinutes).add(threeMinutes)
+val nineSeconds  = Seconds(9)
+val threeSeconds = Seconds(3)
+val sum          = secondsSyntax(nineSeconds).add(threeSeconds)
 ```
 
 In this way, we can even add members to final classes and even primitive types like Strings. This can become quite powerful in writing concise and readable code.
@@ -143,7 +143,7 @@ Implicit conversions are not something new. In fact, it is heavily used in some 
 
 # With Great Power comes Great responsibility
 
-Scala implicit conversions give programmers very powerful capabilities. However, it is also important to make the code readable as it will be read many more times, while it is only written once. Therefore, we have to use it just the right amount to remove those pesky boilerplate code lines go away and make the code nice and shiny. Overdoing it could make it really hard to read.
+Scala implicit conversions give programmers very powerful capabilities. However, it is also important to make the code readable as it will be read many more times, while it is only written once. Therefore, we have to use it just the right amount to make those pesky boilerplate code lines go away and make the code nice and shiny. Overdoing it could make it really hard to read.
 
 However, it is always a good idea to use an IDE such as IntelliJ IDEA when writing code with Scala. IntelliJ IDEA especially can show you the exact Implicit Conversion being used when you enable the “Show Implicit Hints" feature.
 

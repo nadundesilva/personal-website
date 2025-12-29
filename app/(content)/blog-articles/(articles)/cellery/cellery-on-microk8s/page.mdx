@@ -33,7 +33,7 @@ export default function Layout({ children }) {
 
 There had been a lot of buzz around microservices, Kubernetes, and Istio recently. [Cellery](https://github.com/wso2/cellery), a newcomer to this space, brings together some of these technologies and gives you a simplified approach to building, running, testing, and managing code-first composites on Kubernetes. Cellery can be deployed on top of any Kubernetes cluster and can provide you with many useful capabilities without much of a hassle.
 
-This article will focus on deploying Cellery on [MircoK8s](https://microk8s.io/). MicroK8s is a quite handy tool introduced by Canonical for spinning up a single-node Kubernetes cluster for development purposes in your computer. If you are a developer using Cellery, MicroK8s is a good option to get started in your Cellery journey.
+This article will focus on deploying Cellery on [MicroK8s](https://microk8s.io/). MicroK8s is a quite handy tool introduced by Canonical for spinning up a single-node Kubernetes cluster for development purposes in your computer. If you are a developer using Cellery, MicroK8s is a good option to get started in your Cellery journey.
 
 **Note:** If you are new to K8s and wish to get started quickly with Cellery, please use the [local setup option](https://github.com/wso2-cellery/sdk#quickstart-guide) as this is more convenient for new users.
 
@@ -142,7 +142,7 @@ Also, for accessing the cluster from your machine, host entries need to be added
 
 To get started with installing the cellery run-time on the MicroK8s, we need to execute the following command. The command will exit after making sure all the Cellery pods are up and running.
 
-**Note:** This will install a basic volatile installation of Cellery. and this is mostly used for development purposes.
+**Note:** This will install a basic volatile installation of Cellery, and this is mostly used for development purposes.
 
 ```shell
 cellery setup create existing

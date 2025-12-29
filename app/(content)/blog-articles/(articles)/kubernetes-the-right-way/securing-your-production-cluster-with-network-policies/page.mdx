@@ -144,7 +144,7 @@ You can use any combination of Network Policies according to what suits your app
 
 I would suggest not using `namespaceSelector` alone as it is far too permissive. You can use the other two approaches in allowing your application traffic in a concise manner. Even the traffic that comes from your Ingress Controllers into your application Pods can be limited accordingly in this manner (This is only if the Ingress Controller traffic is routed through a Pod in the Cluster. If not, you can use an IP range based policy as explained in the section below).
 
-One important technique that will come in handy in allowing cross-namespace traffic, is using the `kubernetes.io/metadata.name` label for selecting a namespace by its name. This label is automatically applied to all namespaces by the Kubernetes API Server automatically.
+One important technique that will come in handy in allowing cross-namespace traffic, is using the `kubernetes.io/metadata.name` label for selecting a namespace by its name. This label is automatically applied to all namespaces by the Kubernetes API Server.
 
 ## Allow Traffic to and from Specific IP ranges
 

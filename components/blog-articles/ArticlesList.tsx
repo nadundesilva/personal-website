@@ -12,113 +12,86 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import {
-    Card,
-    CardActionArea,
-    CardContent,
-    CardMedia,
-    Grid,
-    Typography,
-} from "@mui/material";
-import { glob } from "glob";
+import { Box, Grid } from "@mui/material";
 import type React from "react";
 
-import { Link } from "@/components/content";
+import { Link, SectionHeading, Title } from "@/components/content";
+import ArticleListItem from "./ArticlesListItem";
+import { getBlogArticleGroups, type BlogArticle } from "@/utils/blog-articles";
 
-interface BlogArticle {
-    title: string;
-    description: string;
-    url: string;
-    keywords: string[];
-    publishedDate: Date;
-    image: string;
+interface ArticlesGroupProps {
+    title?: string;
+    articles: BlogArticle[];
+    href?: string;
 }
 
-async function getBlogArticles(pathPattern: string): Promise<BlogArticle[]> {
-    const articles = await Promise.all(
-        (await glob(pathPattern)).map(async (filePath) => {
-            const relativePath = filePath
-                .replace(
-                    /^(app\/\(content\)\/blog-articles\/\(articles\)\/)/,
-                    "",
-                )
-                .replace(/\/page\.mdx$/, "");
-            const { metadata, blogMetadata } = await import(
-                `app/(content)/blog-articles/(articles)/${relativePath}/page.mdx`
-            );
+const ArticlesGroup = ({
+    title,
+    articles,
+    href,
+}: ArticlesGroupProps): React.ReactElement => (
+    <Box sx={{ mb: 6 }}>
+        {title &&
+            (href ? (
+                <Link
+                    href={href}
+                    sx={{
+                        display: "block",
+                        color: "inherit",
+                    }}
+                >
+                    <SectionHeading>{title}</SectionHeading>
+                </Link>
+            ) : (
+                <SectionHeading>{title}</SectionHeading>
+            ))}
+        <Box sx={{ mt: 3 }}>
+            <Grid
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="stretch"
+                spacing={2}
+            >
+                {articles.map((blogArticle) => (
+                    <Grid
+                        key={`/blog-articles/${blogArticle.websiteSubPath}`}
+                        size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+                    >
+                        <ArticleListItem blogArticle={blogArticle} />
+                    </Grid>
+                ))}
+            </Grid>
+        </Box>
+    </Box>
+);
 
-            return {
-                title: metadata.title as string,
-                description: metadata.description as string,
-                url: `/blog-articles/${relativePath}` as string,
-                keywords: blogMetadata.keywords as string[],
-                publishedDate: blogMetadata.publishedDate as Date,
-                image: blogMetadata.image as string,
-            };
-        }),
-    );
-    return articles.sort(
-        (a, b) => b.publishedDate.getTime() - a.publishedDate.getTime(),
-    );
+interface ArticlesListProps {
+    subPath: string;
 }
 
 const ArticlesList = async ({
-    pathPattern,
-}: {
-    pathPattern: string;
-}): Promise<React.ReactElement> => {
-    const blogArticles = await getBlogArticles(pathPattern);
+    subPath,
+}: ArticlesListProps): Promise<React.ReactElement> => {
+    const { currentGroup, subGroups } = await getBlogArticleGroups(subPath);
 
     return (
-        <Grid
-            container
-            direction="row"
-            justifyContent="flex-start"
-            alignItems="stretch"
-            spacing={2}
-            sx={{ mt: 2 }}
-        >
-            {blogArticles.map((blogArticle) => (
-                <Grid
-                    key={blogArticle.url}
-                    size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
-                >
-                    <Card raised sx={{ height: "100%" }}>
-                        <Link href={blogArticle.url}>
-                            <CardActionArea
-                                sx={{
-                                    height: "100%",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                }}
-                            >
-                                <CardMedia
-                                    component="img"
-                                    alt={blogArticle.title}
-                                    height="140"
-                                    image={blogArticle.image}
-                                />
-                                <CardContent sx={{ flex: "auto" }}>
-                                    <Typography
-                                        gutterBottom
-                                        variant="h3"
-                                        sx={{ pb: 1 }}
-                                    >
-                                        {blogArticle.title}
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        color="text.secondary"
-                                    >
-                                        {blogArticle.description}
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
-                        </Link>
-                    </Card>
-                </Grid>
-            ))}
-        </Grid>
+        <>
+            <Title>{currentGroup ? currentGroup.title : "Blog Articles"}</Title>
+            <Box sx={{ mt: 4 }}>
+                {currentGroup && (
+                    <ArticlesGroup articles={currentGroup.articles} />
+                )}
+                {subGroups.map((subGroup) => (
+                    <ArticlesGroup
+                        key={`/blog-articles/${subGroup.websiteSubPath}`}
+                        title={subGroup.title}
+                        articles={subGroup.articles}
+                        href={`/blog-articles/${subGroup.websiteSubPath}`}
+                    />
+                ))}
+            </Box>
+        </>
     );
 };
 

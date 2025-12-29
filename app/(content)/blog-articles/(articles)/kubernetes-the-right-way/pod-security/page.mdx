@@ -44,7 +44,7 @@ An application running in a container is started as a process within the host sy
 
 - The application only sees itself and no other processes within the host (and of course, any other processes started by the application within the container).
 - The application can only read/write the files within the subdirectory (which gets created within the host system) and thinks that the subdirectory is the root of its file system (i.e. cannot see the host system files).
-- The application will be in its own network space and will be completely isolated from the host. Depending on how the container orchestrater works, the application may have a network built that routes traffic between the host and the container, allowing it to communicate with the host, seeing it as a separate host.
+- The application will be in its own network space and will be completely isolated from the host. Depending on how the container orchestrator works, the application may have a network built that routes traffic between the host and the container, allowing it to communicate with the host, seeing it as a separate host.
 
 In many ways, the containers are fully isolated from the host and act as separate virtual hosts located within the host.
 
@@ -166,7 +166,7 @@ On top of these development time mitigations, you can also utilize scanners to a
     }}
 />
 
-# Scanning Applications, Docker Images & K8s Yamls for Vulnerabilities
+# Scanning Applications, Docker Images & K8s YAMLs for Vulnerabilities
 
 While this is not a Kubernetes-specific improvement, this can help in preventing many security threats. Even in a perfectly secure system, we would need to still expose some ports to the internet which will serve your applications to your users.
 
@@ -178,7 +178,7 @@ This is where application and Docker image scanners can come to your rescue. The
 
 These can be integrated into your CI/CD pipelines so that they would automatically fail the pipelines if any vulnerabilities are found. You can even run scheduled pipelines to scan all the images that are being used in your Kubernetes cluster to detect vulnerabilities sooner. Doing so can greatly increase your chances of fixing many vulnerabilities as soon as they are found.
 
-Similarly, there are analyzers (e.g.:- https://www.checkov.io/) for scanning Kubernetes Yaml files that will analyze and report if they can be improved with a known best practice. This includes some of the best practices we have talked about in this article as well.
+Similarly, there are analyzers (e.g.:- https://www.checkov.io/) for scanning Kubernetes YAML files that will analyze and report if they can be improved with a known best practice. This includes some of the best practices we have talked about in this article as well.
 
 ---
 

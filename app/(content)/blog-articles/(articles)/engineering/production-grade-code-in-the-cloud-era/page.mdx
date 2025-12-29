@@ -110,7 +110,7 @@ For an application to be observable, it should be possible to infer its internal
 
 Logs are an important part of any application and you should be careful in selecting a proper logging framework from the start. In general, all important events happening in the application should be logged (selecting the proper log level for your logs to not overwhelm log collection agents is important as well).
 
-- information that would help you debug the error — do not assume that you will be able to debug your code in production.
+- Include information that would help you debug the error — do not assume that you will be able to debug your code in production.
 - Use a request/task ID — since many applications need to handle concurrent requests, it can be hard to distinguish logs printed from one request from another without an ID to correlate logs together. A random UUID generated for each of these concurrent requests/tasks would be the solution for this issue.
 - Use log levels wisely — it can be quite costly (in terms of money as well as performance) to write logs in production environments. Moreover, properly marking warning and error logs can help SRE to identify issues easily.
 - Use debug logs with the information required for debugging — Since it’s general practice to only enable the info log level in production, you can log all the actions in your application as debug logs so that they can be enabled when there is a production issue.
@@ -148,7 +148,7 @@ While metrics may not seem important at first glance, they can be quite handy as
 
 A set of metrics covering things such as the errors that occurred in the application, total traffic, latency in handling requests/tasks (or any other information that is important to you) can help you spot issues in advance.
 
-For all the above (logs, distributed tracing, and metrics), Open Telemetry had been gaining traction over the last few years, as a widely accepted specification. This was introduced by CNCF and it is being implemented by most of the popular frameworks such as Jaeger and Prometheus. Therefore, this can be a good starting point if you are not sure where to start at.
+For all the above (logs, distributed tracing, and metrics), OpenTelemetry had been gaining traction over the last few years, as a widely accepted specification. This was introduced by CNCF and it is being adopted by most of the popular observability tools and platforms such as Jaeger and Prometheus. Therefore, this can be a good starting point if you are not sure where to start at.
 
 # Health Probes
 

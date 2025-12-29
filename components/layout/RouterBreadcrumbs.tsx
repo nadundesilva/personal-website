@@ -20,9 +20,15 @@ import { usePathname } from "next/navigation";
 import type React from "react";
 
 import { Link } from "@/components/content";
-import { WebsiteHome, type Route } from "@/constants/routes";
+import { type Route } from "@/constants/routes";
 
-const RouterBreadcrumbs = (): React.ReactElement | null => {
+interface RouterBreadcrumbsProps {
+    topLevelRoutes: Record<string, Route>;
+}
+
+const RouterBreadcrumbs = ({
+    topLevelRoutes,
+}: RouterBreadcrumbsProps): React.ReactElement | null => {
     const pathname = usePathname();
     const pathnames =
         pathname === null ? [] : pathname.split("/").filter((x) => x);
@@ -62,7 +68,7 @@ const RouterBreadcrumbs = (): React.ReactElement | null => {
                 }
             }
         };
-        visitRoutes(WebsiteHome.subRoutes, pathnames, "");
+        visitRoutes(topLevelRoutes, pathnames, "");
     }
 
     return (

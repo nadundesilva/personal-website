@@ -22,7 +22,7 @@ Cypress.Commands.add("loadPage", (url: string): void => {
     cy.log(`Changed viewport to ${viewportWidth}x${viewportHeight}`);
 
     cy.visit(url);
-    cy.scrollTo(0, 0, { duration: 1000 });
+    cy.scrollTo(0, 0, { duration: 1000, ensureScrollable: false });
     cy.log(`Loaded ${url} page`);
     window.localStorage.setItem("COLOR_SCHEME", "light");
 
@@ -48,7 +48,7 @@ Cypress.Commands.add("clickNavLink", (name: string): void => {
     cy.findAllByRole("progressbar").should("not.exist");
 });
 
-Cypress.Commands.add("clickBreadcrumb", (name: string): void => {
+Cypress.Commands.add("clickBreadcrumbByName", (name: string): void => {
     cy.findByRole("navigation", {
         name: /breadcrumb/i,
     })
@@ -59,7 +59,7 @@ Cypress.Commands.add("clickBreadcrumb", (name: string): void => {
             })
                 .as("breadcrumb")
                 .should("be.visible");
-            cy.scrollTo(0, 0, { duration: 1000 });
+            cy.scrollTo(0, 0, { duration: 1000, ensureScrollable: false });
             cy.get("@breadcrumb").click({ waitForAnimations: true });
         });
 
@@ -67,4 +67,28 @@ Cypress.Commands.add("clickBreadcrumb", (name: string): void => {
         cy.wait(1000);
         cy.findAllByRole("progressbar").should("not.exist");
     }
+});
+
+Cypress.Commands.add("clickBreadcrumbByHref", (href: string): void => {
+    cy.findByRole("navigation", {
+        name: /breadcrumb/i,
+    })
+        .should("be.visible")
+        .within(() => {
+            cy.get(`a[href="${href}"]`).as("breadcrumb").should("be.visible");
+            cy.scrollTo(0, 0, { duration: 1000, ensureScrollable: false });
+            cy.get("@breadcrumb").click({ waitForAnimations: true });
+        });
+
+    cy.wait(1000);
+    cy.findAllByRole("progressbar").should("not.exist");
+});
+
+Cypress.Commands.add("clickLinkByHref", (href: string): void => {
+    cy.get(`a[href="${href}"]`).as("link").should("be.visible");
+    cy.scrollTo(0, 0, { duration: 1000, ensureScrollable: false });
+    cy.get("@link").click({ waitForAnimations: true });
+
+    cy.wait(1000);
+    cy.findAllByRole("progressbar").should("not.exist");
 });

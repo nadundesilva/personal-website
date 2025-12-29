@@ -17,6 +17,12 @@ import type { MetadataRoute } from "next";
 
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 import { WebsiteHome, type Route } from "@/constants/routes";
+import {
+    BLOG_ARTICLE_FILE,
+    BLOG_ARTICLES_DIRECTORY_PREFIX,
+    BLOG_ARTICLES_GROUP_FILE,
+    resolveWebsiteBlogArticlesSubPath,
+} from "@/utils/blog-articles";
 
 const buildMainSitemapUrls = (
     currentRoutes: Record<string, Route> | undefined,
@@ -33,27 +39,37 @@ const buildMainSitemapUrls = (
     return urls;
 };
 
-const blogArticles = globSync(
-    "app/(content)/blog-articles/(articles)/**/page.mdx",
-).map(
-    (filePath) =>
-        "/blog-articles/" +
-        filePath
-            .replace(/^(app\/\(content\)\/blog-articles\/\(articles\)\/)/, "")
-            .replace(/\/page\.mdx$/, ""),
-);
+const buildBlogArticleSitemapUrls = (): string[] => {
+    const blogArticleSubGroups = globSync(
+        `${BLOG_ARTICLES_DIRECTORY_PREFIX}/*/**/${BLOG_ARTICLES_GROUP_FILE}`,
+    ).map(
+        (filePath) =>
+            `/blog-articles/${resolveWebsiteBlogArticlesSubPath(filePath)}`,
+    );
 
-const currentTime = new Date();
+    const blogArticles = globSync(
+        `${BLOG_ARTICLES_DIRECTORY_PREFIX}/**/${BLOG_ARTICLE_FILE}`,
+    ).map(
+        (filePath) =>
+            `/blog-articles/${resolveWebsiteBlogArticlesSubPath(filePath)}`,
+    );
 
-const sitemap = (): MetadataRoute.Sitemap =>
-    ["/", "/nadundesilva-cv.pdf"]
-        .concat(buildMainSitemapUrls(WebsiteHome.subRoutes))
-        .concat(blogArticles)
-        .map((url) => ({
-            url: `${WEBSITE_PUBLIC_URL}${url}`,
-            lastModified: currentTime,
-            changeFrequency: "daily",
-        }));
+    return [...blogArticleSubGroups, ...blogArticles];
+};
+
+const sitemap = (): MetadataRoute.Sitemap => {
+    const currentTime = new Date();
+    return [
+        "/",
+        "/nadundesilva-cv.pdf",
+        ...buildMainSitemapUrls(WebsiteHome.subRoutes),
+        ...buildBlogArticleSitemapUrls(),
+    ].map((url) => ({
+        url: `${WEBSITE_PUBLIC_URL}${url}`,
+        lastModified: currentTime,
+        changeFrequency: "daily",
+    }));
+};
 
 export default sitemap;
 export const dynamic = "force-static";
