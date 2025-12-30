@@ -145,6 +145,24 @@ export const Logos: Record<string, LogoAsset> = {
         width: 3192,
         height: 3192,
     },
+    OrionHealth: {
+        src: {
+            light: "/assets/experience/orion-health-logo.svg",
+            dark: "/assets/experience/orion-health-logo-white.svg",
+        },
+        alt: "Orion Health",
+        width: 3192,
+        height: 3192,
+    },
+    McCraeTech: {
+        src: {
+            light: "/assets/experience/mccrae-tech-logo.svg",
+            dark: "/assets/experience/mccrae-tech-logo-white.svg",
+        },
+        alt: "McCrae Tech",
+        width: 3192,
+        height: 3192,
+    },
 
     // Projects
     Siddhi: {
@@ -189,6 +207,18 @@ export const Logos: Record<string, LogoAsset> = {
             dark: "/assets/projects/choreo-logo-white.svg",
         },
         alt: "Choreo",
+        width: 3192,
+        height: 3192,
+        recommendedSx: {
+            my: 2,
+        },
+    },
+    Indexity: {
+        src: {
+            light: "/assets/projects/indexity-logo.svg",
+            dark: "/assets/projects/indexity-logo-white.svg",
+        },
+        alt: "Indexity",
         width: 3192,
         height: 3192,
         recommendedSx: {

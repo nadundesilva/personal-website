@@ -90,6 +90,7 @@ const ContributedProjects = (): React.ReactElement => {
                 justifyContent="center"
                 alignItems="stretch"
             >
+                {renderProject(Projects.Indexity)}
                 {renderProject(Projects.Choreo)}
                 {renderProject(Projects.Ballerina)}
                 {renderProject(Projects.Cellery)}

@@ -62,6 +62,7 @@ const Achievements = (): React.ReactElement => {
     );
     const HackaDev = generateLink("HackaDev", "https://www.hackadev.lk/");
     const AngelHack = generateLink("Angel Hack", "https://angelhack.com/");
+    const Unity = generateLink("Unity", "https://unity.com/");
 
     const generateInstituteLink = (institute: Institute): React.ReactElement =>
         generateLink(institute.name, institute.link);
@@ -228,7 +229,7 @@ const Achievements = (): React.ReactElement => {
                     try out as well.
                 </Paragraph>
                 <Paragraph>
-                    The game was built using Unity which received the signal
+                    The game was built using {Unity} which received the signal
                     from the sensor attached to the exercise bicycle. The speed
                     at which the user pedaled the bicycle forward was mapped
                     into the speed at which the user moved within the game and

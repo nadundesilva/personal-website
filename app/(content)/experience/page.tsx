@@ -26,7 +26,7 @@ import {
     SectionHeading,
     Title,
 } from "@/components/content";
-import { Date, DateRange } from "@/constants/date";
+import { Date, DateRange, Now } from "@/constants/date";
 import { Logos } from "@/constants/logos";
 import { FULL_NAME } from "@/constants/metadata";
 import { Projects } from "@/constants/projects";
@@ -42,33 +42,190 @@ const Experience = (): React.ReactElement => {
             {text}
         </Link>
     );
+
+    // Employers
+    const GoogleSummerOfCode = generateLink(
+        "Google Summer of Code",
+        "https://summerofcode.withgoogle.com/",
+    );
+    const WSO2 = generateLink("WSO2", "https://wso2.com/");
+    const McCraeTech = generateLink("McCrae Tech", "https://mccrae.tech/");
+    const OrionHealth = generateLink(
+        "Orion Health",
+        "https://www.orionhealth.com/",
+    );
+
+    // Projects
     const Siddhi = generateLink("Siddhi", Projects.Siddhi.link);
-    const MkDocs = generateLink("MkDocs", "https://www.mkdocs.org/");
+    const Cellery = generateLink("Cellery", Projects.Cellery.link);
+    const Ballerina = generateLink("Ballerina", Projects.Ballerina.link);
+    const Choreo = generateLink("Choreo", Projects.Choreo.link);
+    const Indexity = generateLink("Indexity", Projects.Indexity.link);
     const Wso2IdentityServer = generateLink(
         "WSO2 Identity Server",
         "https://wso2.com/identity-server/",
     );
+
+    // Third party
+    const MkDocs = generateLink("MkDocs", "https://www.mkdocs.org/");
     const ReactJs = generateLink("React", "https://reactjs.org/");
     const ApacheOpenWhisk = generateLink(
         "Apache OpenWhisk",
         "https://openwhisk.apache.org/",
     );
     const KNative = generateLink("Knative", "https://knative.dev/docs/");
-    const Cellery = generateLink("Cellery", Projects.Cellery.link);
-    const Ballerina = generateLink("Ballerina", Projects.Ballerina.link);
-    const Choreo = generateLink("Choreo", Projects.Choreo.link);
-    const WSO2 = generateLink("WSO2", "https://wso2.com/");
-    const GoogleSummerOfCode = generateLink(
-        "Google Summer of Code",
-        "https://summerofcode.withgoogle.com/",
+    const AWS = generateLink("AWS", "https://aws.amazon.com/");
+    const GitLab = generateLink("GitLab", "https://gitlab.com/");
+    const ApacheLucene = generateLink(
+        "Apache Lucene",
+        "https://lucene.apache.org/",
     );
+    const Terraform = generateLink("Terraform", "https://www.terraform.io/");
+    const GoogleCloud = generateLink(
+        "Google Cloud",
+        "https://cloud.google.com/",
+    );
+    const Kubernetes = generateLink("Kubernetes", "https://kubernetes.io/");
+    const GoLang = generateLink("Go", "https://go.dev/");
+    const MSSQL = generateLink(
+        "MSSQL",
+        "https://www.microsoft.com/en-us/sql-server",
+    );
+    const Redis = generateLink("Redis", "https://redis.io/");
+    const Istio = generateLink("Istio", "https://istio.io/");
+    const OpenTracing = generateLink("OpenTracing", "https://opentracing.io/");
+    const Envoy = generateLink("Envoy", "https://www.envoyproxy.io/");
+    const VSCode = generateLink("VS Code", "https://code.visualstudio.com/");
+    const D3js = generateLink("D3.js", "https://d3js.org/");
+    const OIDC = generateLink(
+        "OpenID Connect (OIDC)",
+        "https://openid.net/connect/",
+    );
+    const Prometheus = generateLink("Prometheus", "https://prometheus.io/");
+    const Jaeger = generateLink("Jaeger", "https://www.jaegertracing.io/");
+    const Docker = generateLink("Docker", "https://www.docker.com/");
+    const Maven = generateLink("Maven", "https://maven.apache.org/");
 
-    const wso2Logo = <Logo logo={Logos.WSO2} height="2.5em" />;
     const gsocLogo = <Logo logo={Logos.GoogleSummerOfCode} height="2.5em" />;
+    const wso2Logo = <Logo logo={Logos.WSO2} height="2.5em" />;
+    const orionHealthLogo = <Logo logo={Logos.OrionHealth} height="3em" />;
+    const mccraeTechLogo = <Logo logo={Logos.McCraeTech} height="1.5em" />;
 
     return (
         <>
             <Title>Experience</Title>
+            <Section>
+                <SectionHeading
+                    date={new DateRange(new Date(2024, "April"), Now)}
+                    logo={mccraeTechLogo}
+                >
+                    Lead Software Engineer
+                </SectionHeading>
+                <Paragraph>
+                    After the divestment of {McCraeTech} from {OrionHealth}, I
+                    was offered the role of Lead Software Engineer at{" "}
+                    {McCraeTech} based on my previous work at {OrionHealth}. I
+                    was tasked with leading the Site Reliability Engineering
+                    (SRE) and deployment aspects of {Indexity} data-planes,
+                    ensuring high availability, scalability, and reliability of
+                    the platform. Additionally, I worked on various development
+                    tasks across other areas of {Indexity}, contributing to the
+                    overall platform architecture and functionality.
+                </Paragraph>
+                <HighlightsSection>
+                    <ListItem>
+                        <Typography>
+                            Orchestrated the migration of {Indexity}&apos;s SRE
+                            frameworks and infrastructure from {OrionHealth}{" "}
+                            into {McCraeTech}, achieving a smooth transition
+                            without affecting end users.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Automated the customer request handling, incident
+                            handling, and on-call rotations for the {Indexity}{" "}
+                            data-planes, with comprehensive monitoring and
+                            alerting, reducing the response times for many
+                            incidents.
+                        </Typography>
+                    </ListItem>
+                </HighlightsSection>
+            </Section>
+            <Section>
+                <SectionHeading
+                    date={
+                        new DateRange(
+                            new Date(2022, "November"),
+                            new Date(2024, "April"),
+                        )
+                    }
+                    logo={orionHealthLogo}
+                >
+                    Senior Software Engineer
+                </SectionHeading>
+                <Paragraph>
+                    At {OrionHealth}, I spearheaded the deployment of {Indexity}{" "}
+                    data-planes on {AWS}, along with other development tasks.
+                    This involved designing and implementing cloud
+                    infrastructure solutions on {AWS}, ensuring scalability and
+                    reliability of the data platform. I handled all the design
+                    work as well as critical security and operational aspects
+                    such as Threat Modeling and Disaster Recovery Planning.
+                </Paragraph>
+                <Paragraph>
+                    My Threat Modeling work involved identifying potential
+                    security vulnerabilities, analyzing attack vectors, and
+                    designing mitigation strategies to protect the platform and
+                    customer data. For Disaster Recovery Planning, I designed
+                    comprehensive recovery procedures, backup strategies, and
+                    failover mechanisms to ensure business continuity and
+                    minimal data loss in case of system failures or disasters.
+                </Paragraph>
+                <HighlightsSection>
+                    <ListItem>
+                        <Typography>
+                            Directed the successful deployment of {Indexity}{" "}
+                            data-planes using {AWS} infrastructure; conducted
+                            thorough disaster recovery planning, which reduced
+                            potential downtime risks from unforeseen incidents
+                            by at least 40%.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Championed an end-to-end deployment strategy for{" "}
+                            {Indexity} within a deployment framework on {GitLab}{" "}
+                            and {AWS}, resulting in a faster rollout time that
+                            decreased development cycles by one day per
+                            development cycle.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Orchestrated comprehensive threat modeling and
+                            privacy assessments, leading to stronger safeguards,
+                            resulting in no major vulnerabilities detected by
+                            penetration tests initiated by customers.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Enhanced the precision of phone number searches by
+                            implementing {ApacheLucene}-based indexing
+                            techniques, improving the patient searches across
+                            two customers.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Developed the {Terraform} code for deploying
+                            self-hosted {GitLab} runners on {GoogleCloud},
+                            reducing the development costs by more than 50%.
+                        </Typography>
+                    </ListItem>
+                </HighlightsSection>
+            </Section>
             <Section>
                 <SectionHeading
                     date={
@@ -91,7 +248,7 @@ const Experience = (): React.ReactElement => {
                 </Paragraph>
                 <Paragraph>
                     Apart from the Observability Area, I also led the effort on
-                    the Choreo Online VS Code Editor and implemented a
+                    the Choreo Online {VSCode} Editor and implemented a
                     significant portion of it. This feature was also finished on
                     time while adhering to code quality, architectural and
                     security standards. This involved implementing a secure
@@ -107,40 +264,42 @@ const Experience = (): React.ReactElement => {
                 <HighlightsSection>
                     <ListItem>
                         <Typography>
-                            Achieved the Sustained Outstanding Contribution
-                            Award for the third consecutive year — currently
-                            awarded only for the top 5% of the employees in the
-                            company.
+                            Secured the Sustained Outstanding Contribution Award
+                            thrice in a row, an honor given exclusively to only
+                            the top 5% of all company staff members who
+                            demonstrated exceptional technical leadership and
+                            innovative contributions throughout tenure.
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Engineered the minimum viable features for Choreo
-                            online editor&apos;s resource scheduling, within 1.5
-                            months, leading another engineer, using Kubernetes
-                            and Go.
+                            Led a senior software engineer in developing the
+                            minimum viable features for the resource scheduling
+                            of the Choreo online editor within 1.5 months, using{" "}
+                            {Kubernetes} and {GoLang}.
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Analyzed the startup time of the Kubernetes
-                            resources of the Choreo Editors and reduced the time
-                            by 80%, increasing the overall user experience.
+                            Eliminated bottlenecks, reducing the startup time of
+                            the {Kubernetes} resources of the Choreo Editors by
+                            80% and increasing the overall user experience.
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Reduced the MS SQL Server DB utilization by 60%, by
-                            introducing a Redis cache and randomization of cache
+                            Reduced the {MSSQL} database utilization by 60%
+                            using a {Redis} cache and randomization of cache
                             expiry times, increasing the number of users the
                             system can handle.
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Completed 95% of the targets and sprint milestones
-                            on time, by prioritization of tasks and fostering a
-                            good working environment.
+                            Led the product team, completing 95% of the team
+                            targets and sprint milestones on time by
+                            prioritizing tasks and fostering a good working
+                            environment.
                         </Typography>
                     </ListItem>
                 </HighlightsSection>
@@ -160,7 +319,7 @@ const Experience = (): React.ReactElement => {
                 <Paragraph>
                     I completely owned the Observability area of Cellery and
                     mentored a few interns as well as other junior engineers. I
-                    have also implemented parts of the CLI, VS Code extension
+                    have also implemented parts of the CLI, {VSCode} extension
                     and other tools of {Cellery} which involved different new
                     concepts and technologies which I learned within short
                     periods of time. Later when project {Choreo} was started,{" "}
@@ -217,34 +376,34 @@ const Experience = (): React.ReactElement => {
                 <HighlightsSection>
                     <ListItem>
                         <Typography>
-                            Spearheaded and implemented the foundation for
-                            Choreo observability within 3 months, with a team of
+                            Spearheaded the implementation of the foundation for
+                            Choreo observability within 3 months with a team of
                             2 other engineers, creating the backbone of Choreo
                             observability.
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Architected the Choreo observability storages with
-                            data archival into a Data Lake, decreasing the cost
-                            by 90% for the company while storing the data for
-                            Machine Learning (ML) use cases.
+                            Decreased the cost by 90% for the company by
+                            architecting the Choreo observability storages,
+                            including data archival into a Data Lake for Machine
+                            Learning (ML) use cases.
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Revamped the observability instrumentation at
-                            Ballerina compiler level, within 1 month, to map the
-                            observability data to the source code, providing a
-                            better debugging experience for users.
+                            Improved debugging experience for users by revamping
+                            the observability instrumentation at the Ballerina
+                            compiler level, within 1 month, to map the
+                            observability data to the source code.
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Minimized and maintained the lowest number of bugs
-                            across all areas within Choreo by implementing
-                            proper code reviewing, testing and deployment
-                            practices in a team of 6 engineers.
+                            Minimized the number of bugs in the Choreo
+                            Observability area by implementing proper code
+                            reviewing, testing, and deployment practices in a
+                            team of 6 engineers.
                         </Typography>
                     </ListItem>
                 </HighlightsSection>
@@ -291,8 +450,8 @@ const Experience = (): React.ReactElement => {
                     and implement a considerable amount of it along with another
                     engineer. I also contributed ideas for the platform as a
                     whole as well. The {WSO2} Serverless Platform was based on{" "}
-                    {ApacheOpenWhisk} and it allowed running any Docker image in
-                    serverless mode which was a new concept at that time.
+                    {ApacheOpenWhisk} and it allowed running any {Docker} image
+                    in serverless mode which was a new concept at that time.
                     However, almost near the time when we completed a basic but
                     complete version of the platform, {KNative} which offered a
                     similar experience was announced. As a result, the
@@ -309,7 +468,7 @@ const Experience = (): React.ReactElement => {
                 <Paragraph>
                     After Serverless Platform was discontinued, {WSO2}
                     started another project named VICK (later named as {Cellery}
-                    ) which was aimed towards making deployments in Kubernetes
+                    ) which was aimed towards making deployments in {Kubernetes}{" "}
                     easier. I was selected to be part of the initial research
                     team to implement the product. I worked on this project for
                     some time and it evolved and along with the Cell-based
@@ -317,8 +476,8 @@ const Experience = (): React.ReactElement => {
                     worked on the Observability aspects of the platform, but I
                     contributed to almost all the other areas of the product
                     with thoughts and ideas as well. While working on project{" "}
-                    {Cellery}, I was able to gain in-depth knowledge on
-                    Kubernetes as well and this helped me immensely in my role
+                    {Cellery}, I was able to gain in-depth knowledge on{" "}
+                    {Kubernetes} as well and this helped me immensely in my role
                     as a software engineer later in my career.
                 </Paragraph>
                 <HighlightsSection>
@@ -326,30 +485,29 @@ const Experience = (): React.ReactElement => {
                         <Typography>
                             Delivered the Cellery observability basic features
                             within 2 months for observing microservice
-                            composites, using Kubernetes, Istio, OpenTracing and
-                            Envoy.
+                            composites using {Kubernetes}, {Istio},{" "}
+                            {OpenTracing}, and {Envoy}.
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography>
                             Headed the implementation of Cellery developer tools
-                            using Language Server Extensions and visualizations
-                            of Cells using D3.
+                            using {VSCode} Language Server Extensions and
+                            visualizations of Cells using {D3js}.
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Developed Cellery Hub backed by a Docker Registry as
-                            storage and authentication of the CLI and portal
-                            using OpenID Connect (OIDC), collaborating with a
-                            team, within 1 month.
+                            Developed Cellery Hub backed by a {Docker} Registry
+                            as the storage and implemented the authentication of
+                            the CLI and portal using {OIDC} within 1 month.
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography>
                             Implemented the observability aspects of the WSO2
-                            Serverless Platform using Prometheus and Jaeger on
-                            top of Kubernetes and OpenWhisk.
+                            Serverless Platform using {Prometheus} and {Jaeger}{" "}
+                            on top of {Kubernetes} and {ApacheOpenWhisk}.
                         </Typography>
                     </ListItem>
                 </HighlightsSection>
@@ -369,12 +527,12 @@ const Experience = (): React.ReactElement => {
                 <Paragraph>
                     During my last year at the University, in my spare time, I
                     worked as a {GoogleSummerOfCode} intern. I worked for {WSO2}{" "}
-                    during this period as well and developed a Maven plugin for
-                    automatically generating documentation for the {Siddhi}{" "}
+                    during this period as well and developed a {Maven} plugin
+                    for automatically generating documentation for the {Siddhi}{" "}
                     extensions. The information for the documentation was
                     scraped from data annotated into the extensions using a
-                    Maven plugin and the collected data was converted into HTML
-                    pages using {MkDocs}. This was used by {Siddhi} for
+                    {Maven} plugin and the collected data was converted into
+                    HTML pages using {MkDocs}. This was used by {Siddhi} for
                     generating their documentation till it was decommissioned
                     several years later.
                 </Paragraph>

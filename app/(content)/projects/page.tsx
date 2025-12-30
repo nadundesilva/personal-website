@@ -28,7 +28,7 @@ import {
     SectionHeading,
     Title,
 } from "@/components/content";
-import { Date, DateRange } from "@/constants/date";
+import { Date, DateRange, Now } from "@/constants/date";
 import { Logos } from "@/constants/logos";
 import { FULL_NAME } from "@/constants/metadata";
 import { Projects as ProjectDetails } from "@/constants/projects";
@@ -44,19 +44,47 @@ const Projects = (): React.ReactElement => {
             {text}
         </Link>
     );
+
+    // Employers
+    const WSO2 = generateLink("WSO2", "https://wso2.com/");
+    const McCraeTech = generateLink("McCrae Tech", "https://mccrae.tech/");
+    const OrionHealth = generateLink(
+        "Orion Health",
+        "https://www.orionhealth.com/",
+    );
+
+    // Projects
+    const Indexity = generateLink("Indexity", ProjectDetails.Indexity.link);
     const Choreo = generateLink("Choreo", ProjectDetails.Choreo.link);
     const Ballerina = generateLink("Ballerina", ProjectDetails.Ballerina.link);
-    const WSO2 = generateLink("WSO2", "https://wso2.com/");
+    const Cellery = generateLink("Cellery", ProjectDetails.Cellery.link);
+    const Siddhi = generateLink("Siddhi", ProjectDetails.Siddhi.link);
+
+    // Third party
     const OpenTracing = generateLink("OpenTracing", "https://opentracing.io/");
     const OpenTelemetry = generateLink(
         "OpenTelemetry",
         "https://opentelemetry.io/",
     );
-    const Cellery = generateLink("Cellery", ProjectDetails.Cellery.link);
     const Kubernetes = generateLink("Kubernetes", "https://kubernetes.io/");
     const Istio = generateLink("Istio", "https://istio.io/");
-    const Siddhi = generateLink("Siddhi", ProjectDetails.Siddhi.link);
+    const AWS = generateLink("AWS", "https://aws.amazon.com/");
+    const ApacheLucene = generateLink(
+        "Apache Lucene",
+        "https://lucene.apache.org/",
+    );
+    const GitLab = generateLink("GitLab", "https://gitlab.com/");
+    const VSCode = generateLink("VS Code", "https://code.visualstudio.com/");
+    const Docker = generateLink("Docker", "https://www.docker.com/");
+    const D3js = generateLink("D3.js", "https://d3js.org/");
+    const Maven = generateLink("Maven", "https://maven.apache.org/");
+    const Medium = generateLink("Medium", "https://medium.com/");
+    const CelleryMediumPublication = generateLink(
+        "Cellery Medium publication",
+        "https://medium.com/wso2-cellery",
+    );
 
+    const indexityLogo = <Logo logo={Logos.Indexity} height="1.5em" />;
     const choreoLogo = <Logo logo={Logos.Choreo} height="2.0em" />;
     const ballerinaLogo = <Logo logo={Logos.Ballerina} height="1.5em" />;
     const celleryLogo = <Logo logo={Logos.Cellery} height="2.5em" />;
@@ -71,6 +99,95 @@ const Projects = (): React.ReactElement => {
                     icon={KeyboardArrowRight}
                 />
             </Box>
+            <Section>
+                <SectionHeading
+                    date={new DateRange(new Date(2022, "November"), Now)}
+                    logo={indexityLogo}
+                >
+                    Indexity
+                </SectionHeading>
+                <Paragraph>
+                    {Indexity} is a cloud-native Enterprise Master Patient Index
+                    (EMPI) and Master Data Management (MDM) platform designed to
+                    enhance data accuracy and interoperability in healthcare
+                    systems. It offers rapid data ingestion, sub-second search
+                    capabilities within a fully managed, zero-operations
+                    environment. This enables organizations to deploy quickly,
+                    iterate freely, and maintain up-to-date systems without the
+                    operational overhead associated with legacy MDM and EMPI
+                    solutions. The platform comprises modular components
+                    including Index (a matching and linking engine) and Registry
+                    (a persistent, authoritative store). Key features include
+                    matching algorithms, stewardship workflows, and
+                    comprehensive audit and provenance capabilities.
+                </Paragraph>
+                <Paragraph>
+                    I spearheaded the deployment of {Indexity} data-planes on{" "}
+                    {AWS}, along with other development tasks. This involved
+                    designing and implementing cloud infrastructure solutions on{" "}
+                    {AWS}, ensuring scalability and reliability of the data
+                    platform. I handled all the design work as well as critical
+                    security and operational aspects such as Threat Modeling and
+                    Disaster Recovery Planning. After the divestment of{" "}
+                    {McCraeTech} from {OrionHealth}, I was tasked with leading
+                    the Site Reliability Engineering (SRE) and deployment
+                    aspects of {Indexity} data-planes, ensuring high
+                    availability, scalability, and reliability of the platform.
+                </Paragraph>
+                <HighlightsSection>
+                    <ListItem>
+                        <Typography>
+                            Directed the successful deployment of {Indexity}{" "}
+                            data-planes using {AWS} infrastructure; conducted
+                            thorough disaster recovery planning, which reduced
+                            potential downtime risks from unforeseen incidents
+                            by at least 40%.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Orchestrated the migration of {Indexity}&apos;s SRE
+                            frameworks and infrastructure from {OrionHealth}{" "}
+                            into {McCraeTech}, achieving a smooth transition
+                            without affecting end users.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Automated the customer request handling, incident
+                            handling, and on-call rotations for the {Indexity}{" "}
+                            data-planes, with comprehensive monitoring and
+                            alerting, reducing the response times for many
+                            incidents.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Championed an end-to-end deployment strategy for{" "}
+                            {Indexity} within a deployment framework on {GitLab}
+                            and {AWS}, resulting in a faster rollout time that
+                            decreased development cycles by one day per
+                            development cycle.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Orchestrated comprehensive threat modeling and
+                            privacy assessments, leading to stronger safeguards,
+                            resulting in no major vulnerabilities detected by
+                            penetration tests initiated by customers.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Enhanced the precision of phone number searches by
+                            implementing {ApacheLucene}-based indexing
+                            techniques, improving the patient searches across
+                            two customers.
+                        </Typography>
+                    </ListItem>
+                </HighlightsSection>
+            </Section>
             <Section>
                 <SectionHeading
                     date={
@@ -116,14 +233,15 @@ const Projects = (): React.ReactElement => {
                     development to deployment and management of cloud-native
                     applications easy. One of these was the Low Code editor
                     provided for {Ballerina}. To make things easier for
-                    development, {Choreo} provides an online VS Code editor with
-                    the Low Code editor and everything configured to develop the
-                    applications faster. I designed the scheduling of the online
-                    VS Code editor in {Choreo}, which involved scheduling the
-                    resources and configuring the routing to allow users to
-                    access the editor in a secure manner. Security, isolation of
-                    resources and the startup time were some of the most
-                    important aspects of the resource scheduling.
+                    development, {Choreo} provides an online {VSCode} editor
+                    with the Low Code editor and everything configured to
+                    develop the applications faster. I designed the scheduling
+                    of the online {VSCode} editor in {Choreo}, which involved
+                    scheduling the resources and configuring the routing to
+                    allow users to access the editor in a secure manner.
+                    Security, isolation of resources and the startup time were
+                    some of the most important aspects of the resource
+                    scheduling.
                 </Paragraph>
                 <HighlightsSection>
                     <ListItem>
@@ -268,8 +386,8 @@ const Projects = (): React.ReactElement => {
                     to which the users could push their Cells. This allowed
                     users to reuse Cells and properly wire-up dependencies to
                     manage their deployments efficiently. I worked on the
-                    implementation of some parts of Cellery Hub including the
-                    Docker Registry-based storage, authentication and
+                    implementation of some parts of Cellery Hub including the{" "}
+                    {Docker} Registry-based storage, authentication and
                     authorization of the frontend and the CLI used for pushing
                     and pulling cells.
                 </Paragraph>
@@ -297,15 +415,16 @@ const Projects = (): React.ReactElement => {
                     <ListItem>
                         <Typography>
                             Presented Cellery Observability in several community
-                            calls and wrote Medium articles in the Cellery
-                            Medium publication.
+                            calls and wrote {Medium} articles in the{" "}
+                            {CelleryMediumPublication}.
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Implemented a PoC for the storage of Cells in a
-                            Docker Registry-based Cell registry and implemented
-                            the core of the storage and authentication.
+                            Implemented a PoC for the storage of Cells in a{" "}
+                            {Docker} Registry-based Cell registry and
+                            implemented the core of the storage and
+                            authentication.
                         </Typography>
                     </ListItem>
                     <ListItem>
@@ -325,10 +444,10 @@ const Projects = (): React.ReactElement => {
                     </ListItem>
                     <ListItem>
                         <Typography>
-                            Implemented D3.js-based cell viewer CLI command
+                            Implemented {D3js}-based cell viewer CLI command
                             which allows users to view a cell and all of its
-                            dependencies (this was later adopted into the VS
-                            Code plugin as well).
+                            dependencies (this was later adopted into the{" "}
+                            {VSCode} plugin as well).
                         </Typography>
                     </ListItem>
                 </HighlightsSection>
@@ -370,7 +489,7 @@ const Projects = (): React.ReactElement => {
                 <HighlightsSection>
                     <ListItem>
                         <Typography>
-                            Designed and implemented a Maven plugin for
+                            Designed and implemented a {Maven} plugin for
                             automatically generating documentation for Siddhi
                             extensions using annotated data written in the Java
                             code.

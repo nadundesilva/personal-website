@@ -7,6 +7,11 @@ export interface Project {
 }
 
 export const Projects: Record<string, Project> = {
+    Indexity: {
+        name: "Indexity",
+        logo: Logos.Indexity,
+        link: "https://indexity.io/",
+    },
     Choreo: {
         name: "Choreo",
         logo: Logos.Choreo,
