@@ -63,6 +63,17 @@ const Certifications = (): React.ReactElement => {
     const AdamWhite = generatePersonLink(People.AdamWhite);
     const MarthaWhite = generatePersonLink(People.MarthaWhite);
 
+    const CertifiedKubernetesApplicationDeveloper = generateLink(
+        "Certified Kubernetes Application Developer",
+        "https://www.cncf.io/certification/ckad/",
+    );
+    const CertifiedKubernetesAdministrator = generateLink(
+        "Certified Kubernetes Administrator",
+        "https://www.cncf.io/certification/cka/",
+    );
+    const Kubernetes = generateLink("Kubernetes", "https://kubernetes.io/");
+    const Etcd = generateLink("etcd", "https://etcd.io/");
+
     const generateSectionHeader = (
         certificate: Certificate,
     ): React.ReactElement => (
@@ -150,10 +161,10 @@ const Certifications = (): React.ReactElement => {
                     Certificates.CertifiedKubernetesAdministrator,
                 )}
                 <Paragraph>
-                    Certified Kubernetes Administrator is offered and governed
+                    {CertifiedKubernetesAdministrator} is offered and governed
                     by the {LinuxFoundation}. This covers the administrative
-                    aspects and in-depth knowledge about Kubernetes Clusters
-                    including etcd clusters.
+                    aspects and in-depth knowledge about {Kubernetes} Clusters
+                    including {Etcd} clusters.
                 </Paragraph>
             </Section>
             <Section>
@@ -161,9 +172,10 @@ const Certifications = (): React.ReactElement => {
                     Certificates.CertifiedKubernetesApplicationDeveloper,
                 )}
                 <Paragraph>
-                    Certified Kubernetes Application Developer is offered and
+                    {CertifiedKubernetesApplicationDeveloper} is offered and
                     governed by the {LinuxFoundation}. This covers aspects
-                    related to developing applications to be run on Kubernetes.
+                    related to developing applications to be run on {Kubernetes}
+                    .
                 </Paragraph>
             </Section>
         </>

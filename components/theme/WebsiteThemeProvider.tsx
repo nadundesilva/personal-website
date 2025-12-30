@@ -92,13 +92,18 @@ const createWebsiteTheme = (fontFamily: string): Theme =>
             },
             MuiLink: {
                 styleOverrides: {
-                    root: {
+                    root: ({ theme }: { theme: Theme }) => ({
+                        "color":
+                            theme.palette.mode === "dark"
+                                ? theme.palette.primary.light
+                                : theme.palette.primary.dark,
                         "textDecoration": "none",
+                        "fontWeight": 500,
                         "transition": "opacity 0.25s ease-in-out",
                         "&:hover": {
-                            opacity: 0.7,
+                            opacity: 0.8,
                         },
-                    },
+                    }),
                 },
             },
             MuiTypography: {
