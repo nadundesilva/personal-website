@@ -79,6 +79,7 @@ const PersonalProjects = (): React.ReactElement => {
         "Network Policy",
         "https://kubernetes.io/docs/concepts/services-networking/network-policies/",
     );
+    const Kubernetes = generateLink("Kubernetes", "https://kubernetes.io/");
     return (
         <>
             <Title>Personal Projects</Title>
@@ -94,10 +95,10 @@ const PersonalProjects = (): React.ReactElement => {
                     K8s Replicator
                 </SectionHeading>
                 <Paragraph>
-                    In Kubernetes deployments when the same {Secret},{" "}
+                    In {Kubernetes} deployments when the same {Secret},{" "}
                     {ConfigMap} or {NetworkPolicy} needs to be accessed across
                     multiple namespaces, it needs to be manually created in all
-                    of them. This handy Kubernetes controller can come to your
+                    of them. This handy {Kubernetes} controller can come to your
                     rescue. It will automatically watch the namespaces and
                     create the resources in them as soon as they are created. By
                     doing so, this will allow removing some of the burden on the

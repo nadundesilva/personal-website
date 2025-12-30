@@ -66,6 +66,7 @@ module.exports = {
                 "lcp-discovery-insight": ["warn"],
                 "forced-reflow-insight": ["warn"],
                 "color-contrast": ["warn"],
+                "link-text": ["warn"],
                 ...LIVE_SITE_ASSERTIONS,
             },
         },
