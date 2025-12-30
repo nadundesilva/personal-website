@@ -23,7 +23,7 @@ import {
     styled,
     useTheme,
 } from "@mui/material";
-import Image from "next/image";
+import Image from "next-image-export-optimizer";
 import type React from "react";
 
 import { Images } from "@/constants/images";

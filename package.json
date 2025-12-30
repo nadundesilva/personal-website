@@ -5,9 +5,9 @@
     "private": true,
     "scripts": {
         "dev": "NODE_ENV='development' NEXT_PUBLIC_WEBSITE_URL='http://localhost:3000' next dev --webpack -p 3000",
-        "build": "NODE_ENV='production' next build --webpack",
-        "build:analyze": "NODE_ENV='production' ANALYZE=true next build --webpack",
-        "start": "NODE_ENV='production' npm run build && npx serve@latest out",
+        "build": "NODE_ENV='production' next build --webpack && next-image-export-optimizer",
+        "build:analyze": "ANALYZE='true' npm run build",
+        "start": "npm run build && npx serve@latest out",
         "lint": "npm run lint:ts && npm run lint:css",
         "lint:ts": "eslint .",
         "lint:css": "stylelint *.css **/*.css",
@@ -33,7 +33,6 @@
         "@emotion/cache": "~11.14.0",
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.1",
-        "@imgix/js-core": "^3.8.0",
         "@mui/icons-material": "^7.3.6",
         "@mui/lab": "^7.0.1-beta.20",
         "@mui/material": "^7.3.6",
@@ -41,6 +40,7 @@
         "@sentry/nextjs": "^10.32.1",
         "glob": "^13.0.0",
         "next": "^16.1.1",
+        "next-image-export-optimizer": "^1.20.1",
         "react": "^19.2.3",
         "react-dom": "^19.2.3",
         "sharp": "^0.34.5"
