@@ -21,7 +21,7 @@ import {
     Typography,
 } from "@mui/material";
 import type { SxProps } from "@mui/system";
-import Image from "next/image";
+import Image from "next-image-export-optimizer";
 import type React from "react";
 
 import { Photos } from "@/constants/images";

@@ -15,7 +15,7 @@
 import { OpenInNew } from "@mui/icons-material";
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import type { MDXComponents } from "mdx/types";
-import Image from "next/image";
+import Image from "next-image-export-optimizer";
 import Script from "next/script";
 import React from "react";
 import type { BlogPosting, Person, WithContext } from "schema-dts";
@@ -209,8 +209,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                         <Image
                             src={src}
                             alt={alt}
-                            unoptimized
-                            sizes="(min-width: 600px) 90vw, (min-width: 900px) 75vw, 100vw"
                             style={{
                                 width: "100%",
                                 height: "auto",

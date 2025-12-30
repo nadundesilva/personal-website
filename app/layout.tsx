@@ -137,7 +137,6 @@ const createCspValues = (): string[] => {
         "img-src": [
             "'self'",
             "data:",
-            "https://nadundesilva.imgix.net",
             "https://www.google.lk",
             "https://www.googletagmanager.com",
         ],
@@ -194,8 +193,6 @@ const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
                     httpEquiv="Content-Security-Policy"
                     content={csps.join("; ")}
                 />
-
-                <link rel="preconnect" href="https://nadundesilva.imgix.net" />
 
                 <meta property="fb:app_id" content={FB_APP_ID} />
                 <meta property="og:fb:profile_id" content="nadunrds" />
