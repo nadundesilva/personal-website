@@ -43,3 +43,7 @@ yarn-error.log*
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+# Next Image Export Optimizer
+next-image-export-optimizer
+public/assets/next-image-export-optimizer-hashes.json
