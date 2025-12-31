@@ -1,2 +1,1 @@
-^https?://www\.googletagmanager\.com/$
 ^https://[a-z0-9]+.ingest.us.sentry.io/$
