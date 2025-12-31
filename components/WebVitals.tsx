@@ -16,19 +16,33 @@
 import { useReportWebVitals } from "next/web-vitals";
 import type React from "react";
 
+interface Zaraz {
+    track: (eventName: string, data?: Record<string, unknown>) => void;
+    queue: (eventName: string, data?: Record<string, unknown>) => void;
+}
+
 interface Window {
-    gtag: Gtag.Gtag;
+    zaraz?: Zaraz;
 }
 
 const WebVitals = (): React.ReactElement | null => {
     useReportWebVitals((metric) => {
-        (window as Window).gtag("event", metric.name, {
-            value: Math.round(
-                metric.name === "CLS" ? metric.value * 1000 : metric.value,
-            ),
-            event_label: metric.id,
-            non_interaction: true,
-        });
+        if (typeof window !== "undefined" && (window as Window).zaraz) {
+            const zaraz = (window as Window).zaraz;
+            if (zaraz) {
+                zaraz.track("web_vital", {
+                    name: metric.name,
+                    value: Math.round(
+                        metric.name === "CLS"
+                            ? metric.value * 1000
+                            : metric.value,
+                    ),
+                    id: metric.id,
+                    delta: metric.delta,
+                    rating: metric.rating,
+                });
+            }
+        }
     });
     return null;
 };

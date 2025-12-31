@@ -30,7 +30,6 @@ import "@/styles/main.css";
 import "@/styles/syntax-highlighting.css";
 import { WebsiteHome } from "@/constants/routes";
 
-const GA_TRACKING_ID = "GTM-T9KX7B4";
 const GOOGLE_SITE_VERIFICATION = "M8dg6gzVYU0noXFvsPOqknm_WjREFeNE212YeUk0g30";
 const YANDEX_VERIFICATION = "acbc45e5d9645cf0";
 const FB_APP_ID = "567329184466353";
@@ -134,25 +133,19 @@ const createCspValues = (): string[] => {
     const cspValues = {
         "default-src": ["'none'"],
         "manifest-src": ["'self'"],
-        "img-src": [
-            "'self'",
-            "data:",
-            "https://www.google.lk",
-            "https://www.googletagmanager.com",
-        ],
+        "img-src": ["'self'", "data:"],
         "style-src": ["'unsafe-inline'"],
         "style-src-elem": ["'self'", "'unsafe-inline'"],
         "font-src": ["'self'"],
         "script-src": [
             "'self'",
-            "https://www.googletagmanager.com",
             "'unsafe-inline'",
+            "https://static.cloudflareinsights.com",
         ],
         "worker-src": ["'self'", "blob:"],
         "child-src": ["'self'", "blob:"],
         "connect-src": [
             "'self'",
-            "https://www.google-analytics.com",
             "https://o4507214991917056.ingest.us.sentry.io",
         ],
     };
@@ -197,47 +190,13 @@ const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
                 <meta property="fb:app_id" content={FB_APP_ID} />
                 <meta property="og:fb:profile_id" content="nadunrds" />
 
-                {/* Google Tag Manager */}
                 <Script
-                    src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
-                    strategy="afterInteractive"
-                />
-                <Script
-                    id="google-tag-manager"
-                    strategy="afterInteractive"
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                            window.dataLayer = window.dataLayer || [];
-                            function gtag() {
-                                dataLayer.push(arguments);
-                            }
-                            gtag("js", new Date());
-                            gtag("config", "${GA_TRACKING_ID}", {
-                                page_path: window.location.pathname,
-                            });
-                        `,
-                    }}
-                />
-                <script
                     id="json-ld-person"
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
             </head>
             <body>
-                {/* Google Tag Manager (noscript) */}
-                <noscript>
-                    <iframe
-                        src={`https://www.googletagmanager.com/ns.html?id=${GA_TRACKING_ID}`}
-                        height="0"
-                        width="0"
-                        style={{
-                            display: "none",
-                            visibility: "hidden",
-                        }}
-                    ></iframe>
-                </noscript>
-                {/* End Google Tag Manager (noscript) */}
                 <main>
                     <React.StrictMode>
                         <WebVitals />
