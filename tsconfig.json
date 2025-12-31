@@ -11,8 +11,8 @@
             "@/styles/*": ["styles/*"],
             "@/assets/*": ["assets/*"]
         },
-        "target": "es5",
-        "lib": ["es6", "dom", "dom.iterable", "esnext"],
+        "target": "ES2022",
+        "lib": ["ES2022", "dom", "dom.iterable", "esnext"],
         "types": ["cypress", "@testing-library/cypress", "@types/ga-gtag"],
         "allowJs": true,
         "skipLibCheck": true,

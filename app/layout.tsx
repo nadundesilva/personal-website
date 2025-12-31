@@ -199,12 +199,12 @@ const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
 
                 {/* Google Tag Manager */}
                 <Script
-                    async
-                    defer
                     src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+                    strategy="afterInteractive"
                 />
                 <Script
                     id="google-tag-manager"
+                    strategy="afterInteractive"
                     dangerouslySetInnerHTML={{
                         __html: `
                             window.dataLayer = window.dataLayer || [];
@@ -218,7 +218,7 @@ const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
                         `,
                     }}
                 />
-                <Script
+                <script
                     id="json-ld-person"
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

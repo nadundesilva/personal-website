@@ -31,9 +31,9 @@ Sentry.init({
         }),
     ],
 
-    tracesSampleRate: 1,
+    tracesSampleRate: 0.1,
     replaysOnErrorSampleRate: 1.0,
-    replaysSessionSampleRate: 0.1,
+    replaysSessionSampleRate: 0.01,
 });
 
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
