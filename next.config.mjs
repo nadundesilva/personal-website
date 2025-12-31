@@ -86,6 +86,13 @@ const nextConfig = (phase, { defaultConfig }) => {
         transpilePackages: ["next-image-export-optimizer"],
         productionBrowserSourceMaps: true,
         reactStrictMode: true,
+        experimental: {
+            optimizePackageImports: [
+                "@mui/material",
+                "@mui/icons-material",
+                "@mui/lab",
+            ],
+        },
         env: {
             nextImageExportOptimizer_imageFolderPath: "public/assets",
             nextImageExportOptimizer_exportFolderPath: "./out",
