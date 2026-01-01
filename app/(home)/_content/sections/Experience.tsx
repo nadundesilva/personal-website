@@ -136,10 +136,10 @@ const Experience = (): React.ReactElement => {
                                 variant="body2"
                                 color="text.secondary"
                                 sx={{
-                                    fontSize: { xs: 11, md: 12 },
-                                    fontWeight: 300,
+                                    fontSize: { xs: 12, md: 13 },
+                                    fontWeight: 400,
                                     letterSpacing: "0.04em",
-                                    opacity: 0.7,
+                                    opacity: 0.85,
                                     textTransform: "uppercase",
                                     ...(isAllContentRightAligned && {
                                         writingMode: "vertical-rl",
