@@ -86,7 +86,7 @@ const Testimonial = ({
                     transform: "rotate(180deg)",
                     fontSize: "2.5rem",
                     color: "text.secondary",
-                    opacity: 0.2,
+                    opacity: 0.35,
                     mb: 1,
                     ml: -1,
                     display: "block",
