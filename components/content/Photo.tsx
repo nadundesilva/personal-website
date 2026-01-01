@@ -14,16 +14,16 @@
  */
 import { Box } from "@mui/material";
 import Image from "next-image-export-optimizer";
+import { type StaticImageData } from "next/image";
 import type React from "react";
 
-import type { ImageAsset } from "@/constants/images";
-
 interface PhotoProps {
-    photo: ImageAsset;
+    src: StaticImageData;
+    alt: string;
     float: "left" | "right";
 }
 
-const Photo = ({ photo, float }: PhotoProps): React.ReactElement => (
+const Photo = ({ src, alt, float }: PhotoProps): React.ReactElement => (
     <Box
         sx={{
             "position": "relative",
@@ -42,12 +42,8 @@ const Photo = ({ photo, float }: PhotoProps): React.ReactElement => (
         }}
     >
         <Image
-            width={photo.width}
-            height={photo.height}
-            src={photo.src}
-            alt={photo.alt}
-            placeholder={photo.blurDataURL === undefined ? undefined : "blur"}
-            blurDataURL={photo.blurDataURL}
+            src={src}
+            alt={alt}
             style={{
                 height: "auto",
                 maxWidth: "100%",

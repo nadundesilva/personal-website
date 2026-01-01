@@ -12,15 +12,24 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+import { type StaticImageData } from "next/image";
 import { Date } from "./date";
 import { type Institute, Institutes } from "./institutes";
-import { type LogoAsset, Logos } from "./logos";
+
+import deepLearningAiLogoImage from "@/assets/certifications/deep-learning-ai-logo.png";
+import universityOfAlbertaLogoImage from "@/assets/certifications/university-of-alberta-logo.png";
+import ckaLogoImage from "@/assets/certifications/cka-logo.png";
+import ckadLogoImage from "@/assets/certifications/ckad-logo.png";
 
 export interface Certificate {
     name: string;
     type: "Course" | "Certification" | "Specialization";
     link: string;
-    logo: LogoAsset;
+    logo: {
+        srcLight: StaticImageData;
+        srcDark: StaticImageData;
+        alt: string;
+    };
     issuer: Institute;
     completedOn: Date;
 }
@@ -30,7 +39,11 @@ export const Certificates: Record<string, Certificate> = {
         name: "Deep Learning",
         type: "Specialization",
         link: "https://coursera.org/share/8e5db53bfef4c4b27f79004022edad72",
-        logo: Logos.DeepLearningAI,
+        logo: {
+            srcLight: deepLearningAiLogoImage,
+            srcDark: deepLearningAiLogoImage,
+            alt: "Deep Learning AI",
+        },
         issuer: Institutes.DeepLearningAi,
         completedOn: new Date(2021, "June"),
     },
@@ -38,7 +51,11 @@ export const Certificates: Record<string, Certificate> = {
         name: "Fundamentals of Reinforcement Learning",
         type: "Course",
         link: "https://coursera.org/share/fcbebc1de9e6a9b3ecb186983af7b969",
-        logo: Logos.UniversityOfAlberta,
+        logo: {
+            srcLight: universityOfAlbertaLogoImage,
+            srcDark: universityOfAlbertaLogoImage,
+            alt: "University of Alberta",
+        },
         issuer: Institutes.UniversityOfAlberta,
         completedOn: new Date(2021, "September"),
     },
@@ -46,7 +63,11 @@ export const Certificates: Record<string, Certificate> = {
         name: "Build Basic Generative Adversarial Networks (GANs)",
         type: "Course",
         link: "https://coursera.org/share/fed56feb8ba81177e6467779f22c0851",
-        logo: Logos.DeepLearningAI,
+        logo: {
+            srcLight: deepLearningAiLogoImage,
+            srcDark: deepLearningAiLogoImage,
+            alt: "Deep Learning AI",
+        },
         issuer: Institutes.DeepLearningAi,
         completedOn: new Date(2021, "July"),
     },
@@ -54,7 +75,11 @@ export const Certificates: Record<string, Certificate> = {
         name: "Certified Kubernetes Administrator (CKA)",
         type: "Certification",
         link: "https://www.youracclaim.com/badges/8241114b-7435-460a-a08f-9d33304c1470?source=linked_in_profile",
-        logo: Logos.CKA,
+        logo: {
+            srcLight: ckaLogoImage,
+            srcDark: ckaLogoImage,
+            alt: "Certified Kubernetes Administrator",
+        },
         issuer: Institutes.LinuxFoundation,
         completedOn: new Date(2020, "December"),
     },
@@ -62,7 +87,11 @@ export const Certificates: Record<string, Certificate> = {
         name: "Certified Kubernetes Application Developer (CKAD)",
         type: "Certification",
         link: "https://www.youracclaim.com/badges/e9df4128-2017-41c3-9e7d-028e37176243/linked_in_profile",
-        logo: Logos.CKAD,
+        logo: {
+            srcLight: ckadLogoImage,
+            srcDark: ckadLogoImage,
+            alt: "Certified Kubernetes Application Developer",
+        },
         issuer: Institutes.LinuxFoundation,
         completedOn: new Date(2020, "January"),
     },

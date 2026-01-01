@@ -14,12 +14,13 @@
  */
 
 import { glob } from "glob";
+import { type StaticImageData } from "next/image";
 
 export interface BlogArticle {
     title: string;
     description: string;
     keywords: string[];
-    image: string;
+    image: StaticImageData;
     publishedDate: Date;
     websiteSubPath: string;
 }
@@ -57,7 +58,7 @@ async function getBlogArticles(subPath: string): Promise<BlogArticle[]> {
                 title: metadata.title as string,
                 description: metadata.description as string,
                 keywords: blogMetadata.keywords as string[],
-                image: blogMetadata.image as string,
+                image: blogMetadata.image as StaticImageData,
                 publishedDate: blogMetadata.publishedDate as Date,
                 websiteSubPath,
             };

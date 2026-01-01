@@ -66,7 +66,6 @@
         "husky": "9.1.7",
         "lint-staged": "16.2.7",
         "next-pwa": "5.6.0",
-        "next-router-mock": "1.0.4",
         "nyc": "17.1.0",
         "prettier": "3.7.4",
         "rehype-pretty-code": "0.14.1",

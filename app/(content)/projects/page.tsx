@@ -29,9 +29,19 @@ import {
     Title,
 } from "@/components/content";
 import { Date, DateRange, Now } from "@/constants/date";
-import { Logos } from "@/constants/logos";
 import { FULL_NAME } from "@/constants/metadata";
 import { Projects as ProjectDetails } from "@/constants/projects";
+
+import indexityLogoImage from "@/assets/projects/indexity-logo.svg";
+import indexityLogoWhiteImage from "@/assets/projects/indexity-logo-white.svg";
+import choreoLogoImage from "@/assets/projects/choreo-logo.svg";
+import choreoLogoWhiteImage from "@/assets/projects/choreo-logo-white.svg";
+import ballerinaLogoImage from "@/assets/projects/ballerina-logo.svg";
+import ballerinaLogoWhiteImage from "@/assets/projects/ballerina-logo-white.svg";
+import celleryLogoImage from "@/assets/projects/cellery-logo.svg";
+import celleryLogoWhiteImage from "@/assets/projects/cellery-logo-white.svg";
+import siddhiLogoImage from "@/assets/projects/siddhi-logo.svg";
+import siddhiLogoWhiteImage from "@/assets/projects/siddhi-logo-white.svg";
 
 export const metadata: Metadata = {
     title: `${FULL_NAME} | Projects`,
@@ -84,11 +94,46 @@ const Projects = (): React.ReactElement => {
         "https://medium.com/wso2-cellery",
     );
 
-    const indexityLogo = <Logo logo={Logos.Indexity} height="1.5em" />;
-    const choreoLogo = <Logo logo={Logos.Choreo} height="2.0em" />;
-    const ballerinaLogo = <Logo logo={Logos.Ballerina} height="1.5em" />;
-    const celleryLogo = <Logo logo={Logos.Cellery} height="2.5em" />;
-    const siddhiLogo = <Logo logo={Logos.Siddhi} height="1.8em" />;
+    const indexityLogo = (
+        <Logo
+            srcLight={indexityLogoImage}
+            srcDark={indexityLogoWhiteImage}
+            alt="Indexity"
+            recommendedSx={{ height: "1.5em" }}
+        />
+    );
+    const choreoLogo = (
+        <Logo
+            srcLight={choreoLogoImage}
+            srcDark={choreoLogoWhiteImage}
+            alt="Choreo"
+            recommendedSx={{ height: "2.0em" }}
+        />
+    );
+    const ballerinaLogo = (
+        <Logo
+            srcLight={ballerinaLogoImage}
+            srcDark={ballerinaLogoWhiteImage}
+            alt="Ballerina"
+            recommendedSx={{ height: "1.5em" }}
+        />
+    );
+    const celleryLogo = (
+        <Logo
+            srcLight={celleryLogoImage}
+            srcDark={celleryLogoWhiteImage}
+            alt="Cellery"
+            recommendedSx={{ height: "2.5em" }}
+        />
+    );
+    const siddhiLogo = (
+        <Logo
+            srcLight={siddhiLogoImage}
+            srcDark={siddhiLogoWhiteImage}
+            alt="Siddhi"
+            recommendedSx={{ height: "1.8em" }}
+        />
+    );
     return (
         <>
             <Title>Projects</Title>

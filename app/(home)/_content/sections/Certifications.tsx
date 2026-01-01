@@ -88,9 +88,12 @@ const Certifications = (): React.ReactElement => {
                                             <Image
                                                 alt={certification.logo.alt}
                                                 src={
-                                                    certification.logo.src[
-                                                        theme.palette.mode
-                                                    ]
+                                                    theme.palette.mode ==
+                                                    "light"
+                                                        ? certification.logo
+                                                              .srcLight
+                                                        : certification.logo
+                                                              .srcDark
                                                 }
                                                 fill
                                                 sizes={imageSizes}

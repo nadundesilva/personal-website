@@ -79,7 +79,14 @@ const Certifications = (): React.ReactElement => {
     ): React.ReactElement => (
         <SectionHeading
             date={certificate.completedOn}
-            logo={<Logo height="5em" logo={certificate.logo} />}
+            logo={
+                <Logo
+                    srcLight={certificate.logo.srcLight}
+                    srcDark={certificate.logo.srcDark}
+                    alt={certificate.logo.alt}
+                    recommendedSx={{ height: "5em" }}
+                />
+            }
             actionButton={{
                 href: certificate.link,
                 name: "View Credential",

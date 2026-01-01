@@ -1,11 +1,12 @@
-import locked from "@/assets/blog-articles/miscellaneous/locked.webp";
-import cleaning from "@/assets/blog-articles/miscellaneous/cleaning.webp";
-import fence from "@/assets/blog-articles/miscellaneous/fence.webp";
-import magnifyingGlass from "@/assets/blog-articles/miscellaneous/magnifying-glass.webp";
-import winner from "@/assets/blog-articles/miscellaneous/winner.webp";
+import podSecurityImage from "@/assets/blog-articles/pod-security.webp";
+import lockedImage from "@/assets/blog-articles/miscellaneous/locked.webp";
+import cleaningImage from "@/assets/blog-articles/miscellaneous/cleaning.webp";
+import fenceImage from "@/assets/blog-articles/miscellaneous/fence.webp";
+import magnifyingGlassImage from "@/assets/blog-articles/miscellaneous/magnifying-glass.webp";
+import winnerImage from "@/assets/blog-articles/miscellaneous/winner.webp";
 
 export const blogMetadata = {
-    image: "/assets/blog-articles/pod-security.webp",
+    image: podSecurityImage,
     mediumUrl:
         "https://medium.com/faun/kubernetes-the-right-way-security-checklist-c38650898807",
     publishedDate: new Date("2024-02-22"),
@@ -56,7 +57,7 @@ However, there are many evil-doers in the world (I am referring to hackers here 
 
 <Image
     alt="Locked"
-    src={locked}
+    src={lockedImage}
     creator={{
         name: "Gina Neri",
         href: "https://unsplash.com/@gneri1713",
@@ -87,7 +88,7 @@ With this in place even if an attacker breaks into your container (this is not c
 
 <Image
     alt="Cleaning Up"
-    src={cleaning}
+    src={cleaningImage}
     creator={{
         name: "RDNE Stock project",
         href: "https://www.pexels.com/@rdne/",
@@ -118,7 +119,7 @@ This makes it possible to always lock down the file system by making it read-onl
 
 <Image
     alt="Fence"
-    src={fence}
+    src={fenceImage}
     creator={{
         name: "Kendall Hoopes",
         href: "https://www.pexels.com/@ken123films/",
@@ -155,7 +156,7 @@ On top of these development time mitigations, you can also utilize scanners to a
 
 <Image
     alt="Magnifying Glass"
-    src={magnifyingGlass}
+    src={magnifyingGlassImage}
     creator={{
         name: "Emiliano Vittoriosi",
         href: "https://unsplash.com/@emilianovittoriosi",
@@ -188,7 +189,7 @@ Sometimes, it may not seem that important, however, once a security incident occ
 
 <Image
     alt="Winner"
-    src={winner}
+    src={winnerImage}
     creator={{
         name: "Japheth Mast",
         href: "https://unsplash.com/@japhethmast",

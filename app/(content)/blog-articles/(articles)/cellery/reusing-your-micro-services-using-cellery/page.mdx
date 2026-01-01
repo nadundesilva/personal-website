@@ -1,10 +1,11 @@
-import celleryToTheRescue from "@/assets/blog-articles/cellery/cellery-to-the-rescue.webp";
-import celleryViewCell from "@/assets/blog-articles/cellery/cellery-view-cell.webp";
-import traditionalMicroservicesToCelleryCells from "@/assets/blog-articles/cellery/traditional-microservices-to-cellery-cells.webp";
-import celleryHubFrontend from "@/assets/blog-articles/cellery/cellery-hub-frontend.webp";
+import celleryImage from "@/assets/blog-articles/cellery.webp";
+import celleryToTheRescueImage from "@/assets/blog-articles/cellery/cellery-to-the-rescue.webp";
+import celleryViewCellImage from "@/assets/blog-articles/cellery/cellery-view-cell.webp";
+import traditionalMicroservicesToCelleryCellsImage from "@/assets/blog-articles/cellery/traditional-microservices-to-cellery-cells.webp";
+import celleryHubFrontendImage from "@/assets/blog-articles/cellery/cellery-hub-frontend.webp";
 
 export const blogMetadata = {
-    image: "/assets/blog-articles/cellery.webp",
+    image: celleryImage,
     mediumUrl:
         "https://medium.com/wso2-cellery/reusing-micro-services-as-cells-aa03fe170492",
     publishedDate: new Date("2019-10-30"),
@@ -33,7 +34,7 @@ Deploying the same micro-services deployment in dev, test, and prod environments
 
 # Cellery to the Rescue
 
-<Image alt="Cellery to the Rescue" src={celleryToTheRescue} />
+<Image alt="Cellery to the Rescue" src={celleryToTheRescueImage} />
 
 Cellery addresses these issues with an opinionated view of the deployment architecture by enforcing a proper structure and order to all the chaos. This article will focus on [Cellery](https://github.com/wso2/cellery) and how it solves these issues using [Cell-based architecture](https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md) and push/pull functionality using [Cellery Hub](https://github.com/wso2/cellery-hub).
 
@@ -45,7 +46,7 @@ A Cell is the unit of deployment in Cellery. A Cell in its simplest form is a co
 
 A gateway is placed in each Cell which can accept incoming traffic from outside the Cell. The gateway is responsible for exposing properly versioned APIs which can be consumed by any other Cell. We only need to write the components and define the ingresses for each component and Cellery will automatically add a Gateway with the necessary APIs exposed.
 
-<Image alt="Cellery View Command Output Cell" src={celleryViewCell} />
+<Image alt="Cellery View Command Output Cell" src={celleryViewCellImage} />
 
 **Note:** If converting your current application to a Cell is too complicated at first, you can always try out Composites (Naked-Cells) which gives you all the goodness of a Cell without the restrictions on architecture. However, it is recommended to eventually convert all your Composites into Cells.
 
@@ -86,7 +87,7 @@ Taking a look at how the [Hipster Shop sample](https://github.com/GoogleCloudPla
 
 <Image
     alt="Cellery to the Rescue"
-    src={traditionalMicroservicesToCelleryCells}
+    src={traditionalMicroservicesToCelleryCellsImage}
 />
 
 Imagine the above application along with many other applications sharing some of the Cells (E.g.:- Checkout Cell being shared with other applications along with Hipster Shop) running in a Kubernetes cluster. Managing such a deployment with the appropriate versions consumed by the correct micro-services alone can be quite challenging.
@@ -115,7 +116,7 @@ Therefore, these Cell Images which contain a blueprint of a Cell can be reused b
 
 To add more sprinkles on the top, Cellery comes with the ability to push and pull Cell Images using a Registry named Cellery Hub. Cellery Hub can be used to share your Cells with others. Even if you are working in a team that deals with multiple teams, Cellery Hub can be used to share your Images. Cellery Hub provides you with the ability to search for Images as well as check what the Cell looks like including its dependencies.
 
-<Image alt="Cellery Hub Frontend" src={celleryHubFrontend} />
+<Image alt="Cellery Hub Frontend" src={celleryHubFrontendImage} />
 
 The Cells as you can see are self-documenting, reusable units of deployment that help out in deploying and managing micro-services in a reusable manner.
 
