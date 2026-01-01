@@ -110,7 +110,6 @@ const Achievements = (): React.ReactElement => {
     const renderImageListItem = (
         achievementIndex: number,
         rowCount: number,
-        totalColumns: number,
     ): React.ReactElement => {
         const achievementSection: AchievementSection =
             achievementSections[achievementIndex];
@@ -177,25 +176,25 @@ const Achievements = (): React.ReactElement => {
                 <ImageList rowHeight={ROW_HEIGHT} cols={3}>
                     <FullSizeImageListItem rows={2} cols={1}>
                         <ImageList rowHeight={ROW_HEIGHT} cols={1}>
-                            {renderImageListItem(0, 1, 3)}
-                            {renderImageListItem(1, 1, 3)}
+                            {renderImageListItem(0, 1)}
+                            {renderImageListItem(1, 1)}
                         </ImageList>
                     </FullSizeImageListItem>
-                    {renderImageListItem(2, 2, 3)}
+                    {renderImageListItem(2, 2)}
                     <FullSizeImageListItem rows={2} cols={1}>
                         <ImageList rowHeight={ROW_HEIGHT} cols={1}>
-                            {renderImageListItem(3, 1, 3)}
-                            {renderImageListItem(4, 1, 3)}
+                            {renderImageListItem(3, 1)}
+                            {renderImageListItem(4, 1)}
                         </ImageList>
                     </FullSizeImageListItem>
                 </ImageList>
             ) : (
                 <ImageList rowHeight={ROW_HEIGHT} cols={1}>
-                    {renderImageListItem(0, 1, 1)}
-                    {renderImageListItem(1, 1, 1)}
-                    {renderImageListItem(2, 1, 1)}
-                    {renderImageListItem(3, 1, 1)}
-                    {renderImageListItem(4, 1, 1)}
+                    {renderImageListItem(0, 1)}
+                    {renderImageListItem(1, 1)}
+                    {renderImageListItem(2, 1)}
+                    {renderImageListItem(3, 1)}
+                    {renderImageListItem(4, 1)}
                 </ImageList>
             )}
         </>

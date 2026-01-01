@@ -18,9 +18,11 @@ const PATHS = [
     "/experience",
     "/achievements",
     "/projects",
+    "/projects/personal",
     "/testimonials",
     "/blog-articles",
     "/education",
+    "/education/certifications",
 ];
 
 const LIVE_SITE_ASSERTIONS =
@@ -48,25 +50,20 @@ module.exports = {
         assert: {
             preset: "lighthouse:recommended",
             assertions: {
-                "canonical": ["warn"],
-                "offscreen-images": ["warn"],
-                "preload-lcp-image": ["warn"],
                 "unused-javascript": ["warn"],
                 "uses-responsive-images": ["warn"],
                 "uses-rel-preconnect": ["warn"],
                 "total-byte-weight": ["warn"],
                 "lcp-lazy-loaded": ["warn"],
-                "prioritize-lcp-image": ["warn"],
-                "link-name": ["warn"],
                 "heading-order": ["warn"],
                 "image-delivery-insight": ["warn"],
                 "legacy-javascript-insight": ["warn"],
                 "modern-http-insight": ["warn"],
                 "network-dependency-tree-insight": ["warn"],
                 "lcp-discovery-insight": ["warn"],
-                "forced-reflow-insight": ["warn"],
                 "color-contrast": ["warn"],
                 "link-text": ["warn"],
+                "deprecations": ["warn"],
                 ...LIVE_SITE_ASSERTIONS,
             },
         },

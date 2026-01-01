@@ -205,10 +205,10 @@ const WelcomeBanner = (): React.ReactElement => {
                 <Typography
                     sx={{
                         color: "#ffffff",
-                        opacity: 0.75,
+                        opacity: 0.87,
                         fontSize: { xs: 9, sm: 10 },
                         letterSpacing: "0.12em",
-                        fontWeight: 300,
+                        fontWeight: 400,
                         textTransform: "uppercase",
                     }}
                 >

@@ -141,7 +141,6 @@ const Testimonial = ({
                     sx={{
                         fontSize: "1rem",
                         color: "text.secondary",
-                        opacity: 0.85,
                     }}
                 />
                 <Typography
@@ -150,7 +149,6 @@ const Testimonial = ({
                         color: "text.secondary",
                         fontWeight: 300,
                         letterSpacing: "0.01em",
-                        opacity: 0.85,
                     }}
                 >
                     {renderRelationShip(recommender, relationship)} when Nadun
