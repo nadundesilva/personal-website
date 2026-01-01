@@ -136,8 +136,8 @@ const Layout = ({
                                     <ListItemButton
                                         onClick={toggleDrawer}
                                         sx={{
-                                            "px": 3,
-                                            "py": 2,
+                                            "px": 2.5,
+                                            "py": 1.25,
                                             "minHeight": 56,
                                             "color": "#ffffff",
                                             "borderRadius": 2,
@@ -161,7 +161,9 @@ const Layout = ({
                                                 bottom: 12,
                                                 left: "50%",
                                                 transform: "translateX(-50%)",
-                                                width: isActive ? "50%" : 0,
+                                                width: isActive
+                                                    ? { xs: "50%", sm: "25%" }
+                                                    : 0,
                                                 height: 1.5,
                                                 backgroundColor: "#ffffff",
                                                 opacity: isActive ? 1 : 0.8,
@@ -255,7 +257,7 @@ const Layout = ({
                                         sx={{
                                             "color": "#ffffff",
                                             "px": 2.5,
-                                            "py": 1,
+                                            "py": 1.25,
                                             "minWidth": "auto",
                                             "position": "relative",
                                             "fontWeight": isActive ? 500 : 400,

@@ -31,8 +31,10 @@ import {
 } from "@/components/content";
 import { Date, DateRange } from "@/constants/date";
 import { type Institute, Institutes } from "@/constants/institutes";
-import { Logos } from "@/constants/logos";
 import { FULL_NAME } from "@/constants/metadata";
+
+import uomLogoImage from "@/assets/education/university-of-moratuwa-logo.png";
+import sjcLogoImage from "@/assets/education/st-josephs-college-colombo-10-logo.png";
 
 export const metadata: Metadata = {
     title: `${FULL_NAME} | Education`,
@@ -76,9 +78,21 @@ const Education = (): React.ReactElement => {
         </Link>
     );
 
-    const uomLogo = <Logo height="4em" logo={Logos.UniversityOfMoratuwa} />;
+    const uomLogo = (
+        <Logo
+            srcLight={uomLogoImage}
+            srcDark={uomLogoImage}
+            alt="University of Moratuwa"
+            recommendedSx={{ height: "4em" }}
+        />
+    );
     const sjcLogo = (
-        <Logo height="4em" logo={Logos.StJosephsCollegeColombo10} />
+        <Logo
+            srcLight={sjcLogoImage}
+            srcDark={sjcLogoImage}
+            alt="St. Joseph's College, Colombo 10"
+            recommendedSx={{ height: "4em" }}
+        />
     );
 
     return (

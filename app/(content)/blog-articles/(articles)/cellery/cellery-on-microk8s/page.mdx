@@ -1,16 +1,17 @@
-import microk8sStatusOutput from "@/assets/blog-articles/cellery/microk8s-status-output.webp";
-import microk8sDnsEnableOutput from "@/assets/blog-articles/cellery/microk8s-dns-enable-output.webp";
-import kubectlConfigCurrentContextOutput from "@/assets/blog-articles/cellery/kubectl-config-current-context-output.webp";
-import microk8sInspectOutput from "@/assets/blog-articles/cellery/microk8s-inspect-output.webp";
-import celleryVersionOutput from "@/assets/blog-articles/cellery/cellery-version-output.webp";
-import k8sLoadBalancerServiceYaml from "@/assets/blog-articles/cellery/k8s-load-balancer-service-yaml.webp";
-import cellerySetupCreateExistingOutput from "@/assets/blog-articles/cellery/cellery-setup-create-existing-output.webp";
-import celleryRunCellOutput from "@/assets/blog-articles/cellery/cellery-run-cell-output.webp";
-import celleryListInstancesOutput from "@/assets/blog-articles/cellery/cellery-list-instances-output.webp";
-import cellFrontend from "@/assets/blog-articles/cellery/cell-frontend.webp";
+import celleryOnMicroK8sImage from "@/assets/blog-articles/cellery-on-microk8s.webp";
+import microk8sStatusOutputImage from "@/assets/blog-articles/cellery/microk8s-status-output.webp";
+import microk8sDnsEnableOutputImage from "@/assets/blog-articles/cellery/microk8s-dns-enable-output.webp";
+import kubectlConfigCurrentContextOutputImage from "@/assets/blog-articles/cellery/kubectl-config-current-context-output.webp";
+import microk8sInspectOutputImage from "@/assets/blog-articles/cellery/microk8s-inspect-output.webp";
+import celleryVersionOutputImage from "@/assets/blog-articles/cellery/cellery-version-output.webp";
+import k8sLoadBalancerServiceYamlImage from "@/assets/blog-articles/cellery/k8s-load-balancer-service-yaml.webp";
+import cellerySetupCreateExistingOutputImage from "@/assets/blog-articles/cellery/cellery-setup-create-existing-output.webp";
+import celleryRunCellOutputImage from "@/assets/blog-articles/cellery/cellery-run-cell-output.webp";
+import celleryListInstancesOutputImage from "@/assets/blog-articles/cellery/cellery-list-instances-output.webp";
+import cellFrontendImage from "@/assets/blog-articles/cellery/cell-frontend.webp";
 
 export const blogMetadata = {
-    image: "/assets/blog-articles/cellery-on-microk8s.webp",
+    image: celleryOnMicroK8sImage,
     mediumUrl:
         "https://medium.com/wso2-cellery/cellery-on-microk8s-e7bc19320f46",
     publishedDate: new Date("2019-10-06"),
@@ -53,7 +54,7 @@ After finishing the above steps, run the following command to check if the K8s c
 microk8s.status
 ```
 
-<Image alt="MicroK8s Status Output" src={microk8sStatusOutput} />
+<Image alt="MicroK8s Status Output" src={microk8sStatusOutputImage} />
 
 If you get a message saying **microk8s is running** your single node K8s cluster is successfully up and running.
 
@@ -63,7 +64,7 @@ To proceed with working with MicroK8s, the following command should be run to en
 microk8s.enable dns
 ```
 
-<Image alt="MicroK8s Enable DNS Output" src={microk8sDnsEnableOutput} />
+<Image alt="MicroK8s Enable DNS Output" src={microk8sDnsEnableOutputImage} />
 
 The next step is to update the default Kubernetes configuration so that kubectl will point to the MicroK8s cluster.
 
@@ -87,7 +88,7 @@ kubectl get nodes
 
 <Image
     alt="Kubectl Config Current Context Output"
-    src={kubectlConfigCurrentContextOutput}
+    src={kubectlConfigCurrentContextOutputImage}
 />
 
 Now we are ready to get started with setting up Cellery!
@@ -100,7 +101,7 @@ To enable inter-pod communication you may need to enable packet forwarding to/fr
 microk8s.inspect
 ```
 
-<Image alt="MicroK8s Inspect Output" src={microk8sInspectOutput} />
+<Image alt="MicroK8s Inspect Output" src={microk8sInspectOutputImage} />
 
 If this command gives you the above warning about packet forwarding, please run the following command as mentioned in the command output.
 
@@ -120,7 +121,7 @@ To get started with Cellery, please install the CLI from the [Cellery SDK](https
 cellery version
 ```
 
-<Image alt="Cellery Version Output" src={celleryVersionOutput} />
+<Image alt="Cellery Version Output" src={celleryVersionOutputImage} />
 
 **Note:** You can also install the optional dependency (required for developing Cells), [BallerinaLang](https://ballerina.io/downloads/). _BallerinaLang v0.991.0_ is required for _Cellery v0.4.0_.
 
@@ -130,7 +131,10 @@ As the first step, we need to find out the IP of the node running MicroK8s. If y
 
 After figuring out the IP, the `<CELLERY_INSTALLATION_LOCATION>/k8s-artefacts/system/service-nodeport.yaml` file needs to be edited and the IP should be added to `spec.externalIPs` list (The default Cellery installation location in Linux is `/usr/share/cellery` and in MacOS it is `/Library/Cellery`).
 
-<Image alt="K8s Load Balancer Service Yaml" src={k8sLoadBalancerServiceYaml} />
+<Image
+    alt="K8s Load Balancer Service Yaml"
+    src={k8sLoadBalancerServiceYamlImage}
+/>
 
 Also, for accessing the cluster from your machine, host entries need to be added by adding a new line to the `/etc/hosts` file.
 
@@ -150,7 +154,7 @@ cellery setup create existing
 
 <Image
     alt="Cellery Setup Create Existing Output"
-    src={cellerySetupCreateExistingOutput}
+    src={cellerySetupCreateExistingOutputImage}
 />
 
 _Voila!_ Now you have a _basic Cellery run-time_ running in your machine.
@@ -165,7 +169,7 @@ To run the Cell, simply run the following command (This will pull the Cell Image
 cellery run wso2cellery/pet-fe-cell:0.4.0 -d -n pet-fe -l petStoreBackend:pet-be
 ```
 
-<Image alt="Cellery Run Cell Output" src={celleryRunCellOutput} />
+<Image alt="Cellery Run Cell Output" src={celleryRunCellOutputImage} />
 
 After the run command completes, you can check the Cell instances running on the run-time by running the following command.
 
@@ -173,11 +177,14 @@ After the run command completes, you can check the Cell instances running on the
 cellery list instances
 ```
 
-<Image alt="Cellery List Instances Output" src={celleryListInstancesOutput} />
+<Image
+    alt="Cellery List Instances Output"
+    src={celleryListInstancesOutputImage}
+/>
 
 To access the application we deployed, visit http://pet-store.com using your browser.
 
-<Image alt="Cell Frontend" src={cellFrontend} />
+<Image alt="Cell Frontend" src={cellFrontendImage} />
 
 If you see the above page, you have successfully deployed the Pet Store application on Cellery.
 

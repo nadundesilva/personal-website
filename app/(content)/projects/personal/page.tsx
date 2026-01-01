@@ -27,8 +27,10 @@ import {
     SectionHeading,
     Title,
 } from "@/components/content";
-import { Logos } from "@/constants/logos";
 import { FULL_NAME } from "@/constants/metadata";
+
+import k8sReplicatorLogoImage from "@/assets/projects/personal/k8s-replicator-logo.png";
+import meshManagerLogoImage from "@/assets/projects/personal/mesh-manager-logo.png";
 
 interface UseCasesSectionProps {
     children: React.ReactNode;
@@ -58,9 +60,21 @@ export const metadata: Metadata = {
 
 const PersonalProjects = (): React.ReactElement => {
     const k8sReplicatorLogo = (
-        <Logo logo={Logos.K8sReplicator} height="3.5em" />
+        <Logo
+            srcLight={k8sReplicatorLogoImage}
+            srcDark={k8sReplicatorLogoImage}
+            alt="K8s Replicator"
+            recommendedSx={{ height: "3.5em" }}
+        />
     );
-    const meshManagerLogo = <Logo logo={Logos.MeshManager} height="4.5em" />;
+    const meshManagerLogo = (
+        <Logo
+            srcLight={meshManagerLogoImage}
+            srcDark={meshManagerLogoImage}
+            alt="Mesh Manager"
+            recommendedSx={{ height: "4.5em" }}
+        />
+    );
 
     const generateLink = (text: string, href: string): React.ReactElement => (
         <Link href={href} target="_blank">

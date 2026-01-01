@@ -27,9 +27,17 @@ import {
     Title,
 } from "@/components/content";
 import { Date, DateRange, Now } from "@/constants/date";
-import { Logos } from "@/constants/logos";
 import { FULL_NAME } from "@/constants/metadata";
 import { Projects } from "@/constants/projects";
+
+import gsocLogoImage from "@/assets/experience/gsoc-logo.svg";
+import gsocLogoWhiteImage from "@/assets/experience/gsoc-logo-white.svg";
+import wso2LogoImage from "@/assets/experience/wso2-logo.svg";
+import wso2LogoWhiteImage from "@/assets/experience/wso2-logo-white.svg";
+import orionHealthLogoImage from "@/assets/experience/orion-health-logo.svg";
+import orionHealthLogoWhiteImage from "@/assets/experience/orion-health-logo-white.svg";
+import mccraeTechLogoImage from "@/assets/experience/mccrae-tech-logo.svg";
+import mccraeTechLogoWhiteImage from "@/assets/experience/mccrae-tech-logo-white.svg";
 
 export const metadata: Metadata = {
     title: `${FULL_NAME} | Experience`,
@@ -106,10 +114,38 @@ const Experience = (): React.ReactElement => {
     const Docker = generateLink("Docker", "https://www.docker.com/");
     const Maven = generateLink("Maven", "https://maven.apache.org/");
 
-    const gsocLogo = <Logo logo={Logos.GoogleSummerOfCode} height="2.5em" />;
-    const wso2Logo = <Logo logo={Logos.WSO2} height="2.5em" />;
-    const orionHealthLogo = <Logo logo={Logos.OrionHealth} height="3em" />;
-    const mccraeTechLogo = <Logo logo={Logos.McCraeTech} height="1.5em" />;
+    const gsocLogo = (
+        <Logo
+            srcLight={gsocLogoImage}
+            srcDark={gsocLogoWhiteImage}
+            alt="Google Summer of Code"
+            recommendedSx={{ height: "2.5em" }}
+        />
+    );
+    const wso2Logo = (
+        <Logo
+            srcLight={wso2LogoImage}
+            srcDark={wso2LogoWhiteImage}
+            alt="WSO2"
+            recommendedSx={{ height: "2.5em" }}
+        />
+    );
+    const orionHealthLogo = (
+        <Logo
+            srcLight={orionHealthLogoImage}
+            srcDark={orionHealthLogoWhiteImage}
+            alt="Orion Health"
+            recommendedSx={{ height: "3em" }}
+        />
+    );
+    const mccraeTechLogo = (
+        <Logo
+            srcLight={mccraeTechLogoImage}
+            srcDark={mccraeTechLogoWhiteImage}
+            alt="McCrae Tech"
+            recommendedSx={{ height: "1.5em" }}
+        />
+    );
 
     return (
         <>

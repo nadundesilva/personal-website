@@ -23,6 +23,8 @@ import {
     WEBSITE_PUBLIC_URL,
 } from "@/constants/metadata";
 
+import profilePhotoImage from "@/assets/profile-photo.jpg";
+
 export const metadata: Metadata = {
     title: `${FULL_NAME} | Lead Software Engineer and Cloud Computing Enthusiast`,
     description: MAIN_DESCRIPTION,
@@ -35,7 +37,7 @@ export const metadata: Metadata = {
         siteName: FULL_NAME,
         locale: "en_US",
         images: {
-            url: `${WEBSITE_PUBLIC_URL}/assets/profile-photo.jpg`,
+            url: profilePhotoImage.src,
             alt: FULL_NAME,
             type: "image/jpeg",
             width: 1960,
@@ -47,7 +49,7 @@ export const metadata: Metadata = {
         site: "@nadunrds",
         creator: "@nadunrds",
         images: {
-            url: `${WEBSITE_PUBLIC_URL}/assets/profile-photo.jpg`,
+            url: profilePhotoImage.src,
             alt: FULL_NAME,
             type: "image/jpeg",
             width: 1960,

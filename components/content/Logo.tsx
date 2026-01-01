@@ -13,26 +13,32 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, useTheme } from "@mui/material";
+import { Box, type SxProps, type Theme, useTheme } from "@mui/material";
 import Image from "next-image-export-optimizer";
 import type React from "react";
 
-import type { LogoAsset } from "@/constants/logos";
+import { type StaticImageData } from "next/image";
 
 interface LogoProps {
-    logo: LogoAsset;
-    height?: string;
+    srcLight: StaticImageData;
+    srcDark: StaticImageData;
+    alt: string;
+    recommendedSx?: SxProps<Theme>;
 }
 
-const Logo = ({ logo, height }: LogoProps): React.ReactElement => {
+const Logo = ({
+    srcLight,
+    srcDark,
+    alt,
+    recommendedSx,
+}: LogoProps): React.ReactElement => {
     const theme = useTheme();
-    const src = logo.src[theme.palette.mode];
+    const src = theme.palette.mode == "light" ? srcLight : srcDark;
     return (
         <Box
             sx={{
-                ...logo.recommendedSx,
+                ...recommendedSx,
                 "position": "relative",
-                "height": height ?? "3em",
                 "width": "100%",
                 "py": 1,
                 "& img": {
@@ -42,10 +48,9 @@ const Logo = ({ logo, height }: LogoProps): React.ReactElement => {
             }}
         >
             <Image
-                alt={logo.alt}
+                alt={alt}
                 src={src}
                 fill
-                sizes="100vw"
                 style={{
                     objectFit: "scale-down",
                 }}

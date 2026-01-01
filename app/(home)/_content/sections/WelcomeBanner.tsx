@@ -25,8 +25,9 @@ import {
 } from "@mui/material";
 import Image from "next-image-export-optimizer";
 import type React from "react";
+import { FULL_NAME } from "@/constants/metadata";
 
-import { Images } from "@/constants/images";
+import welcomeBannerImage from "@/assets/banner.jpg";
 
 const WelcomeText = styled(Typography)({
     "color": "#ffffff",
@@ -181,12 +182,10 @@ const WelcomeBanner = (): React.ReactElement => {
                 }}
             >
                 <Image
-                    src={Images.WelcomeBanner.src}
-                    alt={Images.WelcomeBanner.alt}
+                    src={welcomeBannerImage}
+                    alt={`${FULL_NAME}'s Website Welcome Banner`}
                     fill
                     style={{ objectFit: "cover", zIndex: 1 }}
-                    placeholder="blur"
-                    blurDataURL={Images.WelcomeBanner.blurDataURL}
                 />
             </Container>
             <Box

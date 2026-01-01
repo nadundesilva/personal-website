@@ -28,10 +28,28 @@ import {
     Title,
 } from "@/components/content";
 import { Date, DateRange } from "@/constants/date";
-import { Photos } from "@/constants/images";
 import { type Institute, Institutes } from "@/constants/institutes";
-import { Logos } from "@/constants/logos";
 import { FULL_NAME } from "@/constants/metadata";
+
+import wso2OutstandingContributorImage from "@/assets/achievements/wso2-outstanding-contributor.jpg";
+import uomDeansList2017Image from "@/assets/achievements/deans-list-2017.jpg";
+import nasaSpaceAppsChallenge2017NewspaperImage from "@/assets/achievements/nasa-space-apps-2017-newspaper.jpg";
+import nasaSpaceAppsChallenge2017Image from "@/assets/achievements/nasa-space-apps-2017.jpg";
+import angelHack2016Image from "@/assets/achievements/angel-hack-2016.jpg";
+import angelHack2016BikeImage from "@/assets/achievements/angel-hack-2016-bike.jpg";
+import hsbcYouthEnterpriseAwards2015Image from "@/assets/achievements/hsbc-youth-enterprise-awards-2015.jpg";
+import hsbcYouthEnterpriseAwards2015DiscussionImage from "@/assets/achievements/hsbc-youth-enterprise-awards-2015-discussion.jpg";
+
+import wso2LogoImage from "@/assets/experience/wso2-logo.svg";
+import wso2LogoWhiteImage from "@/assets/experience/wso2-logo-white.svg";
+import uomLogoImage from "@/assets/education/university-of-moratuwa-logo.png";
+import nasaSpaceAppsChallengeLogoImage from "@/assets/achievements/nasa-space-apps-logo.png";
+import nasaSpaceAppsChallengeLogoWhiteImage from "@/assets/achievements/nasa-space-apps-logo-white.png";
+import angelHackLogoImage from "@/assets/achievements/angel-hack-logo.png";
+import angelHackLogoWhiteImage from "@/assets/achievements/angel-hack-logo-white.png";
+import hackaDevLogoImage from "@/assets/achievements/hackadev-logo.png";
+import hackaDevLogoWhiteImage from "@/assets/achievements/hackadev-logo-white.png";
+import britishCouncilLogoImage from "@/assets/achievements/british-council-logo.png";
 
 export const metadata: Metadata = {
     title: `${FULL_NAME} | Achievements`,
@@ -75,15 +93,53 @@ const Achievements = (): React.ReactElement => {
     );
     const WSO2 = generateInstituteLink(Institutes.WSO2);
 
-    const wso2Logo = <Logo height="2.5em" logo={Logos.WSO2} />;
-    const uomLogo = <Logo height="4em" logo={Logos.UniversityOfMoratuwa} />;
-    const nasaSpaceAppsChallengeLogo = (
-        <Logo logo={Logos.NASASpaceAppsChallenge} />
+    const wso2Logo = (
+        <Logo
+            srcLight={wso2LogoImage}
+            srcDark={wso2LogoWhiteImage}
+            alt="WSO2"
+            recommendedSx={{ height: "2.5em" }}
+        />
     );
-    const angelHackLogo = <Logo height="2.5em" logo={Logos.AngelHack} />;
-    const hackaDevLogo = <Logo height="4.5em" logo={Logos.HackaDev} />;
+    const uomLogo = (
+        <Logo
+            srcLight={uomLogoImage}
+            srcDark={uomLogoImage}
+            alt="University of Moratuwa"
+            recommendedSx={{ height: "4em" }}
+        />
+    );
+    const nasaSpaceAppsChallengeLogo = (
+        <Logo
+            srcLight={nasaSpaceAppsChallengeLogoImage}
+            srcDark={nasaSpaceAppsChallengeLogoWhiteImage}
+            alt="NASA Space Apps Challenge"
+            recommendedSx={{ height: "2.5em" }}
+        />
+    );
+    const angelHackLogo = (
+        <Logo
+            srcLight={angelHackLogoImage}
+            srcDark={angelHackLogoWhiteImage}
+            alt="Angel Hack"
+            recommendedSx={{ height: "2.5em" }}
+        />
+    );
+    const hackaDevLogo = (
+        <Logo
+            srcLight={hackaDevLogoImage}
+            srcDark={hackaDevLogoWhiteImage}
+            alt="HackaDev"
+            recommendedSx={{ height: "4.5em" }}
+        />
+    );
     const britishCouncilLogo = (
-        <Logo height="2.5em" logo={Logos.BritishCouncil} />
+        <Logo
+            srcLight={britishCouncilLogoImage}
+            srcDark={britishCouncilLogoImage}
+            alt="British Council"
+            recommendedSx={{ height: "2.5em" }}
+        />
     );
 
     return (
@@ -97,8 +153,9 @@ const Achievements = (): React.ReactElement => {
                     WSO2 Sustained Outstanding Contribution Award
                 </SectionHeading>
                 <Photo
+                    src={wso2OutstandingContributorImage}
+                    alt="WSO2 Sustained Outstanding Contribution Award"
                     float="right"
-                    photo={Photos.WSO2OutstandingContributor2019}
                 />
                 <Paragraph>
                     Each year for employees who have performed exceptionally
@@ -125,7 +182,11 @@ const Achievements = (): React.ReactElement => {
                     Placements on the Dean&lsquo;s List at the University of
                     Moratuwa
                 </SectionHeading>
-                <Photo float="right" photo={Photos.UOMDeansList2017} />
+                <Photo
+                    src={uomDeansList2017Image}
+                    alt="University of Moratuwa Deans List 2017"
+                    float="right"
+                />
                 <Paragraph>
                     During my B.Sc. (Hons.) in Engineering (Computer Science and
                     Engineering) degree at the University of Moratuwa, I was
@@ -169,8 +230,9 @@ const Achievements = (): React.ReactElement => {
                     Finalist
                 </SectionHeading>
                 <Photo
+                    src={nasaSpaceAppsChallenge2017NewspaperImage}
+                    alt="NASA Space Apps Challenge 2017 Newspaper"
                     float="right"
-                    photo={Photos.NASASpaceAppsChallenge2017Newspaper}
                 />
                 <Paragraph>
                     The {NasaSpaceAppsChallenge} is a competition hosted by{" "}
@@ -180,7 +242,11 @@ const Achievements = (): React.ReactElement => {
                     {OurEcologicalNeighborhood} category to solve the{" "}
                     {WhereTheGenesFlow} challenge.
                 </Paragraph>
-                <Photo float="left" photo={Photos.NASASpaceAppsChallenge2017} />
+                <Photo
+                    src={nasaSpaceAppsChallenge2017Image}
+                    alt="NASA Space Apps Challenge 2017"
+                    float="left"
+                />
                 <Paragraph>
                     We came up with a platform to map and compare population
                     genetics of a species with landscape features, climate
@@ -211,14 +277,22 @@ const Achievements = (): React.ReactElement => {
                 <SectionHeading date={new Date(2016)} logo={angelHackLogo}>
                     Angel Hack - Finalist
                 </SectionHeading>
-                <Photo float="right" photo={Photos.AngelHack2016} />
+                <Photo
+                    src={angelHack2016Image}
+                    alt="Angel Hack 2016"
+                    float="right"
+                />
                 <Paragraph>
                     In {AngelHack} 2016, our team developed a smart workout
                     system which combined a virtual reality game with an
                     exercise bicycle fitted with a sensor to encourage people to
                     workout more.
                 </Paragraph>
-                <Photo float="left" photo={Photos.AngelHack2016Bike} />
+                <Photo
+                    src={angelHack2016BikeImage}
+                    alt="Angel Hack 2016 Bike"
+                    float="left"
+                />
                 <Paragraph>
                     The game maps the user&lsquo;s movement on the bicycle to
                     movements on the game. The user is presented with targets
@@ -261,8 +335,9 @@ const Achievements = (): React.ReactElement => {
                     British Council HSBC Youth Enterprise Awards - Finalist
                 </SectionHeading>
                 <Photo
+                    src={hsbcYouthEnterpriseAwards2015Image}
+                    alt="British Council HSBC Youth Enterprise Awards 2015"
                     float="right"
-                    photo={Photos.HSBCYouthEnterpriseAwards2015}
                 />
                 <Paragraph>
                     {BritishCouncilHSBCYouthEnterpriseAwards} is a hackathon in
@@ -272,8 +347,9 @@ const Achievements = (): React.ReactElement => {
                     revolutionizing education.
                 </Paragraph>
                 <Photo
+                    src={hsbcYouthEnterpriseAwards2015DiscussionImage}
+                    alt="British Council HSBC Youth Enterprise Awards 2015 Discussion"
                     float="left"
-                    photo={Photos.HSBCYouthEnterpriseAwards2015Discussion}
                 />
                 <Paragraph>
                     Although there is so much online content, many people still
