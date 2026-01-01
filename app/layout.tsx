@@ -192,6 +192,11 @@ const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
                 <meta property="fb:app_id" content={FB_APP_ID} />
                 <meta property="og:fb:profile_id" content="nadunrds" />
 
+                <link
+                    rel="preconnect"
+                    href="https://o4507214991917056.ingest.us.sentry.io"
+                />
+
                 <Script
                     id="json-ld-person"
                     type="application/ld+json"

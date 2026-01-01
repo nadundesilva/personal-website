@@ -139,7 +139,6 @@ const Experience = (): React.ReactElement => {
                                     fontSize: { xs: 12, md: 13 },
                                     fontWeight: 400,
                                     letterSpacing: "0.04em",
-                                    opacity: 0.85,
                                     textTransform: "uppercase",
                                     ...(isAllContentRightAligned && {
                                         writingMode: "vertical-rl",
@@ -226,7 +225,7 @@ const Experience = (): React.ReactElement => {
                                             ? "left"
                                             : "right",
                                         lineHeight: 1.8,
-                                        fontWeight: 300,
+                                        fontWeight: 400,
                                     }}
                                 >
                                     {item.description}
@@ -254,8 +253,7 @@ const Experience = (): React.ReactElement => {
                                         sx={{
                                             lineHeight: 1.3,
                                             fontSize: { xs: 13 },
-                                            opacity: 0.75,
-                                            fontWeight: 300,
+                                            fontWeight: 400,
                                             letterSpacing: "0em",
                                         }}
                                     >

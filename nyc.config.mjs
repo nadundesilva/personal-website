@@ -12,9 +12,9 @@
  *
  * © 2025 Nadun De Silva. All rights reserved.
  */
-const baseConfig = require("@istanbuljs/nyc-config-typescript");
+import baseConfig from "@istanbuljs/nyc-config-typescript";
 
-module.exports = {
+export default {
     ...baseConfig,
     "check-coverage": true,
     "all": true,
