@@ -183,12 +183,34 @@ const createWebsiteTheme = (fontFamily: string): Theme =>
                         letterSpacing: "0.01em",
                         padding: "6px 12px",
                     },
-                    outlined: {
+                    outlined: ({ theme }: { theme: Theme }) => ({
                         "borderWidth": 1,
+                        "borderColor":
+                            theme.palette.mode === "dark"
+                                ? "rgba(255, 255, 255, 0.3)"
+                                : "rgba(0, 0, 0, 0.23)",
+                        "color":
+                            theme.palette.mode === "dark"
+                                ? "rgba(255, 255, 255, 0.87)"
+                                : "rgba(0, 0, 0, 0.87)",
+                        "& .MuiButton-endIcon, & .MuiButton-startIcon": {
+                            color:
+                                theme.palette.mode === "dark"
+                                    ? "rgba(255, 255, 255, 0.87)"
+                                    : "rgba(0, 0, 0, 0.87)",
+                        },
                         "&:hover": {
                             borderWidth: 1,
+                            borderColor:
+                                theme.palette.mode === "dark"
+                                    ? "rgba(255, 255, 255, 0.5)"
+                                    : "rgba(0, 0, 0, 0.4)",
+                            backgroundColor:
+                                theme.palette.mode === "dark"
+                                    ? "rgba(255, 255, 255, 0.05)"
+                                    : "rgba(0, 0, 0, 0.02)",
                         },
-                    },
+                    }),
                 },
             },
             MuiIconButton: {

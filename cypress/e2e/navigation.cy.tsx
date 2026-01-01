@@ -32,6 +32,7 @@ const extractArticleUrlsFromAllLinks = (
 describe("navigation between pages", () => {
     it("properly navigates to pages and back using breadcrumbs", () => {
         cy.loadPage(WebsiteHome.path);
+        cy.scrollTo("bottom", { duration: 1000, ensureScrollable: false });
 
         const visitSubRoutes = (
             currentRoutes: Record<string, Route>,
@@ -48,6 +49,10 @@ describe("navigation between pages", () => {
 
                 cy.wait(1000);
                 cy.findAllByRole("progressbar").should("not.exist");
+                cy.scrollTo("bottom", {
+                    duration: 1000,
+                    ensureScrollable: false,
+                });
 
                 if (route.subRoutes !== undefined) {
                     throw new Error(
@@ -64,6 +69,13 @@ describe("navigation between pages", () => {
         ) => {
             Object.values(currentRoutes).forEach((route) => {
                 cy.clickNavLink(route.name);
+                cy.wait(1000);
+                cy.findAllByRole("progressbar").should("not.exist");
+                cy.scrollTo("bottom", {
+                    duration: 1000,
+                    ensureScrollable: false,
+                });
+
                 if (route.subRoutes !== undefined) {
                     visitSubRoutes(route.subRoutes, route.name);
                 }
@@ -82,6 +94,10 @@ describe("navigation between pages", () => {
                 cy.loadPage("/blog-articles");
                 cy.wait(1000);
                 cy.findAllByRole("progressbar").should("not.exist");
+                cy.scrollTo("bottom", {
+                    duration: 1000,
+                    ensureScrollable: false,
+                });
 
                 // Find all article links on the page (excluding category links)
                 cy.findAllByRole("link").then(($links) => {
@@ -103,6 +119,12 @@ describe("navigation between pages", () => {
 
                         cy.clickLinkByHref(articleUrl);
                         cy.location("pathname").should("eq", articleUrl);
+                        cy.wait(1000);
+                        cy.findAllByRole("progressbar").should("not.exist");
+                        cy.scrollTo("bottom", {
+                            duration: 1000,
+                            ensureScrollable: false,
+                        });
 
                         cy.clickBreadcrumbByName("Blog Articles");
                     });
@@ -126,6 +148,10 @@ describe("navigation between pages", () => {
                         cy.loadPage("/blog-articles");
                         cy.wait(1000);
                         cy.findAllByRole("progressbar").should("not.exist");
+                        cy.scrollTo("bottom", {
+                            duration: 1000,
+                            ensureScrollable: false,
+                        });
 
                         discoveredSubGroupPages.forEach((subGroupPage) => {
                             cy.log(`Testing sub group page: ${subGroupPage}`);
@@ -133,6 +159,12 @@ describe("navigation between pages", () => {
                             // Navigate to the group page by clicking the link from /blog-articles
                             cy.clickLinkByHref(subGroupPage);
                             cy.location("pathname").should("eq", subGroupPage);
+                            cy.wait(1000);
+                            cy.findAllByRole("progressbar").should("not.exist");
+                            cy.scrollTo("bottom", {
+                                duration: 1000,
+                                ensureScrollable: false,
+                            });
 
                             // Find all article links on the page (excluding category/group links)
                             cy.findAllByRole("link").then(($links) => {
@@ -153,6 +185,14 @@ describe("navigation between pages", () => {
                                         "eq",
                                         articleUrl,
                                     );
+                                    cy.wait(1000);
+                                    cy.findAllByRole("progressbar").should(
+                                        "not.exist",
+                                    );
+                                    cy.scrollTo("bottom", {
+                                        duration: 1000,
+                                        ensureScrollable: false,
+                                    });
 
                                     // Go back to group page using breadcrumbs
                                     cy.clickBreadcrumbByHref(subGroupPage);

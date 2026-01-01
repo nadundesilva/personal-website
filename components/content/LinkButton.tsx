@@ -1,3 +1,4 @@
+"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -36,9 +37,17 @@ const LinkButton = ({
             variant="outlined"
             endIcon={Icon ? <Icon /> : undefined}
             sx={{
-                "transition": "all 0.25s ease-in-out",
+                "color": "text.secondary",
+                "opacity": 0.85,
+                "borderColor": "text.secondary",
+                "& .MuiButton-endIcon, & .MuiButton-startIcon": {
+                    color: "text.secondary",
+                    opacity: 0.85,
+                },
                 "&:hover": {
                     transform: "translateY(-1px)",
+                    opacity: 1,
+                    borderColor: "text.secondary",
                 },
             }}
         >
