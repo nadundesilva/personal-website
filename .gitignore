@@ -45,5 +45,5 @@ yarn-error.log*
 .env.sentry-build-plugin
 
 # Next Image Export Optimizer
-next-image-export-optimizer
-public/assets/next-image-export-optimizer-hashes.json
+public/optimized-images
+public/images/next-image-export-optimizer-hashes.json

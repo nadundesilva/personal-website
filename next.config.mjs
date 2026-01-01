@@ -94,12 +94,11 @@ const nextConfig = (phase, { defaultConfig }) => {
             ],
         },
         env: {
-            nextImageExportOptimizer_imageFolderPath: "public/assets",
+            nextImageExportOptimizer_imageFolderPath: "public/images",
             nextImageExportOptimizer_exportFolderPath: "./out",
             nextImageExportOptimizer_quality: "75",
             nextImageExportOptimizer_storePicturesInWEBP: "true",
-            nextImageExportOptimizer_exportFolderName:
-                "next-image-export-optimizer",
+            nextImageExportOptimizer_exportFolderName: "optimized-images",
             nextImageExportOptimizer_generateAndUseBlurImages: "true",
             nextImageExportOptimizer_remoteImageCacheTTL: "0",
         },

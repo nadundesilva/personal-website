@@ -24,9 +24,11 @@ import type { SxProps } from "@mui/system";
 import Image from "next-image-export-optimizer";
 import type React from "react";
 
-import { Photos } from "@/constants/images";
 import Profiles from "@/constants/profiles";
 import { Link } from "@/components/content";
+import { FULL_NAME } from "@/constants/metadata";
+
+import profilePhotoImage from "@/assets/profile-photo.jpg";
 
 const AboutMe = (): React.ReactElement => {
     const profilePhoto = (
@@ -43,13 +45,10 @@ const AboutMe = (): React.ReactElement => {
                 }}
             >
                 <Image
-                    src={Photos.ProfilePhoto.src}
-                    alt={Photos.ProfilePhoto.alt}
-                    sizes={`${100 * (gridWidth / 12)}vw`}
-                    placeholder="blur"
+                    src={profilePhotoImage}
+                    alt={FULL_NAME}
                     fill
                     style={{ objectFit: "cover" }}
-                    blurDataURL={Photos.ProfilePhoto.blurDataURL}
                 />
             </Avatar>
         </Grid>

@@ -22,9 +22,14 @@ import {
     useMediaQuery,
 } from "@mui/material";
 import Image from "next-image-export-optimizer";
+import { type StaticImageData } from "next/image";
 import type React from "react";
 
-import { Photos, type ImageAsset } from "@/constants/images";
+import nasaSpaceAppsChallenge2017Image from "@/assets/achievements/nasa-space-apps-2017.jpg";
+import uomDeansList2017Image from "@/assets/achievements/deans-list-2017.jpg";
+import wso2OutstandingContributor2019Image from "@/assets/achievements/wso2-outstanding-contributor.jpg";
+import hsbcYouthEnterpriseAwards2015Image from "@/assets/achievements/hsbc-youth-enterprise-awards-2015.jpg";
+import angelHack2016Image from "@/assets/achievements/angel-hack-2016.jpg";
 
 const PREFIX = "Home-Achievements";
 const classes = {
@@ -55,7 +60,10 @@ const ImageListItemImageOverlay = styled(Grid)(({ theme }) => ({
 
 interface AchievementSection {
     title: string;
-    photo: ImageAsset;
+    photo: {
+        src: StaticImageData;
+        alt: string;
+    };
 }
 
 const ROW_HEIGHT = 320;
@@ -64,23 +72,38 @@ const Achievements = (): React.ReactElement => {
     const achievementSections: AchievementSection[] = [
         {
             title: "Global Finalist - Galactic Impact - NASA Space Apps Challenge 2017",
-            photo: Photos.NASASpaceAppsChallenge2017,
+            photo: {
+                src: nasaSpaceAppsChallenge2017Image,
+                alt: "NASA Space Apps Challenge 2017",
+            },
         },
         {
             title: "Placements on the Dean's List",
-            photo: Photos.UOMDeansList2017,
+            photo: {
+                src: uomDeansList2017Image,
+                alt: "University of Moratuwa Deans List 2017",
+            },
         },
         {
             title: "WSO2 Sustained Outstanding Contribution Award - Consecutive years from 2019 to 2021",
-            photo: Photos.WSO2OutstandingContributor2019,
+            photo: {
+                src: wso2OutstandingContributor2019Image,
+                alt: "WSO2 Sustained Outstanding Contributor Award 2019",
+            },
         },
         {
             title: "Finalist - British Council HSBC Youth Enterprise Awards 2015",
-            photo: Photos.HSBCYouthEnterpriseAwards2015,
+            photo: {
+                src: hsbcYouthEnterpriseAwards2015Image,
+                alt: "British Council HSBC Youth Enterprise Awards 2015",
+            },
         },
         {
             title: "Finalist - Angel Hack 2016",
-            photo: Photos.AngelHack2016,
+            photo: {
+                src: angelHack2016Image,
+                alt: "Angel Hack 2016",
+            },
         },
     ];
 
@@ -135,10 +158,7 @@ const Achievements = (): React.ReactElement => {
                     <Image
                         src={achievementSection.photo.src}
                         alt={achievementSection.photo.alt}
-                        placeholder="blur"
-                        blurDataURL={achievementSection.photo.blurDataURL}
                         fill
-                        sizes={`${Math.ceil(100 / totalColumns)}vw`}
                         style={{
                             objectFit: "cover",
                             transition:

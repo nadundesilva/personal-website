@@ -30,6 +30,8 @@ import "@/styles/main.css";
 import "@/styles/syntax-highlighting.css";
 import { WebsiteHome } from "@/constants/routes";
 
+import profilePhotoImage from "@/assets/profile-photo.jpg";
+
 const GOOGLE_SITE_VERIFICATION = "M8dg6gzVYU0noXFvsPOqknm_WjREFeNE212YeUk0g30";
 const YANDEX_VERIFICATION = "acbc45e5d9645cf0";
 const FB_APP_ID = "567329184466353";
@@ -58,7 +60,7 @@ export const metadata: Metadata = {
     icons: {
         icon: `${WEBSITE_PUBLIC_URL}/icon-maskable-x512.png`,
         shortcut: `${WEBSITE_PUBLIC_URL}/icon-maskable-x512.png`,
-        apple: `${WEBSITE_PUBLIC_URL}/assets/profile-photo.jpg`,
+        apple: profilePhotoImage.src,
     },
     manifest: `${WEBSITE_PUBLIC_URL}/manifest.webmanifest`,
     verification: {
@@ -68,7 +70,7 @@ export const metadata: Metadata = {
     appleWebApp: {
         capable: true,
         startupImage: {
-            url: `${WEBSITE_PUBLIC_URL}/assets/profile-photo.jpg`,
+            url: profilePhotoImage.src,
             media: "image/jpeg",
         },
         statusBarStyle: "black-translucent",
@@ -107,7 +109,7 @@ const jsonLd: WithContext<Person> = {
     "@type": "Person",
     "name": FULL_NAME,
     "description": MAIN_DESCRIPTION,
-    "image": `${WEBSITE_PUBLIC_URL}/assets/profile-photo.jpg`,
+    "image": profilePhotoImage.src,
     "gender": "male",
     "birthPlace": "Colombo, Sri Lanka",
     "jobTitle": "Lead Software Engineer",

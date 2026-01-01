@@ -73,7 +73,11 @@ const ContributedProjects = (): React.ReactElement => {
                                 fill
                                 style={{ objectFit: "contain" }}
                                 sizes={imageSizes}
-                                src={project.logo.src[theme.palette.mode]}
+                                src={
+                                    theme.palette.mode == "light"
+                                        ? project.logo.srcLight
+                                        : project.logo.srcDark
+                                }
                             />
                         </Container>
                     </Box>

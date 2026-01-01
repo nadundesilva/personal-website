@@ -1,12 +1,13 @@
-import softwareEngineer1 from "@/assets/blog-articles/engineering/software-engineer-1.webp";
-import problem1 from "@/assets/blog-articles/engineering/problem-1.webp";
-import softwareEngineer2 from "@/assets/blog-articles/engineering/software-engineer-2.webp";
-import scalaImplicitConversions from "@/assets/blog-articles/programming/scala-implicit-conversions.webp";
-import parallelizedScoverageReport1 from "@/assets/blog-articles/programming/parallelized-scoverage-report-1.webp";
-import parallelizedScoverageReport2 from "@/assets/blog-articles/programming/parallelized-scoverage-report-2.webp";
+import programming05Image from "@/assets/blog-articles/programming-05.webp";
+import softwareEngineer1Image from "@/assets/blog-articles/engineering/software-engineer-1.webp";
+import problem1Image from "@/assets/blog-articles/engineering/problem-1.webp";
+import softwareEngineer2Image from "@/assets/blog-articles/engineering/software-engineer-2.webp";
+import scalaImplicitConversionsImage from "@/assets/blog-articles/programming/scala-implicit-conversions.webp";
+import parallelizedScoverageReport1Image from "@/assets/blog-articles/programming/parallelized-scoverage-report-1.webp";
+import parallelizedScoverageReport2Image from "@/assets/blog-articles/programming/parallelized-scoverage-report-2.webp";
 
 export const blogMetadata = {
-    image: "/assets/blog-articles/programming-05.webp",
+    image: programming05Image,
     mediumUrl:
         "https://faun.pub/scoverage-in-maven-parallel-builds-a00440b03be2",
     publishedDate: new Date("2023-05-23"),
@@ -43,7 +44,7 @@ If you are working on a large code base with multiple modules and dependencies, 
 
 <Image
     alt="Software Engineer"
-    src={softwareEngineer1}
+    src={softwareEngineer1Image}
     creator={{
         name: "bruce mars",
         href: "https://unsplash.com/@brucemars",
@@ -65,7 +66,7 @@ Especially by using the flag `-T 1C` (or a higher number of threads per core bas
 
 _Here come the problems!_
 
-<Image alt="Problem" src={problem1} />
+<Image alt="Problem" src={problem1Image} />
 
 # Plugins with non-thread-safe Maven goals
 
@@ -108,7 +109,7 @@ mvn -Dscoverage.aggregateOnly=true  scoverage:report-only
 
 <Image
     alt="Software Engineer"
-    src={softwareEngineer2}
+    src={softwareEngineer2Image}
     creator={{
         name: "Danial Igdery",
         href: "https://unsplash.com/@ricaros",
@@ -131,7 +132,10 @@ mvn -T 1C -Dscoverage.aggregate=true -Dscoverage.aggregateOnly=true scoverage:re
 
 However, if you examine the report closely, you will notice that the `module-b`, which contains a simulated long-running test, has 0 test coverage.
 
-<Image alt="Parallelized SCoverage Report" src={parallelizedScoverageReport1} />
+<Image
+    alt="Parallelized SCoverage Report"
+    src={parallelizedScoverageReport1Image}
+/>
 
 After clearing the generated artifacts during the build (by running `mvn clean`), let’s run the two commands that we discussed above to solve the issue.
 
@@ -142,7 +146,10 @@ mvn -Dscoverage.aggregateOnly=true  scoverage:report-only
 
 _Voila!_ The correct test coverage is shown in the report now
 
-<Image alt="Parallelized SCoverage Report" src={parallelizedScoverageReport2} />
+<Image
+    alt="Parallelized SCoverage Report"
+    src={parallelizedScoverageReport2Image}
+/>
 
 ---
 
