@@ -29,7 +29,7 @@ const Skills = (): React.ReactElement => {
             {SkillGroups.map((group) => (
                 <Box key={group.category} sx={{ mt: 2 }}>
                     <Typography
-                        variant="h6"
+                        variant="h3"
                         align="center"
                         sx={{
                             fontWeight: 400,

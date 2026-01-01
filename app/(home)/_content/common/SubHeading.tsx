@@ -30,7 +30,7 @@ const SubHeading = (props: SubHeadingProps): React.ReactElement => (
             }}
         >
             <Typography
-                variant="h4"
+                variant="h3"
                 align="center"
                 sx={{
                     fontWeight: 400,

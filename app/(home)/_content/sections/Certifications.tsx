@@ -133,7 +133,8 @@ const Certifications = (): React.ReactElement => {
                                             mb: 3,
                                             fontSize: { xs: 10, md: 11 },
                                             height: { xs: 22, md: 24 },
-                                            opacity: 0.8,
+                                            backgroundColor: "secondary",
+                                            color: "secondary.contrastText",
                                         }}
                                     />
                                     <Typography
@@ -143,7 +144,6 @@ const Certifications = (): React.ReactElement => {
                                             mt: 1,
                                             fontSize: { xs: 11, md: 12 },
                                             letterSpacing: "0em",
-                                            opacity: 0.7,
                                         }}
                                     >
                                         Issued by
