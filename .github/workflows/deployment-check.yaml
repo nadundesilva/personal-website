@@ -28,9 +28,9 @@ jobs:
                   fetch-depth: 0
                   persist-credentials: false
             - name: Setup Node.js
-              uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+              uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
               with:
-                  node-version: "24.12.0"
+                  node-version: "24.13.0"
             - name: Install NPM Dependencies
               run: |
                   npm ci
@@ -88,9 +88,9 @@ jobs:
                       .github
                       .lighthouserc.js
             - name: Setup Node.js
-              uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+              uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
               with:
-                  node-version: "24.12.0"
+                  node-version: "24.13.0"
             - name: Run Lighthouse Audit
               run: |
                   npm install -g @lhci/cli@0.15.x
@@ -127,7 +127,7 @@ jobs:
                   output: trivy-results.sarif
                   ignore-unfixed: true
             - name: Upload Trivy scan results to GitHub Security tab
-              uses: github/codeql-action/upload-sarif@5d4e8d1aca955e8d8589aabd499c5cae939e33c7 # v4.31.9
+              uses: github/codeql-action/upload-sarif@cdefb33c0f6224e58673d9004f47f7cb3e328b89 # v4.31.10
               if: always()
               with:
                   sarif_file: trivy-results.sarif
