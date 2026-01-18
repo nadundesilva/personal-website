@@ -69,7 +69,7 @@
         "prettier": "3.7.4",
         "rehype-pretty-code": "0.14.1",
         "schema-dts": "1.1.5",
-        "stylelint": "16.26.1",
+        "stylelint": "17.0.0",
         "stylelint-config-standard": "39.0.1",
         "typescript": "5.9.3"
     },
