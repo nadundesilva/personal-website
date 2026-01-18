@@ -70,7 +70,7 @@
         "rehype-pretty-code": "0.14.1",
         "schema-dts": "1.1.5",
         "stylelint": "16.26.1",
-        "stylelint-config-standard": "39.0.1",
+        "stylelint-config-standard": "40.0.0",
         "typescript": "5.9.3"
     },
     "lint-staged": {
