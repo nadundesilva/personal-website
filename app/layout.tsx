@@ -30,7 +30,7 @@ import "@/styles/main.css";
 import "@/styles/syntax-highlighting.css";
 import { WebsiteHome } from "@/constants/routes";
 
-import profilePhotoImage from "@/assets/profile-photo.jpg";
+import profilePhotoImage from "@/assets/profile-photo.webp";
 
 const GOOGLE_SITE_VERIFICATION = "M8dg6gzVYU0noXFvsPOqknm_WjREFeNE212YeUk0g30";
 const YANDEX_VERIFICATION = "acbc45e5d9645cf0";
