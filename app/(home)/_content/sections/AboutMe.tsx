@@ -28,7 +28,7 @@ import Profiles from "@/constants/profiles";
 import { Link } from "@/components/content";
 import { FULL_NAME } from "@/constants/metadata";
 
-import profilePhotoImage from "@/assets/profile-photo.jpg";
+import profilePhotoImage from "@/assets/profile-photo.webp";
 
 const AboutMe = (): React.ReactElement => {
     const profilePhoto = (

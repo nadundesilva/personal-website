@@ -23,7 +23,7 @@ import {
     WEBSITE_PUBLIC_URL,
 } from "@/constants/metadata";
 
-import profilePhotoImage from "@/assets/profile-photo.jpg";
+import profilePhotoImage from "@/assets/profile-photo.webp";
 
 export const metadata: Metadata = {
     title: `${FULL_NAME} | Lead Software Engineer and Cloud Computing Enthusiast`,
