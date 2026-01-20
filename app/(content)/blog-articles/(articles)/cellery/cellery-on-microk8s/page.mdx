@@ -22,6 +22,15 @@ export const metadata = {
     title: "Cellery on MicroK8s",
     description:
         "A guide for deploying Cellery using MicroK8s for Development purposes.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

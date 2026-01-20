@@ -23,6 +23,15 @@ export const metadata = {
     title: "Production Grade Code in the Cloud Era",
     description:
         "A guide outlining the best practices for running production-grade code in the cloud.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

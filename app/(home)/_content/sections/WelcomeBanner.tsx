@@ -25,9 +25,9 @@ import {
 } from "@mui/material";
 import Image from "next-image-export-optimizer";
 import type React from "react";
-import { FULL_NAME } from "@/constants/metadata";
+import { FULL_NAME, TAGLINE } from "@/constants/metadata";
 
-import welcomeBannerImage from "@/assets/banner.jpg";
+import welcomeBannerImage from "@/assets/banner.webp";
 
 const WelcomeText = styled(Typography)({
     "color": "#ffffff",
@@ -139,7 +139,7 @@ const WelcomeBanner = (): React.ReactElement => {
                             animation: "fadeInUp 1s ease-out 0.2s both",
                         }}
                     >
-                        Lead Software Engineer &amp; Cloud Computing Enthusiast
+                        {TAGLINE}
                     </Typography>
                 </Grid>
                 <Grid size={12}>

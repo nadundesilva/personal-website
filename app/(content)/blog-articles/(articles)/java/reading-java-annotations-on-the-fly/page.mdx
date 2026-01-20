@@ -12,6 +12,15 @@ export const metadata = {
     title: "Reading Java Annotations on the fly",
     description:
         "A guide for using Java Reflections API to read annotations and perform actions based on them, which is part of a three-article series.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

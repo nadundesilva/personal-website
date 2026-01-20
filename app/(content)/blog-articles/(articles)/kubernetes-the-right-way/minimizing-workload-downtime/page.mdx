@@ -23,6 +23,15 @@ export const metadata = {
     title: "Kubernetes the Right Way: Minimizing Workload Downtime",
     description:
         "Achieving nearly zero downtime in your Kubernetes Applications requires careful design and proper Site Reliability Engineering.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

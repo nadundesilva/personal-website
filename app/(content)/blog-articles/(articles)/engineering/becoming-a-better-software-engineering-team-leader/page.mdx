@@ -26,6 +26,15 @@ export const metadata = {
     title: "Becoming a Better Software Engineering Team Leader",
     description:
         "A guide for becoming a great team leader who can walk along with a team and guide them toward achieving their goals.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

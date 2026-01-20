@@ -33,7 +33,7 @@ import { FULL_NAME } from "@/constants/metadata";
 import { People, type Person } from "@/constants/people";
 
 export const metadata: Metadata = {
-    title: `${FULL_NAME} | Certifications`,
+    title: "Certifications",
     description: `Various certifications obtained by ${FULL_NAME}.`,
 };
 

@@ -182,7 +182,7 @@ const Testimonial = ({
 );
 
 export const metadata: Metadata = {
-    title: `${FULL_NAME} | Testimonials`,
+    title: "Testimonials",
     description: `Testimonials provided by various professionals throughout the career of ${FULL_NAME}.`,
 };
 

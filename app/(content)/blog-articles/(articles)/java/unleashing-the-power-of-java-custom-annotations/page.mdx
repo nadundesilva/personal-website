@@ -12,6 +12,15 @@ export const metadata = {
     title: "Unleashing the Power of Java Custom Annotations",
     description:
         "A guide for writing Java custom annotations, which is part of a three-article series.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

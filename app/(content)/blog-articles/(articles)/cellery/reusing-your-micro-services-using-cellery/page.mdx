@@ -16,6 +16,15 @@ export const metadata = {
     title: "Reusing your micro-services using Cellery",
     description:
         "Dive into why Cells are the best way to reuse your micro-services.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

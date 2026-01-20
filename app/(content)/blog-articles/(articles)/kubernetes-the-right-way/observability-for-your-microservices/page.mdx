@@ -24,6 +24,15 @@ export const metadata = {
     title: "Kubernetes the Right Way: Observability for Your Microservices",
     description:
         "This article talks about observing a large distributed application deployed in a Kubernetes Cluster so that you can find issues faster.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

@@ -15,6 +15,7 @@
 import type { MetadataRoute } from "next";
 
 import { FULL_NAME, MAIN_DESCRIPTION } from "@/constants/metadata";
+import { getImageType } from "@/utils/image-metadata";
 
 const manifest = (): MetadataRoute.Manifest => ({
     name: FULL_NAME,
@@ -29,12 +30,12 @@ const manifest = (): MetadataRoute.Manifest => ({
         {
             src: "favicon.ico",
             sizes: "144x144 64x64 32x32 24x24 16x16",
-            type: "image/x-icon",
+            type: getImageType("favicon.ico"),
         },
         {
             src: "icon-maskable-x512.png",
             sizes: "512x512",
-            type: "image/png",
+            type: getImageType("icon-maskable-x512.png"),
             purpose: "maskable",
         },
     ],

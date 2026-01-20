@@ -16,10 +16,14 @@
 import { KeyboardArrowRight } from "@mui/icons-material";
 import { Breadcrumbs, Typography } from "@mui/material";
 import type { Route as NextRoute } from "next";
+import Script from "next/script";
 import { usePathname } from "next/navigation";
 import type React from "react";
+import { BreadcrumbList, WithContext } from "schema-dts";
 
 import { Link } from "@/components/content";
+import { ContentContainer } from "@/components/layout";
+import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 import { type Route } from "@/constants/routes";
 
 interface RouterBreadcrumbsProps {
@@ -33,10 +37,10 @@ const RouterBreadcrumbs = ({
     const pathnames =
         pathname === null ? [] : pathname.split("/").filter((x) => x);
 
-    const breadcrumbs: { name: string; path?: NextRoute<string> }[] = [
+    const breadcrumbs: { name: string; path: string }[] = [
         {
             name: "Home",
-            path: pathnames.length > 0 ? "/" : undefined,
+            path: "/",
         },
     ];
     if (pathnames.length > 0) {
@@ -50,20 +54,17 @@ const RouterBreadcrumbs = ({
                     currentBasePath + "/" + currentPathnames[0];
                 if (currentSubPath in currentRoutes) {
                     const route = currentRoutes[currentSubPath];
+                    breadcrumbs.push({
+                        name: route.name,
+                        path: currentSubPath,
+                    });
+
                     if (currentPathnames.length > 1) {
-                        breadcrumbs.push({
-                            name: route.name,
-                            path: currentSubPath as NextRoute<string>,
-                        });
                         visitRoutes(
                             route.subRoutes,
                             currentPathnames.slice(1),
                             currentSubPath,
                         );
-                    } else {
-                        breadcrumbs.push({
-                            name: route.name,
-                        });
                     }
                 }
             }
@@ -71,32 +72,61 @@ const RouterBreadcrumbs = ({
         visitRoutes(topLevelRoutes, pathnames, "");
     }
 
+    const breadcrumbJsonLd: WithContext<BreadcrumbList> = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": breadcrumbs.map((item, index) => ({
+            "@type": "ListItem",
+            "position": index + 1,
+            "name": item.name,
+            "item": `${WEBSITE_PUBLIC_URL}${item.path}`,
+        })),
+    };
+
     return (
-        <Breadcrumbs
-            aria-label="breadcrumb"
-            sx={{ margin: 3 }}
-            separator={<KeyboardArrowRight />}
-        >
-            {breadcrumbs.map((breadcrumb) => {
-                return breadcrumb.path === undefined ? (
-                    <Typography
-                        color="textPrimary"
-                        key={breadcrumb.name}
-                        data-testid="breadcrumb-item"
+        <>
+            <Script
+                id="json-ld-breadcrumb"
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(breadcrumbJsonLd),
+                }}
+            />
+            {pathname !== "/" && (
+                <ContentContainer
+                    sx={{
+                        pt: 2,
+                    }}
+                >
+                    <Breadcrumbs
+                        aria-label="breadcrumb"
+                        sx={{ margin: 3 }}
+                        separator={<KeyboardArrowRight />}
                     >
-                        {breadcrumb.name}
-                    </Typography>
-                ) : (
-                    <Link
-                        key={breadcrumb.name}
-                        href={breadcrumb.path}
-                        data-testid="breadcrumb-item"
-                    >
-                        {breadcrumb.name}
-                    </Link>
-                );
-            })}
-        </Breadcrumbs>
+                        {breadcrumbs.map((breadcrumb, index) => {
+                            const isLast = index === breadcrumbs.length - 1;
+                            return isLast ? (
+                                <Typography
+                                    color="textPrimary"
+                                    key={breadcrumb.name}
+                                    data-testid="breadcrumb-item"
+                                >
+                                    {breadcrumb.name}
+                                </Typography>
+                            ) : (
+                                <Link
+                                    key={breadcrumb.name}
+                                    href={breadcrumb.path as NextRoute<string>}
+                                    data-testid="breadcrumb-item"
+                                >
+                                    {breadcrumb.name}
+                                </Link>
+                            );
+                        })}
+                    </Breadcrumbs>
+                </ContentContainer>
+            )}
+        </>
     );
 };
 

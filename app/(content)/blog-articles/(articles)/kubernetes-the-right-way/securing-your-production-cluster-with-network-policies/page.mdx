@@ -20,6 +20,15 @@ export const metadata = {
     title: "Kubernetes the Right Way: Securing Your Production Cluster with Network Policies",
     description:
         "Kubernetes Network Policies is an important tool at your disposal for improving the Security of your Kubernetes Cluster.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

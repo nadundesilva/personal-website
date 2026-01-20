@@ -54,7 +54,7 @@ const UseCasesSection = ({
 );
 
 export const metadata: Metadata = {
-    title: `${FULL_NAME} | Personal Projects`,
+    title: "Personal Projects",
     description: `Personal projects developed by ${FULL_NAME}.`,
 };
 
