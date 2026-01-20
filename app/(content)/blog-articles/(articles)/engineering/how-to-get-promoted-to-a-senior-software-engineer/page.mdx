@@ -23,6 +23,15 @@ export const metadata = {
     title: "How to get promoted to a Senior Software Engineer",
     description:
         "Becoming a Senior Software Engineer requires gaining experience and knowledge over time. This article outlines what you should cultivate within you to become one.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

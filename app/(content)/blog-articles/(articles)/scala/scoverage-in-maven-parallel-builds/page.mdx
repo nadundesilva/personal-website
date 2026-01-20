@@ -24,6 +24,15 @@ export const metadata = {
     title: "SCoverage in Maven Parallel Builds",
     description:
         "The SCoverage report goal, like some of the other Maven plugin goals out there, is not truly thread-safe. This article covers how you can solve this issue.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

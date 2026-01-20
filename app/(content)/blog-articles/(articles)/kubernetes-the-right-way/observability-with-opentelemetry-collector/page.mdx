@@ -21,6 +21,15 @@ export const metadata = {
     title: "Kubernetes the Right Way: Observability With OpenTelemetry Collector",
     description:
         "OpenTelemetry Collector can play a big role in ensuring your Observability data pipelines work well in large microservices deployments, especially on Kubernetes.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

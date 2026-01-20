@@ -52,7 +52,7 @@ import hackaDevLogoWhiteImage from "@/assets/achievements/hackadev-logo-white.pn
 import britishCouncilLogoImage from "@/assets/achievements/british-council-logo.png";
 
 export const metadata: Metadata = {
-    title: `${FULL_NAME} | Achievements`,
+    title: "Achievements",
     description: `Various notable achievements of ${FULL_NAME}.`,
 };
 

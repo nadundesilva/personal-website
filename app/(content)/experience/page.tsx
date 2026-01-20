@@ -40,7 +40,7 @@ import mccraeTechLogoImage from "@/assets/experience/mccrae-tech-logo.svg";
 import mccraeTechLogoWhiteImage from "@/assets/experience/mccrae-tech-logo-white.svg";
 
 export const metadata: Metadata = {
-    title: `${FULL_NAME} | Experience`,
+    title: "Experience",
     description: `Professional experience of ${FULL_NAME} throughout his career.`,
 };
 

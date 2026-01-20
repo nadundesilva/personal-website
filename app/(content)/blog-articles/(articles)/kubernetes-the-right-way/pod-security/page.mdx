@@ -23,6 +23,15 @@ export const metadata = {
     title: "Kubernetes the Right Way: Pod Security",
     description:
         "When you deploy a containerized application that you developed, in a Kubernetes Cluster, there are some security-related aspects that you should implement. This article goes over some of the most important aspects of them all.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

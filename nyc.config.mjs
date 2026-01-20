@@ -14,7 +14,7 @@
  */
 import baseConfig from "@istanbuljs/nyc-config-typescript";
 
-export default {
+const config = {
     ...baseConfig,
     "check-coverage": true,
     "all": true,
@@ -26,7 +26,13 @@ export default {
         // Code coverage instrumentation wraps function calls, causing build failures.
         // See: https://nextjs.org/docs/app/building-your-application/optimizing/fonts
         "components/theme/fonts.ts",
+        // Excluded from instrumentation: Next.js route segment config exports (like `dynamic`) must be
+        // statically analyzable. Code coverage instrumentation wraps exports, causing build failures.
+        // See: https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
+        "app/**/feed.xml/route.ts",
     ],
     "reporter": ["clover", "json", "html", "text-summary"],
     "report-dir": "coverage",
 };
+
+export default config;

@@ -14,7 +14,9 @@
  */
 
 export const FULL_NAME = "Nadun De Silva";
-export const MAIN_DESCRIPTION = `${FULL_NAME} is a Lead Software Engineer specialising in Cloud Technologies.`;
+export const JOB_TITLE = "Lead Software Engineer";
+export const TAGLINE = `${JOB_TITLE} & Cloud Computing Enthusiast`;
+export const MAIN_DESCRIPTION = `${FULL_NAME} is a ${JOB_TITLE} and a Cloud Computing Enthusiast.`;
 
 const unsanitizedWebsiteUrl =
     process.env.NEXT_PUBLIC_WEBSITE_URL ?? "https://nadundesilva.com";

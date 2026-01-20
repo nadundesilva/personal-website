@@ -19,6 +19,15 @@ export const metadata = {
     title: "Power Up your Scala Code with Implicit Conversions",
     description:
         "Scala has many powerful capabilities. Implicit conversions stand out among them with the ability to avoid most of the boilerplate code.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

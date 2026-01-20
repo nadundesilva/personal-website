@@ -26,6 +26,15 @@ export const metadata = {
     title: "Handling Production Incidents like a Pro",
     description:
         "If you have been a Developer or a Site Reliability Engineer working on an Application deployed in a production environment, you would probably know how hard it is to deal with a production incident. This article outlines some of the steps you can take to minimize the damage as well as how you can systematically find and solve the problem.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {
