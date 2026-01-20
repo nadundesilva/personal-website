@@ -22,6 +22,7 @@ interface TitleProps {
 const Title = ({ children }: TitleProps): React.ReactElement => (
     <Box sx={{ mt: 7, mb: 1 }}>
         <Typography
+            component="h1"
             variant="h2"
             sx={{
                 fontWeight: 500,

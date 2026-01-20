@@ -21,6 +21,15 @@ export const metadata = {
     title: "Why You Should Adopt OpenTelemetry",
     description:
         "OpenTelemetry had been gaining momentum across many Observability vendors and products and it is becoming the de facto standard.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

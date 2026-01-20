@@ -37,7 +37,7 @@ import uomLogoImage from "@/assets/education/university-of-moratuwa-logo.png";
 import sjcLogoImage from "@/assets/education/st-josephs-college-colombo-10-logo.png";
 
 export const metadata: Metadata = {
-    title: `${FULL_NAME} | Education`,
+    title: "Education",
     description: `Educational qualifications of ${FULL_NAME}.`,
 };
 

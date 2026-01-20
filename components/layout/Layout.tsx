@@ -342,15 +342,28 @@ const Layout = ({
                 maxWidth={false}
                 component="footer"
                 sx={{
-                    textAlign: "center",
-                    pt: 3,
-                    pb: 6,
-                    bottom: 0,
-                    background: (theme: Theme) =>
+                    "textAlign": "center",
+                    "pt": 4,
+                    "pb": 6,
+                    "bottom": 0,
+                    "background": (theme: Theme) =>
                         theme.palette.background.default,
+                    "position": "relative",
+                    "&::before": {
+                        content: '""',
+                        position: "absolute",
+                        top: 0,
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        width: "80%",
+                        height: "1px",
+                        background: (theme: Theme) =>
+                            `linear-gradient(90deg, transparent, ${theme.palette.text.secondary}, transparent)`,
+                        opacity: 0.5,
+                    },
                 }}
             >
-                <Typography variant="body2">
+                <Typography variant="body2" color="text.secondary">
                     &copy; 2021-{new Date().getFullYear()} {FULL_NAME}
                 </Typography>
             </Container>

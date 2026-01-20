@@ -22,6 +22,15 @@ export const metadata = {
     title: "Reducing the Cloud Observability Expenses and Performance Impact",
     description:
         "Observability is an essential aspect of any production environment, and at the same time, it can be a massive hit on the bottom line.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

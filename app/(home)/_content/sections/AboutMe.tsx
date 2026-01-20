@@ -26,7 +26,7 @@ import type React from "react";
 
 import Profiles from "@/constants/profiles";
 import { Link } from "@/components/content";
-import { FULL_NAME } from "@/constants/metadata";
+import { FULL_NAME, JOB_TITLE } from "@/constants/metadata";
 
 import profilePhotoImage from "@/assets/profile-photo.webp";
 
@@ -78,14 +78,13 @@ const AboutMe = (): React.ReactElement => {
                         textAlign: "justify",
                     }}
                 >
-                    Lead Software Engineer with {yearsOfExperienceDisplayValue}{" "}
-                    years of experience in cloud-native application development
-                    for Kubernetes and cloud platforms. Background in
-                    architecture, user experience (UX), development, deployment,
-                    and ensuring site reliability of cloud-native applications
-                    in production environments. Experience in owning the
-                    technical direction of product areas and leading a team of
-                    engineers.
+                    {JOB_TITLE} with {yearsOfExperienceDisplayValue} years of
+                    experience in cloud-native application development for
+                    Kubernetes and cloud platforms. Background in architecture,
+                    user experience (UX), development, deployment, and ensuring
+                    site reliability of cloud-native applications in production
+                    environments. Experience in owning the technical direction
+                    of product areas and leading a team of engineers.
                 </Typography>
                 <Divider sx={{ my: { xs: 3, sm: 6 }, opacity: 0.3 }} />
                 <Box
@@ -109,11 +108,18 @@ const AboutMe = (): React.ReactElement => {
                         >
                             <Icon
                                 sx={{
-                                    fontSize: 40,
-                                    color: "text.secondary",
-                                    border: "2px solid",
-                                    borderColor: "divider",
-                                    borderRadius: 1,
+                                    "fontSize": 40,
+                                    "color": "text.secondary",
+                                    "border": "2px solid",
+                                    "borderColor": "divider",
+                                    "borderRadius": 1,
+                                    "transition":
+                                        "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                                    "&:hover": {
+                                        transform: "translateY(-2px)",
+                                        borderColor: "primary.main",
+                                        color: "primary.main",
+                                    },
                                 }}
                             />
                         </Link>

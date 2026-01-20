@@ -12,6 +12,15 @@ export const metadata = {
     title: "Processing Java Annotations at compile time using Annotation",
     description:
         "A guide for reading custom annotations at compile-time for generating code, validating, etc., which is part of a three-article series.",
+    keywords: blogMetadata.keywords,
+    openGraph: {
+        images: [blogMetadata.image.src],
+        publishedTime: blogMetadata.publishedDate.toISOString(),
+        tags: blogMetadata.keywords,
+    },
+    twitter: {
+        images: [blogMetadata.image.src],
+    },
 };
 
 export default function Layout({ children }) {

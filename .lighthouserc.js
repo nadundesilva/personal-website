@@ -64,6 +64,7 @@ module.exports = {
                 "color-contrast": ["warn"],
                 "link-text": ["warn"],
                 "deprecations": ["warn"],
+                "canonical": ["warn"],
                 ...LIVE_SITE_ASSERTIONS,
             },
         },

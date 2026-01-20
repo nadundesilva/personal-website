@@ -12,10 +12,11 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+import ContentContainer from "./ContentContainer";
 import Layout from "./Layout";
 import RouterBreadcrumbs from "./RouterBreadcrumbs";
 import useScrollOffset from "./scrolling";
 
 export default Layout;
 
-export { RouterBreadcrumbs, useScrollOffset };
+export { ContentContainer, RouterBreadcrumbs, useScrollOffset };

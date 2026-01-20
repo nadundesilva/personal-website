@@ -44,7 +44,7 @@ import siddhiLogoImage from "@/assets/projects/siddhi-logo.svg";
 import siddhiLogoWhiteImage from "@/assets/projects/siddhi-logo-white.svg";
 
 export const metadata: Metadata = {
-    title: `${FULL_NAME} | Projects`,
+    title: "Projects",
     description: `Various projects done by ${FULL_NAME} throughout his career.`,
 };
 
