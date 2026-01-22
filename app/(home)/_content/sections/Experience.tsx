@@ -23,7 +23,13 @@ import {
     TimelineConnector,
     TimelineContent,
 } from "@mui/lab";
-import { Box, Card, Typography, useMediaQuery } from "@mui/material";
+import {
+    Box,
+    Card,
+    type Theme,
+    Typography,
+    useMediaQuery,
+} from "@mui/material";
 import type React from "react";
 
 interface ExperienceItem {
@@ -34,7 +40,7 @@ interface ExperienceItem {
 }
 
 const Experience = (): React.ReactElement => {
-    const isAllContentRightAligned = useMediaQuery((theme) =>
+    const isAllContentRightAligned = useMediaQuery((theme: Theme) =>
         theme.breakpoints.down("sm"),
     );
 
@@ -110,47 +116,42 @@ const Experience = (): React.ReactElement => {
     return (
         <Timeline
             position={isAllContentRightAligned ? "right" : "alternate"}
-            sx={{ px: 0 }}
+            sx={{
+                px: 0,
+                [`& .MuiTimelineItem-root:before`]: isAllContentRightAligned
+                    ? {
+                          flex: 0,
+                          padding: 0,
+                      }
+                    : {},
+            }}
         >
             {experienceItems.map((item: ExperienceItem, index: number) => {
                 const isContentOnRight =
                     isAllContentRightAligned || index % 2 === 0;
                 return (
                     <TimelineItem key={item.timePeriod.format()}>
-                        <TimelineOppositeContent
-                            sx={{
-                                ...(isAllContentRightAligned && {
-                                    maxWidth: "40px",
-                                    flex: "0 0 40px",
-                                    display: "flex",
-                                    alignItems: "flex-start",
-                                    justifyContent: "flex-end",
-                                    pt: 2,
-                                    pl: 0,
-                                }),
-                                ...(isContentOnRight && { pl: 0 }),
-                                ...(!isContentOnRight && { pr: 0 }),
-                            }}
-                        >
-                            <Typography
-                                variant="body2"
-                                color="text.secondary"
+                        {!isAllContentRightAligned && (
+                            <TimelineOppositeContent
                                 sx={{
-                                    fontSize: { xs: 12, md: 13 },
-                                    fontWeight: 400,
-                                    letterSpacing: "0.04em",
-                                    textTransform: "uppercase",
-                                    ...(isAllContentRightAligned && {
-                                        writingMode: "vertical-rl",
-                                        textOrientation: "mixed",
-                                        transform: "rotate(180deg)",
-                                        whiteSpace: "nowrap",
-                                    }),
+                                    ...(isContentOnRight && { pl: 0 }),
+                                    ...(!isContentOnRight && { pr: 0 }),
                                 }}
                             >
-                                {item.timePeriod.format()}
-                            </Typography>
-                        </TimelineOppositeContent>
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                    sx={{
+                                        fontSize: { xs: 12, md: 13 },
+                                        fontWeight: 400,
+                                        letterSpacing: "0.04em",
+                                        textTransform: "uppercase",
+                                    }}
+                                >
+                                    {item.timePeriod.format()}
+                                </Typography>
+                            </TimelineOppositeContent>
+                        )}
                         <TimelineSeparator>
                             <TimelineDot
                                 sx={{
@@ -185,18 +186,18 @@ const Experience = (): React.ReactElement => {
                         >
                             <Card
                                 sx={{
-                                    p: 4.5,
+                                    p: { xs: 2.5, md: 4.5 },
                                     mb: 7,
                                     ...(isContentOnRight
                                         ? {
                                               borderLeft: "3px solid",
                                               borderLeftColor: "primary.main",
-                                              pl: 4.5,
+                                              pl: { xs: 2.5, md: 4.5 },
                                           }
                                         : {
                                               borderRight: "3px solid",
                                               borderRightColor: "primary.main",
-                                              pr: 4.5,
+                                              pr: { xs: 2.5, md: 4.5 },
                                           }),
                                 }}
                             >
@@ -216,6 +217,21 @@ const Experience = (): React.ReactElement => {
                                 >
                                     {item.name}
                                 </Typography>
+                                {isAllContentRightAligned && (
+                                    <Typography
+                                        variant="body2"
+                                        color="text.secondary"
+                                        mb={2}
+                                        sx={{
+                                            fontSize: { xs: 10, md: 13 },
+                                            fontWeight: 700,
+                                            letterSpacing: "0.04em",
+                                            textTransform: "uppercase",
+                                        }}
+                                    >
+                                        {item.timePeriod.format()}
+                                    </Typography>
+                                )}
                                 <Typography
                                     variant="body2"
                                     mb={3}

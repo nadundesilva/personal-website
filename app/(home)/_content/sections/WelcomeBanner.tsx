@@ -20,97 +20,135 @@ import {
     Grid,
     Link,
     Typography,
-    styled,
+    type TypographyProps,
+    type CSSProperties,
     useTheme,
+    useMediaQuery,
 } from "@mui/material";
 import Image from "next-image-export-optimizer";
-import type React from "react";
+import React from "react";
 import { FULL_NAME, TAGLINE } from "@/constants/metadata";
 
 import welcomeBannerImage from "@/assets/banner.webp";
 
-const WelcomeText = styled(Typography)({
-    "color": "#ffffff",
-    "fontSize": 44,
-    "fontWeight": 300,
-    "letterSpacing": "-0.05em",
-    "textShadow": "0 2px 24px rgba(0, 0, 0, 0.4)",
-    "@media (min-width:600px)": {
-        fontSize: 60,
-    },
-    "@media (min-width:900px)": {
-        fontSize: 72,
-        letterSpacing: "-0.06em",
-    },
-}) as typeof Typography;
+const WelcomeText = (props: TypographyProps): React.ReactElement => (
+    <Typography
+        component="h1"
+        {...props}
+        sx={{
+            color: "#ffffff",
+            fontSize: { xs: 32, sm: 44, md: 60, lg: 72 },
+            fontWeight: 300,
+            textShadow: "0 2px 24px rgba(0, 0, 0, 0.4)",
+            ...props.sx,
+        }}
+    />
+);
 
 const WelcomeBanner = (): React.ReactElement => {
     const theme = useTheme();
+    const isShortScreen = useMediaQuery("(max-height: 500px)");
+
+    const minHeightStyles = React.useMemo(() => {
+        const mapToolbarStyles = (styleObj: CSSProperties): CSSProperties =>
+            Object.entries(styleObj).reduce<CSSProperties>(
+                (styles, [key, value]) => {
+                    if (key === "minHeight") {
+                        if (typeof value === "number") {
+                            styles[key] = `calc(100dvh - ${value}px)`;
+                        } else if (
+                            typeof value === "string" &&
+                            /\d/.test(value)
+                        ) {
+                            styles[key] = `calc(100dvh - ${value})`;
+                        }
+                    } else if (
+                        typeof value === "object" &&
+                        value !== null &&
+                        !Array.isArray(value)
+                    ) {
+                        const nestedStyles = mapToolbarStyles(
+                            value as CSSProperties,
+                        );
+                        if (Object.keys(nestedStyles).length > 0) {
+                            styles[key] = nestedStyles;
+                        }
+                    }
+                    return styles;
+                },
+                {},
+            );
+
+        return mapToolbarStyles(theme.mixins.toolbar);
+    }, [theme.mixins.toolbar]);
 
     return (
         <Container
             maxWidth={false}
             disableGutters
-            sx={{ position: "relative" }}
+            sx={{
+                position: "relative",
+                ...minHeightStyles,
+                display: "flex",
+                flexDirection: "column",
+                overflow: "hidden", // Ensure background image doesn't overflow
+            }}
         >
             <Box
                 sx={{
                     position: "absolute",
-                    top: 0,
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
+                    inset: 0,
+                    zIndex: 2,
                     background:
                         "linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8))",
-                    zIndex: 2,
                 }}
             />
+
+            <Box
+                sx={{
+                    position: "absolute",
+                    inset: 0,
+                    zIndex: 1,
+                }}
+            >
+                <Image
+                    src={welcomeBannerImage}
+                    alt={`${FULL_NAME}'s Website Welcome Banner`}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    preload
+                />
+            </Box>
+
             <Grid
                 container
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
                 sx={{
-                    "position": "absolute",
-                    "textAlign": "center",
-                    "top": 0,
-                    "bottom": 0,
-                    "left": 0,
-                    "right": 0,
-                    "pt": { xs: 12, md: 20 },
-                    "pb": { xs: 10, md: 12 },
-                    "px": { xs: 2, sm: 3, md: 4 },
-                    "zIndex": 3,
-                    "alignItems": "flex-start",
-                    "justifyContent": "center",
-                    "overflowY": "auto",
-                    "scrollbarWidth": "none",
-                    "&::-webkit-scrollbar": {
-                        display: "none",
-                    },
-                    "@keyframes fadeInUp": {
-                        "0%": {
-                            opacity: 0,
-                            transform: "translateY(16px)",
-                        },
-                        "100%": {
-                            opacity: 1,
-                            transform: "translateY(0)",
-                        },
-                    },
+                    position: "relative",
+                    zIndex: 3,
+                    flex: 1,
+                    textAlign: "center",
+                    pt: isShortScreen ? 2 : { xs: 8, md: 16 },
+                    pb: isShortScreen ? 2 : { xs: 4, md: 6 },
+                    px: { xs: 2, sm: 3, md: 4 }, // Width-based (native MUI)
                 }}
             >
                 <Grid size={12}>
                     <WelcomeText
-                        component="h1"
-                        mb={{ xs: 1.5, md: 2 }}
+                        mb={isShortScreen ? 0.5 : { xs: 1.5, md: 2 }}
                         sx={{
+                            letterSpacing: "-0.05em",
                             animation: "fadeInUp 1s ease-out",
                         }}
                     >
                         Hi, I am
                     </WelcomeText>
                     <WelcomeText
-                        component="h1"
-                        mb={{ xs: 3, md: 4 }}
+                        mb={isShortScreen ? 0.5 : { xs: 3, md: 4 }}
                         sx={{
+                            letterSpacing: { xs: "-0.05em", md: "-0.06em" },
                             animation: "fadeInUp 1s ease-out 0.1s both",
                         }}
                     >
@@ -120,7 +158,7 @@ const WelcomeBanner = (): React.ReactElement => {
                         width={40}
                         height={1}
                         mx="auto"
-                        mb={{ xs: 3, md: 4 }}
+                        mb={isShortScreen ? 1 : { xs: 3, md: 4 }}
                         sx={{
                             backgroundColor: "rgba(255, 255, 255, 0.3)",
                             animation: "fadeInUp 1s ease-out 0.15s both",
@@ -128,7 +166,7 @@ const WelcomeBanner = (): React.ReactElement => {
                     />
                     <Typography
                         component="p"
-                        mb={{ xs: 5, md: 6 }}
+                        mb={isShortScreen ? 2 : { xs: 5, md: 6 }}
                         sx={{
                             color: "#ffffff",
                             fontSize: { xs: 18, sm: 22, md: 24 },
@@ -173,21 +211,7 @@ const WelcomeBanner = (): React.ReactElement => {
                     </Link>
                 </Grid>
             </Grid>
-            <Container
-                maxWidth={false}
-                disableGutters
-                sx={{
-                    position: "relative",
-                    height: `calc(100dvh - ${theme.mixins.toolbar.minHeight ?? 0}px)`,
-                }}
-            >
-                <Image
-                    src={welcomeBannerImage}
-                    alt={`${FULL_NAME}'s Website Welcome Banner`}
-                    fill
-                    style={{ objectFit: "cover", zIndex: 1 }}
-                />
-            </Container>
+
             <Box
                 role="presentation"
                 display="flex"
@@ -195,11 +219,10 @@ const WelcomeBanner = (): React.ReactElement => {
                 alignItems="center"
                 gap={1.25}
                 sx={{
-                    position: "absolute",
-                    bottom: { xs: 32, md: 48 },
-                    left: "50%",
-                    transform: "translateX(-50%)",
+                    position: "relative",
                     zIndex: 3,
+                    pb: { xs: 4, md: 6 },
+                    mt: { xs: 2, md: 0 },
                 }}
             >
                 <Typography
