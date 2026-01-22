@@ -18,6 +18,7 @@ import {
     ImageList,
     ImageListItem,
     styled,
+    type Theme,
     Typography,
     useMediaQuery,
 } from "@mui/material";
@@ -169,7 +170,9 @@ const Achievements = (): React.ReactElement => {
         );
     };
 
-    const isAboveMd = useMediaQuery((theme) => theme.breakpoints.up("md"));
+    const isAboveMd = useMediaQuery((theme: Theme) =>
+        theme.breakpoints.up("md"),
+    );
     return (
         <>
             {isAboveMd ? (
