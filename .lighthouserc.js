@@ -65,6 +65,7 @@ module.exports = {
                 "link-text": ["warn"],
                 "deprecations": ["warn"],
                 "canonical": ["warn"],
+                "forced-reflow-insight": ["warn"],
                 ...LIVE_SITE_ASSERTIONS,
             },
         },

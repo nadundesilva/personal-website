@@ -224,6 +224,7 @@ const Layout = ({
                             component="h1"
                             variant="h6"
                             sx={{
+                                "fontSize": { xs: 16, sm: 20 },
                                 "color": "#ffffff",
                                 "transition": "opacity 0.2s ease-in-out",
                                 "&:hover": {
@@ -331,7 +332,8 @@ const Layout = ({
                 disableGutters
                 maxWidth={false}
                 sx={{
-                    overflow: "hidden",
+                    overflowX: "hidden",
+                    maxWidth: "100%",
                     background: (theme: Theme) =>
                         theme.palette.background.default,
                 }}
@@ -344,7 +346,7 @@ const Layout = ({
                 sx={{
                     "textAlign": "center",
                     "pt": 4,
-                    "pb": 6,
+                    "pb": 10,
                     "bottom": 0,
                     "background": (theme: Theme) =>
                         theme.palette.background.default,
