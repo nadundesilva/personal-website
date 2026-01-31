@@ -23,7 +23,6 @@ import {
     type TypographyProps,
     type CSSProperties,
     useTheme,
-    useMediaQuery,
 } from "@mui/material";
 import Image from "next-image-export-optimizer";
 import React from "react";
@@ -47,7 +46,6 @@ const WelcomeText = (props: TypographyProps): React.ReactElement => (
 
 const WelcomeBanner = (): React.ReactElement => {
     const theme = useTheme();
-    const isShortScreen = useMediaQuery("(max-height: 500px)");
 
     const minHeightStyles = React.useMemo(() => {
         const mapToolbarStyles = (styleObj: CSSProperties): CSSProperties =>
@@ -117,6 +115,7 @@ const WelcomeBanner = (): React.ReactElement => {
                     fill
                     style={{ objectFit: "cover" }}
                     preload
+                    fetchPriority="high"
                 />
             </Box>
 
@@ -126,30 +125,40 @@ const WelcomeBanner = (): React.ReactElement => {
                 justifyContent="center"
                 alignItems="center"
                 sx={{
-                    position: "relative",
-                    zIndex: 3,
-                    flex: 1,
-                    textAlign: "center",
-                    pt: isShortScreen ? 2 : { xs: 8, md: 16 },
-                    pb: isShortScreen ? 2 : { xs: 4, md: 6 },
-                    px: { xs: 2, sm: 3, md: 4 }, // Width-based (native MUI)
+                    "position": "relative",
+                    "zIndex": 3,
+                    "flex": 1,
+                    "textAlign": "center",
+                    "pt": { xs: 8, md: 16 },
+                    "pb": { xs: 4, md: 6 },
+                    "px": { xs: 2, sm: 3, md: 4 }, // Width-based (native MUI)
+                    "@media (max-height: 500px)": {
+                        pt: 2,
+                        pb: 2,
+                    },
                 }}
             >
                 <Grid size={12}>
                     <WelcomeText
-                        mb={isShortScreen ? 0.5 : { xs: 1.5, md: 2 }}
+                        mb={{ xs: 1.5, md: 2 }}
                         sx={{
-                            letterSpacing: "-0.05em",
-                            animation: "fadeInUp 1s ease-out",
+                            "letterSpacing": "-0.05em",
+                            "animation": "fadeInUp 1s ease-out",
+                            "@media (max-height: 500px)": {
+                                mb: 0.5,
+                            },
                         }}
                     >
                         Hi, I am
                     </WelcomeText>
                     <WelcomeText
-                        mb={isShortScreen ? 0.5 : { xs: 3, md: 4 }}
+                        mb={{ xs: 3, md: 4 }}
                         sx={{
-                            letterSpacing: { xs: "-0.05em", md: "-0.06em" },
-                            animation: "fadeInUp 1s ease-out 0.1s both",
+                            "letterSpacing": { xs: "-0.05em", md: "-0.06em" },
+                            "animation": "fadeInUp 1s ease-out 0.1s both",
+                            "@media (max-height: 500px)": {
+                                mb: 0.5,
+                            },
                         }}
                     >
                         Nadun De Silva
@@ -158,23 +167,29 @@ const WelcomeBanner = (): React.ReactElement => {
                         width={40}
                         height={1}
                         mx="auto"
-                        mb={isShortScreen ? 1 : { xs: 3, md: 4 }}
+                        mb={{ xs: 3, md: 4 }}
                         sx={{
-                            backgroundColor: "rgba(255, 255, 255, 0.3)",
-                            animation: "fadeInUp 1s ease-out 0.15s both",
+                            "backgroundColor": "rgba(255, 255, 255, 0.3)",
+                            "animation": "fadeInUp 1s ease-out 0.15s both",
+                            "@media (max-height: 500px)": {
+                                mb: 1,
+                            },
                         }}
                     />
                     <Typography
                         component="p"
-                        mb={isShortScreen ? 2 : { xs: 5, md: 6 }}
+                        mb={{ xs: 5, md: 6 }}
                         sx={{
-                            color: "#ffffff",
-                            fontSize: { xs: 18, sm: 22, md: 24 },
-                            fontWeight: 300,
-                            opacity: 0.9,
-                            letterSpacing: "0.04em",
-                            textShadow: "0 1px 12px rgba(0, 0, 0, 0.25)",
-                            animation: "fadeInUp 1s ease-out 0.2s both",
+                            "color": "#ffffff",
+                            "fontSize": { xs: 18, sm: 22, md: 24 },
+                            "fontWeight": 300,
+                            "opacity": 0.9,
+                            "letterSpacing": "0.04em",
+                            "textShadow": "0 1px 12px rgba(0, 0, 0, 0.25)",
+                            "animation": "fadeInUp 1s ease-out 0.2s both",
+                            "@media (max-height: 500px)": {
+                                mb: 2,
+                            },
                         }}
                     >
                         {TAGLINE}
