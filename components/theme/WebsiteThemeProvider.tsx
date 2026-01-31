@@ -26,7 +26,7 @@ const customPrimary = {
 };
 
 const customSecondary = {
-    main: "#6A89A7",
+    main: "#4a6785",
     light: "#88BDF2",
     dark: "#384959",
     contrastText: "#ffffff",
