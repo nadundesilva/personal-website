@@ -21,6 +21,8 @@ export const metadata: Metadata = {
     authors: [{ name: FULL_NAME, url: WEBSITE_PUBLIC_URL }],
     category: "Computer Science and Software Engineering",
     robots: {
+        "index": true,
+        "follow": true,
         "max-image-preview": "large",
         "max-snippet": -1,
         "max-video-preview": -1,
@@ -37,6 +39,7 @@ export const metadata: Metadata = {
         creator: "@nadunrds",
     },
     alternates: {
+        canonical: "./", // Next.js resolves this to the full URL
         types: {
             "application/rss+xml": `${WEBSITE_PUBLIC_URL}/blog-articles/feed.xml`,
         },
