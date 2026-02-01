@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     },
     description: MAIN_DESCRIPTION,
     alternates: {
-        canonical: WEBSITE_PUBLIC_URL,
+        canonical: "./", // Next.js resolves this to the full URL
     },
     authors: { name: FULL_NAME, url: WEBSITE_PUBLIC_URL },
     creator: FULL_NAME,
