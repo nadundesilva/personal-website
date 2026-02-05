@@ -29,7 +29,7 @@ import Image from "next-image-export-optimizer";
 import type React from "react";
 
 import { Link } from "@/components/content";
-import { type Certificate, Certificates } from "@/constants/certificates";
+import Certificates, { type Certificate } from "@/constants/certificates";
 
 const Certifications = (): React.ReactElement => {
     const theme = useTheme();

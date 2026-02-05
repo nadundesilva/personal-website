@@ -10,99 +10,98 @@
  *
  * Website: https://nadundesilva.com
  *
- * © 2023 Nadun De Silva. All rights reserved.
+ * © 2026 Nadun De Silva. All rights reserved.
  */
 
-export interface Skill {
-    category: string;
-    skills: string[];
-}
+const Skills = {
+    // Programming Languages
+    Java: "Java",
+    Ballerina: "Ballerina",
+    GoLang: "GoLang",
+    Python: "Python",
+    Scala: "Scala",
+    JavaScript: "JavaScript",
+    TypeScript: "TypeScript",
+    CompilerTheory: "Compiler Theory",
 
-const Skills: Skill[] = [
-    {
-        category: "Programming Languages",
-        skills: [
-            "Java",
-            "GoLang",
-            "Python",
-            "Scala",
-            "JavaScript",
-            "TypeScript",
-        ],
-    },
-    {
-        category: "Cloud Platforms",
-        skills: ["AWS", "GCP", "Azure"],
-    },
-    {
-        category: "Containerization & Orchestration",
-        skills: [
-            "Kubernetes",
-            "Azure Kubernetes Service",
-            "AWS Elastic Container Service",
-            "Docker",
-            "Kustomize",
-            "Helm",
-            "Kubernetes Operator Framework",
-            "Istio",
-        ],
-    },
-    {
-        category: "Infrastructure as Code & Automation",
-        skills: ["Terraform", "Ansible", "GitHub Actions", "GitLab CI/CD"],
-    },
-    {
-        category: "Application Frameworks & Libraries",
-        skills: [
-            "Spring Boot",
-            "ExpressJS",
-            "React",
-            "NextJS",
-            "Apache Lucene",
-            "D3.js",
-        ],
-    },
-    {
-        category: "Databases & Data Storage",
-        skills: [
-            "Influx DB",
-            "Redis",
-            "Orient DB",
-            "Azure Data Explorer",
-            "Azure Data Lake",
-            "MySQL",
-            "MsSQL",
-        ],
-    },
-    {
-        category: "Event-Driven Architecture & Messaging",
-        skills: ["Kafka", "SQS", "Azure Event Hub"],
-    },
-    {
-        category: "API Development & Standards",
-        skills: ["REST", "GraphQL", "gRPC", "OpenAPI", "OAuth2", "OIDC"],
-    },
-    {
-        category: "Observability & Monitoring",
-        skills: [
-            "OpenTelemetry",
-            "DataDog",
-            "Prometheus",
-            "Jaeger",
-            "CloudWatch",
-        ],
-    },
-    {
-        category: "Software Engineering Practices",
-        skills: [
-            "Agile",
-            "DevOps",
-            "GitOps",
-            "Site Reliability Engineering",
-            "Disaster Recovery Planning",
-            "Threat Modeling",
-        ],
-    },
-];
+    // Cloud Platforms
+    Aws: "AWS",
+    Gcp: "GCP",
+    Azure: "Azure",
+
+    // Containerization & Orchestration
+    Kubernetes: "Kubernetes",
+    AwsEcs: "AWS ECS",
+    Docker: "Docker",
+    Kustomize: "Kustomize",
+    Helm: "Helm",
+    KubernetesOperatorFramework: "Kubernetes Operator Framework",
+    Istio: "Istio",
+    KubernetesControllers: "Kubernetes Controllers",
+
+    // Infrastructure as Code & Automation
+    Terraform: "Terraform",
+    Ansible: "Ansible",
+    GitHubActions: "GitHub Actions",
+    GitLabCi: "GitLab CI/CD",
+    Maven: "Maven",
+
+    // Application Frameworks & Libraries
+    SpringBoot: "Spring Boot",
+    ExpressJS: "ExpressJS",
+    React: "React",
+    NextJS: "NextJS",
+    ApacheLucene: "Apache Lucene",
+    D3js: "D3.js",
+
+    // Databases & Data Storage
+    InfluxDB: "Influx DB",
+    Redis: "Redis",
+    OrientDB: "Orient DB",
+    AzureDataExplorer: "Azure Data Explorer",
+    AzureDataLake: "Azure Data Lake",
+    MySQL: "MySQL",
+    MsSQL: "MsSQL",
+
+    // Event-Driven Architecture & Messaging
+    Kafka: "Kafka",
+    AwsSqs: "AWS SQS",
+    AzureEventHub: "Azure Event Hub",
+    StreamProcessing: "Stream Processing",
+
+    // API Development & Standards
+    Rest: "REST",
+    GraphQl: "GraphQL",
+    Grpc: "gRPC",
+    OpenApi: "OpenAPI",
+    OAuth2: "OAuth2",
+    Oidc: "OIDC",
+
+    // Observability & Monitoring
+    OpenTelemetry: "OpenTelemetry",
+    DataDog: "DataDog",
+    Prometheus: "Prometheus",
+    Jaeger: "Jaeger",
+    AwsCloudWatch: "AWS CloudWatch",
+
+    // Software Engineering Practices
+    Agile: "Agile",
+    DevOps: "DevOps",
+    GitOps: "GitOps",
+    SiteReliabilityEngineering: "Site Reliability Engineering",
+    DisasterRecoveryPlanning: "Disaster Recovery Planning",
+    ThreatModeling: "Threat Modeling",
+    SoftwareEngineering: "Software Engineering",
+    TechnicalLeadership: "Technical Leadership",
+    Microservices: "Microservices",
+    CloudNativeApplicationDevelopment: "Cloud Native Application Development",
+    CellBasedArchitecture: "Cell-based Architecture",
+
+    // Artificial Intelligence & Machine Learning
+    DeepLearning: "Deep Learning",
+    NeuralNetworks: "Neural Networks",
+    TensorFlow: "TensorFlow",
+    ReinforcementLearning: "Reinforcement Learning",
+};
 
 export default Skills;

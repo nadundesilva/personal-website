@@ -18,7 +18,7 @@ export interface Institute {
     link: string;
 }
 
-export const Institutes: Record<string, Institute> = {
+const Institutes: Record<string, Institute> = {
     StJosephsCollegeColombo10: {
         name: "St. Joseph's College",
         link: "https://www.stjosephscollege.lk/",
@@ -60,3 +60,5 @@ export const Institutes: Record<string, Institute> = {
         link: "https://www.amii.ca/",
     },
 };
+
+export default Institutes;
