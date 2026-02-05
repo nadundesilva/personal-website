@@ -28,7 +28,7 @@ import {
 } from "@/components/content";
 import { Date, DateRange, Now } from "@/constants/date";
 import { FULL_NAME } from "@/constants/metadata";
-import { Projects } from "@/constants/projects";
+import Projects from "@/constants/projects";
 
 import gsocLogoImage from "@/assets/experience/gsoc-logo.svg";
 import gsocLogoWhiteImage from "@/assets/experience/gsoc-logo-white.svg";
