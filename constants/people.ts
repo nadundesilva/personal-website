@@ -18,7 +18,7 @@ export interface Person {
     profile: string;
 }
 
-export const People: Record<string, Person> = {
+const People: Record<string, Person> = {
     AndrewNg: {
         name: "Andrew Ng",
         profile: "https://en.wikipedia.org/wiki/Andrew_Ng",
@@ -36,3 +36,5 @@ export const People: Record<string, Person> = {
         profile: "https://www.coursera.org/instructor/martha-white",
     },
 };
+
+export default People;

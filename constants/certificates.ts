@@ -14,7 +14,8 @@
  */
 import { type StaticImageData } from "next/image";
 import { Date } from "./date";
-import { type Institute, Institutes } from "./institutes";
+import Institutes, { type Institute } from "./institutes";
+import Skills from "@/constants/skills";
 
 import deepLearningAiLogoImage from "@/assets/certifications/deep-learning-ai-logo.png";
 import universityOfAlbertaLogoImage from "@/assets/certifications/university-of-alberta-logo.png";
@@ -32,9 +33,10 @@ export interface Certificate {
     };
     issuer: Institute;
     completedOn: Date;
+    skills: string[];
 }
 
-export const Certificates: Record<string, Certificate> = {
+const Certificates: Record<string, Certificate> = {
     DeepLearningSpecialization: {
         name: "Deep Learning",
         type: "Specialization",
@@ -46,6 +48,12 @@ export const Certificates: Record<string, Certificate> = {
         },
         issuer: Institutes.DeepLearningAi,
         completedOn: new Date(2021, "June"),
+        skills: [
+            Skills.DeepLearning,
+            Skills.NeuralNetworks,
+            Skills.Python,
+            Skills.TensorFlow,
+        ],
     },
     FundamentalsOfReinforcementLearning: {
         name: "Fundamentals of Reinforcement Learning",
@@ -58,6 +66,11 @@ export const Certificates: Record<string, Certificate> = {
         },
         issuer: Institutes.UniversityOfAlberta,
         completedOn: new Date(2021, "September"),
+        skills: [
+            Skills.ReinforcementLearning,
+            Skills.Python,
+            Skills.TensorFlow,
+        ],
     },
     BuildBasicGenerativeAdversarialNetworks: {
         name: "Build Basic Generative Adversarial Networks (GANs)",
@@ -70,6 +83,12 @@ export const Certificates: Record<string, Certificate> = {
         },
         issuer: Institutes.DeepLearningAi,
         completedOn: new Date(2021, "July"),
+        skills: [
+            Skills.DeepLearning,
+            Skills.NeuralNetworks,
+            Skills.Python,
+            Skills.TensorFlow,
+        ],
     },
     CertifiedKubernetesAdministrator: {
         name: "Certified Kubernetes Administrator (CKA)",
@@ -82,6 +101,12 @@ export const Certificates: Record<string, Certificate> = {
         },
         issuer: Institutes.LinuxFoundation,
         completedOn: new Date(2020, "December"),
+        skills: [
+            Skills.Kubernetes,
+            Skills.Docker,
+            Skills.Microservices,
+            Skills.DevOps,
+        ],
     },
     CertifiedKubernetesApplicationDeveloper: {
         name: "Certified Kubernetes Application Developer (CKAD)",
@@ -94,5 +119,14 @@ export const Certificates: Record<string, Certificate> = {
         },
         issuer: Institutes.LinuxFoundation,
         completedOn: new Date(2020, "January"),
+        skills: [
+            Skills.Kubernetes,
+            Skills.Docker,
+            Skills.Microservices,
+            Skills.DevOps,
+            Skills.CloudNativeApplicationDevelopment,
+        ],
     },
 };
+
+export default Certificates;

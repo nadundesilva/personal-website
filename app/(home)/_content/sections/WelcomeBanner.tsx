@@ -114,6 +114,7 @@ const WelcomeBanner = (): React.ReactElement => {
                     alt={`${FULL_NAME}'s Website Welcome Banner`}
                     fill
                     style={{ objectFit: "cover" }}
+                    sizes="100vw"
                     preload
                     fetchPriority="high"
                 />
