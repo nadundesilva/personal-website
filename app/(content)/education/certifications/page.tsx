@@ -27,10 +27,10 @@ import {
     SectionHeading,
     Title,
 } from "@/components/content";
-import { type Certificate, Certificates } from "@/constants/certificates";
-import { type Institute, Institutes } from "@/constants/institutes";
+import Certificates, { type Certificate } from "@/constants/certificates";
+import Institutes, { type Institute } from "@/constants/institutes";
 import { FULL_NAME } from "@/constants/metadata";
-import { People, type Person } from "@/constants/people";
+import People, { type Person } from "@/constants/people";
 
 export const metadata: Metadata = {
     title: "Certifications",

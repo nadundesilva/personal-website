@@ -30,7 +30,7 @@ import {
 } from "@/components/content";
 import { Date, DateRange, Now } from "@/constants/date";
 import { FULL_NAME } from "@/constants/metadata";
-import { Projects as ProjectDetails } from "@/constants/projects";
+import ProjectDetails from "@/constants/projects";
 
 import indexityLogoImage from "@/assets/projects/indexity-logo.svg";
 import indexityLogoWhiteImage from "@/assets/projects/indexity-logo-white.svg";

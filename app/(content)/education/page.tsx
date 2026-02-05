@@ -30,7 +30,7 @@ import {
     Title,
 } from "@/components/content";
 import { Date, DateRange } from "@/constants/date";
-import { type Institute, Institutes } from "@/constants/institutes";
+import Institutes, { type Institute } from "@/constants/institutes";
 import { FULL_NAME } from "@/constants/metadata";
 
 import uomLogoImage from "@/assets/education/university-of-moratuwa-logo.png";

@@ -36,37 +36,40 @@ const pageLoader = (): JSX.Element => (
 const AboutMeSection = dynamic(async () => await import("./sections/AboutMe"), {
     loading: pageLoader,
 });
-const AchievementsSection = dynamic(
-    async () => await import("./sections/Achievements"),
-    {
-        loading: pageLoader,
-    },
-);
-const ContributedProjectsSection = dynamic(
-    async () => await import("./sections/ContributedProjects"),
-    {
-        loading: pageLoader,
-    },
-);
-const CertificationsSection = dynamic(
-    async () => await import("./sections/Certifications"),
-    {
-        loading: pageLoader,
-    },
-);
+
 const ExperienceSection = dynamic(
     async () => await import("./sections/Experience"),
     {
         loading: pageLoader,
     },
 );
-const ProfilesSection = dynamic(
-    async () => await import("./sections/Profiles"),
+
+const ContributedProjectsSection = dynamic(
+    async () => await import("./sections/ContributedProjects"),
     {
         loading: pageLoader,
     },
 );
+
+const AchievementsSection = dynamic(
+    async () => await import("./sections/Achievements"),
+    {
+        loading: pageLoader,
+    },
+);
+
 const SkillsSection = dynamic(async () => await import("./sections/Skills"), {
+    loading: pageLoader,
+});
+
+const CertificationsSection = dynamic(
+    async () => await import("./sections/Certifications"),
+    {
+        loading: pageLoader,
+    },
+);
+
+const ContactSection = dynamic(async () => await import("./sections/Contact"), {
     loading: pageLoader,
 });
 
@@ -104,9 +107,9 @@ const PageContent = (): React.ReactElement => {
             sectionId: "certifications",
         },
         {
-            name: "Profiles",
-            Component: ProfilesSection,
-            sectionId: "profiles",
+            name: "Contact",
+            Component: ContactSection,
+            sectionId: "contact",
         },
     ];
 
