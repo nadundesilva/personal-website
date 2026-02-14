@@ -20,7 +20,7 @@ jobs:
                   persist-credentials: false
             - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
               with:
-                  node-version: "24.13.0"
+                  node-version: "24.13.1"
             - name: Install Dependencies
               run: npm ci
             - name: Run Linter
@@ -42,11 +42,11 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
               with:
-                  node-version: "24.13.0"
+                  node-version: "24.13.1"
             - name: Install Dependencies
               run: npm ci
             - name: Lint Code Base
-              uses: super-linter/super-linter@12562e48d7059cf666c43a4ecb0d3b5a2b31bd9e # v8.4.0
+              uses: super-linter/super-linter@61abc07d755095a68f4987d1c2c3d1d64408f1f9 # v8.5.0
               env:
                   DEFAULT_BRANCH: main
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -88,7 +88,7 @@ jobs:
                   output: trivy-results.sarif
                   ignore-unfixed: true
             - name: Upload Trivy scan results to GitHub Security tab
-              uses: github/codeql-action/upload-sarif@b20883b0cd1f46c72ae0ba6d1090936928f9fa30 # v4.32.0
+              uses: github/codeql-action/upload-sarif@45cbd0c69e560cd9e7cd7f8c32362050c9b7ded2 # v4.32.2
               if: always()
               with:
                   sarif_file: trivy-results.sarif
@@ -112,7 +112,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
               with:
-                  node-version: "24.13.0"
+                  node-version: "24.13.1"
             - name: Install Dependencies
               run: npm ci
             - name: Instrument Website for Code Coverage
@@ -123,7 +123,7 @@ jobs:
               env:
                   BUILD_TYPE: test
             - name: Run E2E Tests
-              uses: cypress-io/github-action@0f330ebf0d60f87608ed72f1d6232e5644aa3171 # v7.1.1
+              uses: cypress-io/github-action@84d178e4bbce871e23f2ffa3085898cde0e4f0ec # v7.1.2
               with:
                   start: bash .github/scripts/start-server.sh
                   browser: ${{ matrix.browser }}
@@ -171,7 +171,7 @@ jobs:
                   persist-credentials: false
             - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
               with:
-                  node-version: "24.13.0"
+                  node-version: "24.13.1"
             - name: Install Dependencies
               run: npm ci
             - name: Build Site
@@ -208,7 +208,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
               with:
-                  node-version: "24.13.0"
+                  node-version: "24.13.1"
             - name: Install Dependencies
               run: npm ci
             - name: Download Site
@@ -259,7 +259,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
               with:
-                  node-version: "24.13.0"
+                  node-version: "24.13.1"
             - name: Install Dependencies
               run: npm ci
             - name: Download Site
@@ -268,7 +268,7 @@ jobs:
                   name: site
                   path: _site/
             - name: Run E2E Tests
-              uses: cypress-io/github-action@0f330ebf0d60f87608ed72f1d6232e5644aa3171 # v7.1.1
+              uses: cypress-io/github-action@84d178e4bbce871e23f2ffa3085898cde0e4f0ec # v7.1.2
               with:
                   start: bash .github/scripts/start-server.sh
                   browser: ${{ matrix.browser }}
@@ -312,7 +312,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
               with:
-                  node-version: "24.13.0"
+                  node-version: "24.13.1"
             - name: Run Lighthouse Audit
               run: |
                   ls -la
@@ -359,7 +359,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
               with:
-                  node-version: "24.13.0"
+                  node-version: "24.13.1"
                   package-manager-cache: false
             - name: Deploy
               uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65 # v3.14.1
