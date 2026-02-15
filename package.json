@@ -43,7 +43,7 @@
         "react-dom": "^19.2.4"
     },
     "devDependencies": {
-        "@cypress/code-coverage": "3.14.7",
+        "@cypress/code-coverage": "4.0.0",
         "@istanbuljs/nyc-config-typescript": "1.0.2",
         "@mdx-js/loader": "3.1.1",
         "@mdx-js/react": "3.1.1",
