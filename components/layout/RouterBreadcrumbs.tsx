@@ -110,6 +110,7 @@ const RouterBreadcrumbs = ({
                                     color="textPrimary"
                                     key={breadcrumb.name}
                                     data-testid="breadcrumb-item"
+                                    aria-current="page"
                                 >
                                     {breadcrumb.name}
                                 </Typography>

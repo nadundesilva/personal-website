@@ -12,14 +12,14 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import type { Metadata } from "next";
 import type React from "react";
 
 import {
+    HighlightsSection,
     Link,
     Logo,
-    List,
     ListItem,
     Paragraph,
     Photo,
@@ -27,7 +27,9 @@ import {
     SectionHeading,
     Title,
 } from "@/components/content";
-import { Date, DateRange } from "@/constants/date";
+import AchievementDetails, { type Achievement } from "@/constants/achievements";
+import Companies, { type Company } from "@/constants/companies";
+import Competitions, { type Competition } from "@/constants/competitions";
 import Institutes, { type Institute } from "@/constants/institutes";
 import { FULL_NAME } from "@/constants/metadata";
 
@@ -40,21 +42,35 @@ import angelHack2016BikeImage from "@/assets/achievements/angel-hack-2016-bike.j
 import hsbcYouthEnterpriseAwards2015Image from "@/assets/achievements/hsbc-youth-enterprise-awards-2015.jpg";
 import hsbcYouthEnterpriseAwards2015DiscussionImage from "@/assets/achievements/hsbc-youth-enterprise-awards-2015-discussion.jpg";
 
-import wso2LogoImage from "@/assets/experience/wso2-logo.svg";
-import wso2LogoWhiteImage from "@/assets/experience/wso2-logo-white.svg";
-import uomLogoImage from "@/assets/education/university-of-moratuwa-logo.png";
-import nasaSpaceAppsChallengeLogoImage from "@/assets/achievements/nasa-space-apps-logo.png";
-import nasaSpaceAppsChallengeLogoWhiteImage from "@/assets/achievements/nasa-space-apps-logo-white.png";
-import angelHackLogoImage from "@/assets/achievements/angel-hack-logo.png";
-import angelHackLogoWhiteImage from "@/assets/achievements/angel-hack-logo-white.png";
-import hackaDevLogoImage from "@/assets/achievements/hackadev-logo.png";
-import hackaDevLogoWhiteImage from "@/assets/achievements/hackadev-logo-white.png";
-import britishCouncilLogoImage from "@/assets/achievements/british-council-logo.png";
-
 export const metadata: Metadata = {
     title: "Achievements",
     description: `Various notable achievements of ${FULL_NAME}.`,
 };
+
+interface AchievementSectionHeadingProps {
+    achievement: Achievement;
+    id: string;
+}
+
+const AchievementSectionHeading = ({
+    achievement,
+    id,
+}: AchievementSectionHeadingProps): React.ReactElement => (
+    <SectionHeading
+        id={id}
+        date={achievement.date}
+        logo={
+            <Logo
+                srcLight={achievement.logo.srcLight}
+                srcDark={achievement.logo.srcDark}
+                alt=""
+                recommendedSx={achievement.logoSx}
+            />
+        }
+    >
+        {achievement.title}
+    </SectionHeading>
+);
 
 const Achievements = (): React.ReactElement => {
     const generateLink = (text: string, href: string): React.ReactElement => (
@@ -62,9 +78,16 @@ const Achievements = (): React.ReactElement => {
             {text}
         </Link>
     );
-    const NasaSpaceAppsChallenge = generateLink(
-        "NASA Space Apps Challenge",
-        "https://www.spaceappschallenge.org/",
+    const generateCompetitionLink = (
+        competition: Competition,
+    ): React.ReactElement => generateLink(competition.name, competition.link);
+    const generateInstituteLink = (institute: Institute): React.ReactElement =>
+        generateLink(institute.name, institute.link);
+    const generateCompanyLink = (company: Company): React.ReactElement =>
+        generateLink(company.name, company.link);
+
+    const NasaSpaceAppsChallenge = generateCompetitionLink(
+        Competitions.NasaSpaceAppsChallenge,
     );
     const OurEcologicalNeighborhood = generateLink(
         "Our Ecological Neighborhood",
@@ -78,83 +101,32 @@ const Achievements = (): React.ReactElement => {
         "Team Codon",
         "https://2017.spaceappschallenge.org/challenges/our-ecological-neighborhood/where-genes-flow/teams/codon",
     );
-    const HackaDev = generateLink("HackaDev", "https://www.hackadev.lk/");
-    const AngelHack = generateLink("Angel Hack", "https://angelhack.com/");
+    const HackaDev = generateCompetitionLink(Competitions.HackaDev);
+    const AngelHack = generateCompetitionLink(Competitions.AngelHack);
     const Unity = generateLink("Unity", "https://unity.com/");
 
-    const generateInstituteLink = (institute: Institute): React.ReactElement =>
-        generateLink(institute.name, institute.link);
     const UniversityOfMoratuwa = generateInstituteLink(
         Institutes.UniversityOfMoratuwa,
     );
-    const NASA = generateInstituteLink(Institutes.NASA);
-    const BritishCouncilHSBCYouthEnterpriseAwards = generateInstituteLink(
-        Institutes.BritishCouncilHSBCYouthEnterpriseAwards,
+    const NASA = generateLink("NASA", "https://www.nasa.gov/");
+    const BritishCouncilHSBCYouthEnterpriseAwards = generateCompetitionLink(
+        Competitions.BritishCouncilHSBCYouthEnterpriseAwards,
     );
-    const WSO2 = generateInstituteLink(Institutes.WSO2);
-
-    const wso2Logo = (
-        <Logo
-            srcLight={wso2LogoImage}
-            srcDark={wso2LogoWhiteImage}
-            alt="WSO2"
-            recommendedSx={{ height: "2.5em" }}
-        />
-    );
-    const uomLogo = (
-        <Logo
-            srcLight={uomLogoImage}
-            srcDark={uomLogoImage}
-            alt="University of Moratuwa"
-            recommendedSx={{ height: "4em" }}
-        />
-    );
-    const nasaSpaceAppsChallengeLogo = (
-        <Logo
-            srcLight={nasaSpaceAppsChallengeLogoImage}
-            srcDark={nasaSpaceAppsChallengeLogoWhiteImage}
-            alt="NASA Space Apps Challenge"
-            recommendedSx={{ height: "2.5em" }}
-        />
-    );
-    const angelHackLogo = (
-        <Logo
-            srcLight={angelHackLogoImage}
-            srcDark={angelHackLogoWhiteImage}
-            alt="Angel Hack"
-            recommendedSx={{ height: "2.5em" }}
-        />
-    );
-    const hackaDevLogo = (
-        <Logo
-            srcLight={hackaDevLogoImage}
-            srcDark={hackaDevLogoWhiteImage}
-            alt="HackaDev"
-            recommendedSx={{ height: "4.5em" }}
-        />
-    );
-    const britishCouncilLogo = (
-        <Logo
-            srcLight={britishCouncilLogoImage}
-            srcDark={britishCouncilLogoImage}
-            alt="British Council"
-            recommendedSx={{ height: "2.5em" }}
-        />
-    );
+    const WSO2 = generateCompanyLink(Companies.WSO2);
 
     return (
         <>
             <Title>Achievements</Title>
-            <Section>
-                <SectionHeading
-                    date={new DateRange(new Date(2019), new Date(2021))}
-                    logo={wso2Logo}
-                >
-                    WSO2 Sustained Outstanding Contribution Award
-                </SectionHeading>
+            <Section labelledById="section-wso2-outstanding-contribution">
+                <AchievementSectionHeading
+                    id="section-wso2-outstanding-contribution"
+                    achievement={
+                        AchievementDetails.WSO2SustainedOutstandingContributionAward
+                    }
+                />
                 <Photo
                     src={wso2OutstandingContributorImage}
-                    alt="WSO2 Sustained Outstanding Contribution Award"
+                    alt="Sustained Outstanding Contribution Award presented by WSO2."
                     float="right"
                 />
                 <Paragraph>
@@ -167,71 +139,61 @@ const Achievements = (): React.ReactElement => {
                 </Paragraph>
                 <Paragraph>
                     In 2021, this award was changed to be only awarded for the
-                    top 5% employees at {WSO2} making it extremely hard to
-                    achieve. In the year 2021, I was awarded this with only 18
-                    other people in the whole company gaining the same award.
-                    This is the best award offered for an employee for
-                    exceptional performance at {WSO2}.
+                    top 5% employees at {Companies.WSO2.name} making it
+                    extremely hard to achieve. In the year 2021, I was awarded
+                    this with only 18 other people in the whole company gaining
+                    the same award. This is the best award offered for an
+                    employee for exceptional performance at{" "}
+                    {Companies.WSO2.name}.
                 </Paragraph>
             </Section>
-            <Section>
-                <SectionHeading
-                    date={new DateRange(new Date(2014), new Date(2018))}
-                    logo={uomLogo}
-                >
-                    Placements on the Dean&lsquo;s List at the University of
-                    Moratuwa
-                </SectionHeading>
+            <Section labelledById="section-uom-deans-list">
+                <AchievementSectionHeading
+                    id="section-uom-deans-list"
+                    achievement={AchievementDetails.PlacementsOnTheDeansList}
+                />
                 <Photo
                     src={uomDeansList2017Image}
-                    alt="University of Moratuwa Deans List 2017"
+                    alt="Certificate indicating placement on the Dean's List at the University of Moratuwa."
                     float="right"
                 />
                 <Paragraph>
                     During my B.Sc. (Hons.) in Engineering (Computer Science and
-                    Engineering) degree at the University of Moratuwa, I was
+                    Engineering) degree at the {UniversityOfMoratuwa}, I was
                     placed on the Dean&lsquo;s List for scoring a GPA above 3.8
-                    (out of 4.2) for 6 out of the 8 semesters I studied at the{" "}
-                    {UniversityOfMoratuwa}.
+                    (out of 4.2) for 6 out of the 8 semesters I studied there.
                 </Paragraph>
-                <Paragraph>
-                    The semesters in which placements on the Dean&lsquo;s List
-                    were awarded (4.20 GPA Scale):
-                </Paragraph>
-                <Box sx={{ m: 0, pt: 2 }}>
-                    <List>
-                        <ListItem>
-                            <Typography>Semester 02 (GPA - 3.82)</Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Typography>Semester 03 (GPA - 3.84)</Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Typography>Semester 05 (GPA - 3.82)</Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Typography>Semester 06 (GPA - 4.03)</Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Typography>Semester 07 (GPA - 4.04)</Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Typography>Semester 08 (GPA - 4.01)</Typography>
-                        </ListItem>
-                    </List>
-                </Box>
+                <HighlightsSection heading="The semesters in which placements on the Dean&rsquo;s List were awarded (4.20 GPA Scale):">
+                    <ListItem>
+                        <Typography>Semester 02 (GPA: 3.82)</Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>Semester 03 (GPA: 3.84)</Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>Semester 05 (GPA: 3.82)</Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>Semester 06 (GPA: 4.03)</Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>Semester 07 (GPA: 4.04)</Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>Semester 08 (GPA: 4.01)</Typography>
+                    </ListItem>
+                </HighlightsSection>
             </Section>
-            <Section>
-                <SectionHeading
-                    date={new Date(2017)}
-                    logo={nasaSpaceAppsChallengeLogo}
-                >
-                    NASA Space Apps Challenge - Galactic Impact - Global
-                    Finalist
-                </SectionHeading>
+            <Section labelledById="section-nasa-space-apps">
+                <AchievementSectionHeading
+                    id="section-nasa-space-apps"
+                    achievement={
+                        AchievementDetails.NasaSpaceAppsChallengeGlobalFinalist
+                    }
+                />
                 <Photo
                     src={nasaSpaceAppsChallenge2017NewspaperImage}
-                    alt="NASA Space Apps Challenge 2017 Newspaper"
+                    alt="Newspaper clipping featuring the NASA Space Apps Challenge."
                     float="right"
                 />
                 <Paragraph>
@@ -244,7 +206,7 @@ const Achievements = (): React.ReactElement => {
                 </Paragraph>
                 <Photo
                     src={nasaSpaceAppsChallenge2017Image}
-                    alt="NASA Space Apps Challenge 2017"
+                    alt="Team Codon members posing together after the NASA Space Apps Challenge."
                     float="left"
                 />
                 <Paragraph>
@@ -257,29 +219,33 @@ const Achievements = (): React.ReactElement => {
                     such barriers.
                 </Paragraph>
             </Section>
-            <Section>
-                <SectionHeading date={new Date(2017)} logo={wso2Logo}>
-                    WSO2 Internal Hackathon - Honorable Mention
-                </SectionHeading>
+            <Section labelledById="section-wso2-internal-hackathon">
+                <AchievementSectionHeading
+                    id="section-wso2-internal-hackathon"
+                    achievement={
+                        AchievementDetails.WSO2InternalHackathonHonorableMention
+                    }
+                />
                 <Paragraph>
                     {WSO2} Internal Hackathon (WHack) was held for the first
                     time in 2017 which was open to all employees including
                     interns who worked there at that time. I was an intern at
-                    that time at {WSO2} and I along with a few other interns
-                    participated in the {WSO2}
+                    that time at {Companies.WSO2.name} and I along with a few
+                    other interns participated in the {Companies.WSO2.name}{" "}
                     internal hackathon. We proposed a system to track users
                     across multiple platforms for improving customer analytics
                     and thereby improve the customer experience as well. We were
                     presented with an honorable mention for this solution.
                 </Paragraph>
             </Section>
-            <Section>
-                <SectionHeading date={new Date(2016)} logo={angelHackLogo}>
-                    Angel Hack - Finalist
-                </SectionHeading>
+            <Section labelledById="section-angel-hack">
+                <AchievementSectionHeading
+                    id="section-angel-hack"
+                    achievement={AchievementDetails.AngelHackFinalist}
+                />
                 <Photo
                     src={angelHack2016Image}
-                    alt="Angel Hack 2016"
+                    alt="Working on the smart workout system prototype."
                     float="right"
                 />
                 <Paragraph>
@@ -290,7 +256,7 @@ const Achievements = (): React.ReactElement => {
                 </Paragraph>
                 <Photo
                     src={angelHack2016BikeImage}
-                    alt="Angel Hack 2016 Bike"
+                    alt="Detailed view of the exercise bicycle prototype used in the smart workout system."
                     float="left"
                 />
                 <Paragraph>
@@ -314,10 +280,11 @@ const Achievements = (): React.ReactElement => {
                     using the bicycle.
                 </Paragraph>
             </Section>
-            <Section>
-                <SectionHeading date={new Date(2015)} logo={hackaDevLogo}>
-                    HackaDev - Finalist
-                </SectionHeading>
+            <Section labelledById="section-hackadev">
+                <AchievementSectionHeading
+                    id="section-hackadev"
+                    achievement={AchievementDetails.HackaDevFinalist}
+                />
                 <Paragraph>
                     {HackaDev} is a competition which provides a platform for
                     teams from within Sri Lanka to provide solutions for
@@ -330,13 +297,16 @@ const Achievements = (): React.ReactElement => {
                     the area.
                 </Paragraph>
             </Section>
-            <Section>
-                <SectionHeading date={new Date(2015)} logo={britishCouncilLogo}>
-                    British Council HSBC Youth Enterprise Awards - Finalist
-                </SectionHeading>
+            <Section labelledById="section-british-council-hsbc-awards">
+                <AchievementSectionHeading
+                    id="section-british-council-hsbc-awards"
+                    achievement={
+                        AchievementDetails.BritishCouncilHSBCYouthEnterpriseAwardsFinalist
+                    }
+                />
                 <Photo
                     src={hsbcYouthEnterpriseAwards2015Image}
-                    alt="British Council HSBC Youth Enterprise Awards 2015"
+                    alt="Team members posing at the hackathon."
                     float="right"
                 />
                 <Paragraph>
@@ -348,7 +318,7 @@ const Achievements = (): React.ReactElement => {
                 </Paragraph>
                 <Photo
                     src={hsbcYouthEnterpriseAwards2015DiscussionImage}
-                    alt="British Council HSBC Youth Enterprise Awards 2015 Discussion"
+                    alt="Team members discussing their project at the hackathon."
                     float="left"
                 />
                 <Paragraph>

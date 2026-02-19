@@ -40,8 +40,10 @@ const Error = ({ reset, error }: ErrorProps): React.ReactElement => {
                 alignItems: "center",
             }}
         >
-            <Box sx={{ textAlign: "center" }}>
-                <Typography sx={{ my: 2 }}>Something went wrong</Typography>
+            <Box role="alert" aria-atomic="true" sx={{ textAlign: "center" }}>
+                <Typography component="h1" variant="h5" sx={{ my: 2 }}>
+                    Something went wrong
+                </Typography>
                 <Button onClick={reset}>Try Again</Button>
             </Box>
         </Container>

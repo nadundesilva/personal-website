@@ -55,7 +55,6 @@ const ImageListItemImageOverlay = styled(Grid)(({ theme }) => ({
     left: 0,
     right: 0,
     opacity: 0,
-    backdropFilter: "blur(6px)",
     transition: "opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
 }));
 
@@ -63,7 +62,6 @@ interface AchievementSection {
     title: string;
     photo: {
         src: StaticImageData;
-        alt: string;
     };
 }
 
@@ -75,35 +73,30 @@ const Achievements = (): React.ReactElement => {
             title: "Global Finalist - Galactic Impact - NASA Space Apps Challenge 2017",
             photo: {
                 src: nasaSpaceAppsChallenge2017Image,
-                alt: "NASA Space Apps Challenge 2017",
             },
         },
         {
             title: "Placements on the Dean's List",
             photo: {
                 src: uomDeansList2017Image,
-                alt: "University of Moratuwa Deans List 2017",
             },
         },
         {
             title: "WSO2 Sustained Outstanding Contribution Award - Consecutive years from 2019 to 2021",
             photo: {
                 src: wso2OutstandingContributor2019Image,
-                alt: "WSO2 Sustained Outstanding Contributor Award 2019",
             },
         },
         {
             title: "Finalist - British Council HSBC Youth Enterprise Awards 2015",
             photo: {
                 src: hsbcYouthEnterpriseAwards2015Image,
-                alt: "British Council HSBC Youth Enterprise Awards 2015",
             },
         },
         {
             title: "Finalist - Angel Hack 2016",
             photo: {
                 src: angelHack2016Image,
-                alt: "Angel Hack 2016",
             },
         },
     ];
@@ -121,7 +114,7 @@ const Achievements = (): React.ReactElement => {
                 sx={{
                     "position": "relative",
                     "overflow": "hidden",
-                    "&:hover": {
+                    "&:hover, &:focus-within": {
                         [`& .${classes.imageListItemImageOverlay}`]: {
                             opacity: 1,
                             zIndex: 1,
@@ -131,6 +124,9 @@ const Achievements = (): React.ReactElement => {
                         },
                     },
                 }}
+                tabIndex={0}
+                aria-labelledby={`achievement-title-${achievementIndex}`}
+                aria-roledescription="achievement"
             >
                 <Box sx={{ height: "100%", position: "relative" }}>
                     <ImageListItemImageOverlay
@@ -141,6 +137,7 @@ const Achievements = (): React.ReactElement => {
                     >
                         <Grid size={{ xs: 10, md: 8 }}>
                             <Typography
+                                id={`achievement-title-${achievementIndex}`}
                                 variant="h6"
                                 component="h3"
                                 fontWeight={500}
@@ -157,7 +154,7 @@ const Achievements = (): React.ReactElement => {
                     </ImageListItemImageOverlay>
                     <Image
                         src={achievementSection.photo.src}
-                        alt={achievementSection.photo.alt}
+                        alt=""
                         fill
                         style={{
                             objectFit: "cover",
@@ -177,15 +174,31 @@ const Achievements = (): React.ReactElement => {
         <>
             {isAboveMd ? (
                 <ImageList rowHeight={ROW_HEIGHT} cols={3}>
-                    <FullSizeImageListItem rows={2} cols={1}>
-                        <ImageList rowHeight={ROW_HEIGHT} cols={1}>
+                    <FullSizeImageListItem
+                        rows={2}
+                        cols={1}
+                        role="presentation"
+                    >
+                        <ImageList
+                            rowHeight={ROW_HEIGHT}
+                            cols={1}
+                            role="presentation"
+                        >
                             {renderImageListItem(0, 1)}
                             {renderImageListItem(1, 1)}
                         </ImageList>
                     </FullSizeImageListItem>
                     {renderImageListItem(2, 2)}
-                    <FullSizeImageListItem rows={2} cols={1}>
-                        <ImageList rowHeight={ROW_HEIGHT} cols={1}>
+                    <FullSizeImageListItem
+                        rows={2}
+                        cols={1}
+                        role="presentation"
+                    >
+                        <ImageList
+                            rowHeight={ROW_HEIGHT}
+                            cols={1}
+                            role="presentation"
+                        >
                             {renderImageListItem(3, 1)}
                             {renderImageListItem(4, 1)}
                         </ImageList>

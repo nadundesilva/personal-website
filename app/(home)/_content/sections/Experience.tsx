@@ -30,6 +30,7 @@ import {
     Typography,
     useMediaQuery,
 } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
 import type React from "react";
 
 const Experience = (): React.ReactElement => {
@@ -40,6 +41,8 @@ const Experience = (): React.ReactElement => {
     return (
         <Timeline
             position={isAllContentRightAligned ? "right" : "alternate"}
+            aria-label="Experience Timeline"
+            role="list"
             sx={{
                 px: 0,
                 [`& .MuiTimelineItem-root:before`]: isAllContentRightAligned
@@ -55,7 +58,10 @@ const Experience = (): React.ReactElement => {
                     const isContentOnRight =
                         isAllContentRightAligned || index % 2 === 0;
                     return (
-                        <TimelineItem key={item.timePeriod.format()}>
+                        <TimelineItem
+                            key={item.timePeriod.format()}
+                            role="listitem"
+                        >
                             {!isAllContentRightAligned && (
                                 <TimelineOppositeContent
                                     sx={{
@@ -130,7 +136,7 @@ const Experience = (): React.ReactElement => {
                                 >
                                     <Typography
                                         variant="h6"
-                                        component="h2"
+                                        component="h3"
                                         mb={2.5}
                                         fontWeight={500}
                                         sx={{
@@ -200,6 +206,12 @@ const Experience = (): React.ReactElement => {
                                                 letterSpacing: "0em",
                                             }}
                                         >
+                                            <Box
+                                                component="span"
+                                                sx={visuallyHidden}
+                                            >
+                                                Company:{" "}
+                                            </Box>
                                             {item.institute}
                                         </Typography>
                                         {!isContentOnRight && (

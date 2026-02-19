@@ -12,26 +12,18 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Business, FormatQuote, Launch, People } from "@mui/icons-material";
+import { FormatQuote, Launch, People, Work } from "@mui/icons-material";
 import { Box, Card, Typography } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
 import type { Metadata } from "next";
 import type React from "react";
 
-import {
-    LinkButton,
-    type LinkButtonProps,
-    Paragraph,
-    Title,
-} from "@/components/content";
+import { LinkButton, Paragraph, Title } from "@/components/content";
 import { FULL_NAME } from "@/constants/metadata";
-
-enum Relationship {
-    ManagedDirectly,
-    Mentor,
-    WorkedOnSameTeam,
-    Senior,
-    Junior,
-}
+import TestimonialsData, {
+    Relationship,
+    type TestimonialData,
+} from "@/constants/testimonials";
 
 const renderRelationShip = (
     name: string,
@@ -55,426 +47,168 @@ const renderRelationShip = (
 };
 
 interface TestimonialProps {
-    children: React.ReactNode;
-    position: string;
-    company: string;
-    recommender: string;
-    recommenderPosition: string;
-    recommenderCompany: string;
-    relationship: Relationship;
-    actionButton?: LinkButtonProps;
+    testimonial: TestimonialData;
 }
 
-const Testimonial = ({
-    children,
-    position,
-    company,
-    recommender,
-    recommenderPosition,
-    recommenderCompany,
-    relationship,
-    actionButton,
-}: TestimonialProps): React.ReactElement => (
-    <Card sx={{ my: 3, p: 3.5 }}>
-        <Box
-            sx={{
-                mb: 3,
-            }}
-        >
-            <FormatQuote
-                sx={{
-                    transform: "rotate(180deg)",
-                    fontSize: "2.5rem",
-                    color: "text.secondary",
-                    opacity: 0.35,
-                    mb: 1,
-                    ml: -1,
-                    display: "block",
-                }}
-            />
-            <Typography
-                variant="h4"
-                sx={{
-                    fontWeight: 500,
-                    letterSpacing: "-0.01em",
-                    lineHeight: 1.4,
-                    mb: 1.5,
-                    color: "text.primary",
-                }}
-            >
-                {recommender}
+const Testimonial = ({ testimonial }: TestimonialProps): React.ReactElement => {
+    const {
+        author,
+        authorPosition,
+        authorCompany,
+        relationship,
+        position,
+        company,
+        content,
+    } = testimonial;
+    const labelId = `testimonial-label-${author.name.toLowerCase().replace(/\s+/g, "-")}`;
+    const linkedinUrl =
+        "https://www.linkedin.com/in/nadundesilva/details/recommendations/";
+
+    return (
+        <Box component="article" aria-labelledby={labelId}>
+            <Typography id={labelId} sx={visuallyHidden}>
+                Testimonial from {author.name}
             </Typography>
-            <Box
-                sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 0.75,
-                    mb: 1,
-                }}
-            >
-                <Business
+            <Card sx={{ my: 0, p: 3.5 }}>
+                <Box
                     sx={{
-                        fontSize: "1rem",
-                        color: "text.secondary",
-                    }}
-                />
-                <Typography
-                    variant="body2"
-                    sx={{
-                        color: "text.primary",
-                        fontWeight: 500,
-                        letterSpacing: "0.01em",
+                        mb: 3,
                     }}
                 >
-                    {recommenderPosition} at {recommenderCompany}
-                </Typography>
-            </Box>
-            <Box
-                sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 0.75,
-                    mb: actionButton ? 2.5 : 0,
-                }}
-            >
-                <People
+                    <FormatQuote
+                        aria-hidden="true"
+                        sx={{
+                            transform: "rotate(180deg)",
+                            fontSize: "2.5rem",
+                            color: "text.secondary",
+                            opacity: 0.35,
+                            mb: 1,
+                            ml: -1,
+                            display: "block",
+                        }}
+                    />
+                    <Typography
+                        variant="h4"
+                        component="h2"
+                        sx={{
+                            fontWeight: 500,
+                            letterSpacing: "-0.01em",
+                            lineHeight: 1.4,
+                            mb: 1.5,
+                            color: "text.primary",
+                        }}
+                    >
+                        {author.name}
+                    </Typography>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 0.75,
+                            mb: 1,
+                        }}
+                    >
+                        <Work
+                            aria-hidden="true"
+                            sx={{
+                                fontSize: "1rem",
+                                color: "text.secondary",
+                            }}
+                        />
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                color: "text.primary",
+                                fontWeight: 500,
+                                letterSpacing: "0.01em",
+                            }}
+                        >
+                            {authorPosition} at {authorCompany.name}
+                        </Typography>
+                    </Box>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 0.75,
+                            mb: 2.5,
+                        }}
+                    >
+                        <People
+                            aria-hidden="true"
+                            sx={{
+                                fontSize: "1rem",
+                                color: "text.secondary",
+                            }}
+                        />
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                color: "text.secondary",
+                                fontWeight: 300,
+                                letterSpacing: "0.01em",
+                            }}
+                        >
+                            {renderRelationShip(author.name, relationship)} when
+                            Nadun was a {position} at {company.name}
+                        </Typography>
+                    </Box>
+                </Box>
+                <Box
                     sx={{
-                        fontSize: "1rem",
-                        color: "text.secondary",
-                    }}
-                />
-                <Typography
-                    variant="body2"
-                    sx={{
-                        color: "text.secondary",
-                        fontWeight: 300,
-                        letterSpacing: "0.01em",
+                        "mb": 3,
+                        "pb": 2.5,
+                        "position": "relative",
+                        "&::after": {
+                            content: '""',
+                            position: "absolute",
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            height: "1px",
+                            backgroundColor: "divider",
+                            opacity: 0.12,
+                        },
                     }}
                 >
-                    {renderRelationShip(recommender, relationship)} when Nadun
-                    was a {position} at {company}
-                </Typography>
-            </Box>
+                    <LinkButton
+                        icon={Launch}
+                        name="View on LinkedIn"
+                        href={linkedinUrl}
+                        ariaLabel={`View testimonial by ${author.name} on LinkedIn`}
+                        target="_blank"
+                    />
+                </Box>
+                {content.map((paragraph, index) => (
+                    <Paragraph key={index}>{paragraph}</Paragraph>
+                ))}
+            </Card>
         </Box>
-        {actionButton && (
-            <Box
-                sx={{
-                    "mb": 3,
-                    "pb": 2.5,
-                    "position": "relative",
-                    "&::after": {
-                        content: '""',
-                        position: "absolute",
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        height: "1px",
-                        backgroundColor: "divider",
-                        opacity: 0.12,
-                    },
-                }}
-            >
-                <LinkButton {...actionButton} target="_blank" />
-            </Box>
-        )}
-        {children}
-    </Card>
-);
+    );
+};
 
 export const metadata: Metadata = {
     title: "Testimonials",
     description: `Testimonials provided by various professionals throughout the career of ${FULL_NAME}.`,
 };
 
-const LINKEDIN_RECOMMENDATIONS_URL =
-    "https://www.linkedin.com/in/nadundesilva/details/recommendations/";
-
 const Testimonials = (): React.ReactElement => {
     return (
         <>
             <Title>Testimonials</Title>
-            <Testimonial
-                position="Associate Technical Lead"
-                company="WSO2"
-                recommender="Tishan Dahanayakage"
-                recommenderPosition="Senior Technical Lead & Engineering Manager"
-                recommenderCompany="WSO2"
-                relationship={Relationship.ManagedDirectly}
-                actionButton={{
-                    icon: Launch,
-                    name: "View on LinkedIn",
-                    href: LINKEDIN_RECOMMENDATIONS_URL,
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 3,
+                    mt: 4,
+                    mb: 7,
                 }}
             >
-                <Paragraph>
-                    I have worked with Nadun directly on two occasions. Once
-                    when he was doing his internship and then again as his
-                    engineering manager while he was acting as the lead of
-                    Choreo Observability team. Nadun is a highly motivated and
-                    passionate individual. He would almost always deliver beyond
-                    expectations. He possess great analytical and problem
-                    solving skills. He has the ability to take a project from
-                    design to delivery confirming to highest standards. Nadun
-                    was repeatedly rated as an exceptional employee and I will
-                    always have him in my team.
-                </Paragraph>
-            </Testimonial>
-            <Testimonial
-                position="Associate Technical Lead"
-                company="WSO2"
-                recommender="Malith Jayasinghe"
-                recommenderPosition="Vice President & Head of Research & AI"
-                recommenderCompany="WSO2"
-                relationship={Relationship.ManagedDirectly}
-                actionButton={{
-                    icon: Launch,
-                    name: "View on LinkedIn",
-                    href: LINKEDIN_RECOMMENDATIONS_URL,
-                }}
-            >
-                <Paragraph>
-                    Nadun was the primary technical lead in Choreo observability
-                    team where led a team of software engineers working on
-                    observability features.
-                </Paragraph>
-                <Paragraph>
-                    Nadun has strong hands-on technical experience in multiple
-                    areas which include software architecture, programming,
-                    performance, scalability, security and K8s. As a software
-                    developer, Nadun puts his best effort to follow software
-                    development best practices. His code reviews are very
-                    thorough and helps developers improve their coding skills.
-                    Nadun cares a lot about the quality of the product and
-                    spends a lot of time improving test coverage as well as
-                    doing a lot of manual testing. Nadun has exceptional
-                    reasoning and analytical skills which allow him to solve
-                    challenging problems faster. He has excellent written and
-                    verbal communication skills and he is able to lead others in
-                    high-demand situations. I have no doubt that Nadun will
-                    succeed in all his endeavors and I recommend him in the
-                    strongest terms.
-                </Paragraph>
-            </Testimonial>
-            <Testimonial
-                position="Associate Technical Lead"
-                company="WSO2"
-                recommender="Isuru Haththotuwa"
-                recommenderPosition="Senior Technical Lead"
-                recommenderCompany="WSO2"
-                relationship={Relationship.Senior}
-                actionButton={{
-                    icon: Launch,
-                    name: "View on LinkedIn",
-                    href: LINKEDIN_RECOMMENDATIONS_URL,
-                }}
-            >
-                <Paragraph>
-                    I had the pleasure of working with Nadun closely in two
-                    projects at WSO2 - Cellery (2019 - 2020) and Choreo (2020 -
-                    2022). He spearheaded the monitoring and metering side
-                    (a.k.a observability) in these two cloud native projects,
-                    which were based on cutting edge technology.
-                </Paragraph>
-                <Paragraph>
-                    Nadun is one of the best brains I have worked with. Even as
-                    a junior engineer, his technical skills, critical thinking
-                    and analytical ability was on par with more experienced
-                    engineers. I specially noted his ability to pick and choose
-                    the best one among two equal-looking options by looking in
-                    to possible outcomes which might occur in future.
-                </Paragraph>
-                <Paragraph>
-                    I wish Nadun all the very best, and would not have any
-                    hesitation in recommending him for any challenging software
-                    engineering related role.
-                </Paragraph>
-            </Testimonial>
-            <Testimonial
-                position="Associate Technical Lead"
-                company="WSO2"
-                recommender="Duneesha Fernando"
-                recommenderPosition="Senior Software Engineer - Machine Learning"
-                recommenderCompany="WSO2"
-                relationship={Relationship.Senior}
-                actionButton={{
-                    icon: Launch,
-                    name: "View on LinkedIn",
-                    href: LINKEDIN_RECOMMENDATIONS_URL,
-                }}
-            >
-                <Paragraph>
-                    I worked with Nadun when he was serving WSO2 as a Senior
-                    Software Engineer as well as an Associate Technical Lead.
-                    Nadun is a highly-skilled engineer, who has a vast breadth
-                    of knowledge on programming, software architecture,
-                    container orchestration, software engineering best practices
-                    etc. As the lead of Choreo&apos;s Observability team,
-                    Nadun&apos;s knowledge contributions towards successfully
-                    building the AI-based performance anomaly detector (the
-                    project that I worked in) was invaluable. As a senior
-                    engineer he was always approachable to us from the time of
-                    planning the project until deployment and even beyond that.
-                    As an individual, I learnt a lot from his technical
-                    knowledge and the vision he had on software development.
-                </Paragraph>
-                <Paragraph>
-                    Apart from his technical skills, what makes Nadun stand out
-                    from other engineers is the fact that he genuinely spends
-                    time to help junior engineers in solving their issues. As a
-                    team lead I have seen numerous instances where he sat
-                    together with others in his team whenever problems arose and
-                    debug those. It was the same for us (who were members of
-                    another but closely related team) whenever we ran into
-                    issues related to observability. Existence of senior
-                    engineers such as Nadun at any workplace is a relief for
-                    newly joined engineers who are initially overwhelmed when
-                    learning the company culture and adapting to their
-                    respective projects, and I have personally experienced that
-                    as I started planning my project during the Covid period
-                    virtually.
-                </Paragraph>
-                <Paragraph>
-                    It was an absolute pleasure to work with and learn from a
-                    talented, kind-hearted and empathetic individual like Nadun.
-                    I&apos;m certain that he would further excel in his bright
-                    career path and inspire more and more upcoming engineers the
-                    same way he did for me and many of my colleagues.
-                </Paragraph>
-            </Testimonial>
-            <Testimonial
-                position="Associate Technical Lead"
-                company="WSO2"
-                recommender="Srinath Perera"
-                recommenderPosition="Chief Architect"
-                recommenderCompany="WSO2"
-                relationship={Relationship.Senior}
-                actionButton={{
-                    icon: Launch,
-                    name: "View on LinkedIn",
-                    href: LINKEDIN_RECOMMENDATIONS_URL,
-                }}
-            >
-                <Paragraph>
-                    I have known Nadun for over 2+ years on his work at WSO2. He
-                    is a 10x engineer. Although he did not report to me, I had a
-                    direct view of his work, and I have worked with him closely
-                    several times. Nadun is passionate, smart, and thoughtful
-                    and a joy to work with.
-                </Paragraph>
-            </Testimonial>
-            <Testimonial
-                position="Associate Technical Lead"
-                company="WSO2"
-                recommender="Binura Gunasekara"
-                recommenderPosition="Technical Lead"
-                recommenderCompany="WSO2"
-                relationship={Relationship.Senior}
-                actionButton={{
-                    icon: Launch,
-                    name: "View on LinkedIn",
-                    href: LINKEDIN_RECOMMENDATIONS_URL,
-                }}
-            >
-                <Paragraph>
-                    I&apos;ve had the pleasure of crossing paths with Nadun on
-                    multiple occasions during his time at WSO2, and he&apos;s
-                    definitely one of the sharpest engineers I&apos;ve had the
-                    opportunity to work with—extremely reliable, proficient, and
-                    thorough in what he does, and still one of the most
-                    approachable and humble people I&apos;ve met on the team.
-                </Paragraph>
-                <Paragraph>
-                    I wish him the best with his future career, and I know any
-                    team would be lucky to have him onboard.
-                </Paragraph>
-            </Testimonial>
-            <Testimonial
-                position="Associate Technical Lead"
-                company="WSO2"
-                recommender="Kanchana Wickremasinghe"
-                recommenderPosition="VP & GM Choreo Business Unit"
-                recommenderCompany="WSO2"
-                relationship={Relationship.Senior}
-                actionButton={{
-                    icon: Launch,
-                    name: "View on LinkedIn",
-                    href: LINKEDIN_RECOMMENDATIONS_URL,
-                }}
-            >
-                <Paragraph>
-                    I got to know Nadun when I joined WSO2 in June 2021. Nadun
-                    is an excellent software engineer and data scientist who is
-                    eager to learn, listen to others, try out things, and get
-                    his hands dirty. He learns things very quickly and applies
-                    them in his work. He is very likable by co-workers for his
-                    ethics, working habits, and helping others when needed. We
-                    are very sad to lose him at WSO2. We wish him all the very
-                    best in his future endeavors.
-                </Paragraph>
-            </Testimonial>
-            <Testimonial
-                position="Senior Software Engineer"
-                company="WSO2"
-                recommender="Nuwan Bandara"
-                recommenderPosition="Senior Director, Head of Product - Integration Cloud"
-                recommenderCompany="WSO2"
-                relationship={Relationship.ManagedDirectly}
-                actionButton={{
-                    icon: Launch,
-                    name: "View on LinkedIn",
-                    href: LINKEDIN_RECOMMENDATIONS_URL,
-                }}
-            >
-                <Paragraph>
-                    Nadun was one of the key members of my team, during the last
-                    two years of my tenure at WSO2. A diligent, smart individual
-                    that the team can always rely on. Nadun is a problem solver,
-                    dives deep to understand the domain and context before
-                    jumping into conclusions. He can think in abstract and can
-                    come up with creative solutions to challenging problems.
-                    Over the years I have seen Nadun growing into a senior
-                    engineer role, mentoring new team members while giving the
-                    highest priority to engineering quality. I wish all the best
-                    to Nadun and wouldn&apos;t hesitate to recommend him to any
-                    engineering role.
-                </Paragraph>
-            </Testimonial>
-            <Testimonial
-                position="Senior Software Engineer"
-                company="WSO2"
-                recommender="Sinthuja Rajendran Suhothayan"
-                recommenderPosition="Architect/Associate Director"
-                recommenderCompany="WSO2"
-                relationship={Relationship.ManagedDirectly}
-                actionButton={{
-                    icon: Launch,
-                    name: "View on LinkedIn",
-                    href: LINKEDIN_RECOMMENDATIONS_URL,
-                }}
-            >
-                <Paragraph>
-                    I worked with Nadun for 1.5 years in an open source project
-                    - Cellery. Nadun is a brilliant software engineer, and he
-                    has full breadth of knowledge from front-end to
-                    backend-programming, and also devops knowledge on how to
-                    manage k8s clusters, best practices to follow, and so on. He
-                    had owned the area of Observability and Tooling in the
-                    Cellery project, and always completes the tasks and features
-                    on time with a good quality. He learns what ever the
-                    technology that is required to complete a feature by him
-                    self, and get it completed on time. As a team lead of the
-                    Cellery project, I can depend on him to work on critical
-                    feature, and I&apos;m sure that he will deliver it through!
-                    Nadun not-only focuses on his work, but also helps co-team
-                    mates and interns on solving their technical problems.
-                </Paragraph>
-                <Paragraph>
-                    It was a great pleasure to work with Nadun and I would rank
-                    him as one of the best engineers that I have worked with. I
-                    would not have a second thought in recommending him for any
-                    challenging technical positions in the IT field.
-                </Paragraph>
-            </Testimonial>
+                {TestimonialsData.map((testimonial, index) => (
+                    <Testimonial key={index} testimonial={testimonial} />
+                ))}
+            </Box>
         </>
     );
 };

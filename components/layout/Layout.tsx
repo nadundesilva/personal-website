@@ -28,7 +28,6 @@ import {
     Drawer,
     Fab,
     IconButton,
-    List,
     ListItemButton,
     ListItemText,
     Toolbar,
@@ -86,6 +85,8 @@ const Layout = ({
             <IconButton
                 color="inherit"
                 aria-label={isDrawerOpen ? "close drawer" : "open drawer"}
+                aria-expanded={isDrawerOpen}
+                aria-controls={isDrawerOpen ? "drawer-navigation" : undefined}
                 onClick={toggleDrawer}
                 edge="start"
                 sx={{
@@ -126,73 +127,84 @@ const Layout = ({
                         px: { xs: 2, sm: 3, md: 4 },
                         py: 2.5,
                     }}
-                    onKeyDown={toggleDrawer}
                 >
-                    <List sx={{ py: 0, gap: 0.25 }}>
+                    <Box
+                        id="drawer-navigation"
+                        component="nav"
+                        aria-label="Drawer Navigation"
+                        sx={{
+                            py: 0,
+                            gap: 0.25,
+                            display: "flex",
+                            flexDirection: "column",
+                        }}
+                    >
                         {Object.values(topLevelRoutes).map((route) => {
                             const isActive = isRouteActive(route.path);
                             return (
-                                <Link key={route.path} href={route.path}>
-                                    <ListItemButton
-                                        onClick={toggleDrawer}
-                                        sx={{
-                                            "px": 2.5,
-                                            "py": 1.25,
-                                            "minHeight": 56,
-                                            "color": "#ffffff",
-                                            "borderRadius": 2,
-                                            "position": "relative",
-                                            "display": "flex",
-                                            "justifyContent": "center",
-                                            "alignItems": "center",
-                                            "transition":
-                                                "background-color 0.2s ease-in-out, opacity 0.2s ease-in-out",
-                                            "&:hover": {
-                                                "backgroundColor":
-                                                    "rgba(255, 255, 255, 0.08)",
-                                                "opacity": 0.9,
-                                                "&::after": {
-                                                    width: "50%",
-                                                },
-                                            },
+                                <ListItemButton
+                                    key={route.path}
+                                    component={Link}
+                                    href={route.path}
+                                    onClick={toggleDrawer}
+                                    aria-current={isActive ? "page" : undefined}
+                                    sx={{
+                                        "px": 2.5,
+                                        "py": 1.25,
+                                        "minHeight": 56,
+                                        "color": "#ffffff",
+                                        "borderRadius": 2,
+                                        "position": "relative",
+                                        "display": "flex",
+                                        "justifyContent": "center",
+                                        "alignItems": "center",
+                                        "transition":
+                                            "background-color 0.2s ease-in-out, opacity 0.2s ease-in-out",
+                                        "&:hover": {
+                                            "backgroundColor":
+                                                "rgba(255, 255, 255, 0.08)",
+                                            "opacity": 0.9,
                                             "&::after": {
-                                                content: '""',
-                                                position: "absolute",
-                                                bottom: 12,
-                                                left: "50%",
-                                                transform: "translateX(-50%)",
-                                                width: isActive
-                                                    ? { xs: "50%", sm: "25%" }
-                                                    : 0,
-                                                height: 1.5,
-                                                backgroundColor: "#ffffff",
-                                                opacity: isActive ? 1 : 0.8,
-                                                borderRadius: 1,
-                                                transition:
-                                                    "width 0.25s ease-in-out",
+                                                width: "50%",
+                                            },
+                                        },
+                                        "&::after": {
+                                            content: '""',
+                                            position: "absolute",
+                                            bottom: 12,
+                                            left: "50%",
+                                            transform: "translateX(-50%)",
+                                            width: isActive
+                                                ? { xs: "50%", sm: "25%" }
+                                                : 0,
+                                            height: 1.5,
+                                            backgroundColor: "#ffffff",
+                                            opacity: isActive ? 1 : 0.8,
+                                            borderRadius: 1,
+                                            transition:
+                                                "width 0.25s ease-in-out",
+                                        },
+                                    }}
+                                >
+                                    <ListItemText
+                                        primary={route.name}
+                                        slotProps={{
+                                            primary: {
+                                                variant: "body1",
+                                                sx: {
+                                                    color: "#ffffff",
+                                                    textAlign: "center",
+                                                    fontWeight: isActive
+                                                        ? 500
+                                                        : 400,
+                                                },
                                             },
                                         }}
-                                    >
-                                        <ListItemText
-                                            primary={route.name}
-                                            slotProps={{
-                                                primary: {
-                                                    variant: "body1",
-                                                    sx: {
-                                                        color: "#ffffff",
-                                                        textAlign: "center",
-                                                        fontWeight: isActive
-                                                            ? 500
-                                                            : 400,
-                                                    },
-                                                },
-                                            }}
-                                        />
-                                    </ListItemButton>
-                                </Link>
+                                    />
+                                </ListItemButton>
                             );
                         })}
-                    </List>
+                    </Box>
                 </Box>
             </Drawer>
         </>
@@ -219,9 +231,9 @@ const Layout = ({
                     onClick={() => isDrawerOpen && toggleDrawer()}
                     display="inline-block"
                 >
-                    <Link href={"/"}>
+                    <Link href={"/"} sx={{ textDecoration: "none" }}>
                         <Typography
-                            component="h1"
+                            component="div"
                             variant="h6"
                             sx={{
                                 "fontSize": { xs: 16, sm: 20 },
@@ -238,6 +250,8 @@ const Layout = ({
                 </Box>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box
+                    component="nav"
+                    aria-label="Primary Navigation"
                     display={{ xs: "none", lg: "flex" }}
                     gap={1}
                     alignItems="center"
@@ -250,44 +264,44 @@ const Layout = ({
                                 onClick={() => isDrawerOpen && toggleDrawer()}
                                 display="inline-block"
                             >
-                                <Link href={route.path}>
-                                    <Button
-                                        variant="text"
-                                        color="primary"
-                                        disableElevation
-                                        sx={{
-                                            "color": "#ffffff",
-                                            "px": 2.5,
-                                            "py": 1.25,
-                                            "minWidth": "auto",
-                                            "position": "relative",
-                                            "fontWeight": isActive ? 500 : 400,
-                                            "&:hover": {
-                                                "backgroundColor":
-                                                    "transparent",
-                                                "opacity": 0.85,
-                                                "&::after": {
-                                                    width: "70%",
-                                                },
-                                            },
+                                <Button
+                                    component={Link}
+                                    href={route.path}
+                                    variant="text"
+                                    color="primary"
+                                    disableElevation
+                                    aria-current={isActive ? "page" : undefined}
+                                    sx={{
+                                        "color": "#ffffff",
+                                        "px": 2.5,
+                                        "py": 1.25,
+                                        "minWidth": "auto",
+                                        "position": "relative",
+                                        "fontWeight": isActive ? 500 : 400,
+                                        "&:hover": {
+                                            "backgroundColor": "transparent",
+                                            "opacity": 0.85,
                                             "&::after": {
-                                                content: '""',
-                                                position: "absolute",
-                                                bottom: 10,
-                                                left: "50%",
-                                                transform: "translateX(-50%)",
-                                                width: isActive ? "70%" : 0,
-                                                height: 1.5,
-                                                backgroundColor: "#ffffff",
-                                                opacity: isActive ? 1 : 0.8,
-                                                transition:
-                                                    "width 0.25s ease-in-out",
+                                                width: "70%",
                                             },
-                                        }}
-                                    >
-                                        {route.name}
-                                    </Button>
-                                </Link>
+                                        },
+                                        "&::after": {
+                                            content: '""',
+                                            position: "absolute",
+                                            bottom: 10,
+                                            left: "50%",
+                                            transform: "translateX(-50%)",
+                                            width: isActive ? "70%" : 0,
+                                            height: 1.5,
+                                            backgroundColor: "#ffffff",
+                                            opacity: isActive ? 1 : 0.8,
+                                            transition:
+                                                "width 0.25s ease-in-out",
+                                        },
+                                    }}
+                                >
+                                    {route.name}
+                                </Button>
                             </Box>
                         );
                     })}
@@ -299,8 +313,8 @@ const Layout = ({
                 >
                     <IconButton
                         size="medium"
-                        onClick={() => setColorScheme(nextColorScheme)}
                         aria-label={`Switch to ${nextColorScheme} theme`}
+                        onClick={() => setColorScheme(nextColorScheme)}
                         sx={{
                             ml: 3,
                             color: "#ffffff",
@@ -317,18 +331,42 @@ const Layout = ({
         </AppBar>
     );
 
-    const handleClick = (): void => {
+    const scrollToTop = (): void => {
+        const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        ).matches;
         scrollToTopRef.current?.scrollIntoView({
-            behavior: "smooth",
+            behavior: prefersReducedMotion ? "instant" : "smooth",
             block: "start",
         });
+        document.getElementById("main-content")?.focus();
     };
 
     return colorScheme ? (
         <>
+            <Button
+                href="#main-content"
+                variant="contained"
+                sx={{
+                    "position": "fixed",
+                    "top": 16,
+                    "left": 16,
+                    "zIndex": 1300,
+                    "transform": "translateY(-150%)",
+                    "transition": "transform 0.3s ease-in-out",
+                    "&:focus-visible": {
+                        transform: "translateY(0)",
+                    },
+                }}
+            >
+                Skip to Content
+            </Button>
             {appBar}
             <Toolbar ref={scrollToTopRef} />
             <Container
+                id="main-content"
+                component="main"
+                tabIndex={-1}
                 disableGutters
                 maxWidth={false}
                 sx={{
@@ -336,6 +374,8 @@ const Layout = ({
                     maxWidth: "100%",
                     background: (theme: Theme) =>
                         theme.palette.background.default,
+                    scrollMarginTop: "100px",
+                    outline: "none",
                 }}
             >
                 {children}
@@ -371,7 +411,6 @@ const Layout = ({
             </Container>
             <Zoom in={trigger}>
                 <Box
-                    onClick={handleClick}
                     role="presentation"
                     sx={{
                         position: "fixed",
@@ -383,6 +422,7 @@ const Layout = ({
                         color="primary"
                         size="small"
                         aria-label="scroll back to top"
+                        onClick={scrollToTop}
                     >
                         <KeyboardArrowUp />
                     </Fab>

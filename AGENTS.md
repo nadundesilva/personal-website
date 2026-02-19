@@ -20,6 +20,7 @@ This document contains knowledge gained from comprehensive codebase reviews. For
 - [Theme and Styling](#theme-and-styling)
 - [Testing](#testing)
 - [Known Issues & Solutions](#known-issues--solutions)
+- [Accessibility and Components](#accessibility-and-components)
 
 ## CI/CD Pipeline
 
@@ -61,6 +62,14 @@ The project uses static export (`output: "export"`) for all builds except develo
 
 **All styling should be done through the MUI theme as much as possible** to maintain consistency and ensure proper theme-aware behavior (light/dark mode support). The theme configuration is centralized in [components/theme/WebsiteThemeProvider.tsx](./components/theme/WebsiteThemeProvider.tsx).
 
+### Global CSS (`main.css`)
+
+While most styling is handled via the MUI theme, [styles/main.css](./styles/main.css) contains critical global CSS rules:
+
+- **Reduced Motion**: Disables all animations and smooth scrolling globally when the user prefers reduced motion (`@media (prefers-reduced-motion: reduce)`), improving accessibility.
+- **Scrollbars**: Defines custom global scrollbar styling for both WebKit and Firefox to match the site's aesthetic.
+- **Base Resets**: Contains basic `body` and `html` resets, smooth scrolling behavior, and default monospace font families.
+
 ### Theme-Aware Colors
 
 Always use theme-aware color tokens (e.g., `text.secondary`, `text.primary`, `palette.primary.main`) instead of hardcoded colors to ensure proper contrast in both light and dark modes.
@@ -86,3 +95,26 @@ The project uses Cypress with `@testing-library/cypress` for end-to-end tests. S
 ### Array Mutations
 
 Some array operations (like `.sort()`) are intentionally used without creating copies when the array is newly created and not reused elsewhere.
+
+## Accessibility and Components
+
+### Custom Link Component
+
+- **Usage**: Use the custom `Link` component for all internal and external links. Ensure to extend MUI `LinkProps` properly to avoid type errors. See [Link.tsx](./components/content/Link.tsx).
+- **MUI Integration**: When using MUI components that support the `component` prop (like `Button`, `CardActionArea`), pass the custom `Link` component via `component={Link}`. Do **not** nest interactive elements (e.g., `<Link><Button/></Link>`) as this causes hydration errors and invalid HTML.
+
+### Interactive Overlays
+
+- **Keyboard Accessibility**: Ensure interactive elements with hover overlays (like image cards) are accessible via keyboard (using `tabIndex={0}` and `:focus-within`). See [Achievements.tsx](<./app/(home)/_content/sections/Achievements.tsx>).
+
+### Heading Hierarchy and Semantics
+
+- **Core Principle**: Always use structure-related components from the [components/content](./components/content/) directory instead of raw MUI components for document structure. This ensures the website completely utilizes consistent semantic HTML and styling everywhere.
+- **Component Mapping**:
+    - `Title` renders an `h1`.
+    - `Section` + `SectionHeading` renders an `h2`.
+    - `SubsectionHeading` renders an `h3`. See [SubsectionHeading.tsx](./components/content/SubsectionHeading.tsx).
+
+### Image Alternate Texts
+
+- **Decorative Images**: Set `alt=""` for purely illustrative images or images whose context is already fully described by adjacent text so that screen readers skip them and avoid redundant readouts.

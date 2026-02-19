@@ -65,6 +65,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         h2: ({ children }) => <SubsectionHeading>{children}</SubsectionHeading>,
         hr: () => (
             <Divider
+                aria-hidden="true"
                 sx={{
                     "border": 0,
                     "textAlign": "center",

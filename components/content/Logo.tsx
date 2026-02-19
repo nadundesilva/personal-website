@@ -17,11 +17,9 @@ import { Box, type SxProps, type Theme, useTheme } from "@mui/material";
 import Image from "next-image-export-optimizer";
 import type React from "react";
 
-import { type StaticImageData } from "next/image";
+import { type LogoImageData } from "@/constants/logos";
 
-interface LogoProps {
-    srcLight: StaticImageData;
-    srcDark: StaticImageData;
+interface LogoProps extends LogoImageData {
     alt: string;
     recommendedSx?: SxProps<Theme>;
 }
@@ -33,9 +31,10 @@ const Logo = ({
     recommendedSx,
 }: LogoProps): React.ReactElement => {
     const theme = useTheme();
-    const src = theme.palette.mode == "light" ? srcLight : srcDark;
+    const src = theme.palette.mode === "light" ? srcLight : srcDark;
     return (
         <Box
+            aria-hidden={alt === "" ? true : undefined}
             sx={{
                 ...recommendedSx,
                 "position": "relative",

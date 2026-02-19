@@ -13,9 +13,11 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { Box, Grid } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
+import { useId } from "react";
 import type React from "react";
 
-import { Link, SectionHeading, Title } from "@/components/content";
+import { Link, Section, SectionHeading, Title } from "@/components/content";
 import ArticleListItem from "./ArticlesListItem";
 import { getBlogArticleGroups, type BlogArticle } from "@/utils/blog-articles";
 
@@ -29,42 +31,52 @@ const ArticlesGroup = ({
     title,
     articles,
     href,
-}: ArticlesGroupProps): React.ReactElement => (
-    <Box sx={{ mb: 6 }}>
-        {title &&
-            (href ? (
-                <Link
-                    href={href}
-                    sx={{
-                        display: "block",
-                        color: "inherit",
-                    }}
-                >
-                    <SectionHeading>{title}</SectionHeading>
-                </Link>
-            ) : (
-                <SectionHeading>{title}</SectionHeading>
-            ))}
-        <Box sx={{ mt: 3 }}>
-            <Grid
-                container
-                direction="row"
-                justifyContent="flex-start"
-                alignItems="stretch"
-                spacing={2}
-            >
-                {articles.map((blogArticle) => (
-                    <Grid
-                        key={`/blog-articles/${blogArticle.websiteSubPath}`}
-                        size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+}: ArticlesGroupProps): React.ReactElement => {
+    const id = useId();
+
+    return (
+        <Section labelledById={id}>
+            {title &&
+                (href ? (
+                    <Link
+                        href={href}
+                        sx={{
+                            display: "block",
+                            color: "inherit",
+                        }}
                     >
-                        <ArticleListItem blogArticle={blogArticle} />
-                    </Grid>
+                        <SectionHeading id={id}>
+                            {title}
+                            <Box component="span" sx={visuallyHidden}>
+                                {" "}
+                                articles
+                            </Box>
+                        </SectionHeading>
+                    </Link>
+                ) : (
+                    <SectionHeading id={id}>{title}</SectionHeading>
                 ))}
-            </Grid>
-        </Box>
-    </Box>
-);
+            <Box sx={{ mt: 3 }}>
+                <Grid
+                    container
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="stretch"
+                    spacing={2}
+                >
+                    {articles.map((blogArticle) => (
+                        <Grid
+                            key={`/blog-articles/${blogArticle.websiteSubPath}`}
+                            size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+                        >
+                            <ArticleListItem blogArticle={blogArticle} />
+                        </Grid>
+                    ))}
+                </Grid>
+            </Box>
+        </Section>
+    );
+};
 
 interface ArticlesListProps {
     subPath: string;

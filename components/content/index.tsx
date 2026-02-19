@@ -15,7 +15,7 @@
 import HighlightsSection from "./HighlightsSection";
 import Link from "./Link";
 import LinkButton, { type LinkButtonProps } from "./LinkButton";
-import List, { CustomListItem as ListItem } from "./List";
+import List, { ListItem } from "./List";
 import Logo from "./Logo";
 import Paragraph from "./Paragraph";
 import Photo from "./Photo";

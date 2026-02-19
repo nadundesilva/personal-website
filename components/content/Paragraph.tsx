@@ -17,10 +17,12 @@ import type React from "react";
 
 interface ParagraphProps {
     children: React.ReactNode;
+    id?: string;
 }
 
-const Paragraph = ({ children }: ParagraphProps): React.ReactElement => (
+const Paragraph = ({ children, id }: ParagraphProps): React.ReactElement => (
     <Typography
+        id={id}
         variant="body1"
         sx={{
             m: 0,
