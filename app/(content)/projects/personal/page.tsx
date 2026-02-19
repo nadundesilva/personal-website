@@ -14,8 +14,9 @@
  */
 import { Launch } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
+import type { SxProps, Theme } from "@mui/material";
 import type { Metadata } from "next";
-import type React from "react";
+import React from "react";
 
 import {
     Link,
@@ -28,9 +29,45 @@ import {
     Title,
 } from "@/components/content";
 import { FULL_NAME } from "@/constants/metadata";
+import ProjectDetails, { type Project } from "@/constants/projects";
 
-import k8sReplicatorLogoImage from "@/assets/projects/personal/k8s-replicator-logo.png";
-import meshManagerLogoImage from "@/assets/projects/personal/mesh-manager-logo.png";
+import { visuallyHidden } from "@mui/utils";
+
+interface PersonalProjectSectionHeadingProps {
+    id: string;
+    project: Project;
+    logoSx: SxProps<Theme>;
+}
+
+const PersonalProjectSectionHeading = ({
+    id,
+    project,
+    logoSx,
+}: PersonalProjectSectionHeadingProps): React.ReactElement => (
+    <SectionHeading
+        id={id}
+        logo={
+            <Logo
+                srcLight={project.logo.srcLight}
+                srcDark={project.logo.srcDark}
+                alt=""
+                recommendedSx={logoSx}
+            />
+        }
+        actionButton={{
+            href: project.link,
+            name: "View on GitHub",
+            ariaLabel: `View on GitHub - ${project.name}`,
+            icon: Launch,
+        }}
+    >
+        {project.name}
+        <Box component="span" sx={visuallyHidden}>
+            {" "}
+            (personal project)
+        </Box>
+    </SectionHeading>
+);
 
 interface UseCasesSectionProps {
     children: React.ReactNode;
@@ -38,20 +75,26 @@ interface UseCasesSectionProps {
 
 const UseCasesSection = ({
     children,
-}: UseCasesSectionProps): React.ReactElement => (
-    <Box sx={{ m: 0, pt: 2 }}>
-        <Typography
-            sx={{
-                fontWeight: 500,
-                letterSpacing: "-0.01em",
-                mb: 2,
-            }}
-        >
-            Use Cases:
-        </Typography>
-        <List>{children}</List>
-    </Box>
-);
+}: UseCasesSectionProps): React.ReactElement => {
+    const headingId = React.useId();
+    return (
+        <Box sx={{ m: 0, pt: 2 }}>
+            <Typography
+                id={headingId}
+                component="h3"
+                variant="subtitle1"
+                sx={{
+                    fontWeight: 500,
+                    letterSpacing: "-0.01em",
+                    mb: 2,
+                }}
+            >
+                Use Cases:
+            </Typography>
+            <List ariaLabelledBy={headingId}>{children}</List>
+        </Box>
+    );
+};
 
 export const metadata: Metadata = {
     title: "Personal Projects",
@@ -59,23 +102,6 @@ export const metadata: Metadata = {
 };
 
 const PersonalProjects = (): React.ReactElement => {
-    const k8sReplicatorLogo = (
-        <Logo
-            srcLight={k8sReplicatorLogoImage}
-            srcDark={k8sReplicatorLogoImage}
-            alt="K8s Replicator"
-            recommendedSx={{ height: "3.5em" }}
-        />
-    );
-    const meshManagerLogo = (
-        <Logo
-            srcLight={meshManagerLogoImage}
-            srcDark={meshManagerLogoImage}
-            alt="Mesh Manager"
-            recommendedSx={{ height: "4.5em" }}
-        />
-    );
-
     const generateLink = (text: string, href: string): React.ReactElement => (
         <Link href={href} target="_blank">
             {text}
@@ -97,22 +123,17 @@ const PersonalProjects = (): React.ReactElement => {
     return (
         <>
             <Title>Personal Projects</Title>
-            <Section>
-                <SectionHeading
-                    logo={k8sReplicatorLogo}
-                    actionButton={{
-                        href: "https://github.com/nadundesilva/k8s-replicator",
-                        name: "View on GitHub",
-                        icon: Launch,
-                    }}
-                >
-                    K8s Replicator
-                </SectionHeading>
+            <Section labelledById="section-project-k8s-replicator">
+                <PersonalProjectSectionHeading
+                    id="section-project-k8s-replicator"
+                    project={ProjectDetails.K8sReplicator}
+                    logoSx={{ height: "3.5em" }}
+                />
                 <Paragraph>
                     In {Kubernetes} deployments when the same {Secret},{" "}
                     {ConfigMap} or {NetworkPolicy} needs to be accessed across
                     multiple namespaces, it needs to be manually created in all
-                    of them. This handy {Kubernetes} controller can come to your
+                    of them. This handy Kubernetes controller can come to your
                     rescue. It will automatically watch the namespaces and
                     create the resources in them as soon as they are created. By
                     doing so, this will allow removing some of the burden on the
@@ -138,17 +159,12 @@ const PersonalProjects = (): React.ReactElement => {
                     </ListItem>
                 </UseCasesSection>
             </Section>
-            <Section>
-                <SectionHeading
-                    logo={meshManagerLogo}
-                    actionButton={{
-                        href: "https://github.com/nadundesilva/mesh-manager",
-                        name: "View on GitHub",
-                        icon: Launch,
-                    }}
-                >
-                    Mesh Manager
-                </SectionHeading>
+            <Section labelledById="section-project-mesh-manager">
+                <PersonalProjectSectionHeading
+                    id="section-project-mesh-manager"
+                    project={ProjectDetails.MeshManager}
+                    logoSx={{ height: "4.5em" }}
+                />
                 <Paragraph>
                     When working with a large deployment based on a
                     microservices architecture, it can get quite complex when

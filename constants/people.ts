@@ -35,6 +35,42 @@ const People: Record<string, Person> = {
         name: "Martha White",
         profile: "https://www.coursera.org/instructor/martha-white",
     },
+    TishanDahanayakage: {
+        name: "Tishan Dahanayakage",
+        profile: "https://www.linkedin.com/in/tishan",
+    },
+    MalithJayasinghe: {
+        name: "Malith Jayasinghe",
+        profile: "https://www.linkedin.com/in/malith-jayasinghe",
+    },
+    IsuruHaththotuwa: {
+        name: "Isuru Haththotuwa",
+        profile: "https://www.linkedin.com/in/isuruhaththotuwa",
+    },
+    DuneeshaFernando: {
+        name: "Duneesha Fernando",
+        profile: "https://www.linkedin.com/in/duneesha-fernando",
+    },
+    SrinathPerera: {
+        name: "Srinath Perera",
+        profile: "https://www.linkedin.com/in/srinathperera",
+    },
+    BinuraGunasekara: {
+        name: "Binura Gunasekara",
+        profile: "https://www.linkedin.com/in/binura-g",
+    },
+    KanchanaWickremasinghe: {
+        name: "Kanchana Wickremasinghe",
+        profile: "https://www.linkedin.com/in/kanchanaw",
+    },
+    NuwanBandara: {
+        name: "Nuwan Bandara",
+        profile: "https://www.linkedin.com/in/nuwanbando",
+    },
+    SinthujaRajendranSuhothayan: {
+        name: "Sinthuja Rajendran Suhothayan",
+        profile: "https://www.linkedin.com/in/sinthuja-rajendran-b45209122",
+    },
 };
 
 export default People;

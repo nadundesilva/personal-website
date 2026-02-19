@@ -17,10 +17,16 @@ import type React from "react";
 
 interface SectionProps {
     children: React.ReactNode;
+    labelledById?: string;
 }
 
-const Section = ({ children }: SectionProps): React.ReactElement => (
+const Section = ({
+    children,
+    labelledById,
+}: SectionProps): React.ReactElement => (
     <Box
+        component="section"
+        aria-labelledby={labelledById}
         sx={{
             "clear": "both", // Keep preceding floating elements off sections
             "mb": 7,
@@ -41,6 +47,7 @@ const Section = ({ children }: SectionProps): React.ReactElement => (
         />
         <Divider
             className="section-divider"
+            aria-hidden="true"
             sx={{
                 display: "none",
                 width: "100%",

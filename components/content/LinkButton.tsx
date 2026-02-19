@@ -23,6 +23,7 @@ interface LinkButtonProps {
     name: string;
     icon?: React.ComponentType;
     target?: string;
+    ariaLabel?: string;
 }
 
 const LinkButton = ({
@@ -30,30 +31,30 @@ const LinkButton = ({
     name,
     icon: Icon,
     target,
+    ariaLabel,
 }: LinkButtonProps): React.ReactElement => (
-    <Link href={href} target={target}>
-        <Button
-            size="small"
-            variant="outlined"
-            endIcon={Icon ? <Icon /> : undefined}
-            sx={{
-                "color": "text.secondary",
-                "opacity": 0.85,
-                "borderColor": "text.secondary",
-                "& .MuiButton-endIcon, & .MuiButton-startIcon": {
-                    color: "text.secondary",
-                    opacity: 0.85,
-                },
-                "&:hover": {
-                    transform: "translateY(-1px)",
-                    opacity: 1,
-                    borderColor: "text.secondary",
-                },
-            }}
-        >
-            {name}
-        </Button>
-    </Link>
+    <Button
+        component={Link}
+        href={href}
+        target={target}
+        size="small"
+        variant="outlined"
+        endIcon={Icon ? <Icon /> : undefined}
+        aria-label={ariaLabel}
+        sx={{
+            "color": "text.secondary",
+            "borderColor": "text.secondary",
+            "& .MuiButton-endIcon, & .MuiButton-startIcon": {
+                color: "text.secondary",
+            },
+            "&:hover": {
+                transform: "translateY(-1px)",
+                borderColor: "text.secondary",
+            },
+        }}
+    >
+        {name}
+    </Button>
 );
 
 export default LinkButton;

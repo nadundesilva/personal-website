@@ -18,7 +18,6 @@ import {
     Button,
     Container,
     Grid,
-    Link,
     Typography,
     type TypographyProps,
     type CSSProperties,
@@ -26,6 +25,7 @@ import {
 } from "@mui/material";
 import Image from "next-image-export-optimizer";
 import React from "react";
+import { Link } from "@/components/content";
 import { FULL_NAME, TAGLINE } from "@/constants/metadata";
 
 import welcomeBannerImage from "@/assets/banner.webp";
@@ -111,8 +111,7 @@ const WelcomeBanner = (): React.ReactElement => {
             >
                 <Image
                     src={welcomeBannerImage}
-                    alt={`${FULL_NAME}'s Website Welcome Banner`}
-                    fill
+                    alt=""
                     style={{ objectFit: "cover" }}
                     sizes="100vw"
                     preload
@@ -141,6 +140,7 @@ const WelcomeBanner = (): React.ReactElement => {
             >
                 <Grid size={12}>
                     <WelcomeText
+                        component="p"
                         mb={{ xs: 1.5, md: 2 }}
                         sx={{
                             "letterSpacing": "-0.05em",
@@ -153,6 +153,7 @@ const WelcomeBanner = (): React.ReactElement => {
                         Hi, I am
                     </WelcomeText>
                     <WelcomeText
+                        component="h1"
                         mb={{ xs: 3, md: 4 }}
                         sx={{
                             "letterSpacing": { xs: "-0.05em", md: "-0.06em" },
@@ -162,7 +163,7 @@ const WelcomeBanner = (): React.ReactElement => {
                             },
                         }}
                     >
-                        Nadun De Silva
+                        {FULL_NAME}
                     </WelcomeText>
                     <Box
                         width={40}
@@ -197,39 +198,41 @@ const WelcomeBanner = (): React.ReactElement => {
                     </Typography>
                 </Grid>
                 <Grid size={12}>
-                    <Link href="/nadundesilva-cv.pdf" target="_blank">
-                        <Button
-                            variant="outlined"
-                            sx={{
-                                "borderColor": "rgba(255, 255, 255, 0.85)",
-                                "color": "#ffffff",
-                                "borderWidth": 1,
-                                "px": { xs: 5, md: 6 },
-                                "py": { xs: 1.5, md: 2 },
-                                "letterSpacing": "0.06em",
-                                "textTransform": "uppercase",
-                                "fontSize": { xs: 12, md: 13 },
-                                "borderRadius": 0,
-                                "transition":
-                                    "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                                "animation": "fadeInUp 1s ease-out 0.25s both",
-                                "&:hover": {
-                                    borderColor: "#ffffff",
-                                    backgroundColor:
-                                        "rgba(255, 255, 255, 0.12)",
-                                    transform: "translateY(-1px)",
-                                    boxShadow: "0 2px 12px rgba(0, 0, 0, 0.25)",
-                                },
-                            }}
-                        >
-                            View CV
-                        </Button>
-                    </Link>
+                    <Button
+                        variant="outlined"
+                        component={Link}
+                        href="/nadundesilva-cv.pdf"
+                        target="_blank"
+                        aria-label="View CV (PDF document)"
+                        sx={{
+                            "borderColor": "rgba(255, 255, 255, 0.85)",
+                            "color": "#ffffff",
+                            "borderWidth": 1,
+                            "px": { xs: 5, md: 6 },
+                            "py": { xs: 1.5, md: 2 },
+                            "letterSpacing": "0.06em",
+                            "textTransform": "uppercase",
+                            "fontSize": { xs: 12, md: 13 },
+                            "borderRadius": 0,
+                            "transition":
+                                "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                            "animation": "fadeInUp 1s ease-out 0.25s both",
+                            "&:hover": {
+                                borderColor: "#ffffff",
+                                backgroundColor: "rgba(255, 255, 255, 0.12)",
+                                transform: "translateY(-1px)",
+                                boxShadow: "0 2px 12px rgba(0, 0, 0, 0.25)",
+                            },
+                        }}
+                    >
+                        View CV
+                    </Button>
                 </Grid>
             </Grid>
 
             <Box
                 role="presentation"
+                aria-hidden="true"
                 display="flex"
                 flexDirection="column"
                 alignItems="center"

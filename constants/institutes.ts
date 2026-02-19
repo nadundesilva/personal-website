@@ -13,51 +13,49 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
+import Logos, { type LogoImageData } from "@/constants/logos";
+
 export interface Institute {
     name: string;
     link: string;
+    logo: LogoImageData;
 }
 
 const Institutes: Record<string, Institute> = {
     StJosephsCollegeColombo10: {
         name: "St. Joseph's College",
         link: "https://www.stjosephscollege.lk/",
+        logo: Logos.StJosephsCollegeColombo10,
     },
     UniversityOfMoratuwa: {
         name: "University of Moratuwa",
         link: "https://uom.lk/",
-    },
-    BritishCouncilHSBCYouthEnterpriseAwards: {
-        name: "British Council HSBC Youth Enterprise Awards",
-        link: "https://www.britishcouncil.lk/programmes/education/internationalising-higher-education/hsbc-youth-enterprise-awards",
-    },
-    NASA: {
-        name: "NASA",
-        link: "https://www.nasa.gov/",
-    },
-    WSO2: {
-        name: "WSO2",
-        link: "https://wso2.com/",
+        logo: Logos.UniversityOfMoratuwa,
     },
     DeepLearningAi: {
         name: "DeepLearning.AI",
         link: "https://www.deeplearning.ai/",
+        logo: Logos.DeepLearningAi,
     },
     Coursera: {
         name: "Coursera",
         link: "https://www.coursera.org/",
+        logo: Logos.DeepLearningAi,
     },
     LinuxFoundation: {
         name: "Linux Foundation",
         link: "https://www.linuxfoundation.org/",
+        logo: Logos.CKA,
     },
     UniversityOfAlberta: {
         name: "University of Alberta",
         link: "https://www.ualberta.ca/",
+        logo: Logos.UniversityOfAlberta,
     },
     AlbertaMachineIntelligenceInstitute: {
         name: "Alberta Machine Intelligence Institute (Amii)",
         link: "https://www.amii.ca/",
+        logo: Logos.UniversityOfAlberta,
     },
 };
 
