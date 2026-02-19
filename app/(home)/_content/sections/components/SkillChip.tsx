@@ -26,14 +26,17 @@ import {
     Box,
     Chip,
     Divider,
+    Paper,
+    Popper,
     Stack,
-    Tooltip,
     Typography,
     useTheme,
     SvgIconProps,
 } from "@mui/material";
 
 import React from "react";
+
+import useHoverDelay from "@/hooks/useHoverDelay";
 
 interface ProficiencyIndicatorProps {
     level: SkillProficiency;
@@ -61,6 +64,7 @@ const ProficiencyIndicator = ({
 
     return (
         <Box
+            aria-hidden={true}
             sx={{
                 display: "flex",
                 alignItems: "end",
@@ -99,6 +103,7 @@ const SkillChipTooltipSkillSection = ({
     icon,
 }: SkillChipTooltipSkillSectionProps) => {
     const theme = useTheme();
+    const titleId = React.useId();
     return (
         <Box>
             <Box
@@ -111,14 +116,16 @@ const SkillChipTooltipSkillSection = ({
                 }}
             >
                 {React.cloneElement(icon, {
-                    sx: { fontSize: 16, color: theme.palette.text.secondary },
+                    "sx": { fontSize: 16, color: theme.palette.text.secondary },
+                    "aria-hidden": true,
                 })}
-                <Typography variant="caption" fontWeight={600}>
+                <Typography id={titleId} variant="caption" fontWeight={600}>
                     {title}
                 </Typography>
             </Box>
             <Box
                 component="ul"
+                aria-labelledby={titleId}
                 sx={{
                     "m": 0,
                     "pl": 0,
@@ -153,16 +160,53 @@ const SkillChipTooltipSkillSection = ({
 };
 
 interface SkillChipTooltipProps {
-    children: React.ReactElement;
+    id: string;
+    anchorEl: HTMLElement | null;
+    onMouseEnter: () => void;
+    onMouseLeave: () => void;
     skill: Skill;
 }
 
 const SkillChipTooltip = ({
-    children,
+    id,
+    anchorEl,
+    onMouseEnter,
+    onMouseLeave,
     skill,
 }: SkillChipTooltipProps): React.ReactElement => (
-    <Tooltip
-        title={
+    <Popper
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        placement="top"
+        modifiers={[
+            {
+                name: "offset",
+                options: { offset: [0, 8] },
+            },
+            {
+                name: "preventOverflow",
+                options: { padding: 20 },
+            },
+        ]}
+        style={{ zIndex: 1300 }}
+    >
+        <Paper
+            id={id}
+            role="tooltip"
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            sx={{
+                backgroundColor: "background.paper",
+                color: "text.primary",
+                maxWidth: 320,
+                fontSize: (theme) => theme.typography.pxToRem(12),
+                border: "1px solid",
+                borderColor: "divider",
+                boxShadow: 4,
+                p: 1.5,
+                borderRadius: 2,
+            }}
+        >
             <Stack spacing={1.5} sx={{ p: 0.5 }}>
                 <Box
                     sx={{
@@ -236,47 +280,8 @@ const SkillChipTooltip = ({
                     />
                 )}
             </Stack>
-        }
-        arrow
-        placement="top"
-        enterTouchDelay={0}
-        slotProps={{
-            popper: {
-                modifiers: [
-                    {
-                        name: "preventOverflow",
-                        options: {
-                            padding: 20,
-                        },
-                    },
-                ],
-            },
-            tooltip: {
-                sx: {
-                    backgroundColor: "background.paper",
-                    color: "text.primary",
-                    maxWidth: 320,
-                    fontSize: (theme) => theme.typography.pxToRem(12),
-                    border: "1px solid",
-                    borderColor: "divider",
-                    boxShadow: 4,
-                    p: 1.5,
-                    borderRadius: 2,
-                },
-            },
-            arrow: {
-                sx: {
-                    "color": "background.paper",
-                    "&:before": {
-                        border: "1px solid",
-                        borderColor: "divider",
-                    },
-                },
-            },
-        }}
-    >
-        {children}
-    </Tooltip>
+        </Paper>
+    </Popper>
 );
 
 interface SkillChipProps {
@@ -289,35 +294,68 @@ const SkillChip = ({ skill }: SkillChipProps): React.ReactElement => {
         skill.usage.projects.length > 0 ||
         skill.usage.certifications.length > 0;
 
-    const chipComponent = (
-        <Chip
-            label={
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                >
-                    {skill.name} <ProficiencyIndicator level={skill.level} />
-                </Box>
-            }
-            variant="outlined"
-            sx={{
-                "transition": "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                "&:hover": {
-                    transform: "translateY(-2px)",
-                    borderColor: "primary.main",
-                    backgroundColor: "action.hover",
-                    cursor: "pointer",
-                },
-            }}
-        />
-    );
+    const tooltipId = React.useId();
+    const { scheduleOpen, scheduleClose, cancelClose, close, anchorEl } =
+        useHoverDelay();
 
-    return hasContent ? (
-        <SkillChipTooltip skill={skill}>{chipComponent}</SkillChipTooltip>
-    ) : (
-        chipComponent
+    const handleMouseEnter = (event: React.MouseEvent<HTMLElement>) => {
+        scheduleOpen(event.currentTarget);
+    };
+
+    const handleFocus = (event: React.FocusEvent<HTMLElement>) => {
+        scheduleOpen(event.currentTarget);
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            close();
+        }
+    };
+
+    return (
+        <>
+            <Chip
+                label={
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        {skill.name}{" "}
+                        <ProficiencyIndicator level={skill.level} />
+                    </Box>
+                }
+                variant="outlined"
+                onMouseEnter={hasContent ? handleMouseEnter : undefined}
+                onMouseLeave={hasContent ? scheduleClose : undefined}
+                onFocus={hasContent ? handleFocus : undefined}
+                onBlur={hasContent ? scheduleClose : undefined}
+                onKeyDown={hasContent ? handleKeyDown : undefined}
+                tabIndex={hasContent ? 0 : undefined}
+                aria-label={`${skill.name} - ${skill.level} level.`}
+                aria-describedby={hasContent ? tooltipId : undefined}
+                sx={{
+                    "transition": "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                    "&:hover, &:focus-visible": {
+                        transform: "translateY(-2px)",
+                        borderColor: "primary.main",
+                        backgroundColor: "action.hover",
+                        cursor: "default",
+                    },
+                }}
+            />
+            {hasContent && (
+                <SkillChipTooltip
+                    id={tooltipId}
+                    anchorEl={anchorEl}
+                    onMouseEnter={cancelClose}
+                    onMouseLeave={scheduleClose}
+                    skill={skill}
+                />
+            )}
+        </>
     );
 };
 

@@ -25,6 +25,7 @@ interface SectionHeadingProps {
     date?: FormattableDate;
     logo?: React.ReactElement;
     actionButton?: LinkButtonProps;
+    id?: string;
 }
 
 const SectionHeading = ({
@@ -32,6 +33,7 @@ const SectionHeading = ({
     date,
     logo,
     actionButton,
+    id,
 }: SectionHeadingProps): React.ReactElement => (
     <Box
         sx={{
@@ -45,6 +47,8 @@ const SectionHeading = ({
     >
         <Box sx={{ flex: 1, minWidth: 0 }}>
             <Typography
+                id={id}
+                component="h2"
                 variant="h3"
                 sx={{
                     mb: 0,

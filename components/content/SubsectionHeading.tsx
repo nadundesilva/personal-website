@@ -17,13 +17,17 @@ import type React from "react";
 
 interface SubsectionHeadingProps {
     children: React.ReactNode;
+    id?: string;
 }
 
 const SubsectionHeading = ({
     children,
+    id,
 }: SubsectionHeadingProps): React.ReactElement => (
     <Box sx={{ mt: 3, mb: 1.5 }}>
         <Typography
+            id={id}
+            component="h3"
             variant="h4"
             sx={{
                 fontWeight: 400,

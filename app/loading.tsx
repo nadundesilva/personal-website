@@ -24,7 +24,7 @@ const Loading = (): React.ReactElement => (
             height: "100vh",
         }}
     >
-        <CircularProgress />
+        <CircularProgress aria-label="Loading" />
     </Box>
 );
 

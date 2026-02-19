@@ -21,14 +21,17 @@ interface Zaraz {
     queue: (eventName: string, data?: Record<string, unknown>) => void;
 }
 
-interface Window {
+interface ZarazWindow {
     zaraz?: Zaraz;
 }
 
 const WebVitals = (): React.ReactElement | null => {
     useReportWebVitals((metric) => {
-        if (typeof window !== "undefined" && (window as Window).zaraz) {
-            const zaraz = (window as Window).zaraz;
+        if (
+            typeof window !== "undefined" &&
+            (window as unknown as ZarazWindow).zaraz
+        ) {
+            const zaraz = (window as unknown as ZarazWindow).zaraz;
             if (zaraz) {
                 zaraz.track("web_vital", {
                     name: metric.name,

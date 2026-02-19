@@ -26,7 +26,7 @@ import type React from "react";
 
 import Profiles from "@/constants/profiles";
 import { Link } from "@/components/content";
-import { FULL_NAME, JOB_TITLE } from "@/constants/metadata";
+import { JOB_TITLE } from "@/constants/metadata";
 
 import profilePhotoImage from "@/assets/profile-photo.webp";
 
@@ -46,8 +46,9 @@ const AboutMe = (): React.ReactElement => {
             >
                 <Image
                     src={profilePhotoImage}
-                    alt={FULL_NAME}
+                    alt="Profile photo of Nadun De Silva"
                     fill
+                    sizes="(max-width: 600px) 100vw, 33vw"
                     style={{ objectFit: "cover" }}
                 />
             </Avatar>
@@ -107,6 +108,7 @@ const AboutMe = (): React.ReactElement => {
                             aria-label={name}
                         >
                             <Icon
+                                aria-hidden={true}
                                 sx={{
                                     "fontSize": 40,
                                     "color": "text.secondary",

@@ -16,6 +16,8 @@ import { Box, Button, Card, Container, Grid, Typography } from "@mui/material";
 import type React from "react";
 
 import Profiles from "@/constants/profiles";
+import { CONTACT_EMAIL } from "@/constants/metadata";
+import { Link } from "@/components/content";
 import { Email } from "@mui/icons-material";
 
 const Contact = (): React.ReactElement => (
@@ -38,7 +40,7 @@ const Contact = (): React.ReactElement => (
                 <Grid size={{ xs: 12, md: 7 }}>
                     <Typography
                         variant="h3"
-                        component="h2"
+                        component="h3"
                         gutterBottom
                         sx={{ fontWeight: 500 }}
                     >
@@ -49,6 +51,7 @@ const Contact = (): React.ReactElement => (
                     </Typography>
                     <Typography
                         variant="h6"
+                        component="p"
                         color="text.secondary"
                         sx={{
                             mb: 4,
@@ -65,9 +68,13 @@ const Contact = (): React.ReactElement => (
                         {Object.values(Profiles).map((profile) => (
                             <Button
                                 key={profile.name}
+                                component={Link}
                                 href={profile.link}
                                 target="_blank"
-                                rel="noopener noreferrer"
+                                style={{
+                                    textDecoration: "none",
+                                    color: "inherit",
+                                }}
                                 variant="outlined"
                                 color="inherit"
                                 startIcon={<profile.Icon />}
@@ -105,7 +112,8 @@ const Contact = (): React.ReactElement => (
                         <Button
                             variant="contained"
                             color="primary"
-                            href="mailto:contact@nadundesilva.com"
+                            href={`mailto:${CONTACT_EMAIL}`}
+                            aria-label={`Say Hello, send an email to ${CONTACT_EMAIL}`}
                             size="large"
                             startIcon={<Email />}
                             sx={{

@@ -13,7 +13,8 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { KeyboardArrowRight } from "@mui/icons-material";
-import { Box, Typography } from "@mui/material";
+import { Box, type SxProps, type Theme, Typography } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
 import type { Metadata } from "next";
 import type React from "react";
 
@@ -29,17 +30,46 @@ import {
     SectionHeading,
     Title,
 } from "@/components/content";
-import { Date, DateRange } from "@/constants/date";
+import Educations, { type Education } from "@/constants/education";
 import Institutes, { type Institute } from "@/constants/institutes";
 import { FULL_NAME } from "@/constants/metadata";
-
-import uomLogoImage from "@/assets/education/university-of-moratuwa-logo.png";
-import sjcLogoImage from "@/assets/education/st-josephs-college-colombo-10-logo.png";
+import { WebsiteHome } from "@/constants/routes";
 
 export const metadata: Metadata = {
     title: "Education",
     description: `Educational qualifications of ${FULL_NAME}.`,
 };
+
+interface EducationSectionHeadingProps {
+    id: string;
+    education: Education;
+    logoSx?: SxProps<Theme>;
+}
+
+const EducationSectionHeading = ({
+    id,
+    education,
+    logoSx,
+}: EducationSectionHeadingProps): React.ReactElement => (
+    <SectionHeading
+        id={id}
+        date={education.timePeriod}
+        logo={
+            <Logo
+                srcLight={education.institute.logo.srcLight}
+                srcDark={education.institute.logo.srcDark}
+                alt=""
+                recommendedSx={logoSx}
+            />
+        }
+    >
+        {education.title}
+        <Box component="span" sx={visuallyHidden}>
+            {" "}
+            at {education.institute.name}
+        </Box>
+    </SectionHeading>
+);
 
 const Education = (): React.ReactElement => {
     const generateInstituteLink = (
@@ -78,46 +108,26 @@ const Education = (): React.ReactElement => {
         </Link>
     );
 
-    const uomLogo = (
-        <Logo
-            srcLight={uomLogoImage}
-            srcDark={uomLogoImage}
-            alt="University of Moratuwa"
-            recommendedSx={{ height: "4em" }}
-        />
-    );
-    const sjcLogo = (
-        <Logo
-            srcLight={sjcLogoImage}
-            srcDark={sjcLogoImage}
-            alt="St. Joseph's College, Colombo 10"
-            recommendedSx={{ height: "4em" }}
-        />
-    );
-
     return (
         <>
             <Title>Education</Title>
-            <Box sx={{ pt: 2 }}>
+            <Box sx={{ pt: 2, pb: 2 }}>
                 <LinkButton
-                    href="/education/certifications"
+                    href={
+                        WebsiteHome.subRoutes["/education"].subRoutes![
+                            "/education/certifications"
+                        ].path
+                    }
                     name="View Certifications"
                     icon={KeyboardArrowRight}
                 />
             </Box>
-            <Section>
-                <SectionHeading
-                    date={
-                        new DateRange(
-                            new Date(2014, "March"),
-                            new Date(2017, "June"),
-                        )
-                    }
-                    logo={uomLogo}
-                >
-                    B.Sc. (Hons.) in Engineering (Computer Science and
-                    Engineering)
-                </SectionHeading>
+            <Section labelledById="section-bsc-uom">
+                <EducationSectionHeading
+                    id="section-bsc-uom"
+                    education={Educations.BScUniversityOfMoratuwa}
+                    logoSx={{ height: "4em" }}
+                />
                 <Paragraph>
                     I studied for my four-year bachelor&apos;s degree at the{" "}
                     {UniversityOfMoratuwa}. The degree covered many in-depth
@@ -133,7 +143,13 @@ const Education = (): React.ReactElement => {
                         <Typography>Academic Standing: First Class</Typography>
                     </ListItem>
                     <ListItem>
-                        <Typography>Overall CGPA - 3.85 / 4.20</Typography>
+                        <Typography>
+                            Overall{" "}
+                            <abbr title="Cumulative Grade Point Average">
+                                CGPA
+                            </abbr>{" "}
+                            - 3.85 / 4.20
+                        </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography>
@@ -141,42 +157,48 @@ const Education = (): React.ReactElement => {
                         </Typography>
                     </ListItem>
                     <ListItem>
-                        <Typography component="div">
+                        <Typography
+                            id="uom-publications-heading"
+                            component="h3"
+                            variant="h6"
+                            sx={{ mt: 3, mb: 1.5 }}
+                        >
                             Publications:
-                            <Box
-                                component="span"
-                                sx={{ display: "block", mt: 1 }}
-                            >
-                                <List>
-                                    <ListItem>
-                                        <Typography>
-                                            {
-                                                GanBasedAnomalyDetectionInIndustrialSoftwareSystems
-                                            }
-                                        </Typography>
-                                    </ListItem>
-                                    <ListItem>
-                                        <Typography>
-                                            {
-                                                AnomalyDetectionInIndustrialSoftwareSystemsUsingVae
-                                            }
-                                        </Typography>
-                                    </ListItem>
-                                </List>
-                            </Box>
                         </Typography>
+                        <Box sx={{ display: "block", mt: 1 }}>
+                            <List ariaLabelledBy="uom-publications-heading">
+                                <ListItem>
+                                    <Typography>
+                                        {
+                                            GanBasedAnomalyDetectionInIndustrialSoftwareSystems
+                                        }
+                                    </Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <Typography>
+                                        {
+                                            AnomalyDetectionInIndustrialSoftwareSystemsUsingVae
+                                        }
+                                    </Typography>
+                                </ListItem>
+                            </List>
+                        </Box>
                     </ListItem>
                 </HighlightsSection>
             </Section>
-            <Section>
-                <SectionHeading date={new Date(2012)} logo={sjcLogo}>
-                    G.C.E. Advanced Level
-                </SectionHeading>
+            <Section labelledById="section-al-sjc">
+                <EducationSectionHeading
+                    id="section-al-sjc"
+                    education={Educations.ALStJosephsCollegeColombo10}
+                    logoSx={{ height: "4em" }}
+                />
                 <Paragraph>
                     I attended school at {StJosephsCollegeColombo10} where I
                     studied many subjects. At the end of my studies, I passed
-                    the G.C.E. Advanced Level examination with distinctions in
-                    all the subjects granting me entrance into the{" "}
+                    the{" "}
+                    <abbr title="General Certificate of Education">G.C.E.</abbr>{" "}
+                    Advanced Level examination with distinctions in all the
+                    subjects granting me entrance into the{" "}
                     {UniversityOfMoratuwa} as well.
                 </Paragraph>
                 <HighlightsSection>
@@ -184,52 +206,60 @@ const Education = (): React.ReactElement => {
                         <Typography>Z - Score: 2.2441</Typography>
                     </ListItem>
                     <ListItem>
-                        <Typography component="div">
+                        <Typography
+                            id="sjc-main-subjects-heading"
+                            component="h3"
+                            variant="h6"
+                            sx={{ mt: 3, mb: 1.5 }}
+                        >
                             Main Subjects:
-                            <Box
-                                component="span"
-                                sx={{ display: "block", mt: 1 }}
-                            >
-                                <List>
-                                    <ListItem>
-                                        <Typography>
-                                            Combined Mathematics - A
-                                        </Typography>
-                                    </ListItem>
-                                    <ListItem>
-                                        <Typography>Physics - A</Typography>
-                                    </ListItem>
-                                    <ListItem>
-                                        <Typography>Chemistry - A</Typography>
-                                    </ListItem>
-                                </List>
-                            </Box>
                         </Typography>
+                        <Box sx={{ display: "block", mt: 1 }}>
+                            <List ariaLabelledBy="sjc-main-subjects-heading">
+                                <ListItem>
+                                    <Typography>
+                                        Combined Mathematics - A
+                                    </Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <Typography>Physics - A</Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <Typography>Chemistry - A</Typography>
+                                </ListItem>
+                            </List>
+                        </Box>
                     </ListItem>
                     <ListItem>
-                        <Typography component="div">
+                        <Typography
+                            id="sjc-other-subjects-heading"
+                            component="h3"
+                            variant="h6"
+                            sx={{ mt: 3, mb: 1.5 }}
+                        >
                             Other Subjects:
-                            <Box
-                                component="span"
-                                sx={{ display: "block", mt: 1 }}
-                            >
-                                <List>
-                                    <ListItem>
-                                        <Typography>General IT - A</Typography>
-                                    </ListItem>
-                                    <ListItem>
-                                        <Typography>
-                                            General English - A
-                                        </Typography>
-                                    </ListItem>
-                                    <ListItem>
-                                        <Typography>
-                                            General Knowledge - A
-                                        </Typography>
-                                    </ListItem>
-                                </List>
-                            </Box>
                         </Typography>
+                        <Box sx={{ display: "block", mt: 1 }}>
+                            <List ariaLabelledBy="sjc-other-subjects-heading">
+                                <ListItem>
+                                    <Typography>
+                                        General{" "}
+                                        <abbr title="Information Technology">
+                                            IT
+                                        </abbr>{" "}
+                                        - A
+                                    </Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <Typography>General English - A</Typography>
+                                </ListItem>
+                                <ListItem>
+                                    <Typography>
+                                        General Knowledge - A
+                                    </Typography>
+                                </ListItem>
+                            </List>
+                        </Box>
                     </ListItem>
                     <ListItem>
                         <Typography>

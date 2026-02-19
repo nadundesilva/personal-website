@@ -124,15 +124,16 @@ const ArticleLayout = ({
                 {pageMetadata.description}
             </Typography>
             <Box sx={{ mb: 4 }}>
-                <Link href={blogMetadata.mediumUrl} target="_blank">
-                    <Button
-                        size="small"
-                        variant="outlined"
-                        endIcon={<OpenInNew />}
-                    >
-                        Medium
-                    </Button>
-                </Link>
+                <Button
+                    component={Link}
+                    href={blogMetadata.mediumUrl}
+                    target="_blank"
+                    size="small"
+                    variant="outlined"
+                    endIcon={<OpenInNew />}
+                >
+                    Medium
+                </Button>
             </Box>
             {children}
         </Box>

@@ -25,17 +25,20 @@ import Image from "next-image-export-optimizer";
 import type React from "react";
 
 import SubHeading from "../common/SubHeading";
+import { Link } from "@/components/content";
 import Projects, { type Project } from "@/constants/projects";
 
 const ContributedProjects = (): React.ReactElement => {
     const theme = useTheme();
 
-    const xsWidth = theme.breakpoints.values.xs;
     const smWidth = theme.breakpoints.values.sm;
     const mdWidth = theme.breakpoints.values.md;
-    const imageSizes = `(min-width: ${xsWidth}px) 100vw, (min-width: ${smWidth}px) 34vw, (min-width: ${mdWidth}px) 33vw`;
+    const imageSizes = `(min-width: ${mdWidth}px) 33vw, (min-width: ${smWidth}px) 34vw, 100vw`;
 
-    const renderProject = (project: Project): React.ReactElement => (
+    const renderProject = (
+        project: Project,
+        headingComponent: React.ElementType,
+    ): React.ReactElement => (
         <Grid key={project.name} size={{ xs: 12, sm: 6, md: 4 }}>
             <Card
                 sx={{
@@ -51,9 +54,10 @@ const ContributedProjects = (): React.ReactElement => {
                 }}
             >
                 <CardActionArea
+                    component={Link}
                     href={project.link}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    style={{ textDecoration: "none", color: "inherit" }}
                     sx={{
                         flexGrow: 1,
                         display: "flex",
@@ -80,12 +84,12 @@ const ContributedProjects = (): React.ReactElement => {
                             }}
                         >
                             <Image
-                                alt={project.logo.alt}
+                                alt=""
                                 fill
                                 style={{ objectFit: "contain" }}
                                 sizes={imageSizes}
                                 src={
-                                    theme.palette.mode == "light"
+                                    theme.palette.mode === "light"
                                         ? project.logo.srcLight
                                         : project.logo.srcDark
                                 }
@@ -93,7 +97,7 @@ const ContributedProjects = (): React.ReactElement => {
                         </Box>
                         <Typography
                             variant="h6"
-                            component="h3"
+                            component={headingComponent}
                             align="center"
                             gutterBottom
                             sx={{ fontWeight: 500 }}
@@ -124,11 +128,11 @@ const ContributedProjects = (): React.ReactElement => {
                 justifyContent="center"
                 alignItems="stretch"
             >
-                {renderProject(Projects.Indexity)}
-                {renderProject(Projects.Choreo)}
-                {renderProject(Projects.Ballerina)}
-                {renderProject(Projects.Cellery)}
-                {renderProject(Projects.Siddhi)}
+                {renderProject(Projects.Indexity, "h3")}
+                {renderProject(Projects.Choreo, "h3")}
+                {renderProject(Projects.Ballerina, "h3")}
+                {renderProject(Projects.Cellery, "h3")}
+                {renderProject(Projects.Siddhi, "h3")}
             </Grid>
             <Box sx={{ mt: { xs: 8, md: 10 } }}>
                 <SubHeading>Personal Projects</SubHeading>
@@ -143,8 +147,8 @@ const ContributedProjects = (): React.ReactElement => {
                         justifyContent="center"
                         alignItems="stretch"
                     >
-                        {renderProject(Projects.K8sReplicator)}
-                        {renderProject(Projects.MeshManager)}
+                        {renderProject(Projects.K8sReplicator, "h4")}
+                        {renderProject(Projects.MeshManager, "h4")}
                     </Grid>
                 </Container>
             </Box>

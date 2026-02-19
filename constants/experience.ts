@@ -14,10 +14,12 @@
  */
 
 import { Date, DateRange, Now } from "./date";
+import Companies, { type Company } from "@/constants/companies";
 import Skills from "@/constants/skills";
 
 export interface Experience {
     name: string;
+    company: Company;
     timePeriod: DateRange;
     description: string;
     institute: string;
@@ -27,6 +29,7 @@ export interface Experience {
 const Experiences: Record<string, Experience> = {
     McCraeTechLeadSoftwareEngineer: {
         name: "Lead Software Engineer",
+        company: Companies.McCraeTech,
         timePeriod: new DateRange(new Date(2024, "April"), Now),
         description: "Leading the SRE aspects of Indexity data-planes.",
         institute: "McCrae Tech, Auckland, New Zealand",
@@ -55,6 +58,7 @@ const Experiences: Record<string, Experience> = {
     },
     OrionHealthSeniorSoftwareEngineer: {
         name: "Senior Software Engineer",
+        company: Companies.OrionHealth,
         timePeriod: new DateRange(
             new Date(2022, "November"),
             new Date(2024, "April"),
@@ -89,6 +93,7 @@ const Experiences: Record<string, Experience> = {
     },
     WSO2AssociateTechnicalLead: {
         name: "Associate Technical Lead",
+        company: Companies.WSO2,
         timePeriod: new DateRange(
             new Date(2021, "June"),
             new Date(2022, "November"),
@@ -104,7 +109,6 @@ const Experiences: Record<string, Experience> = {
             Skills.Java,
             Skills.OpenTelemetry,
             Skills.React,
-            Skills.Azure,
             Skills.AzureDataLake,
             Skills.AzureDataExplorer,
             Skills.AzureEventHub,
@@ -122,6 +126,7 @@ const Experiences: Record<string, Experience> = {
     },
     WSO2SeniorSoftwareEngineer: {
         name: "Senior Software Engineer",
+        company: Companies.WSO2,
         timePeriod: new DateRange(
             new Date(2019, "July"),
             new Date(2021, "June"),
@@ -136,7 +141,6 @@ const Experiences: Record<string, Experience> = {
             Skills.Ballerina,
             Skills.Java,
             Skills.React,
-            Skills.Azure,
             Skills.AzureEventHub,
             Skills.Prometheus,
             Skills.Jaeger,
@@ -151,6 +155,7 @@ const Experiences: Record<string, Experience> = {
     },
     WSO2SoftwareEngineer: {
         name: "Software Engineer",
+        company: Companies.WSO2,
         timePeriod: new DateRange(
             new Date(2018, "January"),
             new Date(2019, "July"),
@@ -170,6 +175,7 @@ const Experiences: Record<string, Experience> = {
     },
     WSO2GoogleSummerOfCodeIntern: {
         name: "Google Summer of Code Intern",
+        company: Companies.WSO2ViaGoogleSummerOfCode,
         timePeriod: new DateRange(
             new Date(2017, "May"),
             new Date(2017, "September"),
@@ -181,6 +187,7 @@ const Experiences: Record<string, Experience> = {
     },
     WSO2SoftwareEngineeringTrainee: {
         name: "Software Engineering Trainee",
+        company: Companies.WSO2,
         timePeriod: new DateRange(
             new Date(2016, "July"),
             new Date(2016, "December"),

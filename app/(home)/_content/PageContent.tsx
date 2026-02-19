@@ -28,8 +28,12 @@ const SectionContainer = styled(Container)(({ theme }) => ({
 }));
 
 const pageLoader = (): JSX.Element => (
-    <Box sx={{ display: "flex", justifyContent: "center", py: 5 }}>
-        <CircularProgress />
+    <Box
+        sx={{ display: "flex", justifyContent: "center", py: 5 }}
+        aria-live="polite"
+        aria-busy="true"
+    >
+        <CircularProgress aria-label="Loading section" />
     </Box>
 );
 
@@ -117,19 +121,24 @@ const PageContent = (): React.ReactElement => {
         title: string,
         section: React.ReactElement,
         testId: string,
-    ): React.ReactElement => (
-        <Container
-            maxWidth={false}
-            disableGutters
-            data-testid={testId}
-            sx={{ my: { xs: 3, md: 6 } }}
-        >
-            <Heading>{title}</Heading>
-            <Container maxWidth={false} disableGutters sx={{ py: 4 }}>
-                {section}
+    ): React.ReactElement => {
+        const titleId = title.toLowerCase().replace(/\s+/g, "-");
+        return (
+            <Container
+                component="section"
+                aria-labelledby={titleId}
+                maxWidth={false}
+                disableGutters
+                data-testid={testId}
+                sx={{ my: { xs: 3, md: 6 } }}
+            >
+                <Heading id={titleId}>{title}</Heading>
+                <Container maxWidth={false} disableGutters sx={{ py: 4 }}>
+                    {section}
+                </Container>
             </Container>
-        </Container>
-    );
+        );
+    };
 
     return (
         <>
@@ -160,7 +169,6 @@ const PageContent = (): React.ReactElement => {
                             maxWidth={false}
                             disableGutters
                             key={section.name}
-                            id={section.sectionId}
                         >
                             {generateSection(
                                 section.name,

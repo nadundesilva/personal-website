@@ -17,6 +17,7 @@ import type React from "react";
 
 interface HeadingProps {
     children: React.ReactNode;
+    id?: string;
 }
 
 const Heading = (props: HeadingProps): React.ReactElement => {
@@ -31,6 +32,7 @@ const Heading = (props: HeadingProps): React.ReactElement => {
                 }}
             >
                 <Typography
+                    id={props.id}
                     variant="h2"
                     align="center"
                     sx={{

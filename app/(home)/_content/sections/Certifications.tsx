@@ -42,11 +42,10 @@ const Certifications = (): React.ReactElement => {
         Certificates.BuildBasicGenerativeAdversarialNetworks,
     ];
 
-    const xsWidth = theme.breakpoints.values.xs;
     const smWidth = theme.breakpoints.values.sm;
     const mdWidth = theme.breakpoints.values.md;
     const xlWidth = theme.breakpoints.values.xl;
-    const imageSizes = `(min-width: ${xsWidth}px) 100vw, (min-width: ${smWidth}px) 50vw, (min-width: ${mdWidth}px) 34vw, (min-width: ${xlWidth}px) 25vw`;
+    const imageSizes = `(min-width: ${xlWidth}px) 25vw, (min-width: ${mdWidth}px) 34vw, (min-width: ${smWidth}px) 50vw, 100vw`;
 
     return (
         <Grid
@@ -58,101 +57,99 @@ const Certifications = (): React.ReactElement => {
             {certifications.map((certification) => (
                 <Grid key={certification.name} size={{ xs: 12, sm: 6, md: 4 }}>
                     <Card sx={{ height: "100%" }}>
-                        <Link href={certification.link} target="_blank">
-                            <CardActionArea
+                        <CardActionArea
+                            component={Link}
+                            href={certification.link}
+                            target="_blank"
+                            style={{ textDecoration: "none", color: "inherit" }}
+                            sx={{
+                                height: "100%",
+                                p: { xs: 2.5, md: 3.5 },
+                                display: "flex",
+                                flexDirection: "column",
+                            }}
+                        >
+                            <CardMedia
+                                component={(props: CardMediaProps) => (
+                                    <Container
+                                        {...props}
+                                        maxWidth={false}
+                                        disableGutters
+                                        sx={{
+                                            position: "relative",
+                                            width: "100%",
+                                            height: "auto",
+                                            pt: "70%",
+                                            margin: "auto",
+                                            mb: 3.5,
+                                            opacity: 0.95,
+                                            transition:
+                                                "opacity 0.3s ease-in-out",
+                                        }}
+                                    >
+                                        <Image
+                                            alt=""
+                                            src={
+                                                theme.palette.mode === "light"
+                                                    ? certification.logo
+                                                          .srcLight
+                                                    : certification.logo.srcDark
+                                            }
+                                            fill
+                                            sizes={imageSizes}
+                                            style={{ objectFit: "contain" }}
+                                        />
+                                    </Container>
+                                )}
+                            />
+                            <CardContent
                                 sx={{
-                                    height: "100%",
-                                    p: { xs: 2.5, md: 3.5 },
                                     display: "flex",
                                     flexDirection: "column",
+                                    justifyContent: "space-between",
+                                    alignItems: "flex-start",
+                                    flexGrow: 1,
+                                    width: "100%",
                                 }}
                             >
-                                <CardMedia
-                                    component={(props: CardMediaProps) => (
-                                        <Container
-                                            {...props}
-                                            maxWidth={false}
-                                            disableGutters
-                                            sx={{
-                                                position: "relative",
-                                                width: "100%",
-                                                height: "auto",
-                                                pt: "70%",
-                                                margin: "auto",
-                                                mb: 3.5,
-                                                opacity: 0.95,
-                                                transition:
-                                                    "opacity 0.3s ease-in-out",
-                                            }}
-                                        >
-                                            <Image
-                                                alt={certification.logo.alt}
-                                                src={
-                                                    theme.palette.mode ==
-                                                    "light"
-                                                        ? certification.logo
-                                                              .srcLight
-                                                        : certification.logo
-                                                              .srcDark
-                                                }
-                                                fill
-                                                sizes={imageSizes}
-                                                style={{ objectFit: "contain" }}
-                                            />
-                                        </Container>
-                                    )}
-                                />
-                                <CardContent
+                                <Typography
+                                    variant="h6"
+                                    component="h3"
                                     sx={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        justifyContent: "space-between",
-                                        alignItems: "flex-start",
-                                        flexGrow: 1,
-                                        width: "100%",
+                                        fontSize: { xs: 16, md: 17 },
+                                        letterSpacing: "-0.02em",
+                                        lineHeight: 1.4,
+                                        mb: 2,
                                     }}
                                 >
-                                    <Typography
-                                        variant="h6"
-                                        component="h3"
-                                        sx={{
-                                            fontSize: { xs: 16, md: 17 },
-                                            letterSpacing: "-0.02em",
-                                            lineHeight: 1.4,
-                                            mb: 2,
-                                        }}
-                                    >
-                                        {certification.name}
-                                    </Typography>
-                                    <Box sx={{ flexGrow: 1 }} />
-                                    <Chip
-                                        label={certification.type}
-                                        color="secondary"
-                                        size="small"
-                                        sx={{
-                                            mb: 3,
-                                            fontSize: { xs: 10, md: 11 },
-                                            height: { xs: 22, md: 24 },
-                                            backgroundColor: "secondary",
-                                            color: "secondary.contrastText",
-                                        }}
-                                    />
-                                    <Typography
-                                        variant="body2"
-                                        color="text.secondary"
-                                        sx={{
-                                            mt: 1,
-                                            fontSize: { xs: 11, md: 12 },
-                                            letterSpacing: "0em",
-                                        }}
-                                    >
-                                        Issued by
-                                        <br />
-                                        {certification.issuer.name}
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
-                        </Link>
+                                    {certification.name}
+                                </Typography>
+                                <Box sx={{ flexGrow: 1 }} />
+                                <Chip
+                                    label={certification.type}
+                                    color="secondary"
+                                    size="small"
+                                    sx={{
+                                        mb: 3,
+                                        fontSize: { xs: 10, md: 11 },
+                                        height: { xs: 22, md: 24 },
+                                    }}
+                                />
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                    sx={{
+                                        mt: 1,
+                                        fontSize: { xs: 11, md: 12 },
+                                        letterSpacing: "0em",
+                                    }}
+                                >
+                                    Issued by
+                                    <br />
+                                    {certification.issuer.name}
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
                     </Card>
                 </Grid>
             ))}

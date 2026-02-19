@@ -13,31 +13,16 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
-import { StaticImageData } from "next/image";
+import { type FormattableDate, Date, DateRange, Now } from "./date";
+import Logos, { type LogoImageData } from "@/constants/logos";
 import Skills from "@/constants/skills";
-
-import indexityLogoImage from "@/assets/projects/indexity-logo.svg";
-import indexityLogoWhiteImage from "@/assets/projects/indexity-logo-white.svg";
-import choreoLogoImage from "@/assets/projects/choreo-logo.svg";
-import choreoLogoWhiteImage from "@/assets/projects/choreo-logo-white.svg";
-import ballerinaLogoImage from "@/assets/projects/ballerina-logo.svg";
-import ballerinaLogoWhiteImage from "@/assets/projects/ballerina-logo-white.svg";
-import celleryLogoImage from "@/assets/projects/cellery-logo.svg";
-import celleryLogoWhiteImage from "@/assets/projects/cellery-logo-white.svg";
-import siddhiLogoImage from "@/assets/projects/siddhi-logo.svg";
-import siddhiLogoWhiteImage from "@/assets/projects/siddhi-logo-white.svg";
-import k8sReplicatorLogoImage from "@/assets/projects/personal/k8s-replicator-logo.png";
-import meshManagerLogoImage from "@/assets/projects/personal/mesh-manager-logo.png";
 
 export interface Project {
     name: string;
     description: string;
-    logo: {
-        srcLight: StaticImageData;
-        srcDark: StaticImageData;
-        alt: string;
-    };
+    logo: LogoImageData;
     link: string;
+    timePeriod: FormattableDate;
     skills: string[];
 }
 
@@ -46,12 +31,9 @@ const Projects: Record<string, Project> = {
         name: "Indexity",
         description:
             "A cloud-native Enterprise Master Patient Index (EMPI) and Master Data Management (MDM) platform designed to enhance data accuracy and interoperability in healthcare systems.",
-        logo: {
-            srcLight: indexityLogoImage,
-            srcDark: indexityLogoWhiteImage,
-            alt: "Indexity",
-        },
+        logo: Logos.Indexity,
         link: "https://indexity.io/",
+        timePeriod: new DateRange(new Date(2022, "November"), Now),
         skills: [
             Skills.GoLang,
             Skills.Python,
@@ -82,12 +64,12 @@ const Projects: Record<string, Project> = {
         name: "Choreo",
         description:
             "A Digital Platform as a Service which abstracts away the complexity of cloud-native development and operations infrastructure so that users can create new APIs, integrations and services in hours.",
-        logo: {
-            srcLight: choreoLogoImage,
-            srcDark: choreoLogoWhiteImage,
-            alt: "Choreo",
-        },
+        logo: Logos.Choreo,
         link: "https://wso2.com/choreo/",
+        timePeriod: new DateRange(
+            new Date(2020, "January"),
+            new Date(2022, "November"),
+        ),
         skills: [
             Skills.Azure,
             Skills.Kubernetes,
@@ -96,7 +78,6 @@ const Projects: Record<string, Project> = {
             Skills.Java,
             Skills.OpenTelemetry,
             Skills.React,
-            Skills.Azure,
             Skills.AzureDataLake,
             Skills.AzureDataExplorer,
             Skills.AzureEventHub,
@@ -115,12 +96,12 @@ const Projects: Record<string, Project> = {
         name: "Ballerina",
         description:
             "A programming language targeting making the development of cloud-native applications easier, featuring built-in automated Observability.",
-        logo: {
-            srcLight: ballerinaLogoImage,
-            srcDark: ballerinaLogoWhiteImage,
-            alt: "Ballerina",
-        },
+        logo: Logos.Ballerina,
         link: "https://ballerina.io/",
+        timePeriod: new DateRange(
+            new Date(2020, "January"),
+            new Date(2022, "June"),
+        ),
         skills: [
             Skills.Java,
             Skills.Ballerina,
@@ -133,12 +114,12 @@ const Projects: Record<string, Project> = {
         name: "Cellery",
         description:
             "An implementation of the Cell-based Architecture which aims to improve productivity of the development of complex microservices, across multiple teams.",
-        logo: {
-            srcLight: celleryLogoImage,
-            srcDark: celleryLogoWhiteImage,
-            alt: "Cellery",
-        },
+        logo: Logos.Cellery,
         link: "https://github.com/wso2-cellery/cellery",
+        timePeriod: new DateRange(
+            new Date(2018, "September"),
+            new Date(2019, "December"),
+        ),
         skills: [
             Skills.Kubernetes,
             Skills.Docker,
@@ -153,12 +134,12 @@ const Projects: Record<string, Project> = {
         name: "Siddhi",
         description:
             "A fully open source, cloud-native, scalable, streaming, and complex event processing system capable of building event-driven applications.",
-        logo: {
-            srcLight: siddhiLogoImage,
-            srcDark: siddhiLogoWhiteImage,
-            alt: "Siddhi",
-        },
+        logo: Logos.Siddhi,
         link: "https://siddhi.io/",
+        timePeriod: new DateRange(
+            new Date(2016, "July"),
+            new Date(2016, "December"),
+        ),
         skills: [
             Skills.Java,
             Skills.Maven,
@@ -170,12 +151,9 @@ const Projects: Record<string, Project> = {
         name: "K8s Replicator",
         description:
             "A Kubernetes controller that automatically watches namespaces and creates resources (Secrets, ConfigMaps, etc.) in them as soon as they are created.",
-        logo: {
-            srcLight: k8sReplicatorLogoImage,
-            srcDark: k8sReplicatorLogoImage,
-            alt: "K8s Replicator",
-        },
+        logo: Logos.K8sReplicator,
         link: "https://github.com/nadundesilva/k8s-replicator",
+        timePeriod: new DateRange(new Date(2021), Now),
         skills: [
             Skills.Kubernetes,
             Skills.Docker,
@@ -188,12 +166,9 @@ const Projects: Record<string, Project> = {
         name: "Mesh Manager",
         description:
             "A controller that allows users to declaratively specify microservices including their dependencies so that the controller will properly manage them.",
-        logo: {
-            srcLight: meshManagerLogoImage,
-            srcDark: meshManagerLogoImage,
-            alt: "Mesh Manager",
-        },
+        logo: Logos.MeshManager,
         link: "https://github.com/nadundesilva/mesh-manager",
+        timePeriod: new DateRange(new Date(2021), Now),
         skills: [
             Skills.Kubernetes,
             Skills.Docker,
