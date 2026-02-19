@@ -96,12 +96,21 @@ const createWebsiteTheme = (fontFamily: string): Theme =>
                         "color":
                             theme.palette.mode === "dark"
                                 ? theme.palette.primary.light
-                                : theme.palette.primary.dark,
-                        "textDecoration": "none",
+                                : theme.palette.primary.main,
+                        "textDecoration": "underline",
                         "fontWeight": 500,
                         "transition": "opacity 0.25s ease-in-out",
                         "&:hover": {
                             opacity: 0.8,
+                        },
+                        "&:focus-visible": {
+                            outline: `2px solid ${
+                                theme.palette.mode === "dark"
+                                    ? theme.palette.primary.light
+                                    : theme.palette.primary.main
+                            }`,
+                            outlineOffset: 2,
+                            borderRadius: 1,
                         },
                     }),
                 },

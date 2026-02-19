@@ -14,6 +14,7 @@
  */
 
 export const FULL_NAME = "Nadun De Silva";
+export const CONTACT_EMAIL = "contact@nadundesilva.com";
 export const JOB_TITLE = "Lead Software Engineer";
 export const TAGLINE = `${JOB_TITLE} & Cloud Computing Enthusiast`;
 export const MAIN_DESCRIPTION = `${FULL_NAME} is a ${JOB_TITLE} and a Cloud Computing Enthusiast.`;

@@ -274,19 +274,15 @@ const RootLayout = async ({
                 />
             </head>
             <body>
-                <main>
-                    <React.StrictMode>
-                        <WebVitals />
-                        <WebsiteThemeProvider
-                            fontFamily={roboto.style.fontFamily}
-                        >
-                            <Layout topLevelRoutes={routes}>
-                                <RouterBreadcrumbs topLevelRoutes={routes} />
-                                {children}
-                            </Layout>
-                        </WebsiteThemeProvider>
-                    </React.StrictMode>
-                </main>
+                <React.StrictMode>
+                    <WebVitals />
+                    <WebsiteThemeProvider fontFamily={roboto.style.fontFamily}>
+                        <Layout topLevelRoutes={routes}>
+                            <RouterBreadcrumbs topLevelRoutes={routes} />
+                            {children}
+                        </Layout>
+                    </WebsiteThemeProvider>
+                </React.StrictMode>
             </body>
         </html>
     );

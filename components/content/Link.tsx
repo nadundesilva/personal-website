@@ -13,47 +13,46 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Link, type LinkProps } from "@mui/material";
+import { Box, Link, type LinkProps } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
 import NextLink from "next/link";
 import type React from "react";
-import { forwardRef, type Ref } from "react";
+import { forwardRef } from "react";
 
-type CustomLinkProps = {
+type CustomLinkProps = LinkProps & {
     href: string | URL;
     children: React.ReactNode;
-    target?: string;
-} & Record<string, unknown>;
+};
 
-const CustomLink = ({
-    href,
-    children,
-    target,
-    ...otherProps
-}: CustomLinkProps): React.ReactElement => (
-    <Link
-        target={target}
-        rel={target === "_blank" ? "noopener noreferrer" : undefined}
-        component={forwardRef(function CustomLinkComponent(
-            {
-                children: customLinkCompChildren,
-                ...customLinkCompProps
-            }: LinkProps,
-            ref: Ref<HTMLAnchorElement>,
-        ) {
-            return (
-                <NextLink
-                    {...customLinkCompProps}
-                    {...otherProps}
-                    href={href}
-                    ref={ref}
-                >
-                    {customLinkCompChildren}
-                </NextLink>
-            );
-        })}
-    >
-        {children}
-    </Link>
+const CustomLink = forwardRef<HTMLAnchorElement, CustomLinkProps>(
+    ({ href, children, target, ...otherProps }, ref): React.ReactElement => {
+        let ariaLabel = otherProps["aria-label"];
+        if (ariaLabel && target === "_blank") {
+            ariaLabel = `${ariaLabel} (opens in a new tab)`;
+        }
+
+        return (
+            <Link
+                component={NextLink}
+                href={href}
+                target={target}
+                rel={target === "_blank" ? "noopener noreferrer" : undefined}
+                ref={ref}
+                {...otherProps}
+                aria-label={ariaLabel}
+            >
+                {children}
+                {target === "_blank" && !ariaLabel && (
+                    <Box component="span" sx={visuallyHidden}>
+                        {" "}
+                        (opens in a new tab)
+                    </Box>
+                )}
+            </Link>
+        );
+    },
 );
+
+CustomLink.displayName = "CustomLink";
 
 export default CustomLink;

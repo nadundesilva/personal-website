@@ -14,20 +14,22 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { Box } from "@mui/material";
-import type { Theme } from "@mui/material/styles";
 import type React from "react";
 
-interface CustomListProps {
+interface ListProps {
     component?: "ul" | "ol";
     children: React.ReactNode;
+    ariaLabelledBy?: string;
 }
 
-const CustomList = ({
+const List = ({
     children,
+    ariaLabelledBy,
     component,
-}: CustomListProps): React.ReactElement => (
+}: ListProps): React.ReactElement => (
     <Box
         component={component ?? "ul"}
+        aria-labelledby={ariaLabelledBy}
         sx={{
             "my": 0,
             "pl": 2.5,
@@ -43,21 +45,16 @@ const CustomList = ({
     </Box>
 );
 
-interface CustomListItemProps {
+interface ListItemProps {
     children: React.ReactNode;
 }
 
-export const CustomListItem = ({
-    children,
-}: CustomListItemProps): React.ReactElement => (
+export const ListItem = ({ children }: ListItemProps): React.ReactElement => (
     <Box
         component="li"
         sx={{
             "&::marker": {
-                color: (theme: Theme) =>
-                    theme.palette.mode === "light"
-                        ? "rgba(0, 0, 0, 0.6)"
-                        : "rgba(255, 255, 255, 0.6)",
+                color: "text.secondary",
             },
         }}
     >
@@ -65,4 +62,4 @@ export const CustomListItem = ({
     </Box>
 );
 
-export default CustomList;
+export default List;

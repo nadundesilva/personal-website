@@ -26,16 +26,47 @@ type Month =
     | "November"
     | "December";
 
-export interface FormattableDate {
-    type: "Date" | "DateRange";
-    format: () => string;
+export interface DateRenderSegment {
+    text: string;
+    dateTime?: string;
 }
 
-export class Date implements FormattableDate {
+export interface FormattableDate {
+    format: () => string;
+    getRenderSegments: () => DateRenderSegment[];
+}
+
+export abstract class AbstractFormattableDate implements FormattableDate {
+    format(): string {
+        return this.getRenderSegments()
+            .map((segment) => segment.text)
+            .join("");
+    }
+
+    abstract getRenderSegments(): DateRenderSegment[];
+}
+
+const MONTHS: Month[] = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+];
+
+export class Date extends AbstractFormattableDate {
     year: number;
     month?: Month;
 
     constructor(year: number, month?: Month) {
+        super();
         if (year < 1994) {
             throw Error(
                 `Invalid year; expected to be greater than or equal to year of birth (1994), but got ${year}`,
@@ -45,40 +76,60 @@ export class Date implements FormattableDate {
         this.month = month;
     }
 
-    type: "Date" = "Date" as const;
+    static fromJsDate(date: globalThis.Date): Date {
+        return new Date(date.getFullYear(), MONTHS[date.getMonth()]);
+    }
 
-    format(): string {
-        let date = "";
+    private toISOString(): string {
         if (this.month !== undefined) {
-            date += this.month + " ";
+            const monthIndex = MONTHS.indexOf(this.month) + 1;
+            return `${this.year}-${String(monthIndex).padStart(2, "0")}`;
         }
-        date += this.year.toString();
-        return date;
+        return this.year.toString();
+    }
+
+    getRenderSegments(): DateRenderSegment[] {
+        let text = "";
+        if (this.month !== undefined) {
+            text += this.month + " ";
+        }
+        text += this.year.toString();
+        return [
+            {
+                text,
+                dateTime: this.toISOString(),
+            },
+        ];
     }
 }
 
-class NowDate implements FormattableDate {
-    type: "Date" = "Date" as const;
-
-    format(): string {
-        return "Now";
+class NowDate extends AbstractFormattableDate {
+    getRenderSegments(): DateRenderSegment[] {
+        return [
+            {
+                text: "Now",
+            },
+        ];
     }
 }
 
 export const Now = new NowDate();
 
-export class DateRange implements FormattableDate {
+export class DateRange extends AbstractFormattableDate {
     from: Date;
     to: Date | NowDate;
 
     constructor(from: Date, to: Date | NowDate) {
+        super();
         this.from = from;
         this.to = to;
     }
 
-    type: "DateRange" = "DateRange" as const;
-
-    format(): string {
-        return this.from.format() + " to " + this.to.format();
+    getRenderSegments(): DateRenderSegment[] {
+        return [
+            ...this.from.getRenderSegments(),
+            { text: " to " },
+            ...this.to.getRenderSegments(),
+        ];
     }
 }

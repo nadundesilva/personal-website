@@ -19,6 +19,8 @@ import type React from "react";
 import type { Person, WithContext } from "schema-dts";
 
 import PageContent from "./_content/PageContent";
+import Companies from "@/constants/companies";
+import Institutes from "@/constants/institutes";
 import {
     TAGLINE,
     FULL_NAME,
@@ -66,15 +68,15 @@ const jsonLd: WithContext<Person> = {
     "alumniOf": [
         {
             "@type": "CollegeOrUniversity",
-            "name": "University of Moratuwa",
-            "sameAs": "https://uom.lk/",
+            "name": Institutes.UniversityOfMoratuwa.name,
+            "sameAs": Institutes.UniversityOfMoratuwa.link,
         },
     ],
     "worksFor": [
         {
             "@type": "Organization",
-            "name": "McCrae Tech",
-            "sameAs": ["https://mccrae.tech/"],
+            "name": Companies.McCraeTech.name,
+            "sameAs": [Companies.McCraeTech.link],
         },
     ],
 };

@@ -14,6 +14,7 @@
  */
 import { Launch } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
 import type { Metadata } from "next";
 import type React from "react";
 
@@ -36,6 +37,41 @@ export const metadata: Metadata = {
     title: "Certifications",
     description: `Various certifications obtained by ${FULL_NAME}.`,
 };
+
+interface CertificationSectionHeadingProps {
+    id: string;
+    certificate: Certificate;
+}
+
+const CertificationSectionHeading = ({
+    id,
+    certificate,
+}: CertificationSectionHeadingProps): React.ReactElement => (
+    <SectionHeading
+        id={id}
+        date={certificate.completedOn}
+        logo={
+            <Logo
+                srcLight={certificate.logo.srcLight}
+                srcDark={certificate.logo.srcDark}
+                alt=""
+                recommendedSx={{ height: "5em" }}
+            />
+        }
+        actionButton={{
+            href: certificate.link,
+            name: "View Credential",
+            ariaLabel: `View ${certificate.name} credential`,
+            icon: Launch,
+        }}
+    >
+        {certificate.name}
+        <Box component="span" sx={visuallyHidden}>
+            {" "}
+            from {certificate.issuer.name}
+        </Box>
+    </SectionHeading>
+);
 
 const Certifications = (): React.ReactElement => {
     const generateLink = (text: string, href: string): React.ReactElement => (
@@ -74,36 +110,16 @@ const Certifications = (): React.ReactElement => {
     const Kubernetes = generateLink("Kubernetes", "https://kubernetes.io/");
     const Etcd = generateLink("etcd", "https://etcd.io/");
 
-    const generateSectionHeader = (
-        certificate: Certificate,
-    ): React.ReactElement => (
-        <SectionHeading
-            date={certificate.completedOn}
-            logo={
-                <Logo
-                    srcLight={certificate.logo.srcLight}
-                    srcDark={certificate.logo.srcDark}
-                    alt={certificate.logo.alt}
-                    recommendedSx={{ height: "5em" }}
-                />
-            }
-            actionButton={{
-                href: certificate.link,
-                name: "View Credential",
-                icon: Launch,
-            }}
-        >
-            {certificate.name}
-        </SectionHeading>
-    );
-
     return (
         <>
             <Title>Certifications</Title>
-            <Section>
-                {generateSectionHeader(
-                    Certificates.FundamentalsOfReinforcementLearning,
-                )}
+            <Section labelledById="section-cert-rl">
+                <CertificationSectionHeading
+                    id="section-cert-rl"
+                    certificate={
+                        Certificates.FundamentalsOfReinforcementLearning
+                    }
+                />
                 <Paragraph>
                     This course is offered by{" "}
                     {AlbertaMachineIntelligenceInstitute} at the{" "}
@@ -112,77 +128,107 @@ const Certifications = (): React.ReactElement => {
                     Reinforcement Learning.
                 </Paragraph>
             </Section>
-            <Section>
-                {generateSectionHeader(
-                    Certificates.BuildBasicGenerativeAdversarialNetworks,
-                )}
+            <Section labelledById="section-cert-gans">
+                <CertificationSectionHeading
+                    id="section-cert-gans"
+                    certificate={
+                        Certificates.BuildBasicGenerativeAdversarialNetworks
+                    }
+                />
                 <Paragraph>
                     This course is offered by {DeepLearningAi} on {Coursera},
-                    taught mainly by {SharonZhou}. It covers how the Generative
-                    Adversarial Networks work as well as some of the latest
-                    developments in this Neural Network architecture.
+                    taught mainly by {SharonZhou}. It covers how the{" "}
+                    <abbr title="Generative Adversarial Networks">GANs</abbr>{" "}
+                    work as well as some of the latest developments in this
+                    Neural Network architecture.
                 </Paragraph>
             </Section>
-            <Section>
-                {generateSectionHeader(Certificates.DeepLearningSpecialization)}
+            <Section labelledById="section-cert-dl">
+                <CertificationSectionHeading
+                    id="section-cert-dl"
+                    certificate={Certificates.DeepLearningSpecialization}
+                />
                 <Paragraph>
                     Deep Learning specialization is offered by {DeepLearningAi}{" "}
                     on {Coursera}, taught mainly by {AndrewNg}. It is an
                     excellent specialization consisting of five courses covering
                     a deep dive into Deep Learning as well as many novel Deep
                     Learning architectures. The specialization included
-                    coursework as well as MCQ and Lab-based hands-on
-                    evaluations.
+                    coursework as well as{" "}
+                    <abbr title="Multiple Choice Questions">MCQ</abbr> and
+                    Lab-based hands-on evaluations.
                 </Paragraph>
                 <Box sx={{ m: 0, pt: 2 }}>
-                    <List>
-                        <ListItem>
-                            <Typography>
-                                Neural Networks and Deep Learning
-                            </Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Typography>
-                                Improving Deep Neural Networks: Hyperparameter
-                                Tuning, Regularization and Optimization
-                            </Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Typography>
-                                Structuring Machine Learning Projects
-                            </Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Typography>
-                                Convolutional Neural Networks
-                            </Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Typography>Sequence Models</Typography>
-                        </ListItem>
-                    </List>
+                    <Typography
+                        id="dl-course-content-heading"
+                        component="h3"
+                        variant="h6"
+                        sx={{ mt: 3, mb: 1.5 }}
+                    >
+                        Course Content:
+                    </Typography>
+                    <Box sx={{ display: "block", mt: 1 }}>
+                        <List ariaLabelledBy="dl-course-content-heading">
+                            <ListItem>
+                                <Typography>
+                                    Neural Networks and Deep Learning
+                                </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <Typography>
+                                    Improving Deep Neural Networks:
+                                    Hyperparameter Tuning, Regularization and
+                                    Optimization
+                                </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <Typography>
+                                    Structuring Machine Learning Projects
+                                </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <Typography>
+                                    Convolutional Neural Networks
+                                </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <Typography>Sequence Models</Typography>
+                            </ListItem>
+                        </List>
+                    </Box>
                 </Box>
             </Section>
-            <Section>
-                {generateSectionHeader(
-                    Certificates.CertifiedKubernetesAdministrator,
-                )}
+            <Section labelledById="section-cert-cka">
+                <CertificationSectionHeading
+                    id="section-cert-cka"
+                    certificate={Certificates.CertifiedKubernetesAdministrator}
+                />
                 <Paragraph>
                     {CertifiedKubernetesAdministrator} is offered and governed
                     by the {LinuxFoundation}. This covers the administrative
                     aspects and in-depth knowledge about {Kubernetes} Clusters
-                    including {Etcd} clusters.
+                    including {Etcd} clusters. The{" "}
+                    <abbr title="Certified Kubernetes Administrator">CKA</abbr>{" "}
+                    certification is a standard for Kubernetes administrators.
                 </Paragraph>
             </Section>
-            <Section>
-                {generateSectionHeader(
-                    Certificates.CertifiedKubernetesApplicationDeveloper,
-                )}
+            <Section labelledById="section-cert-ckad">
+                <CertificationSectionHeading
+                    id="section-cert-ckad"
+                    certificate={
+                        Certificates.CertifiedKubernetesApplicationDeveloper
+                    }
+                />
                 <Paragraph>
                     {CertifiedKubernetesApplicationDeveloper} is offered and
                     governed by the {LinuxFoundation}. This covers aspects
                     related to developing applications to be run on {Kubernetes}
-                    .
+                    . The{" "}
+                    <abbr title="Certified Kubernetes Application Developer">
+                        CKAD
+                    </abbr>{" "}
+                    certification is a common requirement for Cloud Native
+                    developers.
                 </Paragraph>
             </Section>
         </>

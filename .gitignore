@@ -47,3 +47,7 @@ yarn-error.log*
 # Next Image Export Optimizer
 public/optimized-images
 public/images/next-image-export-optimizer-hashes.json
+
+# AI Agents
+.agent
+.claude

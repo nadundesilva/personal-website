@@ -141,7 +141,6 @@ const SkillCategories: SkillGroup[] = [
             createSkill(Skills.Ansible, SkillProficiencies.Novice),
             createSkill(Skills.GitHubActions, SkillProficiencies.Expert),
             createSkill(Skills.GitLabCi, SkillProficiencies.Expert),
-            createSkill(Skills.AzureEventHub, SkillProficiencies.Intermediate),
         ],
     },
     {
