@@ -15,6 +15,7 @@
 import { Launch } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
 import type { Metadata } from "next";
 import React from "react";
 
@@ -30,8 +31,6 @@ import {
 } from "@/components/content";
 import { FULL_NAME } from "@/constants/metadata";
 import ProjectDetails, { type Project } from "@/constants/projects";
-
-import { visuallyHidden } from "@mui/utils";
 
 interface PersonalProjectSectionHeadingProps {
     id: string;

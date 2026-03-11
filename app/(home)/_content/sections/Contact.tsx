@@ -12,13 +12,13 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
+import { Email } from "@mui/icons-material";
 import { Box, Button, Card, Container, Grid, Typography } from "@mui/material";
 import type React from "react";
 
-import Profiles from "@/constants/profiles";
-import { CONTACT_EMAIL } from "@/constants/metadata";
 import { Link } from "@/components/content";
-import { Email } from "@mui/icons-material";
+import { CONTACT_EMAIL } from "@/constants/metadata";
+import Profiles from "@/constants/profiles";
 
 const Contact = (): React.ReactElement => (
     <Container maxWidth="lg" disableGutters sx={{ mb: { xs: 8, md: 12 } }}>

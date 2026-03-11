@@ -2,11 +2,14 @@
  * Nadun De Silva - All Rights Reserved
  *
  * This source code and its associated files are the
- * property of Nadun De Silva. Any unauthorized use,
- * reproduction, or distribution is strictly prohibited.
+ * confidential and proprietary information of Nadun De Silva.
+ * Unauthorized reproduction, distribution, or disclosure
+ * in any form, in whole or in part, is strictly prohibited
+ * except as explicitly provided under a separate license
+ * agreement with Nadun De Silva.
  *
  * Website: https://nadundesilva.com
- * 
+ *
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
@@ -20,7 +23,7 @@ figure[data-rehype-pretty-code-figure] {
 
 code[data-theme],
 code[data-theme] * {
-    font-family: Roboto, sans-serif;
+    font-family: var(--font-code), monospace;
 }
 
 pre > code {
@@ -55,5 +58,5 @@ pre > code[data-line-numbers-max-digits="3"] > [data-line]::before {
 
 span[data-rehype-pretty-code-figure] > code {
     padding: 0.25rem;
-    font-family: Roboto, sans-serif;
+    font-family: var(--font-code), monospace;
 }
