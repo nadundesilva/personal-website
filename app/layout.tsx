@@ -19,7 +19,11 @@ import React from "react";
 import type { WebSite, WithContext } from "schema-dts";
 
 import Layout, { RouterBreadcrumbs } from "@/components/layout";
-import { WebsiteThemeProvider, roboto } from "@/components/theme";
+import {
+    WebsiteThemeProvider,
+    defaultFont,
+    codeFont,
+} from "@/components/theme";
 import WebVitals from "@/components/WebVitals";
 import {
     FULL_NAME,
@@ -273,10 +277,18 @@ const RootLayout = async ({
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
             </head>
-            <body>
+            {/*
+             * Font CSS variables are injected here so they are available globally
+             * in stylesheets (e.g. syntax-highlighting.css). CSS files cannot
+             * import JS values directly, but can reference variables set on a
+             * parent element via var(--font-*).
+             */}
+            <body className={`${defaultFont.variable} ${codeFont.variable}`}>
                 <React.StrictMode>
                     <WebVitals />
-                    <WebsiteThemeProvider fontFamily={roboto.style.fontFamily}>
+                    <WebsiteThemeProvider
+                        fontFamily={defaultFont.style.fontFamily}
+                    >
                         <Layout topLevelRoutes={routes}>
                             <RouterBreadcrumbs topLevelRoutes={routes} />
                             {children}

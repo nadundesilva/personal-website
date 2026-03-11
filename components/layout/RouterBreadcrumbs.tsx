@@ -19,7 +19,7 @@ import type { Route as NextRoute } from "next";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import type React from "react";
-import { BreadcrumbList, WithContext } from "schema-dts";
+import type { BreadcrumbList, WithContext } from "schema-dts";
 
 import { Link } from "@/components/content";
 import { ContentContainer } from "@/components/layout";
