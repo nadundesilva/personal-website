@@ -78,7 +78,7 @@ _Let’s see how we can implement this._
 
 Let’s first define a Priority Class for the Buffer Pods. We need to give a name for the class as well as a `value` representing the priority that should be given to any Pod which has the Priority Class. Pods with a Priority Class with a higher `value` is given higher priority compared to others. Although in the example below, I have set this to zero, it can have any value that you wish (The `value` needs to be between -2,147,483,648 and 1,000,000,000 inclusive).
 
-```yaml
+```yaml title="buffering-priority.yaml"
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
 metadata:
@@ -89,7 +89,7 @@ description: "This Priority Class lowers the priority of Buffer Pods"
 
 The next step is to create Pods and signal to the K8s Pod scheduler the Priority Class they belong to. It can be done by specifying the Priority Class name in the `priorityClassName` field in the Pod spec. You can also add any other required resources (such as Services, Ingresses, and Network Policies) as you wish.
 
-```yaml
+```yaml title="buffer-deployment.yaml"
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -127,7 +127,7 @@ If you have one type of workload, my recommendation is to match the resource req
 
 The Priority Class for the workload Pods can be created similarly. The only requirement is that the `value` of this Priority Class should be higher than the Priority Class of the Buffer Pods (greater than 0 according to our example).
 
-```yaml
+```yaml title="normal-priority.yaml"
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
 metadata:
@@ -138,7 +138,7 @@ description: "This Priority Class increases the priority of other workload pods"
 
 The workload Deployment (or any other K8s resource which creates Pods), can be created similarly and the `priorityClassName` field should point to the above Priority Class.
 
-```yaml
+```yaml title="workload-deployment.yaml"
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -178,7 +178,7 @@ If you are creating many different Pods, it might get troublesome to specify the
 
 This can be done by creating a Priority Class similar to before and setting the `globalDefault` to `true` in it. There can only be one Priority Class with `globalDefault` set to `true` within one Cluster.
 
-```yaml
+```yaml title="default-priority.yaml"
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
 metadata:

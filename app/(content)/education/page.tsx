@@ -19,13 +19,14 @@ import type { Metadata } from "next";
 import type React from "react";
 
 import {
-    HighlightsSection,
+    AccentedList,
     Link,
     LinkButton,
     List,
     ListItem,
     Logo,
     Paragraph,
+    ScrollReveal,
     Section,
     SectionHeading,
     Title,
@@ -111,17 +112,19 @@ const Education = (): React.ReactElement => {
     return (
         <>
             <Title>Education</Title>
-            <Box sx={{ pt: 2, pb: 2 }}>
-                <LinkButton
-                    href={
-                        WebsiteHome.subRoutes["/education"].subRoutes![
-                            "/education/certifications"
-                        ].path
-                    }
-                    name="View Certifications"
-                    icon={KeyboardArrowRight}
-                />
-            </Box>
+            <ScrollReveal>
+                <Box sx={{ pt: 2, pb: 2 }}>
+                    <LinkButton
+                        href={
+                            WebsiteHome.subRoutes["/education"].subRoutes![
+                                "/education/certifications"
+                            ].path
+                        }
+                        name="View Certifications"
+                        icon={KeyboardArrowRight}
+                    />
+                </Box>
+            </ScrollReveal>
             <Section labelledById="section-bsc-uom">
                 <EducationSectionHeading
                     id="section-bsc-uom"
@@ -138,7 +141,7 @@ const Education = (): React.ReactElement => {
                     many other aspects such as general engineering knowledge,
                     ethics and professional conduct.
                 </Paragraph>
-                <HighlightsSection>
+                <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
                         <Typography>Academic Standing: First Class</Typography>
                     </ListItem>
@@ -157,34 +160,24 @@ const Education = (): React.ReactElement => {
                         </Typography>
                     </ListItem>
                     <ListItem>
-                        <Typography
-                            id="uom-publications-heading"
-                            component="h3"
-                            variant="h6"
-                            sx={{ mt: 3, mb: 1.5 }}
-                        >
-                            Publications:
-                        </Typography>
-                        <Box sx={{ display: "block", mt: 1 }}>
-                            <List ariaLabelledBy="uom-publications-heading">
-                                <ListItem>
-                                    <Typography>
-                                        {
-                                            GanBasedAnomalyDetectionInIndustrialSoftwareSystems
-                                        }
-                                    </Typography>
-                                </ListItem>
-                                <ListItem>
-                                    <Typography>
-                                        {
-                                            AnomalyDetectionInIndustrialSoftwareSystemsUsingVae
-                                        }
-                                    </Typography>
-                                </ListItem>
-                            </List>
-                        </Box>
+                        <List heading="Publications:" headingVariant="h4">
+                            <ListItem>
+                                <Typography>
+                                    {
+                                        GanBasedAnomalyDetectionInIndustrialSoftwareSystems
+                                    }
+                                </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <Typography>
+                                    {
+                                        AnomalyDetectionInIndustrialSoftwareSystemsUsingVae
+                                    }
+                                </Typography>
+                            </ListItem>
+                        </List>
                     </ListItem>
-                </HighlightsSection>
+                </AccentedList>
             </Section>
             <Section labelledById="section-al-sjc">
                 <EducationSectionHeading
@@ -201,72 +194,50 @@ const Education = (): React.ReactElement => {
                     subjects granting me entrance into the{" "}
                     {UniversityOfMoratuwa} as well.
                 </Paragraph>
-                <HighlightsSection>
+                <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
                         <Typography>Z - Score: 2.2441</Typography>
                     </ListItem>
                     <ListItem>
-                        <Typography
-                            id="sjc-main-subjects-heading"
-                            component="h3"
-                            variant="h6"
-                            sx={{ mt: 3, mb: 1.5 }}
-                        >
-                            Main Subjects:
-                        </Typography>
-                        <Box sx={{ display: "block", mt: 1 }}>
-                            <List ariaLabelledBy="sjc-main-subjects-heading">
-                                <ListItem>
-                                    <Typography>
-                                        Combined Mathematics - A
-                                    </Typography>
-                                </ListItem>
-                                <ListItem>
-                                    <Typography>Physics - A</Typography>
-                                </ListItem>
-                                <ListItem>
-                                    <Typography>Chemistry - A</Typography>
-                                </ListItem>
-                            </List>
-                        </Box>
+                        <List heading="Main Subjects:" headingVariant="h4">
+                            <ListItem>
+                                <Typography>
+                                    Combined Mathematics - A
+                                </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <Typography>Physics - A</Typography>
+                            </ListItem>
+                            <ListItem>
+                                <Typography>Chemistry - A</Typography>
+                            </ListItem>
+                        </List>
                     </ListItem>
                     <ListItem>
-                        <Typography
-                            id="sjc-other-subjects-heading"
-                            component="h3"
-                            variant="h6"
-                            sx={{ mt: 3, mb: 1.5 }}
-                        >
-                            Other Subjects:
-                        </Typography>
-                        <Box sx={{ display: "block", mt: 1 }}>
-                            <List ariaLabelledBy="sjc-other-subjects-heading">
-                                <ListItem>
-                                    <Typography>
-                                        General{" "}
-                                        <abbr title="Information Technology">
-                                            IT
-                                        </abbr>{" "}
-                                        - A
-                                    </Typography>
-                                </ListItem>
-                                <ListItem>
-                                    <Typography>General English - A</Typography>
-                                </ListItem>
-                                <ListItem>
-                                    <Typography>
-                                        General Knowledge - A
-                                    </Typography>
-                                </ListItem>
-                            </List>
-                        </Box>
+                        <List heading="Other Subjects:" headingVariant="h4">
+                            <ListItem>
+                                <Typography>
+                                    General{" "}
+                                    <abbr title="Information Technology">
+                                        IT
+                                    </abbr>{" "}
+                                    - A
+                                </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <Typography>General English - A</Typography>
+                            </ListItem>
+                            <ListItem>
+                                <Typography>General Knowledge - A</Typography>
+                            </ListItem>
+                        </List>
                     </ListItem>
                     <ListItem>
                         <Typography>
                             Editor of the Science Union 2011 / 2012
                         </Typography>
                     </ListItem>
-                </HighlightsSection>
+                </AccentedList>
             </Section>
         </>
     );

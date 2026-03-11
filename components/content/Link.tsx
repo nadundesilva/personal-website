@@ -1,4 +1,3 @@
-"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -13,6 +12,8 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+"use client";
+
 import { Box, Link, type LinkProps } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import NextLink from "next/link";

@@ -43,6 +43,7 @@ describe("navigation between pages", () => {
                     name: new RegExp(`^View ${route.name}$`, "i"),
                 })
                     .as("navlink")
+                    .scrollIntoView()
                     .should("be.visible");
                 cy.scrollTo(0, 0, { duration: 1000, ensureScrollable: false });
                 cy.get("@navlink").click({ waitForAnimations: true });

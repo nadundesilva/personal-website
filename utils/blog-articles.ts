@@ -13,6 +13,8 @@
  * © 2025 Nadun De Silva. All rights reserved.
  */
 
+import { readFileSync } from "fs";
+
 import { glob } from "glob";
 import { type StaticImageData } from "next/image";
 
@@ -23,6 +25,7 @@ export interface BlogArticle {
     image: StaticImageData;
     publishedDate: Date;
     websiteSubPath: string;
+    readingTimeMinutes: number;
 }
 
 export interface BlogArticleGroupMetadata {
@@ -39,6 +42,22 @@ export const BLOG_ARTICLES_DIRECTORY_PREFIX =
 export const BLOG_ARTICLES_GROUP_FILE = "page.tsx";
 export const BLOG_ARTICLE_FILE = "page.mdx";
 
+function estimateReadingTimeMinutes(mdxContent: string): number {
+    const text = mdxContent
+        .replace(/^(export|import)\s[^;]+;?\n?/gm, "")
+        .replace(/<[A-Z][^>]*\/>/g, "")
+        .replace(/<\/?[A-Za-z][^>]*>/g, "")
+        .replace(/```[\s\S]*?```/g, "")
+        .replace(/`[^`]+`/g, "")
+        .replace(/^#{1,6}\s+/gm, "")
+        .replace(/\{[^}]*\}/g, "");
+    const wordCount = text
+        .trim()
+        .split(/\s+/)
+        .filter((w) => w.length > 0).length;
+    return Math.max(1, Math.ceil(wordCount / 200));
+}
+
 export function resolveWebsiteBlogArticlesSubPath(filePath: string): string {
     return filePath
         .replace(/^app\/\(content\)\/blog-articles\/\(articles\)\//, "")
@@ -51,7 +70,10 @@ async function getBlogArticles(subPath: string): Promise<BlogArticle[]> {
         (await glob(blogArticlesFilePathPattern)).map(async (filePath) => {
             const websiteSubPath = resolveWebsiteBlogArticlesSubPath(filePath);
             const { metadata, blogMetadata } = await import(
-                `app/(content)/blog-articles/(articles)/${websiteSubPath}/${BLOG_ARTICLE_FILE}`
+                `../app/(content)/blog-articles/(articles)/${websiteSubPath}/${BLOG_ARTICLE_FILE}`
+            );
+            const readingTimeMinutes = estimateReadingTimeMinutes(
+                readFileSync(filePath, "utf-8"),
             );
 
             return {
@@ -61,9 +83,11 @@ async function getBlogArticles(subPath: string): Promise<BlogArticle[]> {
                 image: blogMetadata.image as StaticImageData,
                 publishedDate: blogMetadata.publishedDate as Date,
                 websiteSubPath,
+                readingTimeMinutes,
             };
         }),
     );
+    // Newly created array — in-place sort is intentional (ESLint may flag this).
     return articles.sort(
         (a, b) => b.publishedDate.getTime() - a.publishedDate.getTime(),
     );
@@ -88,7 +112,7 @@ async function getCurrentGroupMetadata(
         currentGroupFilePaths[0],
     );
     const { metadata } = await import(
-        `app/(content)/blog-articles/(articles)/${websiteSubPath}/${BLOG_ARTICLES_GROUP_FILE}`
+        `../app/(content)/blog-articles/(articles)/${websiteSubPath}/${BLOG_ARTICLES_GROUP_FILE}`
     );
 
     return {
@@ -106,7 +130,7 @@ async function getSubGroupMetadatas(
         (await glob(groupFilePathPattern)).map(async (filePath) => {
             const websiteSubPath = resolveWebsiteBlogArticlesSubPath(filePath);
             const { metadata } = await import(
-                `app/(content)/blog-articles/(articles)/${websiteSubPath ? `${websiteSubPath}/` : ""}${BLOG_ARTICLES_GROUP_FILE}`
+                `../app/(content)/blog-articles/(articles)/${websiteSubPath ? `${websiteSubPath}/` : ""}${BLOG_ARTICLES_GROUP_FILE}`
             );
 
             return {
@@ -179,6 +203,7 @@ function groupArticles(
 
     return {
         currentGroup,
+        // Array.from produces a new array — in-place sort is safe and intentional.
         subGroups: Array.from(subGroupsMap.values()).sort(
             (groupA, groupB) =>
                 groupB.articles[0].publishedDate.getTime() -

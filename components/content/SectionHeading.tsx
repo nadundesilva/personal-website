@@ -17,8 +17,9 @@ import type React from "react";
 
 import type { FormattableDate } from "@/constants/date";
 
-import Datespan from "./Datespan";
+import DateInfo from "./DateInfo";
 import LinkButton, { type LinkButtonProps } from "./LinkButton";
+import { HorizontalGradientLine } from "@/components/primitives";
 
 interface SectionHeadingProps {
     children: React.ReactNode;
@@ -42,24 +43,26 @@ const SectionHeading = ({
             alignItems: { xs: "flex-start", sm: "flex-start" },
             gap: { xs: 2, sm: 3 },
             mb: 3,
-            mt: 5,
+            mt: { xs: 4, md: 5 },
         }}
     >
         <Box sx={{ flex: 1, minWidth: 0 }}>
             <Typography
                 id={id}
-                component="h2"
-                variant="h3"
+                variant="h2"
                 sx={{
                     mb: 0,
-                    fontWeight: 500,
-                    letterSpacing: "-0.01em",
-                    lineHeight: 1.3,
                 }}
             >
                 {children}
             </Typography>
-            {date && <Datespan value={date} />}
+            <HorizontalGradientLine
+                sx={{
+                    width: { xs: 56, md: 80 },
+                    mb: date || actionButton ? 0 : 1,
+                }}
+            />
+            {date && <DateInfo value={date} />}
             {actionButton && (
                 <Box
                     sx={{

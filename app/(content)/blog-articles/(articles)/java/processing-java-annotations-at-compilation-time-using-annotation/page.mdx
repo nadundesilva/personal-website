@@ -60,7 +60,7 @@ To make use of the annotations, using Java Annotation Processors they need to be
 
 An annotation processor can be implemented by extending the `javax.annotation.processing.AbstractProcessor{:java}` class. The annotation processors are invoked during compile time and we can generate code, validate, etc. using it.
 
-```java
+```java title="AnnotationProcessorExample.java"
 public class AnnotationProcessorExample extends AbstractProcessor {
     @Override
     public synchronized void init(ProcessingEnvironment env) {
@@ -110,7 +110,7 @@ javac -processor com.foo.FooProcessor,com.bar.BarProcessor MyClassWithAnnotation
 
 If you are using Maven for building the source files, the following can be added to you `pom.xml` file to engage the annotation processor.
 
-```xml
+```xml title="pom.xml"
 <build>
     <plugins>
         <plugin>
@@ -134,7 +134,7 @@ If you are using Maven for building the source files, the following can be added
 
 If you prefer the annotation processor to be picked up automatically, we need to add the fully qualified class names of the Annotation Processors to the `META-INF/services/javax.annotation.processing.Processor` file.
 
-```
+```plaintext title="META-INF/services/javax.annotation.processing.Processor"
 com.foo.FooProcessor
 com.bar.BarProcessor
 ```

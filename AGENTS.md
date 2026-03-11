@@ -93,7 +93,6 @@ Accessibility is a hard requirement, not optional:
 | E2E Testing    | Cypress + @testing-library/cypress                                       |
 | Code Coverage  | NYC/Istanbul via @cypress/code-coverage                                  |
 | Linting        | ESLint (`next/core-web-vitals` + prettier)                               |
-| CSS Linting    | Stylelint (`stylelint-config-standard`)                                  |
 | Formatting     | Prettier (`semi`, `trailingComma: all`, `tabWidth: 4`, `printWidth: 80`) |
 | Git Hooks      | Husky + lint-staged                                                      |
 
@@ -132,7 +131,8 @@ components/
   blog-articles/                   # ArticleLayout, ArticlesList, ArticlesListItem
   content/                         # Semantic structure components (Title, Section, Link, etc.)
   layout/                          # Navigation, footer
-  theme/                           # WebsiteThemeProvider.tsx, fonts.ts
+  primitives/                      # Small "use client" UI primitives (see §7 — Primitive Components)
+  theme/                           # WebsiteThemeProvider.tsx, fonts.ts, colors.ts
   WebVitals.tsx
 constants/
   routes.ts                        # Route definitions (WebsiteHome, Route interface)
@@ -295,10 +295,6 @@ const MyComponent = ({ ... }: Props): React.ReactElement => {
 export default MyComponent;
 ```
 
-### Array Mutations
-
-In-place `.sort()` without copying is allowed when the array is newly created within the same scope and not referenced elsewhere. ESLint may flag this — it is intentional. See [`utils/blog-articles.ts`](./utils/blog-articles.ts).
-
 ---
 
 ## 7. Architecture and Key Patterns
@@ -370,8 +366,27 @@ Never use raw MUI components or HTML elements for document structure. Use from [
 | `LinkButton`                 | button-styled link          | CTA links                       |
 | `Logo`                       | image with link             | Logos                           |
 | `Photo`                      | image with optional caption | Photos                          |
-| `Datespan`                   | time range display          | Date ranges                     |
+| `DateInfo`                   | date/date range display     | Dates and date ranges           |
 | `HighlightsSection`          | highlights layout           | Key highlights                  |
+
+### Primitive Components
+
+Small reusable building blocks in [`components/primitives/`](./components/primitives/). They render a specific visual segment — a gradient line, a bordered accent, a divider — but carry no semantic meaning on their own. Think of them like design tokens expressed as components: the same visual pattern used in multiple places.
+
+**Available primitives:**
+
+| Primitive                | What it renders                                                                         |
+| ------------------------ | --------------------------------------------------------------------------------------- |
+| `HorizontalGradientLine` | Short left-anchored gradient accent line (color → transparent) used under headings      |
+| `LeftAccent`             | Left border accent wrapping a content block (3 px, `alpha(primary, 0.3)` by default)    |
+| `GradientDivider`        | Full-width symmetric gradient rule (transparent → color → transparent) between sections |
+
+**When to add a new primitive:**
+
+- A visual pattern (gradient, border accent, decorative line, etc.) is used in more than one place.
+- The element has no semantic meaning by itself — it is purely visual.
+
+Export all primitives from `components/primitives/index.tsx`.
 
 ### Custom Link Component
 
@@ -406,6 +421,108 @@ Never use hardcoded color values. Use theme tokens:
 - `text.primary`, `text.secondary`, `text.disabled`
 - `palette.primary.main`, `palette.primary.light`, `palette.primary.dark`
 - `background.default`, `background.paper`
+
+**Raw palette constants** (`themePrimary`, `themeSecondary`, `linkColors`) are exported from [`components/theme/colors.ts`](./components/theme/colors.ts). Import from there when you need the raw hex values outside of a theme callback (e.g. in a server component like `app/layout.tsx`). `WebsiteThemeProvider.tsx` also imports from this file — do not duplicate color definitions.
+
+**Prefer `useTheme()` or sx callbacks over sx string tokens.** MUI's `sx` prop accepts dot-path strings like `"text.secondary"` or `"action.disabledBackground"` as a shorthand — but these are **not type-checked**. A typo compiles silently and produces broken/invisible styles at runtime with no error:
+
+```tsx
+// PREFER: type-checked — typos are caught at compile time
+const theme = useTheme();
+bgcolor: theme.palette.action.disabledBackground;
+
+// PREFER: equally type-safe via sx callback
+bgcolor: (theme) => theme.palette.action.disabledBackground;
+
+// AVOID: "action.disabledBakground" (typo) would also compile fine
+bgcolor: "action.disabledBackground";
+```
+
+To create lighter or darker shades of an existing palette color (e.g. for gradients), use MUI's `darken` and `lighten` utilities from `@mui/material/styles` — do not hardcode new hex values:
+
+```ts
+import { darken } from "@mui/material/styles";
+
+background: (theme) =>
+    `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${darken(theme.palette.background.paper, 0.1)} 100%)`,
+```
+
+To apply opacity to a palette color, use MUI's `alpha()` utility — do not use `rgba()` literals or append hex alpha digits:
+
+```ts
+import { alpha } from "@mui/material/styles";
+
+// CORRECT
+backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.12);
+
+// AVOID — hardcodes the color value, breaks when theme changes
+backgroundColor: "rgba(56, 73, 89, 0.12)";
+```
+
+### Spacing and Sizing
+
+**`sx` prop auto-multipliers** — Some numeric values in `sx` are automatically scaled; others are not:
+
+| Property group                                                  | Auto-multiplied by                   | Example                         |
+| --------------------------------------------------------------- | ------------------------------------ | ------------------------------- |
+| `m`, `mt`, `mb`, `ml`, `mr`, `mx`, `my`, `p`, `pt`, etc., `gap` | `theme.spacing()` (8px)              | `mt: 2` → `margin-top: 16px`    |
+| `borderRadius`                                                  | `theme.shape.borderRadius` (4px)     | `borderRadius: 1.5` → `6px`     |
+| `width`, `height`, `top`, `bottom`, `left`, `right`             | **NOT scaled** — treated as raw px/% | Use callbacks or explicit units |
+
+**`theme.spacing()` is fixed** — it does **not** auto-scale based on screen size or breakpoints. If you need responsive spacing, specify it explicitly with a breakpoint object:
+
+```tsx
+// Static
+mt: 2
+
+// Responsive
+mt: { xs: 2, md: 4 }
+```
+
+**Semantic rule for when to use `theme.spacing()`:** Only use it for layout whitespace — `margin`, `padding`, `gap`. Do **not** use it for:
+
+- Motion distances: `translateY(-2px)` — use `theme.motion.hoverLift` instead (see below)
+- Element dimensions: `width: 24`, `height: 38` — these are design dimensions, leave as numbers
+- Positional offsets: `top: 12`, `bottom: 10` — positional values are not layout spacing
+
+Similarly, do **not** use `theme.shape.borderRadius` for unrelated numeric coincidences — only when the value is semantically "a fraction or multiple of the base border radius".
+
+### Custom Theme Extensions (`theme.motion`)
+
+Hover-lift distances are stored as a custom `motion` namespace in the theme — not as `theme.spacing()` values (which are semantic for layout whitespace, not motion). Use these for all `translateY` hover effects:
+
+| Token                          | Value   | Use for                                 |
+| ------------------------------ | ------- | --------------------------------------- |
+| `theme.motion.hoverLift`       | `"2px"` | Cards, FABs, photos, icons, skill chips |
+| `theme.motion.hoverLiftSubtle` | `"1px"` | Buttons, link buttons, small chips      |
+
+```tsx
+// CORRECT
+"&:hover": {
+    transform: (theme) => `translateY(-${theme.motion.hoverLift})`,
+}
+```
+
+**Extending the theme with custom namespaces:** When a concept has no MUI equivalent, extend via TypeScript module augmentation in `WebsiteThemeProvider.tsx`:
+
+```ts
+declare module "@mui/material/styles" {
+    interface Theme {
+        motion: {
+            hoverLift: string;
+            hoverLiftSubtle: string;
+        };
+    }
+    interface ThemeOptions {
+        motion?: {
+            hoverLift?: string;
+            hoverLiftSubtle?: string;
+        };
+    }
+}
+```
+
+Then add the values to the `createTheme()` call at the top level of the theme object (not inside `colorSchemes`). Values in the top-level theme are shared across all color schemes.
 
 ### Where to Put Styles
 
@@ -461,6 +578,8 @@ Use these tasks in tests that need to enumerate blog articles dynamically.
 
 ### Running Tests Locally
 
+**Critical:** `start-server.sh` must be run with `source`, not `bash` — see [§10 — Server Scripts](#server-scripts) for details.
+
 ```bash
 # Requires a server to be running first
 npm run cypress:open    # Interactive test runner UI
@@ -510,20 +629,6 @@ Pipeline: [`.github/workflows/deploy-site.yaml`](./.github/workflows/deploy-site
 - run: bash ./.github/scripts/start-server.sh
 ```
 
-### Environment Variables
-
-| Variable                  | Where used                      | Notes                                     |
-| ------------------------- | ------------------------------- | ----------------------------------------- |
-| `NEXT_PUBLIC_WEBSITE_URL` | Dev script                      | `http://localhost:3000` in dev            |
-| `SENTRY_AUTH_TOKEN`       | Build (CI secret)               | Source map upload                         |
-| `SENTRY_RELEASE`          | Build (CI)                      | Set to `github.sha`                       |
-| `ANALYZE`                 | `build:analyze` script          | Set to `true` to open bundle report       |
-| `BUILD_TYPE`              | E2E pipeline + `app/layout.tsx` | Set to `test` for coverage + loosened CSP |
-| `CYPRESS_RECORD_KEY`      | E2E pipeline (CI secret)        | Cypress Cloud recording                   |
-| `CODECOV_TOKEN`           | Coverage upload (CI secret)     | CodeCov authentication                    |
-| `CLOUDFLARE_API_TOKEN`    | Deploy step (CI secret)         | Cloudflare Pages deploy                   |
-| `CLOUDFLARE_ACCOUNT_ID`   | Deploy step (CI secret)         | Cloudflare account identifier             |
-
 ---
 
 ## 11. Known Gotchas
@@ -534,25 +639,19 @@ In [`mdx-components.tsx`](./mdx-components.tsx): MDX `h1` → `SectionHeading` (
 
 ### MDX copyright headers require the `export const _copyright` pattern
 
-Standard block comments and HTML comments are both invalid in `.mdx` files — Prettier mangles block comments and the MDX parser rejects HTML comments. See [Section 6 — File Header](#file-header) for the required pattern.
+→ See [Section 6 — File Header](#file-header) for the required pattern and explanation.
 
 ### TypeScript syntax is forbidden inside `.mdx` files
 
-The MDX acorn parser is JavaScript-only. The following constructs all cause `Could not parse import/exports with acorn` build failures:
-
-- `import type { ... } from "..."` — use plain `import` or omit entirely
-- `export const foo: SomeType = ...` — omit the type annotation
-- Typed function parameters: `function Layout({ children }: Props)` — use plain JS syntax
-
-See [Section 7 — Blog Articles](#blog-articles) for the correct MDX export pattern.
+→ See [Section 7 — Blog Articles](#blog-articles) for the correct MDX export pattern and list of forbidden constructs.
 
 ### `WebsiteHome.subRoutes` is never undefined
 
-TypeScript infers this from the constant initializer. Do not add `?.` optional chaining when accessing it — TypeScript will error. See [`constants/routes.ts`](./constants/routes.ts).
+→ See [§7 — Route Definitions](#route-definitions).
 
-### Sentry is disabled in development
+### CSS keyframes with theme colors must be defined inside the component
 
-`sentryConfig.enabled` is `false` when `NODE_ENV === "development"`. Source map uploads require a valid `SENTRY_AUTH_TOKEN` in the build environment.
+MUI `keyframes` (from `@mui/system`) cannot use `(theme) => ...` callbacks. When theme-aware colors are required, define the keyframe inside the component body after `useTheme()` and interpolate values directly via template literals. See [`Experience.tsx`](<./app/(home)/_content/sections/Experience.tsx>) for the pattern.
 
 ### CSP `unsafe-eval` is only added in development and test
 

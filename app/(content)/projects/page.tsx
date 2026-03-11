@@ -20,12 +20,13 @@ import type { Metadata } from "next";
 import type React from "react";
 
 import {
-    HighlightsSection,
+    AccentedList,
     Link,
     LinkButton,
     ListItem,
     Logo,
     Paragraph,
+    ScrollReveal,
     Section,
     SectionHeading,
     Title,
@@ -121,17 +122,19 @@ const Projects = (): React.ReactElement => {
     return (
         <>
             <Title>Projects</Title>
-            <Box sx={{ pt: 2, pb: 2 }}>
-                <LinkButton
-                    href={
-                        WebsiteHome.subRoutes["/projects"].subRoutes![
-                            "/projects/personal"
-                        ].path
-                    }
-                    name="View Personal Projects"
-                    icon={KeyboardArrowRight}
-                />
-            </Box>
+            <ScrollReveal>
+                <Box sx={{ pt: 2, pb: 2 }}>
+                    <LinkButton
+                        href={
+                            WebsiteHome.subRoutes["/projects"].subRoutes![
+                                "/projects/personal"
+                            ].path
+                        }
+                        name="View Personal Projects"
+                        icon={KeyboardArrowRight}
+                    />
+                </Box>
+            </ScrollReveal>
             <Section labelledById="section-project-indexity">
                 <ProjectSectionHeading
                     id="section-project-indexity"
@@ -167,7 +170,7 @@ const Projects = (): React.ReactElement => {
                     {ProjectDetails.Indexity.name} data-planes, ensuring high
                     availability, scalability, and reliability of the platform.
                 </Paragraph>
-                <HighlightsSection>
+                <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
                         <Typography>
                             Directed the successful deployment of{" "}
@@ -221,7 +224,7 @@ const Projects = (): React.ReactElement => {
                             two customers.
                         </Typography>
                     </ListItem>
-                </HighlightsSection>
+                </AccentedList>
             </Section>
             <Section labelledById="section-project-choreo">
                 <ProjectSectionHeading
@@ -276,7 +279,7 @@ const Projects = (): React.ReactElement => {
                     time were some of the most important aspects of the resource
                     scheduling.
                 </Paragraph>
-                <HighlightsSection>
+                <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
                         <Typography>
                             Worked on the Observability aspects of the initial
@@ -335,7 +338,7 @@ const Projects = (): React.ReactElement => {
                             Experience without affecting other users.
                         </Typography>
                     </ListItem>
-                </HighlightsSection>
+                </AccentedList>
             </Section>
             <Section labelledById="section-project-ballerina">
                 <ProjectSectionHeading
@@ -358,7 +361,7 @@ const Projects = (): React.ReactElement => {
                     with constructs such as services, resources and remote
                     functions.
                 </Paragraph>
-                <HighlightsSection>
+                <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
                         <Typography>
                             Owned {ProjectDetails.Ballerina.name} Observability
@@ -384,7 +387,7 @@ const Projects = (): React.ReactElement => {
                             tracing, from {OpenTracing} to {OpenTelemetry}.
                         </Typography>
                     </ListItem>
-                </HighlightsSection>
+                </AccentedList>
             </Section>
             <Section labelledById="section-project-cellery">
                 <ProjectSectionHeading
@@ -425,7 +428,7 @@ const Projects = (): React.ReactElement => {
                     dependency resolution and visualization to improve the
                     experience around deployments.
                 </Paragraph>
-                <HighlightsSection>
+                <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
                         <Typography>
                             Implemented the Cellery Observability core
@@ -476,7 +479,7 @@ const Projects = (): React.ReactElement => {
                             Code plugin as well).
                         </Typography>
                     </ListItem>
-                </HighlightsSection>
+                </AccentedList>
             </Section>
             <Section labelledById="section-project-siddhi">
                 <ProjectSectionHeading
@@ -507,7 +510,7 @@ const Projects = (): React.ReactElement => {
                     editor for providing completions for siddhi syntax along
                     with the data about the extensions.
                 </Paragraph>
-                <HighlightsSection>
+                <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
                         <Typography>
                             Designed and implemented a {Maven} plugin for
@@ -528,7 +531,7 @@ const Projects = (): React.ReactElement => {
                             Processing Engine.
                         </Typography>
                     </ListItem>
-                </HighlightsSection>
+                </AccentedList>
             </Section>
         </>
     );
