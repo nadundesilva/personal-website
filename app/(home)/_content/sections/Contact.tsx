@@ -14,6 +14,7 @@
  */
 import { Email } from "@mui/icons-material";
 import { Box, Button, Card, Container, Grid, Typography } from "@mui/material";
+import { alpha, darken } from "@mui/material/styles";
 import type React from "react";
 
 import { Link } from "@/components/content";
@@ -29,14 +30,55 @@ const Contact = (): React.ReactElement => (
                 position: "relative",
                 overflow: "hidden",
                 background: (theme) =>
-                    theme.palette.mode === "dark"
-                        ? "linear-gradient(135deg, #1A2027 0%, #121212 100%)"
-                        : "linear-gradient(135deg, #F3F6F9 0%, #FFFFFF 100%)",
+                    `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${darken(theme.palette.background.paper, 0.1)} 100%)`,
                 border: "1px solid",
-                borderColor: "divider",
+                borderColor: (theme) => theme.palette.divider,
             }}
         >
-            <Grid container spacing={6} alignItems="center">
+            <Box
+                aria-hidden="true"
+                sx={{
+                    position: "absolute",
+                    top: -100,
+                    right: -100,
+                    width: 480,
+                    height: 480,
+                    borderRadius: "50%",
+                    background: (theme) =>
+                        `radial-gradient(circle, ${
+                            theme.palette.mode === "light"
+                                ? alpha(theme.palette.primary.main, 0.09)
+                                : alpha(theme.palette.primary.light, 0.05)
+                        }, transparent 70%)`,
+                    pointerEvents: "none",
+                    zIndex: 0,
+                }}
+            />
+            <Box
+                aria-hidden="true"
+                sx={{
+                    position: "absolute",
+                    bottom: -80,
+                    left: -80,
+                    width: 300,
+                    height: 300,
+                    borderRadius: "50%",
+                    background: (theme) =>
+                        `radial-gradient(circle, ${
+                            theme.palette.mode === "light"
+                                ? alpha(theme.palette.primary.main, 0.06)
+                                : alpha(theme.palette.primary.light, 0.03)
+                        }, transparent 70%)`,
+                    pointerEvents: "none",
+                    zIndex: 0,
+                }}
+            />
+            <Grid
+                container
+                spacing={6}
+                alignItems="center"
+                sx={{ position: "relative", zIndex: 1 }}
+            >
                 <Grid size={{ xs: 12, md: 7 }}>
                     <Typography
                         variant="h3"
@@ -45,7 +87,12 @@ const Contact = (): React.ReactElement => (
                         sx={{ fontWeight: 500 }}
                     >
                         Let&apos;s build something <br />
-                        <Box component="span" sx={{ color: "primary.main" }}>
+                        <Box
+                            component="span"
+                            sx={{
+                                color: (theme) => theme.palette.primary.main,
+                            }}
+                        >
                             amazing together.
                         </Box>
                     </Typography>
@@ -79,16 +126,50 @@ const Contact = (): React.ReactElement => (
                                 color="inherit"
                                 startIcon={<profile.Icon />}
                                 sx={{
-                                    "borderColor": "divider",
-                                    "borderRadius": 4,
+                                    "borderColor": (theme) =>
+                                        theme.palette.mode === "light"
+                                            ? alpha(
+                                                  theme.palette.primary.main,
+                                                  0.33,
+                                              )
+                                            : alpha(
+                                                  theme.palette.primary.light,
+                                                  0.27,
+                                              ),
+                                    "borderRadius": (theme) =>
+                                        (theme.shape.borderRadius as number) /
+                                        2,
                                     "textTransform": "none",
+                                    "transition": (theme) =>
+                                        theme.transitions.create(
+                                            [
+                                                "border-color",
+                                                "color",
+                                                "background-color",
+                                            ],
+                                            {
+                                                duration:
+                                                    theme.transitions.duration
+                                                        .shortest,
+                                            },
+                                        ),
                                     "&:hover": {
-                                        borderColor: "primary.main",
-                                        color: "primary.main",
+                                        borderColor: (theme) =>
+                                            theme.palette.primary.main,
+                                        color: (theme) =>
+                                            theme.palette.primary.main,
                                         backgroundColor: (theme) =>
-                                            theme.palette.mode === "dark"
-                                                ? "rgba(255, 255, 255, 0.05)"
-                                                : "rgba(0, 0, 0, 0.02)",
+                                            theme.palette.mode === "light"
+                                                ? alpha(
+                                                      theme.palette.primary
+                                                          .main,
+                                                      0.03,
+                                                  )
+                                                : alpha(
+                                                      theme.palette.primary
+                                                          .light,
+                                                      0.03,
+                                                  ),
                                     },
                                 }}
                             >
@@ -122,9 +203,37 @@ const Contact = (): React.ReactElement => (
                                 "borderRadius": 50,
                                 "fontSize": "1.2rem",
                                 "fontWeight": 700,
-                                "transition": "all 0.3s ease",
+                                "transition": (theme) =>
+                                    theme.transitions.create("all", {
+                                        duration:
+                                            theme.transitions.duration.short,
+                                    }),
+                                "position": "relative",
+                                "overflow": "hidden",
+                                "&::after": {
+                                    content: '""',
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    width: "60%",
+                                    height: "100%",
+                                    background: (theme) =>
+                                        `linear-gradient(105deg, transparent 20%, ${alpha(theme.palette.common.white, 0.18)} 50%, transparent 80%)`,
+                                    transform: "translateX(-200%)",
+                                    transition: "none",
+                                },
                                 "&:hover": {
-                                    transform: "translateY(-2px)",
+                                    transform: (theme) =>
+                                        `translateY(-${theme.motion.hoverLift})`,
+                                },
+                                "&:hover::after": {
+                                    transform: "translateX(300%)",
+                                    transition: (theme) =>
+                                        theme.transitions.create("transform", {
+                                            duration:
+                                                theme.transitions.duration
+                                                    .complex * 2,
+                                        }),
                                 },
                             }}
                         >

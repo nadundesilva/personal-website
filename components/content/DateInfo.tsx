@@ -18,13 +18,14 @@ import { visuallyHidden } from "@mui/utils";
 import type React from "react";
 
 import type { FormattableDate } from "@/constants/date";
+import { PrimaryTintedIcon } from "@/components/primitives";
 
-interface DatespanProps {
+interface DateInfoProps {
     value: FormattableDate;
     sx?: SxProps<Theme>;
 }
 
-const Datespan = ({ value, sx }: DatespanProps): React.ReactElement => (
+const DateInfo = ({ value, sx }: DateInfoProps): React.ReactElement => (
     <Box
         sx={{
             display: "flex",
@@ -38,13 +39,7 @@ const Datespan = ({ value, sx }: DatespanProps): React.ReactElement => (
         <Box component="span" sx={visuallyHidden}>
             Date:
         </Box>
-        <CalendarMonth
-            sx={{
-                color: "text.secondary",
-                fontSize: "1.125rem",
-            }}
-            aria-hidden="true"
-        />
+        <PrimaryTintedIcon icon={CalendarMonth} fontSize="1.125rem" />
         <Typography
             variant="body2"
             sx={{
@@ -70,4 +65,4 @@ const Datespan = ({ value, sx }: DatespanProps): React.ReactElement => (
     </Box>
 );
 
-export default Datespan;
+export default DateInfo;

@@ -17,12 +17,12 @@ import type { Metadata } from "next";
 import type React from "react";
 
 import {
-    HighlightsSection,
+    AccentedList,
     Link,
     Logo,
     ListItem,
     Paragraph,
-    Photo,
+    Image,
     Section,
     SectionHeading,
     Title,
@@ -124,7 +124,7 @@ const Achievements = (): React.ReactElement => {
                         AchievementDetails.WSO2SustainedOutstandingContributionAward
                     }
                 />
-                <Photo
+                <Image
                     src={wso2OutstandingContributorImage}
                     alt="Sustained Outstanding Contribution Award presented by WSO2."
                     float="right"
@@ -152,7 +152,7 @@ const Achievements = (): React.ReactElement => {
                     id="section-uom-deans-list"
                     achievement={AchievementDetails.PlacementsOnTheDeansList}
                 />
-                <Photo
+                <Image
                     src={uomDeansList2017Image}
                     alt="Certificate indicating placement on the Dean's List at the University of Moratuwa."
                     float="right"
@@ -163,7 +163,10 @@ const Achievements = (): React.ReactElement => {
                     placed on the Dean&lsquo;s List for scoring a GPA above 3.8
                     (out of 4.2) for 6 out of the 8 semesters I studied there.
                 </Paragraph>
-                <HighlightsSection heading="The semesters in which placements on the Dean&rsquo;s List were awarded (4.20 GPA Scale):">
+                <AccentedList
+                    heading="Dean&rsquo;s List Semesters (4.20 GPA Scale):"
+                    headingVariant="h3"
+                >
                     <ListItem>
                         <Typography>Semester 02 (GPA: 3.82)</Typography>
                     </ListItem>
@@ -182,7 +185,7 @@ const Achievements = (): React.ReactElement => {
                     <ListItem>
                         <Typography>Semester 08 (GPA: 4.01)</Typography>
                     </ListItem>
-                </HighlightsSection>
+                </AccentedList>
             </Section>
             <Section labelledById="section-nasa-space-apps">
                 <AchievementSectionHeading
@@ -191,7 +194,7 @@ const Achievements = (): React.ReactElement => {
                         AchievementDetails.NasaSpaceAppsChallengeGlobalFinalist
                     }
                 />
-                <Photo
+                <Image
                     src={nasaSpaceAppsChallenge2017NewspaperImage}
                     alt="Newspaper clipping featuring the NASA Space Apps Challenge."
                     float="right"
@@ -204,7 +207,7 @@ const Achievements = (): React.ReactElement => {
                     {OurEcologicalNeighborhood} category to solve the{" "}
                     {WhereTheGenesFlow} challenge.
                 </Paragraph>
-                <Photo
+                <Image
                     src={nasaSpaceAppsChallenge2017Image}
                     alt="Team Codon members posing together after the NASA Space Apps Challenge."
                     float="left"
@@ -243,7 +246,7 @@ const Achievements = (): React.ReactElement => {
                     id="section-angel-hack"
                     achievement={AchievementDetails.AngelHackFinalist}
                 />
-                <Photo
+                <Image
                     src={angelHack2016Image}
                     alt="Working on the smart workout system prototype."
                     float="right"
@@ -254,7 +257,7 @@ const Achievements = (): React.ReactElement => {
                     exercise bicycle fitted with a sensor to encourage people to
                     workout more.
                 </Paragraph>
-                <Photo
+                <Image
                     src={angelHack2016BikeImage}
                     alt="Detailed view of the exercise bicycle prototype used in the smart workout system."
                     float="left"
@@ -304,7 +307,7 @@ const Achievements = (): React.ReactElement => {
                         AchievementDetails.BritishCouncilHSBCYouthEnterpriseAwardsFinalist
                     }
                 />
-                <Photo
+                <Image
                     src={hsbcYouthEnterpriseAwards2015Image}
                     alt="Team members posing at the hackathon."
                     float="right"
@@ -316,7 +319,7 @@ const Achievements = (): React.ReactElement => {
                     presented an idea, along with a prototype, in the hope of
                     revolutionizing education.
                 </Paragraph>
-                <Photo
+                <Image
                     src={hsbcYouthEnterpriseAwards2015DiscussionImage}
                     alt="Team members discussing their project at the hackathon."
                     float="left"

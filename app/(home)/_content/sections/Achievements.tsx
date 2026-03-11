@@ -21,7 +21,9 @@ import {
     type Theme,
     Typography,
     useMediaQuery,
+    useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import Image from "next-image-export-optimizer";
 import { type StaticImageData } from "next/image";
 import type React from "react";
@@ -43,11 +45,11 @@ const FullSizeImageListItem = styled(ImageListItem)({
 });
 
 const ImageListItemImageOverlay = styled(Grid)(({ theme }) => ({
-    color: theme.palette.mode === "light" ? "#000000" : "#ffffff",
-    backgroundColor:
+    color: theme.palette.common.white,
+    background:
         theme.palette.mode === "light"
-            ? "rgba(255, 255, 255, 0.85)"
-            : "rgba(0, 0, 0, 0.85)",
+            ? `linear-gradient(to top, ${alpha(theme.palette.primary.main, 0.95)} 0px, ${alpha(theme.palette.primary.main, 0.7)} 300px, ${alpha(theme.palette.primary.main, 0.2)} 380px, transparent 460px)`
+            : `linear-gradient(to top, ${alpha(theme.palette.background.default, 0.98)} 0px, ${alpha(theme.palette.background.default, 0.75)} 300px, ${alpha(theme.palette.background.default, 0.25)} 380px, transparent 460px)`,
     position: "absolute",
     textAlign: "center",
     top: 0,
@@ -55,7 +57,9 @@ const ImageListItemImageOverlay = styled(Grid)(({ theme }) => ({
     left: 0,
     right: 0,
     opacity: 0,
-    transition: "opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+    transition: theme.transitions.create("opacity", {
+        duration: theme.transitions.duration.standard,
+    }),
 }));
 
 interface AchievementSection {
@@ -68,6 +72,7 @@ interface AchievementSection {
 const ROW_HEIGHT = 320;
 
 const Achievements = (): React.ReactElement => {
+    const theme = useTheme();
     const achievementSections: AchievementSection[] = [
         {
             title: "Global Finalist - Galactic Impact - NASA Space Apps Challenge 2017",
@@ -113,7 +118,15 @@ const Achievements = (): React.ReactElement => {
                 cols={1}
                 sx={{
                     "position": "relative",
-                    "overflow": "hidden",
+                    // Resting glow intensifies on hover. Dark mode uses primary.light (matching
+                    // the pulse color in Experience.tsx) for visual consistency across sections.
+                    "boxShadow": (theme) =>
+                        theme.palette.mode === "light"
+                            ? `0 0 60px ${alpha(theme.palette.primary.main, 0.67)}`
+                            : `0 0 60px ${alpha(theme.palette.primary.light, 0.22)}`,
+                    "transition": theme.transitions.create("box-shadow", {
+                        duration: theme.transitions.duration.standard,
+                    }),
                     "&:hover, &:focus-within": {
                         [`& .${classes.imageListItemImageOverlay}`]: {
                             opacity: 1,
@@ -122,18 +135,29 @@ const Achievements = (): React.ReactElement => {
                         "& img": {
                             transform: "scale(1.03)",
                         },
+                        "boxShadow": (theme) =>
+                            theme.palette.mode === "light"
+                                ? `0 0 90px ${alpha(theme.palette.primary.main, 0.87)}`
+                                : `0 0 90px ${alpha(theme.palette.primary.light, 0.4)}`,
                     },
                 }}
                 tabIndex={0}
                 aria-labelledby={`achievement-title-${achievementIndex}`}
                 aria-roledescription="achievement"
             >
-                <Box sx={{ height: "100%", position: "relative" }}>
+                <Box
+                    sx={{
+                        height: "100%",
+                        position: "relative",
+                        overflow: "hidden",
+                    }}
+                >
                     <ImageListItemImageOverlay
                         container
                         justifyContent="center"
-                        alignItems="center"
+                        alignItems="flex-end"
                         className={classes.imageListItemImageOverlay}
+                        sx={{ pb: { xs: 3, md: 4 } }}
                     >
                         <Grid size={{ xs: 10, md: 8 }}>
                             <Typography
@@ -141,11 +165,13 @@ const Achievements = (): React.ReactElement => {
                                 variant="h6"
                                 component="h3"
                                 fontWeight={500}
+                                color="inherit"
                                 sx={{
                                     fontSize: { xs: 16, md: 18 },
                                     letterSpacing: "-0.02em",
                                     lineHeight: 1.4,
-                                    textShadow: "0 2px 12px rgba(0, 0, 0, 0.2)",
+                                    textShadow: (theme) =>
+                                        `0 2px 12px ${alpha(theme.palette.common.black, 0.2)}`,
                                 }}
                             >
                                 {achievementSection.title}
@@ -158,8 +184,9 @@ const Achievements = (): React.ReactElement => {
                         fill
                         style={{
                             objectFit: "cover",
-                            transition:
-                                "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                            transition: theme.transitions.create("transform", {
+                                duration: theme.transitions.duration.standard,
+                            }),
                         }}
                     />
                 </Box>
@@ -173,16 +200,24 @@ const Achievements = (): React.ReactElement => {
     return (
         <>
             {isAboveMd ? (
-                <ImageList rowHeight={ROW_HEIGHT} cols={3}>
+                <ImageList
+                    rowHeight={ROW_HEIGHT}
+                    cols={3}
+                    // overflow: visible so that the box-shadow glow on each item
+                    // is not clipped by the ImageList's scroll container boundary
+                    sx={{ overflow: "visible" }}
+                >
                     <FullSizeImageListItem
                         rows={2}
                         cols={1}
                         role="presentation"
+                        sx={{ overflow: "visible" }}
                     >
                         <ImageList
                             rowHeight={ROW_HEIGHT}
                             cols={1}
                             role="presentation"
+                            sx={{ overflow: "visible" }}
                         >
                             {renderImageListItem(0, 1)}
                             {renderImageListItem(1, 1)}
@@ -193,11 +228,13 @@ const Achievements = (): React.ReactElement => {
                         rows={2}
                         cols={1}
                         role="presentation"
+                        sx={{ overflow: "visible" }}
                     >
                         <ImageList
                             rowHeight={ROW_HEIGHT}
                             cols={1}
                             role="presentation"
+                            sx={{ overflow: "visible" }}
                         >
                             {renderImageListItem(3, 1)}
                             {renderImageListItem(4, 1)}
@@ -205,7 +242,11 @@ const Achievements = (): React.ReactElement => {
                     </FullSizeImageListItem>
                 </ImageList>
             ) : (
-                <ImageList rowHeight={ROW_HEIGHT} cols={1}>
+                <ImageList
+                    rowHeight={ROW_HEIGHT}
+                    cols={1}
+                    sx={{ overflow: "visible" }}
+                >
                     {renderImageListItem(0, 1)}
                     {renderImageListItem(1, 1)}
                     {renderImageListItem(2, 1)}

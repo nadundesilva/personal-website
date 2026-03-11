@@ -18,7 +18,7 @@ import type { Metadata } from "next";
 import type React from "react";
 
 import {
-    HighlightsSection,
+    AccentedList,
     Link,
     ListItem,
     Logo,
@@ -171,7 +171,7 @@ const Experience = (): React.ReactElement => {
                     other areas of {Projects.Indexity.name}, contributing to the
                     overall platform architecture and functionality.
                 </Paragraph>
-                <HighlightsSection>
+                <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
                         <Typography>
                             Orchestrated the migration of{" "}
@@ -194,7 +194,7 @@ const Experience = (): React.ReactElement => {
                             response times for many incidents.
                         </Typography>
                     </ListItem>
-                </HighlightsSection>
+                </AccentedList>
             </Section>
             <Section labelledById="section-senior-se-orion">
                 <ExperienceSectionHeading
@@ -220,7 +220,7 @@ const Experience = (): React.ReactElement => {
                     failover mechanisms to ensure business continuity and
                     minimal data loss in case of system failures or disasters.
                 </Paragraph>
-                <HighlightsSection>
+                <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
                         <Typography>
                             Directed the successful deployment of{" "}
@@ -262,7 +262,7 @@ const Experience = (): React.ReactElement => {
                             reducing the development costs by more than 50%.
                         </Typography>
                     </ListItem>
-                </HighlightsSection>
+                </AccentedList>
             </Section>
             <Section labelledById="section-atl-wso2">
                 <ExperienceSectionHeading
@@ -295,7 +295,7 @@ const Experience = (): React.ReactElement => {
                     other engineers and kept up with the technical aspects of
                     the platform.
                 </Paragraph>
-                <HighlightsSection>
+                <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
                         <Typography>
                             Secured the Sustained Outstanding Contribution Award
@@ -337,7 +337,7 @@ const Experience = (): React.ReactElement => {
                             environment.
                         </Typography>
                     </ListItem>
-                </HighlightsSection>
+                </AccentedList>
             </Section>
             <Section labelledById="section-senior-se-wso2">
                 <ExperienceSectionHeading
@@ -408,7 +408,7 @@ const Experience = (): React.ReactElement => {
                     Observability and I helped and encouraged the engineers in
                     my team to grow and improve themselves as well.
                 </Paragraph>
-                <HighlightsSection>
+                <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
                         <Typography>
                             Spearheaded the implementation of the foundation for
@@ -442,7 +442,7 @@ const Experience = (): React.ReactElement => {
                             team of 6 engineers.
                         </Typography>
                     </ListItem>
-                </HighlightsSection>
+                </AccentedList>
             </Section>
             <Section labelledById="section-se-wso2">
                 <ExperienceSectionHeading
@@ -512,7 +512,7 @@ const Experience = (): React.ReactElement => {
                     me immensely in my role as a software engineer later in my
                     career.
                 </Paragraph>
-                <HighlightsSection>
+                <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
                         <Typography>
                             Delivered the Cellery observability basic features
@@ -545,7 +545,7 @@ const Experience = (): React.ReactElement => {
                             on top of Kubernetes and Apache OpenWhisk.
                         </Typography>
                     </ListItem>
-                </HighlightsSection>
+                </AccentedList>
             </Section>
             <Section labelledById="section-gsoc">
                 <ExperienceSectionHeading

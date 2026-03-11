@@ -12,12 +12,19 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+import { KeyboardArrowRight } from "@mui/icons-material";
 import { Box, Grid } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { useId } from "react";
 import type React from "react";
 
-import { Link, Section, SectionHeading, Title } from "@/components/content";
+import {
+    Link,
+    ScrollReveal,
+    Section,
+    SectionHeading,
+    Title,
+} from "@/components/content";
 import ArticleListItem from "./ArticlesListItem";
 import { getBlogArticleGroups, type BlogArticle } from "@/utils/blog-articles";
 
@@ -41,12 +48,33 @@ const ArticlesGroup = ({
                     <Link
                         href={href}
                         sx={{
-                            display: "block",
-                            color: "inherit",
+                            "display": "block",
+                            "width": "fit-content",
+                            "color": "inherit",
+                            "textDecoration": "none",
+                            "&:hover": { textDecoration: "none" },
+                            "& .category-arrow": {
+                                transition:
+                                    "opacity 250ms ease, transform 250ms ease",
+                                opacity: 0.4,
+                            },
+                            "&:hover .category-arrow": {
+                                opacity: 1,
+                                transform: "translateX(4px)",
+                            },
                         }}
                     >
                         <SectionHeading id={id}>
                             {title}
+                            <KeyboardArrowRight
+                                className="category-arrow"
+                                aria-hidden="true"
+                                sx={{
+                                    fontSize: "0.7em",
+                                    verticalAlign: "middle",
+                                    ml: 0.5,
+                                }}
+                            />
                             <Box component="span" sx={visuallyHidden}>
                                 {" "}
                                 articles
@@ -64,12 +92,17 @@ const ArticlesGroup = ({
                     alignItems="stretch"
                     spacing={2}
                 >
-                    {articles.map((blogArticle) => (
+                    {articles.map((blogArticle, index) => (
                         <Grid
                             key={`/blog-articles/${blogArticle.websiteSubPath}`}
                             size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
                         >
-                            <ArticleListItem blogArticle={blogArticle} />
+                            <ScrollReveal
+                                delay={index * 50}
+                                sx={{ height: "100%" }}
+                            >
+                                <ArticleListItem blogArticle={blogArticle} />
+                            </ScrollReveal>
                         </Grid>
                     ))}
                 </Grid>

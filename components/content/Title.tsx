@@ -15,24 +15,22 @@
 import { Box, Typography } from "@mui/material";
 import type React from "react";
 
+import { HorizontalGradientLine } from "@/components/primitives";
+import ScrollReveal from "./ScrollReveal";
+
 interface TitleProps {
     children: React.ReactNode;
 }
 
 const Title = ({ children }: TitleProps): React.ReactElement => (
-    <Box sx={{ mt: 7, mb: 1 }}>
-        <Typography
-            component="h1"
-            variant="h2"
-            sx={{
-                fontWeight: 500,
-                letterSpacing: "-0.02em",
-                lineHeight: 1.25,
-            }}
-        >
-            {children}
-        </Typography>
-    </Box>
+    <ScrollReveal>
+        <Box sx={{ mt: { xs: 4, md: 5 }, mb: 3 }}>
+            <Typography variant="h1">{children}</Typography>
+            <HorizontalGradientLine
+                sx={{ mt: 1.25, width: { xs: 100, md: 160 }, opacity: 0.7 }}
+            />
+        </Box>
+    </ScrollReveal>
 );
 
 export default Title;

@@ -12,13 +12,13 @@
  *
  * © 2024 Nadun De Silva. All rights reserved.
  */
-import { Box, Divider, Grid, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import type { MDXComponents } from "mdx/types";
-import Image from "next-image-export-optimizer";
 
 import ArticleLayout, {
     type ArticleLayoutProps,
 } from "@/components/blog-articles/ArticleLayout";
+import MdxArticleImage from "@/components/blog-articles/ArticleImage";
 import {
     Link,
     List,
@@ -27,6 +27,9 @@ import {
     SectionHeading,
     SubsectionHeading,
 } from "@/components/content";
+import CodeBlock from "@/components/blog-articles/CodeBlock";
+import InlineCodeSegment from "@/components/blog-articles/InlineCodeSegment";
+import { LeftAccent } from "@/components/primitives";
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
 interface CreatorPlatform {
@@ -64,17 +67,20 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         h1: ({ children }) => <SectionHeading>{children}</SectionHeading>,
         h2: ({ children }) => <SubsectionHeading>{children}</SubsectionHeading>,
         hr: () => (
-            <Divider
+            <Box
+                component="hr"
                 aria-hidden="true"
                 sx={{
                     "border": 0,
                     "textAlign": "center",
-                    "pt": 4,
+                    "pt": 1,
+                    "pb": 5,
                     "&::before": {
                         content: "'\\2022\\2800\\2022\\2800\\2022'",
+                        display: "block",
                         fontSize: { xs: "1.5rem", sm: "2rem" },
-                        color: "text.secondary",
-                        opacity: 0.4,
+                        color: "primary.main",
+                        opacity: 0.6,
                     },
                 }}
             />
@@ -87,62 +93,83 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 <Typography component="div">{children}</Typography>
             </ListItem>
         ),
+        blockquote: ({ children }) => (
+            <LeftAccent
+                thickness={3}
+                opacity={0.5}
+                sx={{
+                    "my": 4,
+                    "py": 1,
+                    "fontStyle": "italic",
+                    "& code": { fontStyle: "normal" },
+                }}
+            >
+                {children}
+            </LeftAccent>
+        ),
+        code: (props) => <InlineCodeSegment {...props} />,
+        pre: (props) => <CodeBlock {...props} />,
         BlogArticleLayout:
             ArticleLayout as React.ComponentType<ArticleLayoutProps>,
         Image: ({ src, alt, creator }: ImageProps) => (
-            <Grid
-                container
-                direction="column"
-                justifyContent="center"
-                alignItems="center"
-                sx={{ py: { xs: 3, sm: 4 } }}
-            >
-                <Grid
-                    sx={{
-                        textAlign: "center",
-                        width: { xs: "100%", sm: "90%", md: "75%" },
-                    }}
-                >
-                    <Box
-                        sx={{
-                            borderRadius: 1,
-                            overflow: "hidden",
-                            display: "inline-block",
-                            width: "100%",
-                        }}
-                    >
-                        <Image
-                            src={src}
-                            alt={alt}
-                            style={{
-                                width: "100%",
-                                height: "auto",
-                                display: "block",
-                            }}
-                        />
-                    </Box>
-                </Grid>
-                {creator && (
-                    <Grid sx={{ mt: 2 }}>
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                color: "text.secondary",
-                                fontWeight: 300,
-                            }}
-                        >
-                            Photo by{" "}
-                            <Link href={creator.href} target="_blank">
-                                {creator.name}
-                            </Link>{" "}
-                            on{" "}
-                            <Link href={creator.platform.href} target="_blank">
-                                {creator.platform.name}
-                            </Link>
-                        </Typography>
-                    </Grid>
-                )}
-            </Grid>
+            <MdxArticleImage src={src} alt={alt} creator={creator} />
         ),
+
+        /*
+         * Unsupported Elements
+         *
+         * These throw errors at build time to catch accidental usage early.
+         */
+
+        // Raw markdown image syntax (![alt](src)) is unsupported — use the custom
+        // <Image> MDX component instead, which handles attribution and optimization.
+        img: () => {
+            throw new Error(
+                "Raw markdown images are unsupported — use the <Image> MDX component instead.",
+            );
+        },
+        // Tables are not supported in articles.
+        table: () => {
+            throw new Error("Tables are not supported in articles.");
+        },
+        thead: () => {
+            throw new Error("Tables are not supported in articles.");
+        },
+        tbody: () => {
+            throw new Error("Tables are not supported in articles.");
+        },
+        tr: () => {
+            throw new Error("Tables are not supported in articles.");
+        },
+        th: () => {
+            throw new Error("Tables are not supported in articles.");
+        },
+        td: () => {
+            throw new Error("Tables are not supported in articles.");
+        },
+
+        // Heading levels h3–h6 are intentionally unsupported. Articles only use
+        // h1 (SectionHeading) and h2 (SubsectionHeading). Supporting deeper levels
+        // would add visual and structural complexity without benefit to readers.
+        h3: () => {
+            throw new Error(
+                "MDX h3 (###) is unsupported — only 2 heading levels are available in articles (h1 and h2).",
+            );
+        },
+        h4: () => {
+            throw new Error(
+                "MDX h4 (####) is unsupported — only 2 heading levels are available in articles (h1 and h2).",
+            );
+        },
+        h5: () => {
+            throw new Error(
+                "MDX h5 (#####) is unsupported — only 2 heading levels are available in articles (h1 and h2).",
+            );
+        },
+        h6: () => {
+            throw new Error(
+                "MDX h6 (######) is unsupported — only 2 heading levels are available in articles (h1 and h2).",
+            );
+        },
     };
 }

@@ -15,6 +15,8 @@
 import { Box, Divider } from "@mui/material";
 import type React from "react";
 
+import ScrollReveal from "./ScrollReveal";
+
 interface SectionProps {
     children: React.ReactNode;
     labelledById?: string;
@@ -35,24 +37,22 @@ const Section = ({
             },
         }}
     >
-        {children}
-        {/* Clearfix element to ensure spacing is measured from bottom of all content including floats */}
-        <Box
-            sx={{
-                clear: "both",
-                width: "100%",
-                height: 0,
-                overflow: "hidden",
-            }}
-        />
+        <ScrollReveal>
+            {children}
+            {/* Clearfix element to ensure spacing is measured from bottom of all content including floats */}
+            <Box
+                sx={{
+                    clear: "both",
+                    width: "100%",
+                    height: 0,
+                    overflow: "hidden",
+                }}
+            />
+        </ScrollReveal>
         <Divider
-            className="section-divider"
             aria-hidden="true"
-            sx={{
-                display: "none",
-                width: "100%",
-                mt: 7, // Consistent spacing above divider
-            }}
+            className="section-divider"
+            sx={{ display: "none", mt: 7 }}
         />
     </Box>
 );

@@ -38,7 +38,7 @@ const SubHeading = (props: SubHeadingProps): React.ReactElement => (
                     letterSpacing: "-0.02em",
                     lineHeight: 1.3,
                     mb: { xs: 1, md: 1.5 },
-                    color: "text.primary",
+                    color: (theme) => theme.palette.text.primary,
                     position: "relative",
                 }}
             >
@@ -48,11 +48,14 @@ const SubHeading = (props: SubHeadingProps): React.ReactElement => (
                 sx={{
                     width: { xs: 40, md: 56 },
                     height: 1.5,
-                    backgroundColor: (theme) =>
-                        theme.palette.mode === "light"
-                            ? "rgba(0, 0, 0, 0.15)"
-                            : "rgba(255, 255, 255, 0.15)",
+                    background: (theme) =>
+                        `linear-gradient(90deg, transparent, ${
+                            theme.palette.mode === "light"
+                                ? theme.palette.primary.main
+                                : theme.palette.primary.light
+                        }, transparent)`,
                     borderRadius: 1,
+                    opacity: 0.7,
                 }}
             />
         </Box>
