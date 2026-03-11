@@ -214,7 +214,9 @@ npm run build:analyze        # Sets ANALYZE=true, opens bundle report after buil
 
 ### File Header
 
-Every source file (`.ts`, `.tsx`, `.css`, `.mdx`) must start with:
+Every source file (`.ts`, `.tsx`, `.css`, `.mdx`) must start with the copyright header. Use the year of original file creation. Do not update the year on edits.
+
+**`.ts`, `.tsx`, `.css` files** — standard block comment:
 
 ```ts
 /*
@@ -233,7 +235,28 @@ Every source file (`.ts`, `.tsx`, `.css`, `.mdx`) must start with:
  */
 ```
 
-Use the year of original file creation. Do not update the year on edits.
+**`.mdx` files** — Prettier's MDX formatter treats `/* */` block comments as Markdown content and mangles them (escapes `/*`, converts `*` lines to list items). HTML comments (`<!-- -->`) are also rejected by the MDX parser. The only format that survives Prettier and is valid MDX is a JS export wrapper:
+
+```mdx
+export const _copyright =
+    /*
+     * Nadun De Silva - All Rights Reserved
+     *
+     * This source code and its associated files are the
+     * confidential and proprietary information of Nadun De Silva.
+     * Unauthorized reproduction, distribution, or disclosure
+     * in any form, in whole or in part, is strictly prohibited
+     * except as explicitly provided under a separate license
+     * agreement with Nadun De Silva.
+     *
+     * Website: https://nadundesilva.com
+     *
+     * © 2023 Nadun De Silva. All rights reserved.
+     */
+    undefined;
+```
+
+This must appear as the very first thing in the file, before any `import` statements.
 
 ### TypeScript Conventions
 
@@ -244,6 +267,14 @@ Use the year of original file creation. Do not update the year on edits.
 - Default exports for components. Named exports for utilities, hooks, and types.
 - PascalCase filenames for components. camelCase for utilities and hooks.
 
+### Import Ordering
+
+Imports must follow this order with a blank line between each group:
+
+1. External package imports (e.g. `@mui/material`, `next`, `react`)
+2. `@/` alias imports (e.g. `@/components/...`, `@/constants/...`)
+3. Relative imports (e.g. `./Foo`, `../common/Bar`) — **always last**
+
 ### Component Structure Template
 
 ```tsx
@@ -251,7 +282,7 @@ Use the year of original file creation. Do not update the year on edits.
 "use client"; // only if needed
 
 import type React from "react";
-// external imports first, then @/ aliases
+// external imports first, then @/ aliases, then relative imports
 
 interface Props {
     // ...
@@ -294,8 +325,8 @@ Current routes: `/experience`, `/achievements`, `/projects`, `/testimonials`, `/
 
 **Every `page.mdx` must export:**
 
-```tsx
-export const metadata: Metadata = {
+```jsx
+export const metadata = {
     title: "Article Title",
     description: "Article description.",
 };
@@ -315,6 +346,8 @@ export default function Layout({ children }) {
     );
 }
 ```
+
+> **MDX TypeScript restriction:** MDX uses an acorn JavaScript-only parser. TypeScript syntax is **not** supported in `.mdx` files. Do not use `import type`, `: TypeName` annotations, or any other TypeScript-specific syntax inside `.mdx` files — they will cause a build failure: `Could not parse import/exports with acorn`.
 
 **Category listing pages** (`{category}/page.tsx`) are TypeScript files using `ArticlesList` — they are not MDX and do not follow the blog article structure above.
 
@@ -355,12 +388,6 @@ Never use raw MUI components or HTML elements for document structure. Use from [
 ### Image Handling
 
 Always import `Image` from `next-image-export-optimizer`, not from `next/image`. Source images go in `public/images/`. Optimized WebP output is written to `public/optimized-images/` during `npm run build`.
-
-### Accessibility
-
-- Keyboard accessibility: interactive overlays use `tabIndex={0}` and `:focus-within`.
-- Decorative images: `alt=""` so screen readers skip them.
-- Semantic heading hierarchy is enforced by using the content components above.
 
 ---
 
@@ -501,43 +528,27 @@ Pipeline: [`.github/workflows/deploy-site.yaml`](./.github/workflows/deploy-site
 
 ## 11. Known Gotchas
 
-### `start-server.sh` must use `source`, not `bash`
-
-Exports `NODE_EXTRA_CA_CERTS` and `SERVE_PID`. Running with `bash` loses those exports, causing Cypress to fail connecting to the HTTPS server. See [Section 9](#9-cicd-pipeline).
-
-### `output: "export"` is not set in development
-
-`next.config.mjs` conditionally sets static export only when `phase !== PHASE_DEVELOPMENT_SERVER`. Route handlers work differently in dev vs. production. Always add `export const dynamic = "force-static"` to any new route handler.
-
-### Do not nest interactive elements inside `<Link>`
-
-Wrapping `<Button>`, `<CardActionArea>`, etc. inside `<Link>` creates nested `<a>` tags — invalid HTML and causes React hydration errors. Pass `Link` via the `component` prop:
-
-```tsx
-<CardActionArea component={Link} href="/path">
-    ...
-</CardActionArea>
-```
-
 ### MDX heading levels are shifted by one
 
 In [`mdx-components.tsx`](./mdx-components.tsx): MDX `h1` → `SectionHeading` (renders `h2`), MDX `h2` → `SubsectionHeading` (renders `h3`). The actual `h1` for a blog page is always the `Title` component in the page's TypeScript wrapper. Write MDX headings one level higher than you would in plain HTML.
 
-### MDX links always open in new tabs
+### MDX copyright headers require the `export const _copyright` pattern
 
-The `a` override in `mdx-components.tsx` hardcodes `target="_blank"` on all MDX links. Do not add `target` manually. Relative links resolve against `${WEBSITE_PUBLIC_URL}/blog-articles/`.
+Standard block comments and HTML comments are both invalid in `.mdx` files — Prettier mangles block comments and the MDX parser rejects HTML comments. See [Section 6 — File Header](#file-header) for the required pattern.
+
+### TypeScript syntax is forbidden inside `.mdx` files
+
+The MDX acorn parser is JavaScript-only. The following constructs all cause `Could not parse import/exports with acorn` build failures:
+
+- `import type { ... } from "..."` — use plain `import` or omit entirely
+- `export const foo: SomeType = ...` — omit the type annotation
+- Typed function parameters: `function Layout({ children }: Props)` — use plain JS syntax
+
+See [Section 7 — Blog Articles](#blog-articles) for the correct MDX export pattern.
 
 ### `WebsiteHome.subRoutes` is never undefined
 
 TypeScript infers this from the constant initializer. Do not add `?.` optional chaining when accessing it — TypeScript will error. See [`constants/routes.ts`](./constants/routes.ts).
-
-### Cypress viewport is fixed at 1280x768
-
-Below MUI's `lg` breakpoint (1200px), the desktop nav bar is replaced by a mobile drawer, breaking all navigation tests. Do not change the viewport unless specifically testing responsive layouts.
-
-### Use `next-image-export-optimizer`, not `next/image`
-
-The project configures a custom image loader. Import `Image` from `next-image-export-optimizer`. Using `next/image` directly bypasses the optimization pipeline.
 
 ### Sentry is disabled in development
 
@@ -546,7 +557,3 @@ The project configures a custom image loader. Import `Image` from `next-image-ex
 ### CSP `unsafe-eval` is only added in development and test
 
 [`app/layout.tsx`](./app/layout.tsx) adds `'unsafe-eval'` to `script-src` only when `NODE_ENV === "development"` or `BUILD_TYPE === "test"`. Do not rely on `eval` in production code.
-
-### `.sort()` without copy is intentional
-
-When arrays are freshly created and not referenced elsewhere, in-place `.sort()` is used intentionally. Do not "fix" these by adding `.slice().sort()`.

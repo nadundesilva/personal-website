@@ -24,9 +24,9 @@ import {
 import Image from "next-image-export-optimizer";
 import type React from "react";
 
-import SubHeading from "../common/SubHeading";
 import { Link } from "@/components/content";
 import Projects, { type Project } from "@/constants/projects";
+import SubHeading from "../common/SubHeading";
 
 const ContributedProjects = (): React.ReactElement => {
     const theme = useTheme();
