@@ -12,8 +12,6 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-
-import { Container } from "@mui/material";
 import type React from "react";
 
 import { ContentContainer } from "@/components/layout";
@@ -25,15 +23,7 @@ interface ContentLayoutProps {
 const ContentLayout = ({
     children,
 }: ContentLayoutProps): React.ReactElement => {
-    return (
-        <ContentContainer
-            sx={{
-                mb: 5,
-            }}
-        >
-            <Container maxWidth={false}>{children}</Container>
-        </ContentContainer>
-    );
+    return <ContentContainer sx={{ mb: 5 }}>{children}</ContentContainer>;
 };
 
 export default ContentLayout;

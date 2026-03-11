@@ -95,7 +95,7 @@ One pod can have multiple Network Policies that are applied to it based on the s
 
 One of the important things that you should do in your Kubernetes cluster is having a deny-all policy selecting all Pods (with an empty Pod selector; {}) that will block all ingress and egress traffic. This prevents all communication within the Namespaces. Even if your application needs access to the internet (even to arbitrary IP addresses), this Policy still should be added for both incoming and outgoing traffic.
 
-```yaml
+```yaml title="default-deny-all.yaml"
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -123,7 +123,7 @@ It would be even better to specify ports and protocols in the allowed traffic. Y
 
 Let’s take a look at the example below of a Network Policy applied to a frontend server with server-side rendering. The frontend needs to accept incoming traffic from Nginx Ingress Controller and also it needs to call the backend for fetching data and the IdP (Identity Provider) for authentication and authorization.
 
-```yaml
+```yaml title="allow-frontend.yaml"
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -185,7 +185,7 @@ It would be best to only allow these IP ranges so that in a scenario where your 
 
 Let’s take a look at the example below where we are only allowing traffic to the CIDR block `13.108.14.15/24` on port 80.
 
-```yaml
+```yaml title="allow-ip-range.yaml"
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -210,7 +210,7 @@ In some applications, depending on the use cases, it might be harder to use a wh
 
 Let’s take a look at an example.
 
-```yaml
+```yaml title="deny-ip-range.yaml"
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:

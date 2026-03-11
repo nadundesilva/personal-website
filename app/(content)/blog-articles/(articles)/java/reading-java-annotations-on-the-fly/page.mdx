@@ -62,7 +62,7 @@ For us to use the reflections API to read annotations, the annotations should be
 
 Annotations by default are retained in the class files but they are not loaded into the JVM at run-time. Therefore to make sure that the annotations are stored in the class files and that they are loaded into the JVM at run-time, the [`@Retention(RetentionPolicy.RUNTIME)`](https://docs.oracle.com/javase/7/docs/api/java/lang/annotation/RetentionPolicy.html#RUNTIME) annotation needs to be applied to the declaration of the annotation that you wish to read at run-time.
 
-```java
+```java title="RuntimeRetainedAnnotation.java"
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RuntimeRetainedAnnotation {
     String foo();
@@ -84,7 +84,7 @@ Getting hold of the annotation element can be done using the Java Reflections AP
 
 To show how to get hold of the Annotated Element, we will be using the following class as an example. Note that we need to get hold of the `fooValue{:java}` parameter in the `setFoo(Integer fooValue){:java}` method which is the annotated element that we need.
 
-```java
+```java title="MyClass.java"
 public class MyClass {
     private Integer fooValue;
 
@@ -129,7 +129,7 @@ As mentioned before, all classes implementing the `AnnotatedElement{:java}` inte
 
 Let's assume that the `MyAnnotation{:java}` annotation added to the `fooValue{:java}` parameter is defined as shown below.
 
-```java
+```java title="MyAnnotation.java"
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MyAnnotation {
     String bar();
@@ -185,7 +185,7 @@ Note that `Parameters{:java}` is the container annotation type of `Parameter{:ja
 
 If there’s only a single repeatable annotation applied to the class as shown below, the way you can access the annotation is a bit different.
 
-```java
+```java title="FunctionOperation.java"
 @Parameter(name = "username", type = "string")
 public class FunctionOperation {
     // Class Elements

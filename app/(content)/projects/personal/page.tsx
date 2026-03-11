@@ -20,8 +20,8 @@ import type { Metadata } from "next";
 import React from "react";
 
 import {
+    AccentedList,
     Link,
-    List,
     ListItem,
     Logo,
     Paragraph,
@@ -68,33 +68,6 @@ const PersonalProjectSectionHeading = ({
     </SectionHeading>
 );
 
-interface UseCasesSectionProps {
-    children: React.ReactNode;
-}
-
-const UseCasesSection = ({
-    children,
-}: UseCasesSectionProps): React.ReactElement => {
-    const headingId = React.useId();
-    return (
-        <Box sx={{ m: 0, pt: 2 }}>
-            <Typography
-                id={headingId}
-                component="h3"
-                variant="subtitle1"
-                sx={{
-                    fontWeight: 500,
-                    letterSpacing: "-0.01em",
-                    mb: 2,
-                }}
-            >
-                Use Cases:
-            </Typography>
-            <List ariaLabelledBy={headingId}>{children}</List>
-        </Box>
-    );
-};
-
 export const metadata: Metadata = {
     title: "Personal Projects",
     description: `Personal projects developed by ${FULL_NAME}.`,
@@ -138,7 +111,7 @@ const PersonalProjects = (): React.ReactElement => {
                     doing so, this will allow removing some of the burden on the
                     operational aspects.
                 </Paragraph>
-                <UseCasesSection>
+                <AccentedList heading="Use Cases" headingVariant="h3">
                     <ListItem>
                         <Typography>
                             Use a wildcard TLS Secret across namespaces.
@@ -156,7 +129,7 @@ const PersonalProjects = (): React.ReactElement => {
                             Network Policies across namespaces.
                         </Typography>
                     </ListItem>
-                </UseCasesSection>
+                </AccentedList>
             </Section>
             <Section labelledById="section-project-mesh-manager">
                 <PersonalProjectSectionHeading
@@ -172,7 +145,7 @@ const PersonalProjects = (): React.ReactElement => {
                     the microservices including its dependencies so that the
                     controller will properly manage them.
                 </Paragraph>
-                <UseCasesSection>
+                <AccentedList heading="Use Cases" headingVariant="h3">
                     <ListItem>
                         <Typography>
                             Ensuring that dependencies are not removed when
@@ -191,7 +164,7 @@ const PersonalProjects = (): React.ReactElement => {
                             microservice.
                         </Typography>
                     </ListItem>
-                </UseCasesSection>
+                </AccentedList>
             </Section>
         </>
     );

@@ -26,17 +26,28 @@ import {
     Box,
     Chip,
     Divider,
+    Fade,
     Paper,
     Popper,
     Stack,
     Typography,
-    useTheme,
     SvgIconProps,
+    useTheme,
 } from "@mui/material";
 
 import React from "react";
 
 import useHoverDelay from "@/hooks/useHoverDelay";
+
+// All proficiency colors are intentionally kept local to this component.
+// They are visual-only bar-chart indicators with no meaning outside of
+// SkillChip, so they do not belong in the global MUI theme palette or in
+// colors.ts.
+const proficiencyColors: Record<SkillProficiency, string> = {
+    [SkillProficiencies.Expert]: "#4caf50",
+    [SkillProficiencies.Intermediate]: "#2196f3",
+    [SkillProficiencies.Novice]: "#cd7f32",
+};
 
 interface ProficiencyIndicatorProps {
     level: SkillProficiency;
@@ -45,22 +56,21 @@ interface ProficiencyIndicatorProps {
 const ProficiencyIndicator = ({
     level,
 }: ProficiencyIndicatorProps): React.ReactElement => {
-    const theme = useTheme();
-
-    let bars;
-    let color;
-    if (level === SkillProficiencies.Expert) {
-        bars = 3;
-        color = theme.palette.success.main;
-    } else if (level === SkillProficiencies.Intermediate) {
-        bars = 2;
-        color = theme.palette.info.main;
-    } else if (level === SkillProficiencies.Novice) {
-        bars = 1;
-        color = "#cd7f32";
-    } else {
-        throw new Error(`Unsupported skill level: ${level}`);
+    let bars: number;
+    switch (level) {
+        case SkillProficiencies.Expert:
+            bars = 3;
+            break;
+        case SkillProficiencies.Intermediate:
+            bars = 2;
+            break;
+        case SkillProficiencies.Novice:
+            bars = 1;
+            break;
+        default:
+            throw new Error(`Unsupported skill level: ${level}`);
     }
+    const color = proficiencyColors[level];
 
     return (
         <Box
@@ -68,7 +78,7 @@ const ProficiencyIndicator = ({
             sx={{
                 display: "flex",
                 alignItems: "end",
-                gap: "2px",
+                gap: 0.25,
                 height: 12,
                 ml: 0.5,
             }}
@@ -79,11 +89,11 @@ const ProficiencyIndicator = ({
                     sx={{
                         width: 3,
                         height: i * 4,
-                        bgcolor:
+                        bgcolor: (theme) =>
                             i <= bars
                                 ? color
                                 : theme.palette.action.disabledBackground,
-                        borderRadius: "1px",
+                        borderRadius: 0.125,
                     }}
                 />
             ))}
@@ -102,7 +112,6 @@ const SkillChipTooltipSkillSection = ({
     items,
     icon,
 }: SkillChipTooltipSkillSectionProps) => {
-    const theme = useTheme();
     const titleId = React.useId();
     return (
         <Box>
@@ -112,11 +121,14 @@ const SkillChipTooltipSkillSection = ({
                     alignItems: "center",
                     gap: 1,
                     mb: 0.5,
-                    color: "text.secondary",
+                    color: (theme) => theme.palette.text.secondary,
                 }}
             >
                 {React.cloneElement(icon, {
-                    "sx": { fontSize: 16, color: theme.palette.text.secondary },
+                    "sx": {
+                        fontSize: 16,
+                        color: (theme) => theme.palette.text.secondary,
+                    },
                     "aria-hidden": true,
                 })}
                 <Typography id={titleId} variant="caption" fontWeight={600}>
@@ -138,12 +150,13 @@ const SkillChipTooltipSkillSection = ({
                         "&:before": {
                             content: '""',
                             position: "absolute",
-                            left: 10,
-                            top: 8,
+                            left: (theme) => theme.spacing(1.25),
+                            top: (theme) => theme.spacing(1),
                             width: 3,
                             height: 3,
                             borderRadius: "50%",
-                            backgroundColor: theme.palette.text.disabled,
+                            backgroundColor: (theme) =>
+                                theme.palette.text.disabled,
                         },
                         "&:last-child": {
                             mb: 0,
@@ -173,116 +186,144 @@ const SkillChipTooltip = ({
     onMouseEnter,
     onMouseLeave,
     skill,
-}: SkillChipTooltipProps): React.ReactElement => (
-    <Popper
-        open={Boolean(anchorEl)}
-        anchorEl={anchorEl}
-        placement="top"
-        modifiers={[
-            {
-                name: "offset",
-                options: { offset: [0, 8] },
-            },
-            {
-                name: "preventOverflow",
-                options: { padding: 20 },
-            },
-        ]}
-        style={{ zIndex: 1300 }}
-    >
-        <Paper
-            id={id}
-            role="tooltip"
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-            sx={{
-                backgroundColor: "background.paper",
-                color: "text.primary",
-                maxWidth: 320,
-                fontSize: (theme) => theme.typography.pxToRem(12),
-                border: "1px solid",
-                borderColor: "divider",
-                boxShadow: 4,
-                p: 1.5,
-                borderRadius: 2,
-            }}
+}: SkillChipTooltipProps): React.ReactElement => {
+    const theme = useTheme();
+    return (
+        <Popper
+            open={Boolean(anchorEl)}
+            anchorEl={anchorEl}
+            placement="top"
+            modifiers={[
+                {
+                    name: "offset",
+                    options: { offset: [0, 8] },
+                },
+                {
+                    name: "preventOverflow",
+                    options: { padding: 20 },
+                },
+            ]}
+            // "modal" resolves to theme.zIndex.modal, placing the tooltip at the
+            // same layer as dialogs so it doesn't float above them when one is open
+            sx={{ zIndex: "modal" }}
+            transition
         >
-            <Stack spacing={1.5} sx={{ p: 0.5 }}>
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        gap: 2,
-                        pb: 0.5,
-                    }}
+            {/* transition prop on Popper enables the render prop pattern, giving access to
+            TransitionProps which are forwarded to Fade for a smooth enter/exit animation */}
+            {({ TransitionProps }) => (
+                <Fade
+                    {...TransitionProps}
+                    timeout={theme.transitions.duration.shortest}
                 >
-                    <Typography variant="subtitle2" fontWeight={700}>
-                        {skill.name}
-                    </Typography>
-                    <Box
+                    <Paper
+                        id={id}
+                        role="tooltip"
+                        onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave}
                         sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 1,
-                            backgroundColor: "action.hover",
-                            px: 1,
-                            py: 0.25,
-                            borderRadius: 1,
+                            backgroundColor: (theme) =>
+                                theme.palette.background.paper,
+                            color: (theme) => theme.palette.text.primary,
+                            maxWidth: 320,
+                            fontSize: (theme) => theme.typography.pxToRem(12),
+                            border: "1px solid",
+                            borderColor: (theme) => theme.palette.divider,
+                            boxShadow: 4,
+                            p: 1.5,
+                            borderRadius: 2,
                         }}
                     >
-                        <Typography
-                            variant="caption"
-                            color="text.primary"
-                            fontWeight={500}
-                        >
-                            {skill.level}
-                        </Typography>
-                        <ProficiencyIndicator level={skill.level} />
-                    </Box>
-                </Box>
+                        <Stack spacing={1.5} sx={{ p: 0.5 }}>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    gap: 2,
+                                    pb: 0.5,
+                                }}
+                            >
+                                <Typography
+                                    variant="subtitle2"
+                                    fontWeight={700}
+                                >
+                                    {skill.name}
+                                </Typography>
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: 1,
+                                        backgroundColor: (theme) =>
+                                            theme.palette.action.hover,
+                                        px: 1,
+                                        py: 0.25,
+                                        borderRadius: 1,
+                                    }}
+                                >
+                                    <Typography
+                                        variant="caption"
+                                        color="text.primary"
+                                        fontWeight={500}
+                                    >
+                                        {skill.level}
+                                    </Typography>
+                                    <ProficiencyIndicator level={skill.level} />
+                                </Box>
+                            </Box>
 
-                {/* Experiences */}
-                {skill.usage.experiences.length > 0 && (
-                    <SkillChipTooltipSkillSection
-                        title="Used as"
-                        icon={<WorkIcon />}
-                        items={skill.usage.experiences.map(
-                            (e) => `${e.name} at ${e.institute}`,
-                        )}
-                    />
-                )}
+                            {/* Experiences */}
+                            {skill.usage.experiences.length > 0 && (
+                                <SkillChipTooltipSkillSection
+                                    title="Used as"
+                                    icon={<WorkIcon />}
+                                    items={skill.usage.experiences.map(
+                                        (e) => `${e.name} at ${e.institute}`,
+                                    )}
+                                />
+                            )}
 
-                {/* Divider */}
-                {skill.usage.experiences.length > 0 &&
-                    (skill.usage.projects.length > 0 ||
-                        skill.usage.certifications.length > 0) && <Divider />}
+                            {/* Divider */}
+                            {skill.usage.experiences.length > 0 &&
+                                (skill.usage.projects.length > 0 ||
+                                    skill.usage.certifications.length > 0) && (
+                                    <Divider />
+                                )}
 
-                {/* Projects */}
-                {skill.usage.projects.length > 0 && (
-                    <SkillChipTooltipSkillSection
-                        title="Applied in"
-                        icon={<CodeIcon />}
-                        items={skill.usage.projects.map((p) => p.name)}
-                    />
-                )}
+                            {/* Projects */}
+                            {skill.usage.projects.length > 0 && (
+                                <SkillChipTooltipSkillSection
+                                    title="Applied in"
+                                    icon={<CodeIcon />}
+                                    items={skill.usage.projects.map(
+                                        (p) => p.name,
+                                    )}
+                                />
+                            )}
 
-                {/* Divider */}
-                {skill.usage.projects.length > 0 &&
-                    skill.usage.certifications.length > 0 && <Divider />}
+                            {/* Divider */}
+                            {skill.usage.projects.length > 0 &&
+                                skill.usage.certifications.length > 0 && (
+                                    <Divider />
+                                )}
 
-                {/* Certifications */}
-                {skill.usage.certifications.length > 0 && (
-                    <SkillChipTooltipSkillSection
-                        title="Proven via"
-                        icon={<WorkspacePremiumIcon />}
-                        items={skill.usage.certifications.map((c) => c.name)}
-                    />
-                )}
-            </Stack>
-        </Paper>
-    </Popper>
-);
+                            {/* Certifications */}
+                            {skill.usage.certifications.length > 0 && (
+                                <SkillChipTooltipSkillSection
+                                    title="Proven via"
+                                    icon={<WorkspacePremiumIcon />}
+                                    items={skill.usage.certifications.map(
+                                        (c) => c.name,
+                                    )}
+                                />
+                            )}
+                        </Stack>
+                    </Paper>
+                </Fade>
+            )}
+        </Popper>
+    );
+};
 
 interface SkillChipProps {
     skill: Skill;
@@ -337,13 +378,7 @@ const SkillChip = ({ skill }: SkillChipProps): React.ReactElement => {
                 aria-label={`${skill.name} - ${skill.level} level.`}
                 aria-describedby={hasContent ? tooltipId : undefined}
                 sx={{
-                    "transition": "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                    "&:hover, &:focus-visible": {
-                        transform: "translateY(-2px)",
-                        borderColor: "primary.main",
-                        backgroundColor: "action.hover",
-                        cursor: "default",
-                    },
+                    "&:hover": { cursor: "default" },
                 }}
             />
             {hasContent && (

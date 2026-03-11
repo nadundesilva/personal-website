@@ -1,4 +1,3 @@
-"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -13,7 +12,10 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+"use client";
+
 import { Button } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import type React from "react";
 
 import Link from "./Link";
@@ -43,13 +45,31 @@ const LinkButton = ({
         aria-label={ariaLabel}
         sx={{
             "color": "text.secondary",
-            "borderColor": "text.secondary",
+            "borderColor": (theme) =>
+                theme.palette.mode === "light"
+                    ? alpha(theme.palette.primary.main, 0.4)
+                    : alpha(theme.palette.primary.light, 0.35),
+            "transition": (theme) =>
+                theme.transitions.create(["transform", "border-color"], {
+                    duration: theme.transitions.duration.shorter,
+                }),
             "& .MuiButton-endIcon, & .MuiButton-startIcon": {
                 color: "text.secondary",
+                transition: (theme) =>
+                    theme.transitions.create("color", {
+                        duration: theme.transitions.duration.shorter,
+                    }),
             },
             "&:hover": {
-                transform: "translateY(-1px)",
-                borderColor: "text.secondary",
+                transform: (theme) =>
+                    `translateY(-${theme.motion.hoverLiftSubtle})`,
+                borderColor: (theme) => theme.palette.primary.main,
+            },
+            "&:hover .MuiButton-endIcon, &:hover .MuiButton-startIcon": {
+                color: (theme) =>
+                    theme.palette.mode === "light"
+                        ? theme.palette.primary.main
+                        : theme.palette.primary.light,
             },
         }}
     >

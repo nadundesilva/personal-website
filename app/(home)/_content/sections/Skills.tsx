@@ -23,7 +23,10 @@ const Skills = (): React.ReactElement => (
         sx={{
             display: "flex",
             flexDirection: "column",
-            gap: { xs: 4, md: 5 },
+            gap: { xs: 6, md: 8 },
+            width: "100%",
+            maxWidth: { xs: "100%", md: 720 },
+            mx: "auto",
         }}
     >
         <Box
@@ -48,13 +51,13 @@ const Skills = (): React.ReactElement => (
                     clip: "auto",
                     whiteSpace: "normal",
                     outline: "2px solid",
-                    outlineColor: "primary.main",
+                    outlineColor: (theme) => theme.palette.primary.main,
                     outlineOffset: "2px",
-                    zIndex: 999,
+                    zIndex: (theme) => theme.zIndex.tooltip + 1,
                     display: "block",
                     textAlign: "center",
-                    backgroundColor: "background.paper",
-                    color: "primary.main",
+                    backgroundColor: (theme) => theme.palette.background.paper,
+                    color: (theme) => theme.palette.primary.main,
                     borderRadius: 1,
                     textDecoration: "none",
                 },
@@ -71,12 +74,36 @@ const Skills = (): React.ReactElement => (
                         variant="h3"
                         align="center"
                         sx={{
-                            fontWeight: 400,
-                            fontSize: { xs: 18, md: 20 },
-                            letterSpacing: "-0.01em",
-                            lineHeight: 1.3,
-                            mb: { xs: 0.5, md: 1 },
-                            color: "text.secondary",
+                            "fontWeight": 400,
+                            "fontSize": { xs: 18, md: 20 },
+                            "letterSpacing": "-0.01em",
+                            "lineHeight": 1.6,
+                            "mb": { xs: 2, md: 2.5 },
+                            "color": (theme) => theme.palette.text.secondary,
+                            "&::before": {
+                                content: '"<"',
+                                fontFamily: "monospace",
+                                color: (theme) => theme.palette.primary.main,
+                                opacity: 0.6,
+                                fontWeight: 300,
+                                fontSize: "1.3em",
+                                display: "inline-block",
+                                verticalAlign: "middle",
+                                marginRight: 1,
+                                lineHeight: 1,
+                            },
+                            "&::after": {
+                                content: '"/>"',
+                                fontFamily: "monospace",
+                                color: (theme) => theme.palette.primary.main,
+                                opacity: 0.6,
+                                fontWeight: 300,
+                                fontSize: "1.3em",
+                                display: "inline-block",
+                                verticalAlign: "middle",
+                                marginLeft: 1,
+                                lineHeight: 1,
+                            },
                         }}
                     >
                         {group.category}
@@ -85,8 +112,8 @@ const Skills = (): React.ReactElement => (
                         component="ul"
                         aria-labelledby={headingId}
                         sx={{
+                            p: 0,
                             pt: 1,
-                            pb: 0,
                             m: 0,
                             listStyle: "none",
                             display: "flex",

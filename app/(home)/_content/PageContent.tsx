@@ -1,4 +1,3 @@
-"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -13,13 +12,16 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+"use client";
 
 import { Box, CircularProgress, Container, styled } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import dynamic from "next/dynamic";
 import type React from "react";
 import type { JSX } from "react";
 
 import Heading from "./common/Heading";
+import ScrollReveal from "@/components/content/ScrollReveal";
 import WelcomeBanner from "./sections/WelcomeBanner";
 
 const SectionContainer = styled(Container)(({ theme }) => ({
@@ -121,6 +123,8 @@ const PageContent = (): React.ReactElement => {
         title: string,
         section: React.ReactElement,
         testId: string,
+        number?: number,
+        showDivider = true,
     ): React.ReactElement => {
         const titleId = title.toLowerCase().replace(/\s+/g, "-");
         return (
@@ -130,12 +134,31 @@ const PageContent = (): React.ReactElement => {
                 maxWidth={false}
                 disableGutters
                 data-testid={testId}
-                sx={{ my: { xs: 3, md: 6 } }}
+                sx={{ mt: { xs: 6, md: 10 }, mb: { xs: 3, md: 6 } }}
             >
-                <Heading id={titleId}>{title}</Heading>
+                <Heading id={titleId} number={number}>
+                    {title}
+                </Heading>
                 <Container maxWidth={false} disableGutters sx={{ py: 4 }}>
                     {section}
                 </Container>
+                {showDivider && (
+                    <Box
+                        aria-hidden="true"
+                        sx={{
+                            width: "100%",
+                            height: 2,
+                            mt: { xs: 3, md: 6 },
+                            background: (theme) =>
+                                `linear-gradient(90deg, transparent, ${
+                                    theme.palette.mode === "light"
+                                        ? theme.palette.primary.main
+                                        : theme.palette.primary.light
+                                }, transparent)`,
+                            opacity: 0.2,
+                        }}
+                    />
+                )}
             </Container>
         );
     };
@@ -147,7 +170,8 @@ const PageContent = (): React.ReactElement => {
                 maxWidth={false}
                 disableGutters
                 sx={{
-                    pt: { xs: 3, md: 6 },
+                    position: "relative",
+                    pt: { xs: 6, md: 8 },
                     px: {
                         xs: 1,
                         md: 4,
@@ -156,25 +180,52 @@ const PageContent = (): React.ReactElement => {
                     },
                 }}
             >
-                <Container maxWidth={false}>
+                {/* Gradient overlay that blends the hero banner into the content area below */}
+                <Box
+                    aria-hidden="true"
+                    sx={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        height: 280,
+                        background: (theme) =>
+                            theme.palette.mode === "light"
+                                ? `radial-gradient(ellipse 100% 100% at 50% 0%, ${alpha(theme.palette.primary.main, 0.6)} 0%, ${alpha(theme.palette.primary.main, 0.25)} 40%, ${alpha(theme.palette.primary.main, 0.08)} 70%, transparent 100%)`
+                                : `radial-gradient(ellipse 100% 100% at 50% 0%, ${alpha(theme.palette.common.black, 0.6)} 0%, ${alpha(theme.palette.common.black, 0.25)} 40%, ${alpha(theme.palette.common.black, 0.08)} 70%, transparent 100%)`,
+                        pointerEvents: "none",
+                        zIndex: 0,
+                    }}
+                />
+                <Container
+                    maxWidth={false}
+                    sx={{ position: "relative", zIndex: 1 }}
+                >
                     <SectionContainer maxWidth={false} disableGutters>
-                        {generateSection(
-                            "About Me",
-                            <AboutMeSection />,
-                            "about-me-section",
-                        )}
+                        <ScrollReveal delay={0}>
+                            {generateSection(
+                                "About Me",
+                                <AboutMeSection />,
+                                "about-me-section",
+                                1,
+                            )}
+                        </ScrollReveal>
                     </SectionContainer>
-                    {pageSections.map((section: Section) => (
+                    {pageSections.map((section: Section, index: number) => (
                         <SectionContainer
                             maxWidth={false}
                             disableGutters
                             key={section.name}
                         >
-                            {generateSection(
-                                section.name,
-                                <section.Component />,
-                                `${section.sectionId}-section`,
-                            )}
+                            <ScrollReveal delay={index * 50}>
+                                {generateSection(
+                                    section.name,
+                                    <section.Component />,
+                                    `${section.sectionId}-section`,
+                                    index + 2,
+                                    index < pageSections.length - 1,
+                                )}
+                            </ScrollReveal>
                         </SectionContainer>
                     ))}
                 </Container>

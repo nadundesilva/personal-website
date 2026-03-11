@@ -78,7 +78,7 @@ A gateway is placed in each Cell which can accept incoming traffic from outside 
 
 Writing a simple Cell with a single component is as simple as adding the following lines. (To view the [full Code](https://raw.githubusercontent.com/wso2-cellery/samples/master/cells/hello-world-api/hello-world-api.bal) along with the build, run and test life-cycle methods of this Cell and other Cells please check the [samples](https://github.com/wso2-cellery/samples).)
 
-```cellery
+```ballerina title="hello-world-api.bal"
 cellery:Component helloComponent = {
     name: "hello-api",
     source: {

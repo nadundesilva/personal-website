@@ -1,4 +1,3 @@
-"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -13,6 +12,9 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+"use client";
+
+import { AccessTime } from "@mui/icons-material";
 import {
     Box,
     Card,
@@ -20,16 +22,16 @@ import {
     CardContent,
     CardMedia,
     type CardMediaProps,
+    Chip,
     Container,
     Typography,
     useTheme,
 } from "@mui/material";
-import { useId } from "react";
 import Image from "next-image-export-optimizer";
 import type React from "react";
 
 import { Link } from "@/components/content";
-import Datespan from "@/components/content/Datespan";
+import DateInfo from "@/components/content/DateInfo";
 import { Date as FormattableDate } from "@/constants/date";
 import { type BlogArticle } from "@/utils/blog-articles";
 
@@ -47,14 +49,11 @@ const ArticleListItem = ({
     const lgWidth = theme.breakpoints.values.lg;
     const imageSizes = `(min-width: ${lgWidth}px) 25vw, (min-width: ${mdWidth}px) 33vw, (min-width: ${smWidth}px) 50vw, 100vw`;
 
-    const titleId = useId();
-
     return (
         <Card sx={{ height: "100%" }}>
             <CardActionArea
                 component={Link}
                 href={`/blog-articles/${blogArticle.websiteSubPath}`}
-                aria-labelledby={titleId}
                 sx={{
                     height: "100%",
                     display: "flex",
@@ -95,13 +94,10 @@ const ArticleListItem = ({
                     }}
                 >
                     <Typography
-                        id={titleId}
                         gutterBottom
-                        component="h3"
-                        variant="h4"
+                        variant="h3"
                         sx={{
                             pb: 1,
-                            fontWeight: 500,
                             lineHeight: 1.3,
                         }}
                     >
@@ -120,15 +116,63 @@ const ArticleListItem = ({
                     >
                         {blogArticle.description}
                     </Typography>
+                    {blogArticle.keywords.length > 0 && (
+                        <Box
+                            role="group"
+                            aria-label="Keywords"
+                            sx={{
+                                display: "flex",
+                                flexWrap: "wrap",
+                                gap: 0.625,
+                                mt: 1.5,
+                            }}
+                        >
+                            {blogArticle.keywords.map((keyword) => (
+                                <Chip
+                                    key={keyword}
+                                    label={keyword}
+                                    size="small"
+                                    variant="outlined"
+                                    color="primary"
+                                    slotProps={{
+                                        label: { sx: { px: 0.75 } },
+                                    }}
+                                    sx={{
+                                        "cursor": "default",
+                                        "height": "1.25rem",
+                                        "fontSize": "0.625rem",
+                                        "&:hover": { transform: "none" },
+                                    }}
+                                />
+                            ))}
+                        </Box>
+                    )}
                     <Box sx={{ flexGrow: 1 }} />
                     <Box
                         sx={{
                             display: "flex",
-                            justifyContent: "flex-end",
+                            justifyContent: "space-between",
+                            alignItems: "center",
                             mt: 2,
                         }}
                     >
-                        <Datespan
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 0.5,
+                                color: "text.secondary",
+                            }}
+                        >
+                            <AccessTime sx={{ fontSize: "0.875rem" }} />
+                            <Typography
+                                variant="body2"
+                                sx={{ fontSize: "0.75rem" }}
+                            >
+                                ~{blogArticle.readingTimeMinutes} min read
+                            </Typography>
+                        </Box>
+                        <DateInfo
                             value={FormattableDate.fromJsDate(
                                 blogArticle.publishedDate,
                             )}

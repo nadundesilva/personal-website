@@ -1,4 +1,3 @@
-"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -13,6 +12,8 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+"use client";
+
 import { KeyboardArrowRight } from "@mui/icons-material";
 import { Breadcrumbs, Typography } from "@mui/material";
 import type { Route as NextRoute } from "next";
@@ -92,7 +93,7 @@ const RouterBreadcrumbs = ({
                     __html: JSON.stringify(breadcrumbJsonLd),
                 }}
             />
-            {pathname !== "/" && (
+            {pathname !== "/" && pathname !== "/404" && (
                 <ContentContainer
                     sx={{
                         pt: 2,
@@ -100,8 +101,17 @@ const RouterBreadcrumbs = ({
                 >
                     <Breadcrumbs
                         aria-label="breadcrumb"
-                        sx={{ margin: 3 }}
-                        separator={<KeyboardArrowRight />}
+                        sx={{ my: 1 }}
+                        separator={
+                            <KeyboardArrowRight
+                                aria-hidden="true"
+                                sx={{
+                                    color: "primary.main",
+                                    opacity: 0.7,
+                                    fontSize: "1.1rem",
+                                }}
+                            />
+                        }
                     >
                         {breadcrumbs.map((breadcrumb, index) => {
                             const isLast = index === breadcrumbs.length - 1;
@@ -111,6 +121,7 @@ const RouterBreadcrumbs = ({
                                     key={breadcrumb.name}
                                     data-testid="breadcrumb-item"
                                     aria-current="page"
+                                    sx={{ fontWeight: 600 }}
                                 >
                                     {breadcrumb.name}
                                 </Typography>

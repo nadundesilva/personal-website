@@ -23,17 +23,8 @@ const defaultSentryInitConfig = {
 export const onRequestError = Sentry.captureRequestError;
 
 export async function register() {
-    if (process.env.NEXT_RUNTIME === "nodejs") {
-        Sentry.init({
-            ...defaultSentryInitConfig,
-            enabled: process.env.NODE_ENV === "production",
-        });
-    }
-
-    if (process.env.NEXT_RUNTIME === "edge") {
-        Sentry.init({
-            ...defaultSentryInitConfig,
-            enabled: process.env.NODE_ENV === "production",
-        });
-    }
+    Sentry.init({
+        ...defaultSentryInitConfig,
+        enabled: process.env.NODE_ENV === "production",
+    });
 }

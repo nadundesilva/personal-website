@@ -27,7 +27,9 @@ const Paragraph = ({ children, id }: ParagraphProps): React.ReactElement => (
         sx={{
             m: 0,
             mb: 2.5,
-            textAlign: "justify",
+            // Intentional: justified text gives content pages an editorial, document-like appearance.
+            // Disabled on xs to avoid uneven word spacing on narrow screens.
+            textAlign: { xs: "left", sm: "justify" },
             lineHeight: 1.75,
         }}
     >

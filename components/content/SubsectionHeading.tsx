@@ -12,8 +12,10 @@
  *
  * © 2024 Nadun De Silva. All rights reserved.
  */
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import type React from "react";
+
+import { LeftAccent } from "@/components/primitives";
 
 interface SubsectionHeadingProps {
     children: React.ReactNode;
@@ -24,20 +26,11 @@ const SubsectionHeading = ({
     children,
     id,
 }: SubsectionHeadingProps): React.ReactElement => (
-    <Box sx={{ mt: 3, mb: 1.5 }}>
-        <Typography
-            id={id}
-            component="h3"
-            variant="h4"
-            sx={{
-                fontWeight: 400,
-                letterSpacing: "0em",
-                lineHeight: 1.4,
-            }}
-        >
+    <LeftAccent thickness={2} opacity={0.42} sx={{ mt: 4, mb: 2, pl: 1.5 }}>
+        <Typography id={id} variant="h3">
             {children}
         </Typography>
-    </Box>
+    </LeftAccent>
 );
 
 export default SubsectionHeading;
