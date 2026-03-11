@@ -12,10 +12,20 @@
  *
  * © 2025 Nadun De Silva. All rights reserved.
  */
-import { Roboto } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 
-export const roboto = Roboto({
+const defaultFont = Inter({
     weight: ["300", "400", "500"],
     subsets: ["latin"],
     display: "swap",
+    variable: "--font-default",
 });
+
+export const code = JetBrains_Mono({
+    weight: ["400", "500"],
+    subsets: ["latin"],
+    display: "swap",
+    variable: "--font-code",
+});
+
+export default defaultFont;

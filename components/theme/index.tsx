@@ -13,6 +13,6 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import WebsiteThemeProvider from "./WebsiteThemeProvider";
-import { roboto } from "./fonts";
+import defaultFont, { code as codeFont } from "./fonts";
 
-export { WebsiteThemeProvider, roboto };
+export { WebsiteThemeProvider, defaultFont, codeFont };

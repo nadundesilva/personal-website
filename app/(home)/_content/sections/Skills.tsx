@@ -12,10 +12,10 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import SkillCategories from "@/constants/skill-categories";
 import { Box, Typography } from "@mui/material";
+import type React from "react";
 
-import React from "react";
+import SkillCategories from "@/constants/skill-categories";
 import SkillChip from "./components/SkillChip";
 
 const Skills = (): React.ReactElement => (

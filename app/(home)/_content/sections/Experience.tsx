@@ -12,7 +12,6 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import Experiences, { type Experience } from "@/constants/experience";
 import { LocationCity } from "@mui/icons-material";
 import {
     Timeline,
@@ -32,6 +31,8 @@ import {
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import type React from "react";
+
+import Experiences, { type Experience } from "@/constants/experience";
 
 const Experience = (): React.ReactElement => {
     const isAllContentRightAligned = useMediaQuery((theme: Theme) =>

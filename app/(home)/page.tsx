@@ -18,7 +18,6 @@ import Script from "next/script";
 import type React from "react";
 import type { Person, WithContext } from "schema-dts";
 
-import PageContent from "./_content/PageContent";
 import Companies from "@/constants/companies";
 import Institutes from "@/constants/institutes";
 import {
@@ -29,9 +28,9 @@ import {
     JOB_TITLE,
 } from "@/constants/metadata";
 import Profiles from "@/constants/profiles";
-
 import { getImageType } from "@/utils/image-metadata";
 import profilePhotoImage from "@/assets/profile-photo.webp";
+import PageContent from "./_content/PageContent";
 
 export const metadata: Metadata = {
     title: {

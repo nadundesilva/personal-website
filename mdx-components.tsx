@@ -17,7 +17,7 @@ import type { MDXComponents } from "mdx/types";
 import Image from "next-image-export-optimizer";
 
 import ArticleLayout, {
-    ArticleLayoutProps,
+    type ArticleLayoutProps,
 } from "@/components/blog-articles/ArticleLayout";
 import {
     Link,
