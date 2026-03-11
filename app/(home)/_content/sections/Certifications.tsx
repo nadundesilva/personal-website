@@ -25,6 +25,7 @@ import {
     Typography,
     useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import Image from "next-image-export-optimizer";
 import type React from "react";
 
@@ -69,39 +70,58 @@ const Certifications = (): React.ReactElement => {
                                 flexDirection: "column",
                             }}
                         >
-                            <CardMedia
-                                component={(props: CardMediaProps) => (
-                                    <Container
-                                        {...props}
-                                        maxWidth={false}
-                                        disableGutters
-                                        sx={{
-                                            position: "relative",
-                                            width: "100%",
-                                            height: "auto",
-                                            pt: "70%",
-                                            margin: "auto",
-                                            mb: 3.5,
-                                            opacity: 0.95,
-                                            transition:
-                                                "opacity 0.3s ease-in-out",
-                                        }}
-                                    >
-                                        <Image
-                                            alt=""
-                                            src={
-                                                theme.palette.mode === "light"
-                                                    ? certification.logo
-                                                          .srcLight
-                                                    : certification.logo.srcDark
-                                            }
-                                            fill
-                                            sizes={imageSizes}
-                                            style={{ objectFit: "contain" }}
-                                        />
-                                    </Container>
-                                )}
-                            />
+                            <Box
+                                sx={{
+                                    width: "100%",
+                                    mb: 3.5,
+                                    p: 2,
+                                    borderRadius: 2,
+                                    overflow: "hidden",
+                                    background: (theme) =>
+                                        theme.palette.mode === "light"
+                                            ? alpha(
+                                                  theme.palette.primary.main,
+                                                  0.03,
+                                              )
+                                            : alpha(
+                                                  theme.palette.primary.light,
+                                                  0.03,
+                                              ),
+                                }}
+                            >
+                                <CardMedia
+                                    component={(props: CardMediaProps) => (
+                                        <Container
+                                            {...props}
+                                            maxWidth={false}
+                                            disableGutters
+                                            sx={{
+                                                position: "relative",
+                                                width: "100%",
+                                                height: "auto",
+                                                pt: "70%",
+                                                margin: "auto",
+                                                overflow: "hidden",
+                                            }}
+                                        >
+                                            <Image
+                                                alt=""
+                                                src={
+                                                    theme.palette.mode ===
+                                                    "light"
+                                                        ? certification.logo
+                                                              .srcLight
+                                                        : certification.logo
+                                                              .srcDark
+                                                }
+                                                fill
+                                                sizes={imageSizes}
+                                                style={{ objectFit: "contain" }}
+                                            />
+                                        </Container>
+                                    )}
+                                />
+                            </Box>
                             <CardContent
                                 sx={{
                                     display: "flex",

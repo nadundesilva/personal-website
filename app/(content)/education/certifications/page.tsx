@@ -19,8 +19,8 @@ import type { Metadata } from "next";
 import type React from "react";
 
 import {
+    AccentedList,
     Link,
-    List,
     ListItem,
     Logo,
     Paragraph,
@@ -61,7 +61,7 @@ const CertificationSectionHeading = ({
         actionButton={{
             href: certificate.link,
             name: "View Credential",
-            ariaLabel: `View ${certificate.name} credential`,
+            ariaLabel: `View credential: ${certificate.name}`,
             icon: Launch,
         }}
     >
@@ -158,45 +158,30 @@ const Certifications = (): React.ReactElement => {
                     <abbr title="Multiple Choice Questions">MCQ</abbr> and
                     Lab-based hands-on evaluations.
                 </Paragraph>
-                <Box sx={{ m: 0, pt: 2 }}>
-                    <Typography
-                        id="dl-course-content-heading"
-                        component="h3"
-                        variant="h6"
-                        sx={{ mt: 3, mb: 1.5 }}
-                    >
-                        Course Content:
-                    </Typography>
-                    <Box sx={{ display: "block", mt: 1 }}>
-                        <List ariaLabelledBy="dl-course-content-heading">
-                            <ListItem>
-                                <Typography>
-                                    Neural Networks and Deep Learning
-                                </Typography>
-                            </ListItem>
-                            <ListItem>
-                                <Typography>
-                                    Improving Deep Neural Networks:
-                                    Hyperparameter Tuning, Regularization and
-                                    Optimization
-                                </Typography>
-                            </ListItem>
-                            <ListItem>
-                                <Typography>
-                                    Structuring Machine Learning Projects
-                                </Typography>
-                            </ListItem>
-                            <ListItem>
-                                <Typography>
-                                    Convolutional Neural Networks
-                                </Typography>
-                            </ListItem>
-                            <ListItem>
-                                <Typography>Sequence Models</Typography>
-                            </ListItem>
-                        </List>
-                    </Box>
-                </Box>
+                <AccentedList heading="Course Content" headingVariant="h3">
+                    <ListItem>
+                        <Typography>
+                            Neural Networks and Deep Learning
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Improving Deep Neural Networks: Hyperparameter
+                            Tuning, Regularization and Optimization
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>
+                            Structuring Machine Learning Projects
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>Convolutional Neural Networks</Typography>
+                    </ListItem>
+                    <ListItem>
+                        <Typography>Sequence Models</Typography>
+                    </ListItem>
+                </AccentedList>
             </Section>
             <Section labelledById="section-cert-cka">
                 <CertificationSectionHeading

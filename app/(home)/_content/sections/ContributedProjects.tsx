@@ -16,11 +16,14 @@ import {
     Box,
     Card,
     CardActionArea,
+    CardMedia,
+    type CardMediaProps,
     Container,
     Grid,
     Typography,
     useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import Image from "next-image-export-optimizer";
 import type React from "react";
 
@@ -42,15 +45,9 @@ const ContributedProjects = (): React.ReactElement => {
         <Grid key={project.name} size={{ xs: 12, sm: 6, md: 4 }}>
             <Card
                 sx={{
-                    "height": "100%",
-                    "display": "flex",
-                    "flexDirection": "column",
-                    "transition":
-                        "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
-                    "&:hover": {
-                        transform: "translateY(-2px)",
-                        boxShadow: (theme) => theme.shadows[4],
-                    },
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
                 }}
             >
                 <CardActionArea
@@ -77,22 +74,48 @@ const ContributedProjects = (): React.ReactElement => {
                     >
                         <Box
                             sx={{
-                                position: "relative",
                                 width: "100%",
-                                height: 80,
                                 mb: 3,
+                                p: 2,
+                                borderRadius: 2,
+                                overflow: "hidden",
+                                background: (theme) =>
+                                    theme.palette.mode === "light"
+                                        ? alpha(
+                                              theme.palette.primary.main,
+                                              0.03,
+                                          )
+                                        : alpha(
+                                              theme.palette.primary.light,
+                                              0.03,
+                                          ),
                             }}
                         >
-                            <Image
-                                alt=""
-                                fill
-                                style={{ objectFit: "contain" }}
-                                sizes={imageSizes}
-                                src={
-                                    theme.palette.mode === "light"
-                                        ? project.logo.srcLight
-                                        : project.logo.srcDark
-                                }
+                            <CardMedia
+                                component={(props: CardMediaProps) => (
+                                    <Container
+                                        {...props}
+                                        maxWidth={false}
+                                        disableGutters
+                                        sx={{
+                                            position: "relative",
+                                            width: "100%",
+                                            height: 80,
+                                        }}
+                                    >
+                                        <Image
+                                            alt=""
+                                            fill
+                                            style={{ objectFit: "contain" }}
+                                            sizes={imageSizes}
+                                            src={
+                                                theme.palette.mode === "light"
+                                                    ? project.logo.srcLight
+                                                    : project.logo.srcDark
+                                            }
+                                        />
+                                    </Container>
+                                )}
                             />
                         </Box>
                         <Typography

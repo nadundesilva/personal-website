@@ -10,17 +10,10 @@
  *
  * Website: https://nadundesilva.com
  *
- * © 2023 Nadun De Silva. All rights reserved.
+ * © 2026 Nadun De Silva. All rights reserved.
  */
-import type { Metadata } from "next";
-import type React from "react";
+import HorizontalGradientLine from "./HorizontalGradientLine";
+import LeftAccent from "./LeftAccent";
+import PrimaryTintedIcon from "./PrimaryTintedIcon";
 
-import NotFound from "./NotFound";
-
-export const metadata: Metadata = {
-    title: "Page Not Found",
-};
-
-const NotFoundPage = (): React.ReactElement => <NotFound />;
-
-export default NotFoundPage;
+export { HorizontalGradientLine, LeftAccent, PrimaryTintedIcon };

@@ -70,7 +70,7 @@ However, this is not the only scenario where annotations can be useful. Whatever
 
 Creating a custom annotation is as simple as writing a new class. The only difference is that `@interface{:java}` keyword needs to be used instead of the `class{:java}` keyword. Moreover, you will notice how the annotation type elements in the Annotations declaration (The method-like declarations inside the annotation declaration) are written differently.
 
-```java
+```java title="MyFirstAnnotation.java"
 public @interface MyFirstAnnotation {
     String foo();
     int bar();
@@ -79,7 +79,7 @@ public @interface MyFirstAnnotation {
 
 Now that you have written your first custom annotation declaration, it is time to annotate a class with this annotation.
 
-```java
+```java title="MyFirstAnnotatedClass.java"
 @MyFirstAnnotation(foo = "Foo Value", bar = 100)
 public class MyFirstAnnotatedClass {
     // Class Elements
@@ -128,7 +128,7 @@ In the first example, although we added the annotation to a class, it can be app
 
 However, in most of the scenarios you come across, there will be a specific type of element that will be annotated by the annotation, and annotating any other element will be invalid. In this case, you can restrict the target element by using the [`@Target`](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html) annotation. This annotation needs to be applied to the annotation declaration (Yes guys you heard me right. Annotations can be applied to annotation declarations as well.) and the target [element types](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/ElementType.html) should be passed into it. A small example is shown below.
 
-```java
+```java title="TargetRestrictedAnnotation.java"
 @Target(ElementType.TYPE)
 public @interface TargetRestrictedAnnotation {
     String foo();
@@ -151,7 +151,7 @@ Several element types can be passed into the `@Target{:java}` annotation restric
 
 You can even pass an array of element types as well when the annotation can be applied to more than one of the element types.
 
-```java
+```java title="TargetRestrictedAnnotation.java"
 @Target({ElementType.FIELD, ElementType.METHOD})
 public @interface TargetRestrictedAnnotation {
     String foo();
@@ -190,7 +190,7 @@ The retention policy refers to how long the annotations will be retained. The an
 
 However, we may need to specify the retention policy where we might not need the annotations in the class files or we need them at run-time to be read by a program. This can be done by adding the [`@Retention{:java}`](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html) annotation and passing the [retention policy](https://docs.oracle.com/javase/7/docs/api/java/lang/annotation/RetentionPolicy.html) into it.
 
-```java
+```java title="RetentionRestrictedAnnotation.java"
 @Retention(RetentionPolicy.SOURCE)
 public @interface RetentionRestrictedAnnotation {
     String foo();

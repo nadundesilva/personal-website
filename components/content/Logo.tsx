@@ -1,4 +1,3 @@
-"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -13,6 +12,8 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+"use client";
+
 import { Box, type SxProps, type Theme, useTheme } from "@mui/material";
 import Image from "next-image-export-optimizer";
 import type React from "react";
@@ -40,6 +41,12 @@ const Logo = ({
                 "position": "relative",
                 "width": "100%",
                 "py": 1,
+                "transition": theme.transitions.create("opacity", {
+                    duration: theme.transitions.duration.shorter,
+                }),
+                "&:hover": {
+                    opacity: 0.8,
+                },
                 "& img": {
                     objectFit: "scale-down",
                     objectPosition: { xs: "left center", sm: "right center" },

@@ -24,6 +24,7 @@ import {
     defaultFont,
     codeFont,
 } from "@/components/theme";
+import { themePrimary } from "@/components/theme/colors";
 import WebVitals from "@/components/WebVitals";
 import {
     FULL_NAME,
@@ -31,8 +32,6 @@ import {
     MAIN_DESCRIPTION,
     WEBSITE_PUBLIC_URL,
 } from "@/constants/metadata";
-import "@/styles/main.css";
-import "@/styles/syntax-highlighting.css";
 import { Route, WebsiteHome } from "@/constants/routes";
 import {
     type BlogArticleGroup,
@@ -129,14 +128,16 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+    // The app bar uses primary.main in both color schemes, so the browser
+    // chrome color matches it.
     themeColor: [
         {
             media: "(prefers-color-scheme: light)",
-            color: "#3f51b5",
+            color: themePrimary.main,
         },
         {
             media: "(prefers-color-scheme: dark)",
-            color: "#000000",
+            color: themePrimary.main,
         },
     ],
     colorScheme: "light",
@@ -277,17 +278,12 @@ const RootLayout = async ({
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
             </head>
-            {/*
-             * Font CSS variables are injected here so they are available globally
-             * in stylesheets (e.g. syntax-highlighting.css). CSS files cannot
-             * import JS values directly, but can reference variables set on a
-             * parent element via var(--font-*).
-             */}
-            <body className={`${defaultFont.variable} ${codeFont.variable}`}>
+            <body>
                 <React.StrictMode>
                     <WebVitals />
                     <WebsiteThemeProvider
                         fontFamily={defaultFont.style.fontFamily}
+                        codeFontFamily={codeFont.style.fontFamily}
                     >
                         <Layout topLevelRoutes={routes}>
                             <RouterBreadcrumbs topLevelRoutes={routes} />

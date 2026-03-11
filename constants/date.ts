@@ -26,7 +26,7 @@ type Month =
     | "November"
     | "December";
 
-export interface DateRenderSegment {
+interface DateRenderSegment {
     text: string;
     dateTime?: string;
 }
@@ -78,6 +78,12 @@ export class Date extends AbstractFormattableDate {
 
     static fromJsDate(date: globalThis.Date): Date {
         return new Date(date.getFullYear(), MONTHS[date.getMonth()]);
+    }
+
+    toJsDate(): globalThis.Date {
+        const monthIndex =
+            this.month !== undefined ? MONTHS.indexOf(this.month) : 0;
+        return new globalThis.Date(this.year, monthIndex);
     }
 
     private toISOString(): string {

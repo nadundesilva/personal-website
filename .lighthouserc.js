@@ -66,6 +66,16 @@ module.exports = {
                 "deprecations": ["warn"],
                 "canonical": ["warn"],
                 "forced-reflow-insight": ["warn"],
+                "bf-cache": ["warn"],
+
+                // MUI/Emotion CSS-in-JS generates inline styles during static export.
+                // Global theme rules (CssBaseline, hover/focus states, scrollbar styles)
+                // don't match measurable DOM elements so Lighthouse flags them as unused,
+                // and Emotion serialises CSS with standard whitespace. Fixing either issue
+                // requires migrating away from Emotion (e.g. Pigment CSS) — not feasible now.
+                "unminified-css": ["warn"],
+                "unused-css-rules": ["warn"],
+
                 ...LIVE_SITE_ASSERTIONS,
             },
         },

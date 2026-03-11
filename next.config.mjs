@@ -35,7 +35,10 @@ const withMDX = nextMDX({
         rehypePlugins: [
             [
                 "rehype-pretty-code",
-                { theme: "dracula", defaultLang: "plaintext" },
+                {
+                    theme: { dark: "dracula", light: "github-light" },
+                    defaultLang: "plaintext",
+                },
             ],
         ],
     },
@@ -73,11 +76,6 @@ const nextConfig = (phase, { defaultConfig }) => {
     const nextConfig = {
         ...defaultConfig,
         pageExtensions: ["ts", "tsx", "md", "mdx", "js", "jsx"],
-        modularizeImports: {
-            "@mui/icons-material": {
-                transform: "@mui/icons-material/{{member}}",
-            },
-        },
         images: {
             loader: "custom",
             imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
@@ -86,6 +84,37 @@ const nextConfig = (phase, { defaultConfig }) => {
         transpilePackages: ["next-image-export-optimizer"],
         productionBrowserSourceMaps: true,
         reactStrictMode: true,
+        // Patch the MDX webpack rule so that next-swc-loader runs with bundleLayer:"rsc".
+        // Without this, the default SWC loader has no bundleLayer, which causes
+        // isReactServerLayer=false in SWC's serverComponents transform. SWC then treats
+        // MDX pages as client-layer modules and rejects `export const metadata`.
+        webpack: (config) => {
+            const mdxRule = config.module.rules.find((rule) =>
+                rule?.test?.toString().includes(".mdx"),
+            );
+            if (mdxRule && Array.isArray(mdxRule.use)) {
+                // Clone each loader entry to avoid mutating the shared swcDefaultLoader
+                // object used by other webpack rules, then set bundleLayer:"rsc" so
+                // SWC treats MDX pages as server-layer modules and allows metadata exports.
+                mdxRule.use = mdxRule.use.map((entry) => {
+                    if (
+                        entry &&
+                        typeof entry === "object" &&
+                        entry.loader === "next-swc-loader"
+                    ) {
+                        return {
+                            ...entry,
+                            options: {
+                                ...entry.options,
+                                bundleLayer: "rsc",
+                            },
+                        };
+                    }
+                    return entry;
+                });
+            }
+            return config;
+        },
         experimental: {
             optimizePackageImports: [
                 "@mui/material",

@@ -1,4 +1,3 @@
-"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -13,7 +12,6 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-
 import { Container, type ContainerProps } from "@mui/material";
 import type React from "react";
 
@@ -28,7 +26,9 @@ const ContentContainer = ({
             maxWidth={maxWidth}
             sx={{
                 px: {
-                    xs: 0,
+                    xs: 1,
+                    sm: 3,
+                    md: 4,
                     lg: 20,
                     xl: 40,
                 },

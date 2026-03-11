@@ -85,7 +85,10 @@ Cypress.Commands.add("clickBreadcrumbByHref", (href: string): void => {
 });
 
 Cypress.Commands.add("clickLinkByHref", (href: string): void => {
-    cy.get(`a[href="${href}"]`).as("link").should("be.visible");
+    cy.get(`a[href="${href}"]`)
+        .as("link")
+        .scrollIntoView()
+        .should("be.visible");
     cy.scrollTo(0, 0, { duration: 1000, ensureScrollable: false });
     cy.get("@link").click({ waitForAnimations: true });
 

@@ -28,16 +28,33 @@ import {
     type Theme,
     Typography,
     useMediaQuery,
+    useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
+import { keyframes } from "@mui/system";
 import { visuallyHidden } from "@mui/utils";
 import type React from "react";
 
 import Experiences, { type Experience } from "@/constants/experience";
 
 const Experience = (): React.ReactElement => {
+    const theme = useTheme();
     const isAllContentRightAligned = useMediaQuery((theme: Theme) =>
         theme.breakpoints.down("sm"),
     );
+
+    const pulseColor =
+        theme.palette.mode === "light"
+            ? theme.palette.primary.main
+            : theme.palette.primary.light;
+
+    // Defined inside the component (after useTheme) so theme-aware colors can be
+    // interpolated. Module-level keyframes cannot use theme callbacks.
+    const timelinePulse = keyframes`
+        0%   { box-shadow: 0 0 0 0   ${alpha(pulseColor, theme.palette.mode === "light" ? 0.35 : 0.4)}; }
+        70%  { box-shadow: 0 0 0 8px ${alpha(pulseColor, 0)}; }
+        100% { box-shadow: 0 0 0 0   ${alpha(pulseColor, 0)}; }
+    `;
 
     return (
         <Timeline
@@ -87,25 +104,34 @@ const Experience = (): React.ReactElement => {
                             <TimelineSeparator>
                                 <TimelineDot
                                     sx={{
-                                        "backgroundColor": "primary.main",
+                                        "backgroundColor": (theme) =>
+                                            theme.palette.primary.main,
                                         "width": 18,
                                         "height": 18,
                                         "boxShadow": "none",
                                         "border": "3.5px solid",
-                                        "borderColor": "background.paper",
-                                        "transition":
-                                            "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                                        "borderColor": (theme) =>
+                                            theme.palette.background.paper,
+                                        // Stagger each dot's pulse by 0.4s so they don't all pulse in sync
+                                        "animation": `${timelinePulse} 2.5s ease-out ${index * 0.4}s infinite`,
+                                        "transition": (theme) =>
+                                            theme.transitions.create("all", {
+                                                duration:
+                                                    theme.transitions.duration
+                                                        .short,
+                                            }),
                                         "&:hover": {
-                                            transform: "scale(1.1)",
-                                            boxShadow: (theme) =>
-                                                `0 0 0 4px ${theme.palette.primary.main}1A`,
+                                            transform: "scale(1.15)",
                                         },
                                     }}
                                 />
                                 <TimelineConnector
                                     sx={{
-                                        backgroundColor: "divider",
-                                        opacity: 0.25,
+                                        background: (theme) =>
+                                            theme.palette.mode === "light"
+                                                ? `linear-gradient(to bottom, ${alpha(theme.palette.primary.main, 0.33)}, transparent)`
+                                                : `linear-gradient(to bottom, ${alpha(theme.palette.primary.light, 0.27)}, transparent)`,
+                                        backgroundColor: "transparent",
                                         width: 1,
                                     }}
                                 />
@@ -118,19 +144,69 @@ const Experience = (): React.ReactElement => {
                             >
                                 <Card
                                     sx={{
-                                        p: { xs: 2.5, md: 4.5 },
-                                        mb: 7,
+                                        "p": { xs: 2.5, md: 4.5 },
+                                        "mb": 7,
+                                        "transition": (theme) =>
+                                            theme.transitions.create("all", {
+                                                duration:
+                                                    theme.transitions.duration
+                                                        .shortest,
+                                            }),
+                                        "&:hover": {
+                                            ...(isContentOnRight
+                                                ? {
+                                                      borderLeftColor: (
+                                                          theme,
+                                                      ) =>
+                                                          theme.palette.primary
+                                                              .main,
+                                                  }
+                                                : {
+                                                      borderRightColor: (
+                                                          theme,
+                                                      ) =>
+                                                          theme.palette.primary
+                                                              .main,
+                                                  }),
+                                        },
+                                        "borderTop": "none",
                                         ...(isContentOnRight
                                             ? {
                                                   borderLeft: "3px solid",
-                                                  borderLeftColor:
-                                                      "primary.main",
+                                                  borderLeftColor: (theme) =>
+                                                      theme.palette.mode ===
+                                                      "light"
+                                                          ? alpha(
+                                                                theme.palette
+                                                                    .primary
+                                                                    .main,
+                                                                0.33,
+                                                            )
+                                                          : alpha(
+                                                                theme.palette
+                                                                    .primary
+                                                                    .light,
+                                                                0.27,
+                                                            ),
                                                   pl: { xs: 2.5, md: 4.5 },
                                               }
                                             : {
                                                   borderRight: "3px solid",
-                                                  borderRightColor:
-                                                      "primary.main",
+                                                  borderRightColor: (theme) =>
+                                                      theme.palette.mode ===
+                                                      "light"
+                                                          ? alpha(
+                                                                theme.palette
+                                                                    .primary
+                                                                    .main,
+                                                                0.33,
+                                                            )
+                                                          : alpha(
+                                                                theme.palette
+                                                                    .primary
+                                                                    .light,
+                                                                0.27,
+                                                            ),
                                                   pr: { xs: 2.5, md: 4.5 },
                                               }),
                                     }}
@@ -157,7 +233,7 @@ const Experience = (): React.ReactElement => {
                                             color="text.secondary"
                                             mb={2}
                                             sx={{
-                                                fontSize: { xs: 10, md: 13 },
+                                                fontSize: { xs: 12, md: 13 },
                                                 fontWeight: 700,
                                                 letterSpacing: "0.04em",
                                                 textTransform: "uppercase",
