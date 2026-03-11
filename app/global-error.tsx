@@ -1,4 +1,3 @@
-"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -13,6 +12,8 @@
  *
  * © 2025 Nadun De Silva. All rights reserved.
  */
+"use client";
+
 import * as Sentry from "@sentry/nextjs";
 import NextError from "next/error";
 import React, { useEffect } from "react";

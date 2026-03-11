@@ -1,4 +1,3 @@
-"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -13,6 +12,8 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+"use client";
+
 import {
     Close,
     DarkMode,
@@ -33,13 +34,14 @@ import {
     Toolbar,
     Tooltip,
     Typography,
+    useMediaQuery,
     useScrollTrigger,
     Zoom,
 } from "@mui/material";
-import { type Theme, useColorScheme } from "@mui/material/styles";
+import { alpha, type Theme, useColorScheme } from "@mui/material/styles";
 import { usePathname } from "next/navigation";
 import type React from "react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Link } from "@/components/content";
 import { FULL_NAME } from "@/constants/metadata";
@@ -55,12 +57,21 @@ const Layout = ({
     topLevelRoutes,
 }: LayoutProps): React.ReactElement | null => {
     const pathname = usePathname();
-    const trigger = useScrollTrigger({
+    const scrollTrigger = useScrollTrigger({
         disableHysteresis: true,
         threshold: 0,
     });
 
     const scrollToTopRef = useRef<HTMLDivElement>(null);
+
+    // On route change, Next.js triggers a smooth scroll to y=0 via the global
+    // `scroll-behavior: smooth` set on <html>. React's re-render of the new
+    // page interrupts that animation mid-flight, leaving the scroll position
+    // at a non-zero value. Scrolling instantly here — before any animation
+    // can start — ensures the page always resets to the true top on navigation.
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "instant" });
+    }, [pathname]);
 
     const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
     const toggleDrawer = (): void => {
@@ -80,6 +91,10 @@ const Layout = ({
         return false;
     };
 
+    const isLargeScreen = useMediaQuery((theme: Theme) =>
+        theme.breakpoints.up("lg"),
+    );
+
     const drawer = (
         <>
             <IconButton
@@ -91,10 +106,7 @@ const Layout = ({
                 edge="start"
                 sx={{
                     mr: 2,
-                    display: {
-                        xs: "block",
-                        lg: "none",
-                    },
+                    display: isLargeScreen ? "none" : "block",
                 }}
             >
                 {isDrawerOpen ? <Close /> : <MenuIcon />}
@@ -106,17 +118,18 @@ const Layout = ({
                 slotProps={{
                     backdrop: {
                         sx: {
-                            zIndex: 1200,
+                            zIndex: (theme) => theme.zIndex.drawer,
                         },
                     },
                     paper: {
                         sx: {
                             backgroundColor: (theme) =>
                                 theme.palette.primary.main,
-                            color: "#ffffff",
+                            color: (theme) =>
+                                theme.palette.primary.contrastText,
                             boxShadow: 2,
                             marginTop: { xs: "56px", sm: "64px" },
-                            zIndex: 1200,
+                            zIndex: (theme) => theme.zIndex.drawer,
                         },
                     },
                 }}
@@ -152,17 +165,29 @@ const Layout = ({
                                         "px": 2.5,
                                         "py": 1.25,
                                         "minHeight": 56,
-                                        "color": "#ffffff",
+                                        "color": (theme) =>
+                                            theme.palette.primary.contrastText,
                                         "borderRadius": 2,
                                         "position": "relative",
                                         "display": "flex",
                                         "justifyContent": "center",
                                         "alignItems": "center",
-                                        "transition":
-                                            "background-color 0.2s ease-in-out, opacity 0.2s ease-in-out",
+                                        "transition": (theme) =>
+                                            theme.transitions.create(
+                                                ["background-color", "opacity"],
+                                                {
+                                                    duration:
+                                                        theme.transitions
+                                                            .duration.shortest,
+                                                },
+                                            ),
                                         "&:hover": {
-                                            "backgroundColor":
-                                                "rgba(255, 255, 255, 0.08)",
+                                            "backgroundColor": (theme) =>
+                                                alpha(
+                                                    theme.palette.primary
+                                                        .contrastText,
+                                                    0.08,
+                                                ),
                                             "opacity": 0.9,
                                             "&::after": {
                                                 width: "50%",
@@ -178,11 +203,21 @@ const Layout = ({
                                                 ? { xs: "50%", sm: "25%" }
                                                 : 0,
                                             height: 1.5,
-                                            backgroundColor: "#ffffff",
+                                            backgroundColor: (theme) =>
+                                                theme.palette.primary
+                                                    .contrastText,
                                             opacity: isActive ? 1 : 0.8,
                                             borderRadius: 1,
-                                            transition:
-                                                "width 0.25s ease-in-out",
+                                            transition: (theme) =>
+                                                theme.transitions.create(
+                                                    "width",
+                                                    {
+                                                        duration:
+                                                            theme.transitions
+                                                                .duration
+                                                                .shorter,
+                                                    },
+                                                ),
                                         },
                                     }}
                                 >
@@ -192,7 +227,9 @@ const Layout = ({
                                             primary: {
                                                 variant: "body1",
                                                 sx: {
-                                                    color: "#ffffff",
+                                                    color: (theme) =>
+                                                        theme.palette.primary
+                                                            .contrastText,
                                                     textAlign: "center",
                                                     fontWeight: isActive
                                                         ? 500
@@ -210,15 +247,32 @@ const Layout = ({
         </>
     );
 
+    const isAtTopOfHomePage = pathname === "/" && !scrollTrigger;
+
     const appBar = (
         <AppBar
             component="header"
             sx={{
                 px: { xs: 2, sm: 3, md: 4 },
-                zIndex: 1201,
+                zIndex: (theme) => theme.zIndex.drawer + 1,
+                // On the home page before any scroll: transparent AppBar with dark gradient scrim so nav
+                // text remains readable over the hero image. Once scrolled: frosted glass with blur.
+                // Do not do this on small screens where we show the drawer, as it does not match the drawer.
+                ...(isAtTopOfHomePage && isLargeScreen
+                    ? {
+                          backgroundColor: "transparent",
+                          backgroundImage: (theme: Theme) =>
+                              `linear-gradient(to bottom, ${alpha(theme.palette.common.black, 0.85)} 0%, transparent 100%)`,
+                          boxShadow: "none",
+                          backdropFilter: "none",
+                      }
+                    : {
+                          backgroundColor: (theme: Theme) =>
+                              theme.palette.primary.main,
+                      }),
             }}
             data-testid="app-bar"
-            elevation={trigger ? 1 : 0}
+            elevation={scrollTrigger ? 1 : 0}
         >
             <Toolbar
                 sx={{
@@ -231,14 +285,25 @@ const Layout = ({
                     onClick={() => isDrawerOpen && toggleDrawer()}
                     display="inline-block"
                 >
-                    <Link href={"/"} sx={{ textDecoration: "none" }}>
+                    <Link
+                        href={"/"}
+                        sx={{
+                            "textDecoration": "none",
+                            "&:hover": { textDecoration: "none" },
+                        }}
+                    >
                         <Typography
                             component="div"
                             variant="h6"
                             sx={{
                                 "fontSize": { xs: 16, sm: 20 },
-                                "color": "#ffffff",
-                                "transition": "opacity 0.2s ease-in-out",
+                                "color": (theme) =>
+                                    theme.palette.primary.contrastText,
+                                "transition": (theme) =>
+                                    theme.transitions.create("opacity", {
+                                        duration:
+                                            theme.transitions.duration.shortest,
+                                    }),
                                 "&:hover": {
                                     opacity: 0.85,
                                 },
@@ -252,7 +317,7 @@ const Layout = ({
                 <Box
                     component="nav"
                     aria-label="Primary Navigation"
-                    display={{ xs: "none", lg: "flex" }}
+                    display={isLargeScreen ? "flex" : "none"}
                     gap={1}
                     alignItems="center"
                 >
@@ -272,7 +337,8 @@ const Layout = ({
                                     disableElevation
                                     aria-current={isActive ? "page" : undefined}
                                     sx={{
-                                        "color": "#ffffff",
+                                        "color": (theme) =>
+                                            theme.palette.primary.contrastText,
                                         "px": 2.5,
                                         "py": 1.25,
                                         "minWidth": "auto",
@@ -293,10 +359,20 @@ const Layout = ({
                                             transform: "translateX(-50%)",
                                             width: isActive ? "70%" : 0,
                                             height: 1.5,
-                                            backgroundColor: "#ffffff",
+                                            backgroundColor: (theme) =>
+                                                theme.palette.primary
+                                                    .contrastText,
                                             opacity: isActive ? 1 : 0.8,
-                                            transition:
-                                                "width 0.25s ease-in-out",
+                                            transition: (theme) =>
+                                                theme.transitions.create(
+                                                    "width",
+                                                    {
+                                                        duration:
+                                                            theme.transitions
+                                                                .duration
+                                                                .shorter,
+                                                    },
+                                                ),
                                         },
                                     }}
                                 >
@@ -317,7 +393,8 @@ const Layout = ({
                         onClick={() => setColorScheme(nextColorScheme)}
                         sx={{
                             ml: 3,
-                            color: "#ffffff",
+                            color: (theme) =>
+                                theme.palette.primary.contrastText,
                         }}
                     >
                         {nextColorScheme === "light" ? (
@@ -351,9 +428,12 @@ const Layout = ({
                     "position": "fixed",
                     "top": 16,
                     "left": 16,
-                    "zIndex": 1300,
+                    "zIndex": (theme) => theme.zIndex.modal,
                     "transform": "translateY(-150%)",
-                    "transition": "transform 0.3s ease-in-out",
+                    "transition": (theme) =>
+                        theme.transitions.create("transform", {
+                            duration: theme.transitions.duration.short,
+                        }),
                     "&:focus-visible": {
                         transform: "translateY(0)",
                     },
@@ -362,7 +442,8 @@ const Layout = ({
                 Skip to Content
             </Button>
             {appBar}
-            <Toolbar ref={scrollToTopRef} />
+            <Box ref={scrollToTopRef} sx={{ height: 0 }} />
+            {pathname !== "/" && <Toolbar />}
             <Container
                 id="main-content"
                 component="main"
@@ -376,6 +457,14 @@ const Layout = ({
                         theme.palette.background.default,
                     scrollMarginTop: "100px",
                     outline: "none",
+                    // Subtle dot grid background — visible on all pages.
+                    // On the home page the WelcomeBanner's full-height backgrounds cover it;
+                    // the AppBar covers it at the top via its solid fixed background.
+                    backgroundImage: (theme: Theme) =>
+                        theme.palette.mode === "light"
+                            ? `radial-gradient(circle, ${alpha(theme.palette.primary.main, 0.19)} 1px, transparent 1px)`
+                            : `radial-gradient(circle, ${alpha(theme.palette.common.white, 0.12)} 1px, transparent 1px)`,
+                    backgroundSize: "28px 28px",
                 }}
             >
                 {children}
@@ -409,13 +498,13 @@ const Layout = ({
                     &copy; 2021-{new Date().getFullYear()} {FULL_NAME}
                 </Typography>
             </Container>
-            <Zoom in={trigger}>
+            <Zoom in={scrollTrigger}>
                 <Box
                     role="presentation"
                     sx={{
                         position: "fixed",
-                        bottom: 24,
-                        right: 24,
+                        bottom: (theme) => theme.spacing(3),
+                        right: (theme) => theme.spacing(3),
                     }}
                 >
                     <Fab

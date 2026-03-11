@@ -12,7 +12,6 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { KeyboardArrowDown } from "@mui/icons-material";
 import {
     Box,
     Button,
@@ -20,9 +19,9 @@ import {
     Grid,
     Typography,
     type TypographyProps,
-    type CSSProperties,
-    useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
+import { keyframes } from "@mui/system";
 import Image from "next-image-export-optimizer";
 import React from "react";
 import { Link } from "@/components/content";
@@ -32,53 +31,36 @@ import welcomeBannerImage from "@/assets/banner.webp";
 
 const WelcomeText = (props: TypographyProps): React.ReactElement => (
     <Typography
-        component="h1"
         {...props}
         sx={{
-            color: "#ffffff",
+            color: (theme) => theme.palette.common.white,
             fontSize: { xs: 32, sm: 44, md: 60, lg: 72 },
             fontWeight: 300,
-            textShadow: "0 2px 24px rgba(0, 0, 0, 0.4)",
+            textShadow: (theme) =>
+                `0 2px 24px ${alpha(theme.palette.common.black, 0.4)}`,
             ...props.sx,
         }}
     />
 );
 
 const WelcomeBanner = (): React.ReactElement => {
-    const theme = useTheme();
+    const fadeInUp = keyframes`
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    `;
 
-    const minHeightStyles = React.useMemo(() => {
-        const mapToolbarStyles = (styleObj: CSSProperties): CSSProperties =>
-            Object.entries(styleObj).reduce<CSSProperties>(
-                (styles, [key, value]) => {
-                    if (key === "minHeight") {
-                        if (typeof value === "number") {
-                            styles[key] = `calc(100dvh - ${value}px)`;
-                        } else if (
-                            typeof value === "string" &&
-                            /\d/.test(value)
-                        ) {
-                            styles[key] = `calc(100dvh - ${value})`;
-                        }
-                    } else if (
-                        typeof value === "object" &&
-                        value !== null &&
-                        !Array.isArray(value)
-                    ) {
-                        const nestedStyles = mapToolbarStyles(
-                            value as CSSProperties,
-                        );
-                        if (Object.keys(nestedStyles).length > 0) {
-                            styles[key] = nestedStyles;
-                        }
-                    }
-                    return styles;
-                },
-                {},
-            );
-
-        return mapToolbarStyles(theme.mixins.toolbar);
-    }, [theme.mixins.toolbar]);
+    // Animates the dot inside the mouse-outline scroll indicator at the bottom of the banner
+    const scrollDot = keyframes`
+        0% { transform: translateY(0); opacity: 0.8; }
+        80% { transform: translateY(14px); opacity: 0; }
+        100% { transform: translateY(14px); opacity: 0; }
+    `;
 
     return (
         <Container
@@ -86,19 +68,20 @@ const WelcomeBanner = (): React.ReactElement => {
             disableGutters
             sx={{
                 position: "relative",
-                ...minHeightStyles,
+                minHeight: "100dvh",
                 display: "flex",
                 flexDirection: "column",
                 overflow: "hidden", // Ensure background image doesn't overflow
             }}
         >
+            {/* Three-layer vignette: side darkening + radial center spotlight + base top-to-bottom */}
             <Box
                 sx={{
                     position: "absolute",
                     inset: 0,
                     zIndex: 2,
-                    background:
-                        "linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8))",
+                    background: (theme) =>
+                        `linear-gradient(to right, ${alpha(theme.palette.common.black, 0.45)}, transparent 30%, transparent 70%, ${alpha(theme.palette.common.black, 0.45)}), radial-gradient(ellipse at center, transparent 25%, ${alpha(theme.palette.common.black, 0.55)} 78%), linear-gradient(to bottom, ${alpha(theme.palette.common.black, 0.35)}, ${alpha(theme.palette.common.black, 0.85)})`,
                 }}
             />
 
@@ -109,10 +92,18 @@ const WelcomeBanner = (): React.ReactElement => {
                     zIndex: 1,
                 }}
             >
+                {/* Slight desaturation + dimming gives an editorial, moody tone */}
+                {/* preload + fetchPriority="high" because this is the LCP
+                    element — the browser must start loading it immediately */}
                 <Image
                     src={welcomeBannerImage}
                     alt=""
-                    style={{ objectFit: "cover" }}
+                    fill
+                    style={{
+                        objectFit: "cover",
+                        objectPosition: "center",
+                        filter: "saturate(0.75) brightness(1.0)",
+                    }}
                     sizes="100vw"
                     preload
                     fetchPriority="high"
@@ -132,6 +123,8 @@ const WelcomeBanner = (): React.ReactElement => {
                     "pt": { xs: 8, md: 16 },
                     "pb": { xs: 4, md: 6 },
                     "px": { xs: 2, sm: 3, md: 4 }, // Width-based (native MUI)
+                    // Reduce vertical padding on very short viewports (e.g. landscape
+                    // mobile) where the full padding would compress the content
                     "@media (max-height: 500px)": {
                         pt: 2,
                         pb: 2,
@@ -143,10 +136,12 @@ const WelcomeBanner = (): React.ReactElement => {
                         component="p"
                         mb={{ xs: 1.5, md: 2 }}
                         sx={{
-                            "letterSpacing": "-0.05em",
-                            "animation": "fadeInUp 1s ease-out",
+                            "fontSize": { xs: 18, sm: 24, md: 32, lg: 38 },
+                            "letterSpacing": "-0.03em",
+                            "opacity": 0.75,
+                            "animation": `${fadeInUp} 1s ease-out`,
                             "@media (max-height: 500px)": {
-                                mb: 0.5,
+                                mb: 1.5,
                             },
                         }}
                     >
@@ -157,24 +152,25 @@ const WelcomeBanner = (): React.ReactElement => {
                         mb={{ xs: 3, md: 4 }}
                         sx={{
                             "letterSpacing": { xs: "-0.05em", md: "-0.06em" },
-                            "animation": "fadeInUp 1s ease-out 0.1s both",
+                            "animation": `${fadeInUp} 1s ease-out 0.1s both`,
                             "@media (max-height: 500px)": {
-                                mb: 0.5,
+                                mb: 2,
                             },
                         }}
                     >
                         {FULL_NAME}
                     </WelcomeText>
                     <Box
-                        width={40}
-                        height={1}
                         mx="auto"
                         mb={{ xs: 3, md: 4 }}
                         sx={{
-                            "backgroundColor": "rgba(255, 255, 255, 0.3)",
-                            "animation": "fadeInUp 1s ease-out 0.15s both",
+                            "width": 120,
+                            "height": 2,
+                            "background": (theme) =>
+                                `linear-gradient(90deg, transparent, ${alpha(theme.palette.common.white, 0.6)}, transparent)`,
+                            "animation": `${fadeInUp} 1s ease-out 0.15s both`,
                             "@media (max-height: 500px)": {
-                                mb: 1,
+                                mb: 2,
                             },
                         }}
                     />
@@ -182,15 +178,16 @@ const WelcomeBanner = (): React.ReactElement => {
                         component="p"
                         mb={{ xs: 5, md: 6 }}
                         sx={{
-                            "color": "#ffffff",
+                            "color": (theme) => theme.palette.common.white,
                             "fontSize": { xs: 18, sm: 22, md: 24 },
                             "fontWeight": 300,
                             "opacity": 0.9,
                             "letterSpacing": "0.04em",
-                            "textShadow": "0 1px 12px rgba(0, 0, 0, 0.25)",
-                            "animation": "fadeInUp 1s ease-out 0.2s both",
+                            "textShadow": (theme) =>
+                                `0 1px 12px ${alpha(theme.palette.common.black, 0.25)}`,
+                            "animation": `${fadeInUp} 1s ease-out 0.2s both`,
                             "@media (max-height: 500px)": {
-                                mb: 2,
+                                mb: 3,
                             },
                         }}
                     >
@@ -205,8 +202,11 @@ const WelcomeBanner = (): React.ReactElement => {
                         target="_blank"
                         aria-label="View CV (PDF document)"
                         sx={{
-                            "borderColor": "rgba(255, 255, 255, 0.85)",
-                            "color": "#ffffff",
+                            "position": "relative",
+                            "overflow": "hidden",
+                            "borderColor": (theme) =>
+                                alpha(theme.palette.common.white, 0.85),
+                            "color": (theme) => theme.palette.common.white,
                             "borderWidth": 1,
                             "px": { xs: 5, md: 6 },
                             "py": { xs: 1.5, md: 2 },
@@ -214,14 +214,41 @@ const WelcomeBanner = (): React.ReactElement => {
                             "textTransform": "uppercase",
                             "fontSize": { xs: 12, md: 13 },
                             "borderRadius": 0,
-                            "transition":
-                                "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                            "animation": "fadeInUp 1s ease-out 0.25s both",
+                            "transition": (theme) =>
+                                theme.transitions.create("all", {
+                                    duration: theme.transitions.duration.short,
+                                }),
+                            "animation": `${fadeInUp} 1s ease-out 0.25s both`,
+                            "&::after": {
+                                content: '""',
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: "60%",
+                                height: "100%",
+                                background: (theme) =>
+                                    `linear-gradient(105deg, transparent 20%, ${alpha(theme.palette.common.white, 0.18)} 50%, transparent 80%)`,
+                                transform: "translateX(-200%)",
+                                transition: "none",
+                            },
                             "&:hover": {
-                                borderColor: "#ffffff",
-                                backgroundColor: "rgba(255, 255, 255, 0.12)",
-                                transform: "translateY(-1px)",
-                                boxShadow: "0 2px 12px rgba(0, 0, 0, 0.25)",
+                                borderColor: (theme) =>
+                                    theme.palette.common.white,
+                                backgroundColor: (theme) =>
+                                    alpha(theme.palette.common.white, 0.12),
+                                transform: (theme) =>
+                                    `translateY(-${theme.motion.hoverLiftSubtle})`,
+                                boxShadow: (theme) =>
+                                    `0 2px 12px ${alpha(theme.palette.common.black, 0.25)}`,
+                            },
+                            "&:hover::after": {
+                                transform: "translateX(300%)",
+                                transition: (theme) =>
+                                    theme.transitions.create("transform", {
+                                        duration:
+                                            theme.transitions.duration.complex *
+                                            2,
+                                    }),
                             },
                         }}
                     >
@@ -230,6 +257,7 @@ const WelcomeBanner = (): React.ReactElement => {
                 </Grid>
             </Grid>
 
+            {/* Mouse-outline scroll indicator: outer box = mouse body, inner box = animated dot */}
             <Box
                 role="presentation"
                 aria-hidden="true"
@@ -242,38 +270,34 @@ const WelcomeBanner = (): React.ReactElement => {
                     zIndex: 3,
                     pb: { xs: 4, md: 6 },
                     mt: { xs: 2, md: 0 },
+                    animation: `${fadeInUp} 1s ease-out 0.4s both`,
                 }}
             >
-                <Typography
+                <Box
                     sx={{
-                        color: "#ffffff",
-                        opacity: 0.87,
-                        fontSize: { xs: 9, sm: 10 },
-                        letterSpacing: "0.12em",
-                        fontWeight: 400,
-                        textTransform: "uppercase",
+                        width: 24,
+                        height: 38,
+                        borderRadius: 1.5,
+                        border: (theme) =>
+                            `2px solid ${alpha(theme.palette.common.white, 0.5)}`,
+                        position: "relative",
+                        display: "flex",
+                        justifyContent: "center",
                     }}
                 >
-                    Scroll down
-                </Typography>
-                <KeyboardArrowDown
-                    sx={{
-                        "color": "#ffffff",
-                        "opacity": 0.7,
-                        "fontSize": { xs: 20, md: 24 },
-                        "animation": "bounce 3s infinite ease-in-out",
-                        "@keyframes bounce": {
-                            "0%, 100%": {
-                                transform: "translateY(0)",
-                                opacity: 0.7,
-                            },
-                            "50%": {
-                                transform: "translateY(4px)",
-                                opacity: 0.5,
-                            },
-                        },
-                    }}
-                />
+                    <Box
+                        sx={{
+                            width: 4,
+                            height: 7,
+                            borderRadius: 0.25,
+                            backgroundColor: (theme) =>
+                                alpha(theme.palette.common.white, 0.85),
+                            position: "absolute",
+                            top: 5,
+                            animation: `${scrollDot} 1.8s ease-in-out infinite`,
+                        }}
+                    />
+                </Box>
             </Box>
         </Container>
     );

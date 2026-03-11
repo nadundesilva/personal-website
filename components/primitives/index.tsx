@@ -10,20 +10,10 @@
  *
  * Website: https://nadundesilva.com
  *
- * © 2023 Nadun De Silva. All rights reserved.
+ * © 2026 Nadun De Silva. All rights reserved.
  */
-import type React from "react";
+import HorizontalGradientLine from "./HorizontalGradientLine";
+import LeftAccent from "./LeftAccent";
+import PrimaryTintedIcon from "./PrimaryTintedIcon";
 
-import { ContentContainer } from "@/components/layout";
-
-interface ContentLayoutProps {
-    children: React.ReactNode;
-}
-
-const ContentLayout = ({
-    children,
-}: ContentLayoutProps): React.ReactElement => {
-    return <ContentContainer sx={{ mb: 5 }}>{children}</ContentContainer>;
-};
-
-export default ContentLayout;
+export { HorizontalGradientLine, LeftAccent, PrimaryTintedIcon };

@@ -1,4 +1,3 @@
-"use client";
 /*
  * Nadun De Silva - All Rights Reserved
  *
@@ -13,6 +12,8 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+"use client";
+
 import { useReportWebVitals } from "next/web-vitals";
 import type React from "react";
 

@@ -18,6 +18,7 @@ import type React from "react";
 interface HeadingProps {
     children: React.ReactNode;
     id?: string;
+    number?: number;
 }
 
 const Heading = (props: HeadingProps): React.ReactElement => {
@@ -25,23 +26,46 @@ const Heading = (props: HeadingProps): React.ReactElement => {
         <Container maxWidth={false} disableGutters>
             <Box
                 sx={{
+                    position: "relative",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
                     mb: { xs: 1.5, md: 2 },
                 }}
             >
+                {props.number !== undefined && (
+                    <Typography
+                        aria-hidden="true"
+                        sx={{
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -55%)",
+                            fontSize: { xs: 112, md: 160 },
+                            fontWeight: 800,
+                            letterSpacing: "-0.04em",
+                            color: (theme) =>
+                                theme.palette.mode === "light"
+                                    ? theme.palette.primary.main
+                                    : theme.palette.primary.light,
+                            opacity: 0.06,
+                            lineHeight: 1,
+                            userSelect: "none",
+                            pointerEvents: "none",
+                            whiteSpace: "nowrap",
+                        }}
+                    >
+                        {String(props.number).padStart(2, "0")}
+                    </Typography>
+                )}
                 <Typography
                     id={props.id}
                     variant="h2"
                     align="center"
                     sx={{
-                        fontWeight: 500,
                         fontSize: { xs: 36, md: 44 },
-                        letterSpacing: "-0.03em",
-                        lineHeight: 1.2,
                         mb: { xs: 2.5, md: 3 },
-                        color: "text.primary",
+                        color: (theme) => theme.palette.text.primary,
                         position: "relative",
                     }}
                 >
@@ -51,11 +75,14 @@ const Heading = (props: HeadingProps): React.ReactElement => {
                     sx={{
                         width: { xs: 56, md: 80 },
                         height: 2,
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === "light"
-                                ? "rgba(0, 0, 0, 0.2)"
-                                : "rgba(255, 255, 255, 0.2)",
+                        background: (theme) =>
+                            `linear-gradient(90deg, transparent, ${
+                                theme.palette.mode === "light"
+                                    ? theme.palette.primary.main
+                                    : theme.palette.primary.light
+                            }, transparent)`,
                         borderRadius: 1,
+                        opacity: 0.7,
                     }}
                 />
             </Box>
