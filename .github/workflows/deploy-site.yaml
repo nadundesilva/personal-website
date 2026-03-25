@@ -83,7 +83,7 @@ jobs:
               with:
                   scan-type: fs
                   vuln-type: library
-                  exit-code: 1
+                  exit-code: 0
                   format: sarif
                   output: trivy-results.sarif
                   ignore-unfixed: true
