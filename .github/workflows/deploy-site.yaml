@@ -79,7 +79,7 @@ jobs:
               with:
                   persist-credentials: false
             - name: Run Trivy vulnerability scanner
-              uses: aquasecurity/trivy-action@c1824fd6edce30d7ab345a9989de00bbd46ef284 # 0.34.0
+              uses: aquasecurity/trivy-action@ab6606b76e5a054be08cab3d07da323e90e751e8 # 0.34.0
               with:
                   scan-type: fs
                   vuln-type: library
