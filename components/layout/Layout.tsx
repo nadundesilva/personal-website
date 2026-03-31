@@ -453,7 +453,7 @@ const Layout = ({
                 disableGutters
                 maxWidth={false}
                 sx={{
-                    overflowX: "hidden",
+                    overflowX: "clip",
                     maxWidth: "100%",
                     background: (theme: Theme) =>
                         theme.palette.background.default,
