@@ -76,7 +76,7 @@ const WelcomeBanner = (): React.ReactElement => {
             disableGutters
             sx={{
                 position: "relative",
-                minHeight: "100dvh",
+                minHeight: "100lvh",
                 display: "flex",
                 flexDirection: "column",
                 overflow: "hidden", // Ensure background image doesn't overflow
