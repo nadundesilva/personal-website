@@ -177,10 +177,12 @@ const createWebsiteTheme = (
                         transition:
                             "background-color 0.3s ease, color 0.3s ease",
                     },
-                    /* Enable smooth scrolling and prevent horizontal overflow */
+                    /* overflow-x: clip prevents horizontal scroll without creating a scroll container.
+                     * overflow-x: hidden would create a scroll container, giving mobile browsers a
+                     * non-overlay scrollbar and causing the first touch swipe to be wasted. */
                     "html": {
                         scrollBehavior: "smooth",
-                        overflowX: "hidden",
+                        overflowX: "clip",
                     },
                     /* Respect user's reduced-motion preference for accessibility */
                     "@media (prefers-reduced-motion: reduce)": {
