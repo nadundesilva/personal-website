@@ -21,6 +21,7 @@ import type React from "react";
 
 import { LinkButton } from "@/components/content";
 import { ContentContainer } from "@/components/layout";
+import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
 
 const NotFound = (): React.ReactElement => {
     const float = keyframes`
@@ -97,7 +98,9 @@ const NotFound = (): React.ReactElement => {
                         opacity: { xs: 0.35, md: 0.4 },
                         mb: 3,
                         userSelect: "none",
-                        animation: `${float} 4s ease-in-out infinite`,
+                        [MOTION_OK_QUERY]: {
+                            animation: `${float} 4s ease-in-out infinite`,
+                        },
                     }}
                 >
                     404
@@ -107,10 +110,12 @@ const NotFound = (): React.ReactElement => {
                 <Box
                     sx={{
                         mb: 2,
-                        animation: `${fadeInUp} 0.7s ease-out 0.05s both`,
+                        [MOTION_OK_QUERY]: {
+                            animation: `${fadeInUp} 0.7s ease-out 0.05s both`,
+                        },
                     }}
                 >
-                    <Typography variant="h1" sx={{ fontWeight: 500, mb: 1.5 }}>
+                    <Typography variant="h1" sx={{ mb: 1.5 }}>
                         Page Not Found
                     </Typography>
                     <Box
@@ -137,15 +142,31 @@ const NotFound = (): React.ReactElement => {
                     sx={{
                         mb: 5,
                         maxWidth: 420,
-                        animation: `${fadeInUp} 0.7s ease-out 0.15s both`,
+                        [MOTION_OK_QUERY]: {
+                            animation: `${fadeInUp} 0.7s ease-out 0.15s both`,
+                        },
                     }}
                 >
                     The page you&apos;re looking for doesn&apos;t exist or may
                     have been moved.
                 </Typography>
 
-                <Box sx={{ animation: `${fadeInUp} 0.7s ease-out 0.25s both` }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        gap: 2,
+                        flexWrap: "wrap",
+                        justifyContent: "center",
+                        [MOTION_OK_QUERY]: {
+                            animation: `${fadeInUp} 0.7s ease-out 0.25s both`,
+                        },
+                    }}
+                >
                     <LinkButton href="/" name="Go to Homepage" />
+                    <LinkButton
+                        href="/blog-articles"
+                        name="Browse Blog Articles"
+                    />
                 </Box>
             </Box>
         </ContentContainer>

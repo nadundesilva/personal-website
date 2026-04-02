@@ -21,14 +21,21 @@ import {
     Typography,
     type TypographyProps,
 } from "@mui/material";
+
+export const WELCOME_BANNER_END_ID = "welcome-banner-end";
 import { alpha } from "@mui/material/styles";
 import { keyframes } from "@mui/system";
 import Image from "next-image-export-optimizer";
 import React from "react";
 import { Link } from "@/components/content";
+import {
+    MOTION_OK_QUERY,
+    SHORT_VIEWPORT_QUERY,
+} from "@/components/theme/media-queries";
 import { FULL_NAME, TAGLINE } from "@/constants/metadata";
 
 import welcomeBannerImage from "@/assets/banner.webp";
+import ScrollIndicator from "./components/ScrollIndicator";
 
 // Use MUI Link (plain anchor) as the inner component instead of Next.js Link
 // so the router does not treat the PDF path as a Next.js route and attempt to
@@ -61,13 +68,6 @@ const WelcomeBanner = (): React.ReactElement => {
             opacity: 1;
             transform: translateY(0);
         }
-    `;
-
-    // Animates the dot inside the mouse-outline scroll indicator at the bottom of the banner
-    const scrollDot = keyframes`
-        0% { transform: translateY(0); opacity: 0.8; }
-        80% { transform: translateY(14px); opacity: 0; }
-        100% { transform: translateY(14px); opacity: 0; }
     `;
 
     return (
@@ -124,16 +124,16 @@ const WelcomeBanner = (): React.ReactElement => {
                 justifyContent="center"
                 alignItems="center"
                 sx={{
-                    "position": "relative",
-                    "zIndex": 3,
-                    "flex": 1,
-                    "textAlign": "center",
-                    "pt": { xs: 8, md: 16 },
-                    "pb": { xs: 4, md: 6 },
-                    "px": { xs: 2, sm: 3, md: 4 }, // Width-based (native MUI)
+                    position: "relative",
+                    zIndex: 3,
+                    flex: 1,
+                    textAlign: "center",
+                    pt: { xs: 8, md: 16 },
+                    pb: { xs: 4, md: 6 },
+                    px: { xs: 2, sm: 3, md: 4 }, // Width-based (native MUI)
                     // Reduce vertical padding on very short viewports (e.g. landscape
                     // mobile) where the full padding would compress the content
-                    "@media (max-height: 500px)": {
+                    [SHORT_VIEWPORT_QUERY]: {
                         pt: 2,
                         pb: 2,
                     },
@@ -144,11 +144,13 @@ const WelcomeBanner = (): React.ReactElement => {
                         component="p"
                         mb={{ xs: 1.5, md: 2 }}
                         sx={{
-                            "fontSize": { xs: 18, sm: 24, md: 32, lg: 38 },
-                            "letterSpacing": "-0.03em",
-                            "opacity": 0.75,
-                            "animation": `${fadeInUp} 1s ease-out`,
-                            "@media (max-height: 500px)": {
+                            fontSize: { xs: 18, sm: 24, md: 32, lg: 38 },
+                            letterSpacing: "-0.03em",
+                            opacity: 0.75,
+                            [MOTION_OK_QUERY]: {
+                                animation: `${fadeInUp} 1s ease-out`,
+                            },
+                            [SHORT_VIEWPORT_QUERY]: {
                                 mb: 1.5,
                             },
                         }}
@@ -159,9 +161,11 @@ const WelcomeBanner = (): React.ReactElement => {
                         component="h1"
                         mb={{ xs: 3, md: 4 }}
                         sx={{
-                            "letterSpacing": { xs: "-0.05em", md: "-0.06em" },
-                            "animation": `${fadeInUp} 1s ease-out 0.1s both`,
-                            "@media (max-height: 500px)": {
+                            letterSpacing: { xs: "-0.05em", md: "-0.06em" },
+                            [MOTION_OK_QUERY]: {
+                                animation: `${fadeInUp} 1s ease-out 0.1s both`,
+                            },
+                            [SHORT_VIEWPORT_QUERY]: {
                                 mb: 2,
                             },
                         }}
@@ -172,12 +176,14 @@ const WelcomeBanner = (): React.ReactElement => {
                         mx="auto"
                         mb={{ xs: 3, md: 4 }}
                         sx={{
-                            "width": 120,
-                            "height": 2,
-                            "background": (theme) =>
+                            width: 120,
+                            height: 2,
+                            background: (theme) =>
                                 `linear-gradient(90deg, transparent, ${alpha(theme.palette.common.white, 0.6)}, transparent)`,
-                            "animation": `${fadeInUp} 1s ease-out 0.15s both`,
-                            "@media (max-height: 500px)": {
+                            [MOTION_OK_QUERY]: {
+                                animation: `${fadeInUp} 1s ease-out 0.15s both`,
+                            },
+                            [SHORT_VIEWPORT_QUERY]: {
                                 mb: 2,
                             },
                         }}
@@ -186,15 +192,17 @@ const WelcomeBanner = (): React.ReactElement => {
                         component="p"
                         mb={{ xs: 5, md: 6 }}
                         sx={{
-                            "color": (theme) => theme.palette.common.white,
-                            "fontSize": { xs: 18, sm: 22, md: 24 },
-                            "fontWeight": 300,
-                            "opacity": 0.9,
-                            "letterSpacing": "0.04em",
-                            "textShadow": (theme) =>
+                            color: (theme) => theme.palette.common.white,
+                            fontSize: { xs: 18, sm: 22, md: 24 },
+                            fontWeight: 300,
+                            opacity: 0.9,
+                            letterSpacing: "0.04em",
+                            textShadow: (theme) =>
                                 `0 1px 12px ${alpha(theme.palette.common.black, 0.25)}`,
-                            "animation": `${fadeInUp} 1s ease-out 0.2s both`,
-                            "@media (max-height: 500px)": {
+                            [MOTION_OK_QUERY]: {
+                                animation: `${fadeInUp} 1s ease-out 0.2s both`,
+                            },
+                            [SHORT_VIEWPORT_QUERY]: {
                                 mb: 3,
                             },
                         }}
@@ -222,11 +230,6 @@ const WelcomeBanner = (): React.ReactElement => {
                             "textTransform": "uppercase",
                             "fontSize": { xs: 12, md: 13 },
                             "borderRadius": 0,
-                            "transition": (theme) =>
-                                theme.transitions.create("all", {
-                                    duration: theme.transitions.duration.short,
-                                }),
-                            "animation": `${fadeInUp} 1s ease-out 0.25s both`,
                             "&::after": {
                                 content: '""',
                                 position: "absolute",
@@ -237,26 +240,31 @@ const WelcomeBanner = (): React.ReactElement => {
                                 background: (theme) =>
                                     `linear-gradient(105deg, transparent 20%, ${alpha(theme.palette.common.white, 0.18)} 50%, transparent 80%)`,
                                 transform: "translateX(-200%)",
-                                transition: "none",
                             },
                             "&:hover": {
                                 borderColor: (theme) =>
                                     theme.palette.common.white,
                                 backgroundColor: (theme) =>
                                     alpha(theme.palette.common.white, 0.12),
-                                transform: (theme) =>
-                                    `translateY(-${theme.motion.hoverLiftSubtle})`,
                                 boxShadow: (theme) =>
                                     `0 2px 12px ${alpha(theme.palette.common.black, 0.25)}`,
                             },
-                            "&:hover::after": {
-                                transform: "translateX(300%)",
-                                transition: (theme) =>
-                                    theme.transitions.create("transform", {
+                            [MOTION_OK_QUERY]: {
+                                "animation": `${fadeInUp} 1s ease-out 0.25s both`,
+                                "transition": (theme) =>
+                                    theme.transitions.create("all", {
                                         duration:
-                                            theme.transitions.duration.complex *
-                                            2,
+                                            theme.transitions.duration.short,
                                     }),
+                                "&:hover::after": {
+                                    transform: "translateX(300%)",
+                                    transition: (theme) =>
+                                        theme.transitions.create("transform", {
+                                            duration:
+                                                theme.transitions.duration
+                                                    .complex * 2,
+                                        }),
+                                },
                             },
                         }}
                     >
@@ -265,10 +273,8 @@ const WelcomeBanner = (): React.ReactElement => {
                 </Grid>
             </Grid>
 
-            {/* Mouse-outline scroll indicator: outer box = mouse body, inner box = animated dot */}
+            {/* Mouse-outline scroll indicator — clicking scrolls to the About Me section */}
             <Box
-                role="presentation"
-                aria-hidden="true"
                 display="flex"
                 flexDirection="column"
                 alignItems="center"
@@ -278,35 +284,20 @@ const WelcomeBanner = (): React.ReactElement => {
                     zIndex: 3,
                     pb: { xs: 4, md: 6 },
                     mt: { xs: 2, md: 0 },
-                    animation: `${fadeInUp} 1s ease-out 0.4s both`,
+                    [MOTION_OK_QUERY]: {
+                        animation: `${fadeInUp} 1s ease-out 0.4s both`,
+                    },
                 }}
             >
-                <Box
-                    sx={{
-                        width: 24,
-                        height: 38,
-                        borderRadius: 1.5,
-                        border: (theme) =>
-                            `2px solid ${alpha(theme.palette.common.white, 0.5)}`,
-                        position: "relative",
-                        display: "flex",
-                        justifyContent: "center",
-                    }}
-                >
-                    <Box
-                        sx={{
-                            width: 4,
-                            height: 7,
-                            borderRadius: 0.25,
-                            backgroundColor: (theme) =>
-                                alpha(theme.palette.common.white, 0.85),
-                            position: "absolute",
-                            top: 5,
-                            animation: `${scrollDot} 1.8s ease-in-out infinite`,
-                        }}
-                    />
-                </Box>
+                <ScrollIndicator />
             </Box>
+
+            {/* Hidden anchor at the very end of the banner — scroll target for the indicator above */}
+            <Box
+                id={WELCOME_BANNER_END_ID}
+                aria-hidden="true"
+                sx={{ height: 0 }}
+            />
         </Container>
     );
 };

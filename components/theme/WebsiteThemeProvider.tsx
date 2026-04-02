@@ -21,6 +21,15 @@ import {
     createTheme,
     ThemeProvider,
 } from "@mui/material/styles";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
+import type React from "react";
+
+import {
+    linkColors,
+    themePrimary,
+    themeSecondary,
+} from "@/components/theme/colors";
+import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
 
 declare module "@mui/material/styles" {
     interface Theme {
@@ -43,14 +52,11 @@ declare module "@mui/material/styles" {
     }
 }
 
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
-import type React from "react";
-
-import {
-    linkColors,
-    themePrimary,
-    themeSecondary,
-} from "@/components/theme/colors";
+declare module "@mui/material/Chip" {
+    interface ChipPropsSizeOverrides {
+        keyword: true;
+    }
+}
 
 const CSS_VAR_PREFIX = "mui";
 
@@ -123,8 +129,8 @@ const createWebsiteTheme = (
             h6: {
                 fontWeight: 500,
                 fontSize: "0.9375rem",
-                letterSpacing: "0em",
-                lineHeight: 1.5,
+                letterSpacing: "-0.02em",
+                lineHeight: 1.4,
             },
             body1: {
                 fontWeight: 400,
@@ -137,6 +143,13 @@ const createWebsiteTheme = (
                 fontSize: "0.875rem",
                 letterSpacing: "0em",
                 lineHeight: 1.7,
+            },
+            overline: {
+                fontWeight: 400,
+                fontSize: "0.75rem",
+                letterSpacing: "0.08em",
+                lineHeight: 1.6,
+                textTransform: "uppercase",
             },
         },
         spacing: 8,
@@ -173,27 +186,17 @@ const createWebsiteTheme = (
                             backgroundColor: theme.palette.primary.light,
                             color: theme.palette.primary.main,
                         },
+                    "html": {
+                        scrollBehavior: "auto",
+                        overflowX: "clip",
+                    },
                     "body": {
                         transition:
                             "background-color 0.3s ease, color 0.3s ease",
                     },
-                    /* overflow-x: clip prevents horizontal scroll without creating a scroll container.
-                     * overflow-x: hidden would create a scroll container, giving mobile browsers a
-                     * non-overlay scrollbar and causing the first touch swipe to be wasted. */
-                    "html": {
-                        scrollBehavior: "smooth",
-                        overflowX: "clip",
-                    },
-                    /* Respect user's reduced-motion preference for accessibility */
-                    "@media (prefers-reduced-motion: reduce)": {
-                        "html": {
-                            scrollBehavior: "auto",
-                        },
-                        "*, *::before, *::after": {
-                            animationDuration: "0.01ms !important",
-                            animationIterationCount: "1 !important",
-                            transitionDuration: "0.01ms !important",
-                            scrollBehavior: "auto !important",
+                    [MOTION_OK_QUERY]: {
+                        html: {
+                            scrollBehavior: "smooth",
                         },
                     },
                     /* Monospace font stack for inline code and code blocks */
@@ -288,9 +291,34 @@ const createWebsiteTheme = (
                         "fontWeight": 400,
                         "borderRadius": theme.shape.borderRadius,
                         "boxShadow": "none",
-                        "transition": theme.transitions.create("all", {
-                            duration: theme.transitions.duration.shorter,
-                        }),
+                        "transition": theme.transitions.create(
+                            [
+                                "opacity",
+                                "box-shadow",
+                                "background-color",
+                                "border-color",
+                                "color",
+                            ],
+                            {
+                                duration: theme.transitions.duration.shorter,
+                            },
+                        ),
+                        [MOTION_OK_QUERY]: {
+                            transition: theme.transitions.create(
+                                [
+                                    "opacity",
+                                    "box-shadow",
+                                    "background-color",
+                                    "border-color",
+                                    "color",
+                                    "transform",
+                                ],
+                                {
+                                    duration:
+                                        theme.transitions.duration.shorter,
+                                },
+                            ),
+                        },
                         "&:hover": {
                             boxShadow: "none",
                             opacity: 0.9,
@@ -328,6 +356,11 @@ const createWebsiteTheme = (
                                 theme.palette.mode === "dark"
                                     ? alpha(theme.palette.common.white, 0.05)
                                     : alpha(theme.palette.common.black, 0.02),
+                        },
+                        [MOTION_OK_QUERY]: {
+                            "&:hover": {
+                                transform: `translateY(-${theme.motion.hoverLiftSubtle})`,
+                            },
                         },
                     }),
                 },
@@ -411,26 +444,28 @@ const createWebsiteTheme = (
                                 ? alpha(theme.palette.primary.main, 0.33)
                                 : alpha(theme.palette.primary.light, 0.27),
                         "boxShadow": "none",
-                        "transition": theme.transitions.create("all", {
-                            duration: theme.transitions.duration.short,
-                        }),
+                        [MOTION_OK_QUERY]: {
+                            "transition": theme.transitions.create("all", {
+                                duration: theme.transitions.duration.short,
+                            }),
+                            "&:hover": {
+                                "transform": `translateY(-${theme.motion.hoverLift})`,
+                                "& img": { transform: "scale(1.05)" },
+                            },
+                        },
                         "&:hover": {
-                            "transform": `translateY(-${theme.motion.hoverLift})`,
-                            "boxShadow":
+                            boxShadow:
                                 theme.palette.mode === "light"
                                     ? `0 4px 16px ${alpha(theme.palette.common.black, 0.06)}, 0 0 24px ${alpha(theme.palette.primary.main, 0.2)}`
                                     : `0 4px 16px ${alpha(theme.palette.common.black, 0.2)}, 0 0 24px ${alpha(theme.palette.primary.light, 0.16)}`,
-                            "borderColor":
+                            borderColor:
                                 theme.palette.mode === "light"
                                     ? alpha(theme.palette.primary.main, 0.25)
                                     : alpha(theme.palette.primary.light, 0.2),
-                            "borderTopColor":
+                            borderTopColor:
                                 theme.palette.mode === "light"
                                     ? theme.palette.primary.main
                                     : theme.palette.primary.light,
-                            "& img": {
-                                transform: "scale(1.05)",
-                            },
                         },
                     }),
                 },
@@ -441,6 +476,7 @@ const createWebsiteTheme = (
                         "borderRadius":
                             (theme.shape.borderRadius as number) * 1.5,
                         "transition": "none",
+                        "color": "inherit",
                         "textDecoration": "none",
                         "&:hover": {
                             textDecoration: "none",
@@ -464,18 +500,37 @@ const createWebsiteTheme = (
             MuiCardMedia: {
                 styleOverrides: {
                     root: ({ theme }: { theme: Theme }) => ({
-                        "transition": theme.transitions.create("opacity", {
-                            duration: theme.transitions.duration.short,
-                        }),
-                        "& img": {
-                            transition: theme.transitions.create("transform", {
-                                duration: theme.transitions.duration.standard,
+                        [MOTION_OK_QUERY]: {
+                            "transition": theme.transitions.create("opacity", {
+                                duration: theme.transitions.duration.short,
                             }),
+                            "& img": {
+                                transition: theme.transitions.create(
+                                    "transform",
+                                    {
+                                        duration:
+                                            theme.transitions.duration.standard,
+                                    },
+                                ),
+                            },
                         },
                     }),
                 },
             },
             MuiChip: {
+                variants: [
+                    {
+                        props: { size: "keyword" },
+                        style: {
+                            "height": "1.25rem",
+                            "fontSize": "0.625rem",
+                            "& .MuiChip-label": {
+                                paddingLeft: "0.375rem",
+                                paddingRight: "0.375rem",
+                            },
+                        },
+                    },
+                ],
                 styleOverrides: {
                     root: ({ theme }: { theme: Theme }) => ({
                         fontWeight: 400,
@@ -488,7 +543,13 @@ const createWebsiteTheme = (
                         fontSize: "0.6875rem",
                         height: 22,
                     },
-                    outlined: ({ theme }: { theme: Theme }) => ({
+                    outlined: ({
+                        theme,
+                        ownerState,
+                    }: {
+                        theme: Theme;
+                        ownerState: { clickable?: boolean };
+                    }) => ({
                         "borderColor":
                             theme.palette.mode === "light"
                                 ? alpha(theme.palette.primary.main, 0.35)
@@ -497,11 +558,15 @@ const createWebsiteTheme = (
                             theme.palette.mode === "light"
                                 ? theme.palette.primary.main
                                 : theme.palette.primary.light,
-                        "transition": theme.transitions.create("all", {
-                            duration: theme.transitions.duration.short,
-                        }),
-                        "&:hover, &:focus-visible": {
-                            transform: `translateY(-${theme.motion.hoverLift})`,
+                        [MOTION_OK_QUERY]: {
+                            transition: theme.transitions.create("all", {
+                                duration: theme.transitions.duration.short,
+                            }),
+                            ...(ownerState.clickable && {
+                                "&:hover, &:focus-visible": {
+                                    transform: `translateY(-${theme.motion.hoverLift})`,
+                                },
+                            }),
                         },
                         "&:hover": {
                             borderColor:
@@ -520,12 +585,14 @@ const createWebsiteTheme = (
                 styleOverrides: {
                     root: ({ theme }: { theme: Theme }) => ({
                         "boxShadow": `0 2px 12px ${alpha(theme.palette.common.black, 0.06)}`,
-                        "transition": theme.transitions.create(
-                            ["transform", "box-shadow"],
-                            { duration: theme.transitions.duration.short },
-                        ),
+                        [MOTION_OK_QUERY]: {
+                            "transition": theme.transitions.create(
+                                ["transform", "box-shadow"],
+                                { duration: theme.transitions.duration.short },
+                            ),
+                            "&:hover": { transform: "scale(1.02)" },
+                        },
                         "&:hover": {
-                            transform: "scale(1.02)",
                             boxShadow: `0 4px 16px ${alpha(theme.palette.common.black, 0.1)}`,
                         },
                     }),
@@ -541,9 +608,11 @@ const createWebsiteTheme = (
                     }),
                     bar: ({ theme }: { theme: Theme }) => ({
                         borderRadius: (theme.shape.borderRadius as number) / 4,
-                        transition: theme.transitions.create("transform", {
-                            duration: theme.transitions.duration.complex,
-                        }),
+                        [MOTION_OK_QUERY]: {
+                            transition: theme.transitions.create("transform", {
+                                duration: theme.transitions.duration.complex,
+                            }),
+                        },
                     }),
                 },
             },
@@ -559,11 +628,15 @@ const createWebsiteTheme = (
                     root: ({ theme }: { theme: Theme }) => ({
                         "borderRadius": theme.shape.borderRadius,
                         "overflow": "hidden",
-                        "transition": theme.transitions.create("all", {
-                            duration: theme.transitions.duration.short,
-                        }),
+                        [MOTION_OK_QUERY]: {
+                            "transition": theme.transitions.create("all", {
+                                duration: theme.transitions.duration.short,
+                            }),
+                            "&:hover": {
+                                transform: `translateY(-${theme.motion.hoverLiftSubtle})`,
+                            },
+                        },
                         "&:hover": {
-                            transform: `translateY(-${theme.motion.hoverLiftSubtle})`,
                             boxShadow: `0 4px 16px ${alpha(theme.palette.common.black, 0.06)}`,
                         },
                     }),
@@ -573,13 +646,31 @@ const createWebsiteTheme = (
                 styleOverrides: {
                     root: ({ theme }: { theme: Theme }) => ({
                         "boxShadow": `0 2px 8px ${alpha(theme.palette.common.black, 0.15)}`,
-                        "transition": theme.transitions.create("all", {
-                            duration: theme.transitions.duration.short,
-                        }),
+                        [MOTION_OK_QUERY]: {
+                            "transition": theme.transitions.create("all", {
+                                duration: theme.transitions.duration.short,
+                            }),
+                            "&:hover": {
+                                transform: `translateY(-${theme.motion.hoverLift})`,
+                            },
+                        },
                         "&:hover": {
-                            transform: `translateY(-${theme.motion.hoverLift})`,
                             boxShadow: `0 4px 12px ${alpha(theme.palette.common.black, 0.2)}`,
                             backgroundColor: theme.palette.primary.dark,
+                        },
+                    }),
+                },
+            },
+            MuiToolbar: {
+                styleOverrides: {
+                    root: ({ theme }: { theme: Theme }) => ({
+                        [theme.breakpoints.only("xs")]: {
+                            paddingLeft: theme.spacing(1),
+                            paddingRight: theme.spacing(1),
+                        },
+                        [theme.breakpoints.up("sm")]: {
+                            paddingLeft: theme.spacing(2),
+                            paddingRight: theme.spacing(2),
                         },
                     }),
                 },

@@ -119,7 +119,6 @@ export const AccentedList = ({
                 theme.palette.mode === "light"
                     ? alpha(theme.palette.primary.main, 0.03)
                     : alpha(theme.palette.primary.light, 0.04),
-            borderRadius: "0 4px 4px 0",
         }}
     >
         <List heading={heading} headingVariant={headingVariant}>

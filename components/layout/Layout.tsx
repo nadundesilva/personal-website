@@ -44,6 +44,7 @@ import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
 import { Link } from "@/components/content";
+import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
 import { FULL_NAME } from "@/constants/metadata";
 import { Route } from "@/constants/routes";
 
@@ -94,6 +95,7 @@ const Layout = ({
     const isLargeScreen = useMediaQuery((theme: Theme) =>
         theme.breakpoints.up("lg"),
     );
+    const motionOk = useMediaQuery(MOTION_OK_QUERY);
 
     const drawer = (
         <>
@@ -129,7 +131,10 @@ const Layout = ({
                             color: (theme) =>
                                 theme.palette.primary.contrastText,
                             boxShadow: 2,
-                            marginTop: { xs: "56px", sm: "64px" },
+                            marginTop: (theme) => ({
+                                xs: `${theme.mixins.toolbar.minHeight as number}px`,
+                                sm: `${(theme.mixins.toolbar[theme.breakpoints.up("sm")] as { minHeight: number }).minHeight}px`,
+                            }),
                             zIndex: (theme) => theme.zIndex.drawer,
                         },
                     },
@@ -173,15 +178,6 @@ const Layout = ({
                                         "display": "flex",
                                         "justifyContent": "center",
                                         "alignItems": "center",
-                                        "transition": (theme) =>
-                                            theme.transitions.create(
-                                                ["background-color", "opacity"],
-                                                {
-                                                    duration:
-                                                        theme.transitions
-                                                            .duration.shortest,
-                                                },
-                                            ),
                                         "&:hover": {
                                             "backgroundColor": (theme) =>
                                                 alpha(
@@ -194,6 +190,15 @@ const Layout = ({
                                                 width: "50%",
                                             },
                                         },
+                                        "transition": (theme) =>
+                                            theme.transitions.create(
+                                                ["background-color", "opacity"],
+                                                {
+                                                    duration:
+                                                        theme.transitions
+                                                            .duration.shortest,
+                                                },
+                                            ),
                                         "&::after": {
                                             content: '""',
                                             position: "absolute",
@@ -209,16 +214,21 @@ const Layout = ({
                                                     .contrastText,
                                             opacity: isActive ? 1 : 0.8,
                                             borderRadius: 1,
-                                            transition: (theme) =>
-                                                theme.transitions.create(
-                                                    "width",
-                                                    {
-                                                        duration:
-                                                            theme.transitions
-                                                                .duration
-                                                                .shorter,
-                                                    },
-                                                ),
+                                        },
+                                        [MOTION_OK_QUERY]: {
+                                            "&::after": {
+                                                transition: (theme) =>
+                                                    theme.transitions.create(
+                                                        "width",
+                                                        {
+                                                            duration:
+                                                                theme
+                                                                    .transitions
+                                                                    .duration
+                                                                    .shorter,
+                                                        },
+                                                    ),
+                                            },
                                         },
                                     }}
                                 >
@@ -276,12 +286,7 @@ const Layout = ({
             data-testid="app-bar"
             elevation={scrollTrigger ? 1 : 0}
         >
-            <Toolbar
-                sx={{
-                    minHeight: { xs: 56, sm: 64 },
-                    px: { xs: 1, sm: 2 },
-                }}
-            >
+            <Toolbar>
                 {drawer}
                 <Box
                     onClick={() => isDrawerOpen && toggleDrawer()}
@@ -290,7 +295,6 @@ const Layout = ({
                     <Link
                         href={"/"}
                         sx={{
-                            "textDecoration": "none",
                             "&:hover": { textDecoration: "none" },
                         }}
                     >
@@ -365,16 +369,21 @@ const Layout = ({
                                                 theme.palette.primary
                                                     .contrastText,
                                             opacity: isActive ? 1 : 0.8,
-                                            transition: (theme) =>
-                                                theme.transitions.create(
-                                                    "width",
-                                                    {
-                                                        duration:
-                                                            theme.transitions
-                                                                .duration
-                                                                .shorter,
-                                                    },
-                                                ),
+                                        },
+                                        [MOTION_OK_QUERY]: {
+                                            "&::after": {
+                                                transition: (theme) =>
+                                                    theme.transitions.create(
+                                                        "width",
+                                                        {
+                                                            duration:
+                                                                theme
+                                                                    .transitions
+                                                                    .duration
+                                                                    .shorter,
+                                                        },
+                                                    ),
+                                            },
                                         },
                                     }}
                                 >
@@ -411,11 +420,8 @@ const Layout = ({
     );
 
     const scrollToTop = (): void => {
-        const prefersReducedMotion = window.matchMedia(
-            "(prefers-reduced-motion: reduce)",
-        ).matches;
         scrollToTopRef.current?.scrollIntoView({
-            behavior: prefersReducedMotion ? "instant" : "smooth",
+            behavior: motionOk ? "smooth" : "instant",
             block: "start",
         });
         document.getElementById("main-content")?.focus();
@@ -432,12 +438,14 @@ const Layout = ({
                     "left": 16,
                     "zIndex": (theme) => theme.zIndex.modal,
                     "transform": "translateY(-150%)",
-                    "transition": (theme) =>
-                        theme.transitions.create("transform", {
-                            duration: theme.transitions.duration.short,
-                        }),
                     "&:focus-visible": {
                         transform: "translateY(0)",
+                    },
+                    [MOTION_OK_QUERY]: {
+                        transition: (theme) =>
+                            theme.transitions.create("transform", {
+                                duration: theme.transitions.duration.short,
+                            }),
                     },
                 }}
             >

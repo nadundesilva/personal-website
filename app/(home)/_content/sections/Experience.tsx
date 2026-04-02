@@ -12,7 +12,11 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { LocationCity } from "@mui/icons-material";
+import {
+    KeyboardArrowDown,
+    KeyboardArrowUp,
+    LocationCity,
+} from "@mui/icons-material";
 import {
     Timeline,
     TimelineItem,
@@ -24,6 +28,7 @@ import {
 } from "@mui/lab";
 import {
     Box,
+    Button,
     Card,
     type Theme,
     Typography,
@@ -34,8 +39,74 @@ import { alpha } from "@mui/material/styles";
 import { keyframes } from "@mui/system";
 import { visuallyHidden } from "@mui/utils";
 import type React from "react";
+import { useState } from "react";
 
 import Experiences, { type Experience } from "@/constants/experience";
+import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
+import { KeywordChip } from "@/components/primitives";
+
+const SKILLS_PREVIEW_COUNT = 5;
+
+interface ExperienceSkillsProps {
+    skills: string[];
+    isContentOnRight: boolean;
+}
+
+const ExperienceSkills = ({
+    skills,
+    isContentOnRight,
+}: ExperienceSkillsProps): React.ReactElement => {
+    const [expanded, setExpanded] = useState(false);
+    return (
+        <Box
+            role="group"
+            aria-label="Skills used"
+            sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 0.625,
+                mt: 2,
+                justifyContent: isContentOnRight ? "flex-start" : "flex-end",
+            }}
+        >
+            {skills
+                .slice(0, expanded ? undefined : SKILLS_PREVIEW_COUNT)
+                .map((skill) => (
+                    <KeywordChip key={skill} label={skill} />
+                ))}
+            {skills.length > SKILLS_PREVIEW_COUNT && (
+                <Button
+                    size="small"
+                    variant="text"
+                    onClick={() => setExpanded((prev) => !prev)}
+                    sx={{
+                        fontSize: "0.625rem",
+                        px: 0.5,
+                        py: 0,
+                        minWidth: 0,
+                        height: "1.25rem",
+                        fontWeight: 400,
+                        color: "text.secondary",
+                        alignSelf: "center",
+                        gap: 0.25,
+                    }}
+                >
+                    {expanded ? (
+                        <>
+                            Show less
+                            <KeyboardArrowUp sx={{ fontSize: "0.75rem" }} />
+                        </>
+                    ) : (
+                        <>
+                            +{skills.length - SKILLS_PREVIEW_COUNT} more
+                            <KeyboardArrowDown sx={{ fontSize: "0.75rem" }} />
+                        </>
+                    )}
+                </Button>
+            )}
+        </Box>
+    );
+};
 
 const Experience = (): React.ReactElement => {
     const theme = useTheme();
@@ -103,27 +174,32 @@ const Experience = (): React.ReactElement => {
                             )}
                             <TimelineSeparator>
                                 <TimelineDot
-                                    sx={{
-                                        "backgroundColor": (theme) =>
+                                    sx={(theme) => ({
+                                        backgroundColor:
                                             theme.palette.primary.main,
-                                        "width": 18,
-                                        "height": 18,
-                                        "boxShadow": "none",
-                                        "border": "3.5px solid",
-                                        "borderColor": (theme) =>
+                                        width: 18,
+                                        height: 18,
+                                        boxShadow: "none",
+                                        border: "3.5px solid",
+                                        borderColor:
                                             theme.palette.background.paper,
                                         // Stagger each dot's pulse by 0.4s so they don't all pulse in sync
-                                        "animation": `${timelinePulse} 2.5s ease-out ${index * 0.4}s infinite`,
-                                        "transition": (theme) =>
-                                            theme.transitions.create("all", {
-                                                duration:
-                                                    theme.transitions.duration
-                                                        .short,
-                                            }),
-                                        "&:hover": {
-                                            transform: "scale(1.15)",
+                                        [MOTION_OK_QUERY]: {
+                                            "animation": `${timelinePulse} 2.5s ease-out ${index * 0.4}s infinite`,
+                                            "transition":
+                                                theme.transitions.create(
+                                                    "all",
+                                                    {
+                                                        duration:
+                                                            theme.transitions
+                                                                .duration.short,
+                                                    },
+                                                ),
+                                            "&:hover": {
+                                                transform: "scale(1.15)",
+                                            },
                                         },
-                                    }}
+                                    })}
                                 />
                                 <TimelineConnector
                                     sx={{
@@ -147,11 +223,14 @@ const Experience = (): React.ReactElement => {
                                         "p": { xs: 2.5, md: 4.5 },
                                         "mb": 7,
                                         "transition": (theme) =>
-                                            theme.transitions.create("all", {
-                                                duration:
-                                                    theme.transitions.duration
-                                                        .shortest,
-                                            }),
+                                            theme.transitions.create(
+                                                "border-color",
+                                                {
+                                                    duration:
+                                                        theme.transitions
+                                                            .duration.shortest,
+                                                },
+                                            ),
                                         "&:hover": {
                                             ...(isContentOnRight
                                                 ? {
@@ -215,13 +294,11 @@ const Experience = (): React.ReactElement => {
                                         variant="h6"
                                         component="h3"
                                         mb={2.5}
-                                        fontWeight={500}
                                         sx={{
                                             textAlign: isContentOnRight
                                                 ? "left"
                                                 : "right",
                                             fontSize: { xs: 19, md: 20 },
-                                            letterSpacing: "-0.02em",
                                             lineHeight: 1.3,
                                         }}
                                     >
@@ -280,7 +357,6 @@ const Experience = (): React.ReactElement => {
                                                 lineHeight: 1.3,
                                                 fontSize: { xs: 13 },
                                                 fontWeight: 400,
-                                                letterSpacing: "0em",
                                             }}
                                         >
                                             <Box
@@ -298,6 +374,12 @@ const Experience = (): React.ReactElement => {
                                             />
                                         )}
                                     </Box>
+                                    {item.skills.length > 0 && (
+                                        <ExperienceSkills
+                                            skills={item.skills}
+                                            isContentOnRight={isContentOnRight}
+                                        />
+                                    )}
                                 </Card>
                             </TimelineContent>
                         </TimelineItem>

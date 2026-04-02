@@ -15,7 +15,7 @@
 import type { MetadataRoute } from "next";
 
 import { FULL_NAME, MAIN_DESCRIPTION } from "@/constants/metadata";
-import { getImageType } from "@/utils/image-metadata";
+import { getImageType } from "@/utils/common/image-metadata";
 
 const manifest = (): MetadataRoute.Manifest => ({
     name: FULL_NAME,

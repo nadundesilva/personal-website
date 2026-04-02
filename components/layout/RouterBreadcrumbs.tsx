@@ -93,7 +93,7 @@ const RouterBreadcrumbs = ({
                     __html: JSON.stringify(breadcrumbJsonLd),
                 }}
             />
-            {pathname !== "/" && pathname !== "/404" && (
+            {breadcrumbs.length > 1 && (
                 <ContentContainer
                     sx={{
                         pt: 2,

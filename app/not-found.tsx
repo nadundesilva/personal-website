@@ -10,23 +10,17 @@
  *
  * Website: https://nadundesilva.com
  *
- * © 2023 Nadun De Silva. All rights reserved.
+ * © 2026 Nadun De Silva. All rights reserved.
  */
+import type { Metadata } from "next";
 import type React from "react";
 
-import ReadingProgress from "@/components/blog-articles/ReadingProgress";
+import NotFound from "./404/NotFound";
 
-interface BlogArticlesLayoutProps {
-    children: React.ReactNode;
-}
+export const metadata: Metadata = {
+    title: "Page Not Found",
+};
 
-const BlogArticlesLayout = ({
-    children,
-}: BlogArticlesLayoutProps): React.ReactElement => (
-    <>
-        <ReadingProgress />
-        {children}
-    </>
-);
+const NotFoundPage = (): React.ReactElement => <NotFound />;
 
-export default BlogArticlesLayout;
+export default NotFoundPage;

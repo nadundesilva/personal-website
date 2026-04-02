@@ -15,6 +15,7 @@
 import { KeyboardArrowRight } from "@mui/icons-material";
 import { Box, Grid } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
+import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
 import { useId } from "react";
 import type React from "react";
 
@@ -26,7 +27,10 @@ import {
     Title,
 } from "@/components/content";
 import ArticleListItem from "./ArticlesListItem";
-import { getBlogArticleGroups, type BlogArticle } from "@/utils/blog-articles";
+import {
+    getBlogArticleGroups,
+    type BlogArticle,
+} from "@/utils/server/blog-articles";
 
 interface ArticlesGroupProps {
     title?: string;
@@ -51,16 +55,22 @@ const ArticlesGroup = ({
                             "display": "block",
                             "width": "fit-content",
                             "color": "inherit",
-                            "textDecoration": "none",
                             "&:hover": { textDecoration: "none" },
                             "& .category-arrow": {
-                                transition:
-                                    "opacity 250ms ease, transform 250ms ease",
-                                opacity: 0.4,
+                                opacity: 0.7,
+                                transition: "opacity 250ms ease",
                             },
                             "&:hover .category-arrow": {
                                 opacity: 1,
-                                transform: "translateX(4px)",
+                            },
+                            [MOTION_OK_QUERY]: {
+                                "& .category-arrow": {
+                                    transition:
+                                        "opacity 250ms ease, transform 250ms ease",
+                                },
+                                "&:hover .category-arrow": {
+                                    transform: "translateX(4px)",
+                                },
                             },
                         }}
                     >

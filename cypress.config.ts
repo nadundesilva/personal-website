@@ -20,7 +20,7 @@ import {
     BLOG_ARTICLES_DIRECTORY_PREFIX,
     BLOG_ARTICLES_GROUP_FILE,
     resolveWebsiteBlogArticlesSubPath,
-} from "./utils/blog-articles";
+} from "./utils/server/blog-articles";
 
 export default defineConfig({
     projectId: "w712w3",

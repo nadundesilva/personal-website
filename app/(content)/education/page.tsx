@@ -121,7 +121,7 @@ const Education = (): React.ReactElement => {
                             ].path
                         }
                         name="View Certifications"
-                        icon={KeyboardArrowRight}
+                        endIcon={KeyboardArrowRight}
                     />
                 </Box>
             </ScrollReveal>
