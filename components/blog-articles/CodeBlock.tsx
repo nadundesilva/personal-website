@@ -14,15 +14,14 @@
  */
 "use client";
 
-import CheckIcon from "@mui/icons-material/Check";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import Box from "@mui/material/Box";
 import GlobalStyles from "@mui/material/GlobalStyles";
-import IconButton from "@mui/material/IconButton";
 import { alpha } from "@mui/material/styles";
-import Tooltip from "@mui/material/Tooltip";
 import type React from "react";
 import { useRef, useState } from "react";
+
+import { CopyButton } from "@/components/primitives";
+import { NO_HOVER_QUERY } from "@/components/theme/media-queries";
 
 // rehype-pretty-code data attributes
 const DATA_ATTR_REHYPE_FIGURE = "data-rehype-pretty-code-figure";
@@ -69,15 +68,9 @@ const CodeBlock = ({
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     const handleCopy = async () => {
-        try {
-            const text =
-                wrapperRef.current?.querySelector("code")?.textContent ?? "";
-            await navigator.clipboard.writeText(text);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
-        } catch {
-            // Clipboard API unavailable or permission denied
-        }
+        const text =
+            wrapperRef.current?.querySelector("code")?.textContent ?? "";
+        await navigator.clipboard.writeText(text);
     };
 
     return (
@@ -110,7 +103,7 @@ const CodeBlock = ({
                         [`figure[${DATA_ATTR_REHYPE_FIGURE}]`]: {
                             margin: "1.5rem 0",
                             border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
-                            borderRadius: "8px",
+                            borderRadius: `${theme.shape.borderRadius}px`,
                             overflow: "hidden",
                             ...theme.applyStyles("dark", {
                                 borderColor: alpha(
@@ -160,7 +153,7 @@ const CodeBlock = ({
                             opacity: 1,
                             color: codeTheme.success,
                         },
-                        "@media (hover: none)": {
+                        [NO_HOVER_QUERY]: {
                             "& .copy-btn": { opacity: 1 },
                         },
 
@@ -223,11 +216,16 @@ const CodeBlock = ({
                                 lineHeight: 1.8,
                             },
 
-                            // Line number rendered via CSS counter in the gutter
+                            // Line number rendered via CSS counter in the gutter.
+                            // box-sizing: content-box is required because MUI's CSS reset applies
+                            // border-box globally (including ::before). Without it, width is the
+                            // *total* box size, so padding-right consumes the number's content
+                            // area and the border cuts through multi-digit numbers.
                             [`& [${DATA_ATTR_REHYPE_LINE}]::before`]: {
                                 counterIncrement: "line",
                                 content: "counter(line)",
                                 display: "inline-block",
+                                boxSizing: "content-box",
                                 marginLeft: `calc(-1 * var(${CSS_VAR_GUTTER_SIZE}))`,
                                 width: "1rem",
                                 paddingRight: "1rem",
@@ -258,20 +256,12 @@ const CodeBlock = ({
                 }}
             >
                 <pre {...props}>{children}</pre>
-                <Tooltip title={copied ? "Copied!" : "Copy to clipboard"}>
-                    <IconButton
-                        className="copy-btn"
-                        onClick={handleCopy}
-                        size="small"
-                        aria-label="Copy code to clipboard"
-                    >
-                        {copied ? (
-                            <CheckIcon fontSize="small" />
-                        ) : (
-                            <ContentCopyIcon fontSize="small" />
-                        )}
-                    </IconButton>
-                </Tooltip>
+                <CopyButton
+                    className="copy-btn"
+                    label="Copy to clipboard"
+                    onCopy={handleCopy}
+                    onCopiedChange={setCopied}
+                />
             </Box>
         </>
     );

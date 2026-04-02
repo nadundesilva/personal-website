@@ -14,7 +14,8 @@
  */
 "use client";
 
-import { Box, type SxProps, type Theme } from "@mui/material";
+import { Box, useMediaQuery, type SxProps, type Theme } from "@mui/material";
+import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
@@ -35,14 +36,11 @@ const ScrollReveal = ({
     sx,
 }: ScrollRevealProps): React.ReactElement => {
     const ref = useRef<HTMLDivElement>(null);
-    const [isVisible, setIsVisible] = useState(
-        () =>
-            typeof window !== "undefined" &&
-            window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-    );
+    const [isVisible, setIsVisible] = useState(false);
+    const motionOk = useMediaQuery(MOTION_OK_QUERY);
 
     useEffect(() => {
-        if (isVisible) return;
+        if (!motionOk) return;
         const element = ref.current;
         if (!element) return;
 
@@ -57,24 +55,33 @@ const ScrollReveal = ({
         );
         observer.observe(element);
         return () => observer.disconnect();
-    }, [isVisible]);
+    }, [motionOk]);
 
     return (
         <Box
             ref={ref}
-            sx={{
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible
-                    ? "translateY(0)"
-                    : `translateY(${SCROLL_REVEAL_OFFSET})`,
-                transition: (theme) =>
-                    theme.transitions.create(["opacity", "transform"], {
-                        duration: theme.transitions.duration.complex,
-                        easing: theme.transitions.easing.easeOut,
-                        delay,
-                    }),
-                ...sx,
-            }}
+            sx={[
+                // Base: always fully visible. Reduced-motion users and SSR stay here.
+                { opacity: 1, transform: "none" },
+                (theme) => ({
+                    // Motion-OK users: start hidden, animate in when scrolled into view.
+                    [MOTION_OK_QUERY]: {
+                        opacity: isVisible ? 1 : 0,
+                        transform: isVisible
+                            ? "translateY(0)"
+                            : `translateY(${SCROLL_REVEAL_OFFSET})`,
+                        transition: theme.transitions.create(
+                            ["opacity", "transform"],
+                            {
+                                duration: theme.transitions.duration.complex,
+                                easing: theme.transitions.easing.easeOut,
+                                delay,
+                            },
+                        ),
+                    },
+                }),
+                ...(Array.isArray(sx) ? sx : sx != null ? [sx] : []),
+            ]}
         >
             {children}
         </Box>

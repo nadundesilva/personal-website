@@ -412,6 +412,8 @@ Always import `Image` from `next-image-export-optimizer`, not from `next/image`.
 
 **All styling must go through the MUI theme first.** Only add global CSS for the specific use cases listed below.
 
+**Never use raw HTML elements.** Always use MUI components (`Box`, `Typography`, `Stack`, etc.) so that the `sx` prop and theme callbacks are available.
+
 The theme is in [`components/theme/WebsiteThemeProvider.tsx`](./components/theme/WebsiteThemeProvider.tsx).
 
 ### Color Tokens
@@ -524,6 +526,47 @@ declare module "@mui/material/styles" {
 
 Then add the values to the `createTheme()` call at the top level of the theme object (not inside `colorSchemes`). Values in the top-level theme are shared across all color schemes.
 
+### Motion Guards (`prefers-reduced-motion`)
+
+All `@media` query strings live in [`components/theme/media-queries.ts`](./components/theme/media-queries.ts). Never write a raw `@media (...)` string inline.
+
+**Rule: always use the positive guard.** Put motion CSS _inside_ `[MOTION_OK_QUERY]` so reduced-motion users never receive it. Never add transitions/animations unconditionally and then cancel them with a `prefers-reduced-motion: reduce` block.
+
+```tsx
+import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
+
+// CORRECT — motion CSS is absent for reduced-motion users
+sx={{
+    "&:hover": { boxShadow: hoverShadow },   // visual change, no guard needed
+    [MOTION_OK_QUERY]: {
+        transition: (theme) => theme.transitions.create("box-shadow", { ... }),
+        "&:hover": { transform: (theme) => `translateY(-${theme.motion.hoverLift})` },
+    },
+}}
+
+// WRONG — adds transition for everyone then cancels it
+sx={{
+    transition: "box-shadow 0.2s ease",
+    "@media (prefers-reduced-motion: reduce)": { transition: "none" },
+}}
+```
+
+This applies to `sx` props, `styled()` objects, and MUI theme `styleOverrides`.
+
+For imperative JS choices (e.g. scroll behavior), use `useMediaQuery(MOTION_OK_QUERY)` at the component level:
+
+```tsx
+const motionOk = useMediaQuery(MOTION_OK_QUERY);
+element.scrollIntoView({ behavior: motionOk ? "smooth" : "instant" });
+```
+
+### Avoid `!important`
+
+Do not use `!important` in `sx` props or CSS. It bypasses the specificity system and makes styles
+hard to override and debug. Exhaust all other options first.
+
+Only reach for `!important` if all of the above have been tried and genuinely do not work.
+
 ### Where to Put Styles
 
 | Use case                                  | Location                                                 |
@@ -538,7 +581,6 @@ Then add the values to the `createTheme()` call at the top level of the theme ob
 
 Only for:
 
-- `@media (prefers-reduced-motion: reduce)` — disables all animations and smooth scrolling globally.
 - Custom scrollbar styling (WebKit + Firefox).
 - `body`/`html` resets: margin, scroll behavior, `overflow-x: hidden`.
 - Monospace font stack for `code` elements.

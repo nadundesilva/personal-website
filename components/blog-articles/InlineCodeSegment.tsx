@@ -33,7 +33,7 @@ const InlineCodeSegment = ({
                 "fontFamily": `${theme.typography.codeFontFamily}, monospace`,
                 "backgroundColor": alpha(theme.palette.primary.main, 0.1),
                 "border": `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
-                "borderRadius": "4px",
+                "borderRadius": 0.5,
                 "whiteSpace": "nowrap",
                 "verticalAlign": "middle",
                 ...theme.applyStyles("dark", {

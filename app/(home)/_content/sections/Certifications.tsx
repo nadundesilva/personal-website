@@ -62,7 +62,6 @@ const Certifications = (): React.ReactElement => {
                             component={Link}
                             href={certification.link}
                             target="_blank"
-                            style={{ textDecoration: "none", color: "inherit" }}
                             sx={{
                                 height: "100%",
                                 p: { xs: 2.5, md: 3.5 },
@@ -137,8 +136,6 @@ const Certifications = (): React.ReactElement => {
                                     component="h3"
                                     sx={{
                                         fontSize: { xs: 16, md: 17 },
-                                        letterSpacing: "-0.02em",
-                                        lineHeight: 1.4,
                                         mb: 2,
                                     }}
                                 >
@@ -161,7 +158,6 @@ const Certifications = (): React.ReactElement => {
                                     sx={{
                                         mt: 1,
                                         fontSize: { xs: 11, md: 12 },
-                                        letterSpacing: "0em",
                                     }}
                                 >
                                     Issued by

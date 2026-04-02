@@ -23,7 +23,8 @@ import Link from "./Link";
 interface LinkButtonProps {
     href: string;
     name: string;
-    icon?: React.ComponentType;
+    startIcon?: React.ComponentType;
+    endIcon?: React.ComponentType;
     target?: string;
     ariaLabel?: string;
 }
@@ -31,7 +32,8 @@ interface LinkButtonProps {
 const LinkButton = ({
     href,
     name,
-    icon: Icon,
+    startIcon: StartIcon,
+    endIcon: EndIcon,
     target,
     ariaLabel,
 }: LinkButtonProps): React.ReactElement => (
@@ -41,37 +43,31 @@ const LinkButton = ({
         target={target}
         size="small"
         variant="outlined"
-        endIcon={Icon ? <Icon /> : undefined}
+        startIcon={StartIcon ? <StartIcon /> : undefined}
+        endIcon={EndIcon ? <EndIcon /> : undefined}
         aria-label={ariaLabel}
-        sx={{
+        sx={(theme) => ({
             "color": "text.secondary",
-            "borderColor": (theme) =>
+            "borderColor":
                 theme.palette.mode === "light"
                     ? alpha(theme.palette.primary.main, 0.4)
                     : alpha(theme.palette.primary.light, 0.35),
-            "transition": (theme) =>
-                theme.transitions.create(["transform", "border-color"], {
-                    duration: theme.transitions.duration.shorter,
-                }),
             "& .MuiButton-endIcon, & .MuiButton-startIcon": {
                 color: "text.secondary",
-                transition: (theme) =>
-                    theme.transitions.create("color", {
-                        duration: theme.transitions.duration.shorter,
-                    }),
+                transition: theme.transitions.create("color", {
+                    duration: theme.transitions.duration.shorter,
+                }),
             },
             "&:hover": {
-                transform: (theme) =>
-                    `translateY(-${theme.motion.hoverLiftSubtle})`,
-                borderColor: (theme) => theme.palette.primary.main,
+                borderColor: theme.palette.primary.main,
             },
             "&:hover .MuiButton-endIcon, &:hover .MuiButton-startIcon": {
-                color: (theme) =>
+                color:
                     theme.palette.mode === "light"
                         ? theme.palette.primary.main
                         : theme.palette.primary.light,
             },
-        }}
+        })}
     >
         {name}
     </Button>

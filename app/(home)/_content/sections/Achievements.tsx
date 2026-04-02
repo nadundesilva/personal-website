@@ -27,6 +27,7 @@ import { alpha } from "@mui/material/styles";
 import Image from "next-image-export-optimizer";
 import { type StaticImageData } from "next/image";
 import type React from "react";
+import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
 
 import nasaSpaceAppsChallenge2017Image from "@/assets/achievements/nasa-space-apps-2017.jpg";
 import uomDeansList2017Image from "@/assets/achievements/deans-list-2017.jpg";
@@ -132,13 +133,15 @@ const Achievements = (): React.ReactElement => {
                             opacity: 1,
                             zIndex: 1,
                         },
-                        "& img": {
-                            transform: "scale(1.03)",
-                        },
-                        "boxShadow": (theme) =>
+                        boxShadow: (theme) =>
                             theme.palette.mode === "light"
                                 ? `0 0 90px ${alpha(theme.palette.primary.main, 0.87)}`
                                 : `0 0 90px ${alpha(theme.palette.primary.light, 0.4)}`,
+                    },
+                    [MOTION_OK_QUERY]: {
+                        "&:hover img, &:focus-within img": {
+                            transform: "scale(1.03)",
+                        },
                     },
                 }}
                 tabIndex={0}
@@ -150,6 +153,15 @@ const Achievements = (): React.ReactElement => {
                         height: "100%",
                         position: "relative",
                         overflow: "hidden",
+                        [MOTION_OK_QUERY]: {
+                            "& img": {
+                                transition: (theme) =>
+                                    theme.transitions.create("transform", {
+                                        duration:
+                                            theme.transitions.duration.standard,
+                                    }),
+                            },
+                        },
                     }}
                 >
                     <ImageListItemImageOverlay
@@ -164,12 +176,9 @@ const Achievements = (): React.ReactElement => {
                                 id={`achievement-title-${achievementIndex}`}
                                 variant="h6"
                                 component="h3"
-                                fontWeight={500}
                                 color="inherit"
                                 sx={{
                                     fontSize: { xs: 16, md: 18 },
-                                    letterSpacing: "-0.02em",
-                                    lineHeight: 1.4,
                                     textShadow: (theme) =>
                                         `0 2px 12px ${alpha(theme.palette.common.black, 0.2)}`,
                                 }}
@@ -182,12 +191,7 @@ const Achievements = (): React.ReactElement => {
                         src={achievementSection.photo.src}
                         alt=""
                         fill
-                        style={{
-                            objectFit: "cover",
-                            transition: theme.transitions.create("transform", {
-                                duration: theme.transitions.duration.standard,
-                            }),
-                        }}
+                        style={{ objectFit: "cover" }}
                     />
                 </Box>
             </FullSizeImageListItem>

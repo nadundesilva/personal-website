@@ -102,7 +102,6 @@ const Testimonial = ({ testimonial }: TestimonialProps): React.ReactElement => {
                             letterSpacing: "-0.01em",
                             lineHeight: 1.4,
                             mb: 1.5,
-                            color: "text.primary",
                         }}
                     >
                         {author.name}
@@ -140,7 +139,6 @@ const Testimonial = ({ testimonial }: TestimonialProps): React.ReactElement => {
                             variant="body2"
                             sx={{
                                 color: "text.secondary",
-                                fontWeight: 300,
                                 letterSpacing: "0.01em",
                             }}
                         >
@@ -158,7 +156,7 @@ const Testimonial = ({ testimonial }: TestimonialProps): React.ReactElement => {
                     }}
                 >
                     <LinkButton
-                        icon={Launch}
+                        endIcon={Launch}
                         name="View on LinkedIn"
                         href={linkedinUrl}
                         ariaLabel={`View on LinkedIn - testimonial by ${author.name}`}

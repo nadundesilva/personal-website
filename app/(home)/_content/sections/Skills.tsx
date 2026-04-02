@@ -12,11 +12,86 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+import { InfoOutlined } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import type React from "react";
 
 import SkillCategories from "@/constants/skill-categories";
-import SkillChip from "./components/SkillChip";
+import SkillChip, { proficiencyLevels } from "./components/SkillChip";
+
+const ProficiencyLegend = (): React.ReactElement => (
+    <Box
+        sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            gap: { xs: 1.5, md: 2 },
+        }}
+    >
+        {Object.entries(proficiencyLevels)
+            .map(([label, data]) => ({ label, ...data }))
+            .sort((a, b) => a.bars - b.bars)
+            .map(({ label, bars, color }) => (
+                <Box
+                    key={label}
+                    sx={{ display: "flex", alignItems: "center", gap: 0.75 }}
+                >
+                    <Box
+                        aria-hidden="true"
+                        sx={{
+                            display: "flex",
+                            alignItems: "flex-end",
+                            gap: 0.25,
+                            height: 12,
+                        }}
+                    >
+                        {([1, 2, 3] as const).map((i) => (
+                            <Box
+                                key={i}
+                                sx={{
+                                    width: 3,
+                                    height: i * 4,
+                                    bgcolor:
+                                        i <= bars
+                                            ? color
+                                            : "action.disabledBackground",
+                                    borderRadius: 0.125,
+                                }}
+                            />
+                        ))}
+                    </Box>
+                    <Typography
+                        variant="caption"
+                        sx={{
+                            fontSize: 11,
+                            color: (theme) => theme.palette.text.disabled,
+                        }}
+                    >
+                        {label}
+                    </Typography>
+                </Box>
+            ))}
+        <Typography
+            variant="caption"
+            sx={{
+                fontSize: 11,
+                color: (theme) => theme.palette.text.disabled,
+                opacity: 0.7,
+            }}
+        >
+            <InfoOutlined
+                sx={{
+                    fontSize: 13,
+                    opacity: 0.6,
+                    verticalAlign: "middle",
+                    mr: 0.5,
+                }}
+            />
+            hover or tap any skill for details
+        </Typography>
+    </Box>
+);
 
 const Skills = (): React.ReactElement => (
     <Box
@@ -65,6 +140,7 @@ const Skills = (): React.ReactElement => (
         >
             Skip Skills
         </Box>
+        <ProficiencyLegend />
         {SkillCategories.map((group) => {
             const headingId = `skills-category-${group.category.toLowerCase().replace(/\s+/g, "-")}`;
             return (
@@ -73,6 +149,7 @@ const Skills = (): React.ReactElement => (
                         id={headingId}
                         variant="h3"
                         align="center"
+                        aria-label={group.category}
                         sx={{
                             "fontWeight": 400,
                             "fontSize": { xs: 18, md: 20 },
