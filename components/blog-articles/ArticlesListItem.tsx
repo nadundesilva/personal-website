@@ -22,7 +22,6 @@ import {
     CardContent,
     CardMedia,
     type CardMediaProps,
-    Chip,
     Container,
     Typography,
     useTheme,
@@ -31,9 +30,10 @@ import Image from "next-image-export-optimizer";
 import type React from "react";
 
 import { Link } from "@/components/content";
+import { KeywordChip } from "@/components/primitives";
 import DateInfo from "@/components/content/DateInfo";
 import { Date as FormattableDate } from "@/constants/date";
-import { type BlogArticle } from "@/utils/blog-articles";
+import { type BlogArticle } from "@/utils/server/blog-articles";
 
 interface ArticleListItemProps {
     blogArticle: BlogArticle;
@@ -128,22 +128,7 @@ const ArticleListItem = ({
                             }}
                         >
                             {blogArticle.keywords.map((keyword) => (
-                                <Chip
-                                    key={keyword}
-                                    label={keyword}
-                                    size="small"
-                                    variant="outlined"
-                                    color="primary"
-                                    slotProps={{
-                                        label: { sx: { px: 0.75 } },
-                                    }}
-                                    sx={{
-                                        "cursor": "default",
-                                        "height": "1.25rem",
-                                        "fontSize": "0.625rem",
-                                        "&:hover": { transform: "none" },
-                                    }}
-                                />
+                                <KeywordChip key={keyword} label={keyword} />
                             ))}
                         </Box>
                     )}

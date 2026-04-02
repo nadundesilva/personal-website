@@ -131,7 +131,7 @@ const Projects = (): React.ReactElement => {
                             ].path
                         }
                         name="View Personal Projects"
-                        icon={KeyboardArrowRight}
+                        endIcon={KeyboardArrowRight}
                     />
                 </Box>
             </ScrollReveal>

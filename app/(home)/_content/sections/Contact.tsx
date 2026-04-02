@@ -12,14 +12,50 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
+"use client";
+
 import { Email } from "@mui/icons-material";
 import { Box, Button, Card, Container, Grid, Typography } from "@mui/material";
 import { alpha, darken } from "@mui/material/styles";
+import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
 import type React from "react";
+import { useState } from "react";
 
 import { Link } from "@/components/content";
 import { CONTACT_EMAIL } from "@/constants/metadata";
+import { CopyButton } from "@/components/primitives";
 import Profiles from "@/constants/profiles";
+
+const CopyEmailButton = ({ email }: { email: string }): React.ReactElement => {
+    const [copied, setCopied] = useState(false);
+
+    return (
+        <Box
+            sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.5,
+            }}
+        >
+            <Typography variant="body2" color="text.secondary">
+                {email}
+            </Typography>
+            <CopyButton
+                label="Copy email"
+                onCopy={() => navigator.clipboard.writeText(email)}
+                onCopiedChange={setCopied}
+                sx={(theme) => ({
+                    color: copied
+                        ? theme.palette.primary.main
+                        : "text.secondary",
+                    transition: theme.transitions.create("color", {
+                        duration: theme.transitions.duration.shortest,
+                    }),
+                })}
+            />
+        </Box>
+    );
+};
 
 const Contact = (): React.ReactElement => (
     <Container maxWidth="lg" disableGutters sx={{ mb: { xs: 8, md: 12 } }}>
@@ -80,12 +116,7 @@ const Contact = (): React.ReactElement => (
                 sx={{ position: "relative", zIndex: 1 }}
             >
                 <Grid size={{ xs: 12, md: 7 }}>
-                    <Typography
-                        variant="h3"
-                        component="h3"
-                        gutterBottom
-                        sx={{ fontWeight: 500 }}
-                    >
+                    <Typography variant="h3" component="h3" gutterBottom>
                         Let&apos;s build something <br />
                         <Box
                             component="span"
@@ -111,7 +142,14 @@ const Contact = (): React.ReactElement => (
                         collaborations, or just having a chat about technology.
                     </Typography>
 
-                    <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            gap: 2,
+                            flexWrap: "wrap",
+                            justifyContent: { xs: "center", md: "flex-start" },
+                        }}
+                    >
                         {Object.values(Profiles).map((profile) => (
                             <Button
                                 key={profile.name}
@@ -125,8 +163,8 @@ const Contact = (): React.ReactElement => (
                                 variant="outlined"
                                 color="inherit"
                                 startIcon={<profile.Icon />}
-                                sx={{
-                                    "borderColor": (theme) =>
+                                sx={(theme) => ({
+                                    "borderColor":
                                         theme.palette.mode === "light"
                                             ? alpha(
                                                   theme.palette.primary.main,
@@ -136,29 +174,25 @@ const Contact = (): React.ReactElement => (
                                                   theme.palette.primary.light,
                                                   0.27,
                                               ),
-                                    "borderRadius": (theme) =>
+                                    "borderRadius":
                                         (theme.shape.borderRadius as number) /
                                         2,
-                                    "textTransform": "none",
-                                    "transition": (theme) =>
-                                        theme.transitions.create(
-                                            [
-                                                "border-color",
-                                                "color",
-                                                "background-color",
-                                            ],
-                                            {
-                                                duration:
-                                                    theme.transitions.duration
-                                                        .shortest,
-                                            },
-                                        ),
+                                    "transition": theme.transitions.create(
+                                        [
+                                            "border-color",
+                                            "color",
+                                            "background-color",
+                                        ],
+                                        {
+                                            duration:
+                                                theme.transitions.duration
+                                                    .shortest,
+                                        },
+                                    ),
                                     "&:hover": {
-                                        borderColor: (theme) =>
-                                            theme.palette.primary.main,
-                                        color: (theme) =>
-                                            theme.palette.primary.main,
-                                        backgroundColor: (theme) =>
+                                        borderColor: theme.palette.primary.main,
+                                        color: theme.palette.primary.main,
+                                        backgroundColor:
                                             theme.palette.mode === "light"
                                                 ? alpha(
                                                       theme.palette.primary
@@ -171,7 +205,7 @@ const Contact = (): React.ReactElement => (
                                                       0.03,
                                                   ),
                                     },
-                                }}
+                                })}
                             >
                                 {profile.name}
                             </Button>
@@ -184,7 +218,7 @@ const Contact = (): React.ReactElement => (
                         sx={{
                             display: "flex",
                             flexDirection: "column",
-                            alignItems: { xs: "start", md: "center" },
+                            alignItems: "center",
                             justifyContent: "center",
                             height: "100%",
                             p: { xs: 0, md: 4 },
@@ -199,15 +233,10 @@ const Contact = (): React.ReactElement => (
                             startIcon={<Email />}
                             sx={{
                                 "py": 2,
-                                "px": 6,
+                                "px": { xs: 4, sm: 6 },
                                 "borderRadius": 50,
-                                "fontSize": "1.2rem",
+                                "fontSize": { xs: "1rem", sm: "1.2rem" },
                                 "fontWeight": 700,
-                                "transition": (theme) =>
-                                    theme.transitions.create("all", {
-                                        duration:
-                                            theme.transitions.duration.short,
-                                    }),
                                 "position": "relative",
                                 "overflow": "hidden",
                                 "&::after": {
@@ -220,25 +249,39 @@ const Contact = (): React.ReactElement => (
                                     background: (theme) =>
                                         `linear-gradient(105deg, transparent 20%, ${alpha(theme.palette.common.white, 0.18)} 50%, transparent 80%)`,
                                     transform: "translateX(-200%)",
-                                    transition: "none",
                                 },
-                                "&:hover": {
-                                    transform: (theme) =>
-                                        `translateY(-${theme.motion.hoverLift})`,
-                                },
-                                "&:hover::after": {
-                                    transform: "translateX(300%)",
-                                    transition: (theme) =>
-                                        theme.transitions.create("transform", {
+                                [MOTION_OK_QUERY]: {
+                                    "transition": (theme) =>
+                                        theme.transitions.create("all", {
                                             duration:
                                                 theme.transitions.duration
-                                                    .complex * 2,
+                                                    .short,
                                         }),
+                                    "&:hover": {
+                                        transform: (theme) =>
+                                            `translateY(-${theme.motion.hoverLift})`,
+                                    },
+                                    "&:hover::after": {
+                                        transform: "translateX(300%)",
+                                        transition: (theme) =>
+                                            theme.transitions.create(
+                                                "transform",
+                                                {
+                                                    duration:
+                                                        theme.transitions
+                                                            .duration.complex *
+                                                        2,
+                                                },
+                                            ),
+                                    },
                                 },
                             }}
                         >
                             Say Hello
                         </Button>
+                        <Box sx={{ mt: 1.5 }}>
+                            <CopyEmailButton email={CONTACT_EMAIL} />
+                        </Box>
                     </Box>
                 </Grid>
             </Grid>

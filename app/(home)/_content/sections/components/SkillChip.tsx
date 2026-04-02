@@ -12,11 +12,7 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-import {
-    SkillProficiencies,
-    type Skill,
-    type SkillProficiency,
-} from "@/constants/skill-categories";
+import { SkillProficiency, type Skill } from "@/constants/skill-categories";
 import {
     Code as CodeIcon,
     WorkOutline as WorkIcon,
@@ -39,14 +35,16 @@ import React from "react";
 
 import useHoverDelay from "@/hooks/useHoverDelay";
 
-// All proficiency colors are intentionally kept local to this component.
-// They are visual-only bar-chart indicators with no meaning outside of
-// SkillChip, so they do not belong in the global MUI theme palette or in
-// colors.ts.
-const proficiencyColors: Record<SkillProficiency, string> = {
-    [SkillProficiencies.Expert]: "#4caf50",
-    [SkillProficiencies.Intermediate]: "#2196f3",
-    [SkillProficiencies.Novice]: "#cd7f32",
+// Exported so the Skills legend can reference the same values without
+// duplicating them. Colors do not belong in the global MUI theme palette or
+// in colors.ts — they are visual-only bar-chart indicators.
+export const proficiencyLevels: Record<
+    SkillProficiency,
+    { bars: number; color: string }
+> = {
+    [SkillProficiency.Novice]: { bars: 1, color: "#cd7f32" },
+    [SkillProficiency.Intermediate]: { bars: 2, color: "#2196f3" },
+    [SkillProficiency.Expert]: { bars: 3, color: "#4caf50" },
 };
 
 interface ProficiencyIndicatorProps {
@@ -56,21 +54,7 @@ interface ProficiencyIndicatorProps {
 const ProficiencyIndicator = ({
     level,
 }: ProficiencyIndicatorProps): React.ReactElement => {
-    let bars: number;
-    switch (level) {
-        case SkillProficiencies.Expert:
-            bars = 3;
-            break;
-        case SkillProficiencies.Intermediate:
-            bars = 2;
-            break;
-        case SkillProficiencies.Novice:
-            bars = 1;
-            break;
-        default:
-            throw new Error(`Unsupported skill level: ${level}`);
-    }
-    const color = proficiencyColors[level];
+    const { bars, color } = proficiencyLevels[level];
 
     return (
         <Box
@@ -221,9 +205,6 @@ const SkillChipTooltip = ({
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
                         sx={{
-                            backgroundColor: (theme) =>
-                                theme.palette.background.paper,
-                            color: (theme) => theme.palette.text.primary,
                             maxWidth: 320,
                             fontSize: (theme) => theme.typography.pxToRem(12),
                             border: "1px solid",
@@ -378,7 +359,7 @@ const SkillChip = ({ skill }: SkillChipProps): React.ReactElement => {
                 aria-label={`${skill.name} - ${skill.level} level.`}
                 aria-describedby={hasContent ? tooltipId : undefined}
                 sx={{
-                    "&:hover": { cursor: "default" },
+                    cursor: "default",
                 }}
             />
             {hasContent && (

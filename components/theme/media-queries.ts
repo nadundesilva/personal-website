@@ -10,23 +10,12 @@
  *
  * Website: https://nadundesilva.com
  *
- * © 2023 Nadun De Silva. All rights reserved.
+ * © 2026 Nadun De Silva. All rights reserved.
  */
-import type React from "react";
 
-import ReadingProgress from "@/components/blog-articles/ReadingProgress";
+export const MOTION_OK_QUERY =
+    "@media (prefers-reduced-motion: no-preference)" as const;
 
-interface BlogArticlesLayoutProps {
-    children: React.ReactNode;
-}
+export const NO_HOVER_QUERY = "@media (hover: none)" as const;
 
-const BlogArticlesLayout = ({
-    children,
-}: BlogArticlesLayoutProps): React.ReactElement => (
-    <>
-        <ReadingProgress />
-        {children}
-    </>
-);
-
-export default BlogArticlesLayout;
+export const SHORT_VIEWPORT_QUERY = "@media (max-height: 500px)" as const;

@@ -65,8 +65,9 @@ const Heading = (props: HeadingProps): React.ReactElement => {
                     sx={{
                         fontSize: { xs: 36, md: 44 },
                         mb: { xs: 2.5, md: 3 },
-                        color: (theme) => theme.palette.text.primary,
                         position: "relative",
+                        scrollMarginTop: (theme) =>
+                            `calc(${theme.mixins.toolbar.minHeight as number}px + ${theme.spacing(2)})`,
                     }}
                 >
                     {props.children}

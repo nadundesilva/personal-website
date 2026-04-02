@@ -57,7 +57,7 @@ const PersonalProjectSectionHeading = ({
             href: project.link,
             name: "View on GitHub",
             ariaLabel: `View on GitHub - ${project.name}`,
-            icon: Launch,
+            endIcon: Launch,
         }}
     >
         {project.name}

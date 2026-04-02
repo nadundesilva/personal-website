@@ -14,7 +14,13 @@
  */
 "use client";
 
-import { Box, CircularProgress, Container, styled } from "@mui/material";
+import {
+    Box,
+    CircularProgress,
+    Container,
+    Divider,
+    styled,
+} from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import dynamic from "next/dynamic";
 import type React from "react";
@@ -26,7 +32,7 @@ import WelcomeBanner from "./sections/WelcomeBanner";
 
 const SectionContainer = styled(Container)(({ theme }) => ({
     m: 0,
-    pt: `${theme.mixins.toolbar.minHeight ?? 0}px`,
+    pt: `${theme.mixins.toolbar.minHeight as number}px`,
 }));
 
 const pageLoader = (): JSX.Element => (
@@ -143,21 +149,7 @@ const PageContent = (): React.ReactElement => {
                     {section}
                 </Container>
                 {showDivider && (
-                    <Box
-                        aria-hidden="true"
-                        sx={{
-                            width: "100%",
-                            height: 2,
-                            mt: { xs: 3, md: 6 },
-                            background: (theme) =>
-                                `linear-gradient(90deg, transparent, ${
-                                    theme.palette.mode === "light"
-                                        ? theme.palette.primary.main
-                                        : theme.palette.primary.light
-                                }, transparent)`,
-                            opacity: 0.2,
-                        }}
-                    />
+                    <Divider aria-hidden="true" sx={{ mt: { xs: 3, md: 6 } }} />
                 )}
             </Container>
         );
@@ -171,6 +163,7 @@ const PageContent = (): React.ReactElement => {
                 disableGutters
                 sx={{
                     position: "relative",
+                    isolation: "isolate",
                     pt: { xs: 6, md: 8 },
                     px: {
                         xs: 1,

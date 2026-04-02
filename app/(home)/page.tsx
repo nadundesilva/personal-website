@@ -28,7 +28,7 @@ import {
     JOB_TITLE,
 } from "@/constants/metadata";
 import Profiles from "@/constants/profiles";
-import { getImageType } from "@/utils/image-metadata";
+import { getImageType } from "@/utils/common/image-metadata";
 import profilePhotoImage from "@/assets/profile-photo.webp";
 import PageContent from "./_content/PageContent";
 
