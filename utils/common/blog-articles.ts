@@ -12,18 +12,17 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-import CopyButton from "./CopyButton";
-import HorizontalGradientLine from "./HorizontalGradientLine";
-import KeywordChip from "./KeywordChip";
-import LeftAccent from "./LeftAccent";
-import ProgressFab from "./ProgressFab";
-import PrimaryTintedIcon from "./PrimaryTintedIcon";
 
-export {
-    CopyButton,
-    HorizontalGradientLine,
-    KeywordChip,
-    LeftAccent,
-    ProgressFab,
-    PrimaryTintedIcon,
-};
+const WORDS_PER_MINUTE = 200;
+
+/**
+ * Estimates reading time from plain text (e.g. DOM textContent or pre-stripped MDX).
+ * Returns at least 1 minute.
+ */
+export function estimateReadingTimeMinutesFromText(text: string): number {
+    const wordCount = text
+        .trim()
+        .split(/\s+/)
+        .filter((w) => w.length > 0).length;
+    return Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE));
+}

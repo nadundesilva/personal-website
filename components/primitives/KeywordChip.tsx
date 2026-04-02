@@ -12,18 +12,23 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-import CopyButton from "./CopyButton";
-import HorizontalGradientLine from "./HorizontalGradientLine";
-import KeywordChip from "./KeywordChip";
-import LeftAccent from "./LeftAccent";
-import ProgressFab from "./ProgressFab";
-import PrimaryTintedIcon from "./PrimaryTintedIcon";
+"use client";
 
-export {
-    CopyButton,
-    HorizontalGradientLine,
-    KeywordChip,
-    LeftAccent,
-    ProgressFab,
-    PrimaryTintedIcon,
-};
+import { Chip } from "@mui/material";
+import type React from "react";
+
+interface KeywordChipProps {
+    label: string;
+}
+
+const KeywordChip = ({ label }: KeywordChipProps): React.ReactElement => (
+    <Chip
+        label={label}
+        size="keyword"
+        variant="outlined"
+        color="primary"
+        sx={{ cursor: "default" }}
+    />
+);
+
+export default KeywordChip;

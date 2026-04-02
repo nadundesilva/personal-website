@@ -18,6 +18,8 @@ import { readFileSync } from "fs";
 import { glob } from "glob";
 import { type StaticImageData } from "next/image";
 
+import { estimateReadingTimeMinutesFromText } from "../common/blog-articles";
+
 export interface BlogArticle {
     title: string;
     description: string;
@@ -51,11 +53,7 @@ function estimateReadingTimeMinutes(mdxContent: string): number {
         .replace(/`[^`]+`/g, "")
         .replace(/^#{1,6}\s+/gm, "")
         .replace(/\{[^}]*\}/g, "");
-    const wordCount = text
-        .trim()
-        .split(/\s+/)
-        .filter((w) => w.length > 0).length;
-    return Math.max(1, Math.ceil(wordCount / 200));
+    return estimateReadingTimeMinutesFromText(text);
 }
 
 export function resolveWebsiteBlogArticlesSubPath(filePath: string): string {
@@ -70,7 +68,7 @@ async function getBlogArticles(subPath: string): Promise<BlogArticle[]> {
         (await glob(blogArticlesFilePathPattern)).map(async (filePath) => {
             const websiteSubPath = resolveWebsiteBlogArticlesSubPath(filePath);
             const { metadata, blogMetadata } = await import(
-                `../app/(content)/blog-articles/(articles)/${websiteSubPath}/${BLOG_ARTICLE_FILE}`
+                `../../app/(content)/blog-articles/(articles)/${websiteSubPath}/${BLOG_ARTICLE_FILE}`
             );
             const readingTimeMinutes = estimateReadingTimeMinutes(
                 readFileSync(filePath, "utf-8"),
@@ -112,7 +110,7 @@ async function getCurrentGroupMetadata(
         currentGroupFilePaths[0],
     );
     const { metadata } = await import(
-        `../app/(content)/blog-articles/(articles)/${websiteSubPath}/${BLOG_ARTICLES_GROUP_FILE}`
+        `../../app/(content)/blog-articles/(articles)/${websiteSubPath}/${BLOG_ARTICLES_GROUP_FILE}`
     );
 
     return {
@@ -130,7 +128,7 @@ async function getSubGroupMetadatas(
         (await glob(groupFilePathPattern)).map(async (filePath) => {
             const websiteSubPath = resolveWebsiteBlogArticlesSubPath(filePath);
             const { metadata } = await import(
-                `../app/(content)/blog-articles/(articles)/${websiteSubPath ? `${websiteSubPath}/` : ""}${BLOG_ARTICLES_GROUP_FILE}`
+                `../../app/(content)/blog-articles/(articles)/${websiteSubPath ? `${websiteSubPath}/` : ""}${BLOG_ARTICLES_GROUP_FILE}`
             );
 
             return {

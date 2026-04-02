@@ -66,6 +66,7 @@ module.exports = {
                 "deprecations": ["warn"],
                 "canonical": ["warn"],
                 "forced-reflow-insight": ["warn"],
+                "third-parties-insight": ["warn"],
                 "bf-cache": ["warn"],
 
                 // MUI/Emotion CSS-in-JS generates inline styles during static export.

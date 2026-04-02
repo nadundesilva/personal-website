@@ -22,7 +22,7 @@ import {
     BLOG_ARTICLES_DIRECTORY_PREFIX,
     BLOG_ARTICLES_GROUP_FILE,
     resolveWebsiteBlogArticlesSubPath,
-} from "@/utils/blog-articles";
+} from "@/utils/server/blog-articles";
 
 const buildMainSitemapUrls = (
     currentRoutes: Record<string, Route> | undefined,

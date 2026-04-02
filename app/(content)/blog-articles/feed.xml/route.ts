@@ -19,8 +19,11 @@ import {
     MAIN_DESCRIPTION,
     WEBSITE_PUBLIC_URL,
 } from "@/constants/metadata";
-import { getBlogArticleGroups, type BlogArticle } from "@/utils/blog-articles";
-import { getImageType } from "@/utils/image-metadata";
+import {
+    getBlogArticleGroups,
+    type BlogArticle,
+} from "@/utils/server/blog-articles";
+import { getImageType } from "@/utils/common/image-metadata";
 
 export const dynamic = "force-static";
 

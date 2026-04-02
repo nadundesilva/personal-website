@@ -62,7 +62,7 @@ const CertificationSectionHeading = ({
             href: certificate.link,
             name: "View Credential",
             ariaLabel: `View credential: ${certificate.name}`,
-            icon: Launch,
+            endIcon: Launch,
         }}
     >
         {certificate.name}

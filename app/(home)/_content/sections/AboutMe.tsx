@@ -21,6 +21,7 @@ import type React from "react";
 
 import Profiles from "@/constants/profiles";
 import { Link } from "@/components/content";
+import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
 import Experiences from "@/constants/experience";
 import { JOB_TITLE } from "@/constants/metadata";
 
@@ -38,20 +39,30 @@ const AboutMe = (): React.ReactElement => {
                     "pt": "100%",
                     "position": "relative",
                     "overflow": "hidden",
-                    "transition": (theme) =>
-                        theme.transitions.create(["box-shadow", "transform"], {
-                            duration: theme.transitions.duration.standard,
-                        }),
                     "boxShadow": (theme) =>
                         theme.palette.mode === "light"
                             ? `0 0 0 3px ${alpha(theme.palette.primary.main, 0.35)}, 0 0 48px ${alpha(theme.palette.primary.main, 0.27)}`
                             : `0 0 0 3px ${alpha(theme.palette.primary.light, 0.25)}, 0 0 48px ${alpha(theme.palette.primary.light, 0.2)}`,
+                    "transition": (theme) =>
+                        theme.transitions.create("box-shadow", {
+                            duration: theme.transitions.duration.standard,
+                        }),
                     "&:hover": {
-                        transform: "scale(1.02)",
                         boxShadow: (theme) =>
                             theme.palette.mode === "light"
                                 ? `0 0 0 3px ${alpha(theme.palette.primary.main, 0.6)}, 0 0 64px ${alpha(theme.palette.primary.main, 0.4)}`
                                 : `0 0 0 3px ${alpha(theme.palette.primary.light, 0.4)}, 0 0 64px ${alpha(theme.palette.primary.light, 0.33)}`,
+                    },
+                    [MOTION_OK_QUERY]: {
+                        "transition": (theme) =>
+                            theme.transitions.create(
+                                ["box-shadow", "transform"],
+                                {
+                                    duration:
+                                        theme.transitions.duration.standard,
+                                },
+                            ),
+                        "&:hover": { transform: "scale(1.02)" },
                     },
                 }}
             >
@@ -93,9 +104,8 @@ const AboutMe = (): React.ReactElement => {
                 <Typography
                     variant="body1"
                     sx={{
-                        lineHeight: 1.75,
                         fontSize: { sm: 16 },
-                        textAlign: "justify",
+                        textAlign: "left",
                     }}
                 >
                     {JOB_TITLE} with {yearsOfExperienceDisplayValue} years of
@@ -146,14 +156,19 @@ const AboutMe = (): React.ReactElement => {
                                     "borderRadius": "50%",
                                     "padding": 0.625,
                                     "transition": (theme) =>
-                                        theme.transitions.create("all", {
-                                            duration:
-                                                theme.transitions.duration
-                                                    .short,
-                                        }),
+                                        theme.transitions.create(
+                                            [
+                                                "border-color",
+                                                "color",
+                                                "background-color",
+                                            ],
+                                            {
+                                                duration:
+                                                    theme.transitions.duration
+                                                        .short,
+                                            },
+                                        ),
                                     "&:hover": {
-                                        transform: (theme) =>
-                                            `translateY(-${theme.motion.hoverLift})`,
                                         borderColor: (theme) =>
                                             theme.palette.primary.main,
                                         color: (theme) =>
@@ -170,6 +185,26 @@ const AboutMe = (): React.ReactElement => {
                                                           .light,
                                                       0.03,
                                                   ),
+                                    },
+                                    [MOTION_OK_QUERY]: {
+                                        "transition": (theme) =>
+                                            theme.transitions.create(
+                                                [
+                                                    "border-color",
+                                                    "color",
+                                                    "background-color",
+                                                    "transform",
+                                                ],
+                                                {
+                                                    duration:
+                                                        theme.transitions
+                                                            .duration.short,
+                                                },
+                                            ),
+                                        "&:hover": {
+                                            transform: (theme) =>
+                                                `translateY(-${theme.motion.hoverLift})`,
+                                        },
                                     },
                                 }}
                             />

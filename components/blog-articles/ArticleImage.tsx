@@ -61,7 +61,6 @@ const ArticleImage = ({
                     variant="body2"
                     sx={{
                         color: "text.secondary",
-                        fontWeight: 300,
                     }}
                 >
                     Photo by{" "}

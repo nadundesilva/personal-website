@@ -38,7 +38,6 @@ const SubHeading = (props: SubHeadingProps): React.ReactElement => (
                     letterSpacing: "-0.02em",
                     lineHeight: 1.3,
                     mb: { xs: 1, md: 1.5 },
-                    color: (theme) => theme.palette.text.primary,
                     position: "relative",
                 }}
             >

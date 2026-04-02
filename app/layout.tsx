@@ -36,9 +36,9 @@ import { Route, WebsiteHome } from "@/constants/routes";
 import {
     type BlogArticleGroup,
     getBlogArticleGroups,
-} from "@/utils/blog-articles";
+} from "@/utils/server/blog-articles";
 
-import { getImageType } from "@/utils/image-metadata";
+import { getImageType } from "@/utils/common/image-metadata";
 import profilePhotoImage from "@/assets/profile-photo.webp";
 
 const GOOGLE_SITE_VERIFICATION = "M8dg6gzVYU0noXFvsPOqknm_WjREFeNE212YeUk0g30";

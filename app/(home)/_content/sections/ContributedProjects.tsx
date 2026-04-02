@@ -54,7 +54,6 @@ const ContributedProjects = (): React.ReactElement => {
                     component={Link}
                     href={project.link}
                     target="_blank"
-                    style={{ textDecoration: "none", color: "inherit" }}
                     sx={{
                         flexGrow: 1,
                         display: "flex",
@@ -123,7 +122,6 @@ const ContributedProjects = (): React.ReactElement => {
                             component={headingComponent}
                             align="center"
                             gutterBottom
-                            sx={{ fontWeight: 500 }}
                         >
                             {project.name}
                         </Typography>
