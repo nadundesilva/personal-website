@@ -94,6 +94,9 @@ const Projects = (): React.ReactElement => {
     const Ballerina = generateProjectLink(ProjectDetails.Ballerina);
     const Cellery = generateProjectLink(ProjectDetails.Cellery);
     const Siddhi = generateProjectLink(ProjectDetails.Siddhi);
+    const GoogleSummerOfCode = generateProjectLink(
+        ProjectDetails.GoogleSummerOfCode,
+    );
 
     // Third party
     const OpenTracing = generateLink("OpenTracing", "https://opentracing.io/");
@@ -113,6 +116,7 @@ const Projects = (): React.ReactElement => {
     const Docker = generateLink("Docker", "https://www.docker.com/");
     const D3js = generateLink("D3.js", "https://d3js.org/");
     const Maven = generateLink("Maven", "https://maven.apache.org/");
+    const MkDocs = generateLink("MkDocs", "https://www.mkdocs.org/");
     const Medium = generateLink("Medium", "https://medium.com/");
     const CelleryMediumPublication = generateLink(
         "Cellery Medium publication",
@@ -504,21 +508,9 @@ const Projects = (): React.ReactElement => {
                     initial implementation of {ProjectDetails.Siddhi.name}{" "}
                     extensions within the extrema namespace, which included
                     extensions for finding the maximum and minimum values in
-                    various ways in continuous event streams. Moreover, during
-                    the Google Summer of Code project, I worked on an
-                    autocomplete solution for the {ProjectDetails.Siddhi.name}{" "}
-                    editor for providing completions for siddhi syntax along
-                    with the data about the extensions.
+                    various ways in continuous event streams.
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
-                    <ListItem>
-                        <Typography>
-                            Designed and implemented a {Maven} plugin for
-                            automatically generating documentation for Siddhi
-                            extensions using annotated data written in the Java
-                            code.
-                        </Typography>
-                    </ListItem>
                     <ListItem>
                         <Typography>
                             Implemented a Notebook prototype for analytics and
@@ -529,6 +521,36 @@ const Projects = (): React.ReactElement => {
                         <Typography>
                             Implemented six extensions for Siddhi, Stream
                             Processing Engine.
+                        </Typography>
+                    </ListItem>
+                </AccentedList>
+            </Section>
+            <Section labelledById="section-project-gsoc-2017">
+                <ProjectSectionHeading
+                    id="section-project-gsoc-2017"
+                    project={ProjectDetails.GoogleSummerOfCode}
+                    logoSx={{ height: "2.5em" }}
+                />
+                <Paragraph>
+                    During my last year at the University, in my spare time, I
+                    worked as a {GoogleSummerOfCode} intern. I worked for {WSO2}{" "}
+                    during this period and developed a {Maven} plugin for
+                    automatically generating documentation for the {Siddhi}{" "}
+                    extensions. The information for the documentation was
+                    scraped from data annotated into the extensions using a
+                    Maven plugin and the collected data was converted into HTML
+                    pages using {MkDocs}. This was used by{" "}
+                    {ProjectDetails.Siddhi.name} for generating their
+                    documentation till it was decommissioned several years
+                    later.
+                </Paragraph>
+                <AccentedList heading="Highlights" headingVariant="h3">
+                    <ListItem>
+                        <Typography>
+                            Designed and implemented a {Maven} plugin for
+                            automatically generating documentation for{" "}
+                            {ProjectDetails.Siddhi.name} extensions using
+                            annotated data written in the Java code.
                         </Typography>
                     </ListItem>
                 </AccentedList>
