@@ -147,6 +147,18 @@ const Projects: Record<string, Project> = {
             Skills.SoftwareEngineering,
         ],
     },
+    GoogleSummerOfCode: {
+        name: "Google Summer of Code - Siddhi Docs Generation",
+        description:
+            "A Maven plugin for automatically generating documentation for Siddhi extensions using data annotated in the Java code.",
+        logo: Logos.GoogleSummerOfCode,
+        link: "https://summerofcode.withgoogle.com/archive/2017/projects/5957128497922048",
+        timePeriod: new DateRange(
+            new Date(2017, "May"),
+            new Date(2017, "September"),
+        ),
+        skills: [Skills.Java, Skills.Maven],
+    },
     K8sReplicator: {
         name: "K8s Replicator",
         description:

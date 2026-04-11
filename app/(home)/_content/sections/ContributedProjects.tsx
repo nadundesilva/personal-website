@@ -154,6 +154,7 @@ const ContributedProjects = (): React.ReactElement => {
                 {renderProject(Projects.Ballerina, "h3")}
                 {renderProject(Projects.Cellery, "h3")}
                 {renderProject(Projects.Siddhi, "h3")}
+                {renderProject(Projects.GoogleSummerOfCode, "h3")}
             </Grid>
             <Box sx={{ mt: { xs: 8, md: 10 } }}>
                 <SubHeading>Personal Projects</SubHeading>

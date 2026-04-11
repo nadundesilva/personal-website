@@ -173,18 +173,6 @@ const Experiences: Record<string, Experience> = {
             Skills.Microservices,
         ],
     },
-    WSO2GoogleSummerOfCodeIntern: {
-        name: "Google Summer of Code Intern",
-        company: Companies.WSO2ViaGoogleSummerOfCode,
-        timePeriod: new DateRange(
-            new Date(2017, "May"),
-            new Date(2017, "September"),
-        ),
-        description:
-            "Designed and implemented a Maven plugin for automatically generating documentation for Siddhi extensions using annotated data written in the Java code.",
-        institute: "WSO2, Colombo 03, Sri Lanka",
-        skills: [Skills.Java, Skills.Maven],
-    },
     WSO2SoftwareEngineeringTrainee: {
         name: "Software Engineering Trainee",
         company: Companies.WSO2,
