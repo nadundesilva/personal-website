@@ -17,6 +17,7 @@ import { Box, Typography } from "@mui/material";
 import type React from "react";
 
 import SkillCategories from "@/constants/skill-categories";
+import type { SectionProps } from "../types";
 import SkillChip, { proficiencyLevels } from "./components/SkillChip";
 
 const ProficiencyLegend = (): React.ReactElement => (
@@ -93,7 +94,9 @@ const ProficiencyLegend = (): React.ReactElement => (
     </Box>
 );
 
-const Skills = (): React.ReactElement => (
+const Skills = ({
+    sectionEntranceDelay = 0,
+}: SectionProps): React.ReactElement => (
     <Box
         sx={{
             display: "flex",
@@ -201,7 +204,10 @@ const Skills = (): React.ReactElement => (
                     >
                         {group.skills.map((skill) => (
                             <Box component="li" key={skill.name}>
-                                <SkillChip skill={skill} />
+                                <SkillChip
+                                    skill={skill}
+                                    sectionEntranceDelay={sectionEntranceDelay}
+                                />
                             </Box>
                         ))}
                     </Box>

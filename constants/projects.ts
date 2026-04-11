@@ -148,7 +148,7 @@ const Projects: Record<string, Project> = {
         ],
     },
     GoogleSummerOfCode: {
-        name: "Google Summer of Code - Siddhi Docs Generation",
+        name: "Google Summer of Code - Siddhi Docs Auto-Generation",
         description:
             "A Maven plugin for automatically generating documentation for Siddhi extensions using data annotated in the Java code.",
         logo: Logos.GoogleSummerOfCode,

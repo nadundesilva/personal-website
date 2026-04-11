@@ -19,13 +19,8 @@ import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
 import { useId } from "react";
 import type React from "react";
 
-import {
-    Link,
-    ScrollReveal,
-    Section,
-    SectionHeading,
-    Title,
-} from "@/components/content";
+import { Link, Section, SectionHeading, Title } from "@/components/content";
+import { ScrollReveal } from "@/components/primitives";
 import ArticleListItem from "./ArticlesListItem";
 import {
     getBlogArticleGroups,

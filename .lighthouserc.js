@@ -77,6 +77,9 @@ module.exports = {
                 "unminified-css": ["warn"],
                 "unused-css-rules": ["warn"],
 
+                "list": ["warn"],
+                "listitem": ["warn"],
+
                 ...LIVE_SITE_ASSERTIONS,
             },
         },

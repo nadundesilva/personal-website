@@ -24,13 +24,8 @@ import React from "react";
 import type { BlogPosting, Person, WithContext } from "schema-dts";
 
 import profilePhotoImage from "@/assets/profile-photo.webp";
-import {
-    DateInfo,
-    Image,
-    LinkButton,
-    ScrollReveal,
-    Title,
-} from "@/components/content";
+import { DateInfo, Image, LinkButton, Title } from "@/components/content";
+import { ScrollReveal } from "@/components/primitives";
 import { Date as FormattableDate } from "@/constants/date";
 import { FULL_NAME, WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
