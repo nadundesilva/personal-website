@@ -83,9 +83,6 @@ const Experience = (): React.ReactElement => {
         generateLink(project.name, project.link);
 
     // Employers
-    const GoogleSummerOfCode = generateCompanyLink(
-        Companies.WSO2ViaGoogleSummerOfCode,
-    );
     const WSO2 = generateCompanyLink(Companies.WSO2);
     const McCraeTech = generateCompanyLink(Companies.McCraeTech);
     const OrionHealth = generateCompanyLink(Companies.OrionHealth);
@@ -102,7 +99,6 @@ const Experience = (): React.ReactElement => {
     );
 
     // Third party
-    const MkDocs = generateLink("MkDocs", "https://www.mkdocs.org/");
     const ReactJs = generateLink("React", "https://reactjs.org/");
     const ApacheOpenWhisk = generateLink(
         "Apache OpenWhisk",
@@ -147,7 +143,6 @@ const Experience = (): React.ReactElement => {
     const Prometheus = generateLink("Prometheus", "https://prometheus.io/");
     const Jaeger = generateLink("Jaeger", "https://www.jaegertracing.io/");
     const Docker = generateLink("Docker", "https://www.docker.com/");
-    const Maven = generateLink("Maven", "https://maven.apache.org/");
 
     return (
         <>
@@ -546,25 +541,6 @@ const Experience = (): React.ReactElement => {
                         </Typography>
                     </ListItem>
                 </AccentedList>
-            </Section>
-            <Section labelledById="section-gsoc">
-                <ExperienceSectionHeading
-                    id="section-gsoc"
-                    experience={Experiences.WSO2GoogleSummerOfCodeIntern}
-                    logoSx={{ height: "2.5em" }}
-                />
-                <Paragraph>
-                    During my last year at the University, in my spare time, I
-                    worked as a {GoogleSummerOfCode} intern. I worked for {WSO2}{" "}
-                    during this period as well and developed a {Maven} plugin
-                    for automatically generating documentation for the {Siddhi}{" "}
-                    extensions. The information for the documentation was
-                    scraped from data annotated into the extensions using a
-                    Maven plugin and the collected data was converted into HTML
-                    pages using {MkDocs}. This was used by{" "}
-                    {Projects.Siddhi.name} for generating their documentation
-                    till it was decommissioned several years later.
-                </Paragraph>
             </Section>
             <Section labelledById="section-trainee-wso2">
                 <ExperienceSectionHeading
