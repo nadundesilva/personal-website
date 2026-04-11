@@ -28,6 +28,7 @@ import Image from "next-image-export-optimizer";
 import type React from "react";
 
 import { Link } from "@/components/content";
+import { StaggerReveal } from "@/components/primitives";
 import Projects, { type Project } from "@/constants/projects";
 import SubHeading from "../common/SubHeading";
 
@@ -149,12 +150,14 @@ const ContributedProjects = (): React.ReactElement => {
                 justifyContent="center"
                 alignItems="stretch"
             >
-                {renderProject(Projects.Indexity, "h3")}
-                {renderProject(Projects.Choreo, "h3")}
-                {renderProject(Projects.Ballerina, "h3")}
-                {renderProject(Projects.Cellery, "h3")}
-                {renderProject(Projects.Siddhi, "h3")}
-                {renderProject(Projects.GoogleSummerOfCode, "h3")}
+                <StaggerReveal>
+                    {renderProject(Projects.Indexity, "h3")}
+                    {renderProject(Projects.Choreo, "h3")}
+                    {renderProject(Projects.Ballerina, "h3")}
+                    {renderProject(Projects.Cellery, "h3")}
+                    {renderProject(Projects.Siddhi, "h3")}
+                    {renderProject(Projects.GoogleSummerOfCode, "h3")}
+                </StaggerReveal>
             </Grid>
             <Box sx={{ mt: { xs: 8, md: 10 } }}>
                 <SubHeading>Personal Projects</SubHeading>
@@ -169,8 +172,10 @@ const ContributedProjects = (): React.ReactElement => {
                         justifyContent="center"
                         alignItems="stretch"
                     >
-                        {renderProject(Projects.K8sReplicator, "h4")}
-                        {renderProject(Projects.MeshManager, "h4")}
+                        <StaggerReveal>
+                            {renderProject(Projects.K8sReplicator, "h4")}
+                            {renderProject(Projects.MeshManager, "h4")}
+                        </StaggerReveal>
                     </Grid>
                 </Container>
             </Box>

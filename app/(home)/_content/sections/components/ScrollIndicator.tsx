@@ -31,7 +31,7 @@ const ScrollIndicator = (): React.ReactElement => (
     <ButtonBase
         component="a"
         href={`#${WELCOME_BANNER_END_ID}`}
-        aria-label="Scroll to About Me section"
+        aria-label="Scroll to Who Am I section"
         focusRipple
         sx={{
             "borderRadius": 1.5,

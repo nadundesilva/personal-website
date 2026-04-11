@@ -18,7 +18,6 @@ import List, { AccentedList, ListItem } from "./List";
 import Image from "./Image";
 import Logo from "./Logo";
 import Paragraph from "./Paragraph";
-import ScrollReveal from "./ScrollReveal";
 import Section from "./Section";
 import SectionHeading from "./SectionHeading";
 import SubsectionHeading from "./SubsectionHeading";
@@ -35,7 +34,6 @@ export {
     Image,
     Logo,
     Paragraph,
-    ScrollReveal,
     Section,
     SectionHeading,
     SubsectionHeading,

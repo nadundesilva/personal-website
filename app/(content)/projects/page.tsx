@@ -26,11 +26,11 @@ import {
     ListItem,
     Logo,
     Paragraph,
-    ScrollReveal,
     Section,
     SectionHeading,
     Title,
 } from "@/components/content";
+import { ScrollReveal } from "@/components/primitives";
 import Companies, { type Company } from "@/constants/companies";
 import { FULL_NAME } from "@/constants/metadata";
 import ProjectDetails, { type Project } from "@/constants/projects";

@@ -279,8 +279,10 @@ const Layout = ({
                       }
                     : {
                           backgroundColor: (theme: Theme) =>
-                              alpha(theme.palette.primary.main, 0.85),
-                          backdropFilter: "blur(12px)",
+                              alpha(theme.palette.primary.main, 0.75),
+                          backdropFilter: "blur(16px)",
+                          borderBottom: (theme: Theme) =>
+                              `1px solid ${alpha(theme.palette.common.white, 0.08)}`,
                       }),
             }}
             data-testid="app-bar"
