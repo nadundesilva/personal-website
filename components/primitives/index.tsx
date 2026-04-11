@@ -18,6 +18,8 @@ import KeywordChip from "./KeywordChip";
 import LeftAccent from "./LeftAccent";
 import ProgressFab from "./ProgressFab";
 import PrimaryTintedIcon from "./PrimaryTintedIcon";
+import ScrollReveal from "./ScrollReveal";
+import StaggerReveal from "./StaggerReveal";
 
 export {
     CopyButton,
@@ -26,4 +28,6 @@ export {
     LeftAccent,
     ProgressFab,
     PrimaryTintedIcon,
+    ScrollReveal,
+    StaggerReveal,
 };

@@ -12,6 +12,8 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
+"use client";
+
 import { SkillProficiency, type Skill } from "@/constants/skill-categories";
 import {
     Code as CodeIcon,
@@ -28,11 +30,13 @@ import {
     Stack,
     Typography,
     SvgIconProps,
+    useMediaQuery,
     useTheme,
 } from "@mui/material";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
+import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
 import useHoverDelay from "@/hooks/useHoverDelay";
 
 // Exported so the Skills legend can reference the same values without
@@ -49,15 +53,56 @@ export const proficiencyLevels: Record<
 
 interface ProficiencyIndicatorProps {
     level: SkillProficiency;
+    sectionEntranceDelay?: number;
+
+    // When true, the bars animate from hidden to visible via an IntersectionObserver.
+    // When omitted (legend, tooltip), bars are always at full size.
+    animate?: boolean;
 }
 
 const ProficiencyIndicator = ({
     level,
+    sectionEntranceDelay = 0,
+    animate = false,
 }: ProficiencyIndicatorProps): React.ReactElement => {
     const { bars, color } = proficiencyLevels[level];
+    const ref = useRef<HTMLDivElement>(null);
+    const [barsVisible, setBarsVisible] = useState(false);
+    const motionOk = useMediaQuery(MOTION_OK_QUERY);
+    const theme = useTheme();
+
+    useEffect(() => {
+        if (!animate || !motionOk) return;
+        const el = ref.current;
+        if (!el) return;
+
+        const scrollRevealDurationMs =
+            theme.transitions.duration.complex + sectionEntranceDelay;
+        const mountTime = Date.now();
+        let timer: ReturnType<typeof setTimeout>;
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    const remaining = Math.max(
+                        0,
+                        scrollRevealDurationMs - (Date.now() - mountTime),
+                    );
+                    timer = setTimeout(() => setBarsVisible(true), remaining);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.5 },
+        );
+        observer.observe(el);
+        return () => {
+            observer.disconnect();
+            clearTimeout(timer);
+        };
+    }, [animate, motionOk, theme, sectionEntranceDelay]);
 
     return (
         <Box
+            ref={ref}
             aria-hidden={true}
             sx={{
                 display: "flex",
@@ -65,11 +110,27 @@ const ProficiencyIndicator = ({
                 gap: 0.25,
                 height: 12,
                 ml: 0.5,
+                ...(animate && {
+                    "& > *": {
+                        [MOTION_OK_QUERY]: {
+                            transform: barsVisible ? "scaleY(1)" : "scaleY(0)",
+                            transformOrigin: "bottom center",
+                            transition: `transform 1000ms cubic-bezier(0.16, 1, 0.3, 1)`,
+                        },
+                    },
+                }),
             }}
         >
             {[1, 2, 3].map((i) => (
                 <Box
                     key={i}
+                    style={
+                        animate
+                            ? {
+                                  transitionDelay: `${(i - 1) * 100}ms`,
+                              }
+                            : undefined
+                    }
                     sx={{
                         width: 3,
                         height: i * 4,
@@ -308,9 +369,13 @@ const SkillChipTooltip = ({
 
 interface SkillChipProps {
     skill: Skill;
+    sectionEntranceDelay?: number;
 }
 
-const SkillChip = ({ skill }: SkillChipProps): React.ReactElement => {
+const SkillChip = ({
+    skill,
+    sectionEntranceDelay = 0,
+}: SkillChipProps): React.ReactElement => {
     const hasContent =
         skill.usage.experiences.length > 0 ||
         skill.usage.projects.length > 0 ||
@@ -346,7 +411,11 @@ const SkillChip = ({ skill }: SkillChipProps): React.ReactElement => {
                         }}
                     >
                         {skill.name}{" "}
-                        <ProficiencyIndicator level={skill.level} />
+                        <ProficiencyIndicator
+                            level={skill.level}
+                            animate
+                            sectionEntranceDelay={sectionEntranceDelay}
+                        />
                     </Box>
                 }
                 variant="outlined"

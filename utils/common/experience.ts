@@ -17,15 +17,23 @@ import { Date as CustomDate, Now } from "@/constants/date";
 
 const MILLISECONDS_PER_YEAR = 1000 * 60 * 60 * 24 * 365.25;
 
+export const YEARS_EXPERIENCE_INCREMENT = 0.5;
+
+export interface YearsOfExperienceDisplay {
+    value: number;
+    prefix?: string;
+    suffix?: string;
+}
+
 /**
- * Returns years of experience formatted for display:
- * - Rounded to the nearest half-year
- * - Suffixed with "+" when rounded down (e.g. "8+", "7.5+")
- * - Prefixed with "Nearly " when rounded up (e.g. "Nearly 8.5")
+ * Returns years of experience as a structured object for display:
+ * - `value`: rounded to the nearest `YEARS_EXPERIENCE_INCREMENT`
+ * - `prefix`: "nearly " when rounded up, "" otherwise
+ * - `suffix`: "+" when rounded down, "" otherwise
  *
  * Computed by summing the duration of each individual experience entry.
  */
-export function calculateYearsOfExperienceForDisplay(): string {
+export function calculateYearsOfExperienceForDisplay(): YearsOfExperienceDisplay {
     const now = new Date();
     const totalMs = Object.values(Experiences).reduce((sum, exp) => {
         const { from, to } = exp.timePeriod;
@@ -43,12 +51,15 @@ export function calculateYearsOfExperienceForDisplay(): string {
     }, 0);
 
     const yearsOfExperience = totalMs / MILLISECONDS_PER_YEAR;
-    const rounded = Math.round(yearsOfExperience * 2) / 2;
+    const rounded =
+        Math.round(yearsOfExperience / YEARS_EXPERIENCE_INCREMENT) *
+        YEARS_EXPERIENCE_INCREMENT;
+
     if (yearsOfExperience < rounded) {
-        return `nearly ${rounded}`;
+        return { value: rounded, prefix: "nearly " };
     }
     if (yearsOfExperience > rounded) {
-        return `${rounded}+`;
+        return { value: rounded, suffix: "+" };
     }
-    return `${rounded}`;
+    return { value: rounded };
 }

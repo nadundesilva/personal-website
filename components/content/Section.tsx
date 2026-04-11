@@ -15,7 +15,7 @@
 import { Box, Divider } from "@mui/material";
 import type React from "react";
 
-import ScrollReveal from "./ScrollReveal";
+import { ScrollReveal } from "@/components/primitives";
 
 interface SectionProps {
     children: React.ReactNode;

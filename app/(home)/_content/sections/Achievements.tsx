@@ -27,6 +27,7 @@ import { alpha } from "@mui/material/styles";
 import Image from "next-image-export-optimizer";
 import { type StaticImageData } from "next/image";
 import type React from "react";
+import { StaggerReveal } from "@/components/primitives";
 import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
 
 import nasaSpaceAppsChallenge2017Image from "@/assets/achievements/nasa-space-apps-2017.jpg";
@@ -201,64 +202,60 @@ const Achievements = (): React.ReactElement => {
     const isAboveMd = useMediaQuery((theme: Theme) =>
         theme.breakpoints.up("md"),
     );
-    return (
-        <>
-            {isAboveMd ? (
-                <ImageList
-                    rowHeight={ROW_HEIGHT}
-                    cols={3}
-                    // overflow: visible so that the box-shadow glow on each item
-                    // is not clipped by the ImageList's scroll container boundary
-                    sx={{ overflow: "visible" }}
-                >
-                    <FullSizeImageListItem
-                        rows={2}
-                        cols={1}
-                        role="presentation"
-                        sx={{ overflow: "visible" }}
-                    >
-                        <ImageList
-                            rowHeight={ROW_HEIGHT}
-                            cols={1}
-                            role="presentation"
-                            sx={{ overflow: "visible" }}
-                        >
-                            {renderImageListItem(0, 1)}
-                            {renderImageListItem(1, 1)}
-                        </ImageList>
-                    </FullSizeImageListItem>
-                    {renderImageListItem(2, 2)}
-                    <FullSizeImageListItem
-                        rows={2}
-                        cols={1}
-                        role="presentation"
-                        sx={{ overflow: "visible" }}
-                    >
-                        <ImageList
-                            rowHeight={ROW_HEIGHT}
-                            cols={1}
-                            role="presentation"
-                            sx={{ overflow: "visible" }}
-                        >
-                            {renderImageListItem(3, 1)}
-                            {renderImageListItem(4, 1)}
-                        </ImageList>
-                    </FullSizeImageListItem>
-                </ImageList>
-            ) : (
-                <ImageList
-                    rowHeight={ROW_HEIGHT}
+    return isAboveMd ? (
+        <ImageList
+            rowHeight={ROW_HEIGHT}
+            cols={3}
+            // overflow: visible so that the box-shadow glow on each item
+            // is not clipped by the ImageList's scroll container boundary
+            sx={{ overflow: "visible" }}
+        >
+            <StaggerReveal>
+                <FullSizeImageListItem
+                    rows={2}
                     cols={1}
+                    role="presentation"
                     sx={{ overflow: "visible" }}
                 >
-                    {renderImageListItem(0, 1)}
-                    {renderImageListItem(1, 1)}
-                    {renderImageListItem(2, 1)}
-                    {renderImageListItem(3, 1)}
-                    {renderImageListItem(4, 1)}
-                </ImageList>
-            )}
-        </>
+                    <ImageList
+                        rowHeight={ROW_HEIGHT}
+                        cols={1}
+                        role="presentation"
+                        sx={{ overflow: "visible" }}
+                    >
+                        {renderImageListItem(0, 1)}
+                        {renderImageListItem(1, 1)}
+                    </ImageList>
+                </FullSizeImageListItem>
+                {renderImageListItem(2, 2)}
+                <FullSizeImageListItem
+                    rows={2}
+                    cols={1}
+                    role="presentation"
+                    sx={{ overflow: "visible" }}
+                >
+                    <ImageList
+                        rowHeight={ROW_HEIGHT}
+                        cols={1}
+                        role="presentation"
+                        sx={{ overflow: "visible" }}
+                    >
+                        {renderImageListItem(3, 1)}
+                        {renderImageListItem(4, 1)}
+                    </ImageList>
+                </FullSizeImageListItem>
+            </StaggerReveal>
+        </ImageList>
+    ) : (
+        <ImageList rowHeight={ROW_HEIGHT} cols={1} sx={{ overflow: "visible" }}>
+            <StaggerReveal>
+                {renderImageListItem(0, 1)}
+                {renderImageListItem(1, 1)}
+                {renderImageListItem(2, 1)}
+                {renderImageListItem(3, 1)}
+                {renderImageListItem(4, 1)}
+            </StaggerReveal>
+        </ImageList>
     );
 };
 
