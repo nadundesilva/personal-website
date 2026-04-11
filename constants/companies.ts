@@ -37,11 +37,6 @@ const Companies: Record<string, Company> = {
         link: "https://wso2.com/",
         logo: Logos.WSO2,
     },
-    WSO2ViaGoogleSummerOfCode: {
-        name: "WSO2 via Google Summer of Code",
-        link: "https://summerofcode.withgoogle.com/",
-        logo: Logos.GoogleSummerOfCode,
-    },
 };
 
 export default Companies;

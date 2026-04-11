@@ -22,8 +22,8 @@ import type React from "react";
 import Profiles from "@/constants/profiles";
 import { Link } from "@/components/content";
 import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
-import Experiences from "@/constants/experience";
 import { JOB_TITLE } from "@/constants/metadata";
+import { calculateYearsOfExperienceForDisplay } from "@/utils/common/experience";
 
 import profilePhotoImage from "@/assets/profile-photo.webp";
 
@@ -77,19 +77,6 @@ const AboutMe = (): React.ReactElement => {
         </Grid>
     );
 
-    const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
-    const careerStart = Experiences.WSO2SoftwareEngineer.timePeriod.from;
-    const millisecondsOfExperience =
-        new Date().getTime() - careerStart.toJsDate().getTime();
-    const yearsOfExperience = millisecondsOfExperience / millisecondsPerYear;
-    // Round to the nearest half-year so the displayed value stays accurate
-    // without updating it every month (e.g. "7.5 years" rather than "7.3")
-    const yearsOfExperienceRounded = Math.round(yearsOfExperience * 2) / 2;
-    // Prefix "nearly" when rounding up, to avoid overclaiming experience
-    const yearsOfExperienceDisplayValue =
-        (yearsOfExperience < yearsOfExperienceRounded ? "nearly " : "") +
-        yearsOfExperienceRounded;
-
     return (
         <Grid
             container
@@ -108,13 +95,14 @@ const AboutMe = (): React.ReactElement => {
                         textAlign: "left",
                     }}
                 >
-                    {JOB_TITLE} with {yearsOfExperienceDisplayValue} years of
-                    experience in cloud-native application development for
-                    Kubernetes and cloud platforms. Background in architecture,
-                    user experience (UX), development, deployment, and ensuring
-                    site reliability of cloud-native applications in production
-                    environments. Experience in owning the technical direction
-                    of product areas and leading a team of engineers.
+                    {JOB_TITLE} with {calculateYearsOfExperienceForDisplay()}{" "}
+                    years of experience in cloud-native application development
+                    for Kubernetes and cloud platforms. Background in
+                    architecture, user experience (UX), development, deployment,
+                    and ensuring site reliability of cloud-native applications
+                    in production environments. Experience in owning the
+                    technical direction of product areas and leading a team of
+                    engineers.
                 </Typography>
                 <Box
                     sx={{
