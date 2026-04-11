@@ -15,8 +15,7 @@
 import { Box, Typography } from "@mui/material";
 import type React from "react";
 
-import { HorizontalGradientLine } from "@/components/primitives";
-import ScrollReveal from "./ScrollReveal";
+import { ScrollReveal, HorizontalGradientLine } from "@/components/primitives";
 
 interface TitleProps {
     children: React.ReactNode;

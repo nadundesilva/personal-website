@@ -27,7 +27,7 @@ import type React from "react";
 import type { JSX } from "react";
 
 import Heading from "./common/Heading";
-import ScrollReveal from "@/components/content/ScrollReveal";
+import { ScrollReveal } from "@/components/primitives";
 import WelcomeBanner from "./sections/WelcomeBanner";
 
 const SectionContainer = styled(Container)(({ theme }) => ({
@@ -45,7 +45,7 @@ const pageLoader = (): JSX.Element => (
     </Box>
 );
 
-const AboutMeSection = dynamic(async () => await import("./sections/AboutMe"), {
+const WhoAmISection = dynamic(async () => await import("./sections/WhoAmI"), {
     loading: pageLoader,
 });
 
@@ -85,46 +85,50 @@ const ContactSection = dynamic(async () => await import("./sections/Contact"), {
     loading: pageLoader,
 });
 
+import { type SectionProps } from "./types";
+
 interface Section {
     name: string;
-    Component: React.ComponentType;
+    Component: React.ComponentType<SectionProps>;
     sectionId: string;
 }
 
-const PageContent = (): React.ReactElement => {
-    const pageSections: Section[] = [
-        {
-            name: "Experience",
-            Component: ExperienceSection,
-            sectionId: "experience",
-        },
-        {
-            name: "Contributed Projects",
-            Component: ContributedProjectsSection,
-            sectionId: "contributed-projects",
-        },
-        {
-            name: "Achievements",
-            Component: AchievementsSection,
-            sectionId: "achievements",
-        },
-        {
-            name: "Skills",
-            Component: SkillsSection,
-            sectionId: "skills",
-        },
-        {
-            name: "Certifications",
-            Component: CertificationsSection,
-            sectionId: "certifications",
-        },
-        {
-            name: "Contact",
-            Component: ContactSection,
-            sectionId: "contact",
-        },
-    ];
+const SECTION_STAGGER_STEP_MS = 50;
 
+const pageSections: Section[] = [
+    {
+        name: "Experience",
+        Component: ExperienceSection,
+        sectionId: "experience",
+    },
+    {
+        name: "Contributed Projects",
+        Component: ContributedProjectsSection,
+        sectionId: "contributed-projects",
+    },
+    {
+        name: "Achievements",
+        Component: AchievementsSection,
+        sectionId: "achievements",
+    },
+    {
+        name: "Skills",
+        Component: SkillsSection,
+        sectionId: "skills",
+    },
+    {
+        name: "Certifications",
+        Component: CertificationsSection,
+        sectionId: "certifications",
+    },
+    {
+        name: "Contact",
+        Component: ContactSection,
+        sectionId: "contact",
+    },
+];
+
+const PageContent = (): React.ReactElement => {
     const generateSection = (
         title: string,
         section: React.ReactElement,
@@ -195,11 +199,11 @@ const PageContent = (): React.ReactElement => {
                     sx={{ position: "relative", zIndex: 1 }}
                 >
                     <SectionContainer maxWidth={false} disableGutters>
-                        <ScrollReveal delay={0}>
+                        <ScrollReveal>
                             {generateSection(
-                                "About Me",
-                                <AboutMeSection />,
-                                "about-me-section",
+                                "Who Am I",
+                                <WhoAmISection />,
+                                "who-am-i-section",
                                 1,
                             )}
                         </ScrollReveal>
@@ -210,10 +214,16 @@ const PageContent = (): React.ReactElement => {
                             disableGutters
                             key={section.name}
                         >
-                            <ScrollReveal delay={index * 50}>
+                            <ScrollReveal
+                                delay={index * SECTION_STAGGER_STEP_MS}
+                            >
                                 {generateSection(
                                     section.name,
-                                    <section.Component />,
+                                    <section.Component
+                                        sectionEntranceDelay={
+                                            index * SECTION_STAGGER_STEP_MS
+                                        }
+                                    />,
                                     `${section.sectionId}-section`,
                                     index + 2,
                                     index < pageSections.length - 1,

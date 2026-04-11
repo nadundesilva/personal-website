@@ -449,7 +449,7 @@ const createWebsiteTheme = (
                                 duration: theme.transitions.duration.short,
                             }),
                             "&:hover": {
-                                "transform": `translateY(-${theme.motion.hoverLift})`,
+                                "transform": `translateY(-${theme.motion.hoverLift}) scale(1.02)`,
                                 "& img": { transform: "scale(1.05)" },
                             },
                         },

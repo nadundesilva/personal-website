@@ -30,6 +30,7 @@ import Image from "next-image-export-optimizer";
 import type React from "react";
 
 import { Link } from "@/components/content";
+import { StaggerReveal } from "@/components/primitives";
 import Certificates, { type Certificate } from "@/constants/certificates";
 
 const Certifications = (): React.ReactElement => {
@@ -55,120 +56,129 @@ const Certifications = (): React.ReactElement => {
             alignItems="stretch"
             spacing={2}
         >
-            {certifications.map((certification) => (
-                <Grid key={certification.name} size={{ xs: 12, sm: 6, md: 4 }}>
-                    <Card sx={{ height: "100%" }}>
-                        <CardActionArea
-                            component={Link}
-                            href={certification.link}
-                            target="_blank"
-                            sx={{
-                                height: "100%",
-                                p: { xs: 2.5, md: 3.5 },
-                                display: "flex",
-                                flexDirection: "column",
-                            }}
-                        >
-                            <Box
+            <StaggerReveal>
+                {certifications.map((certification) => (
+                    <Grid
+                        key={certification.name}
+                        size={{ xs: 12, sm: 6, md: 4 }}
+                    >
+                        <Card sx={{ height: "100%" }}>
+                            <CardActionArea
+                                component={Link}
+                                href={certification.link}
+                                target="_blank"
                                 sx={{
-                                    width: "100%",
-                                    mb: 3.5,
-                                    p: 2,
-                                    borderRadius: 2,
-                                    overflow: "hidden",
-                                    background: (theme) =>
-                                        theme.palette.mode === "light"
-                                            ? alpha(
-                                                  theme.palette.primary.main,
-                                                  0.03,
-                                              )
-                                            : alpha(
-                                                  theme.palette.primary.light,
-                                                  0.03,
-                                              ),
-                                }}
-                            >
-                                <CardMedia
-                                    component={(props: CardMediaProps) => (
-                                        <Container
-                                            {...props}
-                                            maxWidth={false}
-                                            disableGutters
-                                            sx={{
-                                                position: "relative",
-                                                width: "100%",
-                                                height: "auto",
-                                                pt: "70%",
-                                                margin: "auto",
-                                                overflow: "hidden",
-                                            }}
-                                        >
-                                            <Image
-                                                alt=""
-                                                src={
-                                                    theme.palette.mode ===
-                                                    "light"
-                                                        ? certification.logo
-                                                              .srcLight
-                                                        : certification.logo
-                                                              .srcDark
-                                                }
-                                                fill
-                                                sizes={imageSizes}
-                                                style={{ objectFit: "contain" }}
-                                            />
-                                        </Container>
-                                    )}
-                                />
-                            </Box>
-                            <CardContent
-                                sx={{
+                                    height: "100%",
+                                    p: { xs: 2.5, md: 3.5 },
                                     display: "flex",
                                     flexDirection: "column",
-                                    justifyContent: "space-between",
-                                    alignItems: "flex-start",
-                                    flexGrow: 1,
-                                    width: "100%",
                                 }}
                             >
-                                <Typography
-                                    variant="h6"
-                                    component="h3"
+                                <Box
                                     sx={{
-                                        fontSize: { xs: 16, md: 17 },
-                                        mb: 2,
+                                        width: "100%",
+                                        mb: 3.5,
+                                        p: 2,
+                                        borderRadius: 2,
+                                        overflow: "hidden",
+                                        background: (theme) =>
+                                            theme.palette.mode === "light"
+                                                ? alpha(
+                                                      theme.palette.primary
+                                                          .main,
+                                                      0.03,
+                                                  )
+                                                : alpha(
+                                                      theme.palette.primary
+                                                          .light,
+                                                      0.03,
+                                                  ),
                                     }}
                                 >
-                                    {certification.name}
-                                </Typography>
-                                <Box sx={{ flexGrow: 1 }} />
-                                <Chip
-                                    label={certification.type}
-                                    color="secondary"
-                                    size="small"
+                                    <CardMedia
+                                        component={(props: CardMediaProps) => (
+                                            <Container
+                                                {...props}
+                                                maxWidth={false}
+                                                disableGutters
+                                                sx={{
+                                                    position: "relative",
+                                                    width: "100%",
+                                                    height: "auto",
+                                                    pt: "70%",
+                                                    margin: "auto",
+                                                    overflow: "hidden",
+                                                }}
+                                            >
+                                                <Image
+                                                    alt=""
+                                                    src={
+                                                        theme.palette.mode ===
+                                                        "light"
+                                                            ? certification.logo
+                                                                  .srcLight
+                                                            : certification.logo
+                                                                  .srcDark
+                                                    }
+                                                    fill
+                                                    sizes={imageSizes}
+                                                    style={{
+                                                        objectFit: "contain",
+                                                    }}
+                                                />
+                                            </Container>
+                                        )}
+                                    />
+                                </Box>
+                                <CardContent
                                     sx={{
-                                        mb: 3,
-                                        fontSize: { xs: 10, md: 11 },
-                                        height: { xs: 22, md: 24 },
-                                    }}
-                                />
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                    sx={{
-                                        mt: 1,
-                                        fontSize: { xs: 11, md: 12 },
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        justifyContent: "space-between",
+                                        alignItems: "flex-start",
+                                        flexGrow: 1,
+                                        width: "100%",
                                     }}
                                 >
-                                    Issued by
-                                    <br />
-                                    {certification.issuer.name}
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                    </Card>
-                </Grid>
-            ))}
+                                    <Typography
+                                        variant="h6"
+                                        component="h3"
+                                        sx={{
+                                            fontSize: { xs: 16, md: 17 },
+                                            mb: 2,
+                                        }}
+                                    >
+                                        {certification.name}
+                                    </Typography>
+                                    <Box sx={{ flexGrow: 1 }} />
+                                    <Chip
+                                        label={certification.type}
+                                        color="secondary"
+                                        size="small"
+                                        sx={{
+                                            mb: 3,
+                                            fontSize: { xs: 10, md: 11 },
+                                            height: { xs: 22, md: 24 },
+                                        }}
+                                    />
+                                    <Typography
+                                        variant="body2"
+                                        color="text.secondary"
+                                        sx={{
+                                            mt: 1,
+                                            fontSize: { xs: 11, md: 12 },
+                                        }}
+                                    >
+                                        Issued by
+                                        <br />
+                                        {certification.issuer.name}
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                ))}
+            </StaggerReveal>
         </Grid>
     );
 };

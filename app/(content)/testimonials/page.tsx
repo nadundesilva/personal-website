@@ -16,7 +16,8 @@ import { Box } from "@mui/material";
 import type { Metadata } from "next";
 import type React from "react";
 
-import { ScrollReveal, Title } from "@/components/content";
+import { Title } from "@/components/content";
+import { ScrollReveal } from "@/components/primitives";
 import { FULL_NAME } from "@/constants/metadata";
 import TestimonialsData from "@/constants/testimonials";
 

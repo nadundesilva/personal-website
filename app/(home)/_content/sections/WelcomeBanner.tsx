@@ -16,10 +16,8 @@ import {
     Box,
     Button,
     Container,
-    Grid,
     Link as MuiLink,
     Typography,
-    type TypographyProps,
 } from "@mui/material";
 
 export const WELCOME_BANNER_END_ID = "welcome-banner-end";
@@ -33,9 +31,18 @@ import {
     SHORT_VIEWPORT_QUERY,
 } from "@/components/theme/media-queries";
 import { FULL_NAME, TAGLINE } from "@/constants/metadata";
+import Profiles from "@/constants/profiles";
+import Projects from "@/constants/projects";
+import Skills from "@/constants/skills";
+import {
+    YEARS_EXPERIENCE_INCREMENT,
+    calculateYearsOfExperienceForDisplay,
+} from "@/utils/common/experience";
 
 import welcomeBannerImage from "@/assets/banner.webp";
+import AnimatedStatValue from "./components/AnimatedStatValue";
 import ScrollIndicator from "./components/ScrollIndicator";
+import SpotlightCard from "./components/SpotlightCard";
 
 // Use MUI Link (plain anchor) as the inner component instead of Next.js Link
 // so the router does not treat the PDF path as a Next.js route and attempt to
@@ -44,32 +51,65 @@ const PdfLink = (
     props: React.ComponentPropsWithRef<typeof Link>,
 ): React.ReactElement => <Link component={MuiLink} {...props} />;
 
-const WelcomeText = (props: TypographyProps): React.ReactElement => (
-    <Typography
-        {...props}
-        sx={{
-            color: (theme) => theme.palette.common.white,
-            fontSize: { xs: 32, sm: 44, md: 60, lg: 72 },
-            fontWeight: 300,
-            textShadow: (theme) =>
-                `0 2px 24px ${alpha(theme.palette.common.black, 0.4)}`,
-            ...props.sx,
-        }}
-    />
-);
+const STATS_FADE_IN_DELAY_MS = 550;
+
+const HERO_EASING = "cubic-bezier(0.16, 1, 0.3, 1)";
+
+const fadeInUp = keyframes`
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+`;
+
+const nameShimmer = keyframes`
+    0%, 30% { background-position: 100% center; }
+    70%, 100% { background-position: 0% center; }
+`;
+
+const blobDrift1 = keyframes`
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(40px, -30px) scale(1.08); }
+`;
+
+const blobDrift2 = keyframes`
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-30px, 25px) scale(0.94); }
+`;
+
+const projectCount = Object.keys(Projects).length;
+const skillCount = Object.keys(Skills).length;
+const yearsExp = calculateYearsOfExperienceForDisplay();
+
+const STATS = [
+    {
+        value: yearsExp.value,
+        prefix: yearsExp.prefix,
+        suffix: yearsExp.suffix,
+        step: YEARS_EXPERIENCE_INCREMENT,
+        label: "Years Exp.",
+    },
+    {
+        value: projectCount,
+        prefix: undefined,
+        suffix: undefined,
+        step: 1,
+        label: "Projects",
+    },
+    {
+        value: skillCount,
+        prefix: undefined,
+        suffix: "+",
+        step: 1,
+        label: "Skills",
+    },
+];
 
 const WelcomeBanner = (): React.ReactElement => {
-    const fadeInUp = keyframes`
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    `;
-
     return (
         <Container
             maxWidth={false}
@@ -92,6 +132,51 @@ const WelcomeBanner = (): React.ReactElement => {
                         `linear-gradient(to right, ${alpha(theme.palette.common.black, 0.45)}, transparent 30%, transparent 70%, ${alpha(theme.palette.common.black, 0.45)}), radial-gradient(ellipse at center, transparent 25%, ${alpha(theme.palette.common.black, 0.55)} 78%), linear-gradient(to bottom, ${alpha(theme.palette.common.black, 0.35)}, ${alpha(theme.palette.common.black, 0.85)})`,
                 }}
             />
+
+            {/* Aurora blobs — coloured ambient light above the vignette, below the content */}
+            <Box
+                aria-hidden
+                sx={{
+                    position: "absolute",
+                    inset: 0,
+                    zIndex: 2,
+                    pointerEvents: "none",
+                    overflow: "hidden",
+                }}
+            >
+                <Box
+                    sx={{
+                        position: "absolute",
+                        width: { xs: 350, md: 520 },
+                        height: { xs: 350, md: 520 },
+                        borderRadius: "50%",
+                        top: "5%",
+                        left: "5%",
+                        background: "#88BDF2",
+                        filter: "blur(80px)",
+                        opacity: 0.15,
+                        [MOTION_OK_QUERY]: {
+                            animation: `${blobDrift1} 12s ease-in-out infinite`,
+                        },
+                    }}
+                />
+                <Box
+                    sx={{
+                        position: "absolute",
+                        width: { xs: 300, md: 440 },
+                        height: { xs: 300, md: 440 },
+                        borderRadius: "50%",
+                        bottom: "10%",
+                        right: "5%",
+                        background: "#9370db",
+                        filter: "blur(80px)",
+                        opacity: 0.12,
+                        [MOTION_OK_QUERY]: {
+                            animation: `${blobDrift2} 16s ease-in-out infinite`,
+                        },
+                    }}
+                />
+            </Box>
 
             <Box
                 sx={{
@@ -118,162 +203,323 @@ const WelcomeBanner = (): React.ReactElement => {
                 />
             </Box>
 
-            <Grid
-                container
-                direction="column"
-                justifyContent="center"
-                alignItems="center"
+            {/* Centered glassmorphism card */}
+            <Box
                 sx={{
                     position: "relative",
                     zIndex: 3,
                     flex: 1,
-                    textAlign: "center",
-                    pt: { xs: 8, md: 16 },
-                    pb: { xs: 4, md: 6 },
-                    px: { xs: 2, sm: 3, md: 4 }, // Width-based (native MUI)
-                    // Reduce vertical padding on very short viewports (e.g. landscape
-                    // mobile) where the full padding would compress the content
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    px: { xs: 2, sm: 3 },
+                    pt: { xs: 8, md: 10 },
+                    pb: { xs: 2, md: 4 },
                     [SHORT_VIEWPORT_QUERY]: {
-                        pt: 2,
-                        pb: 2,
+                        pt: 6,
+                        pb: 1,
                     },
                 }}
             >
-                <Grid size={12}>
-                    <WelcomeText
+                <SpotlightCard
+                    sx={{
+                        backdropFilter: "blur(20px)",
+                        WebkitBackdropFilter: "blur(20px)",
+                        background: (theme) =>
+                            alpha(theme.palette.common.white, 0.08),
+                        border: (theme) =>
+                            `1px solid ${alpha(theme.palette.common.white, 0.15)}`,
+                        borderRadius: 2,
+                        boxShadow: "0 24px 80px rgba(0,0,0,0.4)",
+                        width: {
+                            xs: "88vw",
+                            sm: "520px",
+                            md: "580px",
+                            lg: "620px",
+                        },
+                        maxWidth: "100%",
+                        px: { xs: 2, sm: 3, md: 3.5, lg: 5 },
+                        py: { xs: 2.5, sm: 3.5, md: 4, lg: 6 },
+                        textAlign: "center",
+                        [SHORT_VIEWPORT_QUERY]: {
+                            py: 1.5,
+                        },
+                    }}
+                >
+                    {/* "Hi, I am" overline */}
+                    <Typography
                         component="p"
-                        mb={{ xs: 1.5, md: 2 }}
                         sx={{
-                            fontSize: { xs: 18, sm: 24, md: 32, lg: 38 },
-                            letterSpacing: "-0.03em",
-                            opacity: 0.75,
+                            color: "#88BDF2",
+                            fontSize: { xs: 11, sm: 12, md: 12, lg: 13 },
+                            letterSpacing: "0.35em",
+                            textTransform: "uppercase",
+                            fontWeight: 400,
+                            mb: 1,
                             [MOTION_OK_QUERY]: {
-                                animation: `${fadeInUp} 1s ease-out`,
+                                animation: `${fadeInUp} 0.8s ${HERO_EASING} 0s both`,
                             },
-                            [SHORT_VIEWPORT_QUERY]: {
-                                mb: 1.5,
-                            },
+                            [SHORT_VIEWPORT_QUERY]: { mb: 0.5 },
                         }}
                     >
                         Hi, I am
-                    </WelcomeText>
-                    <WelcomeText
+                    </Typography>
+
+                    {/* Name */}
+                    <Typography
                         component="h1"
-                        mb={{ xs: 3, md: 4 }}
                         sx={{
-                            letterSpacing: { xs: "-0.05em", md: "-0.06em" },
+                            background:
+                                "linear-gradient(90deg, #88BDF2 0%, #88BDF2 45%, #BDDDFC 48%, #ffffff 50%, #BDDDFC 52%, #88BDF2 55%, #88BDF2 100%)",
+                            backgroundSize: "500% auto",
+                            backgroundRepeat: "no-repeat",
+                            WebkitBackgroundClip: "text",
+                            WebkitTextFillColor: "transparent",
+                            backgroundClip: "text",
+                            fontSize: { xs: 44, sm: 54, md: 54, lg: 64 },
+                            fontWeight: 300,
+                            letterSpacing: "-0.03em",
+                            lineHeight: 1.1,
+                            mb: { xs: 2, md: 3 },
                             [MOTION_OK_QUERY]: {
-                                animation: `${fadeInUp} 1s ease-out 0.1s both`,
+                                animation: `${fadeInUp} 0.8s ${HERO_EASING} 0.15s both, ${nameShimmer} 9s linear 1.5s infinite`,
                             },
-                            [SHORT_VIEWPORT_QUERY]: {
-                                mb: 2,
-                            },
+                            [SHORT_VIEWPORT_QUERY]: { mb: 1.5 },
                         }}
                     >
                         {FULL_NAME}
-                    </WelcomeText>
+                    </Typography>
+
+                    {/* Gradient divider */}
                     <Box
                         mx="auto"
-                        mb={{ xs: 3, md: 4 }}
                         sx={{
-                            width: 120,
-                            height: 2,
+                            width: { xs: 80, sm: 100, lg: 120 },
+                            height: "1px",
                             background: (theme) =>
-                                `linear-gradient(90deg, transparent, ${alpha(theme.palette.common.white, 0.6)}, transparent)`,
+                                `linear-gradient(90deg, transparent, ${alpha(theme.palette.common.white, 0.4)}, transparent)`,
+                            mb: { xs: 2, md: 3 },
                             [MOTION_OK_QUERY]: {
-                                animation: `${fadeInUp} 1s ease-out 0.15s both`,
+                                animation: `${fadeInUp} 0.8s ${HERO_EASING} 0.25s both`,
                             },
-                            [SHORT_VIEWPORT_QUERY]: {
-                                mb: 2,
-                            },
+                            [SHORT_VIEWPORT_QUERY]: { mb: 1.5 },
                         }}
                     />
+
+                    {/* Tagline */}
                     <Typography
                         component="p"
-                        mb={{ xs: 5, md: 6 }}
                         sx={{
                             color: (theme) => theme.palette.common.white,
-                            fontSize: { xs: 18, sm: 22, md: 24 },
+                            opacity: 0.8,
+                            fontSize: { xs: 15, sm: 17, md: 17, lg: 18 },
                             fontWeight: 300,
-                            opacity: 0.9,
-                            letterSpacing: "0.04em",
-                            textShadow: (theme) =>
-                                `0 1px 12px ${alpha(theme.palette.common.black, 0.25)}`,
+                            lineHeight: 1.6,
+                            mb: { xs: 2.5, md: 3.5 },
                             [MOTION_OK_QUERY]: {
-                                animation: `${fadeInUp} 1s ease-out 0.2s both`,
+                                animation: `${fadeInUp} 0.8s ${HERO_EASING} 0.35s both`,
                             },
-                            [SHORT_VIEWPORT_QUERY]: {
-                                mb: 3,
-                            },
+                            [SHORT_VIEWPORT_QUERY]: { mb: 2 },
                         }}
                     >
                         {TAGLINE}
                     </Typography>
-                </Grid>
-                <Grid size={12}>
-                    <Button
-                        variant="outlined"
-                        component={PdfLink}
-                        href="/nadundesilva-cv.pdf"
-                        target="_blank"
-                        aria-label="View CV (PDF document)"
+
+                    {/* View CV button */}
+                    <Box
                         sx={{
-                            "position": "relative",
-                            "overflow": "hidden",
-                            "borderColor": (theme) =>
-                                alpha(theme.palette.common.white, 0.85),
-                            "color": (theme) => theme.palette.common.white,
-                            "borderWidth": 1,
-                            "px": { xs: 5, md: 6 },
-                            "py": { xs: 1.5, md: 2 },
-                            "letterSpacing": "0.06em",
-                            "textTransform": "uppercase",
-                            "fontSize": { xs: 12, md: 13 },
-                            "borderRadius": 0,
-                            "&::after": {
-                                content: '""',
-                                position: "absolute",
-                                top: 0,
-                                left: 0,
-                                width: "60%",
-                                height: "100%",
-                                background: (theme) =>
-                                    `linear-gradient(105deg, transparent 20%, ${alpha(theme.palette.common.white, 0.18)} 50%, transparent 80%)`,
-                                transform: "translateX(-200%)",
-                            },
-                            "&:hover": {
-                                borderColor: (theme) =>
-                                    theme.palette.common.white,
-                                backgroundColor: (theme) =>
-                                    alpha(theme.palette.common.white, 0.12),
-                                boxShadow: (theme) =>
-                                    `0 2px 12px ${alpha(theme.palette.common.black, 0.25)}`,
-                            },
+                            mb: { xs: 2.5, md: 3 },
                             [MOTION_OK_QUERY]: {
-                                "animation": `${fadeInUp} 1s ease-out 0.25s both`,
-                                "transition": (theme) =>
-                                    theme.transitions.create("all", {
-                                        duration:
-                                            theme.transitions.duration.short,
-                                    }),
-                                "&:hover::after": {
-                                    transform: "translateX(300%)",
+                                animation: `${fadeInUp} 0.8s ${HERO_EASING} 0.45s both`,
+                            },
+                            [SHORT_VIEWPORT_QUERY]: { mb: 2 },
+                        }}
+                    >
+                        <Button
+                            variant="contained"
+                            component={PdfLink}
+                            href="/nadundesilva-cv.pdf"
+                            target="_blank"
+                            aria-label="View CV (PDF document)"
+                            fullWidth
+                            sx={{
+                                "backgroundColor": "#384959",
+                                "color": (theme) => theme.palette.common.white,
+                                "borderRadius": "100px",
+                                "px": { xs: 4, md: 5 },
+                                "py": { xs: 1.25, md: 1.5 },
+                                "fontSize": { xs: 13, md: 14 },
+                                "letterSpacing": "0.05em",
+                                "boxShadow": "none",
+                                "textTransform": "none",
+                                "display": "block",
+                                [MOTION_OK_QUERY]: {
                                     transition: (theme) =>
-                                        theme.transitions.create("transform", {
-                                            duration:
-                                                theme.transitions.duration
-                                                    .complex * 2,
-                                        }),
+                                        theme.transitions.create(
+                                            "background-color",
+                                            {
+                                                duration:
+                                                    theme.transitions.duration
+                                                        .short,
+                                            },
+                                        ),
                                 },
+                                "&:hover": {
+                                    backgroundColor: "#4a6785",
+                                    boxShadow: "none",
+                                },
+                            }}
+                        >
+                            View CV
+                        </Button>
+                    </Box>
+
+                    {/* Stats row — hidden on very short viewports */}
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            mb: { xs: 2.5, md: 3 },
+                            [MOTION_OK_QUERY]: {
+                                animation: `${fadeInUp} 0.8s ${HERO_EASING} ${STATS_FADE_IN_DELAY_MS}ms both`,
+                            },
+                            [SHORT_VIEWPORT_QUERY]: {
+                                display: "none",
                             },
                         }}
                     >
-                        View CV
-                    </Button>
-                </Grid>
-            </Grid>
+                        {STATS.map((stat, index) => (
+                            <React.Fragment key={stat.label}>
+                                {index > 0 && (
+                                    <Box
+                                        sx={{
+                                            width: "1px",
+                                            height: 32,
+                                            backgroundColor: (theme) =>
+                                                alpha(
+                                                    theme.palette.common.white,
+                                                    0.2,
+                                                ),
+                                        }}
+                                    />
+                                )}
+                                <Box
+                                    sx={{
+                                        textAlign: "center",
+                                        px: { xs: 2, sm: 3 },
+                                    }}
+                                >
+                                    <Typography
+                                        sx={{
+                                            color: "#88BDF2",
+                                            fontSize: {
+                                                xs: 22,
+                                                sm: 26,
+                                                lg: 28,
+                                            },
+                                            fontWeight: 700,
+                                            lineHeight: 1.1,
+                                        }}
+                                    >
+                                        <AnimatedStatValue
+                                            value={stat.value}
+                                            prefix={stat.prefix}
+                                            suffix={stat.suffix}
+                                            step={stat.step}
+                                            startDelay={STATS_FADE_IN_DELAY_MS}
+                                        />
+                                    </Typography>
+                                    <Typography
+                                        sx={{
+                                            color: (theme) =>
+                                                alpha(
+                                                    theme.palette.common.white,
+                                                    0.55,
+                                                ),
+                                            fontSize: { xs: 9, sm: 10, lg: 11 },
+                                            textTransform: "uppercase",
+                                            letterSpacing: "0.08em",
+                                            mt: 0.5,
+                                        }}
+                                    >
+                                        {stat.label}
+                                    </Typography>
+                                </Box>
+                            </React.Fragment>
+                        ))}
+                    </Box>
 
-            {/* Mouse-outline scroll indicator — clicking scrolls to the About Me section */}
+                    {/* Thin divider above social icons */}
+                    <Box
+                        sx={{
+                            width: "100%",
+                            height: "1px",
+                            backgroundColor: (theme) =>
+                                alpha(theme.palette.common.white, 0.15),
+                            mb: { xs: 1.5, md: 2 },
+                            [MOTION_OK_QUERY]: {
+                                animation: `${fadeInUp} 0.8s ${HERO_EASING} 0.65s both`,
+                            },
+                            [SHORT_VIEWPORT_QUERY]: { mb: 1 },
+                        }}
+                    />
+
+                    {/* Social icons */}
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            gap: { xs: 3, md: 3.5 },
+                            [MOTION_OK_QUERY]: {
+                                animation: `${fadeInUp} 0.8s ${HERO_EASING} 0.65s both`,
+                            },
+                        }}
+                    >
+                        {[
+                            Profiles.LinkedIn,
+                            Profiles.GitHub,
+                            Profiles.Medium,
+                            Profiles.Instagram,
+                        ].map(({ name, Icon, link }) => (
+                            <MuiLink
+                                key={name}
+                                href={link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`Visit ${name} profile`}
+                                sx={{
+                                    "color": (theme) =>
+                                        alpha(theme.palette.common.white, 0.5),
+                                    "display": "flex",
+                                    "alignItems": "center",
+                                    [MOTION_OK_QUERY]: {
+                                        transition: (theme) =>
+                                            theme.transitions.create(
+                                                "opacity",
+                                                {
+                                                    duration:
+                                                        theme.transitions
+                                                            .duration.shorter,
+                                                },
+                                            ),
+                                    },
+                                    "&:hover": {
+                                        opacity: 0.85,
+                                        color: (theme) =>
+                                            theme.palette.common.white,
+                                    },
+                                }}
+                            >
+                                <Icon sx={{ fontSize: 20 }} />
+                            </MuiLink>
+                        ))}
+                    </Box>
+                </SpotlightCard>
+            </Box>
+
+            {/* Mouse-outline scroll indicator */}
             <Box
                 display="flex"
                 flexDirection="column"
@@ -285,14 +531,14 @@ const WelcomeBanner = (): React.ReactElement => {
                     pb: { xs: 4, md: 6 },
                     mt: { xs: 2, md: 0 },
                     [MOTION_OK_QUERY]: {
-                        animation: `${fadeInUp} 1s ease-out 0.4s both`,
+                        animation: `${fadeInUp} 0.8s ${HERO_EASING} 0.75s both`,
                     },
                 }}
             >
                 <ScrollIndicator />
             </Box>
 
-            {/* Hidden anchor at the very end of the banner — scroll target for the indicator above */}
+            {/* Hidden anchor at the very end of the banner */}
             <Box
                 id={WELCOME_BANNER_END_ID}
                 aria-hidden="true"
