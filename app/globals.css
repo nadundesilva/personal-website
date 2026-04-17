@@ -1,0 +1,30 @@
+/*
+ * Nadun De Silva - All Rights Reserved
+ *
+ * This source code and its associated files are the
+ * confidential and proprietary information of Nadun De Silva.
+ * Unauthorized reproduction, distribution, or disclosure
+ * in any form, in whole or in part, is strictly prohibited
+ * except as explicitly provided under a separate license
+ * agreement with Nadun De Silva.
+ *
+ * Website: https://nadundesilva.com
+ *
+ * © 2026 Nadun De Silva. All rights reserved.
+ */
+
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #384959;
+    --color-primary-light: #bdddfc;
+    --color-primary-dark: #6a89a7;
+    --color-secondary: #4a6785;
+    --color-secondary-light: #88bdf2;
+    --color-secondary-dark: #384959;
+    --color-link-light: #2e5c82;
+    --color-link-dark: #88bdf2;
+
+    --font-sans: var(--font-default);
+    --font-mono: var(--font-code);
+}
