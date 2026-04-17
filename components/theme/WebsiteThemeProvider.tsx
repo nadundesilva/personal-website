@@ -22,6 +22,7 @@ import {
     ThemeProvider,
 } from "@mui/material/styles";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
+import { LazyMotion, MotionConfig, domAnimation } from "motion/react";
 import type React from "react";
 
 import {
@@ -695,7 +696,11 @@ const WebsiteThemeProvider = ({
             <StyledEngineProvider injectFirst>
                 <ThemeProvider theme={websiteTheme} defaultMode="system">
                     <CssBaseline />
-                    {children}
+                    <LazyMotion features={domAnimation} strict>
+                        <MotionConfig reducedMotion="user">
+                            {children}
+                        </MotionConfig>
+                    </LazyMotion>
                 </ThemeProvider>
             </StyledEngineProvider>
         </AppRouterCacheProvider>
