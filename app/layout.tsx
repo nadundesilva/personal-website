@@ -12,6 +12,8 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+import "./globals.css";
+
 import type { Viewport, Metadata } from "next";
 import type { Route as NextRoute } from "next";
 import Script from "next/script";
