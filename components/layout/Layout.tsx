@@ -14,39 +14,31 @@
  */
 "use client";
 
-import {
-    Close,
-    DarkMode,
-    KeyboardArrowUp,
-    LightMode,
-    Menu as MenuIcon,
-} from "@mui/icons-material";
-import {
-    AppBar,
-    Box,
-    Button,
-    Container,
-    Drawer,
-    Fab,
-    IconButton,
-    ListItemButton,
-    ListItemText,
-    Toolbar,
-    Tooltip,
-    Typography,
-    useMediaQuery,
-    useScrollTrigger,
-    Zoom,
-} from "@mui/material";
-import { alpha, type Theme, useColorScheme } from "@mui/material/styles";
-import { usePathname } from "next/navigation";
-import type React from "react";
-import { useEffect, useRef, useState } from "react";
+import "./layout.css";
 
 import { Link } from "@/components/content";
-import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
+import { Button } from "@/components/primitives/Button";
+import {
+    Drawer,
+    DrawerContent,
+    DrawerDescription,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/primitives/Drawer";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/components/primitives/Tooltip";
+import { cn } from "@/components/primitives/utils/cn";
 import { FULL_NAME } from "@/constants/metadata";
-import { Route } from "@/constants/routes";
+import { type Route } from "@/constants/routes";
+import { ChevronUp, Menu, Moon, Sun, X } from "lucide-react";
+import { useReducedMotion } from "motion/react";
+import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
+import type React from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -56,481 +48,277 @@ interface LayoutProps {
 const Layout = ({
     children,
     topLevelRoutes,
-}: LayoutProps): React.ReactElement | null => {
+}: LayoutProps): React.ReactElement => {
     const pathname = usePathname();
-    const scrollTrigger = useScrollTrigger({
-        disableHysteresis: true,
-        threshold: 0,
-    });
-
+    const [scrolled, setScrolled] = useState(false);
     const scrollToTopRef = useRef<HTMLDivElement>(null);
+    const prefersReducedMotion = useReducedMotion();
 
-    // On route change, Next.js triggers a smooth scroll to y=0 via the global
-    // `scroll-behavior: smooth` set on <html>. React's re-render of the new
-    // page interrupts that animation mid-flight, leaving the scroll position
-    // at a non-zero value. Scrolling instantly here — before any animation
-    // can start — ensures the page always resets to the true top on navigation.
+    // On route change, reset scroll to top instantly before any animation starts.
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "instant" });
     }, [pathname]);
 
-    const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
-    const toggleDrawer = (): void => {
-        setDrawerOpen(!isDrawerOpen);
-    };
+    useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 0);
+        handleScroll();
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
-    const { colorScheme, setColorScheme } = useColorScheme();
-    const nextColorScheme = colorScheme === "light" ? "dark" : "light";
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+    const { resolvedTheme, setTheme } = useTheme();
+    const mounted = useSyncExternalStore(
+        () => () => {},
+        () => true,
+        () => false,
+    );
+    const nextColorScheme = resolvedTheme === "light" ? "dark" : "light";
 
     const isRouteActive = (routePath: string): boolean => {
         if (!pathname) return false;
-        // Exact match
+
+        // Exact Match:
         if (pathname === routePath) return true;
+
+        // Prefix Match:
         // Check if current path starts with route path (for sub-routes)
         // Only match if it's a sub-route (has additional path segments)
         if (pathname.startsWith(routePath + "/")) return true;
+
         return false;
     };
 
-    const isLargeScreen = useMediaQuery((theme: Theme) =>
-        theme.breakpoints.up("lg"),
-    );
-    const motionOk = useMediaQuery(MOTION_OK_QUERY);
-
-    const drawer = (
-        <>
-            <IconButton
-                color="inherit"
-                aria-label={isDrawerOpen ? "close drawer" : "open drawer"}
-                aria-expanded={isDrawerOpen}
-                aria-controls={isDrawerOpen ? "drawer-navigation" : undefined}
-                onClick={toggleDrawer}
-                edge="start"
-                sx={{
-                    mr: 2,
-                    display: isLargeScreen ? "none" : "block",
-                }}
-            >
-                {isDrawerOpen ? <Close /> : <MenuIcon />}
-            </IconButton>
-            <Drawer
-                anchor="top"
-                open={isDrawerOpen}
-                onClose={toggleDrawer}
-                slotProps={{
-                    backdrop: {
-                        sx: {
-                            zIndex: (theme) => theme.zIndex.drawer,
-                        },
-                    },
-                    paper: {
-                        sx: {
-                            backgroundColor: (theme) =>
-                                alpha(theme.palette.primary.main, 0.95),
-                            backdropFilter: "blur(12px)",
-                            color: (theme) =>
-                                theme.palette.primary.contrastText,
-                            boxShadow: 2,
-                            marginTop: (theme) => ({
-                                xs: `${theme.mixins.toolbar.minHeight as number}px`,
-                                sm: `${(theme.mixins.toolbar[theme.breakpoints.up("sm")] as { minHeight: number }).minHeight}px`,
-                            }),
-                            zIndex: (theme) => theme.zIndex.drawer,
-                        },
-                    },
-                }}
-            >
-                <Box
-                    sx={{
-                        width: "auto",
-                        px: { xs: 2, sm: 3, md: 4 },
-                        py: 2.5,
-                    }}
-                >
-                    <Box
-                        id="drawer-navigation"
-                        component="nav"
-                        aria-label="Drawer Navigation"
-                        sx={{
-                            py: 0,
-                            gap: 0.25,
-                            display: "flex",
-                            flexDirection: "column",
-                        }}
-                    >
-                        {Object.values(topLevelRoutes).map((route) => {
-                            const isActive = isRouteActive(route.path);
-                            return (
-                                <ListItemButton
-                                    key={route.path}
-                                    component={Link}
-                                    href={route.path}
-                                    onClick={toggleDrawer}
-                                    aria-current={isActive ? "page" : undefined}
-                                    sx={{
-                                        "px": 2.5,
-                                        "py": 1.25,
-                                        "minHeight": 56,
-                                        "color": (theme) =>
-                                            theme.palette.primary.contrastText,
-                                        "borderRadius": 2,
-                                        "position": "relative",
-                                        "display": "flex",
-                                        "justifyContent": "center",
-                                        "alignItems": "center",
-                                        "&:hover": {
-                                            "backgroundColor": (theme) =>
-                                                alpha(
-                                                    theme.palette.primary
-                                                        .contrastText,
-                                                    0.08,
-                                                ),
-                                            "opacity": 0.9,
-                                            "&::after": {
-                                                width: "50%",
-                                            },
-                                        },
-                                        "transition": (theme) =>
-                                            theme.transitions.create(
-                                                ["background-color", "opacity"],
-                                                {
-                                                    duration:
-                                                        theme.transitions
-                                                            .duration.shortest,
-                                                },
-                                            ),
-                                        "&::after": {
-                                            content: '""',
-                                            position: "absolute",
-                                            bottom: 12,
-                                            left: "50%",
-                                            transform: "translateX(-50%)",
-                                            width: isActive
-                                                ? { xs: "50%", sm: "25%" }
-                                                : 0,
-                                            height: 1.5,
-                                            backgroundColor: (theme) =>
-                                                theme.palette.primary
-                                                    .contrastText,
-                                            opacity: isActive ? 1 : 0.8,
-                                            borderRadius: 1,
-                                        },
-                                        [MOTION_OK_QUERY]: {
-                                            "&::after": {
-                                                transition: (theme) =>
-                                                    theme.transitions.create(
-                                                        "width",
-                                                        {
-                                                            duration:
-                                                                theme
-                                                                    .transitions
-                                                                    .duration
-                                                                    .shorter,
-                                                        },
-                                                    ),
-                                            },
-                                        },
-                                    }}
-                                >
-                                    <ListItemText
-                                        primary={route.name}
-                                        slotProps={{
-                                            primary: {
-                                                variant: "body1",
-                                                sx: {
-                                                    color: (theme) =>
-                                                        theme.palette.primary
-                                                            .contrastText,
-                                                    textAlign: "center",
-                                                    fontWeight: isActive
-                                                        ? 500
-                                                        : 400,
-                                                },
-                                            },
-                                        }}
-                                    />
-                                </ListItemButton>
-                            );
-                        })}
-                    </Box>
-                </Box>
-            </Drawer>
-        </>
-    );
-
-    const isAtTopOfHomePage = pathname === "/" && !scrollTrigger;
-
-    const appBar = (
-        <AppBar
-            component="header"
-            sx={{
-                px: { xs: 2, sm: 3, md: 4 },
-                zIndex: (theme) => theme.zIndex.drawer + 1,
-                // On the home page before any scroll: transparent AppBar with dark gradient scrim so nav
-                // text remains readable over the hero image. Once scrolled: frosted glass with blur.
-                // Do not do this on small screens where we show the drawer, as it does not match the drawer.
-                ...(isAtTopOfHomePage && isLargeScreen
-                    ? {
-                          backgroundColor: "transparent",
-                          backgroundImage: (theme: Theme) =>
-                              `linear-gradient(to bottom, ${alpha(theme.palette.common.black, 0.85)} 0%, transparent 100%)`,
-                          boxShadow: "none",
-                          backdropFilter: "none",
-                      }
-                    : {
-                          backgroundColor: (theme: Theme) =>
-                              alpha(theme.palette.primary.main, 0.75),
-                          backdropFilter: "blur(16px)",
-                          borderBottom: (theme: Theme) =>
-                              `1px solid ${alpha(theme.palette.common.white, 0.08)}`,
-                      }),
-            }}
-            data-testid="app-bar"
-            elevation={scrollTrigger ? 1 : 0}
-        >
-            <Toolbar>
-                {drawer}
-                <Box
-                    onClick={() => isDrawerOpen && toggleDrawer()}
-                    display="inline-block"
-                >
-                    <Link
-                        href={"/"}
-                        sx={{
-                            "&:hover": { textDecoration: "none" },
-                        }}
-                    >
-                        <Typography
-                            component="div"
-                            variant="h6"
-                            sx={{
-                                "fontSize": { xs: 16, sm: 20 },
-                                "color": (theme) =>
-                                    theme.palette.primary.contrastText,
-                                "transition": (theme) =>
-                                    theme.transitions.create("opacity", {
-                                        duration:
-                                            theme.transitions.duration.shortest,
-                                    }),
-                                "&:hover": {
-                                    opacity: 0.85,
-                                },
-                            }}
-                        >
-                            {FULL_NAME}
-                        </Typography>
-                    </Link>
-                </Box>
-                <Box sx={{ flexGrow: 1 }} />
-                <Box
-                    component="nav"
-                    aria-label="Primary Navigation"
-                    display={isLargeScreen ? "flex" : "none"}
-                    gap={1}
-                    alignItems="center"
-                >
-                    {Object.values(topLevelRoutes).map((route) => {
-                        const isActive = isRouteActive(route.path);
-                        return (
-                            <Box
-                                key={route.path}
-                                onClick={() => isDrawerOpen && toggleDrawer()}
-                                display="inline-block"
-                            >
-                                <Button
-                                    component={Link}
-                                    href={route.path}
-                                    variant="text"
-                                    color="primary"
-                                    disableElevation
-                                    aria-current={isActive ? "page" : undefined}
-                                    sx={{
-                                        "color": (theme) =>
-                                            theme.palette.primary.contrastText,
-                                        "px": 2.5,
-                                        "py": 1.25,
-                                        "minWidth": "auto",
-                                        "position": "relative",
-                                        "fontWeight": isActive ? 500 : 400,
-                                        "&:hover": {
-                                            "backgroundColor": "transparent",
-                                            "opacity": 0.85,
-                                            "&::after": {
-                                                width: "70%",
-                                            },
-                                        },
-                                        "&::after": {
-                                            content: '""',
-                                            position: "absolute",
-                                            bottom: 10,
-                                            left: "50%",
-                                            transform: "translateX(-50%)",
-                                            width: isActive ? "70%" : 0,
-                                            height: 1.5,
-                                            backgroundColor: (theme) =>
-                                                theme.palette.primary
-                                                    .contrastText,
-                                            opacity: isActive ? 1 : 0.8,
-                                        },
-                                        [MOTION_OK_QUERY]: {
-                                            "&::after": {
-                                                transition: (theme) =>
-                                                    theme.transitions.create(
-                                                        "width",
-                                                        {
-                                                            duration:
-                                                                theme
-                                                                    .transitions
-                                                                    .duration
-                                                                    .shorter,
-                                                        },
-                                                    ),
-                                            },
-                                        },
-                                    }}
-                                >
-                                    {route.name}
-                                </Button>
-                            </Box>
-                        );
-                    })}
-                </Box>
-                <Tooltip
-                    title={`Change to ${nextColorScheme} theme`}
-                    arrow
-                    placement="bottom"
-                >
-                    <IconButton
-                        size="medium"
-                        aria-label={`Switch to ${nextColorScheme} theme`}
-                        onClick={() => setColorScheme(nextColorScheme)}
-                        sx={{
-                            ml: 3,
-                            color: (theme) =>
-                                theme.palette.primary.contrastText,
-                        }}
-                    >
-                        {nextColorScheme === "light" ? (
-                            <LightMode />
-                        ) : (
-                            <DarkMode />
-                        )}
-                    </IconButton>
-                </Tooltip>
-            </Toolbar>
-        </AppBar>
-    );
-
     const scrollToTop = (): void => {
         scrollToTopRef.current?.scrollIntoView({
-            behavior: motionOk ? "smooth" : "instant",
+            behavior: prefersReducedMotion ? "instant" : "smooth",
             block: "start",
         });
         document.getElementById("main-content")?.focus();
     };
 
-    return colorScheme ? (
-        <>
-            <Button
+    // On the home page before any scroll, large screens get a transparent gradient
+    // scrim so nav text stays readable over the hero. Mobile always uses frosted glass.
+    const isAtTopOfHomePage = pathname === "/" && !scrolled;
+
+    return (
+        <Drawer
+            open={isDrawerOpen}
+            onOpenChange={setDrawerOpen}
+            direction="top"
+            modal={false}
+            autoFocus
+        >
+            {/* Skip to content */}
+            <a
                 href="#main-content"
-                variant="contained"
-                sx={{
-                    "position": "fixed",
-                    "top": 16,
-                    "left": 16,
-                    "zIndex": (theme) => theme.zIndex.modal,
-                    "transform": "translateY(-150%)",
-                    "&:focus-visible": {
-                        transform: "translateY(0)",
-                    },
-                    [MOTION_OK_QUERY]: {
-                        transition: (theme) =>
-                            theme.transitions.create("transform", {
-                                duration: theme.transitions.duration.short,
-                            }),
-                    },
-                }}
+                className="bg-primary text-primary-foreground focus-visible:outline-ring fixed top-4 left-4 z-50 -translate-y-[150%] rounded px-4 py-2 text-sm font-medium no-underline focus-visible:translate-y-0 focus-visible:outline-2 motion-safe:transition-transform motion-safe:duration-150"
             >
                 Skip to Content
-            </Button>
-            {appBar}
-            <Box ref={scrollToTopRef} sx={{ height: 0 }} />
-            {pathname !== "/" && <Toolbar />}
-            <Container
+            </a>
+
+            {/* App bar */}
+            <header
+                data-testid="app-bar"
+                className={cn(
+                    "fixed inset-x-0 top-0 z-40",
+                    "motion-safe:transition-[background-color,backdrop-filter,box-shadow,border-color] motion-safe:duration-200",
+                    isAtTopOfHomePage
+                        ? [
+                              "border-transparent bg-transparent shadow-none backdrop-blur-none",
+                              "lg:bg-linear-to-b lg:from-black/85 lg:to-transparent",
+                          ]
+                        : [
+                              "border-b border-white/8 bg-primary/75 backdrop-blur-lg",
+                              scrolled && "shadow-sm",
+                          ],
+                )}
+            >
+                <div className="flex h-14 items-center px-4 sm:h-16 sm:px-6 md:px-8 lg:px-20 xl:px-40 2xl:px-80">
+                    {/* Mobile menu toggle */}
+                    <DrawerTrigger asChild>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            aria-label={
+                                isDrawerOpen
+                                    ? "Close navigation menu"
+                                    : "Open navigation menu"
+                            }
+                            className="text-primary-foreground hover:bg-primary-foreground/10 mr-4 lg:hidden"
+                        >
+                            {isDrawerOpen ? <X /> : <Menu />}
+                        </Button>
+                    </DrawerTrigger>
+
+                    {/* Site name */}
+                    <Link
+                        href="/"
+                        onClick={() => setDrawerOpen(false)}
+                        className="text-primary-foreground text-base font-medium no-underline hover:no-underline hover:opacity-85 sm:text-xl motion-safe:transition-opacity motion-safe:duration-150 focus-visible:outline-primary-foreground/80"
+                    >
+                        {FULL_NAME}
+                    </Link>
+
+                    <div className="flex-1" />
+
+                    {/* Desktop nav */}
+                    <nav
+                        aria-label="Primary Navigation"
+                        className="hidden items-center gap-1 lg:flex"
+                    >
+                        {Object.values(topLevelRoutes).map((route) => {
+                            const isActive = isRouteActive(route.path);
+                            return (
+                                <Link
+                                    key={route.path}
+                                    href={route.path}
+                                    aria-current={isActive ? "page" : undefined}
+                                    className={cn(
+                                        "text-primary-foreground relative inline-block px-4 py-3 text-sm no-underline hover:no-underline hover:opacity-85",
+                                        "after:bg-primary-foreground after:absolute after:bottom-2 after:left-1/2 after:h-[1.5px] after:-translate-x-1/2 after:rounded-full after:content-['']",
+                                        isActive
+                                            ? "font-medium after:w-[70%] after:opacity-100"
+                                            : "font-normal after:w-0 after:opacity-80",
+                                        "motion-safe:after:transition-[width] motion-safe:after:duration-200",
+                                        "hover:after:w-[70%]",
+                                        "focus-visible:outline-primary-foreground/80",
+                                    )}
+                                >
+                                    {route.name}
+                                </Link>
+                            );
+                        })}
+                    </nav>
+
+                    {/* Theme toggle */}
+                    <Tooltip>
+                        <TooltipTrigger
+                            render={
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    aria-label={
+                                        mounted
+                                            ? `Switch to ${nextColorScheme} theme`
+                                            : "Toggle theme"
+                                    }
+                                    onClick={() => setTheme(nextColorScheme)}
+                                    className="text-primary-foreground hover:bg-primary-foreground/10 ml-2"
+                                />
+                            }
+                        >
+                            {mounted &&
+                                (nextColorScheme === "light" ? (
+                                    <Sun size={18} />
+                                ) : (
+                                    <Moon size={18} />
+                                ))}
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            {mounted
+                                ? `Change to ${nextColorScheme} theme`
+                                : "Toggle theme"}
+                        </TooltipContent>
+                    </Tooltip>
+                </div>
+            </header>
+
+            {/* Mobile drawer */}
+            {/* Backdrop — closes drawer on click outside; sits below header */}
+            {isDrawerOpen && (
+                <div
+                    aria-hidden="true"
+                    className="fixed inset-0 z-30 bg-black/10 supports-backdrop-filter:backdrop-blur-xs lg:hidden"
+                    onClick={() => setDrawerOpen(false)}
+                />
+            )}
+
+            <DrawerContent
+                className={cn(
+                    "top-14 sm:top-16 z-30 lg:hidden",
+                    "rounded-none border-none bg-primary/95 backdrop-blur-md shadow-none",
+                    "flex flex-col gap-1 px-4 py-5 sm:px-6 md:px-8",
+                )}
+            >
+                <DrawerTitle className="sr-only">Navigation menu</DrawerTitle>
+                <DrawerDescription className="sr-only">
+                    Links to the main sections of the website
+                </DrawerDescription>
+                <nav aria-label="Drawer Navigation">
+                    {Object.values(topLevelRoutes).map((route) => {
+                        const isActive = isRouteActive(route.path);
+                        return (
+                            <Link
+                                key={route.path}
+                                href={route.path}
+                                onClick={() => setDrawerOpen(false)}
+                                aria-current={isActive ? "page" : undefined}
+                                className={cn(
+                                    "text-primary-foreground relative flex min-h-14 items-center justify-center rounded-lg px-5 py-3 text-base no-underline hover:no-underline",
+                                    "after:bg-primary-foreground after:absolute after:bottom-3 after:left-1/2 after:h-[1.5px] after:-translate-x-1/2 after:rounded-full after:content-['']",
+                                    isActive
+                                        ? "font-medium after:w-1/2 after:opacity-100 sm:after:w-1/4"
+                                        : "font-normal after:w-0",
+                                    "hover:bg-primary-foreground/8 hover:opacity-90",
+                                    "motion-safe:transition-colors motion-safe:duration-150",
+                                    "motion-safe:after:transition-[width] motion-safe:after:duration-200",
+                                    "hover:after:w-1/2 sm:hover:after:w-1/4",
+                                    "focus-visible:outline-primary-foreground/80",
+                                )}
+                            >
+                                {route.name}
+                            </Link>
+                        );
+                    })}
+                </nav>
+            </DrawerContent>
+
+            {/* Scroll-to-top anchor (zero-height) */}
+            <div ref={scrollToTopRef} />
+
+            {/* Toolbar spacer — keeps content below the fixed header on non-home pages */}
+            {pathname !== "/" && <div className="h-14 sm:h-16" />}
+
+            {/* Main content */}
+            <main
                 id="main-content"
-                component="main"
                 tabIndex={-1}
-                disableGutters
-                maxWidth={false}
-                sx={{
-                    overflowX: "clip",
-                    maxWidth: "100%",
-                    background: (theme: Theme) =>
-                        theme.palette.background.default,
-                    scrollMarginTop: "100px",
-                    outline: "none",
-                    // Subtle dot grid background — visible on all pages.
-                    // On the home page the WelcomeBanner's full-height backgrounds cover it;
-                    // the AppBar covers it at the top via its solid fixed background.
-                    backgroundImage: (theme: Theme) =>
-                        theme.palette.mode === "light"
-                            ? `radial-gradient(circle, ${alpha(theme.palette.primary.main, 0.19)} 1px, transparent 1px)`
-                            : `radial-gradient(circle, ${alpha(theme.palette.common.white, 0.12)} 1px, transparent 1px)`,
-                    backgroundSize: "28px 28px",
-                }}
+                className="overflow-x-clip scroll-mt-25 bg-background outline-none bg-[radial-gradient(circle,var(--layout-dot-grid-color)_1px,transparent_1px)] bg-size-7"
             >
                 {children}
-            </Container>
-            <Container
-                maxWidth={false}
-                component="footer"
-                sx={{
-                    "textAlign": "center",
-                    "pt": 4,
-                    "pb": 10,
-                    "bottom": 0,
-                    "background": (theme: Theme) =>
-                        theme.palette.background.default,
-                    "position": "relative",
-                    "&::before": {
-                        content: '""',
-                        position: "absolute",
-                        top: 0,
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        width: "80%",
-                        height: "1px",
-                        background: (theme: Theme) =>
-                            `linear-gradient(90deg, transparent, ${theme.palette.text.secondary}, transparent)`,
-                        opacity: 0.5,
-                    },
-                }}
-            >
-                <Typography variant="body2" color="text.secondary">
+            </main>
+
+            {/* Footer */}
+            <footer className="relative bg-background pt-8 pb-20 text-center before:absolute before:top-0 before:left-1/2 before:h-px before:w-4/5 before:-translate-x-1/2 before:bg-linear-to-r before:from-transparent before:via-muted-foreground before:to-transparent before:opacity-50 before:content-['']">
+                <p className="text-muted-foreground text-sm">
                     &copy; 2021-{new Date().getFullYear()} {FULL_NAME}
-                </Typography>
-            </Container>
-            <Zoom in={scrollTrigger}>
-                <Box
-                    role="presentation"
-                    sx={{
-                        position: "fixed",
-                        bottom: (theme) => theme.spacing(3),
-                        right: (theme) => theme.spacing(3),
-                    }}
+                </p>
+            </footer>
+
+            {/* Scroll-to-top FAB */}
+            <div
+                className={cn(
+                    "fixed bottom-6 right-6 z-20",
+                    scrolled
+                        ? "pointer-events-auto opacity-100"
+                        : "pointer-events-none opacity-0",
+                    "motion-safe:transition-opacity motion-safe:duration-200",
+                )}
+            >
+                <Button
+                    variant="default"
+                    size="icon"
+                    aria-label="scroll back to top"
+                    onClick={scrollToTop}
+                    className="size-10 rounded-full shadow-md"
                 >
-                    <Fab
-                        color="primary"
-                        size="small"
-                        aria-label="scroll back to top"
-                        onClick={scrollToTop}
-                    >
-                        <KeyboardArrowUp />
-                    </Fab>
-                </Box>
-            </Zoom>
-        </>
-    ) : null;
+                    <ChevronUp />
+                </Button>
+            </div>
+        </Drawer>
+    );
 };
 
 export default Layout;

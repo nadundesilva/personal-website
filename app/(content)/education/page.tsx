@@ -12,9 +12,7 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { KeyboardArrowRight } from "@mui/icons-material";
-import { Box, type SxProps, type Theme, Typography } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
+import { ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
 import type React from "react";
 
@@ -44,13 +42,13 @@ export const metadata: Metadata = {
 interface EducationSectionHeadingProps {
     id: string;
     education: Education;
-    logoSx?: SxProps<Theme>;
+    logoClassName?: string;
 }
 
 const EducationSectionHeading = ({
     id,
     education,
-    logoSx,
+    logoClassName,
 }: EducationSectionHeadingProps): React.ReactElement => (
     <SectionHeading
         id={id}
@@ -60,15 +58,12 @@ const EducationSectionHeading = ({
                 srcLight={education.institute.logo.srcLight}
                 srcDark={education.institute.logo.srcDark}
                 alt=""
-                recommendedSx={logoSx}
+                className={logoClassName}
             />
         }
     >
         {education.title}
-        <Box component="span" sx={visuallyHidden}>
-            {" "}
-            at {education.institute.name}
-        </Box>
+        <span className="sr-only"> at {education.institute.name}</span>
     </SectionHeading>
 );
 
@@ -113,7 +108,7 @@ const Education = (): React.ReactElement => {
         <>
             <Title>Education</Title>
             <ScrollReveal>
-                <Box sx={{ pt: 2, pb: 2 }}>
+                <div className="py-4">
                     <LinkButton
                         href={
                             WebsiteHome.subRoutes["/education"].subRoutes![
@@ -121,15 +116,15 @@ const Education = (): React.ReactElement => {
                             ].path
                         }
                         name="View Certifications"
-                        endIcon={KeyboardArrowRight}
+                        endIcon={ChevronRight}
                     />
-                </Box>
+                </div>
             </ScrollReveal>
             <Section labelledById="section-bsc-uom">
                 <EducationSectionHeading
                     id="section-bsc-uom"
                     education={Educations.BScUniversityOfMoratuwa}
-                    logoSx={{ height: "4em" }}
+                    logoClassName="h-[4em]"
                 />
                 <Paragraph>
                     I studied for my four-year bachelor&apos;s degree at the{" "}
@@ -142,38 +137,26 @@ const Education = (): React.ReactElement => {
                     ethics and professional conduct.
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
+                    <ListItem>Academic Standing: First Class</ListItem>
                     <ListItem>
-                        <Typography>Academic Standing: First Class</Typography>
+                        Overall{" "}
+                        <abbr title="Cumulative Grade Point Average">CGPA</abbr>{" "}
+                        - 3.85 / 4.20
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Overall{" "}
-                            <abbr title="Cumulative Grade Point Average">
-                                CGPA
-                            </abbr>{" "}
-                            - 3.85 / 4.20
-                        </Typography>
-                    </ListItem>
-                    <ListItem>
-                        <Typography>
-                            Dean&apos;s List Placements on 6 out of 8 semesters
-                        </Typography>
+                        Dean&apos;s List Placements on 6 out of 8 semesters
                     </ListItem>
                     <ListItem>
                         <List heading="Publications:" headingVariant="h4">
                             <ListItem>
-                                <Typography>
-                                    {
-                                        GanBasedAnomalyDetectionInIndustrialSoftwareSystems
-                                    }
-                                </Typography>
+                                {
+                                    GanBasedAnomalyDetectionInIndustrialSoftwareSystems
+                                }
                             </ListItem>
                             <ListItem>
-                                <Typography>
-                                    {
-                                        AnomalyDetectionInIndustrialSoftwareSystemsUsingVae
-                                    }
-                                </Typography>
+                                {
+                                    AnomalyDetectionInIndustrialSoftwareSystemsUsingVae
+                                }
                             </ListItem>
                         </List>
                     </ListItem>
@@ -183,7 +166,7 @@ const Education = (): React.ReactElement => {
                 <EducationSectionHeading
                     id="section-al-sjc"
                     education={Educations.ALStJosephsCollegeColombo10}
-                    logoSx={{ height: "4em" }}
+                    logoClassName="h-[4em]"
                 />
                 <Paragraph>
                     I attended school at {StJosephsCollegeColombo10} where I
@@ -195,48 +178,26 @@ const Education = (): React.ReactElement => {
                     {UniversityOfMoratuwa} as well.
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
-                    <ListItem>
-                        <Typography>Z - Score: 2.2441</Typography>
-                    </ListItem>
+                    <ListItem>Z - Score: 2.2441</ListItem>
                     <ListItem>
                         <List heading="Main Subjects:" headingVariant="h4">
-                            <ListItem>
-                                <Typography>
-                                    Combined Mathematics - A
-                                </Typography>
-                            </ListItem>
-                            <ListItem>
-                                <Typography>Physics - A</Typography>
-                            </ListItem>
-                            <ListItem>
-                                <Typography>Chemistry - A</Typography>
-                            </ListItem>
+                            <ListItem>Combined Mathematics - A</ListItem>
+                            <ListItem>Physics - A</ListItem>
+                            <ListItem>Chemistry - A</ListItem>
                         </List>
                     </ListItem>
                     <ListItem>
                         <List heading="Other Subjects:" headingVariant="h4">
                             <ListItem>
-                                <Typography>
-                                    General{" "}
-                                    <abbr title="Information Technology">
-                                        IT
-                                    </abbr>{" "}
-                                    - A
-                                </Typography>
+                                General{" "}
+                                <abbr title="Information Technology">IT</abbr> -
+                                A
                             </ListItem>
-                            <ListItem>
-                                <Typography>General English - A</Typography>
-                            </ListItem>
-                            <ListItem>
-                                <Typography>General Knowledge - A</Typography>
-                            </ListItem>
+                            <ListItem>General English - A</ListItem>
+                            <ListItem>General Knowledge - A</ListItem>
                         </List>
                     </ListItem>
-                    <ListItem>
-                        <Typography>
-                            Editor of the Science Union 2011 / 2012
-                        </Typography>
-                    </ListItem>
+                    <ListItem>Editor of the Science Union 2011 / 2012</ListItem>
                 </AccentedList>
             </Section>
         </>

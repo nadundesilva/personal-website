@@ -14,14 +14,14 @@
  */
 "use client";
 
-import AutoAwesome from "@mui/icons-material/AutoAwesome";
-import Box from "@mui/material/Box";
-import Fab from "@mui/material/Fab";
-import Typography from "@mui/material/Typography";
-import { alpha, useTheme } from "@mui/material/styles";
-import { useMediaQuery } from "@mui/material";
-import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
+import { Sparkles } from "lucide-react";
 import type React from "react";
+
+import { cn } from "@/components/primitives/utils/cn";
+
+// BADGE_SIZE drives both the SVG geometry and the outer div size (= size-10 in Tailwind, 10 × 4px).
+const BADGE_SIZE = 40;
+const STROKE_WIDTH = 3;
 
 interface ProgressFabProps {
     progress: number;
@@ -38,97 +38,68 @@ const ProgressFab = ({
         );
     }
 
-    const theme = useTheme();
-    const motionOk = useMediaQuery(MOTION_OK_QUERY);
-
-    // MUI Fab size="small" is theme.spacing(5) (5 × base spacing unit).
-    // Ring radius: inner edge of stroke clears the circle boundary by 1 unit safety margin.
-    const strokeWidth = 3;
-    const badgeSize = parseInt(theme.spacing(5));
-    const ringRadius = badgeSize / 2 - strokeWidth - 1;
+    const ringRadius = BADGE_SIZE / 2 - STROKE_WIDTH - 1;
     const ringCircumference = 2 * Math.PI * ringRadius;
-
-    const center = badgeSize / 2;
+    const ringCentre = BADGE_SIZE / 2;
     const strokeOffset = ringCircumference * (1 - progress / 100);
-    const transition = motionOk ? "opacity 0.4s ease" : "none";
-    const contrastText = theme.palette.primary.contrastText;
-    const trackColor = alpha(contrastText, 0.25);
 
     return (
-        <Fab
-            size="small"
-            color="primary"
-            disableRipple
-            component="div"
-            tabIndex={-1}
-            sx={{ position: "relative", overflow: "hidden" }}
+        <div
+            role="progressbar"
+            aria-valuenow={Math.round(progress)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Article reading progress"
+            className="bg-primary relative size-10 overflow-hidden rounded-full shadow-md"
         >
             <svg
-                width={badgeSize}
-                height={badgeSize}
-                style={{ transform: "rotate(-90deg)", display: "block" }}
+                width={BADGE_SIZE}
+                height={BADGE_SIZE}
+                className="block -rotate-90"
+                aria-hidden="true"
             >
-                {/* Background track */}
                 <circle
-                    cx={center}
-                    cy={center}
+                    cx={ringCentre}
+                    cy={ringCentre}
                     r={ringRadius}
                     fill="none"
-                    stroke={trackColor}
-                    strokeWidth={strokeWidth}
+                    strokeWidth={STROKE_WIDTH}
+                    className="stroke-primary-foreground/25"
                 />
-                {/* Progress arc */}
                 <circle
-                    cx={center}
-                    cy={center}
+                    cx={ringCentre}
+                    cy={ringCentre}
                     r={ringRadius}
                     fill="none"
-                    stroke={contrastText}
-                    strokeWidth={strokeWidth}
+                    strokeWidth={STROKE_WIDTH}
                     strokeLinecap="round"
                     strokeDasharray={ringCircumference}
                     strokeDashoffset={strokeOffset}
-                    style={{
-                        transition: motionOk
-                            ? "stroke-dashoffset 0.2s ease-out"
-                            : "none",
-                    }}
+                    className="stroke-primary-foreground motion-safe:transition-[stroke-dashoffset] motion-safe:duration-200 motion-safe:ease-out"
                 />
             </svg>
 
-            {/* Percentage and done icon crossfade inside the circle */}
-            <Box
-                sx={{
-                    position: "absolute",
-                    inset: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
+            <div
+                aria-hidden="true"
+                className="absolute inset-0 flex items-center justify-center"
             >
-                <Typography
-                    sx={{
-                        fontSize: "0.5rem",
-                        fontWeight: 600,
-                        lineHeight: 1,
-                        color: contrastText,
-                        opacity: isDone ? 0 : 1,
-                        transition,
-                    }}
+                <span
+                    className={cn(
+                        "text-primary-foreground text-[0.5rem] leading-none font-semibold motion-safe:transition-opacity motion-safe:duration-300 motion-safe:ease-in-out",
+                        isDone ? "opacity-0" : "opacity-100",
+                    )}
                 >
                     {Math.round(progress)}%
-                </Typography>
-                <AutoAwesome
-                    sx={{
-                        position: "absolute",
-                        fontSize: "1rem",
-                        color: contrastText,
-                        opacity: isDone ? 1 : 0,
-                        transition,
-                    }}
+                </span>
+                <Sparkles
+                    className={cn(
+                        "text-primary-foreground absolute size-4 motion-safe:transition-opacity motion-safe:duration-300 motion-safe:ease-in-out",
+                        isDone ? "opacity-100" : "opacity-0",
+                    )}
+                    aria-hidden="true"
                 />
-            </Box>
-        </Fab>
+            </div>
+        </div>
     );
 };
 

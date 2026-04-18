@@ -12,41 +12,40 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import "./globals.css";
+import "./app.css";
 
-import type { Viewport, Metadata } from "next";
-import type { Route as NextRoute } from "next";
+import type { Metadata, Route as NextRoute, Viewport } from "next";
 import Script from "next/script";
 import React from "react";
 import type { WebSite, WithContext } from "schema-dts";
 
 import Layout, { RouterBreadcrumbs } from "@/components/layout";
-import {
-    WebsiteThemeProvider,
-    defaultFont,
-    codeFont,
-} from "@/components/theme";
-import { themePrimary } from "@/components/theme/colors";
+import { TooltipProvider } from "@/components/primitives/Tooltip";
+import { cn } from "@/components/primitives/utils/cn";
+import { codeFont, defaultFont } from "@/components/theme";
 import WebVitals from "@/components/WebVitals";
+import Experiences from "@/constants/experience";
 import {
     FULL_NAME,
-    JOB_TITLE,
     MAIN_DESCRIPTION,
     WEBSITE_PUBLIC_URL,
 } from "@/constants/metadata";
+import { TWITTER_HANDLE } from "@/constants/profiles";
 import { Route, WebsiteHome } from "@/constants/routes";
 import {
     type BlogArticleGroup,
     getBlogArticleGroups,
 } from "@/utils/server/blog-articles";
+import { domAnimation, LazyMotion, MotionConfig } from "motion/react";
 
-import { getImageType } from "@/utils/common/image-metadata";
 import profilePhotoImage from "@/assets/profile-photo.webp";
+import { getImageType } from "@/utils/common/image-metadata";
 import { ThemeProvider } from "next-themes";
 
 const GOOGLE_SITE_VERIFICATION = "M8dg6gzVYU0noXFvsPOqknm_WjREFeNE212YeUk0g30";
 const YANDEX_VERIFICATION = "acbc45e5d9645cf0";
 const FB_APP_ID = "567329184466353";
+const BROWSER_CHROME_COLOR = "#384959";
 
 export const metadata: Metadata = {
     metadataBase: new URL(WEBSITE_PUBLIC_URL),
@@ -67,12 +66,10 @@ export const metadata: Metadata = {
         "Nadun",
         "Rusiru",
         "De Silva",
-        "Nadun De Silva",
+        FULL_NAME,
         "Nadun Rusiru De Silva",
         "Kurukulasuriya Patabandige Nadun Rusiru De Silva",
-        "Software Engineer",
-        "Senior Software Engineer",
-        JOB_TITLE,
+        ...[...new Set(Object.values(Experiences).map((e) => e.name))],
     ],
     referrer: "origin",
     robots: {
@@ -91,10 +88,7 @@ export const metadata: Metadata = {
     },
     appleWebApp: {
         capable: true,
-        startupImage: {
-            url: profilePhotoImage.src,
-            media: getImageType(profilePhotoImage.src),
-        },
+        startupImage: profilePhotoImage.src,
         statusBarStyle: "black-translucent",
     },
     formatDetection: {
@@ -118,8 +112,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary",
-        site: "@nadunrds",
-        creator: "@nadunrds",
+        site: TWITTER_HANDLE,
+        creator: TWITTER_HANDLE,
         images: {
             url: profilePhotoImage.src,
             alt: FULL_NAME,
@@ -136,14 +130,14 @@ export const viewport: Viewport = {
     themeColor: [
         {
             media: "(prefers-color-scheme: light)",
-            color: themePrimary.main,
+            color: BROWSER_CHROME_COLOR,
         },
         {
             media: "(prefers-color-scheme: dark)",
-            color: themePrimary.main,
+            color: BROWSER_CHROME_COLOR,
         },
     ],
-    colorScheme: "light",
+    colorScheme: "light dark",
     minimumScale: 1,
     initialScale: 1,
     width: "device-width",
@@ -251,7 +245,7 @@ const RootLayout = async ({
     return (
         <html
             lang="en"
-            className={`${defaultFont.variable} ${codeFont.variable}`}
+            className={cn(defaultFont.variable, codeFont.variable)}
             suppressHydrationWarning
         >
             <head>
@@ -285,7 +279,7 @@ const RootLayout = async ({
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
             </head>
-            <body>
+            <body className="motion-safe:transition-colors motion-safe:duration-300">
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
@@ -293,15 +287,18 @@ const RootLayout = async ({
                 >
                     <React.StrictMode>
                         <WebVitals />
-                        <WebsiteThemeProvider
-                            fontFamily={defaultFont.style.fontFamily}
-                            codeFontFamily={codeFont.style.fontFamily}
-                        >
-                            <Layout topLevelRoutes={routes}>
-                                <RouterBreadcrumbs topLevelRoutes={routes} />
-                                {children}
-                            </Layout>
-                        </WebsiteThemeProvider>
+                        <LazyMotion features={domAnimation} strict>
+                            <MotionConfig reducedMotion="user">
+                                <TooltipProvider>
+                                    <Layout topLevelRoutes={routes}>
+                                        <RouterBreadcrumbs
+                                            topLevelRoutes={routes}
+                                        />
+                                        {children}
+                                    </Layout>
+                                </TooltipProvider>
+                            </MotionConfig>
+                        </LazyMotion>
                     </React.StrictMode>
                 </ThemeProvider>
             </body>

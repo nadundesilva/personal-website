@@ -16,7 +16,7 @@ import { globSync } from "glob";
 import type { MetadataRoute } from "next";
 
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
-import { WebsiteHome, type Route } from "@/constants/routes";
+import { CvPdfPath, WebsiteHome, type Route } from "@/constants/routes";
 import {
     BLOG_ARTICLE_FILE,
     BLOG_ARTICLES_DIRECTORY_PREFIX,
@@ -61,7 +61,7 @@ const sitemap = (): MetadataRoute.Sitemap => {
     const currentTime = new Date();
     return [
         "/",
-        "/nadundesilva-cv.pdf",
+        CvPdfPath,
         ...buildMainSitemapUrls(WebsiteHome.subRoutes),
         ...buildBlogArticleSitemapUrls(),
     ].map((url) => ({

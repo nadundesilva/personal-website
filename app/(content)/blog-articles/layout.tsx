@@ -15,11 +15,16 @@
 import type { Metadata } from "next";
 import type React from "react";
 
-import { FULL_NAME, WEBSITE_PUBLIC_URL } from "@/constants/metadata";
+import {
+    BLOG_CATEGORY,
+    FULL_NAME,
+    WEBSITE_PUBLIC_URL,
+} from "@/constants/metadata";
+import { TWITTER_HANDLE } from "@/constants/profiles";
 
 export const metadata: Metadata = {
     authors: [{ name: FULL_NAME, url: WEBSITE_PUBLIC_URL }],
-    category: "Computer Science and Software Engineering",
+    category: BLOG_CATEGORY,
     robots: {
         "index": true,
         "follow": true,
@@ -31,12 +36,12 @@ export const metadata: Metadata = {
         type: "article",
         siteName: `${FULL_NAME} Blog`,
         authors: [FULL_NAME],
-        section: "Computer Science and Software Engineering",
+        section: BLOG_CATEGORY,
     },
     twitter: {
         card: "summary_large_image",
-        site: "@nadunrds",
-        creator: "@nadunrds",
+        site: TWITTER_HANDLE,
+        creator: TWITTER_HANDLE,
     },
     alternates: {
         canonical: "./", // Next.js resolves this to the full URL

@@ -9,7 +9,6 @@
             "@/constants/*": ["constants/*"],
             "@/hooks/*": ["hooks/*"],
             "@/utils/*": ["utils/*"],
-            "@/styles/*": ["styles/*"],
             "@/assets/*": ["assets/*"]
         },
         "target": "ES2022",

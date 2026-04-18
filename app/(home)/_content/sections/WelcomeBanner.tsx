@@ -12,74 +12,32 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import {
-    Box,
-    Button,
-    Container,
-    Link as MuiLink,
-    Typography,
-} from "@mui/material";
-
-export const WELCOME_BANNER_END_ID = "welcome-banner-end";
-import { alpha } from "@mui/material/styles";
-import { keyframes } from "@mui/system";
 import Image from "next-image-export-optimizer";
 import React from "react";
-import { Link } from "@/components/content";
-import {
-    MOTION_OK_QUERY,
-    SHORT_VIEWPORT_QUERY,
-} from "@/components/theme/media-queries";
+
+import welcomeBannerImage from "@/assets/banner.webp";
 import { FULL_NAME, TAGLINE } from "@/constants/metadata";
 import Profiles from "@/constants/profiles";
 import Projects from "@/constants/projects";
+import { CvPdfPath } from "@/constants/routes";
 import Skills from "@/constants/skills";
 import {
     YEARS_EXPERIENCE_INCREMENT,
     calculateYearsOfExperienceForDisplay,
 } from "@/utils/common/experience";
-
-import welcomeBannerImage from "@/assets/banner.webp";
 import AnimatedStatValue from "./components/AnimatedStatValue";
 import ScrollIndicator from "./components/ScrollIndicator";
 import SpotlightCard from "./components/SpotlightCard";
 
-// Use MUI Link (plain anchor) as the inner component instead of Next.js Link
-// so the router does not treat the PDF path as a Next.js route and attempt to
-// prefetch its RSC tree, which would produce a 404 console error.
+const WELCOME_BANNER_END_ID = "welcome-banner-end";
+
+// Use a plain anchor instead of Next.js Link so the router does not treat the
+// PDF path as a Next.js route and attempt to prefetch its RSC tree.
 const PdfLink = (
-    props: React.ComponentPropsWithRef<typeof Link>,
-): React.ReactElement => <Link component={MuiLink} {...props} />;
+    props: React.AnchorHTMLAttributes<HTMLAnchorElement>,
+): React.ReactElement => <a {...props} />;
 
 const STATS_FADE_IN_DELAY_MS = 550;
-
-const HERO_EASING = "cubic-bezier(0.16, 1, 0.3, 1)";
-
-const fadeInUp = keyframes`
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-`;
-
-const nameShimmer = keyframes`
-    0%, 30% { background-position: 100% center; }
-    70%, 100% { background-position: 0% center; }
-`;
-
-const blobDrift1 = keyframes`
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(40px, -30px) scale(1.08); }
-`;
-
-const blobDrift2 = keyframes`
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(-30px, 25px) scale(0.94); }
-`;
 
 const projectCount = Object.keys(Projects).length;
 const skillCount = Object.keys(Skills).length;
@@ -111,318 +69,82 @@ const STATS = [
 
 const WelcomeBanner = (): React.ReactElement => {
     return (
-        <Container
-            maxWidth={false}
-            disableGutters
-            sx={{
-                position: "relative",
-                minHeight: "100lvh",
-                display: "flex",
-                flexDirection: "column",
-                overflow: "hidden", // Ensure background image doesn't overflow
-            }}
-        >
-            {/* Three-layer vignette: side darkening + radial center spotlight + base top-to-bottom */}
-            <Box
-                sx={{
-                    position: "absolute",
-                    inset: 0,
-                    zIndex: 2,
-                    background: (theme) =>
-                        `linear-gradient(to right, ${alpha(theme.palette.common.black, 0.45)}, transparent 30%, transparent 70%, ${alpha(theme.palette.common.black, 0.45)}), radial-gradient(ellipse at center, transparent 25%, ${alpha(theme.palette.common.black, 0.55)} 78%), linear-gradient(to bottom, ${alpha(theme.palette.common.black, 0.35)}, ${alpha(theme.palette.common.black, 0.85)})`,
-                }}
-            />
-
-            {/* Aurora blobs — coloured ambient light above the vignette, below the content */}
-            <Box
+        <div className="relative flex min-h-lvh flex-col overflow-hidden">
+            {/* Three-layer vignette */}
+            <div
                 aria-hidden
-                sx={{
-                    position: "absolute",
-                    inset: 0,
-                    zIndex: 2,
-                    pointerEvents: "none",
-                    overflow: "hidden",
-                }}
+                className="pointer-events-none absolute inset-0 z-2"
             >
-                <Box
-                    sx={{
-                        position: "absolute",
-                        width: { xs: 350, md: 520 },
-                        height: { xs: 350, md: 520 },
-                        borderRadius: "50%",
-                        top: "5%",
-                        left: "5%",
-                        background: "#88BDF2",
-                        filter: "blur(80px)",
-                        opacity: 0.15,
-                        [MOTION_OK_QUERY]: {
-                            animation: `${blobDrift1} 12s ease-in-out infinite`,
-                        },
-                    }}
-                />
-                <Box
-                    sx={{
-                        position: "absolute",
-                        width: { xs: 300, md: 440 },
-                        height: { xs: 300, md: 440 },
-                        borderRadius: "50%",
-                        bottom: "10%",
-                        right: "5%",
-                        background: "#9370db",
-                        filter: "blur(80px)",
-                        opacity: 0.12,
-                        [MOTION_OK_QUERY]: {
-                            animation: `${blobDrift2} 16s ease-in-out infinite`,
-                        },
-                    }}
-                />
-            </Box>
+                <div className="absolute inset-0 bg-linear-to-r from-black/45 to-transparent to-30%" />
+                <div className="absolute inset-0 bg-linear-to-l from-black/45 to-transparent to-30%" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(0,0,0,0.55)_78%)]" />
+                <div className="absolute inset-0 bg-linear-to-b from-black/35 to-black/85" />
+            </div>
 
-            <Box
-                sx={{
-                    position: "absolute",
-                    inset: 0,
-                    zIndex: 1,
-                }}
+            {/* Auras */}
+            <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 z-2"
             >
-                {/* Slight desaturation + dimming gives an editorial, moody tone */}
-                {/* preload + fetchPriority="high" because this is the LCP
-                    element — the browser must start loading it immediately */}
+                <div className="absolute top-[5%] left-[5%] size-87.5 rounded-full bg-(--home-accent-on-dark) opacity-15 blur-[80px] motion-safe:animate-home-aura-1-drift md:size-130" />
+                <div className="absolute right-[5%] bottom-[10%] size-75 rounded-full bg-[#9370db] opacity-15 blur-[80px] motion-safe:animate-home-aura-2-drift md:size-110" />
+            </div>
+
+            {/* Background image */}
+            <div className="absolute inset-0 z-1">
                 <Image
                     src={welcomeBannerImage}
                     alt=""
                     fill
-                    style={{
-                        objectFit: "cover",
-                        objectPosition: "center",
-                        filter: "saturate(0.75) brightness(1.0)",
-                    }}
+                    className="object-cover object-center saturate-75 brightness-100"
                     sizes="100vw"
                     preload
                     fetchPriority="high"
                 />
-            </Box>
+            </div>
 
             {/* Centered glassmorphism card */}
-            <Box
-                sx={{
-                    position: "relative",
-                    zIndex: 3,
-                    flex: 1,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    px: { xs: 2, sm: 3 },
-                    pt: { xs: 8, md: 10 },
-                    pb: { xs: 2, md: 4 },
-                    [SHORT_VIEWPORT_QUERY]: {
-                        pt: 6,
-                        pb: 1,
-                    },
-                }}
-            >
-                <SpotlightCard
-                    sx={{
-                        backdropFilter: "blur(20px)",
-                        WebkitBackdropFilter: "blur(20px)",
-                        background: (theme) =>
-                            alpha(theme.palette.common.white, 0.08),
-                        border: (theme) =>
-                            `1px solid ${alpha(theme.palette.common.white, 0.15)}`,
-                        borderRadius: 2,
-                        boxShadow: "0 24px 80px rgba(0,0,0,0.4)",
-                        width: {
-                            xs: "88vw",
-                            sm: "520px",
-                            md: "580px",
-                            lg: "620px",
-                        },
-                        maxWidth: "100%",
-                        px: { xs: 2, sm: 3, md: 3.5, lg: 5 },
-                        py: { xs: 2.5, sm: 3.5, md: 4, lg: 6 },
-                        textAlign: "center",
-                        [SHORT_VIEWPORT_QUERY]: {
-                            py: 1.5,
-                        },
-                    }}
-                >
+            <div className="relative z-3 flex flex-1 items-center justify-center px-4 pt-16 pb-4 sm:px-6 md:pt-20 md:pb-8 short-h:pt-12 short-h:pb-2">
+                <SpotlightCard className="w-[88vw] max-w-full rounded-2xl border border-white/15 bg-white/8 px-4 py-5 text-center shadow-[0_24px_80px_rgba(0,0,0,0.4)] backdrop-blur-[20px] sm:w-130 sm:px-6 sm:py-7 md:w-145 md:px-7 md:py-8 lg:w-155 lg:px-10 lg:py-12 short-h:py-3">
                     {/* "Hi, I am" overline */}
-                    <Typography
-                        component="p"
-                        sx={{
-                            color: "#88BDF2",
-                            fontSize: { xs: 11, sm: 12, md: 12, lg: 13 },
-                            letterSpacing: "0.35em",
-                            textTransform: "uppercase",
-                            fontWeight: 400,
-                            mb: 1,
-                            [MOTION_OK_QUERY]: {
-                                animation: `${fadeInUp} 0.8s ${HERO_EASING} 0s both`,
-                            },
-                            [SHORT_VIEWPORT_QUERY]: { mb: 0.5 },
-                        }}
-                    >
+                    <p className="mb-2 text-[11px] font-normal tracking-[0.35em] text-(--home-accent-on-dark) uppercase motion-safe:animate-fade-in-up sm:text-[12px] lg:text-[13px] short-h:mb-1">
                         Hi, I am
-                    </Typography>
+                    </p>
 
                     {/* Name */}
-                    <Typography
-                        component="h1"
-                        sx={{
-                            background:
-                                "linear-gradient(90deg, #88BDF2 0%, #88BDF2 45%, #BDDDFC 48%, #ffffff 50%, #BDDDFC 52%, #88BDF2 55%, #88BDF2 100%)",
-                            backgroundSize: "500% auto",
-                            backgroundRepeat: "no-repeat",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            backgroundClip: "text",
-                            fontSize: { xs: 44, sm: 54, md: 54, lg: 64 },
-                            fontWeight: 300,
-                            letterSpacing: "-0.03em",
-                            lineHeight: 1.1,
-                            mb: { xs: 2, md: 3 },
-                            [MOTION_OK_QUERY]: {
-                                animation: `${fadeInUp} 0.8s ${HERO_EASING} 0.15s both, ${nameShimmer} 9s linear 1.5s infinite`,
-                            },
-                            [SHORT_VIEWPORT_QUERY]: { mb: 1.5 },
-                        }}
-                    >
+                    <h1 className="mb-4 text-[44px] leading-[1.1] font-light tracking-[-0.03em] text-(--home-accent-on-dark) motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.15s] sm:text-[54px] md:mb-6 lg:text-[64px] short-h:mb-3">
                         {FULL_NAME}
-                    </Typography>
+                    </h1>
 
                     {/* Gradient divider */}
-                    <Box
-                        mx="auto"
-                        sx={{
-                            width: { xs: 80, sm: 100, lg: 120 },
-                            height: "1px",
-                            background: (theme) =>
-                                `linear-gradient(90deg, transparent, ${alpha(theme.palette.common.white, 0.4)}, transparent)`,
-                            mb: { xs: 2, md: 3 },
-                            [MOTION_OK_QUERY]: {
-                                animation: `${fadeInUp} 0.8s ${HERO_EASING} 0.25s both`,
-                            },
-                            [SHORT_VIEWPORT_QUERY]: { mb: 1.5 },
-                        }}
-                    />
+                    <div className="mx-auto mb-4 h-px w-20 bg-linear-to-r from-transparent via-white/40 to-transparent motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.25s] sm:w-24 md:mb-6 lg:w-28 short-h:mb-3" />
 
                     {/* Tagline */}
-                    <Typography
-                        component="p"
-                        sx={{
-                            color: (theme) => theme.palette.common.white,
-                            opacity: 0.8,
-                            fontSize: { xs: 15, sm: 17, md: 17, lg: 18 },
-                            fontWeight: 300,
-                            lineHeight: 1.6,
-                            mb: { xs: 2.5, md: 3.5 },
-                            [MOTION_OK_QUERY]: {
-                                animation: `${fadeInUp} 0.8s ${HERO_EASING} 0.35s both`,
-                            },
-                            [SHORT_VIEWPORT_QUERY]: { mb: 2 },
-                        }}
-                    >
+                    <p className="mb-5 text-[15px] leading-relaxed font-light text-white/80 motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.35s] sm:text-[17px] md:mb-7 lg:text-[18px] short-h:mb-4">
                         {TAGLINE}
-                    </Typography>
+                    </p>
 
                     {/* View CV button */}
-                    <Box
-                        sx={{
-                            mb: { xs: 2.5, md: 3 },
-                            [MOTION_OK_QUERY]: {
-                                animation: `${fadeInUp} 0.8s ${HERO_EASING} 0.45s both`,
-                            },
-                            [SHORT_VIEWPORT_QUERY]: { mb: 2 },
-                        }}
-                    >
-                        <Button
-                            variant="contained"
-                            component={PdfLink}
-                            href="/nadundesilva-cv.pdf"
+                    <div className="mb-5 motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.45s] md:mb-6 short-h:mb-4">
+                        <PdfLink
+                            href={CvPdfPath}
                             target="_blank"
                             aria-label="View CV (PDF document)"
-                            fullWidth
-                            sx={{
-                                "backgroundColor": "#384959",
-                                "color": (theme) => theme.palette.common.white,
-                                "borderRadius": "100px",
-                                "px": { xs: 4, md: 5 },
-                                "py": { xs: 1.25, md: 1.5 },
-                                "fontSize": { xs: 13, md: 14 },
-                                "letterSpacing": "0.05em",
-                                "boxShadow": "none",
-                                "textTransform": "none",
-                                "display": "block",
-                                [MOTION_OK_QUERY]: {
-                                    transition: (theme) =>
-                                        theme.transitions.create(
-                                            "background-color",
-                                            {
-                                                duration:
-                                                    theme.transitions.duration
-                                                        .short,
-                                            },
-                                        ),
-                                },
-                                "&:hover": {
-                                    backgroundColor: "#4a6785",
-                                    boxShadow: "none",
-                                },
-                            }}
+                            className="block w-full rounded-full bg-[#384959] px-8 py-3 text-[13px] tracking-wider text-white no-underline hover:bg-[#4a6785] motion-safe:transition-colors motion-safe:duration-250 md:px-10 md:py-2.75 md:text-[14px]"
                         >
                             View CV
-                        </Button>
-                    </Box>
+                        </PdfLink>
+                    </div>
 
                     {/* Stats row — hidden on very short viewports */}
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            mb: { xs: 2.5, md: 3 },
-                            [MOTION_OK_QUERY]: {
-                                animation: `${fadeInUp} 0.8s ${HERO_EASING} ${STATS_FADE_IN_DELAY_MS}ms both`,
-                            },
-                            [SHORT_VIEWPORT_QUERY]: {
-                                display: "none",
-                            },
-                        }}
-                    >
+                    <div className="mb-5 flex flex-row items-center justify-center motion-safe:animate-fade-in-up motion-safe:[animation-delay:550ms] md:mb-6 short-h:hidden">
                         {STATS.map((stat, index) => (
                             <React.Fragment key={stat.label}>
                                 {index > 0 && (
-                                    <Box
-                                        sx={{
-                                            width: "1px",
-                                            height: 32,
-                                            backgroundColor: (theme) =>
-                                                alpha(
-                                                    theme.palette.common.white,
-                                                    0.2,
-                                                ),
-                                        }}
-                                    />
+                                    <div className="h-8 w-px bg-white/20" />
                                 )}
-                                <Box
-                                    sx={{
-                                        textAlign: "center",
-                                        px: { xs: 2, sm: 3 },
-                                    }}
-                                >
-                                    <Typography
-                                        sx={{
-                                            color: "#88BDF2",
-                                            fontSize: {
-                                                xs: 22,
-                                                sm: 26,
-                                                lg: 28,
-                                            },
-                                            fontWeight: 700,
-                                            lineHeight: 1.1,
-                                        }}
-                                    >
+                                <div className="px-4 text-center sm:px-6">
+                                    <p className="text-[22px] leading-[1.1] font-bold text-(--home-accent-on-dark) sm:text-[26px] lg:text-[28px]">
                                         <AnimatedStatValue
                                             value={stat.value}
                                             prefix={stat.prefix}
@@ -430,121 +152,49 @@ const WelcomeBanner = (): React.ReactElement => {
                                             step={stat.step}
                                             startDelay={STATS_FADE_IN_DELAY_MS}
                                         />
-                                    </Typography>
-                                    <Typography
-                                        sx={{
-                                            color: (theme) =>
-                                                alpha(
-                                                    theme.palette.common.white,
-                                                    0.55,
-                                                ),
-                                            fontSize: { xs: 9, sm: 10, lg: 11 },
-                                            textTransform: "uppercase",
-                                            letterSpacing: "0.08em",
-                                            mt: 0.5,
-                                        }}
-                                    >
+                                    </p>
+                                    <p className="mt-1 text-[9px] tracking-[0.08em] text-white/55 uppercase sm:text-[10px] lg:text-[11px]">
                                         {stat.label}
-                                    </Typography>
-                                </Box>
+                                    </p>
+                                </div>
                             </React.Fragment>
                         ))}
-                    </Box>
+                    </div>
 
                     {/* Thin divider above social icons */}
-                    <Box
-                        sx={{
-                            width: "100%",
-                            height: "1px",
-                            backgroundColor: (theme) =>
-                                alpha(theme.palette.common.white, 0.15),
-                            mb: { xs: 1.5, md: 2 },
-                            [MOTION_OK_QUERY]: {
-                                animation: `${fadeInUp} 0.8s ${HERO_EASING} 0.65s both`,
-                            },
-                            [SHORT_VIEWPORT_QUERY]: { mb: 1 },
-                        }}
-                    />
+                    <div className="mb-3 h-px w-full bg-white/15 motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.65s] md:mb-4 short-h:mb-2" />
 
                     {/* Social icons */}
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            gap: { xs: 3, md: 3.5 },
-                            [MOTION_OK_QUERY]: {
-                                animation: `${fadeInUp} 0.8s ${HERO_EASING} 0.65s both`,
-                            },
-                        }}
-                    >
+                    <div className="flex justify-center gap-6 motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.65s] md:gap-7">
                         {[
                             Profiles.LinkedIn,
                             Profiles.GitHub,
                             Profiles.Medium,
                             Profiles.Instagram,
                         ].map(({ name, Icon, link }) => (
-                            <MuiLink
+                            <a
                                 key={name}
                                 href={link}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={`Visit ${name} profile`}
-                                sx={{
-                                    "color": (theme) =>
-                                        alpha(theme.palette.common.white, 0.5),
-                                    "display": "flex",
-                                    "alignItems": "center",
-                                    [MOTION_OK_QUERY]: {
-                                        transition: (theme) =>
-                                            theme.transitions.create(
-                                                "opacity",
-                                                {
-                                                    duration:
-                                                        theme.transitions
-                                                            .duration.shorter,
-                                                },
-                                            ),
-                                    },
-                                    "&:hover": {
-                                        opacity: 0.85,
-                                        color: (theme) =>
-                                            theme.palette.common.white,
-                                    },
-                                }}
+                                className="flex items-center text-white/50 hover:text-white hover:opacity-85 motion-safe:transition-[color,opacity] motion-safe:duration-200"
                             >
-                                <Icon sx={{ fontSize: 20 }} />
-                            </MuiLink>
+                                <Icon size={20} />
+                            </a>
                         ))}
-                    </Box>
+                    </div>
                 </SpotlightCard>
-            </Box>
+            </div>
 
             {/* Mouse-outline scroll indicator */}
-            <Box
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                gap={1.25}
-                sx={{
-                    position: "relative",
-                    zIndex: 3,
-                    pb: { xs: 4, md: 6 },
-                    mt: { xs: 2, md: 0 },
-                    [MOTION_OK_QUERY]: {
-                        animation: `${fadeInUp} 0.8s ${HERO_EASING} 0.75s both`,
-                    },
-                }}
-            >
-                <ScrollIndicator />
-            </Box>
+            <div className="relative z-3 mt-4 flex flex-col items-center gap-2.5 pb-8 motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.75s] md:mt-0 md:pb-12">
+                <ScrollIndicator scrollToTargetId={WELCOME_BANNER_END_ID} />
+            </div>
 
             {/* Hidden anchor at the very end of the banner */}
-            <Box
-                id={WELCOME_BANNER_END_ID}
-                aria-hidden="true"
-                sx={{ height: 0 }}
-            />
-        </Container>
+            <div id={WELCOME_BANNER_END_ID} aria-hidden="true" />
+        </div>
     );
 };
 

@@ -12,57 +12,34 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { CalendarMonth } from "@mui/icons-material";
-import { Box, type SxProps, type Theme, Typography } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
+import { Calendar } from "lucide-react";
 import type React from "react";
 
-import type { FormattableDate } from "@/constants/date";
 import { PrimaryTintedIcon } from "@/components/primitives";
+import { cn } from "@/components/primitives/utils/cn";
+import type { FormattableDate } from "@/constants/date";
 
 interface DateInfoProps {
     value: FormattableDate;
-    sx?: SxProps<Theme>;
+    className?: string;
 }
 
-const DateInfo = ({ value, sx }: DateInfoProps): React.ReactElement => (
-    <Box
-        sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 0.875,
-            mt: 0.75,
-            mb: 2.5,
-            ...sx,
-        }}
-    >
-        <Box component="span" sx={visuallyHidden}>
-            Date:
-        </Box>
-        <PrimaryTintedIcon icon={CalendarMonth} fontSize="1.125rem" />
-        <Typography
-            variant="body2"
-            sx={{
-                color: "text.secondary",
-                fontWeight: 400,
-                letterSpacing: "0.01em",
-            }}
-        >
+const DateInfo = ({ value, className }: DateInfoProps): React.ReactElement => (
+    <div className={cn("mt-1.5 mb-5 flex items-center gap-1.75", className)}>
+        <span className="sr-only">Date:</span>
+        <PrimaryTintedIcon icon={Calendar} size="1.125rem" />
+        <span className="text-muted-foreground text-sm leading-relaxed font-normal tracking-[0.01em]">
             {value.getRenderSegments().map((segment, index) =>
                 segment.dateTime ? (
-                    <Box
-                        key={index}
-                        component="time"
-                        dateTime={segment.dateTime}
-                    >
+                    <time key={index} dateTime={segment.dateTime}>
                         {segment.text}
-                    </Box>
+                    </time>
                 ) : (
                     <span key={index}>{segment.text}</span>
                 ),
             )}
-        </Typography>
-    </Box>
+        </span>
+    </div>
 );
 
 export default DateInfo;

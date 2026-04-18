@@ -12,11 +12,11 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import nextPwa from "next-pwa";
 import NextBundleAnalyzer from "@next/bundle-analyzer";
-import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
-import { withSentryConfig } from "@sentry/nextjs";
 import nextMDX from "@next/mdx";
+import { withSentryConfig } from "@sentry/nextjs";
+import nextPwa from "next-pwa";
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
 
 const withBundleAnalyzer = NextBundleAnalyzer({
     enabled: process.env.ANALYZE === "true",
@@ -114,13 +114,6 @@ const nextConfig = (phase, { defaultConfig }) => {
                 });
             }
             return config;
-        },
-        experimental: {
-            optimizePackageImports: [
-                "@mui/material",
-                "@mui/icons-material",
-                "@mui/lab",
-            ],
         },
         env: {
             nextImageExportOptimizer_imageFolderPath: "public/images",

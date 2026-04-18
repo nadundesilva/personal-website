@@ -12,28 +12,18 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { AccessTime } from "@mui/icons-material";
-import {
-    Box,
-    Card,
-    CardActionArea,
-    CardContent,
-    CardMedia,
-    type CardMediaProps,
-    Container,
-    Typography,
-    useTheme,
-} from "@mui/material";
-import Image from "next-image-export-optimizer";
+import { Clock } from "lucide-react";
+import NextImage from "next-image-export-optimizer";
+import NextLink from "next/link";
 import type React from "react";
 
-import { Link } from "@/components/content";
-import { KeywordChip } from "@/components/primitives";
 import DateInfo from "@/components/content/DateInfo";
+import { KeywordChip } from "@/components/primitives";
 import { Date as FormattableDate } from "@/constants/date";
 import { type BlogArticle } from "@/utils/server/blog-articles";
+
+const IMAGE_SIZES =
+    "(min-width: 1200px) 25vw, (min-width: 900px) 33vw, (min-width: 600px) 50vw, 100vw";
 
 interface ArticleListItemProps {
     blogArticle: BlogArticle;
@@ -41,133 +31,57 @@ interface ArticleListItemProps {
 
 const ArticleListItem = ({
     blogArticle,
-}: ArticleListItemProps): React.ReactElement => {
-    const theme = useTheme();
-
-    const smWidth = theme.breakpoints.values.sm;
-    const mdWidth = theme.breakpoints.values.md;
-    const lgWidth = theme.breakpoints.values.lg;
-    const imageSizes = `(min-width: ${lgWidth}px) 25vw, (min-width: ${mdWidth}px) 33vw, (min-width: ${smWidth}px) 50vw, 100vw`;
-
-    return (
-        <Card sx={{ height: "100%" }}>
-            <CardActionArea
-                component={Link}
-                href={`/blog-articles/${blogArticle.websiteSubPath}`}
-                sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                }}
-            >
-                <CardMedia
-                    component={(props: CardMediaProps) => (
-                        <Container
-                            {...props}
-                            maxWidth={false}
-                            disableGutters
-                            sx={{
-                                position: "relative",
-                                width: "100%",
-                                aspectRatio: "16/9",
-                                overflow: "hidden",
-                            }}
-                        >
-                            <Image
-                                src={blogArticle.image}
-                                alt=""
-                                fill
-                                sizes={imageSizes}
-                                style={{
-                                    objectFit: "cover",
-                                }}
-                            />
-                        </Container>
-                    )}
+}: ArticleListItemProps): React.ReactElement => (
+    <div className="group h-full motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-bounce-out motion-safe:hover:scale-[1.02]">
+        <NextLink
+            href={`/blog-articles/${blogArticle.websiteSubPath}`}
+            className="border-border bg-card hover:bg-accent/5 flex h-full flex-col overflow-hidden rounded-lg border text-inherit no-underline shadow-sm hover:shadow-md motion-safe:transition-[background-color,box-shadow] motion-safe:duration-300"
+        >
+            <div className="relative aspect-video w-full overflow-hidden">
+                <NextImage
+                    src={blogArticle.image}
+                    alt=""
+                    fill
+                    sizes={IMAGE_SIZES}
+                    className="object-cover"
                 />
-                <CardContent
-                    sx={{
-                        flex: "auto",
-                        p: 2.5,
-                        display: "flex",
-                        flexDirection: "column",
-                    }}
-                >
-                    <Typography
-                        gutterBottom
-                        variant="h3"
-                        sx={{
-                            pb: 1,
-                            lineHeight: 1.3,
-                        }}
+            </div>
+            <div className="flex flex-1 flex-col p-5">
+                <h3 className="text-card-foreground mb-2 pb-2 text-base leading-snug font-semibold">
+                    {blogArticle.title}
+                </h3>
+                <p className="text-muted-foreground line-clamp-3 text-sm leading-relaxed">
+                    {blogArticle.description}
+                </p>
+                {blogArticle.keywords.length > 0 && (
+                    <div
+                        role="group"
+                        aria-label="Keywords"
+                        className="mt-3 flex flex-wrap gap-1.5"
                     >
-                        {blogArticle.title}
-                    </Typography>
-                    <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{
-                            lineHeight: 1.6,
-                            display: "-webkit-box",
-                            WebkitLineClamp: 3,
-                            WebkitBoxOrient: "vertical",
-                            overflow: "hidden",
-                        }}
-                    >
-                        {blogArticle.description}
-                    </Typography>
-                    {blogArticle.keywords.length > 0 && (
-                        <Box
-                            role="group"
-                            aria-label="Keywords"
-                            sx={{
-                                display: "flex",
-                                flexWrap: "wrap",
-                                gap: 0.625,
-                                mt: 1.5,
-                            }}
-                        >
-                            {blogArticle.keywords.map((keyword) => (
-                                <KeywordChip key={keyword} label={keyword} />
-                            ))}
-                        </Box>
-                    )}
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            mt: 2,
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 0.5,
-                                color: "text.secondary",
-                            }}
-                        >
-                            <AccessTime sx={{ fontSize: "0.875rem" }} />
-                            <Typography
-                                variant="body2"
-                                sx={{ fontSize: "0.75rem" }}
-                            >
-                                ~{blogArticle.readingTimeMinutes} min read
-                            </Typography>
-                        </Box>
-                        <DateInfo
-                            value={FormattableDate.fromJsDate(
-                                blogArticle.publishedDate,
-                            )}
-                            sx={{ mt: 0, mb: 0 }}
-                        />
-                    </Box>
-                </CardContent>
-            </CardActionArea>
-        </Card>
-    );
-};
+                        {blogArticle.keywords.map((keyword) => (
+                            <KeywordChip key={keyword} label={keyword} />
+                        ))}
+                    </div>
+                )}
+                <div className="flex-1" />
+                <div className="mt-4 flex items-center justify-between">
+                    <div className="text-muted-foreground flex items-center gap-1">
+                        <Clock className="size-3.5" />
+                        <span className="text-xs">
+                            ~{blogArticle.readingTimeMinutes} min read
+                        </span>
+                    </div>
+                    <DateInfo
+                        value={FormattableDate.fromJsDate(
+                            blogArticle.publishedDate,
+                        )}
+                        className="mt-0 mb-0"
+                    />
+                </div>
+            </div>
+        </NextLink>
+    </div>
+);
 
 export default ArticleListItem;

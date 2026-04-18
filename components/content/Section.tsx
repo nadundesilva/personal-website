@@ -12,10 +12,9 @@
  *
  * © 2025 Nadun De Silva. All rights reserved.
  */
-import { Box, Divider } from "@mui/material";
 import type React from "react";
 
-import { ScrollReveal } from "@/components/primitives";
+import { ScrollReveal, Separator } from "@/components/primitives";
 
 interface SectionProps {
     children: React.ReactNode;
@@ -26,35 +25,20 @@ const Section = ({
     children,
     labelledById,
 }: SectionProps): React.ReactElement => (
-    <Box
-        component="section"
+    <section
         aria-labelledby={labelledById}
-        sx={{
-            "clear": "both", // Keep preceding floating elements off sections
-            "mb": 7,
-            "&:not(:last-of-type) .section-divider": {
-                display: "block",
-            },
-        }}
+        className="group/section clear-both mb-14"
     >
         <ScrollReveal>
             {children}
-            {/* Clearfix element to ensure spacing is measured from bottom of all content including floats */}
-            <Box
-                sx={{
-                    clear: "both",
-                    width: "100%",
-                    height: 0,
-                    overflow: "hidden",
-                }}
-            />
+            {/* Clearfix to ensure spacing is measured from bottom of all floated content */}
+            <div className="clear-both h-0 w-full overflow-hidden" />
         </ScrollReveal>
-        <Divider
+        <Separator
             aria-hidden="true"
-            className="section-divider"
-            sx={{ display: "none", mt: 7 }}
+            className="mt-14 hidden group-[:not(:last-of-type)]/section:block"
         />
-    </Box>
+    </section>
 );
 
 export default Section;

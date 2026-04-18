@@ -12,13 +12,14 @@
  *
  * © 2024 Nadun De Silva. All rights reserved.
  */
-import { Box, Typography } from "@mui/material";
 import type { MDXComponents } from "mdx/types";
 
+import MdxArticleImage from "@/components/blog-articles/ArticleImage";
 import ArticleLayout, {
     type ArticleLayoutProps,
 } from "@/components/blog-articles/ArticleLayout";
-import MdxArticleImage from "@/components/blog-articles/ArticleImage";
+import CodeBlock from "@/components/blog-articles/CodeBlock";
+import InlineCodeSegment from "@/components/blog-articles/InlineCodeSegment";
 import {
     Link,
     List,
@@ -27,9 +28,7 @@ import {
     SectionHeading,
     SubsectionHeading,
 } from "@/components/content";
-import CodeBlock from "@/components/blog-articles/CodeBlock";
-import InlineCodeSegment from "@/components/blog-articles/InlineCodeSegment";
-import { LeftAccent } from "@/components/primitives";
+import { LeftAccent, Separator } from "@/components/primitives";
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
 interface CreatorPlatform {
@@ -66,43 +65,22 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             ) : null,
         h1: ({ children }) => <SectionHeading>{children}</SectionHeading>,
         h2: ({ children }) => <SubsectionHeading>{children}</SubsectionHeading>,
-        hr: () => (
-            <Box
-                component="hr"
-                aria-hidden="true"
-                sx={{
-                    "border": 0,
-                    "textAlign": "center",
-                    "pt": 1,
-                    "pb": 5,
-                    "&::before": {
-                        content: "'\\2022\\2800\\2022\\2800\\2022'",
-                        display: "block",
-                        fontSize: { xs: "1.5rem", sm: "2rem" },
-                        color: "primary.main",
-                        opacity: 0.6,
-                    },
-                }}
-            />
-        ),
+        hr: () => <Separator aria-hidden className="my-8" />,
         p: ({ children }) => <Paragraph>{children}</Paragraph>,
         ul: ({ children }) => <List component="ul">{children}</List>,
         ol: ({ children }) => <List component="ol">{children}</List>,
         li: ({ children }) => (
             <ListItem>
-                <Typography component="div">{children}</Typography>
+                <div className="text-[0.9375rem] leading-[1.75] font-normal">
+                    {children}
+                </div>
             </ListItem>
         ),
         blockquote: ({ children }) => (
             <LeftAccent
                 thickness={3}
                 opacity={0.5}
-                sx={{
-                    "my": 4,
-                    "py": 1,
-                    "fontStyle": "italic",
-                    "& code": { fontStyle: "normal" },
-                }}
+                className="my-8 py-2 italic [&_code]:not-italic"
             >
                 {children}
             </LeftAccent>

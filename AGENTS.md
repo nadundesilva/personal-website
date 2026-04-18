@@ -1,6 +1,6 @@
 # Agent Knowledge Base
 
-> Read this file in full before starting any task. It is the authoritative reference for all project conventions, patterns, and gotchas. Update it whenever you discover new knowledge during development.
+> Read this file in full before starting any task. It is the authoritative reference for all project conventions, patterns, and gotchas. Update it whenever you discover new knowledge during development. **Keep this file in context for the entire duration of every task** — do not let it scroll out of context mid-task. If context pressure forces a choice, preserve this file over other read content.
 
 **Maintenance rules:**
 
@@ -42,7 +42,7 @@ The site follows a **modern minimalistic aesthetic**: generous whitespace, restr
 
 - Prefer simplicity — remove rather than add when in doubt.
 - Use whitespace deliberately; avoid cramming content.
-- Limit accent colors to those already defined in the MUI theme palette.
+- Limit accent colors to those already defined as design tokens in [`app/app.css`](./app/app.css).
 - Animations and transitions should be subtle and purposeful, never decorative.
 - All new UI should feel consistent with the existing pages — inspect adjacent components before designing a new one.
 
@@ -81,20 +81,23 @@ Accessibility is a hard requirement, not optional:
 
 ## 3. Tech Stack
 
-| Layer          | Technology                                                               |
-| -------------- | ------------------------------------------------------------------------ |
-| Framework      | Next.js (App Router, `output: "export"`)                                 |
-| Language       | TypeScript (strict, ES2022)                                              |
-| UI             | MUI + Emotion (CSS-in-JS)                                                |
-| Blog           | MDX + rehype-pretty-code (Dracula theme)                                 |
-| Images         | next-image-export-optimizer (custom loader)                              |
-| PWA            | next-pwa                                                                 |
-| Error Tracking | Sentry (`@sentry/nextjs`)                                                |
-| E2E Testing    | Cypress + @testing-library/cypress                                       |
-| Code Coverage  | NYC/Istanbul via @cypress/code-coverage                                  |
-| Linting        | ESLint (`next/core-web-vitals` + prettier)                               |
-| Formatting     | Prettier (`semi`, `trailingComma: all`, `tabWidth: 4`, `printWidth: 80`) |
-| Git Hooks      | Husky + lint-staged                                                      |
+| Layer          | Technology                                                                                                                                                                                                                 |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Framework      | Next.js (App Router, `output: "export"`)                                                                                                                                                                                   |
+| Language       | TypeScript (strict, ES2022)                                                                                                                                                                                                |
+| UI             | Tailwind CSS v4 + shadcn/ui + `@base-ui/react`                                                                                                                                                                             |
+| Icons          | lucide-react (general UI icons) + `@icons-pack/react-simple-icons` (brand/social icons)                                                                                                                                    |
+| Dark Mode      | next-themes (`class` strategy)                                                                                                                                                                                             |
+| Animation      | motion (Framer Motion v12) + tw-animate-css                                                                                                                                                                                |
+| Blog           | MDX + rehype-pretty-code (Dracula / GitHub Light themes)                                                                                                                                                                   |
+| Images         | next-image-export-optimizer (custom loader)                                                                                                                                                                                |
+| PWA            | next-pwa                                                                                                                                                                                                                   |
+| Error Tracking | Sentry (`@sentry/nextjs`)                                                                                                                                                                                                  |
+| E2E Testing    | Cypress + @testing-library/cypress                                                                                                                                                                                         |
+| Code Coverage  | NYC/Istanbul via @cypress/code-coverage                                                                                                                                                                                    |
+| Linting        | ESLint (`next/core-web-vitals` + `next/typescript`) + Stylelint (`stylelint-config-standard` + `stylelint-config-tailwindcss`)                                                                                             |
+| Formatting     | Prettier (`semi`, `trailingComma: all`, `tabWidth: 4`, `printWidth: 80`, `quoteProps: consistent`) + `prettier-plugin-organize-imports` (auto-sorts imports) + `prettier-plugin-tailwindcss` (auto-sorts Tailwind classes) |
+| Git Hooks      | Husky + lint-staged                                                                                                                                                                                                        |
 
 Full dependency list: [`package.json`](./package.json)
 Full Next.js config: [`next.config.mjs`](./next.config.mjs)
@@ -105,47 +108,70 @@ Full Next.js config: [`next.config.mjs`](./next.config.mjs)
 
 ```
 app/                               # Next.js App Router
+  app.css                          # CSS entry point: Tailwind import, design tokens, base styles, custom variants
+  themes.css                       # Light/dark theme color variables (imported by app.css)
   layout.tsx                       # Root layout: theme, Sentry, WebVitals, CSP headers, JSON-LD
-  (home)/page.tsx                  # Home page
+  (home)/
+    page.tsx                       # Home page
+    page.css                       # Home-page-scoped styles
+    _content/                      # Home-page components (sections, common, types)
   (content)/                       # Content section with shared breadcrumb layout
     layout.tsx
     blog-articles/
       page.tsx                     # Blog index
       feed.xml/route.ts            # RSS feed (force-static)
       (articles)/
+        layout.css                 # Syntax highlight theme overrides (dark/light)
         {category}/page.tsx        # Category listing page (TypeScript, uses ArticlesList)
         {category}/{article}/page.mdx  # Individual blog article (MDX)
     achievements/page.tsx
-    education/page.tsx
+    education/
+      page.tsx
+      certifications/page.tsx
     experience/page.tsx
-    projects/page.tsx
-    testimonials/page.tsx
-  404/page.tsx
+    projects/
+      page.tsx
+      personal/page.tsx
+    testimonials/
+      page.tsx
+      Testimonial.tsx              # testimonial card component
+  404/
+    page.tsx
+    NotFound.tsx                   # component rendered by page.tsx and not-found.tsx
+    NotFound.css                   # styles for the NotFound component
   error.tsx
+  global-error.tsx
+  loading.tsx
+  not-found.tsx                    # renders the NotFound component for unknown routes
+  instrumentation.ts               # Sentry server-side instrumentation
+  instrumentation-client.ts        # Sentry client-side instrumentation
   manifest.ts                      # PWA manifest (force-static)
   robots.ts                        # robots.txt (force-static)
   sitemap.ts                       # sitemap.xml (force-static)
 
-assets/                            # Static data: images, JSON/TS data files
+assets/                            # Static image files (imported via @/assets/* alias)
 components/
-  blog-articles/                   # ArticleLayout, ArticlesList, ArticlesListItem
+  blog-articles/                   # ArticleLayout, ArticlesList, ArticlesListItem, ArticleImage,
+                                   # CodeBlock, InlineCodeSegment, ReadingProgress
   content/                         # Semantic structure components (Title, Section, Link, etc.)
-  layout/                          # Navigation, footer
-  primitives/                      # Small "use client" UI primitives (see §7 — Primitive Components)
-  theme/                           # WebsiteThemeProvider.tsx, fonts.ts, colors.ts
+  icons/                           # Custom SVG icon components (e.g. LinkedInIcon)
+  layout/                          # Navigation, breadcrumbs, scroll handling
+  primitives/                      # shadcn-style UI primitives (see §7 — Primitive Components)
+  theme/                           # fonts.ts, index.tsx (re-exports fonts)
   WebVitals.tsx
 constants/
+  date.ts                          # FormattableDate domain model (Date, Now, DateRange)
   routes.ts                        # Route definitions (WebsiteHome, Route interface)
-  metadata.ts                      # FULL_NAME, JOB_TITLE, MAIN_DESCRIPTION, WEBSITE_PUBLIC_URL
+  metadata.ts                      # FULL_NAME, MAIN_DESCRIPTION, WEBSITE_PUBLIC_URL
+  # ...plus: achievements, certificates, companies, competitions, education, experience,
+  #           institutes, logos, people, profiles, projects, skill-categories, skills, testimonials
 cypress/
   e2e/                             # E2E test specs (*.cy.tsx)
   support/commands.ts              # Custom commands
 hooks/                             # Custom React hooks
-styles/
-  main.css                         # Global CSS: reduced motion, scrollbars, body resets
-  syntax-highlighting.css          # Syntax highlight overrides
 utils/
-  blog-articles.ts                 # Blog article discovery and path resolution
+  common/                          # Client-safe utilities: blog-articles.ts, experience.ts, image-metadata.ts
+  server/                          # Server-only utilities: blog-articles.ts (filesystem glob + path resolution)
 .github/
   scripts/
     start-server.sh                # MUST be run with `source` (exports env vars)
@@ -168,7 +194,6 @@ eslint.config.js                   # ESLint flat config
 | `@/constants/*`  | `constants/*`  |
 | `@/hooks/*`      | `hooks/*`      |
 | `@/utils/*`      | `utils/*`      |
-| `@/styles/*`     | `styles/*`     |
 | `@/assets/*`     | `assets/*`     |
 
 Always use these aliases in imports — never relative `../../` paths.
@@ -271,7 +296,7 @@ This must appear as the very first thing in the file, before any `import` statem
 
 Imports must follow this order with a blank line between each group:
 
-1. External package imports (e.g. `@mui/material`, `next`, `react`)
+1. External package imports (e.g. `motion/react`, `next`, `react`)
 2. `@/` alias imports (e.g. `@/components/...`, `@/constants/...`)
 3. Relative imports (e.g. `./Foo`, `../common/Bar`) — **always last**
 
@@ -313,7 +338,7 @@ export default MyComponent;
 
 Defined in [`constants/routes.ts`](./constants/routes.ts). `WebsiteHome.subRoutes` is **always defined** (never `undefined`) — TypeScript infers this from the constant initializer even though `Route.subRoutes` is typed as optional. Do not add optional-chaining guards when accessing `WebsiteHome.subRoutes`.
 
-Current routes: `/experience`, `/achievements`, `/projects`, `/testimonials`, `/blog-articles`, `/education`.
+Current routes: `/experience`, `/achievements`, `/projects`, `/projects/personal`, `/testimonials`, `/blog-articles`, `/education`, `/education/certifications`.
 
 ### Blog Articles
 
@@ -336,7 +361,7 @@ export const blogMetadata = {
 
 export default function Layout({ children }) {
     return (
-        <BlogArticleLayout metadata={metadata} blogMetadata={blogMetadata}>
+        <BlogArticleLayout pageMetadata={metadata} blogMetadata={blogMetadata}>
             {children}
         </BlogArticleLayout>
     );
@@ -349,37 +374,47 @@ export default function Layout({ children }) {
 
 **MDX link behavior:** All MDX links open in a new tab (set in `mdx-components.tsx`). Do not add `target="_blank"` manually. Links are resolved relative to `${WEBSITE_PUBLIC_URL}/blog-articles/`.
 
-**Blog discovery:** [`utils/blog-articles.ts`](./utils/blog-articles.ts) globs the filesystem to discover articles. The content layout uses this to build the breadcrumb tree.
+**Blog discovery:** [`utils/server/blog-articles.ts`](./utils/server/blog-articles.ts) globs the filesystem to discover articles. [`utils/common/blog-articles.ts`](./utils/common/blog-articles.ts) provides client-safe helpers. The content layout uses these to build the breadcrumb tree.
 
 ### Semantic HTML Components
 
-Never use raw MUI components or HTML elements for document structure. Use from [`components/content/`](./components/content/):
+Never use raw HTML elements for document structure. Use from [`components/content/`](./components/content/):
 
-| Component                    | Renders as                  | Use for                         |
-| ---------------------------- | --------------------------- | ------------------------------- |
-| `Title`                      | `h1`                        | Page title (one per page)       |
-| `Section` + `SectionHeading` | section + `h2`              | Major content sections          |
-| `SubsectionHeading`          | `h3`                        | Subsections within a section    |
-| `Paragraph`                  | `p`                         | Body text                       |
-| `List` + `ListItem`          | `ul`/`ol` + `li`            | Lists                           |
-| `Link`                       | `a` (MUI + Next.js)         | All internal and external links |
-| `LinkButton`                 | button-styled link          | CTA links                       |
-| `Logo`                       | image with link             | Logos                           |
-| `Photo`                      | image with optional caption | Photos                          |
-| `DateInfo`                   | date/date range display     | Dates and date ranges           |
-| `HighlightsSection`          | highlights layout           | Key highlights                  |
+| Component                    | Renders as              | Use for                         |
+| ---------------------------- | ----------------------- | ------------------------------- |
+| `Title`                      | `h1`                    | Page title (one per page)       |
+| `Section` + `SectionHeading` | section + `h2`          | Major content sections          |
+| `SubsectionHeading`          | `h3`                    | Subsections within a section    |
+| `Paragraph`                  | `p`                     | Body text                       |
+| `List` + `ListItem`          | `ul`/`ol` + `li`        | Lists                           |
+| `AccentedList`               | left-accented list      | Highlighted/feature lists       |
+| `Link`                       | `a` (Next.js)           | All internal and external links |
+| `LinkButton`                 | button-styled link      | CTA links                       |
+| `Logo`                       | image with link         | Logos                           |
+| `Image`                      | optimized image         | In-page images                  |
+| `DateInfo`                   | date/date range display | Dates and date ranges           |
 
 ### Primitive Components
 
 Small reusable building blocks in [`components/primitives/`](./components/primitives/). They render a specific visual segment — a gradient line, a bordered accent, a divider — but carry no semantic meaning on their own. Think of them like design tokens expressed as components: the same visual pattern used in multiple places.
 
-**Available primitives:**
+**Available primitives** (all exported from [`components/primitives/index.tsx`](./components/primitives/)):
 
-| Primitive                | What it renders                                                                         |
-| ------------------------ | --------------------------------------------------------------------------------------- |
-| `HorizontalGradientLine` | Short left-anchored gradient accent line (color → transparent) used under headings      |
-| `LeftAccent`             | Left border accent wrapping a content block (3 px, `alpha(primary, 0.3)` by default)    |
-| `GradientDivider`        | Full-width symmetric gradient rule (transparent → color → transparent) between sections |
+| Primitive                | What it renders                                                                    |
+| ------------------------ | ---------------------------------------------------------------------------------- |
+| `HorizontalGradientLine` | Short left-anchored gradient accent line (color → transparent) used under headings |
+| `LeftAccent`             | Left border accent wrapping a content block                                        |
+| `Separator`              | Full-width horizontal rule                                                         |
+| `Card`                   | Bordered content card                                                              |
+| `KeywordChip`            | Inline keyword/tag chip                                                            |
+| `PrimaryTintedIcon`      | Icon tinted with the primary color                                                 |
+| `CopyButton`             | Clipboard copy button (used in code blocks)                                        |
+| `ProgressFab`            | Floating action button showing scroll progress                                     |
+| `ScrollReveal`           | Wraps children in a motion-based scroll-reveal animation                           |
+| `StaggerReveal`          | Wraps a list in staggered scroll-reveal animations                                 |
+| `Breadcrumb` (+ parts)   | Accessible breadcrumb navigation components                                        |
+
+> **shadcn components** (`Badge`, `Button`, `Tooltip`) also live in `components/primitives/` but are imported directly where needed (not re-exported from the index), following the shadcn convention.
 
 **When to add a new primitive:**
 
@@ -390,202 +425,79 @@ Export all primitives from `components/primitives/index.tsx`.
 
 ### Custom Link Component
 
-[`components/content/Link.tsx`](./components/content/Link.tsx) wraps MUI `Link` with `NextLink`. When using MUI components with a `component` prop (`Button`, `CardActionArea`), pass `Link` via `component={Link}` — never nest `<Link><Button /></Link>`:
+[`components/content/Link.tsx`](./components/content/Link.tsx) is a `forwardRef` wrapper around `next/link` with Tailwind classes applied via `cn()`. It automatically:
 
-```tsx
-// CORRECT
-<Button component={Link} href="/some-path">Click</Button>
+- Adds `rel="noopener noreferrer"` for `target="_blank"` links.
+- Appends an `aria-label` suffix `" (opens in a new tab)"` when `aria-label` is set and `target="_blank"`.
+- Renders an `sr-only` "(opens in a new tab)" span when no `aria-label` is set.
 
-// WRONG — hydration errors + invalid HTML (nested <a> tags)
-<Link href="/some-path"><Button>Click</Button></Link>
-```
+For button-styled links, use [`LinkButton`](./components/content/LinkButton.tsx). Never nest `<Link>` inside another `<Link>` or inside a `<button>` — this produces invalid HTML.
 
 ### Image Handling
 
-Always import `Image` from `next-image-export-optimizer`, not from `next/image`. Source images go in `public/images/`. Optimized WebP output is written to `public/optimized-images/` during `npm run build`.
+Always import `Image` from `next-image-export-optimizer`, not from `next/image`. Source images live in `assets/` and are imported as static modules (e.g. `import img from "@/assets/foo.webp"`). Optimized WebP output is written to `public/optimized-images/` during `npm run build`.
 
 ---
 
 ## 8. Theme and Styling
 
-### Core Rule
+### Core Approach
 
-**All styling must go through the MUI theme first.** Only add global CSS for the specific use cases listed below.
+Styling uses **Tailwind CSS v4** (CSS-first config) with **shadcn/ui** design tokens. No CSS-in-JS.
 
-**Never use raw HTML elements.** Always use MUI components (`Box`, `Typography`, `Stack`, etc.) so that the `sx` prop and theme callbacks are available.
+- Design tokens (fonts, colors, radii, easings, animations) are defined in the `@theme inline` block in [`app/app.css`](./app/app.css) using oklch values. The light/dark color values themselves live in [`app/themes.css`](./app/themes.css), imported by `app.css`.
+- Dark mode is provided by `next-themes` using the `class` strategy — the `dark` class on `<html>` activates a `@custom-variant dark` defined in [`app/app.css`](./app/app.css). A second custom variant `short-h` (`@media (max-height: 500px)`) is also defined there for hero collapse on short viewports.
+- Compose class strings with `cn()` from [`components/primitives/utils/cn.ts`](./components/primitives/utils/cn.ts) (clsx + tailwind-merge). Use `class-variance-authority` for multi-variant component APIs (shadcn pattern).
 
-The theme is in [`components/theme/WebsiteThemeProvider.tsx`](./components/theme/WebsiteThemeProvider.tsx).
+### Responsive Breakpoints
+
+No custom breakpoints are defined — Tailwind v4 defaults apply: `sm` = 640px, `md` = 768px, `lg` = 1024px, `xl` = 1280px, `2xl` = 1536px.
+
+**Use `lg:` as the threshold for major layout switches** (e.g. `flex-col` → `flex-row`, stacked → side-by-side). `md:` (768px) is standard iPad width — applying a desktop layout there gives tablet users the desktop experience, which is rarely the intent. This convention matches the nav component in [`components/layout/Layout.tsx`](./components/layout/Layout.tsx), which also switches to the desktop nav at `lg:`.
 
 ### Color Tokens
 
-Never use hardcoded color values. Use theme tokens:
+Never hardcode color values. Use semantic Tailwind utility classes tied to design tokens:
 
-- `text.primary`, `text.secondary`, `text.disabled`
-- `palette.primary.main`, `palette.primary.light`, `palette.primary.dark`
-- `background.default`, `background.paper`
+- `text-foreground`, `text-muted-foreground` — body text
+- `bg-background`, `bg-card`, `bg-muted` — backgrounds
+- `text-primary`, `bg-primary`, `text-primary-foreground` — primary accent
 
-**Raw palette constants** (`themePrimary`, `themeSecondary`, `linkColors`) are exported from [`components/theme/colors.ts`](./components/theme/colors.ts). Import from there when you need the raw hex values outside of a theme callback (e.g. in a server component like `app/layout.tsx`). `WebsiteThemeProvider.tsx` also imports from this file — do not duplicate color definitions.
+### Animation and Motion
 
-**Prefer `useTheme()` or sx callbacks over sx string tokens.** MUI's `sx` prop accepts dot-path strings like `"text.secondary"` or `"action.disabledBackground"` as a shorthand — but these are **not type-checked**. A typo compiles silently and produces broken/invisible styles at runtime with no error:
+[`app/layout.tsx`](./app/layout.tsx) wraps the app with `<LazyMotion><MotionConfig reducedMotion="user">` — the `motion` library (Framer Motion v12) automatically honours `prefers-reduced-motion`. `LazyMotion` with `domAnimation` keeps the animation bundle lean. Prefer `motion/react` primitives (`m.div`, `AnimatePresence`, etc.) for interactive transitions. For CSS-only animations, use `tw-animate-css` utilities.
 
-```tsx
-// PREFER: type-checked — typos are caught at compile time
-const theme = useTheme();
-bgcolor: theme.palette.action.disabledBackground;
+### Reduced-Motion Guard
 
-// PREFER: equally type-safe via sx callback
-bgcolor: (theme) => theme.palette.action.disabledBackground;
+**Rule: always use the positive guard.** Put motion CSS inside `motion-safe:` Tailwind variants so reduced-motion users never receive it. Never add transitions unconditionally and then cancel them with `motion-reduce:`.
 
-// AVOID: "action.disabledBakground" (typo) would also compile fine
-bgcolor: "action.disabledBackground";
-```
+**Preference order** (highest to lowest):
 
-To create lighter or darker shades of an existing palette color (e.g. for gradients), use MUI's `darken` and `lighten` utilities from `@mui/material/styles` — do not hardcode new hex values:
-
-```ts
-import { darken } from "@mui/material/styles";
-
-background: (theme) =>
-    `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${darken(theme.palette.background.paper, 0.1)} 100%)`,
-```
-
-To apply opacity to a palette color, use MUI's `alpha()` utility — do not use `rgba()` literals or append hex alpha digits:
-
-```ts
-import { alpha } from "@mui/material/styles";
-
-// CORRECT
-backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.12);
-
-// AVOID — hardcodes the color value, breaks when theme changes
-backgroundColor: "rgba(56, 73, 89, 0.12)";
-```
-
-### Spacing and Sizing
-
-**`sx` prop auto-multipliers** — Some numeric values in `sx` are automatically scaled; others are not:
-
-| Property group                                                  | Auto-multiplied by                   | Example                         |
-| --------------------------------------------------------------- | ------------------------------------ | ------------------------------- |
-| `m`, `mt`, `mb`, `ml`, `mr`, `mx`, `my`, `p`, `pt`, etc., `gap` | `theme.spacing()` (8px)              | `mt: 2` → `margin-top: 16px`    |
-| `borderRadius`                                                  | `theme.shape.borderRadius` (4px)     | `borderRadius: 1.5` → `6px`     |
-| `width`, `height`, `top`, `bottom`, `left`, `right`             | **NOT scaled** — treated as raw px/% | Use callbacks or explicit units |
-
-**`theme.spacing()` is fixed** — it does **not** auto-scale based on screen size or breakpoints. If you need responsive spacing, specify it explicitly with a breakpoint object:
+1. **Tailwind `motion-safe:`** — preferred because the component stays a Server Component. No `"use client"` required.
+2. **`useReducedMotion()` from `motion/react`** — for `"use client"` components that need imperative control (e.g. scroll behavior, JS-driven animation logic).
 
 ```tsx
-// Static
-mt: 2
+// BEST — pure Tailwind, server-component safe
+className =
+    "motion-safe:transition-transform motion-safe:duration-200 hover:-translate-y-0.5";
 
-// Responsive
-mt: { xs: 2, md: 4 }
-```
+// OK — client component with imperative JS behavior
+const reducedMotion = useReducedMotion(); // from motion/react
+element.scrollIntoView({ behavior: reducedMotion ? "instant" : "smooth" });
 
-**Semantic rule for when to use `theme.spacing()`:** Only use it for layout whitespace — `margin`, `padding`, `gap`. Do **not** use it for:
-
-- Motion distances: `translateY(-2px)` — use `theme.motion.hoverLift` instead (see below)
-- Element dimensions: `width: 24`, `height: 38` — these are design dimensions, leave as numbers
-- Positional offsets: `top: 12`, `bottom: 10` — positional values are not layout spacing
-
-Similarly, do **not** use `theme.shape.borderRadius` for unrelated numeric coincidences — only when the value is semantically "a fraction or multiple of the base border radius".
-
-### Custom Theme Extensions (`theme.motion`)
-
-Hover-lift distances are stored as a custom `motion` namespace in the theme — not as `theme.spacing()` values (which are semantic for layout whitespace, not motion). Use these for all `translateY` hover effects:
-
-| Token                          | Value   | Use for                                 |
-| ------------------------------ | ------- | --------------------------------------- |
-| `theme.motion.hoverLift`       | `"2px"` | Cards, FABs, photos, icons, skill chips |
-| `theme.motion.hoverLiftSubtle` | `"1px"` | Buttons, link buttons, small chips      |
-
-```tsx
-// CORRECT
-"&:hover": {
-    transform: (theme) => `translateY(-${theme.motion.hoverLift})`,
-}
-```
-
-**Extending the theme with custom namespaces:** When a concept has no MUI equivalent, extend via TypeScript module augmentation in `WebsiteThemeProvider.tsx`:
-
-```ts
-declare module "@mui/material/styles" {
-    interface Theme {
-        motion: {
-            hoverLift: string;
-            hoverLiftSubtle: string;
-        };
-    }
-    interface ThemeOptions {
-        motion?: {
-            hoverLift?: string;
-            hoverLiftSubtle?: string;
-        };
-    }
-}
-```
-
-Then add the values to the `createTheme()` call at the top level of the theme object (not inside `colorSchemes`). Values in the top-level theme are shared across all color schemes.
-
-### Motion Guards (`prefers-reduced-motion`)
-
-All `@media` query strings live in [`components/theme/media-queries.ts`](./components/theme/media-queries.ts). Never write a raw `@media (...)` string inline.
-
-**Rule: always use the positive guard.** Put motion CSS _inside_ `[MOTION_OK_QUERY]` so reduced-motion users never receive it. Never add transitions/animations unconditionally and then cancel them with a `prefers-reduced-motion: reduce` block.
-
-```tsx
-import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
-
-// CORRECT — motion CSS is absent for reduced-motion users
-sx={{
-    "&:hover": { boxShadow: hoverShadow },   // visual change, no guard needed
-    [MOTION_OK_QUERY]: {
-        transition: (theme) => theme.transitions.create("box-shadow", { ... }),
-        "&:hover": { transform: (theme) => `translateY(-${theme.motion.hoverLift})` },
-    },
-}}
-
-// WRONG — adds transition for everyone then cancels it
-sx={{
-    transition: "box-shadow 0.2s ease",
-    "@media (prefers-reduced-motion: reduce)": { transition: "none" },
-}}
-```
-
-This applies to `sx` props, `styled()` objects, and MUI theme `styleOverrides`.
-
-For imperative JS choices (e.g. scroll behavior), use `useMediaQuery(MOTION_OK_QUERY)` at the component level:
-
-```tsx
-const motionOk = useMediaQuery(MOTION_OK_QUERY);
-element.scrollIntoView({ behavior: motionOk ? "smooth" : "instant" });
+// WRONG — unconditional transition cancelled with motion-reduce:
+className = "transition-transform duration-200 motion-reduce:transition-none";
 ```
 
 ### Avoid `!important`
 
-Do not use `!important` in `sx` props or CSS. It bypasses the specificity system and makes styles
-hard to override and debug. Exhaust all other options first.
+Do not use `!important` in Tailwind class strings or `@layer` blocks. Exhaust specificity options first.
 
-Only reach for `!important` if all of the above have been tried and genuinely do not work.
+### Global CSS
 
-### Where to Put Styles
+[`app/app.css`](./app/app.css) is the global CSS entry point (imported once from [`app/layout.tsx`](./app/layout.tsx)) — Tailwind import, `tw-animate-css`, shadcn base layer, all design tokens, base styles, custom variants, and shared keyframes. It imports [`app/themes.css`](./app/themes.css) for the light/dark color variables. Do not add component styles to either file.
 
-| Use case                                  | Location                                                 |
-| ----------------------------------------- | -------------------------------------------------------- |
-| Style shared across multiple components   | Theme `components` section in `WebsiteThemeProvider.tsx` |
-| Style for a single component instance     | Inline via `sx` prop                                     |
-| Reusable styled wrapper needed            | MUI `styled()` utility                                   |
-| Same value appears in multiple components | Keep inline — do NOT extract to constants                |
-| Component-specific style (one place only) | Stay in the component, not the theme                     |
-
-### Global CSS (`styles/main.css`)
-
-Only for:
-
-- Custom scrollbar styling (WebKit + Firefox).
-- `body`/`html` resets: margin, scroll behavior, `overflow-x: hidden`.
-- Monospace font stack for `code` elements.
-
-Do not add component styles here.
+Co-located styles live alongside the file that owns them, named to match the importing file (e.g. `page.css` for `page.tsx`, `NotFound.css` for `NotFound.tsx`, `layout.css` for `layout.tsx`). Current files: [`app/(home)/page.css`](<./app/(home)/page.css>), [`app/404/NotFound.css`](./app/404/NotFound.css), and [`app/(content)/blog-articles/(articles)/layout.css`](<./app/(content)/blog-articles/(articles)/layout.css>) for blog code-block syntax highlighting overrides.
 
 ---
 
@@ -597,7 +509,7 @@ Do not add component styles here.
 - Custom commands: [`cypress/support/commands.ts`](./cypress/support/commands.ts)
 - Configuration: [`cypress.config.ts`](./cypress.config.ts)
 
-**Viewport:** `1280x768`. This is above MUI's `lg` breakpoint (`1200px`). Below `lg`, the desktop AppBar is hidden and the mobile drawer appears — breaking navigation tests. Do not change the viewport without understanding this.
+**Viewport:** `1280x768`. This is above the `lg` Tailwind breakpoint where the desktop nav renders — below it, the mobile drawer appears, breaking navigation tests. The exact breakpoint is in [`components/layout/Layout.tsx`](./components/layout/Layout.tsx) (currently `lg:` / 1024 px). Do not change the viewport without understanding this.
 
 **Custom commands:**
 
@@ -675,9 +587,13 @@ Pipeline: [`.github/workflows/deploy-site.yaml`](./.github/workflows/deploy-site
 
 ## 11. Known Gotchas
 
-### MDX heading levels are shifted by one
+### MDX heading levels are shifted — and h3+ throw build errors
 
 In [`mdx-components.tsx`](./mdx-components.tsx): MDX `h1` → `SectionHeading` (renders `h2`), MDX `h2` → `SubsectionHeading` (renders `h3`). The actual `h1` for a blog page is always the `Title` component in the page's TypeScript wrapper. Write MDX headings one level higher than you would in plain HTML.
+
+**h3–h6 (`###` through `######`) throw a build error** — only two heading levels are available in articles. Similarly, raw markdown images (`![alt](src)`) and tables throw build errors. Use the `<Image>` MDX component for images instead.
+
+`hr` (`---` in Markdown) is mapped to the `Separator` component and is fully supported.
 
 ### MDX copyright headers require the `export const _copyright` pattern
 
@@ -690,10 +606,6 @@ In [`mdx-components.tsx`](./mdx-components.tsx): MDX `h1` → `SectionHeading` (
 ### `WebsiteHome.subRoutes` is never undefined
 
 → See [§7 — Route Definitions](#route-definitions).
-
-### CSS keyframes with theme colors must be defined inside the component
-
-MUI `keyframes` (from `@mui/system`) cannot use `(theme) => ...` callbacks. When theme-aware colors are required, define the keyframe inside the component body after `useTheme()` and interpolate values directly via template literals. See [`Experience.tsx`](<./app/(home)/_content/sections/Experience.tsx>) for the pattern.
 
 ### CSP `unsafe-eval` is only added in development and test
 

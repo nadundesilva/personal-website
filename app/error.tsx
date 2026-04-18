@@ -14,10 +14,11 @@
  */
 "use client";
 
-import { Button, Typography, type Theme, Container, Box } from "@mui/material";
 import * as Sentry from "@sentry/nextjs";
 import type React from "react";
 import { useEffect } from "react";
+
+import { Button } from "@/components/primitives/Button";
 
 interface ErrorProps {
     reset: () => void;
@@ -30,24 +31,14 @@ const Error = ({ reset, error }: ErrorProps): React.ReactElement => {
     }, [error]);
 
     return (
-        <Container
-            sx={{
-                height: (theme: Theme) =>
-                    `calc(100vh - ${theme.spacing(15)} - ${
-                        theme.typography.fontSize
-                    }px - ${theme.mixins.toolbar.minHeight ?? 0}px)`,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-            }}
-        >
-            <Box role="alert" aria-atomic="true" sx={{ textAlign: "center" }}>
-                <Typography component="h1" variant="h5" sx={{ my: 2 }}>
+        <div className="flex min-h-[50vh] items-center justify-center">
+            <div role="alert" aria-atomic="true" className="text-center">
+                <h1 className="my-4 text-xl font-semibold">
                     Something went wrong
-                </Typography>
+                </h1>
                 <Button onClick={reset}>Try Again</Button>
-            </Box>
-        </Container>
+            </div>
+        </div>
     );
 };
 

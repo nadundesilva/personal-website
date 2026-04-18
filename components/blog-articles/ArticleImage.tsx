@@ -12,9 +12,6 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { Grid, Typography } from "@mui/material";
 import type React from "react";
 
 import { Image, Link } from "@/components/content";
@@ -41,40 +38,23 @@ const ArticleImage = ({
     alt,
     creator,
 }: ArticleImageProps): React.ReactElement => (
-    <Grid
-        container
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ py: { xs: 3, sm: 4 } }}
-    >
-        <Grid
-            sx={{
-                width: { xs: "100%", sm: "90%", md: "75%" },
-            }}
-        >
+    <div className="flex flex-col items-center justify-center py-12 sm:py-16">
+        <div className="w-full sm:w-9/10 md:w-3/4">
             <Image src={src} alt={alt} />
-        </Grid>
+        </div>
         {creator && (
-            <Grid sx={{ mt: 2 }}>
-                <Typography
-                    variant="body2"
-                    sx={{
-                        color: "text.secondary",
-                    }}
-                >
-                    Photo by{" "}
-                    <Link href={creator.href} target="_blank">
-                        {creator.name}
-                    </Link>{" "}
-                    on{" "}
-                    <Link href={creator.platform.href} target="_blank">
-                        {creator.platform.name}
-                    </Link>
-                </Typography>
-            </Grid>
+            <p className="text-muted-foreground mt-4 text-sm">
+                Photo by{" "}
+                <Link href={creator.href} target="_blank">
+                    {creator.name}
+                </Link>{" "}
+                on{" "}
+                <Link href={creator.platform.href} target="_blank">
+                    {creator.platform.name}
+                </Link>
+            </p>
         )}
-    </Grid>
+    </div>
 );
 
 export default ArticleImage;

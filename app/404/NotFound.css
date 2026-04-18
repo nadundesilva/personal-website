@@ -13,9 +13,17 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 
-export const MOTION_OK_QUERY =
-    "@media (prefers-reduced-motion: no-preference)" as const;
+@theme inline {
+    --animate-not-found-float: not-found-float 4s ease-in-out infinite;
+}
 
-export const NO_HOVER_QUERY = "@media (hover: none)" as const;
+@keyframes not-found-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
 
-export const SHORT_VIEWPORT_QUERY = "@media (max-height: 500px)" as const;
+    50% {
+        transform: translateY(-14px);
+    }
+}

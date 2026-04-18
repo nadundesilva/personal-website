@@ -12,229 +12,125 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import {
-    Box,
-    CircularProgress,
-    Container,
-    Divider,
-    styled,
-} from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import dynamic from "next/dynamic";
 import type React from "react";
-import type { JSX } from "react";
 
-import Heading from "./common/Heading";
+import ContentContainer from "@/components/layout/ContentContainer";
 import { ScrollReveal } from "@/components/primitives";
+import Heading from "./common/Heading";
+import Achievements from "./sections/Achievements";
+import Certifications from "./sections/Certifications";
+import Contact from "./sections/Contact";
+import ContributedProjects from "./sections/ContributedProjects";
+import Experience from "./sections/Experience";
+import Skills from "./sections/Skills";
 import WelcomeBanner from "./sections/WelcomeBanner";
+import WhoAmI from "./sections/WhoAmI";
 
-const SectionContainer = styled(Container)(({ theme }) => ({
-    m: 0,
-    pt: `${theme.mixins.toolbar.minHeight as number}px`,
-}));
-
-const pageLoader = (): JSX.Element => (
-    <Box
-        sx={{ display: "flex", justifyContent: "center", py: 5 }}
-        aria-live="polite"
-        aria-busy="true"
-    >
-        <CircularProgress aria-label="Loading section" />
-    </Box>
-);
-
-const WhoAmISection = dynamic(async () => await import("./sections/WhoAmI"), {
-    loading: pageLoader,
-});
-
-const ExperienceSection = dynamic(
-    async () => await import("./sections/Experience"),
-    {
-        loading: pageLoader,
-    },
-);
-
-const ContributedProjectsSection = dynamic(
-    async () => await import("./sections/ContributedProjects"),
-    {
-        loading: pageLoader,
-    },
-);
-
-const AchievementsSection = dynamic(
-    async () => await import("./sections/Achievements"),
-    {
-        loading: pageLoader,
-    },
-);
-
-const SkillsSection = dynamic(async () => await import("./sections/Skills"), {
-    loading: pageLoader,
-});
-
-const CertificationsSection = dynamic(
-    async () => await import("./sections/Certifications"),
-    {
-        loading: pageLoader,
-    },
-);
-
-const ContactSection = dynamic(async () => await import("./sections/Contact"), {
-    loading: pageLoader,
-});
-
-import { type SectionProps } from "./types";
-
-interface Section {
-    name: string;
-    Component: React.ComponentType<SectionProps>;
-    sectionId: string;
+interface PageSectionProps {
+    title: string;
+    section: React.ReactElement;
+    testId: string;
+    index?: number;
+    showDivider?: boolean;
 }
 
-const SECTION_STAGGER_STEP_MS = 50;
-
-const pageSections: Section[] = [
-    {
-        name: "Experience",
-        Component: ExperienceSection,
-        sectionId: "experience",
-    },
-    {
-        name: "Contributed Projects",
-        Component: ContributedProjectsSection,
-        sectionId: "contributed-projects",
-    },
-    {
-        name: "Achievements",
-        Component: AchievementsSection,
-        sectionId: "achievements",
-    },
-    {
-        name: "Skills",
-        Component: SkillsSection,
-        sectionId: "skills",
-    },
-    {
-        name: "Certifications",
-        Component: CertificationsSection,
-        sectionId: "certifications",
-    },
-    {
-        name: "Contact",
-        Component: ContactSection,
-        sectionId: "contact",
-    },
-];
-
-const PageContent = (): React.ReactElement => {
-    const generateSection = (
-        title: string,
-        section: React.ReactElement,
-        testId: string,
-        number?: number,
-        showDivider = true,
-    ): React.ReactElement => {
-        const titleId = title.toLowerCase().replace(/\s+/g, "-");
-        return (
-            <Container
-                component="section"
-                aria-labelledby={titleId}
-                maxWidth={false}
-                disableGutters
-                data-testid={testId}
-                sx={{ mt: { xs: 6, md: 10 }, mb: { xs: 3, md: 6 } }}
-            >
-                <Heading id={titleId} number={number}>
-                    {title}
-                </Heading>
-                <Container maxWidth={false} disableGutters sx={{ py: 4 }}>
-                    {section}
-                </Container>
-                {showDivider && (
-                    <Divider aria-hidden="true" sx={{ mt: { xs: 3, md: 6 } }} />
-                )}
-            </Container>
-        );
-    };
-
+const PageSection = ({
+    title,
+    section,
+    testId,
+    index,
+    showDivider = true,
+}: PageSectionProps): React.ReactElement => {
+    const titleId = title.toLowerCase().replace(/\s+/g, "-");
     return (
-        <>
-            <WelcomeBanner />
-            <Container
-                maxWidth={false}
-                disableGutters
-                sx={{
-                    position: "relative",
-                    isolation: "isolate",
-                    pt: { xs: 6, md: 8 },
-                    px: {
-                        xs: 1,
-                        md: 4,
-                        lg: 20,
-                        xl: 40,
-                    },
-                }}
-            >
-                {/* Gradient overlay that blends the hero banner into the content area below */}
-                <Box
+        <section
+            aria-labelledby={titleId}
+            data-testid={testId}
+            className="mt-12 mb-6 md:mt-20 md:mb-10"
+        >
+            <Heading id={titleId} number={index}>
+                {title}
+            </Heading>
+            <div className="py-4">{section}</div>
+            {showDivider && (
+                <hr
                     aria-hidden="true"
-                    sx={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        height: 280,
-                        background: (theme) =>
-                            theme.palette.mode === "light"
-                                ? `radial-gradient(ellipse 100% 100% at 50% 0%, ${alpha(theme.palette.primary.main, 0.6)} 0%, ${alpha(theme.palette.primary.main, 0.25)} 40%, ${alpha(theme.palette.primary.main, 0.08)} 70%, transparent 100%)`
-                                : `radial-gradient(ellipse 100% 100% at 50% 0%, ${alpha(theme.palette.common.black, 0.6)} 0%, ${alpha(theme.palette.common.black, 0.25)} 40%, ${alpha(theme.palette.common.black, 0.08)} 70%, transparent 100%)`,
-                        pointerEvents: "none",
-                        zIndex: 0,
-                    }}
+                    className="border-border mt-6 md:mt-10"
                 />
-                <Container
-                    maxWidth={false}
-                    sx={{ position: "relative", zIndex: 1 }}
-                >
-                    <SectionContainer maxWidth={false} disableGutters>
-                        <ScrollReveal>
-                            {generateSection(
-                                "Who Am I",
-                                <WhoAmISection />,
-                                "who-am-i-section",
-                                1,
-                            )}
-                        </ScrollReveal>
-                    </SectionContainer>
-                    {pageSections.map((section: Section, index: number) => (
-                        <SectionContainer
-                            maxWidth={false}
-                            disableGutters
-                            key={section.name}
-                        >
-                            <ScrollReveal
-                                delay={index * SECTION_STAGGER_STEP_MS}
-                            >
-                                {generateSection(
-                                    section.name,
-                                    <section.Component
-                                        sectionEntranceDelay={
-                                            index * SECTION_STAGGER_STEP_MS
-                                        }
-                                    />,
-                                    `${section.sectionId}-section`,
-                                    index + 2,
-                                    index < pageSections.length - 1,
-                                )}
-                            </ScrollReveal>
-                        </SectionContainer>
-                    ))}
-                </Container>
-            </Container>
-        </>
+            )}
+        </section>
     );
 };
+
+const PageContent = (): React.ReactElement => (
+    <>
+        <WelcomeBanner />
+        <ContentContainer className="pt-6 md:pt-8">
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute top-0 right-0 left-0 h-70 bg-(--home-hero-fade)"
+            />
+            <div className="relative z-10">
+                <ScrollReveal>
+                    <PageSection
+                        title="Who Am I"
+                        section={<WhoAmI />}
+                        testId="who-am-i-section"
+                        index={1}
+                    />
+                </ScrollReveal>
+                <ScrollReveal delay={0}>
+                    <PageSection
+                        title="Experience"
+                        section={<Experience />}
+                        testId="experience-section"
+                        index={2}
+                    />
+                </ScrollReveal>
+                <ScrollReveal delay={50}>
+                    <PageSection
+                        title="Contributed Projects"
+                        section={<ContributedProjects />}
+                        testId="contributed-projects-section"
+                        index={3}
+                    />
+                </ScrollReveal>
+                <ScrollReveal delay={100}>
+                    <PageSection
+                        title="Achievements"
+                        section={<Achievements />}
+                        testId="achievements-section"
+                        index={4}
+                    />
+                </ScrollReveal>
+                <ScrollReveal delay={150}>
+                    <PageSection
+                        title="Skills"
+                        section={<Skills sectionEntranceDelay={150} />}
+                        testId="skills-section"
+                        index={5}
+                    />
+                </ScrollReveal>
+                <ScrollReveal delay={200}>
+                    <PageSection
+                        title="Certifications"
+                        section={<Certifications />}
+                        testId="certifications-section"
+                        index={6}
+                    />
+                </ScrollReveal>
+                <ScrollReveal delay={250}>
+                    <PageSection
+                        title="Contact"
+                        section={<Contact />}
+                        testId="contact-section"
+                        index={7}
+                        showDivider={false}
+                    />
+                </ScrollReveal>
+            </div>
+        </ContentContainer>
+    </>
+);
 
 export default PageContent;

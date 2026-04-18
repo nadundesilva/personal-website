@@ -12,13 +12,10 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { Button } from "@mui/material";
-import { alpha } from "@mui/material/styles";
+import NextLink from "next/link";
 import type React from "react";
 
-import Link from "./Link";
+import { Button } from "@/components/primitives/Button";
 
 interface LinkButtonProps {
     href: string;
@@ -38,38 +35,23 @@ const LinkButton = ({
     ariaLabel,
 }: LinkButtonProps): React.ReactElement => (
     <Button
-        component={Link}
-        href={href}
-        target={target}
-        size="small"
-        variant="outlined"
-        startIcon={StartIcon ? <StartIcon /> : undefined}
-        endIcon={EndIcon ? <EndIcon /> : undefined}
+        variant="outline"
+        size="sm"
+        nativeButton={false}
+        render={
+            <NextLink
+                href={href}
+                target={target}
+                rel={target === "_blank" ? "noopener noreferrer" : undefined}
+            />
+        }
+        role="link"
         aria-label={ariaLabel}
-        sx={(theme) => ({
-            "color": "text.secondary",
-            "borderColor":
-                theme.palette.mode === "light"
-                    ? alpha(theme.palette.primary.main, 0.4)
-                    : alpha(theme.palette.primary.light, 0.35),
-            "& .MuiButton-endIcon, & .MuiButton-startIcon": {
-                color: "text.secondary",
-                transition: theme.transitions.create("color", {
-                    duration: theme.transitions.duration.shorter,
-                }),
-            },
-            "&:hover": {
-                borderColor: theme.palette.primary.main,
-            },
-            "&:hover .MuiButton-endIcon, &:hover .MuiButton-startIcon": {
-                color:
-                    theme.palette.mode === "light"
-                        ? theme.palette.primary.main
-                        : theme.palette.primary.light,
-            },
-        })}
+        className="text-muted-foreground hover:border-primary hover:text-primary [&_svg]:text-muted-foreground hover:[&_svg]:text-primary border-primary/40 dark:border-primary/35 motion-safe:[&_svg]:transition-colors"
     >
+        {StartIcon && <StartIcon />}
         {name}
+        {EndIcon && <EndIcon />}
     </Button>
 );
 

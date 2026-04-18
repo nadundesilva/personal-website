@@ -12,382 +12,132 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import {
-    KeyboardArrowDown,
-    KeyboardArrowUp,
-    LocationCity,
-} from "@mui/icons-material";
-import {
-    Timeline,
-    TimelineItem,
-    TimelineOppositeContent,
-    TimelineSeparator,
-    TimelineDot,
-    TimelineConnector,
-    TimelineContent,
-} from "@mui/lab";
-import {
-    Box,
-    Button,
-    Card,
-    type Theme,
-    Typography,
-    useMediaQuery,
-    useTheme,
-} from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import { keyframes } from "@mui/system";
-import { visuallyHidden } from "@mui/utils";
+import { Building2 } from "lucide-react";
 import type React from "react";
-import { useState } from "react";
 
+import { cn } from "@/components/primitives/utils/cn";
 import Experiences, { type Experience } from "@/constants/experience";
-import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
-import { KeywordChip } from "@/components/primitives";
+import ExperienceSkills from "./components/ExperienceSkills";
 
-const SKILLS_PREVIEW_COUNT = 5;
+const Experience = (): React.ReactElement => (
+    <ol className="w-full" aria-label="Experience Timeline" role="list">
+        {Object.values(Experiences).map((item: Experience, index: number) => {
+            const isDesktopRight = index % 2 === 0;
 
-interface ExperienceSkillsProps {
-    skills: string[];
-    isContentOnRight: boolean;
-}
-
-const ExperienceSkills = ({
-    skills,
-    isContentOnRight,
-}: ExperienceSkillsProps): React.ReactElement => {
-    const [expanded, setExpanded] = useState(false);
-    return (
-        <Box
-            role="group"
-            aria-label="Skills used"
-            sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: 0.625,
-                mt: 2,
-                justifyContent: isContentOnRight ? "flex-start" : "flex-end",
-            }}
-        >
-            {skills
-                .slice(0, expanded ? undefined : SKILLS_PREVIEW_COUNT)
-                .map((skill) => (
-                    <KeywordChip key={skill} label={skill} />
-                ))}
-            {skills.length > SKILLS_PREVIEW_COUNT && (
-                <Button
-                    size="small"
-                    variant="text"
-                    onClick={() => setExpanded((prev) => !prev)}
-                    sx={{
-                        fontSize: "0.625rem",
-                        px: 0.5,
-                        py: 0,
-                        minWidth: 0,
-                        height: "1.25rem",
-                        fontWeight: 400,
-                        color: "text.secondary",
-                        alignSelf: "center",
-                        gap: 0.25,
-                    }}
-                >
-                    {expanded ? (
-                        <>
-                            Show less
-                            <KeyboardArrowUp sx={{ fontSize: "0.75rem" }} />
-                        </>
-                    ) : (
-                        <>
-                            +{skills.length - SKILLS_PREVIEW_COUNT} more
-                            <KeyboardArrowDown sx={{ fontSize: "0.75rem" }} />
-                        </>
+            const card = (
+                <div
+                    className={cn(
+                        "bg-card border-border mb-14 rounded-lg border p-5 shadow-sm motion-safe:transition-colors motion-safe:duration-150 md:p-9",
+                        isDesktopRight
+                            ? "border-l-primary/33 hover:border-l-primary border-l-[3px]"
+                            : "border-l-primary/33 hover:border-l-primary sm:border-r-primary/33 sm:hover:border-r-primary border-l-[3px] sm:border-r-[3px] sm:border-l-0 sm:hover:border-l-0",
                     )}
-                </Button>
-            )}
-        </Box>
-    );
-};
-
-const Experience = (): React.ReactElement => {
-    const theme = useTheme();
-    const isAllContentRightAligned = useMediaQuery((theme: Theme) =>
-        theme.breakpoints.down("sm"),
-    );
-
-    const pulseColor =
-        theme.palette.mode === "light"
-            ? theme.palette.primary.main
-            : theme.palette.primary.light;
-
-    // Defined inside the component (after useTheme) so theme-aware colors can be
-    // interpolated. Module-level keyframes cannot use theme callbacks.
-    const timelinePulse = keyframes`
-        0%   { box-shadow: 0 0 0 0   ${alpha(pulseColor, theme.palette.mode === "light" ? 0.35 : 0.4)}; }
-        70%  { box-shadow: 0 0 0 8px ${alpha(pulseColor, 0)}; }
-        100% { box-shadow: 0 0 0 0   ${alpha(pulseColor, 0)}; }
-    `;
-
-    return (
-        <Timeline
-            position={isAllContentRightAligned ? "right" : "alternate"}
-            aria-label="Experience Timeline"
-            role="list"
-            sx={{
-                px: 0,
-                [`& .MuiTimelineItem-root:before`]: isAllContentRightAligned
-                    ? {
-                          flex: 0,
-                          padding: 0,
-                      }
-                    : {},
-            }}
-        >
-            {Object.values(Experiences).map(
-                (item: Experience, index: number) => {
-                    const isContentOnRight =
-                        isAllContentRightAligned || index % 2 === 0;
-                    return (
-                        <TimelineItem
-                            key={item.timePeriod.format()}
-                            role="listitem"
-                        >
-                            {!isAllContentRightAligned && (
-                                <TimelineOppositeContent
-                                    sx={{
-                                        ...(isContentOnRight && { pl: 0 }),
-                                        ...(!isContentOnRight && { pr: 0 }),
-                                    }}
-                                >
-                                    <Typography
-                                        variant="body2"
-                                        color="text.secondary"
-                                        sx={{
-                                            fontSize: { xs: 12, md: 13 },
-                                            fontWeight: 400,
-                                            letterSpacing: "0.04em",
-                                            textTransform: "uppercase",
-                                        }}
-                                    >
-                                        {item.timePeriod.format()}
-                                    </Typography>
-                                </TimelineOppositeContent>
+                >
+                    <h3
+                        className={cn(
+                            "mb-5 text-[19px] leading-snug md:text-[20px]",
+                            !isDesktopRight && "sm:text-right",
+                        )}
+                    >
+                        {item.name}
+                    </h3>
+                    {/* Time period — mobile only (desktop shows it in the opposite column) */}
+                    <p className="text-muted-foreground mb-4 text-xs font-bold tracking-[0.04em] uppercase sm:hidden">
+                        {item.timePeriod.format()}
+                    </p>
+                    <p
+                        className={cn(
+                            "text-muted-foreground mb-6 text-sm leading-[1.8] font-normal",
+                            !isDesktopRight && "sm:text-right",
+                        )}
+                    >
+                        {item.description}
+                    </p>
+                    <div
+                        className={cn(
+                            "flex items-center gap-2.5 pt-1",
+                            !isDesktopRight && "sm:justify-end",
+                        )}
+                    >
+                        <Building2
+                            size={18}
+                            aria-hidden
+                            className={cn(
+                                "shrink-0 opacity-60",
+                                !isDesktopRight && "sm:order-2",
                             )}
-                            <TimelineSeparator>
-                                <TimelineDot
-                                    sx={(theme) => ({
-                                        backgroundColor:
-                                            theme.palette.primary.main,
-                                        width: 18,
-                                        height: 18,
-                                        boxShadow: "none",
-                                        border: "3.5px solid",
-                                        borderColor:
-                                            theme.palette.background.paper,
-                                        // Stagger each dot's pulse by 0.4s so they don't all pulse in sync
-                                        [MOTION_OK_QUERY]: {
-                                            "animation": `${timelinePulse} 2.5s ease-out ${index * 0.4}s infinite`,
-                                            "transition":
-                                                theme.transitions.create(
-                                                    "all",
-                                                    {
-                                                        duration:
-                                                            theme.transitions
-                                                                .duration.short,
-                                                    },
-                                                ),
-                                            "&:hover": {
-                                                transform: "scale(1.15)",
-                                            },
-                                        },
-                                    })}
-                                />
-                                <TimelineConnector
-                                    sx={{
-                                        background: (theme) =>
-                                            theme.palette.mode === "light"
-                                                ? `linear-gradient(to bottom, ${alpha(theme.palette.primary.main, 0.33)}, transparent)`
-                                                : `linear-gradient(to bottom, ${alpha(theme.palette.primary.light, 0.27)}, transparent)`,
-                                        backgroundColor: "transparent",
-                                        width: 1,
-                                    }}
-                                />
-                            </TimelineSeparator>
-                            <TimelineContent
-                                sx={{
-                                    ...(isContentOnRight && { pr: 0 }),
-                                    ...(!isContentOnRight && { pl: 0 }),
-                                }}
-                            >
-                                <Card
-                                    sx={{
-                                        "p": { xs: 2.5, md: 4.5 },
-                                        "mb": 7,
-                                        "transition": (theme) =>
-                                            theme.transitions.create(
-                                                "border-color",
-                                                {
-                                                    duration:
-                                                        theme.transitions
-                                                            .duration.shortest,
-                                                },
-                                            ),
-                                        "&:hover": {
-                                            ...(isContentOnRight
-                                                ? {
-                                                      borderLeftColor: (
-                                                          theme,
-                                                      ) =>
-                                                          theme.palette.primary
-                                                              .main,
-                                                  }
-                                                : {
-                                                      borderRightColor: (
-                                                          theme,
-                                                      ) =>
-                                                          theme.palette.primary
-                                                              .main,
-                                                  }),
-                                        },
-                                        "borderTop": "none",
-                                        ...(isContentOnRight
-                                            ? {
-                                                  borderLeft: "3px solid",
-                                                  borderLeftColor: (theme) =>
-                                                      theme.palette.mode ===
-                                                      "light"
-                                                          ? alpha(
-                                                                theme.palette
-                                                                    .primary
-                                                                    .main,
-                                                                0.33,
-                                                            )
-                                                          : alpha(
-                                                                theme.palette
-                                                                    .primary
-                                                                    .light,
-                                                                0.27,
-                                                            ),
-                                                  pl: { xs: 2.5, md: 4.5 },
-                                              }
-                                            : {
-                                                  borderRight: "3px solid",
-                                                  borderRightColor: (theme) =>
-                                                      theme.palette.mode ===
-                                                      "light"
-                                                          ? alpha(
-                                                                theme.palette
-                                                                    .primary
-                                                                    .main,
-                                                                0.33,
-                                                            )
-                                                          : alpha(
-                                                                theme.palette
-                                                                    .primary
-                                                                    .light,
-                                                                0.27,
-                                                            ),
-                                                  pr: { xs: 2.5, md: 4.5 },
-                                              }),
-                                    }}
-                                >
-                                    <Typography
-                                        variant="h6"
-                                        component="h3"
-                                        mb={2.5}
-                                        sx={{
-                                            textAlign: isContentOnRight
-                                                ? "left"
-                                                : "right",
-                                            fontSize: { xs: 19, md: 20 },
-                                            lineHeight: 1.3,
-                                        }}
-                                    >
-                                        {item.name}
-                                    </Typography>
-                                    {isAllContentRightAligned && (
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                            mb={2}
-                                            sx={{
-                                                fontSize: { xs: 12, md: 13 },
-                                                fontWeight: 700,
-                                                letterSpacing: "0.04em",
-                                                textTransform: "uppercase",
-                                            }}
-                                        >
-                                            {item.timePeriod.format()}
-                                        </Typography>
-                                    )}
-                                    <Typography
-                                        variant="body2"
-                                        mb={3}
-                                        color="text.secondary"
-                                        sx={{
-                                            textAlign: isContentOnRight
-                                                ? "left"
-                                                : "right",
-                                            lineHeight: 1.8,
-                                            fontWeight: 400,
-                                        }}
-                                    >
-                                        {item.description}
-                                    </Typography>
-                                    <Box
-                                        display="flex"
-                                        alignItems="center"
-                                        gap={1.25}
-                                        justifyContent={
-                                            isContentOnRight
-                                                ? "flex-start"
-                                                : "flex-end"
-                                        }
-                                        pt={1}
-                                    >
-                                        {isContentOnRight && (
-                                            <LocationCity
-                                                fontSize="small"
-                                                sx={{ opacity: 0.6 }}
-                                            />
-                                        )}
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                            sx={{
-                                                lineHeight: 1.3,
-                                                fontSize: { xs: 13 },
-                                                fontWeight: 400,
-                                            }}
-                                        >
-                                            <Box
-                                                component="span"
-                                                sx={visuallyHidden}
-                                            >
-                                                Company:{" "}
-                                            </Box>
-                                            {item.institute}
-                                        </Typography>
-                                        {!isContentOnRight && (
-                                            <LocationCity
-                                                fontSize="small"
-                                                sx={{ opacity: 0.6 }}
-                                            />
-                                        )}
-                                    </Box>
-                                    {item.skills.length > 0 && (
-                                        <ExperienceSkills
-                                            skills={item.skills}
-                                            isContentOnRight={isContentOnRight}
-                                        />
-                                    )}
-                                </Card>
-                            </TimelineContent>
-                        </TimelineItem>
-                    );
-                },
-            )}
-        </Timeline>
-    );
-};
+                        />
+                        <p
+                            className={cn(
+                                "text-muted-foreground text-[13px] leading-snug",
+                                !isDesktopRight && "sm:order-1",
+                            )}
+                        >
+                            <span className="sr-only">Company: </span>
+                            {item.institute}
+                        </p>
+                    </div>
+                    {item.skills.length > 0 && (
+                        <ExperienceSkills
+                            skills={item.skills}
+                            isContentOnRight={!isDesktopRight}
+                        />
+                    )}
+                </div>
+            );
+
+            const timePeriod = (
+                <p className="text-muted-foreground text-xs tracking-[0.04em] uppercase md:text-[13px]">
+                    {item.timePeriod.format()}
+                </p>
+            );
+
+            return (
+                <li
+                    key={item.timePeriod.format()}
+                    role="listitem"
+                    className="flex items-start"
+                >
+                    {/* Left slot */}
+                    {isDesktopRight ? (
+                        /* Even on desktop: time period, hidden on mobile */
+                        <div className="hidden flex-1 justify-end pt-3 pr-2 sm:flex">
+                            {timePeriod}
+                        </div>
+                    ) : (
+                        /* Odd on desktop: card, hidden on mobile */
+                        <div className="hidden flex-1 pr-2 sm:block">
+                            {card}
+                        </div>
+                    )}
+
+                    {/* Separator */}
+                    <div className="mx-3 flex shrink-0 flex-col items-center self-stretch sm:mx-6">
+                        <div
+                            className="bg-primary mt-1.5 size-3 shrink-0 rounded-full motion-safe:animate-home-timeline-dot-pulse motion-safe:transition-transform motion-safe:duration-150 motion-safe:hover:scale-[1.15]"
+                            style={{ animationDelay: `${index * 0.4}s` }}
+                        />
+                        <div className="from-foreground/20 mt-1.5 min-h-16 w-3 flex-1 bg-linear-to-b to-transparent" />
+                    </div>
+
+                    {/* Right slot */}
+                    {isDesktopRight ? (
+                        /* Even on desktop: card always visible */
+                        <div className="flex-1 pl-2 sm:pl-2">{card}</div>
+                    ) : (
+                        <div className="flex-1 pl-2 sm:pl-2">
+                            {/* Odd on mobile: card here */}
+                            <div className="sm:hidden">{card}</div>
+                            {/* Odd on desktop: time period */}
+                            <div className="hidden pt-3 sm:block">
+                                {timePeriod}
+                            </div>
+                        </div>
+                    )}
+                </li>
+            );
+        })}
+    </ol>
+);
 
 export default Experience;

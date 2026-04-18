@@ -13,9 +13,9 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
-import { type FormattableDate, Date, DateRange, Now } from "./date";
 import Logos, { type LogoImageData } from "@/constants/logos";
 import Skills from "@/constants/skills";
+import { type FormattableDate, Date, DateRange, Now } from "./date";
 
 export interface Project {
     name: string;

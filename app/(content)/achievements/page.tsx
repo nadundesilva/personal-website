@@ -12,17 +12,16 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Typography } from "@mui/material";
 import type { Metadata } from "next";
 import type React from "react";
 
 import {
     AccentedList,
-    Link,
-    Logo,
-    ListItem,
-    Paragraph,
     Image,
+    Link,
+    ListItem,
+    Logo,
+    Paragraph,
     Section,
     SectionHeading,
     Title,
@@ -33,14 +32,14 @@ import Competitions, { type Competition } from "@/constants/competitions";
 import Institutes, { type Institute } from "@/constants/institutes";
 import { FULL_NAME } from "@/constants/metadata";
 
-import wso2OutstandingContributorImage from "@/assets/achievements/wso2-outstanding-contributor.jpg";
+import angelHack2016BikeImage from "@/assets/achievements/angel-hack-2016-bike.jpg";
+import angelHack2016Image from "@/assets/achievements/angel-hack-2016.jpg";
 import uomDeansList2017Image from "@/assets/achievements/deans-list-2017.jpg";
+import hsbcYouthEnterpriseAwards2015DiscussionImage from "@/assets/achievements/hsbc-youth-enterprise-awards-2015-discussion.jpg";
+import hsbcYouthEnterpriseAwards2015Image from "@/assets/achievements/hsbc-youth-enterprise-awards-2015.jpg";
 import nasaSpaceAppsChallenge2017NewspaperImage from "@/assets/achievements/nasa-space-apps-2017-newspaper.jpg";
 import nasaSpaceAppsChallenge2017Image from "@/assets/achievements/nasa-space-apps-2017.jpg";
-import angelHack2016Image from "@/assets/achievements/angel-hack-2016.jpg";
-import angelHack2016BikeImage from "@/assets/achievements/angel-hack-2016-bike.jpg";
-import hsbcYouthEnterpriseAwards2015Image from "@/assets/achievements/hsbc-youth-enterprise-awards-2015.jpg";
-import hsbcYouthEnterpriseAwards2015DiscussionImage from "@/assets/achievements/hsbc-youth-enterprise-awards-2015-discussion.jpg";
+import wso2OutstandingContributorImage from "@/assets/achievements/wso2-outstanding-contributor.jpg";
 
 export const metadata: Metadata = {
     title: "Achievements",
@@ -64,7 +63,7 @@ const AchievementSectionHeading = ({
                 srcLight={achievement.logo.srcLight}
                 srcDark={achievement.logo.srcDark}
                 alt=""
-                recommendedSx={achievement.logoSx}
+                className={achievement.logoClassName}
             />
         }
     >
@@ -167,24 +166,12 @@ const Achievements = (): React.ReactElement => {
                     heading="Dean&rsquo;s List Semesters (4.20 GPA Scale):"
                     headingVariant="h3"
                 >
-                    <ListItem>
-                        <Typography>Semester 02 (GPA: 3.82)</Typography>
-                    </ListItem>
-                    <ListItem>
-                        <Typography>Semester 03 (GPA: 3.84)</Typography>
-                    </ListItem>
-                    <ListItem>
-                        <Typography>Semester 05 (GPA: 3.82)</Typography>
-                    </ListItem>
-                    <ListItem>
-                        <Typography>Semester 06 (GPA: 4.03)</Typography>
-                    </ListItem>
-                    <ListItem>
-                        <Typography>Semester 07 (GPA: 4.04)</Typography>
-                    </ListItem>
-                    <ListItem>
-                        <Typography>Semester 08 (GPA: 4.01)</Typography>
-                    </ListItem>
+                    <ListItem>Semester 02 (GPA: 3.82)</ListItem>
+                    <ListItem>Semester 03 (GPA: 3.84)</ListItem>
+                    <ListItem>Semester 05 (GPA: 3.82)</ListItem>
+                    <ListItem>Semester 06 (GPA: 4.03)</ListItem>
+                    <ListItem>Semester 07 (GPA: 4.04)</ListItem>
+                    <ListItem>Semester 08 (GPA: 4.01)</ListItem>
                 </AccentedList>
             </Section>
             <Section labelledById="section-nasa-space-apps">

@@ -12,20 +12,16 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, CircularProgress } from "@mui/material";
 import type React from "react";
 
 const Loading = (): React.ReactElement => (
-    <Box
-        sx={{
-            display: "flex",
-            justifyContent: "center",
-            pt: "25%",
-            height: "100vh",
-        }}
-    >
-        <CircularProgress aria-label="Loading" />
-    </Box>
+    <div className="flex h-screen justify-center pt-[25%]">
+        <div
+            role="status"
+            aria-label="Loading"
+            className="border-primary/20 border-t-primary size-10 rounded-full border-4 motion-safe:animate-spin"
+        />
+    </div>
 );
 
 export default Loading;

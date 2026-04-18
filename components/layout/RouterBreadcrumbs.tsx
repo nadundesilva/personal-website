@@ -14,16 +14,24 @@
  */
 "use client";
 
-import { KeyboardArrowRight } from "@mui/icons-material";
-import { Breadcrumbs, Typography } from "@mui/material";
 import type { Route as NextRoute } from "next";
-import Script from "next/script";
 import { usePathname } from "next/navigation";
-import type React from "react";
-import type { BreadcrumbList, WithContext } from "schema-dts";
+import Script from "next/script";
+import React from "react";
+import type {
+    BreadcrumbList as JsonLdBreadcrumbList,
+    WithContext,
+} from "schema-dts";
 
 import { Link } from "@/components/content";
 import { ContentContainer } from "@/components/layout";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/primitives";
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 import { type Route } from "@/constants/routes";
 
@@ -73,7 +81,7 @@ const RouterBreadcrumbs = ({
         visitRoutes(topLevelRoutes, pathnames, "");
     }
 
-    const breadcrumbJsonLd: WithContext<BreadcrumbList> = {
+    const breadcrumbJsonLd: WithContext<JsonLdBreadcrumbList> = {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": breadcrumbs.map((item, index) => ({
@@ -94,48 +102,38 @@ const RouterBreadcrumbs = ({
                 }}
             />
             {breadcrumbs.length > 1 && (
-                <ContentContainer
-                    sx={{
-                        pt: 2,
-                    }}
-                >
-                    <Breadcrumbs
-                        aria-label="breadcrumb"
-                        sx={{ my: 1 }}
-                        separator={
-                            <KeyboardArrowRight
-                                aria-hidden="true"
-                                sx={{
-                                    color: "primary.main",
-                                    opacity: 0.7,
-                                    fontSize: "1.1rem",
-                                }}
-                            />
-                        }
-                    >
-                        {breadcrumbs.map((breadcrumb, index) => {
-                            const isLast = index === breadcrumbs.length - 1;
-                            return isLast ? (
-                                <Typography
-                                    color="textPrimary"
-                                    key={breadcrumb.name}
-                                    data-testid="breadcrumb-item"
-                                    aria-current="page"
-                                    sx={{ fontWeight: 600 }}
-                                >
-                                    {breadcrumb.name}
-                                </Typography>
-                            ) : (
-                                <Link
-                                    key={breadcrumb.name}
-                                    href={breadcrumb.path as NextRoute<string>}
-                                    data-testid="breadcrumb-item"
-                                >
-                                    {breadcrumb.name}
-                                </Link>
-                            );
-                        })}
-                    </Breadcrumbs>
+                <ContentContainer className="my-2 pt-4">
+                    <Breadcrumb>
+                        <BreadcrumbList>
+                            {breadcrumbs.map((breadcrumb, index) => {
+                                const isLast = index === breadcrumbs.length - 1;
+                                return (
+                                    <React.Fragment key={breadcrumb.name}>
+                                        <BreadcrumbItem>
+                                            {isLast ? (
+                                                <BreadcrumbPage
+                                                    data-testid="breadcrumb-item"
+                                                    className="font-semibold"
+                                                >
+                                                    {breadcrumb.name}
+                                                </BreadcrumbPage>
+                                            ) : (
+                                                <Link
+                                                    href={
+                                                        breadcrumb.path as NextRoute<string>
+                                                    }
+                                                    data-testid="breadcrumb-item"
+                                                >
+                                                    {breadcrumb.name}
+                                                </Link>
+                                            )}
+                                        </BreadcrumbItem>
+                                        {!isLast && <BreadcrumbSeparator />}
+                                    </React.Fragment>
+                                );
+                            })}
+                        </BreadcrumbList>
+                    </Breadcrumb>
                 </ContentContainer>
             )}
         </>

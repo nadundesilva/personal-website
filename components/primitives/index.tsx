@@ -12,22 +12,45 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
+import { Badge, badgeVariants } from "./Badge";
+import {
+    Breadcrumb,
+    BreadcrumbEllipsis,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "./Breadcrumb";
+import Card from "./Card";
 import CopyButton from "./CopyButton";
 import HorizontalGradientLine from "./HorizontalGradientLine";
 import KeywordChip from "./KeywordChip";
 import LeftAccent from "./LeftAccent";
-import ProgressFab from "./ProgressFab";
 import PrimaryTintedIcon from "./PrimaryTintedIcon";
+import ProgressFab from "./ProgressFab";
 import ScrollReveal from "./ScrollReveal";
+import { Separator } from "./Separator";
 import StaggerReveal from "./StaggerReveal";
 
 export {
+    Badge,
+    badgeVariants,
+    Breadcrumb,
+    BreadcrumbEllipsis,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+    Card,
     CopyButton,
     HorizontalGradientLine,
     KeywordChip,
     LeftAccent,
-    ProgressFab,
     PrimaryTintedIcon,
+    ProgressFab,
     ScrollReveal,
+    Separator,
     StaggerReveal,
 };

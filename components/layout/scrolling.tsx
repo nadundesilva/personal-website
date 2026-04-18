@@ -18,8 +18,8 @@ import {
     type RefObject,
     useCallback,
     useEffect,
-    useState,
     useRef,
+    useState,
 } from "react";
 
 // -1 -> div partially or completely above viewport

@@ -12,211 +12,82 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { InfoOutlined } from "@mui/icons-material";
-import { Box, Typography } from "@mui/material";
+import { Info } from "lucide-react";
 import type React from "react";
 
-import SkillCategories from "@/constants/skill-categories";
+import SkillCategories, {
+    SkillProficiency,
+} from "@/constants/skill-categories";
 import type { SectionProps } from "../types";
-import SkillChip, { proficiencyLevels } from "./components/SkillChip";
+import SkillChip from "./components/SkillChip";
+import SkillProficiencyIndicator, {
+    skillProficiencyLevels,
+} from "./components/SkillProficiencyIndicator";
 
 const ProficiencyLegend = (): React.ReactElement => (
-    <Box
-        sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexWrap: "wrap",
-            gap: { xs: 1.5, md: 2 },
-        }}
-    >
-        {Object.entries(proficiencyLevels)
-            .map(([label, data]) => ({ label, ...data }))
-            .sort((a, b) => a.bars - b.bars)
-            .map(({ label, bars, color }) => (
-                <Box
-                    key={label}
-                    sx={{ display: "flex", alignItems: "center", gap: 0.75 }}
-                >
-                    <Box
-                        aria-hidden="true"
-                        sx={{
-                            display: "flex",
-                            alignItems: "flex-end",
-                            gap: 0.25,
-                            height: 12,
-                        }}
-                    >
-                        {([1, 2, 3] as const).map((i) => (
-                            <Box
-                                key={i}
-                                sx={{
-                                    width: 3,
-                                    height: i * 4,
-                                    bgcolor:
-                                        i <= bars
-                                            ? color
-                                            : "action.disabledBackground",
-                                    borderRadius: 0.125,
-                                }}
-                            />
-                        ))}
-                    </Box>
-                    <Typography
-                        variant="caption"
-                        sx={{
-                            fontSize: 11,
-                            color: (theme) => theme.palette.text.disabled,
-                        }}
-                    >
-                        {label}
-                    </Typography>
-                </Box>
+    <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
+        {(
+            Object.entries(skillProficiencyLevels) as [
+                SkillProficiency,
+                { bars: number; color: string },
+            ][]
+        )
+            .sort(([, a], [, b]) => a.bars - b.bars)
+            .map(([level]) => (
+                <div key={level} className="flex items-center gap-1.5">
+                    <SkillProficiencyIndicator level={level} />
+                    <span className="text-foreground/38 text-[11px]">
+                        {level}
+                    </span>
+                </div>
             ))}
-        <Typography
-            variant="caption"
-            sx={{
-                fontSize: 11,
-                color: (theme) => theme.palette.text.disabled,
-                opacity: 0.7,
-            }}
-        >
-            <InfoOutlined
-                sx={{
-                    fontSize: 13,
-                    opacity: 0.6,
-                    verticalAlign: "middle",
-                    mr: 0.5,
-                }}
-            />
+        <span className="text-foreground/38 flex items-center gap-1 text-[11px] opacity-70">
+            <Info size={13} className="align-middle opacity-60" aria-hidden />
             hover or tap any skill for details
-        </Typography>
-    </Box>
+        </span>
+    </div>
 );
 
 const Skills = ({
     sectionEntranceDelay = 0,
 }: SectionProps): React.ReactElement => (
-    <Box
-        sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: { xs: 6, md: 8 },
-            width: "100%",
-            maxWidth: { xs: "100%", md: 720 },
-            mx: "auto",
-        }}
-    >
-        <Box
-            component="a"
+    <div className="mx-auto flex w-full max-w-full flex-col gap-6 md:max-w-180 md:gap-8">
+        <a
             href="#skip-skills-target"
-            sx={{
-                "position": "absolute",
-                "width": 1,
-                "height": 1,
-                "padding": 0,
-                "margin": -1,
-                "overflow": "hidden",
-                "clip": "rect(0, 0, 0, 0)",
-                "whiteSpace": "nowrap",
-                "border": 0,
-                "&:focus-visible": {
-                    position: "static",
-                    width: "auto",
-                    height: "auto",
-                    margin: 2,
-                    padding: 1,
-                    clip: "auto",
-                    whiteSpace: "normal",
-                    outline: "2px solid",
-                    outlineColor: (theme) => theme.palette.primary.main,
-                    outlineOffset: "2px",
-                    zIndex: (theme) => theme.zIndex.tooltip + 1,
-                    display: "block",
-                    textAlign: "center",
-                    backgroundColor: (theme) => theme.palette.background.paper,
-                    color: (theme) => theme.palette.primary.main,
-                    borderRadius: 1,
-                    textDecoration: "none",
-                },
-            }}
+            className="focus-visible:bg-popover focus-visible:text-primary focus-visible:outline-ring sr-only focus-visible:not-sr-only focus-visible:z-50 focus-visible:m-2 focus-visible:block focus-visible:rounded focus-visible:p-2 focus-visible:text-center focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-offset-2"
         >
             Skip Skills
-        </Box>
+        </a>
         <ProficiencyLegend />
         {SkillCategories.map((group) => {
             const headingId = `skills-category-${group.category.toLowerCase().replace(/\s+/g, "-")}`;
             return (
-                <Box key={group.category} sx={{ mt: 2 }}>
-                    <Typography
+                <div key={group.category}>
+                    <h3
                         id={headingId}
-                        variant="h3"
-                        align="center"
                         aria-label={group.category}
-                        sx={{
-                            "fontWeight": 400,
-                            "fontSize": { xs: 18, md: 20 },
-                            "letterSpacing": "-0.01em",
-                            "lineHeight": 1.6,
-                            "mb": { xs: 2, md: 2.5 },
-                            "color": (theme) => theme.palette.text.secondary,
-                            "&::before": {
-                                content: '"<"',
-                                fontFamily: "monospace",
-                                color: (theme) => theme.palette.primary.main,
-                                opacity: 0.6,
-                                fontWeight: 300,
-                                fontSize: "1.3em",
-                                display: "inline-block",
-                                verticalAlign: "middle",
-                                marginRight: 1,
-                                lineHeight: 1,
-                            },
-                            "&::after": {
-                                content: '"/>"',
-                                fontFamily: "monospace",
-                                color: (theme) => theme.palette.primary.main,
-                                opacity: 0.6,
-                                fontWeight: 300,
-                                fontSize: "1.3em",
-                                display: "inline-block",
-                                verticalAlign: "middle",
-                                marginLeft: 1,
-                                lineHeight: 1,
-                            },
-                        }}
+                        className="text-muted-foreground before:text-primary after:text-primary mb-4 text-center text-[18px] leading-relaxed font-normal tracking-[-0.01em] before:mr-2 before:inline-block before:align-middle before:font-mono before:text-[1.3em] before:leading-none before:font-light before:opacity-60 before:content-['<'] after:ml-2 after:inline-block after:align-middle after:font-mono after:text-[1.3em] after:leading-none after:font-light after:opacity-60 after:content-['/>'] md:mb-5 md:text-[20px]"
                     >
                         {group.category}
-                    </Typography>
-                    <Box
-                        component="ul"
+                    </h3>
+                    <ul
                         aria-labelledby={headingId}
-                        sx={{
-                            p: 0,
-                            pt: 1,
-                            m: 0,
-                            listStyle: "none",
-                            display: "flex",
-                            flexWrap: "wrap",
-                            gap: 1.5,
-                            justifyContent: "center",
-                        }}
+                        className="m-0 flex list-none flex-wrap justify-center gap-3 p-0 pt-2"
                     >
                         {group.skills.map((skill) => (
-                            <Box component="li" key={skill.name}>
+                            <li key={skill.name}>
                                 <SkillChip
                                     skill={skill}
                                     sectionEntranceDelay={sectionEntranceDelay}
                                 />
-                            </Box>
+                            </li>
                         ))}
-                    </Box>
-                </Box>
+                    </ul>
+                </div>
             );
         })}
-        {/* Invisible target for the skip link */}
-        <Box id="skip-skills-target" tabIndex={-1} sx={{ outline: "none" }} />
-    </Box>
+        <div id="skip-skills-target" tabIndex={-1} className="outline-none" />
+    </div>
 );
 
 export default Skills;

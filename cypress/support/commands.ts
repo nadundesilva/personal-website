@@ -12,8 +12,8 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import "@testing-library/cypress/add-commands";
 import { WebsiteHome } from "@/constants/routes";
+import "@testing-library/cypress/add-commands";
 
 Cypress.Commands.add("loadPage", (url: string): void => {
     const viewportWidth = Cypress.config("viewportWidth");
