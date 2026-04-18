@@ -15,6 +15,7 @@
 import type React from "react";
 
 import ReadingProgress from "@/components/blog-articles/ReadingProgress";
+import "./layout.css";
 
 interface BlogArticlesLayoutProps {
     children: React.ReactNode;

@@ -13,9 +13,21 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 
-export const MOTION_OK_QUERY =
-    "@media (prefers-reduced-motion: no-preference)" as const;
+// shadcn/ui component
 
-export const NO_HOVER_QUERY = "@media (hover: none)" as const;
+import { Loader2Icon } from "lucide-react";
 
-export const SHORT_VIEWPORT_QUERY = "@media (max-height: 500px)" as const;
+import { cn } from "@/components/primitives/utils/cn";
+
+function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+    return (
+        <Loader2Icon
+            role="status"
+            aria-label="Loading"
+            className={cn("size-4 animate-spin", className)}
+            {...props}
+        />
+    );
+}
+
+export { Spinner };

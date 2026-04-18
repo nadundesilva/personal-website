@@ -12,7 +12,6 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, Container, Typography } from "@mui/material";
 import type React from "react";
 
 interface HeadingProps {
@@ -23,71 +22,26 @@ interface HeadingProps {
 
 const Heading = (props: HeadingProps): React.ReactElement => {
     return (
-        <Container maxWidth={false} disableGutters>
-            <Box
-                sx={{
-                    position: "relative",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    mb: { xs: 1.5, md: 2 },
-                }}
-            >
-                {props.number !== undefined && (
-                    <Typography
-                        aria-hidden="true"
-                        sx={{
-                            position: "absolute",
-                            top: "50%",
-                            left: "50%",
-                            transform: "translate(-50%, -55%)",
-                            fontSize: { xs: 112, md: 160 },
-                            fontWeight: 800,
-                            letterSpacing: "-0.04em",
-                            color: (theme) =>
-                                theme.palette.mode === "light"
-                                    ? theme.palette.primary.main
-                                    : theme.palette.primary.light,
-                            opacity: 0.06,
-                            lineHeight: 1,
-                            userSelect: "none",
-                            pointerEvents: "none",
-                            whiteSpace: "nowrap",
-                        }}
-                    >
-                        {String(props.number).padStart(2, "0")}
-                    </Typography>
-                )}
-                <Typography
-                    id={props.id}
-                    variant="h2"
-                    align="center"
-                    sx={{
-                        fontSize: { xs: 36, md: 44 },
-                        mb: { xs: 2.5, md: 3 },
-                        position: "relative",
-                        scrollMarginTop: (theme) =>
-                            `calc(${theme.mixins.toolbar.minHeight as number}px + ${theme.spacing(2)})`,
-                    }}
+        <div className="relative mb-6 flex flex-col items-center md:mb-8">
+            {props.number !== undefined && (
+                <span
+                    aria-hidden="true"
+                    className="text-primary pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[55%] text-[7rem] leading-none font-extrabold tracking-[-0.04em] whitespace-nowrap opacity-6 select-none md:text-[10rem]"
                 >
-                    {props.children}
-                </Typography>
-                <Box
-                    sx={{
-                        width: { xs: 56, md: 80 },
-                        height: 2,
-                        background: (theme) =>
-                            `linear-gradient(90deg, transparent, ${
-                                theme.palette.mode === "light"
-                                    ? theme.palette.primary.main
-                                    : theme.palette.primary.light
-                            }, transparent)`,
-                        borderRadius: 1,
-                        opacity: 0.7,
-                    }}
-                />
-            </Box>
-        </Container>
+                    {String(props.number).padStart(2, "0")}
+                </span>
+            )}
+            <h2
+                id={props.id}
+                className="relative mb-5 scroll-mt-20 text-center text-4xl md:mb-6 md:text-[2.75rem]"
+            >
+                {props.children}
+            </h2>
+            <div
+                aria-hidden="true"
+                className="h-0.5 w-14 rounded bg-linear-to-r from-transparent via-primary to-transparent opacity-70 md:w-20"
+            />
+        </div>
     );
 };
 

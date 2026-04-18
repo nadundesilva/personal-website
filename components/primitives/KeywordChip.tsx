@@ -12,23 +12,21 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { Chip } from "@mui/material";
 import type React from "react";
+
+import { Badge } from "@/components/primitives";
 
 interface KeywordChipProps {
     label: string;
 }
 
 const KeywordChip = ({ label }: KeywordChipProps): React.ReactElement => (
-    <Chip
-        label={label}
-        size="keyword"
-        variant="outlined"
-        color="primary"
-        sx={{ cursor: "default" }}
-    />
+    <Badge
+        variant="outline"
+        className="hover:border-primary text-primary h-5 cursor-default rounded border-primary/35 px-1.5 text-[0.625rem] font-normal tracking-[0.04em] uppercase motion-safe:transition-colors hover:bg-primary/5 dark:border-primary/50 dark:hover:bg-primary/8"
+    >
+        {label}
+    </Badge>
 );
 
 export default KeywordChip;

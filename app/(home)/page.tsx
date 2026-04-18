@@ -12,24 +12,25 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Container } from "@mui/material";
+import "./page.css";
+
 import type { Metadata } from "next";
 import Script from "next/script";
 import type React from "react";
 import type { Person, WithContext } from "schema-dts";
 
+import profilePhotoImage from "@/assets/profile-photo.webp";
 import Companies from "@/constants/companies";
+import { CurrentExperience } from "@/constants/experience";
 import Institutes from "@/constants/institutes";
 import {
-    TAGLINE,
     FULL_NAME,
     MAIN_DESCRIPTION,
+    TAGLINE,
     WEBSITE_PUBLIC_URL,
-    JOB_TITLE,
 } from "@/constants/metadata";
 import Profiles from "@/constants/profiles";
 import { getImageType } from "@/utils/common/image-metadata";
-import profilePhotoImage from "@/assets/profile-photo.webp";
 import PageContent from "./_content/PageContent";
 
 export const metadata: Metadata = {
@@ -61,7 +62,7 @@ const jsonLd: WithContext<Person> = {
     "image": new URL(profilePhotoImage.src, WEBSITE_PUBLIC_URL).toString(),
     "gender": "male",
     "birthPlace": "Colombo, Sri Lanka",
-    "jobTitle": JOB_TITLE,
+    "jobTitle": CurrentExperience.name,
     "url": WEBSITE_PUBLIC_URL,
     "sameAs": Object.values(Profiles).map((p) => p.link),
     "alumniOf": [
@@ -82,14 +83,14 @@ const jsonLd: WithContext<Person> = {
 
 const Home = (): React.ReactElement => {
     return (
-        <Container maxWidth={false} disableGutters data-testid="home-page">
+        <div data-testid="home-page">
             <Script
                 id="json-ld-person"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
             <PageContent />
-        </Container>
+        </div>
     );
 };
 

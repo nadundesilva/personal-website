@@ -13,9 +13,9 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
-import { Date, DateRange, Now } from "./date";
 import Companies, { type Company } from "@/constants/companies";
 import Skills from "@/constants/skills";
+import { Date, DateRange, Now } from "./date";
 
 export interface Experience {
     name: string;
@@ -186,5 +186,7 @@ const Experiences: Record<string, Experience> = {
         skills: [Skills.Java, Skills.JavaScript],
     },
 };
+
+export const CurrentExperience = Experiences.McCraeTechLeadSoftwareEngineer;
 
 export default Experiences;

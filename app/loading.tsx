@@ -12,20 +12,18 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, CircularProgress } from "@mui/material";
 import type React from "react";
 
+import { Spinner } from "@/components/primitives";
+
 const Loading = (): React.ReactElement => (
-    <Box
-        sx={{
-            display: "flex",
-            justifyContent: "center",
-            pt: "25%",
-            height: "100vh",
-        }}
-    >
-        <CircularProgress aria-label="Loading" />
-    </Box>
+    <div className="flex h-screen justify-center pt-[25%]">
+        <Spinner
+            role="progressbar"
+            data-testid="route-segment-loading-spinner"
+            className="size-10"
+        />
+    </div>
 );
 
 export default Loading;

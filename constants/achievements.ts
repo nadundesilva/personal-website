@@ -13,13 +13,13 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 
-import { type FormattableDate, Date, DateRange } from "./date";
 import Logos, { type LogoImageData } from "@/constants/logos";
+import { type FormattableDate, Date, DateRange } from "./date";
 
 export interface Achievement {
     title: string;
     logo: LogoImageData;
-    logoSx: { height: string };
+    logoClassName: string;
     date: FormattableDate;
 }
 
@@ -27,43 +27,43 @@ const Achievements: Record<string, Achievement> = {
     WSO2SustainedOutstandingContributionAward: {
         title: "WSO2 Sustained Outstanding Contribution Award",
         logo: Logos.WSO2,
-        logoSx: { height: "2.5em" },
+        logoClassName: "h-[2.5em]",
         date: new DateRange(new Date(2019), new Date(2021)),
     },
     PlacementsOnTheDeansList: {
         title: "Placements on the Dean\u2019s List at the University of Moratuwa",
         logo: Logos.UniversityOfMoratuwa,
-        logoSx: { height: "4em" },
+        logoClassName: "h-[4em]",
         date: new DateRange(new Date(2014), new Date(2018)),
     },
     NasaSpaceAppsChallengeGlobalFinalist: {
         title: "NASA Space Apps Challenge - Galactic Impact - Global Finalist",
         logo: Logos.NasaSpaceAppsChallenge,
-        logoSx: { height: "2.5em" },
+        logoClassName: "h-[2.5em]",
         date: new Date(2017),
     },
     WSO2InternalHackathonHonorableMention: {
         title: "WSO2 Internal Hackathon - Honorable Mention",
         logo: Logos.WSO2,
-        logoSx: { height: "2.5em" },
+        logoClassName: "h-[2.5em]",
         date: new Date(2017),
     },
     AngelHackFinalist: {
         title: "Angel Hack - Finalist",
         logo: Logos.AngelHack,
-        logoSx: { height: "2.5em" },
+        logoClassName: "h-[2.5em]",
         date: new Date(2016),
     },
     HackaDevFinalist: {
         title: "HackaDev - Finalist",
         logo: Logos.HackaDev,
-        logoSx: { height: "4.5em" },
+        logoClassName: "h-[4.5em]",
         date: new Date(2015),
     },
     BritishCouncilHSBCYouthEnterpriseAwardsFinalist: {
         title: "British Council HSBC Youth Enterprise Awards - Finalist",
         logo: Logos.BritishCouncil,
-        logoSx: { height: "2.5em" },
+        logoClassName: "h-[2.5em]",
         date: new Date(2015),
     },
 };

@@ -12,7 +12,6 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import WebsiteThemeProvider from "./WebsiteThemeProvider";
 import defaultFont, { code as codeFont } from "./fonts";
 
-export { WebsiteThemeProvider, defaultFont, codeFont };
+export { codeFont, defaultFont };

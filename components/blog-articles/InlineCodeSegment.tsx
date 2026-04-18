@@ -12,52 +12,30 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import Box from "@mui/material/Box";
-import { alpha } from "@mui/material/styles";
 import type React from "react";
+
+import { cn } from "@/components/primitives/utils/cn";
 
 const InlineCodeSegment = ({
     children,
+    className,
     ...props
-}: React.HTMLAttributes<HTMLElement>): React.ReactElement => {
-    return (
-        <Box
-            component="code"
-            {...props}
-            sx={(theme) => ({
-                "fontSize": `calc(${theme.typography.body1.fontSize as string} * 0.875)`,
-                "lineHeight": 1,
-                "padding": "0.15rem 0.4rem",
-                "fontFamily": `${theme.typography.codeFontFamily}, monospace`,
-                "backgroundColor": alpha(theme.palette.primary.main, 0.1),
-                "border": `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
-                "borderRadius": 0.5,
-                "whiteSpace": "nowrap",
-                "verticalAlign": "middle",
-                ...theme.applyStyles("dark", {
-                    backgroundColor: alpha(theme.palette.primary.light, 0.1),
-                    borderColor: alpha(theme.palette.primary.light, 0.2),
-                }),
-                // When inside a <pre> (i.e. a fenced code block), reset all
-                // inline-code styling — the code block's own styles take over.
-                "pre &": {
-                    fontSize: "inherit",
-                    lineHeight: "inherit",
-                    padding: 0,
-                    fontFamily: "inherit",
-                    backgroundColor: "transparent",
-                    border: 0,
-                    borderRadius: 0,
-                    whiteSpace: "inherit",
-                    verticalAlign: "baseline",
-                },
-            })}
-        >
-            {children}
-        </Box>
-    );
-};
+}: React.HTMLAttributes<HTMLElement>): React.ReactElement => (
+    <code
+        className={cn(
+            // Base inline-code styles
+            "rounded px-[0.4rem] py-[0.15rem] align-middle font-mono text-[0.82rem] leading-none whitespace-nowrap",
+            "bg-primary/10",
+            "border border-primary/20",
+            // When inside a <pre> (fenced code block), reset all inline-code styling
+            "[pre_&]:p-0 [pre_&]:[font-family:inherit] [pre_&]:[line-height:inherit] [pre_&]:text-inherit",
+            "[pre_&]:rounded-none [pre_&]:border-0 [pre_&]:bg-transparent [pre_&]:align-baseline [pre_&]:[white-space:inherit]",
+            className,
+        )}
+        {...props}
+    >
+        {children}
+    </code>
+);
 
 export default InlineCodeSegment;
