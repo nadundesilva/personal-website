@@ -12,66 +12,78 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { Button } from "@mui/material";
-import { alpha } from "@mui/material/styles";
 import type React from "react";
 
+import { Button } from "@/components/primitives";
+import { cn } from "@/components/primitives/utils/cn";
 import Link from "./Link";
 
-interface LinkButtonProps {
-    href: string;
+type LinkButtonBaseProps = {
     name: string;
     startIcon?: React.ComponentType;
     endIcon?: React.ComponentType;
-    target?: string;
     ariaLabel?: string;
-}
+    className?: string;
+};
 
-const LinkButton = ({
-    href,
-    name,
-    startIcon: StartIcon,
-    endIcon: EndIcon,
-    target,
-    ariaLabel,
-}: LinkButtonProps): React.ReactElement => (
-    <Button
-        component={Link}
-        href={href}
-        target={target}
-        size="small"
-        variant="outlined"
-        startIcon={StartIcon ? <StartIcon /> : undefined}
-        endIcon={EndIcon ? <EndIcon /> : undefined}
-        aria-label={ariaLabel}
-        sx={(theme) => ({
-            "color": "text.secondary",
-            "borderColor":
-                theme.palette.mode === "light"
-                    ? alpha(theme.palette.primary.main, 0.4)
-                    : alpha(theme.palette.primary.light, 0.35),
-            "& .MuiButton-endIcon, & .MuiButton-startIcon": {
-                color: "text.secondary",
-                transition: theme.transitions.create("color", {
-                    duration: theme.transitions.duration.shorter,
-                }),
-            },
-            "&:hover": {
-                borderColor: theme.palette.primary.main,
-            },
-            "&:hover .MuiButton-endIcon, &:hover .MuiButton-startIcon": {
-                color:
-                    theme.palette.mode === "light"
-                        ? theme.palette.primary.main
-                        : theme.palette.primary.light,
-            },
-        })}
-    >
-        {name}
-    </Button>
-);
+type LinkButtonWithHref = LinkButtonBaseProps & {
+    href: string;
+    target?: string;
+    prefetch?: boolean;
+
+    renderLink?: never;
+};
+
+type LinkButtonWithRenderLink = LinkButtonBaseProps & {
+    renderLink: React.ReactElement;
+
+    href?: never;
+    target?: never;
+    prefetch?: never;
+};
+
+type LinkButtonProps = LinkButtonWithHref | LinkButtonWithRenderLink;
+
+const LinkButton = (props: LinkButtonProps): React.ReactElement => {
+    const {
+        name,
+        startIcon: StartIcon,
+        endIcon: EndIcon,
+        ariaLabel,
+        className,
+    } = props;
+
+    const renderElement =
+        props.renderLink !== undefined ? (
+            props.renderLink
+        ) : (
+            <Link
+                href={props.href}
+                target={props.target}
+                prefetch={props.prefetch}
+            />
+        );
+
+    return (
+        <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            // Overrides the role="button" that @base-ui/react/button sets on non-native elements
+            role="link"
+            aria-label={ariaLabel}
+            render={renderElement}
+            className={cn(
+                "hover:no-underline focus-visible:outline-none text-muted-foreground hover:border-primary hover:text-primary [&_svg]:text-muted-foreground hover:[&_svg]:text-primary border-primary/40 dark:border-primary/35 motion-safe:[&_svg]:transition-colors",
+                className,
+            )}
+        >
+            {StartIcon && <StartIcon aria-hidden={true} />}
+            {name}
+            {EndIcon && <EndIcon aria-hidden={true} />}
+        </Button>
+    );
+};
 
 export default LinkButton;
 export type { LinkButtonProps };

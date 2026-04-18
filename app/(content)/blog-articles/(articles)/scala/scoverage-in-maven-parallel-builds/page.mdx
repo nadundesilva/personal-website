@@ -19,7 +19,6 @@ import programming05Image from "@/assets/blog-articles/programming-05.webp";
 import softwareEngineer1Image from "@/assets/blog-articles/engineering/software-engineer-1.webp";
 import problem1Image from "@/assets/blog-articles/engineering/problem-1.webp";
 import softwareEngineer2Image from "@/assets/blog-articles/engineering/software-engineer-2.webp";
-import scalaImplicitConversionsImage from "@/assets/blog-articles/programming/scala-implicit-conversions.webp";
 import parallelizedScoverageReport1Image from "@/assets/blog-articles/programming/parallelized-scoverage-report-1.webp";
 import parallelizedScoverageReport2Image from "@/assets/blog-articles/programming/parallelized-scoverage-report-2.webp";
 
@@ -114,7 +113,7 @@ When you run your build with the `-T` flag for the first time, if you are lucky,
 [WARNING] *****************************************************************
 ```
 
-Lookout for such logs once you enable multi-threaded Maven builds and make sure you investigate. While some of these warnings might simply be due to the maintainers not marking them thread-safe even though they are, some plugins (such as the report goals in Maven SCoverage Plugin and `Maven Surefire Plugin`) are truly not designed to be thread-safe.
+Look out for such logs once you enable multi-threaded Maven builds and make sure you investigate. While some of these warnings might simply be due to the maintainers not marking them thread-safe even though they are, some plugins (such as the report goals in Maven SCoverage Plugin and `Maven Surefire Plugin`) are truly not designed to be thread-safe.
 
 The final outcome would be an incorrect test coverage report, as the plugin would create reports with less test coverage than the actual test coverage, due to the final aggregation running before all the tests in all modules are complete.
 

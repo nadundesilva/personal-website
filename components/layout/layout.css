@@ -13,9 +13,14 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 
-export const MOTION_OK_QUERY =
-    "@media (prefers-reduced-motion: no-preference)" as const;
+:root {
+    --layout-dot-grid-color: color-mix(
+        in oklch,
+        var(--primary) 19%,
+        transparent
+    );
+}
 
-export const NO_HOVER_QUERY = "@media (hover: none)" as const;
-
-export const SHORT_VIEWPORT_QUERY = "@media (max-height: 500px)" as const;
+.dark {
+    --layout-dot-grid-color: oklch(100% 0 0deg / 12%);
+}

@@ -88,6 +88,8 @@ const buildRoutes = (currentRoutes: _Route[]): Record<string, Route> => {
     return routesMap;
 };
 
+export const CvPdfPath = "/nadundesilva-cv.pdf";
+
 export const WebsiteHome = {
     name: "Home",
     path: "/",

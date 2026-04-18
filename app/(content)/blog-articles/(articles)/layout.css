@@ -1,0 +1,170 @@
+/*
+ * Nadun De Silva - All Rights Reserved
+ *
+ * This source code and its associated files are the
+ * confidential and proprietary information of Nadun De Silva.
+ * Unauthorized reproduction, distribution, or disclosure
+ * in any form, in whole or in part, is strictly prohibited
+ * except as explicitly provided under a separate license
+ * agreement with Nadun De Silva.
+ *
+ * Website: https://nadundesilva.com
+ *
+ * © 2026 Nadun De Silva. All rights reserved.
+ */
+
+/* ============================================================
+   Code block palette — GitHub Light (light) / Dracula (dark)
+   ============================================================ */
+
+:root {
+    --code-bg: #fff;
+    --code-title-bg: #f6f8fa;
+    --code-border: #d0d7de;
+    --code-comment: #6e7781;
+    --code-accent: #0550ae;
+}
+
+.dark {
+    --code-bg: #282a36;
+    --code-title-bg: #21222c;
+    --code-border: #44475a;
+    --code-comment: #6272a4;
+    --code-accent: #bd93f9;
+}
+
+/* Shiki dual-theme token colors (value contains a space, e.g. "dark light") */
+code[data-theme*=" "],
+code[data-theme*=" "] span {
+    color: var(--shiki-light);
+}
+
+.dark code[data-theme*=" "],
+.dark code[data-theme*=" "] span {
+    color: var(--shiki-dark);
+}
+
+/* rehype-pretty-code figure wrapper */
+figure[data-rehype-pretty-code-figure] {
+    margin: 1.5rem 0;
+    border: 1px solid color-mix(in oklch, var(--primary) 20%, transparent);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+/* rehype-pretty-code title bar */
+[data-rehype-pretty-code-title] {
+    padding: 0.5rem 1rem;
+    background-color: var(--code-title-bg);
+    border-bottom: 1px solid var(--code-border);
+    font-family: var(--font-mono), monospace;
+    font-size: 0.8rem;
+    color: var(--code-comment);
+}
+
+/* Pre background from Shiki */
+.code-block-wrapper pre {
+    margin: 0;
+    background-color: var(--shiki-light-bg);
+}
+
+.dark .code-block-wrapper pre {
+    background-color: var(--shiki-dark-bg);
+}
+
+/* Code font for all rehype-pretty-code themed tokens */
+.code-block-wrapper code[data-theme],
+.code-block-wrapper code[data-theme] * {
+    font-family: var(--font-mono), monospace;
+}
+
+/* Scrollable code area */
+.code-block-wrapper pre > code {
+    --website-blog-articles-code-gutter: 3rem;
+
+    overflow: auto;
+    max-height: 30rem;
+    padding: 1rem;
+    counter-reset: line;
+    scrollbar-width: thin;
+    scrollbar-color: var(--code-comment) transparent;
+}
+
+.code-block-wrapper pre > code[data-line-numbers-max-digits="2"] {
+    --website-blog-articles-code-gutter: 4rem;
+}
+
+.code-block-wrapper pre > code[data-line-numbers-max-digits="3"] {
+    --website-blog-articles-code-gutter: 5rem;
+}
+
+/* Webkit scrollbar */
+.code-block-wrapper pre > code::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.code-block-wrapper pre > code::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.code-block-wrapper pre > code::-webkit-scrollbar-thumb {
+    background: var(--code-comment);
+    border-radius: 3px;
+}
+
+.code-block-wrapper pre > code::-webkit-scrollbar-thumb:hover {
+    background: var(--code-accent);
+}
+
+/* Hanging indent — continuation lines align with code content */
+.code-block-wrapper pre > code [data-line] {
+    padding-left: var(--website-blog-articles-code-gutter);
+    line-height: 1.8;
+}
+
+/* Line number gutter via CSS counter */
+
+/* box-sizing: content-box is required — Tailwind's CSS reset applies border-box globally
+   (including ::before). Without it, padding-right consumes the content area. */
+.code-block-wrapper pre > code [data-line]::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    box-sizing: content-box;
+    margin-left: calc(-1 * var(--website-blog-articles-code-gutter));
+    width: 1rem;
+    padding-right: 1rem;
+    margin-right: 1rem;
+    border-right: 1px solid var(--code-border);
+    text-align: right;
+    color: var(--code-comment);
+}
+
+.code-block-wrapper
+    pre
+    > code[data-line-numbers-max-digits="2"]
+    [data-line]::before {
+    width: 2rem;
+}
+
+.code-block-wrapper
+    pre
+    > code[data-line-numbers-max-digits="3"]
+    [data-line]::before {
+    width: 3rem;
+}
+
+/* Highlighted line */
+.code-block-wrapper pre > code [data-highlighted-line] {
+    background-color: color-mix(in srgb, var(--code-accent) 8%, transparent);
+    box-shadow: inset 3px 0 0 0 var(--code-accent);
+}
+
+/* Highlighted character range */
+.code-block-wrapper [data-highlighted-chars] {
+    background-color: color-mix(in srgb, var(--code-accent) 12%, transparent);
+    border-radius: 3px;
+    box-shadow: 0 0 0 2px
+        color-mix(in srgb, var(--code-accent) 25%, transparent);
+}

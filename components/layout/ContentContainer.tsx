@@ -12,33 +12,28 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-import { Container, type ContainerProps } from "@mui/material";
 import type React from "react";
+
+import { cn } from "@/components/primitives/utils/cn";
+
+type ContentContainerProps = React.ComponentPropsWithoutRef<"div">;
 
 const ContentContainer = ({
     children,
-    sx,
-    maxWidth = false,
+    className,
     ...props
-}: ContainerProps): React.ReactElement => {
-    return (
-        <Container
-            maxWidth={maxWidth}
-            sx={{
-                px: {
-                    xs: 1,
-                    sm: 3,
-                    md: 4,
-                    lg: 20,
-                    xl: 40,
-                },
-                ...sx,
-            }}
-            {...props}
-        >
-            {children}
-        </Container>
-    );
-};
+}: ContentContainerProps): React.ReactElement => (
+    <div
+        className={cn(
+            // Padding values are mirrored as CONTENT_BREAKPOINTS in utils/common/image-sizes.ts.
+            // Update both together when changing these classes.
+            "relative isolate px-4 sm:px-6 md:px-8 lg:px-20 xl:px-40 2xl:px-80",
+            className,
+        )}
+        {...props}
+    >
+        {children}
+    </div>
+);
 
 export default ContentContainer;

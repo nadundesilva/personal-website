@@ -141,7 +141,7 @@ The terminating condition of the querying is detected when the number of returne
 
 While this algorithm will work for many cases, if your data contains multiple repeated timestamps in rows, the algorithm may fail. This can happen if the limit applied to the results chunk is smaller than the maximum number of repeated timestamps as we are always removing the last. The algorithm will raise an error if this condition is reached (Lines 19–20).
 
-However, in many real-world applications repeating timestamps in multiple events will be rare. However, there can be some cases where there are repeated timestamps due to the implementation of how these data points were recorded. (e.g.:- multiple sensor readings which have the same timestamp, to simplify the sensor reading implementation, even though they were read at least several milliseconds apart).
+However, in many real-world applications repeating timestamps in multiple events will be rare. That said, there can be some cases where there are repeated timestamps due to the implementation of how these data points were recorded. (e.g.:- multiple sensor readings which have the same timestamp, to simplify the sensor reading implementation, even though they were read at least several milliseconds apart).
 
 One approach to overcome these limitations in such scenarios would be to group these events into a single row using the time-series database query itself.
 

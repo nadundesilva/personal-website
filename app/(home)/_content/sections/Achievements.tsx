@@ -12,251 +12,95 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import {
-    Box,
-    Grid,
-    ImageList,
-    ImageListItem,
-    styled,
-    type Theme,
-    Typography,
-    useMediaQuery,
-    useTheme,
-} from "@mui/material";
-import { alpha } from "@mui/material/styles";
 import Image from "next-image-export-optimizer";
 import { type StaticImageData } from "next/image";
 import type React from "react";
+
 import { StaggerReveal } from "@/components/primitives";
-import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
+import { generateSizesForColumnLayout } from "@/utils/common/image-sizes";
 
-import nasaSpaceAppsChallenge2017Image from "@/assets/achievements/nasa-space-apps-2017.jpg";
-import uomDeansList2017Image from "@/assets/achievements/deans-list-2017.jpg";
-import wso2OutstandingContributor2019Image from "@/assets/achievements/wso2-outstanding-contributor.jpg";
-import hsbcYouthEnterpriseAwards2015Image from "@/assets/achievements/hsbc-youth-enterprise-awards-2015.jpg";
 import angelHack2016Image from "@/assets/achievements/angel-hack-2016.jpg";
+import uomDeansList2017Image from "@/assets/achievements/deans-list-2017.jpg";
+import hsbcYouthEnterpriseAwards2015Image from "@/assets/achievements/hsbc-youth-enterprise-awards-2015.jpg";
+import nasaSpaceAppsChallenge2017Image from "@/assets/achievements/nasa-space-apps-2017.jpg";
+import wso2OutstandingContributor2019Image from "@/assets/achievements/wso2-outstanding-contributor.jpg";
 
-const PREFIX = "Home-Achievements";
-const classes = {
-    imageListItemImageOverlay: `${PREFIX}-imageListItemImageOverlay`,
-};
-
-const FullSizeImageListItem = styled(ImageListItem)({
-    width: "100%",
-    height: "auto",
-});
-
-const ImageListItemImageOverlay = styled(Grid)(({ theme }) => ({
-    color: theme.palette.common.white,
-    background:
-        theme.palette.mode === "light"
-            ? `linear-gradient(to top, ${alpha(theme.palette.primary.main, 0.95)} 0px, ${alpha(theme.palette.primary.main, 0.7)} 300px, ${alpha(theme.palette.primary.main, 0.2)} 380px, transparent 460px)`
-            : `linear-gradient(to top, ${alpha(theme.palette.background.default, 0.98)} 0px, ${alpha(theme.palette.background.default, 0.75)} 300px, ${alpha(theme.palette.background.default, 0.25)} 380px, transparent 460px)`,
-    position: "absolute",
-    textAlign: "center",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    opacity: 0,
-    transition: theme.transitions.create("opacity", {
-        duration: theme.transitions.duration.standard,
-    }),
-}));
-
-interface AchievementSection {
+interface Achievement {
     title: string;
-    photo: {
-        src: StaticImageData;
-    };
+    photo: StaticImageData;
 }
 
-const ROW_HEIGHT = 320;
+const ACHIEVEMENTS: Achievement[] = [
+    {
+        title: "NASA Space Apps Challenge - Galactic Impact - Global Finalist",
+        photo: nasaSpaceAppsChallenge2017Image,
+    },
+    {
+        title: "Placements on the Dean’s List at the University of Moratuwa",
+        photo: uomDeansList2017Image,
+    },
+    {
+        title: "WSO2 Sustained Outstanding Contribution Award",
+        photo: wso2OutstandingContributor2019Image,
+    },
+    {
+        title: "British Council HSBC Youth Enterprise Awards - Finalist",
+        photo: hsbcYouthEnterpriseAwards2015Image,
+    },
+    {
+        title: "Angel Hack - Finalist",
+        photo: angelHack2016Image,
+    },
+];
 
-const Achievements = (): React.ReactElement => {
-    const theme = useTheme();
-    const achievementSections: AchievementSection[] = [
-        {
-            title: "Global Finalist - Galactic Impact - NASA Space Apps Challenge 2017",
-            photo: {
-                src: nasaSpaceAppsChallenge2017Image,
-            },
-        },
-        {
-            title: "Placements on the Dean's List",
-            photo: {
-                src: uomDeansList2017Image,
-            },
-        },
-        {
-            title: "WSO2 Sustained Outstanding Contribution Award - Consecutive years from 2019 to 2021",
-            photo: {
-                src: wso2OutstandingContributor2019Image,
-            },
-        },
-        {
-            title: "Finalist - British Council HSBC Youth Enterprise Awards 2015",
-            photo: {
-                src: hsbcYouthEnterpriseAwards2015Image,
-            },
-        },
-        {
-            title: "Finalist - Angel Hack 2016",
-            photo: {
-                src: angelHack2016Image,
-            },
-        },
-    ];
+const AchievementItem = ({
+    achievement,
+}: {
+    achievement: Achievement;
+}): React.ReactElement => (
+    // <figure> has implicit role="figure" and is keyboard-focusable without
+    // contradicting its semantics. <figcaption> is always in the DOM so AT
+    // reads it on focus; opacity-0 only hides it visually until hover/focus.
+    <figure className="group relative h-full overflow-hidden" tabIndex={0}>
+        {/* Image with scale on hover */}
+        <div className="absolute inset-0 motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-focus-within:scale-[1.03] motion-safe:group-hover:scale-[1.03]">
+            <Image
+                src={achievement.photo}
+                alt=""
+                fill
+                // flex-wrap gap-1 (4px).
+                sizes={generateSizesForColumnLayout({
+                    lg: { cols: 3, gapPx: 4 },
+                    sm: { cols: 2, gapPx: 4 },
+                })}
+                className="object-cover"
+            />
+        </div>
 
-    const renderImageListItem = (
-        achievementIndex: number,
-        rowCount: number,
-    ): React.ReactElement => {
-        const achievementSection: AchievementSection =
-            achievementSections[achievementIndex];
-        return (
-            <FullSizeImageListItem
-                rows={rowCount}
-                cols={1}
-                sx={{
-                    "position": "relative",
-                    // Resting glow intensifies on hover. Dark mode uses primary.light (matching
-                    // the pulse color in Experience.tsx) for visual consistency across sections.
-                    "boxShadow": (theme) =>
-                        theme.palette.mode === "light"
-                            ? `0 0 60px ${alpha(theme.palette.primary.main, 0.67)}`
-                            : `0 0 60px ${alpha(theme.palette.primary.light, 0.22)}`,
-                    "transition": theme.transitions.create("box-shadow", {
-                        duration: theme.transitions.duration.standard,
-                    }),
-                    "&:hover, &:focus-within": {
-                        [`& .${classes.imageListItemImageOverlay}`]: {
-                            opacity: 1,
-                            zIndex: 1,
-                        },
-                        boxShadow: (theme) =>
-                            theme.palette.mode === "light"
-                                ? `0 0 90px ${alpha(theme.palette.primary.main, 0.87)}`
-                                : `0 0 90px ${alpha(theme.palette.primary.light, 0.4)}`,
-                    },
-                    [MOTION_OK_QUERY]: {
-                        "&:hover img, &:focus-within img": {
-                            transform: "scale(1.03)",
-                        },
-                    },
-                }}
-                tabIndex={0}
-                aria-labelledby={`achievement-title-${achievementIndex}`}
-                aria-roledescription="achievement"
-            >
-                <Box
-                    sx={{
-                        height: "100%",
-                        position: "relative",
-                        overflow: "hidden",
-                        [MOTION_OK_QUERY]: {
-                            "& img": {
-                                transition: (theme) =>
-                                    theme.transitions.create("transform", {
-                                        duration:
-                                            theme.transitions.duration.standard,
-                                    }),
-                            },
-                        },
-                    }}
-                >
-                    <ImageListItemImageOverlay
-                        container
-                        justifyContent="center"
-                        alignItems="flex-end"
-                        className={classes.imageListItemImageOverlay}
-                        sx={{ pb: { xs: 3, md: 4 } }}
-                    >
-                        <Grid size={{ xs: 10, md: 8 }}>
-                            <Typography
-                                id={`achievement-title-${achievementIndex}`}
-                                variant="h6"
-                                component="h3"
-                                color="inherit"
-                                sx={{
-                                    fontSize: { xs: 16, md: 18 },
-                                    textShadow: (theme) =>
-                                        `0 2px 12px ${alpha(theme.palette.common.black, 0.2)}`,
-                                }}
-                            >
-                                {achievementSection.title}
-                            </Typography>
-                        </Grid>
-                    </ImageListItemImageOverlay>
-                    <Image
-                        src={achievementSection.photo.src}
-                        alt=""
-                        fill
-                        style={{ objectFit: "cover" }}
-                    />
-                </Box>
-            </FullSizeImageListItem>
-        );
-    };
+        {/* Overlay — fades in on hover/focus */}
+        <div className="absolute inset-0 z-10 flex items-end justify-center pb-6 text-white opacity-0 group-focus-within:opacity-100 group-hover:opacity-100 motion-safe:transition-opacity motion-safe:duration-300 md:pb-8 [background:var(--home-achievement-hover-overlay)]">
+            <figcaption className="w-4/5 text-center text-base leading-snug [text-shadow:0_2px_12px_rgba(0,0,0,0.2)] md:w-2/3 md:text-lg">
+                {achievement.title}
+            </figcaption>
+        </div>
+    </figure>
+);
 
-    const isAboveMd = useMediaQuery((theme: Theme) =>
-        theme.breakpoints.up("md"),
-    );
-    return isAboveMd ? (
-        <ImageList
-            rowHeight={ROW_HEIGHT}
-            cols={3}
-            // overflow: visible so that the box-shadow glow on each item
-            // is not clipped by the ImageList's scroll container boundary
-            sx={{ overflow: "visible" }}
-        >
-            <StaggerReveal>
-                <FullSizeImageListItem
-                    rows={2}
-                    cols={1}
-                    role="presentation"
-                    sx={{ overflow: "visible" }}
-                >
-                    <ImageList
-                        rowHeight={ROW_HEIGHT}
-                        cols={1}
-                        role="presentation"
-                        sx={{ overflow: "visible" }}
-                    >
-                        {renderImageListItem(0, 1)}
-                        {renderImageListItem(1, 1)}
-                    </ImageList>
-                </FullSizeImageListItem>
-                {renderImageListItem(2, 2)}
-                <FullSizeImageListItem
-                    rows={2}
-                    cols={1}
-                    role="presentation"
-                    sx={{ overflow: "visible" }}
-                >
-                    <ImageList
-                        rowHeight={ROW_HEIGHT}
-                        cols={1}
-                        role="presentation"
-                        sx={{ overflow: "visible" }}
-                    >
-                        {renderImageListItem(3, 1)}
-                        {renderImageListItem(4, 1)}
-                    </ImageList>
-                </FullSizeImageListItem>
-            </StaggerReveal>
-        </ImageList>
-    ) : (
-        <ImageList rowHeight={ROW_HEIGHT} cols={1} sx={{ overflow: "visible" }}>
-            <StaggerReveal>
-                {renderImageListItem(0, 1)}
-                {renderImageListItem(1, 1)}
-                {renderImageListItem(2, 1)}
-                {renderImageListItem(3, 1)}
-                {renderImageListItem(4, 1)}
-            </StaggerReveal>
-        </ImageList>
-    );
-};
+const Achievements = (): React.ReactElement => (
+    /* Flexbox instead of CSS Grid: CSS Grid shares the same column tracks across
+       all rows, so justify-content has no free space to center partial rows with.
+       Flexbox wraps independently per row; calc() deducts each card's share of
+       the gap so full rows fill exactly 100% and partial rows stay the same
+       card width, leaving free space for justify-center to center them. */
+    <StaggerReveal
+        element="ul"
+        className="flex flex-wrap justify-center gap-1"
+        itemClassName="h-56 w-full sm:h-64 sm:w-[calc(50%-0.125rem)] lg:h-72 lg:w-[calc(33.333%-0.167rem)]"
+    >
+        {ACHIEVEMENTS.map((a) => (
+            <AchievementItem key={a.title} achievement={a} />
+        ))}
+    </StaggerReveal>
+);
 
 export default Achievements;

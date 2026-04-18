@@ -12,34 +12,39 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { Box, type SxProps, type Theme } from "@mui/material";
+import { cva, type VariantProps } from "class-variance-authority";
 import type React from "react";
 
-interface HorizontalGradientLineProps {
-    sx?: SxProps<Theme>;
+import { cn } from "@/components/primitives/utils/cn";
+
+const horizontalGradientLineVariants = cva(
+    "mt-1.5 h-0.5 w-8 rounded bg-linear-to-r opacity-65 md:w-11",
+    {
+        variants: {
+            variant: {
+                "left-anchored": "from-primary to-transparent",
+                "centered": "from-transparent via-primary to-transparent",
+            },
+        },
+        defaultVariants: {
+            variant: "left-anchored",
+        },
+    },
+);
+
+interface HorizontalGradientLineProps extends VariantProps<
+    typeof horizontalGradientLineVariants
+> {
+    className?: string;
 }
 
 const HorizontalGradientLine = ({
-    sx,
+    className,
+    variant,
 }: HorizontalGradientLineProps): React.ReactElement => (
-    <Box
-        aria-hidden="true"
-        sx={{
-            mt: 0.75,
-            width: { xs: 32, md: 44 },
-            height: 2,
-            background: (theme) =>
-                `linear-gradient(90deg, ${
-                    theme.palette.mode === "light"
-                        ? theme.palette.primary.main
-                        : theme.palette.primary.light
-                }, transparent)`,
-            borderRadius: 1,
-            opacity: 0.65,
-            ...sx,
-        }}
+    <div
+        aria-hidden={true}
+        className={cn(horizontalGradientLineVariants({ variant }), className)}
     />
 );
 

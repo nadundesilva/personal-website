@@ -12,53 +12,28 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, Container, Typography } from "@mui/material";
 import type React from "react";
+
+import { HorizontalGradientLine } from "@/components/primitives";
 
 interface SubHeadingProps {
     children: React.ReactNode;
+    id?: string;
 }
 
 const SubHeading = (props: SubHeadingProps): React.ReactElement => (
-    <Container maxWidth={false} disableGutters>
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                mb: { xs: 1.5, md: 2 },
-            }}
+    <div className="mb-6 flex flex-col items-center md:mb-8">
+        <h3
+            id={props.id}
+            className="relative mb-2 scroll-mt-20 text-center text-wrap-balance text-[1.375rem] leading-snug font-medium tracking-[-0.02em] md:mb-3 md:text-[1.75rem]"
         >
-            <Typography
-                variant="h3"
-                align="center"
-                sx={{
-                    fontWeight: 400,
-                    fontSize: { xs: 22, md: 28 },
-                    letterSpacing: "-0.02em",
-                    lineHeight: 1.3,
-                    mb: { xs: 1, md: 1.5 },
-                    position: "relative",
-                }}
-            >
-                {props.children}
-            </Typography>
-            <Box
-                sx={{
-                    width: { xs: 40, md: 56 },
-                    height: 1.5,
-                    background: (theme) =>
-                        `linear-gradient(90deg, transparent, ${
-                            theme.palette.mode === "light"
-                                ? theme.palette.primary.main
-                                : theme.palette.primary.light
-                        }, transparent)`,
-                    borderRadius: 1,
-                    opacity: 0.7,
-                }}
-            />
-        </Box>
-    </Container>
+            {props.children}
+        </h3>
+        <HorizontalGradientLine
+            variant="centered"
+            className="mt-0 h-[1.5px] w-10 opacity-70 md:w-14"
+        />
+    </div>
 );
 
 export default SubHeading;

@@ -12,20 +12,17 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { KeyboardArrowRight } from "@mui/icons-material";
-import { Box, Grid } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
-import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
-import { useId } from "react";
+import { ChevronRight } from "lucide-react";
 import type React from "react";
+import { useId } from "react";
 
 import { Link, Section, SectionHeading, Title } from "@/components/content";
 import { ScrollReveal } from "@/components/primitives";
-import ArticleListItem from "./ArticlesListItem";
 import {
     getBlogArticleGroups,
     type BlogArticle,
 } from "@/utils/server/blog-articles";
+import ArticleListItem from "./ArticlesListItem";
 
 interface ArticlesGroupProps {
     title?: string;
@@ -46,72 +43,35 @@ const ArticlesGroup = ({
                 (href ? (
                     <Link
                         href={href}
-                        sx={{
-                            "display": "block",
-                            "width": "fit-content",
-                            "color": "inherit",
-                            "&:hover": { textDecoration: "none" },
-                            "& .category-arrow": {
-                                opacity: 0.7,
-                                transition: "opacity 250ms ease",
-                            },
-                            "&:hover .category-arrow": {
-                                opacity: 1,
-                            },
-                            [MOTION_OK_QUERY]: {
-                                "& .category-arrow": {
-                                    transition:
-                                        "opacity 250ms ease, transform 250ms ease",
-                                },
-                                "&:hover .category-arrow": {
-                                    transform: "translateX(4px)",
-                                },
-                            },
-                        }}
+                        className="group block w-fit text-inherit hover:no-underline hover:opacity-100"
                     >
                         <SectionHeading id={id}>
                             {title}
-                            <KeyboardArrowRight
-                                className="category-arrow"
+                            <ChevronRight
                                 aria-hidden="true"
-                                sx={{
-                                    fontSize: "0.7em",
-                                    verticalAlign: "middle",
-                                    ml: 0.5,
-                                }}
+                                className="ml-1 inline-block size-[0.7em] align-middle opacity-70 group-hover:opacity-100 motion-safe:transition-[opacity,transform] motion-safe:group-hover:translate-x-1"
                             />
-                            <Box component="span" sx={visuallyHidden}>
-                                {" "}
-                                articles
-                            </Box>
+                            <span className="sr-only"> articles</span>
                         </SectionHeading>
                     </Link>
                 ) : (
                     <SectionHeading id={id}>{title}</SectionHeading>
                 ))}
-            <Box sx={{ mt: 3 }}>
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="stretch"
-                    spacing={2}
-                >
-                    {articles.map((blogArticle, index) => (
-                        <Grid
-                            key={`/blog-articles/${blogArticle.websiteSubPath}`}
-                            size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
-                        >
-                            <ScrollReveal
-                                delay={index * 50}
-                                sx={{ height: "100%" }}
-                            >
-                                <ArticleListItem blogArticle={blogArticle} />
-                            </ScrollReveal>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Box>
+            <ul
+                role="list"
+                className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            >
+                {articles.map((blogArticle, index) => (
+                    <li
+                        key={`/blog-articles/${blogArticle.websiteSubPath}`}
+                        className="h-full"
+                    >
+                        <ScrollReveal delay={index * 50} className="h-full">
+                            <ArticleListItem blogArticle={blogArticle} />
+                        </ScrollReveal>
+                    </li>
+                ))}
+            </ul>
         </Section>
     );
 };
@@ -128,7 +88,7 @@ const ArticlesList = async ({
     return (
         <>
             <Title>{currentGroup ? currentGroup.title : "Blog Articles"}</Title>
-            <Box sx={{ mt: 4 }}>
+            <div className="mt-4">
                 {currentGroup && (
                     <ArticlesGroup articles={currentGroup.articles} />
                 )}
@@ -140,7 +100,7 @@ const ArticlesList = async ({
                         href={`/blog-articles/${subGroup.websiteSubPath}`}
                     />
                 ))}
-            </Box>
+            </div>
         </>
     );
 };

@@ -13,6 +13,17 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 
-export interface SectionProps {
-    sectionEntranceDelay?: number;
+:root {
+    --animate-not-found-float: not-found-float 4s ease-in-out infinite;
+}
+
+@keyframes not-found-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-14px);
+    }
 }

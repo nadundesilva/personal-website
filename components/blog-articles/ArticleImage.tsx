@@ -12,12 +12,11 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { Grid, Typography } from "@mui/material";
+import type { StaticImageData } from "next/image";
 import type React from "react";
 
 import { Image, Link } from "@/components/content";
+import { generateSizesForContentBreakpoints } from "@/utils/common/image-sizes";
 
 interface CreatorPlatform {
     name: string;
@@ -31,7 +30,7 @@ interface Creator {
 }
 
 interface ArticleImageProps {
-    src: string;
+    src: StaticImageData;
     alt: string;
     creator?: Creator;
 }
@@ -41,40 +40,34 @@ const ArticleImage = ({
     alt,
     creator,
 }: ArticleImageProps): React.ReactElement => (
-    <Grid
-        container
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ py: { xs: 3, sm: 4 } }}
-    >
-        <Grid
-            sx={{
-                width: { xs: "100%", sm: "90%", md: "75%" },
-            }}
-        >
-            <Image src={src} alt={alt} />
-        </Grid>
+    <figure className="flex flex-col items-center justify-center py-12 sm:py-16">
+        {/* image narrows from full width to 55% as reading column widens;
+            each breakpoint: fraction × (viewport − container padding) */}
+        <div className="w-full sm:w-[calc(90vw-43.2px)] md:w-[calc(75vw-48px)] lg:w-[calc(65vw-104px)] xl:w-[calc(55vw-176px)] 2xl:w-[calc(55vw-352px)]">
+            <Image
+                src={src}
+                alt={alt}
+                sizes={generateSizesForContentBreakpoints({
+                    xl: { viewportFraction: 0.55 }, // 55% × content width; auto-expands to 2xl with correct 640px padding
+                    lg: { viewportFraction: 0.65 }, // 65% × content width (viewport − lg padding)
+                    md: { viewportFraction: 0.75 }, // 75% × content width (viewport − md padding)
+                    sm: { viewportFraction: 0.9 }, // 90% × content width (viewport − sm padding)
+                })}
+            />
+        </div>
         {creator && (
-            <Grid sx={{ mt: 2 }}>
-                <Typography
-                    variant="body2"
-                    sx={{
-                        color: "text.secondary",
-                    }}
-                >
-                    Photo by{" "}
-                    <Link href={creator.href} target="_blank">
-                        {creator.name}
-                    </Link>{" "}
-                    on{" "}
-                    <Link href={creator.platform.href} target="_blank">
-                        {creator.platform.name}
-                    </Link>
-                </Typography>
-            </Grid>
+            <figcaption className="text-muted-foreground mt-4 text-sm">
+                Photo by{" "}
+                <Link href={creator.href} target="_blank">
+                    {creator.name}
+                </Link>{" "}
+                on{" "}
+                <Link href={creator.platform.href} target="_blank">
+                    {creator.platform.name}
+                </Link>
+            </figcaption>
         )}
-    </Grid>
+    </figure>
 );
 
 export default ArticleImage;

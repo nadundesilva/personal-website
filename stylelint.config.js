@@ -12,23 +12,7 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { Chip } from "@mui/material";
-import type React from "react";
-
-interface KeywordChipProps {
-    label: string;
-}
-
-const KeywordChip = ({ label }: KeywordChipProps): React.ReactElement => (
-    <Chip
-        label={label}
-        size="keyword"
-        variant="outlined"
-        color="primary"
-        sx={{ cursor: "default" }}
-    />
-);
-
-export default KeywordChip;
+const config = {
+    extends: ["stylelint-config-standard", "stylelint-config-tailwindcss"],
+};
+export default config;

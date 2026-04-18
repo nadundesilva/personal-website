@@ -1,7 +1,13 @@
 {
+    "$schema": "https://www.schemastore.org/prettierrc.json",
     "semi": true,
     "trailingComma": "all",
     "tabWidth": 4,
     "quoteProps": "consistent",
-    "printWidth": 80
+    "printWidth": 80,
+    "plugins": [
+        "prettier-plugin-tailwindcss",
+        "prettier-plugin-organize-imports"
+    ],
+    "tailwindFunctions": ["cn", "clsx"]
 }

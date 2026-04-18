@@ -1,0 +1,148 @@
+/*
+ * Nadun De Silva - All Rights Reserved
+ *
+ * This source code and its associated files are the
+ * confidential and proprietary information of Nadun De Silva.
+ * Unauthorized reproduction, distribution, or disclosure
+ * in any form, in whole or in part, is strictly prohibited
+ * except as explicitly provided under a separate license
+ * agreement with Nadun De Silva.
+ *
+ * Website: https://nadundesilva.com
+ *
+ * © 2026 Nadun De Silva. All rights reserved.
+ */
+
+:root {
+    /* Welcome Banner: Auras */
+    --home-aura-1-color: oklch(79% 0.093 248deg);
+    --home-aura-2-color: oklch(63% 0.156 296deg);
+
+    /* Welcome Banner: Accent color for the always-dark welcome hero */
+    --home-accent-on-dark: oklch(79% 0.093 248deg);
+
+    /* Welcome Banner: CV button on the always-dark glassmorphism hero card */
+    --home-cv-button-bg: oklch(40% 0.035 248deg);
+    --home-cv-button-bg-hover: oklch(51% 0.055 250deg);
+
+    /* Welcome Banner: Radial centre-out vignette (darkens corners while leaving centre clear) */
+    --home-hero-vignette-radial: radial-gradient(
+        ellipse at center,
+        transparent 25%,
+        oklch(0% 0 0deg / 55%) 78%
+    );
+
+    /* Fade down from Welcome Banner to other home page content */
+    --home-hero-fade: radial-gradient(
+        ellipse 100% 100% at 50% 0%,
+        color-mix(in oklch, var(--primary) 60%, transparent) 0%,
+        color-mix(in oklch, var(--primary) 25%, transparent) 40%,
+        color-mix(in oklch, var(--primary) 8%, transparent) 70%,
+        transparent 100%
+    );
+
+    /* Skill Section */
+    --home-skill-novice-color: oklch(67% 0.132 62deg);
+    --home-skill-intermediate-color: oklch(66% 0.168 248deg);
+    --home-skill-expert-color: oklch(68% 0.162 145deg);
+
+    /* Achievements Section: hover/focus overlay gradient */
+    --home-achievement-hover-overlay: linear-gradient(
+        to top,
+        color-mix(in oklch, var(--primary) 95%, transparent) 0px,
+        color-mix(in oklch, var(--primary) 70%, transparent) 300px,
+        color-mix(in oklch, var(--primary) 20%, transparent) 380px,
+        transparent 460px
+    );
+
+    /* Animations */
+    --animate-home-scroll-dot: home-scroll-dot 1.8s ease-in-out infinite;
+    --animate-home-aura-1-drift: home-aura-1-drift 7s ease-in-out infinite;
+    --animate-home-aura-2-drift: home-aura-2-drift 9s ease-in-out infinite;
+    --animate-home-skill-bar-rise: home-skill-bar-rise 1s
+        cubic-bezier(0.16, 1, 0.3, 1) both;
+    --animate-home-timeline-dot-pulse: home-timeline-dot-pulse 2.5s ease-out
+        infinite backwards;
+}
+
+.dark {
+    /* Achievements Section: hover/focus overlay gradient */
+    --home-achievement-hover-overlay: linear-gradient(
+        to top,
+        color-mix(in oklch, var(--background) 98%, transparent) 0px,
+        color-mix(in oklch, var(--background) 75%, transparent) 300px,
+        color-mix(in oklch, var(--background) 25%, transparent) 380px,
+        transparent 460px
+    );
+
+    /* Fade down from Welcome Banner to other home page content */
+    --home-hero-fade: radial-gradient(
+        ellipse 100% 100% at 50% 0%,
+        oklch(0% 0 0deg / 60%) 0%,
+        oklch(0% 0 0deg / 25%) 40%,
+        oklch(0% 0 0deg / 8%) 70%,
+        transparent 100%
+    );
+}
+
+@keyframes home-scroll-dot {
+    0% {
+        transform: translateY(0);
+        opacity: 0.8;
+    }
+
+    80%,
+    100% {
+        transform: translateY(14px);
+        opacity: 0;
+    }
+}
+
+@keyframes home-aura-1-drift {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(70px, -55px) scale(1.08);
+    }
+}
+
+@keyframes home-aura-2-drift {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-60px, 50px) scale(0.94);
+    }
+}
+
+@keyframes home-skill-bar-rise {
+    from {
+        transform: scaleY(0);
+    }
+
+    to {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes home-timeline-dot-pulse {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 0.7;
+    }
+
+    70%,
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}

@@ -12,14 +12,14 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, Typography } from "@mui/material";
 import type React from "react";
 
+import { HorizontalGradientLine } from "@/components/primitives";
+import { cn } from "@/components/primitives/utils/cn";
 import type { FormattableDate } from "@/constants/date";
 
 import DateInfo from "./DateInfo";
 import LinkButton, { type LinkButtonProps } from "./LinkButton";
-import { HorizontalGradientLine } from "@/components/primitives";
 
 interface SectionHeadingProps {
     children: React.ReactNode;
@@ -36,58 +36,33 @@ const SectionHeading = ({
     actionButton,
     id,
 }: SectionHeadingProps): React.ReactElement => (
-    <Box
-        sx={{
-            display: "flex",
-            flexDirection: { xs: "column", sm: "row" },
-            alignItems: { xs: "flex-start", sm: "flex-start" },
-            gap: { xs: 2, sm: 3 },
-            mb: 3,
-            mt: { xs: 4, md: 5 },
-        }}
-    >
-        <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Typography
+    <div className="mt-8 mb-6 flex flex-col items-start gap-4 sm:flex-row sm:gap-6 md:mt-10">
+        <div className="min-w-0 flex-1">
+            <h2
                 id={id}
-                variant="h2"
-                sx={{
-                    mb: 0,
-                }}
+                className="scroll-mt-20 text-[1.75rem] leading-tight font-medium tracking-[-0.03em] text-wrap-balance"
             >
                 {children}
-            </Typography>
+            </h2>
             <HorizontalGradientLine
-                sx={{
-                    width: { xs: 56, md: 80 },
-                    mb: date || actionButton ? 0 : 1,
-                }}
+                className={cn(
+                    "w-14 md:w-20",
+                    date || actionButton ? undefined : "mb-2",
+                )}
             />
             {date && <DateInfo value={date} />}
             {actionButton && (
-                <Box
-                    sx={{
-                        mt: date ? 0 : 2.5,
-                    }}
-                >
-                    <LinkButton {...actionButton} target="_blank" />
-                </Box>
+                <div className={cn(date ? undefined : "mt-5")}>
+                    <LinkButton {...actionButton} />
+                </div>
             )}
-        </Box>
+        </div>
         {logo && (
-            <Box
-                sx={{
-                    flexShrink: 0,
-                    width: { xs: "100%", sm: "280px" },
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: { xs: "flex-start", sm: "flex-end" },
-                    mt: { xs: 0, sm: 0.25 },
-                }}
-            >
+            <div className="flex w-full shrink-0 items-center justify-start sm:mt-0.5 sm:w-70 sm:justify-end">
                 {logo}
-            </Box>
+            </div>
         )}
-    </Box>
+    </div>
 );
 
 export default SectionHeading;

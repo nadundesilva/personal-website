@@ -14,72 +14,65 @@
  */
 "use client";
 
-import Box from "@mui/material/Box";
-import Fade from "@mui/material/Fade";
-import Typography from "@mui/material/Typography";
-import { alpha } from "@mui/material/styles";
 import type React from "react";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { ProgressFab } from "@/components/primitives";
-import { estimateReadingTimeMinutesFromText } from "@/utils/common/blog-articles";
+import { cn } from "@/components/primitives/utils/cn";
 
 interface PillProps {
-    in: boolean;
+    visible: boolean;
     children: React.ReactNode;
 }
 
-const Pill = ({ in: inProp, children }: PillProps): React.ReactElement => (
-    <Fade in={inProp}>
-        <Box
-            sx={{
-                position: "absolute",
-                right: (theme) => `calc(100% + ${theme.spacing(1)})`,
-                top: "50%",
-                transform: "translateY(-50%)",
-                whiteSpace: "nowrap",
-                px: 1.25,
-                py: 0.625,
-                borderRadius: 50,
-                backgroundColor: (theme) =>
-                    alpha(theme.palette.background.paper, 0.9),
-                backdropFilter: "blur(8px)",
-                border: "1px solid",
-                borderColor: "divider",
-                boxShadow: 1,
-            }}
+const Pill = ({ visible, children }: PillProps): React.ReactElement => (
+    <div
+        role="status"
+        className="absolute top-1/2 right-[calc(100%+0.5rem)] -translate-y-1/2"
+    >
+        <div
+            aria-hidden="true"
+            className={cn(
+                "rounded-full px-2.5 py-1.5 whitespace-nowrap",
+                "border-border border shadow-sm",
+                "bg-card/90 backdrop-blur",
+                "text-muted-foreground text-[0.6875rem] leading-none font-medium",
+                "motion-safe:transition-opacity motion-safe:duration-300",
+                visible ? "opacity-100" : "opacity-0",
+            )}
         >
-            <Typography
-                sx={{
-                    fontSize: "0.6875rem",
-                    fontWeight: 500,
-                    color: "text.secondary",
-                    lineHeight: 1,
-                }}
-            >
-                {children}
-            </Typography>
-        </Box>
-    </Fade>
+            {children}
+        </div>
+        <span className="sr-only">{visible ? children : ""}</span>
+    </div>
 );
 
 const ReadingProgress = (): React.ReactElement => {
+    const [mounted, setMounted] = useState(false);
     const [progress, setProgress] = useState(0);
     const [minutesLeft, setMinutesLeft] = useState<number | null>(null);
     const [totalReadingMinutes, setTotalReadingMinutes] = useState<
         number | null
     >(null);
 
-    // Effect 1: Estimate total reading time from the rendered article text content.
+    useEffect(() => {
+        const id = requestAnimationFrame(() => setMounted(true));
+        return () => cancelAnimationFrame(id);
+    }, []);
+
+    // Effect 1: Read pre-computed reading time injected at build time by the rehype plugin.
     // setState is deferred to a rAF callback to satisfy the react-hooks/set-state-in-effect rule.
     useEffect(() => {
-        const articleEl = document.querySelector("article");
-        if (!articleEl) return;
+        const el = document.querySelector("[data-reading-time-minutes]");
+        if (!el) return;
 
-        const text = articleEl.textContent ?? "";
-        const total = estimateReadingTimeMinutesFromText(text);
+        const minutes = parseInt(
+            (el as HTMLElement).dataset.readingTimeMinutes ?? "1",
+            10,
+        );
 
-        const id = requestAnimationFrame(() => setTotalReadingMinutes(total));
+        const id = requestAnimationFrame(() => setTotalReadingMinutes(minutes));
         return () => cancelAnimationFrame(id);
     }, []);
 
@@ -115,39 +108,31 @@ const ReadingProgress = (): React.ReactElement => {
     const showMinutesLeft =
         minutesLeft !== null && minutesLeft > 0 && progress > 1 && !isDone;
 
-    return (
-        <Fade in={totalReadingMinutes !== null}>
-            {/*
-             * Outer Box is sized to the MUI small FAB (theme.spacing(5)) so
-             * absolutely-positioned children (the pill chips) never cause layout shift.
-             */}
-            <Box
-                aria-hidden="true"
-                sx={{
-                    position: "fixed",
-                    // Sit above the scroll-to-top FAB: spacing(3) bottom + spacing(5) height + spacing(2) gap
-                    bottom: (theme) =>
-                        `calc(${theme.spacing(3)} + ${theme.spacing(5)} + ${theme.spacing(2)})`,
-                    right: (theme) => theme.spacing(3),
-                    zIndex: (theme) => theme.zIndex.appBar,
-                    width: (theme) => theme.spacing(5),
-                    height: (theme) => theme.spacing(5),
-                    pointerEvents: "none",
-                }}
-            >
-                {/* Three independent pills anchored to the left of the circle — each sized
-                    naturally to its own content, crossfaded via opacity so neither pill's
-                    width ever affects the other or the badge layout. */}
-                <Pill in={showInitialRead}>{totalReadingMinutes} min read</Pill>
-                <Pill in={showMinutesLeft}>
-                    {minutesLeft} min{minutesLeft === 1 ? "" : "s"} left
-                </Pill>
-                <Pill in={isDone}>Thanks for reading!</Pill>
+    // Outer div is sized to match the FAB (40px) so pill children never cause layout shift.
+    // bottom: spacing(3)=24px + spacing(5)=40px + spacing(2)=16px = 80px
+    // Portal into document.body so overflow-x:clip on <main> cannot clip this fixed element.
+    const fab = (
+        <div
+            className={cn(
+                "fixed right-6 bottom-20 z-30",
+                "pointer-events-none size-10",
+                "motion-safe:transition-opacity motion-safe:duration-300",
+                totalReadingMinutes !== null ? "opacity-100" : "opacity-0",
+            )}
+        >
+            <Pill visible={showInitialRead}>
+                {totalReadingMinutes} min read
+            </Pill>
+            <Pill visible={showMinutesLeft}>
+                {minutesLeft} min{minutesLeft === 1 ? "" : "s"} left
+            </Pill>
+            <Pill visible={isDone}>Thanks for reading!</Pill>
 
-                <ProgressFab progress={progress} isDone={isDone} />
-            </Box>
-        </Fade>
+            <ProgressFab progress={progress} isDone={isDone} />
+        </div>
     );
+
+    return mounted ? createPortal(fab, document.body) : <></>;
 };
 
 export default ReadingProgress;

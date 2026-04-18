@@ -13,9 +13,9 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
-import { type FormattableDate, Date, DateRange, Now } from "./date";
 import Logos, { type LogoImageData } from "@/constants/logos";
-import Skills from "@/constants/skills";
+import Skills, { type SkillDefinition } from "@/constants/skills";
+import { type FormattableDate, Date, DateRange, Now } from "./date";
 
 export interface Project {
     name: string;
@@ -23,10 +23,10 @@ export interface Project {
     logo: LogoImageData;
     link: string;
     timePeriod: FormattableDate;
-    skills: string[];
+    skills: SkillDefinition[];
 }
 
-const Projects: Record<string, Project> = {
+export const EnterpriseProjects: Record<string, Project> = {
     Indexity: {
         name: "Indexity",
         description:
@@ -159,6 +159,9 @@ const Projects: Record<string, Project> = {
         ),
         skills: [Skills.Java, Skills.Maven],
     },
+};
+
+export const PersonalProjects: Record<string, Project> = {
     K8sReplicator: {
         name: "K8s Replicator",
         description:
@@ -190,5 +193,3 @@ const Projects: Record<string, Project> = {
         ],
     },
 };
-
-export default Projects;

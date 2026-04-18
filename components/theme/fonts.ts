@@ -15,7 +15,7 @@
 import { Inter, JetBrains_Mono } from "next/font/google";
 
 const defaultFont = Inter({
-    weight: ["300", "400", "500"],
+    weight: ["300", "400", "500", "600", "700"],
     subsets: ["latin"],
     display: "swap",
     variable: "--font-default",

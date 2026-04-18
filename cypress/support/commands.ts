@@ -12,8 +12,8 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import "@testing-library/cypress/add-commands";
 import { WebsiteHome } from "@/constants/routes";
+import "@testing-library/cypress/add-commands";
 
 Cypress.Commands.add("loadPage", (url: string): void => {
     const viewportWidth = Cypress.config("viewportWidth");
@@ -28,7 +28,7 @@ Cypress.Commands.add("loadPage", (url: string): void => {
 
     if (url !== WebsiteHome.path) {
         cy.wait(1000);
-        cy.findAllByRole("progressbar").should("not.exist");
+        cy.findAllByTestId("route-segment-loading-spinner").should("not.exist");
     }
 });
 
@@ -45,7 +45,7 @@ Cypress.Commands.add("clickNavLink", (name: string): void => {
         });
 
     cy.wait(1000);
-    cy.findAllByRole("progressbar").should("not.exist");
+    cy.findAllByTestId("route-segment-loading-spinner").should("not.exist");
 });
 
 Cypress.Commands.add("clickBreadcrumbByName", (name: string): void => {
@@ -65,7 +65,7 @@ Cypress.Commands.add("clickBreadcrumbByName", (name: string): void => {
 
     if (name !== WebsiteHome.name) {
         cy.wait(1000);
-        cy.findAllByRole("progressbar").should("not.exist");
+        cy.findAllByTestId("route-segment-loading-spinner").should("not.exist");
     }
 });
 
@@ -81,7 +81,7 @@ Cypress.Commands.add("clickBreadcrumbByHref", (href: string): void => {
         });
 
     cy.wait(1000);
-    cy.findAllByRole("progressbar").should("not.exist");
+    cy.findAllByTestId("route-segment-loading-spinner").should("not.exist");
 });
 
 Cypress.Commands.add("clickLinkByHref", (href: string): void => {
@@ -93,5 +93,5 @@ Cypress.Commands.add("clickLinkByHref", (href: string): void => {
     cy.get("@link").click({ waitForAnimations: true });
 
     cy.wait(1000);
-    cy.findAllByRole("progressbar").should("not.exist");
+    cy.findAllByTestId("route-segment-loading-spinner").should("not.exist");
 });

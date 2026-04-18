@@ -1,0 +1,159 @@
+/*
+ * Nadun De Silva - All Rights Reserved
+ *
+ * This source code and its associated files are the
+ * confidential and proprietary information of Nadun De Silva.
+ * Unauthorized reproduction, distribution, or disclosure
+ * in any form, in whole or in part, is strictly prohibited
+ * except as explicitly provided under a separate license
+ * agreement with Nadun De Silva.
+ *
+ * Website: https://nadundesilva.com
+ *
+ * © 2026 Nadun De Silva. All rights reserved.
+ */
+
+/* ─── Imports ─────────────────────────────────────────────────────────────── */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "./themes.css";
+
+/* ─── Custom variants ─────────────────────────────────────────────────────── */
+
+@custom-variant dark (&:is(.dark *));
+@custom-variant short-h (@media (max-height: 500px));
+
+/* ─── Design tokens ───────────────────────────────────────────────────────── */
+
+@theme inline {
+    /* Fonts */
+    --font-sans: var(--font-default);
+    --font-mono: var(--font-code);
+
+    /* Colors — base canvas */
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    /* Colors — brand */
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    /* Colors — surfaces */
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    /* Colors — emphasis */
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    /* Colors — status */
+    --color-destructive: var(--destructive);
+
+    /* Colors — chrome */
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    /* Colors — links */
+    --color-link: var(--link);
+
+    /* Radii */
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+
+    /* Easings */
+    --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-bounce-out: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Animations */
+    --animate-fade-in-up: fade-in-up 0.8s var(--ease-expo-out) both;
+}
+
+/* ─── Base styles ─────────────────────────────────────────────────────────── */
+
+@layer base {
+    /* Global defaults */
+    * {
+        @apply border-border outline-ring/50;
+
+        scrollbar-width: thin;
+        scrollbar-color: color-mix(in oklch, var(--primary) 30%, transparent)
+            transparent;
+    }
+
+    /* Document */
+    html {
+        @apply font-sans;
+
+        scroll-behavior: auto;
+        overflow-x: clip;
+    }
+
+    body {
+        color: var(--foreground);
+        background-color: var(--background);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        html {
+            scroll-behavior: smooth;
+        }
+    }
+
+    /* Typography */
+    code {
+        font-family: var(--font-mono);
+    }
+
+    /* Selection */
+    ::selection {
+        background-color: var(--primary);
+        color: var(--primary-foreground);
+    }
+
+    /* Scrollbar (WebKit) */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: color-mix(in oklch, var(--primary) 30%, transparent);
+        border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: color-mix(in oklch, var(--primary) 55%, transparent);
+    }
+}
+
+/* ─── Keyframe animations ─────────────────────────────────────────────────── */
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -13,56 +13,65 @@
  * © 2025 Nadun De Silva. All rights reserved.
  */
 import {
-    Facebook,
-    GitHub,
-    Instagram,
-    LinkedIn,
-    Article,
-    X,
-    School,
-} from "@mui/icons-material";
-import type { SvgIcon } from "@mui/material";
+    SiFacebook,
+    SiGithub,
+    SiGooglescholar,
+    SiInstagram,
+    SiMedium,
+    SiX,
+    type IconType,
+} from "@icons-pack/react-simple-icons";
+import type React from "react";
+
+import LinkedInIcon from "@/components/icons/LinkedInIcon";
+
+export type ProfileIcon =
+    | IconType
+    | React.ComponentType<{ size?: number; className?: string }>;
 
 export interface Profile {
     name: string;
-    Icon: typeof SvgIcon;
+    Icon: ProfileIcon;
     link: string;
 }
+
+export const TWITTER_HANDLE = "@nadunrds";
+export const LINKEDIN_PROFILE_URL = "https://www.linkedin.com/in/nadundesilva";
 
 const Profiles: Record<string, Profile> = {
     LinkedIn: {
         name: "LinkedIn",
-        Icon: LinkedIn,
-        link: "https://www.linkedin.com/in/nadundesilva",
+        Icon: LinkedInIcon,
+        link: LINKEDIN_PROFILE_URL,
     },
     GitHub: {
         name: "GitHub",
-        Icon: GitHub,
+        Icon: SiGithub,
         link: "https://github.com/nadundesilva",
     },
     Medium: {
         name: "Medium",
-        Icon: Article,
+        Icon: SiMedium,
         link: "https://medium.com/@nadundesilva",
     },
     GoogleScholar: {
         name: "Google Scholar",
-        Icon: School,
+        Icon: SiGooglescholar,
         link: "https://scholar.google.com/citations?user=CdXo_YQAAAAJ&hl=en&oi=ao",
     },
     Facebook: {
         name: "Facebook",
-        Icon: Facebook,
+        Icon: SiFacebook,
         link: "https://www.facebook.com/nadunrds",
     },
     Instagram: {
         name: "Instagram",
-        Icon: Instagram,
+        Icon: SiInstagram,
         link: "https://www.instagram.com/nadunrds",
     },
     X: {
         name: "X",
-        Icon: X,
+        Icon: SiX,
         link: "https://x.com/nadunrds",
     },
 };

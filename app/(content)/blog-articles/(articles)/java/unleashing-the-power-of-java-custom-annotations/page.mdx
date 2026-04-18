@@ -206,7 +206,7 @@ Three types of retention policies can be specified for the custom annotations th
 - CLASS — Recorded in the class files by the compiler but not retained by the JVM at run-time
 - RUNTIME — Recorded in the class file by the compiler and retained by the JVM at run-time
 
-I will be writing another post to introduce you to Reflections API which can be used for reading annotations at run-time when the `@Retention(RetentionPolicy.RUNTIME){:java}` annotation is used.
+I have written [another post](./java/reading-java-annotations-on-the-fly) introducing the Reflections API which can be used for reading annotations at run-time when the `@Retention(RetentionPolicy.RUNTIME){:java}` annotation is used.
 
 When the `@Retention(RetentionPolicy.SOURCE){:java}` annotation is used, since they are not added to the class files, an Annotation Processor would normally be used so that the annotations can be read at compile time and either an error could be thrown or extra byte code could be generated using the annotated data.
 
@@ -236,4 +236,4 @@ public class FunctionOperation {
 
 In the above example, `@Parameter{:java}` is the actual repeatable annotation and the `@Parameters{:java}` is the container annotation created for it.
 
-That concludes this post. Please feel free to contact me if there are any problems. Don’t forget to clap a few times if this was useful.
+That concludes this post. Please feel free to contact me if there are any problems.

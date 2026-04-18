@@ -13,95 +13,147 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 
+export enum SkillProficiency {
+    Novice = "Novice",
+    Intermediate = "Intermediate",
+    Expert = "Expert",
+}
+
+export interface SkillDefinition {
+    name: string;
+    proficiencyLevel: SkillProficiency;
+}
+
+const createSkill = (
+    name: string,
+    level: SkillProficiency,
+): SkillDefinition => ({ name, proficiencyLevel: level });
+
 const Skills = {
     // Programming Languages
-    Java: "Java",
-    Ballerina: "Ballerina",
-    GoLang: "GoLang",
-    Python: "Python",
-    Scala: "Scala",
-    JavaScript: "JavaScript",
-    TypeScript: "TypeScript",
-    CompilerTheory: "Compiler Theory",
+    Java: createSkill("Java", SkillProficiency.Expert),
+    Ballerina: createSkill("Ballerina", SkillProficiency.Intermediate),
+    GoLang: createSkill("GoLang", SkillProficiency.Expert),
+    Python: createSkill("Python", SkillProficiency.Intermediate),
+    Scala: createSkill("Scala", SkillProficiency.Intermediate),
+    JavaScript: createSkill("JavaScript", SkillProficiency.Intermediate),
+    TypeScript: createSkill("TypeScript", SkillProficiency.Intermediate),
+    CompilerTheory: createSkill(
+        "Compiler Theory",
+        SkillProficiency.Intermediate,
+    ),
 
     // Cloud Platforms
-    Aws: "AWS",
-    Gcp: "GCP",
-    Azure: "Azure",
+    Aws: createSkill("AWS", SkillProficiency.Expert),
+    Gcp: createSkill("GCP", SkillProficiency.Intermediate),
+    Azure: createSkill("Azure", SkillProficiency.Novice),
 
     // Containerization & Orchestration
-    Kubernetes: "Kubernetes",
-    AwsEcs: "AWS ECS",
-    Docker: "Docker",
-    Kustomize: "Kustomize",
-    Helm: "Helm",
-    KubernetesOperatorFramework: "Kubernetes Operator Framework",
-    Istio: "Istio",
-    KubernetesControllers: "Kubernetes Controllers",
+    Kubernetes: createSkill("Kubernetes", SkillProficiency.Expert),
+    AwsEcs: createSkill("AWS ECS", SkillProficiency.Expert),
+    Docker: createSkill("Docker", SkillProficiency.Expert),
+    Kustomize: createSkill("Kustomize", SkillProficiency.Intermediate),
+    Helm: createSkill("Helm", SkillProficiency.Intermediate),
+    KubernetesOperatorFramework: createSkill(
+        "Kubernetes Operator Framework",
+        SkillProficiency.Expert,
+    ),
+    Istio: createSkill("Istio", SkillProficiency.Intermediate),
+    KubernetesControllers: createSkill(
+        "Kubernetes Controllers",
+        SkillProficiency.Expert,
+    ),
 
     // Infrastructure as Code & Automation
-    Terraform: "Terraform",
-    Ansible: "Ansible",
-    GitHubActions: "GitHub Actions",
-    GitLabCi: "GitLab CI/CD",
-    Maven: "Maven",
+    Terraform: createSkill("Terraform", SkillProficiency.Expert),
+    Ansible: createSkill("Ansible", SkillProficiency.Novice),
+    GitHubActions: createSkill("GitHub Actions", SkillProficiency.Expert),
+    GitLabCi: createSkill("GitLab CI/CD", SkillProficiency.Expert),
+    Maven: createSkill("Maven", SkillProficiency.Expert),
 
     // Application Frameworks & Libraries
-    SpringBoot: "Spring Boot",
-    ExpressJS: "ExpressJS",
-    React: "React",
-    NextJS: "NextJS",
-    ApacheLucene: "Apache Lucene",
-    D3js: "D3.js",
+    SpringBoot: createSkill("Spring Boot", SkillProficiency.Intermediate),
+    ExpressJS: createSkill("ExpressJS", SkillProficiency.Intermediate),
+    React: createSkill("React", SkillProficiency.Intermediate),
+    NextJS: createSkill("NextJS", SkillProficiency.Intermediate),
+    ApacheLucene: createSkill("Apache Lucene", SkillProficiency.Intermediate),
+    D3js: createSkill("D3.js", SkillProficiency.Novice),
 
     // Databases & Data Storage
-    InfluxDB: "Influx DB",
-    Redis: "Redis",
-    OrientDB: "Orient DB",
-    AzureDataExplorer: "Azure Data Explorer",
-    AzureDataLake: "Azure Data Lake",
-    MySQL: "MySQL",
-    MsSQL: "MsSQL",
+    InfluxDB: createSkill("Influx DB", SkillProficiency.Novice),
+    Redis: createSkill("Redis", SkillProficiency.Intermediate),
+    OrientDB: createSkill("Orient DB", SkillProficiency.Intermediate),
+    AzureDataExplorer: createSkill(
+        "Azure Data Explorer",
+        SkillProficiency.Expert,
+    ),
+    AzureDataLake: createSkill("Azure Data Lake", SkillProficiency.Expert),
+    MySQL: createSkill("MySQL", SkillProficiency.Expert),
+    MsSQL: createSkill("MsSQL", SkillProficiency.Expert),
 
     // Event-Driven Architecture & Messaging
-    Kafka: "Kafka",
-    AwsSqs: "AWS SQS",
-    AzureEventHub: "Azure Event Hub",
-    StreamProcessing: "Stream Processing",
+    Kafka: createSkill("Kafka", SkillProficiency.Expert),
+    AwsSqs: createSkill("AWS SQS", SkillProficiency.Expert),
+    AzureEventHub: createSkill("Azure Event Hub", SkillProficiency.Expert),
+    StreamProcessing: createSkill("Stream Processing", SkillProficiency.Expert),
 
     // API Development & Standards
-    Rest: "REST",
-    GraphQl: "GraphQL",
-    Grpc: "gRPC",
-    OpenApi: "OpenAPI",
-    OAuth2: "OAuth2",
-    Oidc: "OIDC",
+    Rest: createSkill("REST", SkillProficiency.Expert),
+    GraphQl: createSkill("GraphQL", SkillProficiency.Expert),
+    Grpc: createSkill("gRPC", SkillProficiency.Expert),
+    OpenApi: createSkill("OpenAPI", SkillProficiency.Expert),
+    OAuth2: createSkill("OAuth2", SkillProficiency.Expert),
+    Oidc: createSkill("OIDC", SkillProficiency.Expert),
 
     // Observability & Monitoring
-    OpenTelemetry: "OpenTelemetry",
-    DataDog: "DataDog",
-    Prometheus: "Prometheus",
-    Jaeger: "Jaeger",
-    AwsCloudWatch: "AWS CloudWatch",
+    OpenTelemetry: createSkill("OpenTelemetry", SkillProficiency.Expert),
+    DataDog: createSkill("DataDog", SkillProficiency.Intermediate),
+    Prometheus: createSkill("Prometheus", SkillProficiency.Expert),
+    Jaeger: createSkill("Jaeger", SkillProficiency.Expert),
+    AwsCloudWatch: createSkill("AWS CloudWatch", SkillProficiency.Intermediate),
 
     // Software Engineering Practices
-    Agile: "Agile",
-    DevOps: "DevOps",
-    GitOps: "GitOps",
-    SiteReliabilityEngineering: "Site Reliability Engineering",
-    DisasterRecoveryPlanning: "Disaster Recovery Planning",
-    ThreatModeling: "Threat Modeling",
-    SoftwareEngineering: "Software Engineering",
-    TechnicalLeadership: "Technical Leadership",
-    Microservices: "Microservices",
-    CloudNativeApplicationDevelopment: "Cloud Native Application Development",
-    CellBasedArchitecture: "Cell-based Architecture",
+    Agile: createSkill("Agile", SkillProficiency.Expert),
+    DevOps: createSkill("DevOps", SkillProficiency.Expert),
+    GitOps: createSkill("GitOps", SkillProficiency.Expert),
+    SiteReliabilityEngineering: createSkill(
+        "Site Reliability Engineering",
+        SkillProficiency.Intermediate,
+    ),
+    DisasterRecoveryPlanning: createSkill(
+        "Disaster Recovery Planning",
+        SkillProficiency.Expert,
+    ),
+    ThreatModeling: createSkill(
+        "Threat Modeling",
+        SkillProficiency.Intermediate,
+    ),
+    SoftwareEngineering: createSkill(
+        "Software Engineering",
+        SkillProficiency.Expert,
+    ),
+    TechnicalLeadership: createSkill(
+        "Technical Leadership",
+        SkillProficiency.Expert,
+    ),
+    Microservices: createSkill("Microservices", SkillProficiency.Expert),
+    CloudNativeApplicationDevelopment: createSkill(
+        "Cloud Native Application Development",
+        SkillProficiency.Expert,
+    ),
+    CellBasedArchitecture: createSkill(
+        "Cell-based Architecture",
+        SkillProficiency.Intermediate,
+    ),
 
     // Artificial Intelligence & Machine Learning
-    DeepLearning: "Deep Learning",
-    NeuralNetworks: "Neural Networks",
-    TensorFlow: "TensorFlow",
-    ReinforcementLearning: "Reinforcement Learning",
+    DeepLearning: createSkill("Deep Learning", SkillProficiency.Novice),
+    NeuralNetworks: createSkill("Neural Networks", SkillProficiency.Novice),
+    TensorFlow: createSkill("TensorFlow", SkillProficiency.Novice),
+    ReinforcementLearning: createSkill(
+        "Reinforcement Learning",
+        SkillProficiency.Novice,
+    ),
 };
 
 export default Skills;

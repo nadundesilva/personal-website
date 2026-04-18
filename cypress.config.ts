@@ -13,8 +13,8 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import runCoverageTask from "@cypress/code-coverage/task";
-import { glob } from "glob";
 import { defineConfig } from "cypress";
+import { glob } from "glob";
 import {
     BLOG_ARTICLE_FILE,
     BLOG_ARTICLES_DIRECTORY_PREFIX,

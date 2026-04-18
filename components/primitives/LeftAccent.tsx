@@ -12,38 +12,36 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { Box, type SxProps, type Theme } from "@mui/material";
-import { alpha } from "@mui/material/styles";
+import { cva, type VariantProps } from "class-variance-authority";
 import type React from "react";
 
-interface LeftAccentProps {
+import { cn } from "@/components/primitives/utils/cn";
+
+const leftAccentVariants = cva("border-l-primary/40 border-solid pl-4", {
+    variants: {
+        thickness: {
+            default: "border-l-[3px]",
+            thin: "border-l-[2px]",
+        },
+    },
+    defaultVariants: {
+        thickness: "default",
+    },
+});
+
+interface LeftAccentProps extends VariantProps<typeof leftAccentVariants> {
     children: React.ReactNode;
-    thickness?: number;
-    opacity?: number;
-    sx?: SxProps<Theme>;
+    className?: string;
 }
 
 const LeftAccent = ({
     children,
-    thickness = 3,
-    opacity = 0.4,
-    sx,
+    thickness,
+    className,
 }: LeftAccentProps): React.ReactElement => (
-    <Box
-        sx={{
-            pl: 2,
-            borderLeft: `${thickness}px solid`,
-            borderColor: (theme) =>
-                theme.palette.mode === "light"
-                    ? alpha(theme.palette.primary.main, opacity)
-                    : alpha(theme.palette.primary.light, opacity),
-            ...sx,
-        }}
-    >
+    <div className={cn(leftAccentVariants({ thickness }), className)}>
         {children}
-    </Box>
+    </div>
 );
 
 export default LeftAccent;

@@ -12,8 +12,6 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, Typography, type SxProps, type Theme } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
 import type { Metadata } from "next";
 import type React from "react";
 
@@ -30,7 +28,7 @@ import {
 import Companies, { type Company } from "@/constants/companies";
 import Experiences, { type Experience } from "@/constants/experience";
 import { FULL_NAME } from "@/constants/metadata";
-import Projects, { type Project } from "@/constants/projects";
+import { EnterpriseProjects, type Project } from "@/constants/projects";
 
 export const metadata: Metadata = {
     title: "Experience",
@@ -40,13 +38,13 @@ export const metadata: Metadata = {
 interface ExperienceSectionHeadingProps {
     id: string;
     experience: Experience;
-    logoSx?: SxProps<Theme>;
+    logoClassName?: string;
 }
 
 const ExperienceSectionHeading = ({
     id,
     experience,
-    logoSx,
+    logoClassName,
 }: ExperienceSectionHeadingProps): React.ReactElement => (
     <SectionHeading
         id={id}
@@ -56,15 +54,12 @@ const ExperienceSectionHeading = ({
                 srcLight={experience.company.logo.srcLight}
                 srcDark={experience.company.logo.srcDark}
                 alt=""
-                recommendedSx={logoSx}
+                className={logoClassName}
             />
         }
     >
         {experience.name}
-        <Box component="span" sx={visuallyHidden}>
-            {" "}
-            at {experience.company.name}
-        </Box>
+        <span className="sr-only"> at {experience.company.name}</span>
     </SectionHeading>
 );
 
@@ -88,11 +83,11 @@ const Experience = (): React.ReactElement => {
     const OrionHealth = generateCompanyLink(Companies.OrionHealth);
 
     // Projects
-    const Siddhi = generateProjectLink(Projects.Siddhi);
-    const Cellery = generateProjectLink(Projects.Cellery);
-    const Ballerina = generateProjectLink(Projects.Ballerina);
-    const Choreo = generateProjectLink(Projects.Choreo);
-    const Indexity = generateProjectLink(Projects.Indexity);
+    const Siddhi = generateProjectLink(EnterpriseProjects.Siddhi);
+    const Cellery = generateProjectLink(EnterpriseProjects.Cellery);
+    const Ballerina = generateProjectLink(EnterpriseProjects.Ballerina);
+    const Choreo = generateProjectLink(EnterpriseProjects.Choreo);
+    const Indexity = generateProjectLink(EnterpriseProjects.Indexity);
     const Wso2IdentityServer = generateLink(
         "WSO2 Identity Server",
         "https://wso2.com/identity-server/",
@@ -151,7 +146,7 @@ const Experience = (): React.ReactElement => {
                 <ExperienceSectionHeading
                     id="section-lead-mccrae"
                     experience={Experiences.McCraeTechLeadSoftwareEngineer}
-                    logoSx={{ height: "1.5em" }}
+                    logoClassName="h-[1.5em]"
                 />
                 <Paragraph>
                     After the divestment of {McCraeTech} from {OrionHealth}, I
@@ -163,31 +158,29 @@ const Experience = (): React.ReactElement => {
                     deployment aspects of {Indexity} data-planes, ensuring high
                     availability, scalability, and reliability of the platform.
                     Additionally, I worked on various development tasks across
-                    other areas of {Projects.Indexity.name}, contributing to the
-                    overall platform architecture and functionality.
+                    other areas of {EnterpriseProjects.Indexity.name},
+                    contributing to the overall platform architecture and
+                    functionality.
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Orchestrated the migration of{" "}
-                            {Projects.Indexity.name}&apos;s{" "}
-                            <abbr title="Site Reliability Engineering">
-                                SRE
-                            </abbr>{" "}
-                            frameworks and infrastructure from{" "}
-                            {Companies.OrionHealth.name} into{" "}
-                            {Companies.McCraeTech.name}, achieving a smooth
-                            transition without affecting end users.
-                        </Typography>
+                        Orchestrated the migration of{" "}
+                        {EnterpriseProjects.Indexity.name}
+                        &apos;s{" "}
+                        <abbr title="Site Reliability Engineering">
+                            SRE
+                        </abbr>{" "}
+                        frameworks and infrastructure from{" "}
+                        {Companies.OrionHealth.name} into{" "}
+                        {Companies.McCraeTech.name}, achieving a smooth
+                        transition without affecting end users.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Automated the customer request handling, incident
-                            handling, and on-call rotations for the{" "}
-                            {Projects.Indexity.name} data-planes, with
-                            comprehensive monitoring and alerting, reducing the
-                            response times for many incidents.
-                        </Typography>
+                        Automated the customer request handling, incident
+                        handling, and on-call rotations for the{" "}
+                        {EnterpriseProjects.Indexity.name} data-planes, with
+                        comprehensive monitoring and alerting, reducing the
+                        response times for many incidents.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -195,7 +188,7 @@ const Experience = (): React.ReactElement => {
                 <ExperienceSectionHeading
                     id="section-senior-se-orion"
                     experience={Experiences.OrionHealthSeniorSoftwareEngineer}
-                    logoSx={{ height: "3em" }}
+                    logoClassName="h-[3em]"
                 />
                 <Paragraph>
                     At {OrionHealth}, I spearheaded the deployment of {Indexity}{" "}
@@ -217,45 +210,34 @@ const Experience = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Directed the successful deployment of{" "}
-                            {Projects.Indexity.name} data-planes using AWS{" "}
-                            infrastructure; conducted thorough disaster recovery
-                            planning, which reduced potential downtime risks
-                            from unforeseen incidents by at least 40%.
-                        </Typography>
+                        Directed the successful deployment of{" "}
+                        {EnterpriseProjects.Indexity.name} data-planes using AWS{" "}
+                        infrastructure; conducted thorough disaster recovery
+                        planning, which reduced potential downtime risks from
+                        unforeseen incidents by at least 40%.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Championed an end-to-end deployment strategy for{" "}
-                            {Projects.Indexity.name} within a deployment
-                            framework on {GitLab} and AWS, resulting in a faster
-                            rollout time that decreased development cycles by
-                            one day per development cycle.
-                        </Typography>
+                        Championed an end-to-end deployment strategy for{" "}
+                        {EnterpriseProjects.Indexity.name} within a deployment
+                        framework on {GitLab} and AWS, resulting in a faster
+                        rollout time that decreased development cycles by one
+                        day per development cycle.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Orchestrated comprehensive threat modeling and
-                            privacy assessments, leading to stronger safeguards,
-                            resulting in no major vulnerabilities detected by
-                            penetration tests initiated by customers.
-                        </Typography>
+                        Orchestrated comprehensive threat modeling and privacy
+                        assessments, leading to stronger safeguards, resulting
+                        in no major vulnerabilities detected by penetration
+                        tests initiated by customers.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Enhanced the precision of phone number searches by
-                            implementing {ApacheLucene}-based indexing
-                            techniques, improving the patient searches across
-                            two customers.
-                        </Typography>
+                        Enhanced the precision of phone number searches by
+                        implementing {ApacheLucene}-based indexing techniques,
+                        improving the patient searches across two customers.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Developed the {Terraform} code for deploying
-                            self-hosted GitLab runners on {GoogleCloud},
-                            reducing the development costs by more than 50%.
-                        </Typography>
+                        Developed the {Terraform} code for deploying self-hosted
+                        GitLab runners on {GoogleCloud}, reducing the
+                        development costs by more than 50%.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -263,7 +245,7 @@ const Experience = (): React.ReactElement => {
                 <ExperienceSectionHeading
                     id="section-atl-wso2"
                     experience={Experiences.WSO2AssociateTechnicalLead}
-                    logoSx={{ height: "2.5em" }}
+                    logoClassName="h-[2.5em]"
                 />
                 <Paragraph>
                     I led the technical aspects of the Observability area and it
@@ -273,7 +255,8 @@ const Experience = (): React.ReactElement => {
                     other areas such as growth hacking,{" "}
                     <abbr title="User Experience">UX</abbr>,{" "}
                     <abbr title="Site Reliability Engineering">SRE</abbr> and
-                    other aspects of the {Projects.Choreo.name} platform.
+                    other aspects of the {EnterpriseProjects.Choreo.name}{" "}
+                    platform.
                 </Paragraph>
                 <Paragraph>
                     Apart from the Observability Area, I also led the effort on
@@ -292,45 +275,33 @@ const Experience = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Secured the Sustained Outstanding Contribution Award
-                            thrice in a row, an honor given exclusively to only
-                            the top 5% of all company staff members who
-                            demonstrated exceptional technical leadership and
-                            innovative contributions throughout tenure.
-                        </Typography>
+                        Secured the Sustained Outstanding Contribution Award
+                        thrice in a row, an honor given exclusively to only the
+                        top 5% of all company staff members who demonstrated
+                        exceptional technical leadership and innovative
+                        contributions throughout tenure.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Led a senior software engineer in developing the
-                            minimum viable features for the resource scheduling
-                            of the {Projects.Choreo.name} online editor within
-                            1.5 months, using {Kubernetes} and {GoLang}.
-                        </Typography>
+                        Led a senior software engineer in developing the minimum
+                        viable features for the resource scheduling of the{" "}
+                        {EnterpriseProjects.Choreo.name} online editor within
+                        1.5 months, using {Kubernetes} and {GoLang}.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Eliminated bottlenecks, reducing the startup time of
-                            the Kubernetes resources of the{" "}
-                            {Projects.Choreo.name} Editors by 80% and increasing
-                            the overall user experience.
-                        </Typography>
+                        Eliminated bottlenecks, reducing the startup time of the
+                        Kubernetes resources of the{" "}
+                        {EnterpriseProjects.Choreo.name} Editors by 80% and
+                        increasing the overall user experience.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Reduced the {MSSQL} database utilization by 60%
-                            using a {Redis} cache and randomization of cache
-                            expiry times, increasing the number of users the
-                            system can handle.
-                        </Typography>
+                        Reduced the {MSSQL} database utilization by 60% using a{" "}
+                        {Redis} cache and randomization of cache expiry times,
+                        increasing the number of users the system can handle.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Led the product team, completing 95% of the team
-                            targets and sprint milestones on time by
-                            prioritizing tasks and fostering a good working
-                            environment.
-                        </Typography>
+                        Led the product team, completing 95% of the team targets
+                        and sprint milestones on time by prioritizing tasks and
+                        fostering a good working environment.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -338,7 +309,7 @@ const Experience = (): React.ReactElement => {
                 <ExperienceSectionHeading
                     id="section-senior-se-wso2"
                     experience={Experiences.WSO2SeniorSoftwareEngineer}
-                    logoSx={{ height: "2.5em" }}
+                    logoClassName="h-[2.5em]"
                 />
                 <Paragraph>
                     I completely owned the Observability area of Cellery and
@@ -348,94 +319,87 @@ const Experience = (): React.ReactElement => {
                     extension and other tools of {Cellery} which involved
                     different new concepts and technologies which I learned
                     within short periods of time. Later when project {Choreo}{" "}
-                    was started, {Projects.Cellery.name} was adopted by the
-                    initial version of it as well, until later the project{" "}
-                    {Projects.Choreo.name} was rebooted and project{" "}
-                    {Projects.Cellery.name} was discontinued.
+                    was started, {EnterpriseProjects.Cellery.name} was adopted
+                    by the initial version of it as well, until later the
+                    project {EnterpriseProjects.Choreo.name} was rebooted and
+                    project {EnterpriseProjects.Cellery.name} was discontinued.
                 </Paragraph>
                 <Paragraph>
-                    When the {Projects.Choreo.name} project initially started
-                    (rebooted from the very first implementation), I was again
-                    selected for the small team of engineers who were tasked to
-                    make it a reality. Two more engineers were also added to the{" "}
-                    {Projects.Choreo.name} Observability subteam and I was
-                    tasked with leading the implementation of{" "}
-                    {Projects.Choreo.name} Observability. I designed the core
-                    architecture of {Projects.Choreo.name} Observability and
-                    also worked on improving {Ballerina} Observability to
-                    support {Projects.Choreo.name} Observability better. While
-                    generally this level of responsibility is not given to a
-                    Senior Software Engineer, I was trusted with it and I
-                    handled these responsibilities quite well, earning the top
-                    performance award for each year.
+                    When the {EnterpriseProjects.Choreo.name} project initially
+                    started (rebooted from the very first implementation), I was
+                    again selected for the small team of engineers who were
+                    tasked to make it a reality. Two more engineers were also
+                    added to the {EnterpriseProjects.Choreo.name} Observability
+                    subteam and I was tasked with leading the implementation of{" "}
+                    {EnterpriseProjects.Choreo.name} Observability. I designed
+                    the core architecture of {EnterpriseProjects.Choreo.name}{" "}
+                    Observability and also worked on improving {Ballerina}{" "}
+                    Observability to support {EnterpriseProjects.Choreo.name}{" "}
+                    Observability better. While generally this level of
+                    responsibility is not given to a Senior Software Engineer, I
+                    was trusted with it and I handled these responsibilities
+                    quite well, earning the top performance award for each year.
                 </Paragraph>
                 <Paragraph>
-                    The source code of {Projects.Ballerina.name} Observability
-                    was not actively maintained when I took over as the lead of
-                    the {Projects.Choreo.name} Observability Team. Therefore, I
-                    took over the responsibility of going through the code base
-                    and revamping the Observability instrumentation as well. The{" "}
-                    {Projects.Ballerina.name} compiler level instrumentation was
-                    previously performed at the lowest level of the compiler
-                    while writing the Java bytecode into the Java class files.
-                    However, this approach had its limitations as these
-                    instructions were not aware of scheduler level operations at
-                    this level. This resulted in some of the instructions
-                    getting executed twice due to the way Ballerina scheduler
-                    handled I/O-bound operations. To solve this issue, I worked
-                    on completely rewriting the Observability instrumentation at{" "}
-                    {Projects.Ballerina.name} compiler backend level by
-                    transforming the Ballerina Intermediate Representation (BIR)
-                    during the compilation. While this task was quite
-                    challenging due to the technologies it involved, the fact
-                    that almost no one knew the source code well and the strict
-                    deadlines, I managed to complete this on time and with good
-                    quality.
+                    The source code of {EnterpriseProjects.Ballerina.name}{" "}
+                    Observability was not actively maintained when I took over
+                    as the lead of the {EnterpriseProjects.Choreo.name}{" "}
+                    Observability Team. Therefore, I took over the
+                    responsibility of going through the code base and revamping
+                    the Observability instrumentation as well. The{" "}
+                    {EnterpriseProjects.Ballerina.name} compiler level
+                    instrumentation was previously performed at the lowest level
+                    of the compiler while writing the Java bytecode into the
+                    Java class files. However, this approach had its limitations
+                    as these instructions were not aware of scheduler level
+                    operations at this level. This resulted in some of the
+                    instructions getting executed twice due to the way Ballerina
+                    scheduler handled I/O-bound operations. To solve this issue,
+                    I worked on completely rewriting the Observability
+                    instrumentation at {EnterpriseProjects.Ballerina.name}{" "}
+                    compiler backend level by transforming the Ballerina
+                    Intermediate Representation (BIR) during the compilation.
+                    While this task was quite challenging due to the
+                    technologies it involved, the fact that almost no one knew
+                    the source code well and the strict deadlines, I managed to
+                    complete this on time and with good quality.
                 </Paragraph>
                 <Paragraph>
                     After the initial <abbr title="Proof of Concept">PoC</abbr>{" "}
-                    was completed, the {Projects.Choreo.name} product also
-                    evolved and the Observability Team also gained new members.
-                    I was entrusted with continuing to lead the Observability
-                    Team while some of the product management aspects were
-                    handed over to others. I guided the team into implementing
-                    most of the core features of {Projects.Choreo.name}{" "}
-                    Observability and I helped and encouraged the engineers in
-                    my team to grow and improve themselves as well.
+                    was completed, the {EnterpriseProjects.Choreo.name} product
+                    also evolved and the Observability Team also gained new
+                    members. I was entrusted with continuing to lead the
+                    Observability Team while some of the product management
+                    aspects were handed over to others. I guided the team into
+                    implementing most of the core features of{" "}
+                    {EnterpriseProjects.Choreo.name} Observability and I helped
+                    and encouraged the engineers in my team to grow and improve
+                    themselves as well.
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Spearheaded the implementation of the foundation for
-                            Choreo observability within 3 months with a team of
-                            2 other engineers, creating the backbone of Choreo
-                            observability.
-                        </Typography>
+                        Spearheaded the implementation of the foundation for
+                        Choreo observability within 3 months with a team of 2
+                        other engineers, creating the backbone of Choreo
+                        observability.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Decreased the cost by 90% for the company by
-                            architecting the Choreo observability storages,
-                            including data archival into a Data Lake for Machine
-                            Learning (<abbr title="Machine Learning">ML</abbr>)
-                            use cases.
-                        </Typography>
+                        Decreased the cost by 90% for the company by
+                        architecting the Choreo observability storages,
+                        including data archival into a Data Lake for Machine
+                        Learning (<abbr title="Machine Learning">ML</abbr>) use
+                        cases.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Improved debugging experience for users by revamping
-                            the observability instrumentation at the Ballerina
-                            compiler level, within 1 month, to map the
-                            observability data to the source code.
-                        </Typography>
+                        Improved debugging experience for users by revamping the
+                        observability instrumentation at the Ballerina compiler
+                        level, within 1 month, to map the observability data to
+                        the source code.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Minimized the number of bugs in the Choreo
-                            Observability area by implementing proper code
-                            reviewing, testing, and deployment practices in a
-                            team of 6 engineers.
-                        </Typography>
+                        Minimized the number of bugs in the Choreo Observability
+                        area by implementing proper code reviewing, testing, and
+                        deployment practices in a team of 6 engineers.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -443,7 +407,7 @@ const Experience = (): React.ReactElement => {
                 <ExperienceSectionHeading
                     id="section-se-wso2"
                     experience={Experiences.WSO2SoftwareEngineer}
-                    logoSx={{ height: "2.5em" }}
+                    logoClassName="h-[2.5em]"
                 />
                 <Paragraph>
                     At the start of my employment, I worked in multiple teams as
@@ -498,47 +462,39 @@ const Experience = (): React.ReactElement => {
                     easier. I was selected to be part of the initial research
                     team to implement the product. I worked on this project for
                     some time and it evolved and along with the Cell-based
-                    architecture, later became project {Projects.Cellery.name}.
-                    I mainly worked on the Observability aspects of the
-                    platform, but I contributed to almost all the other areas of
-                    the product with thoughts and ideas as well. While working
-                    on project {Projects.Cellery.name}, I was able to gain
+                    architecture, later became project{" "}
+                    {EnterpriseProjects.Cellery.name}. I mainly worked on the
+                    Observability aspects of the platform, but I contributed to
+                    almost all the other areas of the product with thoughts and
+                    ideas as well. While working on project{" "}
+                    {EnterpriseProjects.Cellery.name}, I was able to gain
                     in-depth knowledge on {Kubernetes} as well and this helped
                     me immensely in my role as a software engineer later in my
                     career.
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Delivered the Cellery observability basic features
-                            within 2 months for observing microservice
-                            composites using Kubernetes, {Istio}, {OpenTracing},
-                            and {Envoy}.
-                        </Typography>
+                        Delivered the Cellery observability basic features
+                        within 2 months for observing microservice composites
+                        using Kubernetes, {Istio}, {OpenTracing}, and {Envoy}.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Headed the implementation of Cellery developer tools
-                            using {VSCode} Language Server Extensions and
-                            visualizations of Cells using {D3js}.
-                        </Typography>
+                        Headed the implementation of Cellery developer tools
+                        using {VSCode} Language Server Extensions and
+                        visualizations of Cells using {D3js}.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Developed {Projects.Cellery.name} Hub backed by a{" "}
-                            Docker Registry as the storage and implemented the
-                            authentication of the{" "}
-                            <abbr title="Command Line Interface">CLI</abbr> and
-                            portal using {OIDC} within 1 month.
-                        </Typography>
+                        Developed {EnterpriseProjects.Cellery.name} Hub backed
+                        by a Docker Registry as the storage and implemented the
+                        authentication of the{" "}
+                        <abbr title="Command Line Interface">CLI</abbr> and
+                        portal using {OIDC} within 1 month.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Implemented the observability aspects of the{" "}
-                            {Companies.WSO2.name}
-                            Serverless Platform using {Prometheus} and {Jaeger}{" "}
-                            on top of Kubernetes and Apache OpenWhisk.
-                        </Typography>
+                        Implemented the observability aspects of the{" "}
+                        {Companies.WSO2.name}
+                        Serverless Platform using {Prometheus} and {Jaeger} on
+                        top of Kubernetes and Apache OpenWhisk.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -546,7 +502,7 @@ const Experience = (): React.ReactElement => {
                 <ExperienceSectionHeading
                     id="section-trainee-wso2"
                     experience={Experiences.WSO2SoftwareEngineeringTrainee}
-                    logoSx={{ height: "2.5em" }}
+                    logoClassName="h-[2.5em]"
                 />
                 <Paragraph>
                     I worked as a Software Engineering intern at {WSO2} as a
@@ -565,10 +521,10 @@ const Experience = (): React.ReactElement => {
                     minimum values in data streams. Afterwards, I worked on a
                     prototype for generating suggestions in the editor component
                     of the {Siddhi} IDE using data annotated into the{" "}
-                    {Projects.Siddhi.name} extensions through Java custom
-                    annotations. Moreover, I designed some of the initial
-                    wireframes of the {Projects.Siddhi.name} IDE as well before
-                    the end of my internship.
+                    {EnterpriseProjects.Siddhi.name} extensions through Java
+                    custom annotations. Moreover, I designed some of the initial
+                    wireframes of the {EnterpriseProjects.Siddhi.name} IDE as
+                    well before the end of my internship.
                 </Paragraph>
             </Section>
         </>

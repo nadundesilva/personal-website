@@ -1,0 +1,77 @@
+/*
+ * Nadun De Silva - All Rights Reserved
+ *
+ * This source code and its associated files are the
+ * confidential and proprietary information of Nadun De Silva.
+ * Unauthorized reproduction, distribution, or disclosure
+ * in any form, in whole or in part, is strictly prohibited
+ * except as explicitly provided under a separate license
+ * agreement with Nadun De Silva.
+ *
+ * Website: https://nadundesilva.com
+ *
+ * © 2026 Nadun De Silva. All rights reserved.
+ */
+
+/* Light theme */
+:root {
+    color-scheme: light;
+
+    --background: oklch(98% 0 0deg);
+    --foreground: oklch(20% 0.02 222deg);
+    --card: oklch(97.7% 0 0deg);
+    --card-foreground: oklch(20% 0.02 222deg);
+    --popover: oklch(98% 0 0deg);
+    --popover-foreground: oklch(20% 0.02 222deg);
+    --primary: oklch(39% 0.044 222deg);
+    --primary-foreground: oklch(98% 0 0deg);
+    --secondary: oklch(47% 0.057 222deg);
+    --secondary-foreground: oklch(98% 0 0deg);
+    --muted: oklch(94% 0.01 222deg);
+    --muted-foreground: oklch(52% 0.03 222deg);
+    --accent: oklch(88% 0.055 222deg);
+    --accent-foreground: oklch(20% 0.02 222deg);
+    --destructive: oklch(57.7% 0.245 27.325deg);
+    --border: oklch(88% 0 0deg);
+    --input: oklch(88% 0 0deg);
+    --ring: oklch(39% 0.044 222deg);
+    --radius: 0.625rem;
+    --link: oklch(40% 0.072 232deg);
+    --image-shadow:
+        0 0 0 3px color-mix(in oklch, var(--primary) 25%, transparent),
+        0 4px 24px color-mix(in oklch, var(--primary) 15%, transparent);
+    --image-shadow-hover:
+        0 0 0 3px color-mix(in oklch, var(--primary) 50%, transparent),
+        0 8px 32px color-mix(in oklch, var(--primary) 27%, transparent);
+}
+
+/* Dark theme */
+.dark {
+    color-scheme: dark;
+
+    --background: oklch(21% 0.03 250deg);
+    --foreground: oklch(93% 0.01 222deg);
+    --card: oklch(26% 0.028 250deg);
+    --card-foreground: oklch(93% 0.01 222deg);
+    --popover: oklch(26% 0.028 250deg);
+    --popover-foreground: oklch(93% 0.01 222deg);
+    --primary: oklch(60% 0.056 222deg);
+    --primary-foreground: oklch(98% 0 0deg);
+    --secondary: oklch(77% 0.069 218deg);
+    --secondary-foreground: oklch(21% 0.03 250deg);
+    --muted: oklch(29% 0.026 250deg);
+    --muted-foreground: oklch(70% 0.03 222deg);
+    --accent: oklch(33% 0.028 250deg);
+    --accent-foreground: oklch(93% 0.01 222deg);
+    --destructive: oklch(70.4% 0.191 22.216deg);
+    --border: oklch(100% 0 0deg / 10%);
+    --input: oklch(100% 0 0deg / 15%);
+    --ring: oklch(60% 0.056 222deg);
+    --link: oklch(72% 0.078 222deg);
+    --image-shadow:
+        0 0 0 3px color-mix(in oklch, var(--primary) 20%, transparent),
+        0 4px 24px color-mix(in oklch, var(--primary) 12%, transparent);
+    --image-shadow-hover:
+        0 0 0 3px color-mix(in oklch, var(--primary) 35%, transparent),
+        0 8px 32px color-mix(in oklch, var(--primary) 22%, transparent);
+}

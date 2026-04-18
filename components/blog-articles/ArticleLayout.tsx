@@ -14,9 +14,8 @@
  */
 "use client";
 
-import { ArrowBack, OpenInNew } from "@mui/icons-material";
-import { Box, Typography } from "@mui/material";
-import { KeywordChip, LeftAccent } from "@/components/primitives";
+import { Badge, LeftAccent, ScrollReveal } from "@/components/primitives";
+import { ArrowLeft, ExternalLink } from "lucide-react";
 import type { StaticImageData } from "next/image";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
@@ -24,8 +23,13 @@ import React from "react";
 import type { BlogPosting, Person, WithContext } from "schema-dts";
 
 import profilePhotoImage from "@/assets/profile-photo.webp";
-import { DateInfo, Image, LinkButton, Title } from "@/components/content";
-import { ScrollReveal } from "@/components/primitives";
+import {
+    DateInfo,
+    Image,
+    LinkButton,
+    Paragraph,
+    Title,
+} from "@/components/content";
 import { Date as FormattableDate } from "@/constants/date";
 import { FULL_NAME, WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
@@ -86,7 +90,7 @@ const ArticleLayout = ({
     const renderingId = React.useId();
 
     return (
-        <Box component="article">
+        <article>
             <Title>{pageMetadata.title}</Title>
             <Script
                 id={`json-ld-blog-${renderingId}`}
@@ -97,58 +101,39 @@ const ArticleLayout = ({
             />
 
             <ScrollReveal delay={100}>
-                <LeftAccent sx={{ mb: 4 }}>
+                <LeftAccent className="mb-8">
                     <DateInfo
                         value={FormattableDate.fromJsDate(
                             blogMetadata.publishedDate,
                         )}
-                        sx={{ mt: 0, mb: 2.5 }}
+                        className="mt-0 mb-5"
                     />
-                    <Typography
-                        variant="body2"
-                        sx={{
-                            mb: 2.5,
-                            color: "text.secondary",
-                            lineHeight: 1.6,
-                        }}
-                    >
+                    <Paragraph className="text-muted-foreground mb-5 text-sm leading-relaxed sm:text-start">
                         {pageMetadata.description}
-                    </Typography>
+                    </Paragraph>
                     <LinkButton
                         href={blogMetadata.mediumUrl}
                         name="Read on Medium"
-                        endIcon={OpenInNew}
+                        endIcon={ExternalLink}
                         target="_blank"
                     />
                     {blogMetadata.keywords.length > 0 && (
-                        <Box sx={{ mt: 3.5 }}>
-                            <Typography
-                                variant="overline"
-                                component="p"
-                                sx={{
-                                    color: "text.secondary",
-                                    mb: 0.75,
-                                }}
-                            >
+                        <div className="mt-7">
+                            <span className="text-muted-foreground mb-1.5 block text-xs tracking-widest uppercase">
                                 Keywords:
-                            </Typography>
-                            <Box
+                            </span>
+                            <div
                                 role="group"
                                 aria-label="Article keywords"
-                                sx={{
-                                    display: "flex",
-                                    flexWrap: "wrap",
-                                    gap: 0.5,
-                                }}
+                                className="flex flex-wrap gap-1"
                             >
                                 {blogMetadata.keywords.map((keyword) => (
-                                    <KeywordChip
-                                        key={keyword}
-                                        label={keyword}
-                                    />
+                                    <Badge variant="outline" key={keyword}>
+                                        {keyword}
+                                    </Badge>
                                 ))}
-                            </Box>
-                        </Box>
+                            </div>
+                        </div>
                     )}
                 </LeftAccent>
             </ScrollReveal>
@@ -157,32 +142,24 @@ const ArticleLayout = ({
                     src={blogMetadata.image}
                     alt=""
                     fill
-                    sizes="100vw"
-                    sx={{ aspectRatio: "16/9", borderRadius: 2, mb: 6 }}
+                    fetchPriority="high"
+                    className="mb-12 aspect-video rounded-md"
                 />
             </ScrollReveal>
             {children}
-            <ScrollReveal delay={0}>
-                <Box
-                    sx={{
-                        mt: 8,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        gap: 1.5,
-                    }}
-                >
-                    <Typography variant="overline" color="text.disabled">
+            <ScrollReveal>
+                <div className="mt-16 flex flex-col items-center gap-3">
+                    <span className="text-muted-foreground text-xs tracking-widest uppercase">
                         Continue reading
-                    </Typography>
+                    </span>
                     <LinkButton
                         href="/blog-articles"
                         name="Back to all articles"
-                        startIcon={ArrowBack}
+                        startIcon={ArrowLeft}
                     />
-                </Box>
+                </div>
             </ScrollReveal>
-        </Box>
+        </article>
     );
 };
 

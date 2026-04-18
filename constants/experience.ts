@@ -13,9 +13,9 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
-import { Date, DateRange, Now } from "./date";
 import Companies, { type Company } from "@/constants/companies";
-import Skills from "@/constants/skills";
+import Skills, { type SkillDefinition } from "@/constants/skills";
+import { Date, DateRange, Now } from "./date";
 
 export interface Experience {
     name: string;
@@ -23,7 +23,7 @@ export interface Experience {
     timePeriod: DateRange;
     description: string;
     institute: string;
-    skills: string[];
+    skills: SkillDefinition[];
 }
 
 const Experiences: Record<string, Experience> = {
@@ -31,7 +31,8 @@ const Experiences: Record<string, Experience> = {
         name: "Lead Software Engineer",
         company: Companies.McCraeTech,
         timePeriod: new DateRange(new Date(2024, "April"), Now),
-        description: "Leading the SRE aspects of Indexity data-planes.",
+        description:
+            "Leading the SRE aspects of Indexity data-planes and working across the product.",
         institute: "McCrae Tech, Auckland, New Zealand",
         skills: [
             Skills.GoLang,
@@ -186,5 +187,7 @@ const Experiences: Record<string, Experience> = {
         skills: [Skills.Java, Skills.JavaScript],
     },
 };
+
+export const CurrentExperience = Experiences.McCraeTechLeadSoftwareEngineer;
 
 export default Experiences;

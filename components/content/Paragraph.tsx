@@ -12,28 +12,39 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Typography } from "@mui/material";
+import { cva, type VariantProps } from "class-variance-authority";
 import type React from "react";
 
-interface ParagraphProps {
+import { cn } from "@/components/primitives/utils/cn";
+
+const paragraphVariants = cva(
+    "mb-5 text-[0.9375rem] leading-[1.75] font-normal",
+    {
+        variants: {
+            textAlign: {
+                justified: "sm:text-justify",
+                start: "sm:text-start",
+            },
+        },
+        defaultVariants: { textAlign: "justified" },
+    },
+);
+
+interface ParagraphProps extends VariantProps<typeof paragraphVariants> {
     children: React.ReactNode;
     id?: string;
+    className?: string;
 }
 
-const Paragraph = ({ children, id }: ParagraphProps): React.ReactElement => (
-    <Typography
-        id={id}
-        variant="body1"
-        sx={{
-            m: 0,
-            mb: 2.5,
-            // Intentional: justified text gives content pages an editorial, document-like appearance.
-            // Disabled on xs to avoid uneven word spacing on narrow screens.
-            textAlign: { xs: "left", sm: "justify" },
-        }}
-    >
+const Paragraph = ({
+    children,
+    id,
+    textAlign,
+    className,
+}: ParagraphProps): React.ReactElement => (
+    <p id={id} className={cn(paragraphVariants({ textAlign }), className)}>
         {children}
-    </Typography>
+    </p>
 );
 
 export default Paragraph;

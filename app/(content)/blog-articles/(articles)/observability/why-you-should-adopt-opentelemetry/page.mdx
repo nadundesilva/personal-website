@@ -37,7 +37,7 @@ export const blogMetadata = {
 export const metadata = {
     title: "Why You Should Adopt OpenTelemetry",
     description:
-        "OpenTelemetry had been gaining momentum across many Observability vendors and products and it is becoming the de facto standard.",
+        "OpenTelemetry has been gaining momentum across many Observability vendors and products and it is becoming the de facto standard.",
     keywords: blogMetadata.keywords,
     openGraph: {
         images: [blogMetadata.image.src],
@@ -65,7 +65,7 @@ There are so many observability vendors and frameworks out there. Most of them o
 
 <Image alt="OpenTelemetry Logo" src={openTelemetryImage} />
 
-[OpenTelemetry](https://opentelemetry.io/) is a CNCF project which unifies and formalizes all aspects of Observability into one specification. The specification itself was incepted a few years back and it continues to evolve and gain momentum throughout the industry.
+[OpenTelemetry](https://opentelemetry.io/) is a CNCF project which unifies and formalizes all aspects of Observability into one specification. The specification itself was launched a few years back and it continues to evolve and gain momentum throughout the industry.
 
 You may have been working with [OpenTracing](https://opentracing.io/), [OpenCensus](https://opencensus.io/), [Prometheus](https://prometheus.io/), or some of the popular frameworks and tools out there for adding Observability to your applications. However, until [OpenTelemetry](https://opentelemetry.io/) came along, there was no one specification spanning across all three verticals of Observability (metrics, tracing, and logging), tying them together and correlating them appropriately.
 
@@ -73,7 +73,7 @@ You may have been working with [OpenTracing](https://opentracing.io/), [OpenCens
 
 # Unifies All the Pillars of Observability
 
-Previously there were few specifications for traces (OpenTracing) and metrics (Prometheus, Micrometer). However, some of these specifications such as Prometheus were vendor specific and all of them were created focusing on one area and not Observability as a whole.
+Previously there were few specifications for traces (OpenTracing) and metrics (Prometheus, Micrometer). However, none of these were formal universal standards, and each was specific to its own ecosystem, with others adopting their formats due to their popularity rather than any agreed-upon specification. Moreover, none of them covered Observability as a whole.
 
 OpenTelemetry covers the three main types we discussed and adds common specifications such as attributes (contextual information) to all three of them. OpenTelemetry also provides libraries in many languages, on top of the specification itself. The libraries themselves add proper contextual information to properly correlate each other (For example trace ID to logs).
 
@@ -81,7 +81,7 @@ OpenTelemetry covers the three main types we discussed and adds common specifica
 
 If you have been using other popular specifications/frameworks such as OpenTracing and OpenCensus, you will feel quite at home in OpenTelemetry. They even provided shims and other tools allowing you to use the existing code in your applications with minimal changes. This will help you in migrating to OpenTelemetry quite easily.
 
-At the same time specifications like OpenTracing and OpenCensus had been deprecated in favor of OpenTelemetry and they are encouraging to move to OpenTelemetry. Therefore, it is important to switch to OpenTelemetry if you want a continuously improving framework.
+At the same time specifications like OpenTracing and OpenCensus have been deprecated in favor of OpenTelemetry and they encourage users to move to OpenTelemetry. Therefore, it is important to switch to OpenTelemetry if you want a continuously improving framework.
 
 # Made by Observability Experts With Best Practices in Mind
 
@@ -104,7 +104,7 @@ OpenTelemetry also offers components such as OpenTelemetry Collector which are d
 
 # A Large Number of Supported Vendors
 
-With the increasing adaptation of OpenTelemetry in both applications and observability providers, we now have a large number of vendors supporting OpenTelemetry with most of the big players in observability and cloud out there in it. You can view the [list on the OpenTelemetry website](https://opentelemetry.io/ecosystem/vendors/) itself.
+With the increasing adoption of OpenTelemetry in both applications and observability providers, we now have a large number of vendors supporting OpenTelemetry with most of the big players in observability and cloud out there in it. You can view the [list on the OpenTelemetry website](https://opentelemetry.io/ecosystem/vendors/) itself.
 
 At the same time, since most of the [popular programming languages also have instrumentation support](https://opentelemetry.io/docs/instrumentation/), you will be able to have even a polyglot microservices deployment without much trouble and publish the data to any vendor of your preference.
 

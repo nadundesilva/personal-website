@@ -14,33 +14,40 @@
  */
 "use client";
 
-import { Check, ContentCopy, ErrorOutline } from "@mui/icons-material";
-import IconButton from "@mui/material/IconButton";
-import type { SxProps, Theme } from "@mui/material/styles";
-import Tooltip from "@mui/material/Tooltip";
+import { AlertCircle, Check, Copy } from "lucide-react";
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-interface CopyButtonProps {
-    onCopy: () => void | Promise<void>;
+import { Button } from "@/components/primitives/Button";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/components/primitives/Tooltip";
+
+type CopyButtonProps = {
     label?: string;
     copiedLabel?: string;
     failedLabel?: string;
-    size?: "small" | "medium" | "large";
     className?: string;
-    sx?: SxProps<Theme>;
-    onCopiedChange?: (copied: boolean) => void;
-}
+} & (
+    | {
+          copyContent: string;
+          resolveCopyContent?: never;
+      }
+    | {
+          copyContent?: never;
+          resolveCopyContent: () => string | Promise<string>;
+      }
+);
 
 const CopyButton = ({
-    onCopy,
+    copyContent,
+    resolveCopyContent,
     label = "Copy",
     copiedLabel = "Copied!",
     failedLabel = "Copy failed",
-    size = "small",
     className,
-    sx,
-    onCopiedChange,
 }: CopyButtonProps): React.ReactElement => {
     const [copied, setCopied] = useState(false);
     const [copyFailed, setCopyFailed] = useState(false);
@@ -56,15 +63,16 @@ const CopyButton = ({
 
     const handleClick = useCallback(async () => {
         try {
-            await Promise.resolve(onCopy());
+            const content = await Promise.resolve(
+                copyContent ?? resolveCopyContent?.() ?? "",
+            );
+            await navigator.clipboard.writeText(content);
             setCopied(true);
-            onCopiedChange?.(true);
             if (timeoutRef.current !== null) {
                 clearTimeout(timeoutRef.current);
             }
             timeoutRef.current = setTimeout(() => {
                 setCopied(false);
-                onCopiedChange?.(false);
             }, 2000);
         } catch {
             setCopyFailed(true);
@@ -75,7 +83,7 @@ const CopyButton = ({
                 setCopyFailed(false);
             }, 2000);
         }
-    }, [onCopy, onCopiedChange]);
+    }, [copyContent, resolveCopyContent]);
 
     const currentLabel = copyFailed
         ? failedLabel
@@ -84,23 +92,35 @@ const CopyButton = ({
           : label;
 
     return (
-        <Tooltip title={currentLabel}>
-            <IconButton
-                onClick={handleClick}
-                aria-label={currentLabel}
-                size={size}
-                className={className}
-                color={copyFailed ? "error" : undefined}
-                sx={sx}
+        <Tooltip>
+            <TooltipTrigger
+                render={
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleClick}
+                        // Intentionally the base label, not currentLabel — the button's
+                        // accessible name describes its action ("Copy"), not its state.
+                        // State feedback is announced via the role="status" span below.
+                        aria-label={label}
+                        className={className}
+                    />
+                }
             >
                 {copied ? (
-                    <Check fontSize="small" />
+                    <Check />
                 ) : copyFailed ? (
-                    <ErrorOutline fontSize="small" />
+                    <AlertCircle className="text-destructive" />
                 ) : (
-                    <ContentCopy fontSize="small" />
+                    <Copy />
                 )}
-            </IconButton>
+            </TooltipTrigger>
+            <TooltipContent>{currentLabel}</TooltipContent>
+
+            {/* Sole mechanism for announcing state changes — aria-label is intentionally kept as the action name */}
+            <span role="status" className="sr-only">
+                {copied || copyFailed ? currentLabel : ""}
+            </span>
         </Tooltip>
     );
 };

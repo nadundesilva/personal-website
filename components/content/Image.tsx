@@ -12,15 +12,22 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { Box } from "@mui/material";
-import { alpha, type Theme } from "@mui/material/styles";
-import type { SxProps } from "@mui/system";
-import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
+import { cn } from "@/components/primitives/utils/cn";
 import NextImage from "next-image-export-optimizer";
 import { type StaticImageData } from "next/image";
 import type React from "react";
+
+import { generateSizesForContentBreakpoints } from "@/utils/common/image-sizes";
+
+// Mirrors the float CSS classes exactly — update both together.
+const FLOAT_IMAGE_SIZES = generateSizesForContentBreakpoints({
+    xl: { viewportFraction: 0.2 }, // 1/5 content width; auto-expands to 2xl with correct 640px padding
+    lg: { viewportFraction: 0.25 }, // 1/4 content width
+    md: { viewportFraction: 1 / 3 }, // 1/3 content width
+});
+
+// Full ContentContainer content width at every breakpoint.
+const FULL_WIDTH_SIZES = generateSizesForContentBreakpoints({});
 
 interface ImageProps {
     src: StaticImageData | string;
@@ -28,18 +35,9 @@ interface ImageProps {
     float?: "left" | "right";
     fill?: boolean;
     sizes?: string;
-    sx?: SxProps<Theme>;
+    fetchPriority?: "high" | "low" | "auto";
+    className?: string;
 }
-
-const boxShadow = (theme: Theme) =>
-    theme.palette.mode === "light"
-        ? `0 0 0 3px ${alpha(theme.palette.primary.main, 0.25)}, 0 4px 24px ${alpha(theme.palette.primary.main, 0.15)}`
-        : `0 0 0 3px ${alpha(theme.palette.primary.light, 0.2)}, 0 4px 24px ${alpha(theme.palette.primary.light, 0.12)}`;
-
-const boxShadowHover = (theme: Theme) =>
-    theme.palette.mode === "light"
-        ? `0 0 0 3px ${alpha(theme.palette.primary.main, 0.5)}, 0 8px 32px ${alpha(theme.palette.primary.main, 0.27)}`
-        : `0 0 0 3px ${alpha(theme.palette.primary.light, 0.35)}, 0 8px 32px ${alpha(theme.palette.primary.light, 0.22)}`;
 
 const Image = ({
     src,
@@ -47,56 +45,40 @@ const Image = ({
     float,
     fill,
     sizes,
-    sx,
-}: ImageProps): React.ReactElement => (
-    <Box
-        sx={[
-            {
-                "borderRadius": 1,
-                "overflow": "hidden",
-                "boxShadow": boxShadow,
-                "transition": (theme) =>
-                    theme.transitions.create("box-shadow", {
-                        duration: theme.transitions.duration.short,
-                    }),
-                "&:hover": {
-                    boxShadow: boxShadowHover,
-                },
-                [MOTION_OK_QUERY]: {
-                    "transition": (theme) =>
-                        theme.transitions.create(["transform", "box-shadow"], {
-                            duration: theme.transitions.duration.short,
-                        }),
-                    "&:hover": {
-                        transform: (theme) =>
-                            `translateY(-${theme.motion.hoverLift})`,
-                    },
-                },
-                ...(fill && { position: "relative" }),
-                ...(float !== undefined && {
-                    float,
-                    height: "auto",
-                    width: { xs: "100%", md: "20vw" },
-                    my: 2.5,
-                    ml: float === "left" ? 0 : 2.5,
-                    mr: float === "right" ? 0 : 2.5,
-                }),
-            },
-            ...(Array.isArray(sx) ? sx : [sx ?? {}]),
-        ]}
-    >
-        <NextImage
-            src={src}
-            alt={alt}
-            fill={fill}
-            sizes={sizes}
-            style={
-                fill
-                    ? { objectFit: "cover" }
-                    : { height: "auto", maxWidth: "100%", display: "block" }
-            }
-        />
-    </Box>
-);
+    fetchPriority,
+    className,
+}: ImageProps): React.ReactElement => {
+    const effectiveSizes =
+        sizes ?? (float !== undefined ? FLOAT_IMAGE_SIZES : FULL_WIDTH_SIZES);
+    return (
+        <div
+            className={cn(
+                className,
+                "overflow-hidden rounded-sm",
+                "shadow-(--image-shadow) hover:shadow-(--image-shadow-hover)",
+                "motion-safe:transition-[transform,box-shadow] motion-safe:duration-200 motion-safe:hover:-translate-y-0.5",
+                fill && "relative",
+                float !== undefined && [
+                    float === "left" ? "float-left" : "float-right",
+                    "my-5 h-auto w-full",
+                    "md:w-[calc(33.3333vw-21.3333px)]", // 1/3 × content width (viewport − md padding)
+                    "lg:w-[calc(25vw-40px)]", // 1/4 × content width (viewport − lg padding)
+                    "xl:w-[calc(20vw-64px)]", // 1/5 × content width (viewport − xl padding)
+                    "2xl:w-[calc(20vw-128px)]", // 1/5 × content width (viewport − 2xl padding)
+                    float === "left" ? "mr-5" : "ml-5",
+                ],
+            )}
+        >
+            <NextImage
+                src={src}
+                alt={alt}
+                fill={fill}
+                sizes={effectiveSizes}
+                fetchPriority={fetchPriority}
+                className={fill ? "object-cover" : undefined}
+            />
+        </div>
+    );
+};
 
 export default Image;

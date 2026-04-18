@@ -13,7 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
-import "./commands";
 import { mount } from "cypress/react";
+import "./commands";
 
 Cypress.Commands.add("mount", mount);

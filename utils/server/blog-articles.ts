@@ -13,12 +13,11 @@
  * © 2025 Nadun De Silva. All rights reserved.
  */
 
-import { readFileSync } from "fs";
+import { readFile } from "fs/promises";
 
 import { glob } from "glob";
 import { type StaticImageData } from "next/image";
-
-import { estimateReadingTimeMinutesFromText } from "../common/blog-articles";
+import readingTime from "reading-time";
 
 export interface BlogArticle {
     title: string;
@@ -44,18 +43,6 @@ export const BLOG_ARTICLES_DIRECTORY_PREFIX =
 export const BLOG_ARTICLES_GROUP_FILE = "page.tsx";
 export const BLOG_ARTICLE_FILE = "page.mdx";
 
-function estimateReadingTimeMinutes(mdxContent: string): number {
-    const text = mdxContent
-        .replace(/^(export|import)\s[^;]+;?\n?/gm, "")
-        .replace(/<[A-Z][^>]*\/>/g, "")
-        .replace(/<\/?[A-Za-z][^>]*>/g, "")
-        .replace(/```[\s\S]*?```/g, "")
-        .replace(/`[^`]+`/g, "")
-        .replace(/^#{1,6}\s+/gm, "")
-        .replace(/\{[^}]*\}/g, "");
-    return estimateReadingTimeMinutesFromText(text);
-}
-
 export function resolveWebsiteBlogArticlesSubPath(filePath: string): string {
     return filePath
         .replace(/^app\/\(content\)\/blog-articles\/\(articles\)\//, "")
@@ -70,9 +57,8 @@ async function getBlogArticles(subPath: string): Promise<BlogArticle[]> {
             const { metadata, blogMetadata } = await import(
                 `../../app/(content)/blog-articles/(articles)/${websiteSubPath}/${BLOG_ARTICLE_FILE}`
             );
-            const readingTimeMinutes = estimateReadingTimeMinutes(
-                readFileSync(filePath, "utf-8"),
-            );
+            const { minutes } = readingTime(await readFile(filePath, "utf-8"));
+            const readingTimeMinutes = Math.max(1, Math.ceil(minutes));
 
             return {
                 title: metadata.title as string,

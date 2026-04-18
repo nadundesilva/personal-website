@@ -13,16 +13,21 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 
-const WORDS_PER_MINUTE = 200;
+// shadcn/ui component
 
-/**
- * Estimates reading time from plain text (e.g. DOM textContent or pre-stripped MDX).
- * Returns at least 1 minute.
- */
-export function estimateReadingTimeMinutesFromText(text: string): number {
-    const wordCount = text
-        .trim()
-        .split(/\s+/)
-        .filter((w) => w.length > 0).length;
-    return Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE));
+import { Loader2Icon } from "lucide-react";
+
+import { cn } from "@/components/primitives/utils/cn";
+
+function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+    return (
+        <Loader2Icon
+            role="status"
+            aria-label="Loading"
+            className={cn("size-4 motion-safe:animate-spin", className)}
+            {...props}
+        />
+    );
 }
+
+export { Spinner };

@@ -14,6 +14,7 @@
  */
 "use client";
 
+import { animate, useReducedMotion } from "motion/react";
 import React, { useEffect, useState } from "react";
 
 interface AnimatedStatValueProps {
@@ -21,25 +22,17 @@ interface AnimatedStatValueProps {
     prefix?: string;
     suffix?: string;
     step?: number;
-    startDelay?: number;
 }
-
-const ANIMATION_DURATION_MS = 1500;
 
 function formatNumber(current: number, target: number): string {
     const dot = String(target).indexOf(".");
     const places = dot === -1 ? 0 : String(target).length - dot - 1;
-    return places === 0 ? String(Math.round(current)) : current.toFixed(places);
-}
-
-function capitalise(str: string): string {
-    if (str.length === 0) return str;
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-// Ease-out quadratic: fast start, decelerates to end.
-function easeOut(t: number): number {
-    return 1 - Math.pow(1 - t, 2);
+    const integerDigits = String(Math.floor(Math.abs(target))).length;
+    return new Intl.NumberFormat(undefined, {
+        minimumFractionDigits: places,
+        maximumFractionDigits: places,
+        minimumIntegerDigits: integerDigits,
+    }).format(places === 0 ? Math.round(current) : current);
 }
 
 const AnimatedStatValue = ({
@@ -47,55 +40,50 @@ const AnimatedStatValue = ({
     prefix = "",
     suffix = "",
     step = 1,
-    startDelay = 0,
 }: AnimatedStatValueProps): React.ReactElement => {
-    const prefersReducedMotion =
-        typeof window !== "undefined" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const [current, setCurrent] = useState(0);
 
-    const [current, setCurrent] = useState(prefersReducedMotion ? value : 0);
+    // animate() ignores MotionConfig reducedMotion="user" — must check manually.
+    const reducedMotion = useReducedMotion();
 
     useEffect(() => {
-        if (prefersReducedMotion) {
+        // null means the hook hasn't resolved yet — wait for an explicit false before
+        // starting so reduced-motion users never see even a brief counter animation.
+        if (reducedMotion !== false) {
             return;
         }
 
-        let rafId: number;
+        const controls = animate(0, value, {
+            duration: 1,
+            ease: "easeOut",
+            onUpdate(latest) {
+                const stepped = Math.round(latest / step) * step;
+                setCurrent(Math.min(stepped, value));
+            },
+        });
+        return () => controls.stop();
+    }, [value, step, reducedMotion]);
 
-        const startAnimation = (): void => {
-            const startTime = performance.now();
+    // When reduced motion is preferred, skip the count-up and show the final value directly.
+    const displayCurrent = reducedMotion ? value : current;
 
-            const tick = (now: number): void => {
-                const elapsed = now - startTime;
-                const progress = Math.min(elapsed / ANIMATION_DURATION_MS, 1);
-                const eased = easeOut(progress);
-                // Snap to the nearest step so displayed increments are multiples of step
-                const raw = eased * value;
-                const stepped = Math.round(raw / step) * step;
-                const clamped =
-                    progress >= 1 ? value : Math.min(stepped, value);
-                setCurrent(clamped);
-
-                if (progress < 1) {
-                    rafId = requestAnimationFrame(tick);
-                }
-            };
-
-            rafId = requestAnimationFrame(tick);
-        };
-
-        const timerId = setTimeout(startAnimation, startDelay);
-        return () => {
-            clearTimeout(timerId);
-            cancelAnimationFrame(rafId);
-        };
-    }, [value, step, startDelay, prefersReducedMotion]);
+    const displayPrefix = prefix
+        ? prefix.charAt(0).toUpperCase() + prefix.slice(1)
+        : prefix;
 
     return (
         <>
-            {capitalise(prefix)}
-            {formatNumber(current, value)}
-            {suffix}
+            <span
+                aria-hidden={true}
+                className="[font-variant-numeric:tabular-nums]"
+            >
+                {displayPrefix}
+                {formatNumber(displayCurrent, value)}
+                {suffix}
+            </span>
+            <span className="sr-only">
+                {`${displayPrefix}${formatNumber(value, value)}${suffix}`}
+            </span>
         </>
     );
 };

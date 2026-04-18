@@ -12,15 +12,19 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { FormatQuote, Launch, People, Work } from "@mui/icons-material";
-import { Box, Card, Typography } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
+import { Briefcase, ExternalLink, Quote, Users } from "lucide-react";
 import type React from "react";
 
 import { LinkButton, Paragraph } from "@/components/content";
-import { LeftAccent, PrimaryTintedIcon } from "@/components/primitives";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    LeftAccent,
+    PrimaryTintedIcon,
+    Separator,
+} from "@/components/primitives";
+import { LINKEDIN_PROFILE_URL } from "@/constants/profiles";
 import { Relationship, type TestimonialData } from "@/constants/testimonials";
 
 const renderRelationShip = (
@@ -49,125 +53,63 @@ interface TestimonialProps {
 }
 
 const Testimonial = ({ testimonial }: TestimonialProps): React.ReactElement => {
-    const {
-        author,
-        authorPosition,
-        authorCompany,
-        relationship,
-        position,
-        company,
-        content,
-    } = testimonial;
-    const labelId = `testimonial-label-${author.name.toLowerCase().replace(/\s+/g, "-")}`;
-    const linkedinUrl =
-        "https://www.linkedin.com/in/nadundesilva/details/recommendations/";
+    const { author, relationship, position, content } = testimonial;
+    const labelId = `testimonial-label-${author.person.name.toLowerCase().replace(/\s+/g, "-")}`;
+    const linkedinUrl = `${LINKEDIN_PROFILE_URL}/details/recommendations/`;
 
     return (
-        <Box component="article" aria-labelledby={labelId}>
-            <Typography id={labelId} sx={visuallyHidden}>
-                Testimonial from {author.name}
-            </Typography>
-            <Card
-                sx={{
-                    my: 0,
-                    p: 3.5,
-                    position: "relative",
-                    overflow: "hidden",
-                }}
-            >
-                <FormatQuote
-                    aria-hidden="true"
-                    sx={{
-                        position: "absolute",
-                        top: 12,
-                        right: 16,
-                        fontSize: "7rem",
-                        color: "primary.main",
-                        opacity: 0.06,
-                        transform: "rotate(180deg)",
-                        pointerEvents: "none",
-                        zIndex: 0,
-                    }}
-                />
-                <LeftAccent
-                    sx={{
-                        mb: 3,
-                        position: "relative",
-                        zIndex: 1,
-                    }}
-                >
-                    <Typography
-                        variant="h2"
-                        sx={{
-                            letterSpacing: "-0.01em",
-                            lineHeight: 1.4,
-                            mb: 1.5,
-                        }}
-                    >
-                        {author.name}
-                    </Typography>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 0.75,
-                            mb: 1,
-                        }}
-                    >
-                        <PrimaryTintedIcon icon={Work} fontSize="1rem" />
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                color: "text.primary",
-                                fontWeight: 500,
-                                letterSpacing: "0.01em",
-                            }}
+        <article aria-labelledby={labelId}>
+            <Card className="relative">
+                <CardHeader className="gap-0 p-7 pb-5">
+                    <Quote
+                        aria-hidden={true}
+                        className="text-primary pointer-events-none absolute top-3 right-4 size-28 rotate-180 opacity-6"
+                    />
+                    <LeftAccent className="relative z-1 mb-6">
+                        <h2
+                            id={labelId}
+                            className="mb-1.5 text-xl leading-snug tracking-[-0.01em] font-light"
                         >
-                            {authorPosition} at {authorCompany.name}
-                        </Typography>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 0.75,
-                            mb: 2.5,
-                        }}
-                    >
-                        <PrimaryTintedIcon icon={People} fontSize="1rem" />
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                color: "text.secondary",
-                                letterSpacing: "0.01em",
-                            }}
-                        >
-                            {renderRelationShip(author.name, relationship)} when
-                            Nadun was a {position} at {company.name}
-                        </Typography>
-                    </Box>
-                </LeftAccent>
-                <Box
-                    sx={{
-                        mb: 3,
-                        pb: 2.5,
-                        borderBottom: "1px solid",
-                        borderColor: "divider",
-                    }}
-                >
+                            <span className="sr-only">Testimonial from </span>
+                            {author.person.name}
+                        </h2>
+                        <div className="mb-2 flex items-center gap-1.5">
+                            <PrimaryTintedIcon icon={Briefcase} size="1rem" />
+                            <span className="text-foreground text-sm font-medium tracking-[0.01em]">
+                                {author.position} at {author.company.name}
+                            </span>
+                        </div>
+                        <div className="mb-5 flex items-center gap-1.5">
+                            <PrimaryTintedIcon icon={Users} size="1rem" />
+                            <span className="text-muted-foreground text-sm tracking-[0.01em]">
+                                {renderRelationShip(
+                                    author.person.name,
+                                    relationship,
+                                )}{" "}
+                                when Nadun was a {position.name} at{" "}
+                                {position.company.name}
+                            </span>
+                        </div>
+                    </LeftAccent>
                     <LinkButton
-                        endIcon={Launch}
+                        endIcon={ExternalLink}
                         name="View on LinkedIn"
                         href={linkedinUrl}
-                        ariaLabel={`View on LinkedIn - testimonial by ${author.name}`}
+                        ariaLabel={`View on LinkedIn - testimonial by ${author.person.name}`}
                         target="_blank"
+                        className="justify-self-start"
                     />
-                </Box>
-                {content.map((paragraph, index) => (
-                    <Paragraph key={index}>{paragraph}</Paragraph>
-                ))}
+                </CardHeader>
+                <Separator />
+                <CardContent className="p-7 pt-6">
+                    <blockquote>
+                        {content.map((paragraph, index) => (
+                            <Paragraph key={index}>{paragraph}</Paragraph>
+                        ))}
+                    </blockquote>
+                </CardContent>
             </Card>
-        </Box>
+        </article>
     );
 };
 

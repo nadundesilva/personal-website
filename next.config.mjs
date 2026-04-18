@@ -12,11 +12,12 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import nextPwa from "next-pwa";
 import NextBundleAnalyzer from "@next/bundle-analyzer";
-import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
-import { withSentryConfig } from "@sentry/nextjs";
 import nextMDX from "@next/mdx";
+import { withSentryConfig } from "@sentry/nextjs";
+import nextPwa from "next-pwa";
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
+import rehypeReadingTime from "./build/utils/rehype-reading-time.mjs";
 
 const withBundleAnalyzer = NextBundleAnalyzer({
     enabled: process.env.ANALYZE === "true",
@@ -33,6 +34,7 @@ const withMDX = nextMDX({
     options: {
         remarkPlugins: [],
         rehypePlugins: [
+            rehypeReadingTime,
             [
                 "rehype-pretty-code",
                 {
@@ -115,14 +117,10 @@ const nextConfig = (phase, { defaultConfig }) => {
             }
             return config;
         },
-        experimental: {
-            optimizePackageImports: [
-                "@mui/material",
-                "@mui/icons-material",
-                "@mui/lab",
-            ],
-        },
         env: {
+            WEBSITE_BUILD_YEAR: new Date().getFullYear().toString(),
+
+            // Next Image Optimizer Configurations
             nextImageExportOptimizer_imageFolderPath: "public/images",
             nextImageExportOptimizer_exportFolderPath: "./out",
             nextImageExportOptimizer_quality: "75",

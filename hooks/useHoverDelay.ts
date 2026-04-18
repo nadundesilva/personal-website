@@ -12,6 +12,9 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
+
+// shadcn/ui hook
+
 import React from "react";
 
 interface UseHoverDelayResult {

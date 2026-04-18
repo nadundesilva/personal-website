@@ -13,8 +13,8 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 
-import { Date, DateRange } from "./date";
 import Institutes, { type Institute } from "@/constants/institutes";
+import { Date, DateRange } from "./date";
 
 export interface Education {
     title: string;
