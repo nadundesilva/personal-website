@@ -12,7 +12,6 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, Container, Typography } from "@mui/material";
 import type React from "react";
 
 interface SubHeadingProps {
@@ -20,45 +19,15 @@ interface SubHeadingProps {
 }
 
 const SubHeading = (props: SubHeadingProps): React.ReactElement => (
-    <Container maxWidth={false} disableGutters>
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                mb: { xs: 1.5, md: 2 },
-            }}
-        >
-            <Typography
-                variant="h3"
-                align="center"
-                sx={{
-                    fontWeight: 400,
-                    fontSize: { xs: 22, md: 28 },
-                    letterSpacing: "-0.02em",
-                    lineHeight: 1.3,
-                    mb: { xs: 1, md: 1.5 },
-                    position: "relative",
-                }}
-            >
-                {props.children}
-            </Typography>
-            <Box
-                sx={{
-                    width: { xs: 40, md: 56 },
-                    height: 1.5,
-                    background: (theme) =>
-                        `linear-gradient(90deg, transparent, ${
-                            theme.palette.mode === "light"
-                                ? theme.palette.primary.main
-                                : theme.palette.primary.light
-                        }, transparent)`,
-                    borderRadius: 1,
-                    opacity: 0.7,
-                }}
-            />
-        </Box>
-    </Container>
+    <div className="mb-6 flex flex-col items-center md:mb-8">
+        <h3 className="relative mb-2 text-center text-[1.375rem] leading-snug font-normal tracking-[-0.02em] md:mb-3 md:text-[1.75rem]">
+            {props.children}
+        </h3>
+        <div
+            aria-hidden="true"
+            className="h-[1.5px] w-10 rounded bg-linear-to-r from-transparent via-primary to-transparent opacity-70 md:w-14"
+        />
+    </div>
 );
 
 export default SubHeading;

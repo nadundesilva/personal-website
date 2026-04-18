@@ -1,0 +1,132 @@
+/*
+ * Nadun De Silva - All Rights Reserved
+ *
+ * This source code and its associated files are the
+ * confidential and proprietary information of Nadun De Silva.
+ * Unauthorized reproduction, distribution, or disclosure
+ * in any form, in whole or in part, is strictly prohibited
+ * except as explicitly provided under a separate license
+ * agreement with Nadun De Silva.
+ *
+ * Website: https://nadundesilva.com
+ *
+ * © 2026 Nadun De Silva. All rights reserved.
+ */
+
+@theme inline {
+    --animate-home-scroll-dot: home-scroll-dot 1.8s ease-in-out infinite;
+    --animate-home-aura-1-drift: home-aura-1-drift 7s ease-in-out infinite;
+    --animate-home-aura-2-drift: home-aura-2-drift 9s ease-in-out infinite;
+    --animate-home-skill-bar-rise: home-skill-bar-rise 1s var(--ease-expo-out)
+        both;
+    --animate-home-timeline-dot-pulse: home-timeline-dot-pulse 2.5s ease-out
+        infinite;
+}
+
+:root {
+    --home-aura-1-color: #88bdf2;
+    --home-aura-2-color: #9370db;
+
+    --home-skill-novice-color: #cd7f32;
+    --home-skill-intermediate-color: #2196f3;
+    --home-skill-expert-color: #4caf50;
+
+    --home-image-shadow:
+        0 0 0 3px color-mix(in oklch, var(--primary) 25%, transparent),
+        0 4px 24px color-mix(in oklch, var(--primary) 15%, transparent);
+    --home-image-shadow-hover:
+        0 0 0 3px color-mix(in oklch, var(--primary) 50%, transparent),
+        0 8px 32px color-mix(in oklch, var(--primary) 27%, transparent);
+    --home-hero-fade: radial-gradient(
+        ellipse 100% 100% at 50% 0%,
+        color-mix(in oklch, var(--primary) 60%, transparent) 0%,
+        color-mix(in oklch, var(--primary) 25%, transparent) 40%,
+        color-mix(in oklch, var(--primary) 8%, transparent) 70%,
+        transparent 100%
+    );
+
+    /* Accent color for the always-dark welcome hero */
+    --home-accent-on-dark: #88bdf2;
+
+    /* CV button on the always-dark glassmorphism hero card */
+    --home-cv-button-bg: #384959;
+    --home-cv-button-bg-hover: #4a6785;
+}
+
+.dark {
+    --home-image-shadow:
+        0 0 0 3px color-mix(in oklch, var(--primary) 20%, transparent),
+        0 4px 24px color-mix(in oklch, var(--primary) 12%, transparent);
+    --home-image-shadow-hover:
+        0 0 0 3px color-mix(in oklch, var(--primary) 35%, transparent),
+        0 8px 32px color-mix(in oklch, var(--primary) 22%, transparent);
+    --home-hero-fade: radial-gradient(
+        ellipse 100% 100% at 50% 0%,
+        oklch(0% 0 0deg / 60%) 0%,
+        oklch(0% 0 0deg / 25%) 40%,
+        oklch(0% 0 0deg / 8%) 70%,
+        transparent 100%
+    );
+}
+
+@keyframes home-scroll-dot {
+    0% {
+        transform: translateY(0);
+        opacity: 0.8;
+    }
+
+    80%,
+    100% {
+        transform: translateY(14px);
+        opacity: 0;
+    }
+}
+
+@keyframes home-aura-1-drift {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(70px, -55px) scale(1.08);
+    }
+}
+
+@keyframes home-aura-2-drift {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-60px, 50px) scale(0.94);
+    }
+}
+
+@keyframes home-skill-bar-rise {
+    from {
+        transform: scaleY(0);
+    }
+
+    to {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes home-timeline-dot-pulse {
+    0% {
+        box-shadow: 0 0 0 0
+            color-mix(in oklch, var(--color-primary) 35%, transparent);
+    }
+
+    70% {
+        box-shadow: 0 0 0 8px
+            color-mix(in oklch, var(--color-primary) 0%, transparent);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0
+            color-mix(in oklch, var(--color-primary) 0%, transparent);
+    }
+}

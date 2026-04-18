@@ -14,6 +14,7 @@
  */
 "use client";
 
+import { useReducedMotion } from "motion/react";
 import React, { useEffect, useState } from "react";
 
 interface AnimatedStatValueProps {
@@ -49,9 +50,7 @@ const AnimatedStatValue = ({
     step = 1,
     startDelay = 0,
 }: AnimatedStatValueProps): React.ReactElement => {
-    const prefersReducedMotion =
-        typeof window !== "undefined" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = useReducedMotion();
 
     const [current, setCurrent] = useState(prefersReducedMotion ? value : 0);
 
@@ -93,9 +92,14 @@ const AnimatedStatValue = ({
 
     return (
         <>
-            {capitalise(prefix)}
-            {formatNumber(current, value)}
-            {suffix}
+            <span aria-hidden="true">
+                {capitalise(prefix)}
+                {formatNumber(current, value)}
+                {suffix}
+            </span>
+            <span className="sr-only">
+                {`${capitalise(prefix)}${formatNumber(value, value)}${suffix}`}
+            </span>
         </>
     );
 };

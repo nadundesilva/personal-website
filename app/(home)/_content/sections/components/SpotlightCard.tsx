@@ -14,56 +14,49 @@
  */
 "use client";
 
-import { Box, useMediaQuery, type SxProps, type Theme } from "@mui/material";
+import { cn } from "@/components/primitives/utils/cn";
+import { useReducedMotion } from "motion/react";
 import type React from "react";
 import { useCallback, useRef } from "react";
-
-import {
-    MOTION_OK_QUERY,
-    NO_HOVER_QUERY,
-} from "@/components/theme/media-queries";
 
 const SPOTLIGHT_POSITION_X_CSS_PROPERTY = "--spotlight-position-x";
 const SPOTLIGHT_POSITION_Y_CSS_PROPERTY = "--spotlight-position-y";
 
 interface SpotlightCardProps {
     children: React.ReactNode;
-    sx?: SxProps<Theme>;
+    className?: string;
 }
 
 const SpotlightCard = ({
     children,
-    sx,
+    className,
 }: SpotlightCardProps): React.ReactElement => {
     const cardRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
-    const motionOk = useMediaQuery(MOTION_OK_QUERY);
-    const noHover = useMediaQuery(NO_HOVER_QUERY);
+    const reducedMotion = useReducedMotion();
 
     const handleMouseMove = useCallback(
         (event: React.MouseEvent<HTMLDivElement>) => {
-            if (!motionOk || noHover) return;
+            if (reducedMotion) return;
+            const noHover = window.matchMedia("(hover: none)").matches;
+            if (noHover) return;
 
             const cardElement = cardRef.current;
             const overlayElement = overlayRef.current;
-
             if (!cardElement || !overlayElement) return;
 
             const cardBB = cardElement.getBoundingClientRect();
-            const spotlightPositionX = event.clientX - cardBB.left;
-            const spotlightPositionY = event.clientY - cardBB.top;
-
             cardElement.style.setProperty(
                 SPOTLIGHT_POSITION_X_CSS_PROPERTY,
-                `${spotlightPositionX}px`,
+                `${event.clientX - cardBB.left}px`,
             );
             cardElement.style.setProperty(
                 SPOTLIGHT_POSITION_Y_CSS_PROPERTY,
-                `${spotlightPositionY}px`,
+                `${event.clientY - cardBB.top}px`,
             );
             overlayElement.style.opacity = "1";
         },
-        [motionOk, noHover],
+        [reducedMotion],
     );
 
     const handleMouseLeave = useCallback(() => {
@@ -74,33 +67,24 @@ const SpotlightCard = ({
     }, []);
 
     return (
-        <Box
+        <div
             ref={cardRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            sx={[
-                { position: "relative", overflow: "hidden" },
-                ...(Array.isArray(sx) ? sx : [sx]),
-            ]}
+            className={cn("relative overflow-hidden", className)}
         >
             {/* Spotlight overlay — follows the cursor via CSS custom properties */}
-            <Box
+            <div
                 ref={overlayRef}
                 aria-hidden={true}
-                sx={{
-                    position: "absolute",
-                    inset: 0,
-                    pointerEvents: "none",
-                    zIndex: 0,
-                    opacity: 0,
-                    borderRadius: "inherit",
+                className="pointer-events-none absolute inset-0 z-0 rounded-[inherit] opacity-0 motion-safe:transition-opacity motion-safe:duration-250"
+                style={{
                     background: `radial-gradient(circle 260px at var(${SPOTLIGHT_POSITION_X_CSS_PROPERTY}, -9999px) var(${SPOTLIGHT_POSITION_Y_CSS_PROPERTY}, -9999px), rgba(255,255,255,0.10), transparent 70%)`,
-                    transition: "opacity 0.25s ease",
                 }}
             />
             {/* Content sits above the spotlight overlay */}
-            <Box sx={{ position: "relative", zIndex: 1 }}>{children}</Box>
-        </Box>
+            <div className="relative z-1">{children}</div>
+        </div>
     );
 };
 

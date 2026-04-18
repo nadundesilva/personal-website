@@ -12,57 +12,43 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { Box, type SxProps, type Theme, useTheme } from "@mui/material";
 import Image from "next-image-export-optimizer";
 import type React from "react";
 
+import { cn } from "@/components/primitives/utils/cn";
 import { type LogoImageData } from "@/constants/logos";
 
 interface LogoProps extends LogoImageData {
     alt: string;
-    recommendedSx?: SxProps<Theme>;
+    className?: string;
 }
 
 const Logo = ({
     srcLight,
     srcDark,
     alt,
-    recommendedSx,
-}: LogoProps): React.ReactElement => {
-    const theme = useTheme();
-    const src = theme.palette.mode === "light" ? srcLight : srcDark;
-    return (
-        <Box
-            aria-hidden={alt === "" ? true : undefined}
-            sx={{
-                ...recommendedSx,
-                "position": "relative",
-                "width": "100%",
-                "py": 1,
-                "transition": theme.transitions.create("opacity", {
-                    duration: theme.transitions.duration.shorter,
-                }),
-                "&:hover": {
-                    opacity: 0.8,
-                },
-                "& img": {
-                    objectFit: "scale-down",
-                    objectPosition: { xs: "left center", sm: "right center" },
-                },
-            }}
-        >
-            <Image
-                alt={alt}
-                src={src}
-                fill
-                style={{
-                    objectFit: "scale-down",
-                }}
-            />
-        </Box>
-    );
-};
+    className,
+}: LogoProps): React.ReactElement => (
+    <div
+        aria-hidden={alt === "" ? true : undefined}
+        className={cn(
+            "relative w-full py-2 motion-safe:transition-opacity motion-safe:duration-250 hover:opacity-80",
+            className,
+        )}
+    >
+        <Image
+            alt={alt}
+            src={srcLight}
+            fill
+            className="block object-scale-down object-left sm:object-right dark:hidden"
+        />
+        <Image
+            alt={alt}
+            src={srcDark}
+            fill
+            className="hidden object-scale-down object-left sm:object-right dark:block"
+        />
+    </div>
+);
 
 export default Logo;

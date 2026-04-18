@@ -12,8 +12,8 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import Experiences from "@/constants/experience";
 import { Date as CustomDate, Now } from "@/constants/date";
+import Experiences from "@/constants/experience";
 
 const MILLISECONDS_PER_YEAR = 1000 * 60 * 60 * 24 * 365.25;
 

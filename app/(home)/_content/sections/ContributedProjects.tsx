@@ -12,175 +12,93 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import {
-    Box,
-    Card,
-    CardActionArea,
-    CardMedia,
-    type CardMediaProps,
-    Container,
-    Grid,
-    Typography,
-    useTheme,
-} from "@mui/material";
-import { alpha } from "@mui/material/styles";
 import Image from "next-image-export-optimizer";
 import type React from "react";
 
 import { Link } from "@/components/content";
-import { StaggerReveal } from "@/components/primitives";
+import { Card, CardContent, StaggerReveal } from "@/components/primitives";
 import Projects, { type Project } from "@/constants/projects";
 import SubHeading from "../common/SubHeading";
 
-const ContributedProjects = (): React.ReactElement => {
-    const theme = useTheme();
+const IMAGE_SIZES = "(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw";
 
-    const smWidth = theme.breakpoints.values.sm;
-    const mdWidth = theme.breakpoints.values.md;
-    const imageSizes = `(min-width: ${mdWidth}px) 33vw, (min-width: ${smWidth}px) 34vw, 100vw`;
-
-    const renderProject = (
-        project: Project,
-        headingComponent: React.ElementType,
-    ): React.ReactElement => (
-        <Grid key={project.name} size={{ xs: 12, sm: 6, md: 4 }}>
-            <Card
-                sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                }}
-            >
-                <CardActionArea
-                    component={Link}
-                    href={project.link}
-                    target="_blank"
-                    sx={{
-                        flexGrow: 1,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "stretch",
-                    }}
-                >
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "flex-start",
-                            p: 3,
-                            flexGrow: 1,
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                width: "100%",
-                                mb: 3,
-                                p: 2,
-                                borderRadius: 2,
-                                overflow: "hidden",
-                                background: (theme) =>
-                                    theme.palette.mode === "light"
-                                        ? alpha(
-                                              theme.palette.primary.main,
-                                              0.03,
-                                          )
-                                        : alpha(
-                                              theme.palette.primary.light,
-                                              0.03,
-                                          ),
-                            }}
-                        >
-                            <CardMedia
-                                component={(props: CardMediaProps) => (
-                                    <Container
-                                        {...props}
-                                        maxWidth={false}
-                                        disableGutters
-                                        sx={{
-                                            position: "relative",
-                                            width: "100%",
-                                            height: 80,
-                                        }}
-                                    >
-                                        <Image
-                                            alt=""
-                                            fill
-                                            style={{ objectFit: "contain" }}
-                                            sizes={imageSizes}
-                                            src={
-                                                theme.palette.mode === "light"
-                                                    ? project.logo.srcLight
-                                                    : project.logo.srcDark
-                                            }
-                                        />
-                                    </Container>
-                                )}
+const ProjectCard = ({
+    project,
+    headingLevel: Heading,
+}: {
+    project: Project;
+    headingLevel: "h3" | "h4";
+}): React.ReactElement => (
+    <Card className="group w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.667rem)] motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-bounce-out motion-safe:hover:scale-[1.02]">
+        <Link
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-card hover:bg-accent/5 text-foreground flex h-full flex-col rounded-lg no-underline hover:no-underline hover:opacity-100 hover:shadow-md motion-safe:transition-[background-color,box-shadow] motion-safe:duration-300"
+        >
+            <CardContent className="flex h-full flex-col p-5 md:p-7">
+                <div className="bg-primary/3 mb-6 w-full overflow-hidden rounded-lg p-2">
+                    <div className="motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-bounce-out motion-safe:group-hover:scale-[1.06]">
+                        <div className="relative h-20 w-full">
+                            <Image
+                                src={project.logo.srcLight}
+                                alt=""
+                                fill
+                                sizes={IMAGE_SIZES}
+                                className="object-contain dark:hidden"
                             />
-                        </Box>
-                        <Typography
-                            variant="h6"
-                            component={headingComponent}
-                            align="center"
-                            gutterBottom
-                        >
-                            {project.name}
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            align="center"
-                            color="text.secondary"
-                            sx={{
-                                lineHeight: 1.6,
-                            }}
-                        >
-                            {project.description}
-                        </Typography>
-                    </Box>
-                </CardActionArea>
-            </Card>
-        </Grid>
-    );
+                            <Image
+                                src={project.logo.srcDark}
+                                alt=""
+                                fill
+                                sizes={IMAGE_SIZES}
+                                className="hidden object-contain dark:block"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <Heading className="mb-3 text-center text-[17px] leading-snug font-medium md:text-lg">
+                    {project.name}
+                </Heading>
+                <p className="text-muted-foreground text-center text-sm leading-relaxed">
+                    {project.description}
+                </p>
+            </CardContent>
+        </Link>
+    </Card>
+);
 
-    return (
-        <>
-            <Grid
-                container
-                spacing={2}
-                justifyContent="center"
-                alignItems="stretch"
-            >
+const ContributedProjects = (): React.ReactElement => (
+    <>
+        <div className="flex flex-wrap justify-center gap-4">
+            <StaggerReveal>
+                <ProjectCard project={Projects.Indexity} headingLevel="h3" />
+                <ProjectCard project={Projects.Choreo} headingLevel="h3" />
+                <ProjectCard project={Projects.Ballerina} headingLevel="h3" />
+                <ProjectCard project={Projects.Cellery} headingLevel="h3" />
+                <ProjectCard project={Projects.Siddhi} headingLevel="h3" />
+                <ProjectCard
+                    project={Projects.GoogleSummerOfCode}
+                    headingLevel="h3"
+                />
+            </StaggerReveal>
+        </div>
+        <div className="mt-16 md:mt-20">
+            <SubHeading>Personal Projects</SubHeading>
+            <div className="flex flex-wrap justify-center gap-4">
                 <StaggerReveal>
-                    {renderProject(Projects.Indexity, "h3")}
-                    {renderProject(Projects.Choreo, "h3")}
-                    {renderProject(Projects.Ballerina, "h3")}
-                    {renderProject(Projects.Cellery, "h3")}
-                    {renderProject(Projects.Siddhi, "h3")}
-                    {renderProject(Projects.GoogleSummerOfCode, "h3")}
+                    <ProjectCard
+                        project={Projects.K8sReplicator}
+                        headingLevel="h4"
+                    />
+                    <ProjectCard
+                        project={Projects.MeshManager}
+                        headingLevel="h4"
+                    />
                 </StaggerReveal>
-            </Grid>
-            <Box sx={{ mt: { xs: 8, md: 10 } }}>
-                <SubHeading>Personal Projects</SubHeading>
-                <Container
-                    maxWidth={false}
-                    disableGutters
-                    sx={{ my: { xs: 3, md: 6 } }}
-                >
-                    <Grid
-                        container
-                        spacing={2}
-                        justifyContent="center"
-                        alignItems="stretch"
-                    >
-                        <StaggerReveal>
-                            {renderProject(Projects.K8sReplicator, "h4")}
-                            {renderProject(Projects.MeshManager, "h4")}
-                        </StaggerReveal>
-                    </Grid>
-                </Container>
-            </Box>
-        </>
-    );
-};
+            </div>
+        </div>
+    </>
+);
 
 export default ContributedProjects;

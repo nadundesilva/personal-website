@@ -13,16 +13,17 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 
-const WORDS_PER_MINUTE = 200;
+@theme inline {
+    --animate-not-found-float: not-found-float 4s ease-in-out infinite;
+}
 
-/**
- * Estimates reading time from plain text (e.g. DOM textContent or pre-stripped MDX).
- * Returns at least 1 minute.
- */
-export function estimateReadingTimeMinutesFromText(text: string): number {
-    const wordCount = text
-        .trim()
-        .split(/\s+/)
-        .filter((w) => w.length > 0).length;
-    return Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE));
+@keyframes not-found-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-14px);
+    }
 }

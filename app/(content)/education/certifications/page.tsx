@@ -12,9 +12,7 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Launch } from "@mui/icons-material";
-import { Box, Typography } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
+import { ExternalLink } from "lucide-react";
 import type { Metadata } from "next";
 import type React from "react";
 
@@ -55,21 +53,18 @@ const CertificationSectionHeading = ({
                 srcLight={certificate.logo.srcLight}
                 srcDark={certificate.logo.srcDark}
                 alt=""
-                recommendedSx={{ height: "5em" }}
+                className="h-[5em]"
             />
         }
         actionButton={{
             href: certificate.link,
             name: "View Credential",
             ariaLabel: `View credential: ${certificate.name}`,
-            endIcon: Launch,
+            endIcon: ExternalLink,
         }}
     >
         {certificate.name}
-        <Box component="span" sx={visuallyHidden}>
-            {" "}
-            from {certificate.issuer.name}
-        </Box>
+        <span className="sr-only"> from {certificate.issuer.name}</span>
     </SectionHeading>
 );
 
@@ -159,28 +154,14 @@ const Certifications = (): React.ReactElement => {
                     Lab-based hands-on evaluations.
                 </Paragraph>
                 <AccentedList heading="Course Content" headingVariant="h3">
+                    <ListItem>Neural Networks and Deep Learning</ListItem>
                     <ListItem>
-                        <Typography>
-                            Neural Networks and Deep Learning
-                        </Typography>
+                        Improving Deep Neural Networks: Hyperparameter Tuning,
+                        Regularization and Optimization
                     </ListItem>
-                    <ListItem>
-                        <Typography>
-                            Improving Deep Neural Networks: Hyperparameter
-                            Tuning, Regularization and Optimization
-                        </Typography>
-                    </ListItem>
-                    <ListItem>
-                        <Typography>
-                            Structuring Machine Learning Projects
-                        </Typography>
-                    </ListItem>
-                    <ListItem>
-                        <Typography>Convolutional Neural Networks</Typography>
-                    </ListItem>
-                    <ListItem>
-                        <Typography>Sequence Models</Typography>
-                    </ListItem>
+                    <ListItem>Structuring Machine Learning Projects</ListItem>
+                    <ListItem>Convolutional Neural Networks</ListItem>
+                    <ListItem>Sequence Models</ListItem>
                 </AccentedList>
             </Section>
             <Section labelledById="section-cert-cka">

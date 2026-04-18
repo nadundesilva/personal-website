@@ -12,7 +12,6 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Typography } from "@mui/material";
 import type React from "react";
 
 interface ParagraphProps {
@@ -21,19 +20,12 @@ interface ParagraphProps {
 }
 
 const Paragraph = ({ children, id }: ParagraphProps): React.ReactElement => (
-    <Typography
+    <p
         id={id}
-        variant="body1"
-        sx={{
-            m: 0,
-            mb: 2.5,
-            // Intentional: justified text gives content pages an editorial, document-like appearance.
-            // Disabled on xs to avoid uneven word spacing on narrow screens.
-            textAlign: { xs: "left", sm: "justify" },
-        }}
+        className="m-0 mb-5 text-[0.9375rem] leading-[1.75] font-normal sm:text-justify"
     >
         {children}
-    </Typography>
+    </p>
 );
 
 export default Paragraph;

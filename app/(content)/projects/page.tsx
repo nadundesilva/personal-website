@@ -12,10 +12,7 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { KeyboardArrowRight } from "@mui/icons-material";
-import { Box, Typography } from "@mui/material";
-import type { SxProps, Theme } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
+import { ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
 import type React from "react";
 
@@ -44,13 +41,13 @@ export const metadata: Metadata = {
 interface ProjectSectionHeadingProps {
     id: string;
     project: Project;
-    logoSx: SxProps<Theme>;
+    logoClassName: string;
 }
 
 const ProjectSectionHeading = ({
     id,
     project,
-    logoSx,
+    logoClassName,
 }: ProjectSectionHeadingProps): React.ReactElement => (
     <SectionHeading
         id={id}
@@ -60,15 +57,12 @@ const ProjectSectionHeading = ({
                 srcLight={project.logo.srcLight}
                 srcDark={project.logo.srcDark}
                 alt=""
-                recommendedSx={logoSx}
+                className={logoClassName}
             />
         }
     >
         {project.name}
-        <Box component="span" sx={visuallyHidden}>
-            {" "}
-            (project)
-        </Box>
+        <span className="sr-only"> (project)</span>
     </SectionHeading>
 );
 
@@ -127,7 +121,7 @@ const Projects = (): React.ReactElement => {
         <>
             <Title>Projects</Title>
             <ScrollReveal>
-                <Box sx={{ pt: 2, pb: 2 }}>
+                <div className="py-4">
                     <LinkButton
                         href={
                             WebsiteHome.subRoutes["/projects"].subRoutes![
@@ -135,15 +129,15 @@ const Projects = (): React.ReactElement => {
                             ].path
                         }
                         name="View Personal Projects"
-                        endIcon={KeyboardArrowRight}
+                        endIcon={ChevronRight}
                     />
-                </Box>
+                </div>
             </ScrollReveal>
             <Section labelledById="section-project-indexity">
                 <ProjectSectionHeading
                     id="section-project-indexity"
                     project={ProjectDetails.Indexity}
-                    logoSx={{ height: "1.5em" }}
+                    logoClassName="h-[1.5em]"
                 />
                 <Paragraph>
                     {Indexity} is a cloud-native Enterprise Master Patient Index
@@ -176,57 +170,44 @@ const Projects = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Directed the successful deployment of{" "}
-                            {ProjectDetails.Indexity.name} data-planes using AWS
-                            infrastructure; conducted thorough disaster recovery
-                            planning, which reduced potential downtime risks
-                            from unforeseen incidents by at least 40%.
-                        </Typography>
+                        Directed the successful deployment of{" "}
+                        {ProjectDetails.Indexity.name} data-planes using AWS
+                        infrastructure; conducted thorough disaster recovery
+                        planning, which reduced potential downtime risks from
+                        unforeseen incidents by at least 40%.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Orchestrated the migration of{" "}
-                            {ProjectDetails.Indexity.name}&apos;s SRE frameworks
-                            and infrastructure from {Companies.OrionHealth.name}{" "}
-                            into {Companies.McCraeTech.name}, achieving a smooth
-                            transition without affecting end users.
-                        </Typography>
+                        Orchestrated the migration of{" "}
+                        {ProjectDetails.Indexity.name}&apos;s SRE frameworks and
+                        infrastructure from {Companies.OrionHealth.name} into{" "}
+                        {Companies.McCraeTech.name}, achieving a smooth
+                        transition without affecting end users.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Automated the customer request handling, incident
-                            handling, and on-call rotations for the{" "}
-                            {ProjectDetails.Indexity.name} data-planes, with
-                            comprehensive monitoring and alerting, reducing the
-                            response times for many incidents.
-                        </Typography>
+                        Automated the customer request handling, incident
+                        handling, and on-call rotations for the{" "}
+                        {ProjectDetails.Indexity.name} data-planes, with
+                        comprehensive monitoring and alerting, reducing the
+                        response times for many incidents.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Championed an end-to-end deployment strategy for{" "}
-                            {ProjectDetails.Indexity.name} within a deployment
-                            framework on {GitLab}
-                            and AWS, resulting in a faster rollout time that
-                            decreased development cycles by one day per
-                            development cycle.
-                        </Typography>
+                        Championed an end-to-end deployment strategy for{" "}
+                        {ProjectDetails.Indexity.name} within a deployment
+                        framework on {GitLab}
+                        and AWS, resulting in a faster rollout time that
+                        decreased development cycles by one day per development
+                        cycle.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Orchestrated comprehensive threat modeling and
-                            privacy assessments, leading to stronger safeguards,
-                            resulting in no major vulnerabilities detected by
-                            penetration tests initiated by customers.
-                        </Typography>
+                        Orchestrated comprehensive threat modeling and privacy
+                        assessments, leading to stronger safeguards, resulting
+                        in no major vulnerabilities detected by penetration
+                        tests initiated by customers.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Enhanced the precision of phone number searches by
-                            implementing {ApacheLucene}-based indexing
-                            techniques, improving the patient searches across
-                            two customers.
-                        </Typography>
+                        Enhanced the precision of phone number searches by
+                        implementing {ApacheLucene}-based indexing techniques,
+                        improving the patient searches across two customers.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -234,7 +215,7 @@ const Projects = (): React.ReactElement => {
                 <ProjectSectionHeading
                     id="section-project-choreo"
                     project={ProjectDetails.Choreo}
-                    logoSx={{ height: "2.0em" }}
+                    logoClassName="h-[2.0em]"
                 />
                 <Paragraph>
                     {Choreo} is a Digital Platform as a Service which abstracts
@@ -285,62 +266,45 @@ const Projects = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Worked on the Observability aspects of the initial
-                            PoC of {ProjectDetails.Choreo.name} and completed it
-                            within 3 months leading 2 more engineers.
-                        </Typography>
+                        Worked on the Observability aspects of the initial PoC
+                        of {ProjectDetails.Choreo.name} and completed it within
+                        3 months leading 2 more engineers.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Led the Observability team and designed many of the
-                            Observability features of{" "}
-                            {ProjectDetails.Choreo.name} around{" "}
-                            {ProjectDetails.Ballerina.name}.
-                        </Typography>
+                        Led the Observability team and designed many of the
+                        Observability features of {ProjectDetails.Choreo.name}{" "}
+                        around {ProjectDetails.Ballerina.name}.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Designed and architected the core data ingestion,
-                            storage and analytics architecture of{" "}
-                            {ProjectDetails.Choreo.name} Observability.
-                        </Typography>
+                        Designed and architected the core data ingestion,
+                        storage and analytics architecture of{" "}
+                        {ProjectDetails.Choreo.name} Observability.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Guided several interns and new joinees within the
-                            Observability team to settle into the company and
-                            the team, fostering an environment which allowed
-                            them to learn and grow.
-                        </Typography>
+                        Guided several interns and new joinees within the
+                        Observability team to settle into the company and the
+                        team, fostering an environment which allowed them to
+                        learn and grow.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Handled many high-profile war-rooms created to
-                            handle various production issues related to
-                            Observability as well as in some other areas.{" "}
-                        </Typography>
+                        Handled many high-profile war-rooms created to handle
+                        various production issues related to Observability as
+                        well as in some other areas.{" "}
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Designed the resource scheduling of the online VS
-                            Code editor and implemented some of the core
-                            functionality of it.
-                        </Typography>
+                        Designed the resource scheduling of the online VS Code
+                        editor and implemented some of the core functionality of
+                        it.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Improved the startup time of the Choreo online VS
-                            Code editor by analyzing the time taken for
-                            different parts of the resource scheduling.
-                        </Typography>
+                        Improved the startup time of the Choreo online VS Code
+                        editor by analyzing the time taken for different parts
+                        of the resource scheduling.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Designed the isolation and security aspects of the
-                            editor, ensuring that the users have the best User
-                            Experience without affecting other users.
-                        </Typography>
+                        Designed the isolation and security aspects of the
+                        editor, ensuring that the users have the best User
+                        Experience without affecting other users.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -348,7 +312,7 @@ const Projects = (): React.ReactElement => {
                 <ProjectSectionHeading
                     id="section-project-ballerina"
                     project={ProjectDetails.Ballerina}
-                    logoSx={{ height: "1.5em" }}
+                    logoClassName="h-[1.5em]"
                 />
                 <Paragraph>
                     {Ballerina} is a programming language built within{" "}
@@ -367,29 +331,22 @@ const Projects = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Owned {ProjectDetails.Ballerina.name} Observability
-                            and designed many of the improvements around
-                            compiler level instrumentation.
-                        </Typography>
+                        Owned {ProjectDetails.Ballerina.name} Observability and
+                        designed many of the improvements around compiler level
+                        instrumentation.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Rewrote the {ProjectDetails.Ballerina.name}{" "}
-                            Observability compiler level instrumentation (moving
-                            from a Java bytecode generation level
-                            instrumentation to a Ballerina Intermediate
-                            Representation modification level instrumentation in
-                            the compilation flow) to allow collecting more
-                            contextual information, while keeping the
-                            performance impact minimal.
-                        </Typography>
+                        Rewrote the {ProjectDetails.Ballerina.name}{" "}
+                        Observability compiler level instrumentation (moving
+                        from a Java bytecode generation level instrumentation to
+                        a Ballerina Intermediate Representation modification
+                        level instrumentation in the compilation flow) to allow
+                        collecting more contextual information, while keeping
+                        the performance impact minimal.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Initiated the migration of Ballerina distributed
-                            tracing, from {OpenTracing} to {OpenTelemetry}.
-                        </Typography>
+                        Initiated the migration of Ballerina distributed
+                        tracing, from {OpenTracing} to {OpenTelemetry}.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -397,7 +354,7 @@ const Projects = (): React.ReactElement => {
                 <ProjectSectionHeading
                     id="section-project-cellery"
                     project={ProjectDetails.Cellery}
-                    logoSx={{ height: "2.5em" }}
+                    logoClassName="h-[2.5em]"
                 />
                 <Paragraph>
                     {Cellery} is an implementation of the Cell-based
@@ -434,54 +391,39 @@ const Projects = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Implemented the Cellery Observability core
-                            implementation including dashboards using metrics,
-                            distributed tracing by extracting information from
-                            the Istio mesh sidecars.
-                        </Typography>
+                        Implemented the Cellery Observability core
+                        implementation including dashboards using metrics,
+                        distributed tracing by extracting information from the
+                        Istio mesh sidecars.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Guided several junior engineers and interns.
-                        </Typography>
+                        Guided several junior engineers and interns.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Presented Cellery Observability in several community
-                            calls and wrote {Medium} articles in the{" "}
-                            {CelleryMediumPublication}.
-                        </Typography>
+                        Presented Cellery Observability in several community
+                        calls and wrote {Medium} articles in the{" "}
+                        {CelleryMediumPublication}.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Implemented a PoC for the storage of Cells in a{" "}
-                            Docker Registry-based Cell registry and implemented
-                            the core of the storage and authentication.
-                        </Typography>
+                        Implemented a PoC for the storage of Cells in a Docker
+                        Registry-based Cell registry and implemented the core of
+                        the storage and authentication.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Implemented cellery CLI command for logging into
-                            Cellery Hub using a browser window-based OAuth flow
-                            using code grant flow.
-                        </Typography>
+                        Implemented cellery CLI command for logging into Cellery
+                        Hub using a browser window-based OAuth flow using code
+                        grant flow.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Implemented transitive dependency resolution,
-                            deployment order resolution and parallel deployment
-                            of cells (while preserving dependency order) with a
-                            single CLI command.
-                        </Typography>
+                        Implemented transitive dependency resolution, deployment
+                        order resolution and parallel deployment of cells (while
+                        preserving dependency order) with a single CLI command.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Implemented {D3js}-based cell viewer CLI command
-                            which allows users to view a cell and all of its
-                            dependencies (this was later adopted into the VS
-                            Code plugin as well).
-                        </Typography>
+                        Implemented {D3js}-based cell viewer CLI command which
+                        allows users to view a cell and all of its dependencies
+                        (this was later adopted into the VS Code plugin as
+                        well).
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -489,7 +431,7 @@ const Projects = (): React.ReactElement => {
                 <ProjectSectionHeading
                     id="section-project-siddhi"
                     project={ProjectDetails.Siddhi}
-                    logoSx={{ height: "1.8em" }}
+                    logoClassName="h-[1.8em]"
                 />
                 <Paragraph>
                     {Siddhi} is a fully open source, cloud-native, scalable,
@@ -512,16 +454,12 @@ const Projects = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Implemented a Notebook prototype for analytics and
-                            visualizations using the WSO2 Data Analytics Server.
-                        </Typography>
+                        Implemented a Notebook prototype for analytics and
+                        visualizations using the WSO2 Data Analytics Server.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Implemented six extensions for Siddhi, Stream
-                            Processing Engine.
-                        </Typography>
+                        Implemented six extensions for Siddhi, Stream Processing
+                        Engine.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -529,7 +467,7 @@ const Projects = (): React.ReactElement => {
                 <ProjectSectionHeading
                     id="section-project-gsoc-2017"
                     project={ProjectDetails.GoogleSummerOfCode}
-                    logoSx={{ height: "2.5em" }}
+                    logoClassName="h-[2.5em]"
                 />
                 <Paragraph>
                     During my last year at the University, in my spare time, I
@@ -546,12 +484,10 @@ const Projects = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Designed and implemented a {Maven} plugin for
-                            automatically generating documentation for{" "}
-                            {ProjectDetails.Siddhi.name} extensions using
-                            annotated data written in the Java code.
-                        </Typography>
+                        Designed and implemented a {Maven} plugin for
+                        automatically generating documentation for{" "}
+                        {ProjectDetails.Siddhi.name} extensions using annotated
+                        data written in the Java code.
                     </ListItem>
                 </AccentedList>
             </Section>

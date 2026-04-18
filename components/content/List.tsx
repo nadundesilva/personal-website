@@ -12,12 +12,10 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { Box, Typography, type TypographyProps } from "@mui/material";
-import { alpha } from "@mui/material/styles";
 import type React from "react";
 import { useId } from "react";
+
+import { cn } from "@/components/primitives/utils/cn";
 
 import { LeftAccent } from "@/components/primitives";
 
@@ -26,12 +24,14 @@ interface ListItemProps {
 }
 
 export const ListItem = ({ children }: ListItemProps): React.ReactElement => (
-    <Box component="li">{children}</Box>
+    <li>{children}</li>
 );
 
 type ListItemElement = React.ReactElement<
     React.ComponentProps<typeof ListItem>
 >;
+
+type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 interface ListBaseProps {
     component?: "ul" | "ol";
@@ -40,7 +40,7 @@ interface ListBaseProps {
 
 interface ListWithHeadingProps extends ListBaseProps {
     heading: React.ReactNode;
-    headingVariant: TypographyProps["variant"];
+    headingVariant: HeadingLevel;
 }
 
 interface ListWithoutHeadingProps extends ListBaseProps {
@@ -57,44 +57,27 @@ const List = ({
     component,
 }: ListProps): React.ReactElement => {
     const headingId = useId();
+    const Tag = headingVariant ?? "h3";
+    const ListTag = component ?? "ul";
     return (
         <>
             {heading && (
-                <Typography
+                <Tag
                     id={headingId}
-                    variant={headingVariant}
-                    sx={{
-                        mt: 0,
-                        mb: 2.5,
-                        letterSpacing: "-0.01em",
-                        lineHeight: 1.35,
-                    }}
+                    className="mt-0 mb-5 leading-snug tracking-[-0.01em]"
                 >
                     {heading}
-                </Typography>
+                </Tag>
             )}
-            <Box
-                component={component ?? "ul"}
+            <ListTag
                 aria-labelledby={heading ? headingId : undefined}
-                sx={{
-                    "my": 0,
-                    "pl": 2.5,
-                    "& li": {
-                        "mb": 1.5,
-                        "&:last-child": {
-                            mb: 0,
-                        },
-                        "&::marker": {
-                            color: (theme) =>
-                                theme.palette.mode === "light"
-                                    ? alpha(theme.palette.primary.main, 0.7)
-                                    : alpha(theme.palette.primary.light, 0.7),
-                        },
-                    },
-                }}
+                className={cn(
+                    "my-0 pl-5 [&_li]:mb-3 [&_li::marker]:text-primary/70 [&_li:last-child]:mb-0",
+                    component === "ol" ? "list-decimal" : "list-disc",
+                )}
             >
                 {children}
-            </Box>
+            </ListTag>
         </>
     );
 };
@@ -102,7 +85,7 @@ const List = ({
 interface AccentedListProps {
     children: ListItemElement | ListItemElement[];
     heading: React.ReactNode;
-    headingVariant: TypographyProps["variant"];
+    headingVariant: HeadingLevel;
 }
 
 export const AccentedList = ({
@@ -110,17 +93,7 @@ export const AccentedList = ({
     heading,
     headingVariant,
 }: AccentedListProps): React.ReactElement => (
-    <LeftAccent
-        sx={{
-            mt: 4,
-            pr: 1,
-            py: 0.5,
-            background: (theme) =>
-                theme.palette.mode === "light"
-                    ? alpha(theme.palette.primary.main, 0.03)
-                    : alpha(theme.palette.primary.light, 0.04),
-        }}
-    >
+    <LeftAccent className="clear-both mt-8 bg-primary/3 py-1 pr-2 dark:bg-primary/4">
         <List heading={heading} headingVariant={headingVariant}>
             {children}
         </List>
