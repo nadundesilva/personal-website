@@ -42,6 +42,7 @@ import {
 
 import { getImageType } from "@/utils/common/image-metadata";
 import profilePhotoImage from "@/assets/profile-photo.webp";
+import { ThemeProvider } from "next-themes";
 
 const GOOGLE_SITE_VERIFICATION = "M8dg6gzVYU0noXFvsPOqknm_WjREFeNE212YeUk0g30";
 const YANDEX_VERIFICATION = "acbc45e5d9645cf0";
@@ -248,7 +249,11 @@ const RootLayout = async ({
 
     const csps = createCspValues();
     return (
-        <html lang="en">
+        <html
+            lang="en"
+            className={`${defaultFont.variable} ${codeFont.variable}`}
+            suppressHydrationWarning
+        >
             <head>
                 <meta charSet="UTF-8" />
 
@@ -281,18 +286,24 @@ const RootLayout = async ({
                 />
             </head>
             <body>
-                <React.StrictMode>
-                    <WebVitals />
-                    <WebsiteThemeProvider
-                        fontFamily={defaultFont.style.fontFamily}
-                        codeFontFamily={codeFont.style.fontFamily}
-                    >
-                        <Layout topLevelRoutes={routes}>
-                            <RouterBreadcrumbs topLevelRoutes={routes} />
-                            {children}
-                        </Layout>
-                    </WebsiteThemeProvider>
-                </React.StrictMode>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                >
+                    <React.StrictMode>
+                        <WebVitals />
+                        <WebsiteThemeProvider
+                            fontFamily={defaultFont.style.fontFamily}
+                            codeFontFamily={codeFont.style.fontFamily}
+                        >
+                            <Layout topLevelRoutes={routes}>
+                                <RouterBreadcrumbs topLevelRoutes={routes} />
+                                {children}
+                            </Layout>
+                        </WebsiteThemeProvider>
+                    </React.StrictMode>
+                </ThemeProvider>
             </body>
         </html>
     );
