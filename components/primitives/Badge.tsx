@@ -32,8 +32,10 @@ const badgeVariants = cva(
                     "bg-muted text-muted-foreground [a]:hover:bg-muted/60",
                 destructive:
                     "bg-destructive/10 text-destructive focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:focus-visible:ring-destructive/40 [a]:hover:bg-destructive/20",
+                // dark:text-foreground — primary at oklch(60%) on the dark card
+                // fails WCAG AA 4.5:1 at this font size; foreground passes (~9.4:1).
                 outline:
-                    "cursor-default border-primary/35 px-1.5 text-[0.625rem] font-normal tracking-[0.04em] text-primary uppercase dark:border-primary/50",
+                    "cursor-default border-primary/35 px-1.5 text-[0.625rem] font-normal tracking-[0.04em] text-primary uppercase dark:border-primary/50 dark:text-foreground",
                 ghost: "hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50",
                 link: "text-primary underline-offset-4 hover:underline",
             },

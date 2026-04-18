@@ -761,6 +761,12 @@ Jobs 1–4 run in parallel on every push/PR. Job 5 runs independently. Jobs 6–
 
 [`app/layout.tsx`](./app/layout.tsx) adds `'unsafe-eval'` to `script-src` only when `NODE_ENV === "development"` or `BUILD_TYPE === "test"`. Do not rely on `eval` in production code.
 
+### Production HTTP security headers live in `public/_headers`
+
+HTTP security headers (`Strict-Transport-Security`, `X-Content-Type-Options`, `X-Frame-Options`, `Permissions-Policy`) are served via [`public/_headers`](./public/_headers) — Cloudflare Pages reads this file automatically. The CSP is set separately via `<meta httpEquiv="Content-Security-Policy">` in [`app/layout.tsx`](./app/layout.tsx) so it can include the conditional `'unsafe-eval'` for dev/test builds.
+
+Note: The CI LHCI server (Caddy Docker via [`start-server.sh`](./.github/scripts/start-server.sh)) parses `${WEBSITE_BUILD_DIR}/_headers` and translates each header under the `/*` pattern into a Caddy `header` directive, so security headers are present during CI LHCI audits.
+
 ### `ContentContainer` padding must be mirrored in `image-sizes.ts`
 
 `CONTENT_BREAKPOINTS` in [`utils/common/image-sizes.ts`](./utils/common/image-sizes.ts) hardcodes the min-width and padding pixel values for each breakpoint. The padding values mirror the `px-*` Tailwind classes in [`components/layout/ContentContainer.tsx`](./components/layout/ContentContainer.tsx). Both `generateSizesForContentBreakpoints` and `generateSizesForColumnLayout` derive their `calc()` strings from these values. If `ContentContainer`'s padding classes change, update `CONTENT_BREAKPOINTS` in the same PR or all `sizes` strings will be wrong.

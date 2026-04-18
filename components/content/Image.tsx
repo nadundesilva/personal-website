@@ -36,6 +36,7 @@ interface ImageProps {
     fill?: boolean;
     sizes?: string;
     fetchPriority?: "high" | "low" | "auto";
+    loading?: "eager" | "lazy";
     className?: string;
 }
 
@@ -46,10 +47,13 @@ const Image = ({
     fill,
     sizes,
     fetchPriority,
+    loading,
     className,
 }: ImageProps): React.ReactElement => {
     const effectiveSizes =
         sizes ?? (float !== undefined ? FLOAT_IMAGE_SIZES : FULL_WIDTH_SIZES);
+    const effectiveLoading =
+        loading ?? (fetchPriority === "high" ? "eager" : undefined);
     return (
         <div
             className={cn(
@@ -75,6 +79,7 @@ const Image = ({
                 fill={fill}
                 sizes={effectiveSizes}
                 fetchPriority={fetchPriority}
+                loading={effectiveLoading}
                 className={fill ? "object-cover" : undefined}
             />
         </div>

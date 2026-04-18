@@ -77,8 +77,8 @@ export const metadata: Metadata = {
         follow: true,
     },
     icons: {
-        icon: `${WEBSITE_PUBLIC_URL}/icon-maskable-x512.png`,
-        shortcut: `${WEBSITE_PUBLIC_URL}/icon-maskable-x512.png`,
+        icon: "/icon-maskable-x512.png",
+        shortcut: "/icon-maskable-x512.png",
         apple: profilePhotoImage.src,
     },
     manifest: `${WEBSITE_PUBLIC_URL}/manifest.webmanifest`,
@@ -252,15 +252,8 @@ const RootLayout = async ({
             <head>
                 <meta charSet="UTF-8" />
 
-                <meta httpEquiv="X-DNS-Prefetch-Control" content="on" />
-                <meta
-                    httpEquiv="Strict-Transport-Security"
-                    content="max-age=63072000; includeSubDomains; preload"
-                />
-                <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
-                <meta httpEquiv="Permissions-Policy" content="" />
-                <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
-
+                {/* CSP stays as a meta tag (not in public/_headers) so that the
+                    'unsafe-eval' directive can be conditionally added for dev/test builds. */}
                 <meta
                     httpEquiv="Content-Security-Policy"
                     content={csps.join("; ")}
@@ -272,6 +265,10 @@ const RootLayout = async ({
                 <link
                     rel="preconnect"
                     href="https://o4507214991917056.ingest.us.sentry.io"
+                />
+                <link
+                    rel="preconnect"
+                    href="https://static.cloudflareinsights.com"
                 />
 
                 <Script

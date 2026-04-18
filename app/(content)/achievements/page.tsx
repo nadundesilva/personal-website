@@ -123,10 +123,12 @@ const Achievements = (): React.ReactElement => {
                         AchievementDetails.WSO2SustainedOutstandingContributionAward
                     }
                 />
+                {/* fetchPriority="high" — this is the LCP element on the page. */}
                 <Image
                     src={wso2OutstandingContributorImage}
                     alt="Sustained Outstanding Contribution Award presented by WSO2."
                     float="right"
+                    fetchPriority="high"
                 />
                 <Paragraph>
                     Each year for employees who have performed exceptionally

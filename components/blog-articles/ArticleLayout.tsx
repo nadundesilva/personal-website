@@ -143,6 +143,7 @@ const ArticleLayout = ({
                     alt=""
                     fill
                     fetchPriority="high"
+                    loading="eager"
                     className="mb-12 aspect-video rounded-md"
                 />
             </ScrollReveal>

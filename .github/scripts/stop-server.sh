@@ -11,5 +11,5 @@
 # © 2023 Nadun De Silva. All rights reserved.
 
 echo "Shutting down website server"
-sleep 5s
-sudo kill -9 "${SERVE_PID}"
+docker stop caddy-server
+docker rm caddy-server

@@ -28,12 +28,14 @@ interface ArticlesGroupProps {
     title?: string;
     articles: BlogArticle[];
     href?: string;
+    prioritizeFirst?: boolean;
 }
 
 const ArticlesGroup = ({
     title,
     articles,
     href,
+    prioritizeFirst = false,
 }: ArticlesGroupProps): React.ReactElement => {
     const id = useId();
 
@@ -67,7 +69,14 @@ const ArticlesGroup = ({
                         className="h-full"
                     >
                         <ScrollReveal delay={index * 50} className="h-full">
-                            <ArticleListItem blogArticle={blogArticle} />
+                            <ArticleListItem
+                                blogArticle={blogArticle}
+                                fetchPriority={
+                                    prioritizeFirst && index === 0
+                                        ? "high"
+                                        : undefined
+                                }
+                            />
                         </ScrollReveal>
                     </li>
                 ))}
@@ -90,14 +99,20 @@ const ArticlesList = async ({
             <Title>{currentGroup ? currentGroup.title : "Blog Articles"}</Title>
             <div className="mt-4">
                 {currentGroup && (
-                    <ArticlesGroup articles={currentGroup.articles} />
+                    <ArticlesGroup
+                        articles={currentGroup.articles}
+                        prioritizeFirst
+                    />
                 )}
-                {subGroups.map((subGroup) => (
+                {subGroups.map((subGroup, groupIndex) => (
                     <ArticlesGroup
                         key={`/blog-articles/${subGroup.websiteSubPath}`}
                         title={subGroup.title}
                         articles={subGroup.articles}
                         href={`/blog-articles/${subGroup.websiteSubPath}`}
+                        // Only prioritize the first sub-group's first image when
+                        // there is no currentGroup rendered above it.
+                        prioritizeFirst={!currentGroup && groupIndex === 0}
                     />
                 ))}
             </div>

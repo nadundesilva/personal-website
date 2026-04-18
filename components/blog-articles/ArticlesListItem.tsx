@@ -32,10 +32,12 @@ import { type BlogArticle } from "@/utils/server/blog-articles";
 
 interface ArticleListItemProps {
     blogArticle: BlogArticle;
+    fetchPriority?: "high" | "low" | "auto";
 }
 
 const ArticleListItem = ({
     blogArticle,
+    fetchPriority,
 }: ArticleListItemProps): React.ReactElement => (
     <Card className="group h-full overflow-visible motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-bounce-out motion-safe:hover:scale-[1.02]">
         <Link
@@ -47,6 +49,8 @@ const ArticleListItem = ({
                     src={blogArticle.image}
                     alt=""
                     fill
+                    fetchPriority={fetchPriority}
+                    loading={fetchPriority === "high" ? "eager" : undefined}
                     // CSS grid gap-4 (16px).
                     sizes={generateSizesForColumnLayout({
                         xl: { cols: 4, gapPx: 16 },

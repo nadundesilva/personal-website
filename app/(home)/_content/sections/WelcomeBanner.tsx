@@ -210,7 +210,7 @@ const WelcomeBanner = (): React.ReactElement => {
                                                 href={link}
                                                 target="_blank"
                                                 aria-label={`Visit ${name} profile`}
-                                                className="flex items-center text-white/50 hover:text-white hover:no-underline hover:opacity-85 motion-safe:transition-[color,opacity] motion-safe:duration-200"
+                                                className="flex items-center text-white/65 hover:text-white hover:no-underline hover:opacity-85 motion-safe:transition-[color,opacity] motion-safe:duration-200"
                                             />
                                         }
                                     >

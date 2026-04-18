@@ -70,6 +70,7 @@ const List = ({
                 </Tag>
             )}
             <ListTag
+                role="list"
                 aria-labelledby={heading ? headingId : undefined}
                 className={cn(
                     "pl-5 [&_li]:mb-3 [&_li::marker]:text-primary/70 [&_li:last-child]:mb-0",
