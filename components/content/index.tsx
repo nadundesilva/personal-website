@@ -12,31 +12,31 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+import DateInfo from "./DateInfo";
+import Image from "./Image";
 import Link from "./Link";
 import LinkButton, { type LinkButtonProps } from "./LinkButton";
 import List, { AccentedList, ListItem } from "./List";
-import Image from "./Image";
 import Logo from "./Logo";
 import Paragraph from "./Paragraph";
 import Section from "./Section";
 import SectionHeading from "./SectionHeading";
 import SubsectionHeading from "./SubsectionHeading";
-import DateInfo from "./DateInfo";
 import Title from "./Title";
 
 export {
     AccentedList,
+    DateInfo,
+    Image,
     Link,
     LinkButton,
-    type LinkButtonProps,
     List,
     ListItem,
-    Image,
     Logo,
     Paragraph,
     Section,
     SectionHeading,
     SubsectionHeading,
-    DateInfo,
     Title,
+    type LinkButtonProps,
 };

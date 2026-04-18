@@ -12,31 +12,19 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import type { SvgIconProps } from "@mui/material";
-import { alpha } from "@mui/material/styles";
+import type { LucideProps } from "lucide-react";
 import type React from "react";
 
 interface PrimaryTintedIconProps {
-    icon: React.ComponentType<SvgIconProps>;
-    fontSize?: string;
+    icon: React.ComponentType<LucideProps>;
+    size?: string;
 }
 
 const PrimaryTintedIcon = ({
     icon: Icon,
-    fontSize,
+    size,
 }: PrimaryTintedIconProps): React.ReactElement => (
-    <Icon
-        aria-hidden="true"
-        sx={{
-            color: (theme) =>
-                theme.palette.mode === "light"
-                    ? alpha(theme.palette.primary.main, 0.7)
-                    : alpha(theme.palette.primary.light, 0.7),
-            ...(fontSize !== undefined && { fontSize }),
-        }}
-    />
+    <Icon aria-hidden="true" className="text-primary/70" size={size} />
 );
 
 export default PrimaryTintedIcon;

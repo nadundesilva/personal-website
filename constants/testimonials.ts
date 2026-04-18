@@ -14,6 +14,7 @@
  */
 
 import Companies, { type Company } from "@/constants/companies";
+import Experiences, { type Experience } from "@/constants/experience";
 import People, { type Person } from "@/constants/people";
 
 export enum Relationship {
@@ -24,34 +25,39 @@ export enum Relationship {
     Junior,
 }
 
-export interface TestimonialData {
+export interface TestimonialAuthor {
+    person: Person;
     position: string;
     company: Company;
-    author: Person;
-    authorPosition: string;
-    authorCompany: Company;
+}
+
+export interface TestimonialData {
+    position: Experience;
+    author: TestimonialAuthor;
     relationship: Relationship;
     content: string[];
 }
 
 const Testimonials: TestimonialData[] = [
     {
-        position: "Associate Technical Lead",
-        company: Companies.WSO2,
-        author: People.TishanDahanayakage,
-        authorPosition: "Senior Technical Lead & Engineering Manager",
-        authorCompany: Companies.WSO2,
+        position: Experiences.WSO2AssociateTechnicalLead,
+        author: {
+            person: People.TishanDahanayakage,
+            position: "Senior Technical Lead & Engineering Manager",
+            company: Companies.WSO2,
+        },
         relationship: Relationship.ManagedDirectly,
         content: [
             "I have worked with Nadun directly on two occasions. Once when he was doing his internship and then again as his engineering manager while he was acting as the lead of Choreo Observability team. Nadun is a highly motivated and passionate individual. He would almost always deliver beyond expectations. He possess great analytical and problem solving skills. He has the ability to take a project from design to delivery confirming to highest standards. Nadun was repeatedly rated as an exceptional employee and I will always have him in my team.",
         ],
     },
     {
-        position: "Associate Technical Lead",
-        company: Companies.WSO2,
-        author: People.MalithJayasinghe,
-        authorPosition: "Vice President & Head of Research & AI",
-        authorCompany: Companies.WSO2,
+        position: Experiences.WSO2AssociateTechnicalLead,
+        author: {
+            person: People.MalithJayasinghe,
+            position: "Vice President & Head of Research & AI",
+            company: Companies.WSO2,
+        },
         relationship: Relationship.ManagedDirectly,
         content: [
             "Nadun was the primary technical lead in Choreo observability team where led a team of software engineers working on observability features.",
@@ -60,11 +66,12 @@ const Testimonials: TestimonialData[] = [
         ],
     },
     {
-        position: "Associate Technical Lead",
-        company: Companies.WSO2,
-        author: People.IsuruHaththotuwa,
-        authorPosition: "Senior Technical Lead",
-        authorCompany: Companies.WSO2,
+        position: Experiences.WSO2AssociateTechnicalLead,
+        author: {
+            person: People.IsuruHaththotuwa,
+            position: "Senior Technical Lead",
+            company: Companies.WSO2,
+        },
         relationship: Relationship.Senior,
         content: [
             "I had the pleasure of working with Nadun closely in two projects at WSO2 - Cellery (2019 - 2020) and Choreo (2020 - 2022). He spearheaded the monitoring and metering side (a.k.a observability) in these two cloud native projects, which were based on cutting edge technology.",
@@ -75,11 +82,12 @@ const Testimonials: TestimonialData[] = [
         ],
     },
     {
-        position: "Associate Technical Lead",
-        company: Companies.WSO2,
-        author: People.DuneeshaFernando,
-        authorPosition: "Senior Software Engineer - Machine Learning",
-        authorCompany: Companies.WSO2,
+        position: Experiences.WSO2AssociateTechnicalLead,
+        author: {
+            person: People.DuneeshaFernando,
+            position: "Senior Software Engineer - Machine Learning",
+            company: Companies.WSO2,
+        },
         relationship: Relationship.Senior,
         content: [
             "I worked with Nadun when he was serving WSO2 as a Senior Software Engineer as well as an Associate Technical Lead. Nadun is a highly-skilled engineer, who has a vast breadth of knowledge on programming, software architecture, container orchestration, software engineering best practices etc. As the lead of Choreo's Observability team, Nadun's knowledge contributions towards successfully building the AI-based performance anomaly detector (the project that I worked in) was invaluable. As a senior engineer he was always approachable to us from the time of planning the project until deployment and even beyond that. As an individual, I learnt a lot from his technical knowledge and the vision he had on software development.",
@@ -90,22 +98,24 @@ const Testimonials: TestimonialData[] = [
         ],
     },
     {
-        position: "Associate Technical Lead",
-        company: Companies.WSO2,
-        author: People.SrinathPerera,
-        authorPosition: "Chief Architect",
-        authorCompany: Companies.WSO2,
+        position: Experiences.WSO2AssociateTechnicalLead,
+        author: {
+            person: People.SrinathPerera,
+            position: "Chief Architect",
+            company: Companies.WSO2,
+        },
         relationship: Relationship.Senior,
         content: [
             "I have known Nadun for over 2+ years on his work at WSO2. He is a 10x engineer. Although he did not report to me, I had a direct view of his work, and I have worked with him closely several times. Nadun is passionate, smart, and thoughtful and a joy to work with.",
         ],
     },
     {
-        position: "Associate Technical Lead",
-        company: Companies.WSO2,
-        author: People.BinuraGunasekara,
-        authorPosition: "Technical Lead",
-        authorCompany: Companies.WSO2,
+        position: Experiences.WSO2AssociateTechnicalLead,
+        author: {
+            person: People.BinuraGunasekara,
+            position: "Technical Lead",
+            company: Companies.WSO2,
+        },
         relationship: Relationship.Senior,
         content: [
             "I've had the pleasure of crossing paths with Nadun on multiple occasions during his time at WSO2, and he's definitely one of the sharpest engineers I've had the opportunity to work with—extremely reliable, proficient, and thorough in what he does, and still one of the most approachable and humble people I've met on the team.",
@@ -114,33 +124,36 @@ const Testimonials: TestimonialData[] = [
         ],
     },
     {
-        position: "Associate Technical Lead",
-        company: Companies.WSO2,
-        author: People.KanchanaWickremasinghe,
-        authorPosition: "VP & GM Choreo Business Unit",
-        authorCompany: Companies.WSO2,
+        position: Experiences.WSO2AssociateTechnicalLead,
+        author: {
+            person: People.KanchanaWickremasinghe,
+            position: "VP & GM Choreo Business Unit",
+            company: Companies.WSO2,
+        },
         relationship: Relationship.Senior,
         content: [
             "I got to know Nadun when I joined WSO2 in June 2021. Nadun is an excellent software engineer and data scientist who is eager to learn, listen to others, try out things, and get his hands dirty. He learns things very quickly and applies them in his work. He is very likable by co-workers for his ethics, working habits, and helping others when needed. We are very sad to lose him at WSO2. We wish him all the very best in his future endeavors.",
         ],
     },
     {
-        position: "Senior Software Engineer",
-        company: Companies.WSO2,
-        author: People.NuwanBandara,
-        authorPosition: "Senior Director, Head of Product - Integration Cloud",
-        authorCompany: Companies.WSO2,
+        position: Experiences.WSO2SeniorSoftwareEngineer,
+        author: {
+            person: People.NuwanBandara,
+            position: "Senior Director, Head of Product - Integration Cloud",
+            company: Companies.WSO2,
+        },
         relationship: Relationship.ManagedDirectly,
         content: [
             "Nadun was one of the key members of my team, during the last two years of my tenure at WSO2. A diligent, smart individual that the team can always rely on. Nadun is a problem solver, dives deep to understand the domain and context before jumping into conclusions. He can think in abstract and can come up with creative solutions to challenging problems. Over the years I have seen Nadun growing into a senior engineer role, mentoring new team members while giving the highest priority to engineering quality. I wish all the best to Nadun and wouldn't hesitate to recommend him to any engineering role.",
         ],
     },
     {
-        position: "Senior Software Engineer",
-        company: Companies.WSO2,
-        author: People.SinthujaRajendranSuhothayan,
-        authorPosition: "Architect/Associate Director",
-        authorCompany: Companies.WSO2,
+        position: Experiences.WSO2SeniorSoftwareEngineer,
+        author: {
+            person: People.SinthujaRajendranSuhothayan,
+            position: "Architect/Associate Director",
+            company: Companies.WSO2,
+        },
         relationship: Relationship.ManagedDirectly,
         content: [
             "I worked with Nadun for 1.5 years in an open source project - Cellery. Nadun is a brilliant software engineer, and he has full breadth of knowledge from front-end to backend-programming, and also devops knowledge on how to manage k8s clusters, best practices to follow, and so on. He had owned the area of Observability and Tooling in the Cellery project, and always completes the tasks and features on time with a good quality. He learns what ever the technology that is required to complete a feature by him self, and get it completed on time. As a team lead of the Cellery project, I can depend on him to work on critical feature, and I'm sure that he will deliver it through! Nadun not-only focuses on his work, but also helps co-team mates and interns on solving their technical problems.",

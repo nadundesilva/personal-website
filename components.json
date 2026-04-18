@@ -9,7 +9,7 @@
     "menuAccent": "subtle",
     "tailwind": {
         "config": "",
-        "css": "app/globals.css",
+        "css": "app/app.css",
         "baseColor": "neutral",
         "cssVariables": true,
         "prefix": ""

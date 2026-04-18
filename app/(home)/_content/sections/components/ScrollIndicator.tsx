@@ -12,73 +12,24 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-import Box from "@mui/material/Box";
-import ButtonBase from "@mui/material/ButtonBase";
-import { alpha } from "@mui/material/styles";
-import { keyframes } from "@mui/system";
 import type React from "react";
 
-import { WELCOME_BANNER_END_ID } from "../WelcomeBanner";
-import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
+interface ScrollIndicatorProps {
+    scrollToTargetId: string;
+}
 
-const scrollDot = keyframes`
-    0% { transform: translateY(0); opacity: 0.8; }
-    80% { transform: translateY(14px); opacity: 0; }
-    100% { transform: translateY(14px); opacity: 0; }
-`;
-
-const ScrollIndicator = (): React.ReactElement => (
-    <ButtonBase
-        component="a"
-        href={`#${WELCOME_BANNER_END_ID}`}
-        aria-label="Scroll to Who Am I section"
-        focusRipple
-        sx={{
-            "borderRadius": 1.5,
-            "p": 1,
-            "&:focus-visible": {
-                outline: (theme) =>
-                    `2px solid ${alpha(theme.palette.common.white, 0.9)}`,
-                outlineOffset: "4px",
-            },
-        }}
+const ScrollIndicator = ({
+    scrollToTargetId: targetId,
+}: ScrollIndicatorProps): React.ReactElement => (
+    <a
+        href={`#${targetId}`}
+        aria-label="Scroll down"
+        className="group rounded-xl p-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/90"
     >
-        <Box
-            sx={{
-                "width": 24,
-                "height": 38,
-                "borderRadius": 1.5,
-                "border": (theme) =>
-                    `2px solid ${alpha(theme.palette.common.white, 0.5)}`,
-                "position": "relative",
-                "display": "flex",
-                "justifyContent": "center",
-                "transition": (theme) =>
-                    theme.transitions.create("border-color", {
-                        duration: theme.transitions.duration.shorter,
-                    }),
-                "button:hover &": {
-                    borderColor: (theme) =>
-                        alpha(theme.palette.common.white, 0.9),
-                },
-            }}
-        >
-            <Box
-                sx={{
-                    width: 4,
-                    height: 7,
-                    borderRadius: 0.25,
-                    backgroundColor: (theme) =>
-                        alpha(theme.palette.common.white, 0.85),
-                    position: "absolute",
-                    top: 5,
-                    [MOTION_OK_QUERY]: {
-                        animation: `${scrollDot} 1.8s ease-in-out infinite`,
-                    },
-                }}
-            />
-        </Box>
-    </ButtonBase>
+        <div className="relative flex h-9.5 w-6 justify-center rounded-xl border-2 border-white/50 motion-safe:transition-colors motion-safe:duration-200 group-hover:border-white/90">
+            <div className="absolute top-1.25 h-1.75 w-1 rounded-sm bg-white/85 motion-safe:animate-home-scroll-dot" />
+        </div>
+    </a>
 );
 
 export default ScrollIndicator;

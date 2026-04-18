@@ -13,8 +13,10 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 
-export default {
+const postConf = {
     plugins: {
         "@tailwindcss/postcss": {},
     },
 };
+
+export default postConf;

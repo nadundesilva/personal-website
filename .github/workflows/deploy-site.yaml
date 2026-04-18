@@ -53,8 +53,11 @@ jobs:
                   IGNORE_GITIGNORED_FILES: "true"
                   TYPESCRIPT_ES_CONFIG_FILE: eslint.config.js
                   LINTER_RULES_PATH: .
+                  CSS_FILE_NAME: stylelint.config.js
+                  SAVE_SUPER_LINTER_SUMMARY: "true"
+                  ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: "true"
+                  ENABLE_GITHUB_PULL_REQUEST_SUMMARY_COMMENT: "true"
                   VALIDATE_ALL_CODEBASE: "true"
-                  VALIDATE_CSS: "false"
                   VALIDATE_HTML: "false"
                   VALIDATE_JAVASCRIPT_ES: "false"
                   VALIDATE_JAVASCRIPT_STANDARD: "false"
@@ -198,6 +201,10 @@ jobs:
         name: Check Links in Website
         runs-on: ubuntu-latest
         needs: build-site
+        env:
+            # Hostnames and status codes are in the same order.
+            BOT_RESTRICTED_WEBSITES_PATTERN: 'medium\.com|instagram\.com|linkedin\.com|scholar\.google\.com'
+            BOT_RESTRICTED_STATUS_CODES: "403,429,999"
         steps:
             - name: Checkout
               uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -220,12 +227,22 @@ jobs:
                   source ./.github/scripts/start-server.sh
               env:
                   WEBSITE_BUILD_DIR: _site
-            - name: Link Checker
+            - name: Link Checker (General)
               id: lychee
               uses: lycheeverse/lychee-action@a8c4c7cb88f0c7386610c35eb25108e448569cb0 # v2.7.0
               with:
-                  args: --verbose --no-progress https://nadundesilva.com/
+                  args: --verbose --no-progress --exclude "${{ env.BOT_RESTRICTED_WEBSITES_PATTERN }}" https://nadundesilva.com/
+                  output: ./lychee/out-general.md
                   fail: true
+                  failIfEmpty: true
+            - name: Link Checker (Bot-Protected Sites)
+              id: lychee-restricted
+              uses: lycheeverse/lychee-action@a8c4c7cb88f0c7386610c35eb25108e448569cb0 # v2.7.0
+              with:
+                  args: --verbose --no-progress --include "${{ env.BOT_RESTRICTED_WEBSITES_PATTERN }}" --accept "200,${{ env.BOT_RESTRICTED_STATUS_CODES }}" https://nadundesilva.com/
+                  output: ./lychee/out-restricted.md
+                  fail: true
+                  failIfEmpty: true
             - name: Stop Server
               run: |
                   source ./.github/scripts/stop-server.sh
@@ -236,7 +253,7 @@ jobs:
               uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
               with:
                   name: link-checker-report
-                  path: ./lychee/out.md
+                  path: ./lychee/
 
     check-site-build:
         strategy:

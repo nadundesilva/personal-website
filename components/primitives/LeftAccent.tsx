@@ -12,38 +12,37 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { Box, type SxProps, type Theme } from "@mui/material";
-import { alpha } from "@mui/material/styles";
 import type React from "react";
+
+import { cn } from "@/components/primitives/utils/cn";
 
 interface LeftAccentProps {
     children: React.ReactNode;
     thickness?: number;
     opacity?: number;
-    sx?: SxProps<Theme>;
+    className?: string;
 }
 
 const LeftAccent = ({
     children,
     thickness = 3,
     opacity = 0.4,
-    sx,
+    className,
 }: LeftAccentProps): React.ReactElement => (
-    <Box
-        sx={{
-            pl: 2,
-            borderLeft: `${thickness}px solid`,
-            borderColor: (theme) =>
-                theme.palette.mode === "light"
-                    ? alpha(theme.palette.primary.main, opacity)
-                    : alpha(theme.palette.primary.light, opacity),
-            ...sx,
-        }}
+    <div
+        className={cn(
+            "[border-left-width:var(--accent-thickness)] border-l-(--accent-color) border-solid pl-4",
+            className,
+        )}
+        style={
+            {
+                "--accent-thickness": `${thickness}px`,
+                "--accent-color": `color-mix(in oklch, var(--primary) ${opacity * 100}%, transparent)`,
+            } as React.CSSProperties
+        }
     >
         {children}
-    </Box>
+    </div>
 );
 
 export default LeftAccent;

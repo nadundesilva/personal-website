@@ -12,7 +12,6 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box } from "@mui/material";
 import type { Metadata } from "next";
 import type React from "react";
 
@@ -32,20 +31,13 @@ const Testimonials = (): React.ReactElement => {
     return (
         <>
             <Title>Testimonials</Title>
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 3,
-                    mt: 4,
-                }}
-            >
+            <div className="mt-8 flex flex-col gap-6">
                 {TestimonialsData.map((testimonial, index) => (
                     <ScrollReveal key={index} delay={index * 75}>
                         <Testimonial testimonial={testimonial} />
                     </ScrollReveal>
                 ))}
-            </Box>
+            </div>
         </>
     );
 };

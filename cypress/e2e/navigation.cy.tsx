@@ -49,7 +49,9 @@ describe("navigation between pages", () => {
                 cy.get("@navlink").click({ waitForAnimations: true });
 
                 cy.wait(1000);
-                cy.findAllByRole("progressbar").should("not.exist");
+                cy.findAllByTestId("route-segment-loading-spinner").should(
+                    "not.exist",
+                );
                 cy.scrollTo("bottom", {
                     duration: 1000,
                     ensureScrollable: false,
@@ -71,7 +73,9 @@ describe("navigation between pages", () => {
             Object.values(currentRoutes).forEach((route) => {
                 cy.clickNavLink(route.name);
                 cy.wait(1000);
-                cy.findAllByRole("progressbar").should("not.exist");
+                cy.findAllByTestId("route-segment-loading-spinner").should(
+                    "not.exist",
+                );
                 cy.scrollTo("bottom", {
                     duration: 1000,
                     ensureScrollable: false,
@@ -94,7 +98,9 @@ describe("navigation between pages", () => {
 
                 cy.loadPage("/blog-articles");
                 cy.wait(1000);
-                cy.findAllByRole("progressbar").should("not.exist");
+                cy.findAllByTestId("route-segment-loading-spinner").should(
+                    "not.exist",
+                );
                 cy.scrollTo("bottom", {
                     duration: 1000,
                     ensureScrollable: false,
@@ -121,7 +127,9 @@ describe("navigation between pages", () => {
                         cy.clickLinkByHref(articleUrl);
                         cy.location("pathname").should("eq", articleUrl);
                         cy.wait(1000);
-                        cy.findAllByRole("progressbar").should("not.exist");
+                        cy.findAllByTestId(
+                            "route-segment-loading-spinner",
+                        ).should("not.exist");
                         cy.scrollTo("bottom", {
                             duration: 1000,
                             ensureScrollable: false,
@@ -148,7 +156,9 @@ describe("navigation between pages", () => {
 
                         cy.loadPage("/blog-articles");
                         cy.wait(1000);
-                        cy.findAllByRole("progressbar").should("not.exist");
+                        cy.findAllByTestId(
+                            "route-segment-loading-spinner",
+                        ).should("not.exist");
                         cy.scrollTo("bottom", {
                             duration: 1000,
                             ensureScrollable: false,
@@ -161,7 +171,9 @@ describe("navigation between pages", () => {
                             cy.clickLinkByHref(subGroupPage);
                             cy.location("pathname").should("eq", subGroupPage);
                             cy.wait(1000);
-                            cy.findAllByRole("progressbar").should("not.exist");
+                            cy.findAllByTestId(
+                                "route-segment-loading-spinner",
+                            ).should("not.exist");
                             cy.scrollTo("bottom", {
                                 duration: 1000,
                                 ensureScrollable: false,
@@ -187,9 +199,9 @@ describe("navigation between pages", () => {
                                         articleUrl,
                                     );
                                     cy.wait(1000);
-                                    cy.findAllByRole("progressbar").should(
-                                        "not.exist",
-                                    );
+                                    cy.findAllByTestId(
+                                        "route-segment-loading-spinner",
+                                    ).should("not.exist");
                                     cy.scrollTo("bottom", {
                                         duration: 1000,
                                         ensureScrollable: false,
@@ -208,7 +220,9 @@ describe("navigation between pages", () => {
                             // After testing all articles in this group, go back to /blog-articles
                             cy.clickBreadcrumbByName("Blog Articles");
                             cy.wait(1000);
-                            cy.findAllByRole("progressbar").should("not.exist");
+                            cy.findAllByTestId(
+                                "route-segment-loading-spinner",
+                            ).should("not.exist");
                         });
                     },
                 );

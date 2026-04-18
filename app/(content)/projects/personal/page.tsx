@@ -12,10 +12,7 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Launch } from "@mui/icons-material";
-import { Box, Typography } from "@mui/material";
-import type { SxProps, Theme } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
+import { ExternalLink } from "lucide-react";
 import type { Metadata } from "next";
 import React from "react";
 
@@ -35,13 +32,13 @@ import ProjectDetails, { type Project } from "@/constants/projects";
 interface PersonalProjectSectionHeadingProps {
     id: string;
     project: Project;
-    logoSx: SxProps<Theme>;
+    logoClassName: string;
 }
 
 const PersonalProjectSectionHeading = ({
     id,
     project,
-    logoSx,
+    logoClassName,
 }: PersonalProjectSectionHeadingProps): React.ReactElement => (
     <SectionHeading
         id={id}
@@ -50,21 +47,18 @@ const PersonalProjectSectionHeading = ({
                 srcLight={project.logo.srcLight}
                 srcDark={project.logo.srcDark}
                 alt=""
-                recommendedSx={logoSx}
+                className={logoClassName}
             />
         }
         actionButton={{
             href: project.link,
             name: "View on GitHub",
             ariaLabel: `View on GitHub - ${project.name}`,
-            endIcon: Launch,
+            endIcon: ExternalLink,
         }}
     >
         {project.name}
-        <Box component="span" sx={visuallyHidden}>
-            {" "}
-            (personal project)
-        </Box>
+        <span className="sr-only"> (personal project)</span>
     </SectionHeading>
 );
 
@@ -99,7 +93,7 @@ const PersonalProjects = (): React.ReactElement => {
                 <PersonalProjectSectionHeading
                     id="section-project-k8s-replicator"
                     project={ProjectDetails.K8sReplicator}
-                    logoSx={{ height: "3.5em" }}
+                    logoClassName="h-[3.5em]"
                 />
                 <Paragraph>
                     In {Kubernetes} deployments when the same {Secret},{" "}
@@ -113,21 +107,15 @@ const PersonalProjects = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Use Cases" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Use a wildcard TLS Secret across namespaces.
-                        </Typography>
+                        Use a wildcard TLS Secret across namespaces.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Use a Config Map containing configurations for
-                            connecting into a DB across namespaces.
-                        </Typography>
+                        Use a Config Map containing configurations for
+                        connecting into a DB across namespaces.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Apply common network level restrictions using
-                            Network Policies across namespaces.
-                        </Typography>
+                        Apply common network level restrictions using Network
+                        Policies across namespaces.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -135,7 +123,7 @@ const PersonalProjects = (): React.ReactElement => {
                 <PersonalProjectSectionHeading
                     id="section-project-mesh-manager"
                     project={ProjectDetails.MeshManager}
-                    logoSx={{ height: "4.5em" }}
+                    logoClassName="h-[4.5em]"
                 />
                 <Paragraph>
                     When working with a large deployment based on a
@@ -147,22 +135,15 @@ const PersonalProjects = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Use Cases" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Ensuring that dependencies are not removed when
-                            microservices are still using them.
-                        </Typography>
+                        Ensuring that dependencies are not removed when
+                        microservices are still using them.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Ensuring the order of startup based on the
-                            dependencies.
-                        </Typography>
+                        Ensuring the order of startup based on the dependencies.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Finding all the microservices that depend on a given
-                            microservice.
-                        </Typography>
+                        Finding all the microservices that depend on a given
+                        microservice.
                     </ListItem>
                 </AccentedList>
             </Section>

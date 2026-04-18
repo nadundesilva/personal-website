@@ -12,15 +12,15 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
+import Skills from "@/constants/skills";
 import { type StaticImageData } from "next/image";
 import { Date } from "./date";
 import Institutes, { type Institute } from "./institutes";
-import Skills from "@/constants/skills";
 
-import deepLearningAiLogoImage from "@/assets/certifications/deep-learning-ai-logo.png";
-import universityOfAlbertaLogoImage from "@/assets/certifications/university-of-alberta-logo.png";
 import ckaLogoImage from "@/assets/certifications/cka-logo.png";
 import ckadLogoImage from "@/assets/certifications/ckad-logo.png";
+import deepLearningAiLogoImage from "@/assets/certifications/deep-learning-ai-logo.png";
+import universityOfAlbertaLogoImage from "@/assets/certifications/university-of-alberta-logo.png";
 
 export interface Certificate {
     name: string;

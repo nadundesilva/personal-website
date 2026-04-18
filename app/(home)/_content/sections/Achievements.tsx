@@ -12,251 +12,118 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import {
-    Box,
-    Grid,
-    ImageList,
-    ImageListItem,
-    styled,
-    type Theme,
-    Typography,
-    useMediaQuery,
-    useTheme,
-} from "@mui/material";
-import { alpha } from "@mui/material/styles";
 import Image from "next-image-export-optimizer";
 import { type StaticImageData } from "next/image";
 import type React from "react";
+
 import { StaggerReveal } from "@/components/primitives";
-import { MOTION_OK_QUERY } from "@/components/theme/media-queries";
 
-import nasaSpaceAppsChallenge2017Image from "@/assets/achievements/nasa-space-apps-2017.jpg";
-import uomDeansList2017Image from "@/assets/achievements/deans-list-2017.jpg";
-import wso2OutstandingContributor2019Image from "@/assets/achievements/wso2-outstanding-contributor.jpg";
-import hsbcYouthEnterpriseAwards2015Image from "@/assets/achievements/hsbc-youth-enterprise-awards-2015.jpg";
 import angelHack2016Image from "@/assets/achievements/angel-hack-2016.jpg";
-
-const PREFIX = "Home-Achievements";
-const classes = {
-    imageListItemImageOverlay: `${PREFIX}-imageListItemImageOverlay`,
-};
-
-const FullSizeImageListItem = styled(ImageListItem)({
-    width: "100%",
-    height: "auto",
-});
-
-const ImageListItemImageOverlay = styled(Grid)(({ theme }) => ({
-    color: theme.palette.common.white,
-    background:
-        theme.palette.mode === "light"
-            ? `linear-gradient(to top, ${alpha(theme.palette.primary.main, 0.95)} 0px, ${alpha(theme.palette.primary.main, 0.7)} 300px, ${alpha(theme.palette.primary.main, 0.2)} 380px, transparent 460px)`
-            : `linear-gradient(to top, ${alpha(theme.palette.background.default, 0.98)} 0px, ${alpha(theme.palette.background.default, 0.75)} 300px, ${alpha(theme.palette.background.default, 0.25)} 380px, transparent 460px)`,
-    position: "absolute",
-    textAlign: "center",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    opacity: 0,
-    transition: theme.transitions.create("opacity", {
-        duration: theme.transitions.duration.standard,
-    }),
-}));
+import uomDeansList2017Image from "@/assets/achievements/deans-list-2017.jpg";
+import hsbcYouthEnterpriseAwards2015Image from "@/assets/achievements/hsbc-youth-enterprise-awards-2015.jpg";
+import nasaSpaceAppsChallenge2017Image from "@/assets/achievements/nasa-space-apps-2017.jpg";
+import wso2OutstandingContributor2019Image from "@/assets/achievements/wso2-outstanding-contributor.jpg";
 
 interface AchievementSection {
     title: string;
-    photo: {
-        src: StaticImageData;
-    };
+    photo: StaticImageData;
 }
 
-const ROW_HEIGHT = 320;
+const ACHIEVEMENTS: AchievementSection[] = [
+    {
+        title: "Global Finalist - Galactic Impact - NASA Space Apps Challenge 2017",
+        photo: nasaSpaceAppsChallenge2017Image,
+    },
+    {
+        title: "Placements on the Dean's List",
+        photo: uomDeansList2017Image,
+    },
+    {
+        title: "WSO2 Sustained Outstanding Contribution Award - Consecutive years from 2019 to 2021",
+        photo: wso2OutstandingContributor2019Image,
+    },
+    {
+        title: "Finalist - British Council HSBC Youth Enterprise Awards 2015",
+        photo: hsbcYouthEnterpriseAwards2015Image,
+    },
+    {
+        title: "Finalist - Angel Hack 2016",
+        photo: angelHack2016Image,
+    },
+];
 
-const Achievements = (): React.ReactElement => {
-    const theme = useTheme();
-    const achievementSections: AchievementSection[] = [
-        {
-            title: "Global Finalist - Galactic Impact - NASA Space Apps Challenge 2017",
-            photo: {
-                src: nasaSpaceAppsChallenge2017Image,
-            },
-        },
-        {
-            title: "Placements on the Dean's List",
-            photo: {
-                src: uomDeansList2017Image,
-            },
-        },
-        {
-            title: "WSO2 Sustained Outstanding Contribution Award - Consecutive years from 2019 to 2021",
-            photo: {
-                src: wso2OutstandingContributor2019Image,
-            },
-        },
-        {
-            title: "Finalist - British Council HSBC Youth Enterprise Awards 2015",
-            photo: {
-                src: hsbcYouthEnterpriseAwards2015Image,
-            },
-        },
-        {
-            title: "Finalist - Angel Hack 2016",
-            photo: {
-                src: angelHack2016Image,
-            },
-        },
-    ];
+const AchievementItem = ({
+    achievement,
+    index,
+}: {
+    achievement: AchievementSection;
+    index: number;
+}): React.ReactElement => (
+    <div
+        role="img"
+        className="group relative h-full overflow-hidden"
+        tabIndex={0}
+        aria-labelledby={`achievement-title-${index}`}
+        aria-roledescription="achievement"
+    >
+        {/* Image with scale on hover */}
+        <div className="absolute inset-0 motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-focus-within:scale-[1.03] motion-safe:group-hover:scale-[1.03]">
+            <Image
+                src={achievement.photo}
+                alt=""
+                fill
+                className="object-cover"
+            />
+        </div>
 
-    const renderImageListItem = (
-        achievementIndex: number,
-        rowCount: number,
-    ): React.ReactElement => {
-        const achievementSection: AchievementSection =
-            achievementSections[achievementIndex];
-        return (
-            <FullSizeImageListItem
-                rows={rowCount}
-                cols={1}
-                sx={{
-                    "position": "relative",
-                    // Resting glow intensifies on hover. Dark mode uses primary.light (matching
-                    // the pulse color in Experience.tsx) for visual consistency across sections.
-                    "boxShadow": (theme) =>
-                        theme.palette.mode === "light"
-                            ? `0 0 60px ${alpha(theme.palette.primary.main, 0.67)}`
-                            : `0 0 60px ${alpha(theme.palette.primary.light, 0.22)}`,
-                    "transition": theme.transitions.create("box-shadow", {
-                        duration: theme.transitions.duration.standard,
-                    }),
-                    "&:hover, &:focus-within": {
-                        [`& .${classes.imageListItemImageOverlay}`]: {
-                            opacity: 1,
-                            zIndex: 1,
-                        },
-                        boxShadow: (theme) =>
-                            theme.palette.mode === "light"
-                                ? `0 0 90px ${alpha(theme.palette.primary.main, 0.87)}`
-                                : `0 0 90px ${alpha(theme.palette.primary.light, 0.4)}`,
-                    },
-                    [MOTION_OK_QUERY]: {
-                        "&:hover img, &:focus-within img": {
-                            transform: "scale(1.03)",
-                        },
-                    },
-                }}
-                tabIndex={0}
-                aria-labelledby={`achievement-title-${achievementIndex}`}
-                aria-roledescription="achievement"
+        {/* Overlay — fades in on hover/focus */}
+        <div className="absolute inset-0 z-10 flex items-end justify-center pb-6 text-white opacity-0 group-focus-within:opacity-100 group-hover:opacity-100 motion-safe:transition-opacity motion-safe:duration-300 md:pb-8 bg-[linear-gradient(to_top,color-mix(in_oklch,var(--primary)_95%,transparent)_0px,color-mix(in_oklch,var(--primary)_70%,transparent)_300px,color-mix(in_oklch,var(--primary)_20%,transparent)_380px,transparent_460px)] dark:bg-[linear-gradient(to_top,color-mix(in_oklch,var(--background)_98%,transparent)_0px,color-mix(in_oklch,var(--background)_75%,transparent)_300px,color-mix(in_oklch,var(--background)_25%,transparent)_380px,transparent_460px)]">
+            <h3
+                id={`achievement-title-${index}`}
+                className="w-4/5 text-center text-base leading-snug [text-shadow:0_2px_12px_rgba(0,0,0,0.2)] md:w-2/3 md:text-lg"
             >
-                <Box
-                    sx={{
-                        height: "100%",
-                        position: "relative",
-                        overflow: "hidden",
-                        [MOTION_OK_QUERY]: {
-                            "& img": {
-                                transition: (theme) =>
-                                    theme.transitions.create("transform", {
-                                        duration:
-                                            theme.transitions.duration.standard,
-                                    }),
-                            },
-                        },
-                    }}
-                >
-                    <ImageListItemImageOverlay
-                        container
-                        justifyContent="center"
-                        alignItems="flex-end"
-                        className={classes.imageListItemImageOverlay}
-                        sx={{ pb: { xs: 3, md: 4 } }}
-                    >
-                        <Grid size={{ xs: 10, md: 8 }}>
-                            <Typography
-                                id={`achievement-title-${achievementIndex}`}
-                                variant="h6"
-                                component="h3"
-                                color="inherit"
-                                sx={{
-                                    fontSize: { xs: 16, md: 18 },
-                                    textShadow: (theme) =>
-                                        `0 2px 12px ${alpha(theme.palette.common.black, 0.2)}`,
-                                }}
-                            >
-                                {achievementSection.title}
-                            </Typography>
-                        </Grid>
-                    </ImageListItemImageOverlay>
-                    <Image
-                        src={achievementSection.photo.src}
-                        alt=""
-                        fill
-                        style={{ objectFit: "cover" }}
-                    />
-                </Box>
-            </FullSizeImageListItem>
-        );
-    };
+                {achievement.title}
+            </h3>
+        </div>
+    </div>
+);
 
-    const isAboveMd = useMediaQuery((theme: Theme) =>
-        theme.breakpoints.up("md"),
-    );
-    return isAboveMd ? (
-        <ImageList
-            rowHeight={ROW_HEIGHT}
-            cols={3}
-            // overflow: visible so that the box-shadow glow on each item
-            // is not clipped by the ImageList's scroll container boundary
-            sx={{ overflow: "visible" }}
-        >
-            <StaggerReveal>
-                <FullSizeImageListItem
-                    rows={2}
-                    cols={1}
-                    role="presentation"
-                    sx={{ overflow: "visible" }}
-                >
-                    <ImageList
-                        rowHeight={ROW_HEIGHT}
-                        cols={1}
-                        role="presentation"
-                        sx={{ overflow: "visible" }}
-                    >
-                        {renderImageListItem(0, 1)}
-                        {renderImageListItem(1, 1)}
-                    </ImageList>
-                </FullSizeImageListItem>
-                {renderImageListItem(2, 2)}
-                <FullSizeImageListItem
-                    rows={2}
-                    cols={1}
-                    role="presentation"
-                    sx={{ overflow: "visible" }}
-                >
-                    <ImageList
-                        rowHeight={ROW_HEIGHT}
-                        cols={1}
-                        role="presentation"
-                        sx={{ overflow: "visible" }}
-                    >
-                        {renderImageListItem(3, 1)}
-                        {renderImageListItem(4, 1)}
-                    </ImageList>
-                </FullSizeImageListItem>
-            </StaggerReveal>
-        </ImageList>
-    ) : (
-        <ImageList rowHeight={ROW_HEIGHT} cols={1} sx={{ overflow: "visible" }}>
-            <StaggerReveal>
-                {renderImageListItem(0, 1)}
-                {renderImageListItem(1, 1)}
-                {renderImageListItem(2, 1)}
-                {renderImageListItem(3, 1)}
-                {renderImageListItem(4, 1)}
-            </StaggerReveal>
-        </ImageList>
-    );
-};
+const Achievements = (): React.ReactElement => (
+    <StaggerReveal>
+        {/* Mobile: single column */}
+        <div className="flex flex-col gap-1 sm:hidden">
+            {ACHIEVEMENTS.map((a, i) => (
+                <div key={a.title} className="h-56">
+                    <AchievementItem achievement={a} index={i} />
+                </div>
+            ))}
+        </div>
+
+        {/* Tablet: 2-column grid — items 0-3 in pairs, item 4 full-width */}
+        <div className="hidden sm:grid sm:grid-cols-2 sm:gap-1 lg:hidden">
+            {ACHIEVEMENTS.slice(0, 4).map((a, i) => (
+                <div key={a.title} className="h-72">
+                    <AchievementItem achievement={a} index={i} />
+                </div>
+            ))}
+            <div className="col-span-2 h-72">
+                <AchievementItem achievement={ACHIEVEMENTS[4]} index={4} />
+            </div>
+        </div>
+
+        {/* Desktop: 3-column mosaic — col 1: items 0+1, col 2: item 2, col 3: items 3+4 */}
+        <div className="hidden h-160 gap-1 lg:grid lg:grid-cols-3">
+            <div className="grid h-full grid-rows-2 gap-1">
+                <AchievementItem achievement={ACHIEVEMENTS[0]} index={0} />
+                <AchievementItem achievement={ACHIEVEMENTS[1]} index={1} />
+            </div>
+            <AchievementItem achievement={ACHIEVEMENTS[2]} index={2} />
+            <div className="grid h-full grid-rows-2 gap-1">
+                <AchievementItem achievement={ACHIEVEMENTS[3]} index={3} />
+                <AchievementItem achievement={ACHIEVEMENTS[4]} index={4} />
+            </div>
+        </div>
+    </StaggerReveal>
+);
 
 export default Achievements;

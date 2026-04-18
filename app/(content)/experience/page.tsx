@@ -12,8 +12,6 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, Typography, type SxProps, type Theme } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
 import type { Metadata } from "next";
 import type React from "react";
 
@@ -40,13 +38,13 @@ export const metadata: Metadata = {
 interface ExperienceSectionHeadingProps {
     id: string;
     experience: Experience;
-    logoSx?: SxProps<Theme>;
+    logoClassName?: string;
 }
 
 const ExperienceSectionHeading = ({
     id,
     experience,
-    logoSx,
+    logoClassName,
 }: ExperienceSectionHeadingProps): React.ReactElement => (
     <SectionHeading
         id={id}
@@ -56,15 +54,12 @@ const ExperienceSectionHeading = ({
                 srcLight={experience.company.logo.srcLight}
                 srcDark={experience.company.logo.srcDark}
                 alt=""
-                recommendedSx={logoSx}
+                className={logoClassName}
             />
         }
     >
         {experience.name}
-        <Box component="span" sx={visuallyHidden}>
-            {" "}
-            at {experience.company.name}
-        </Box>
+        <span className="sr-only"> at {experience.company.name}</span>
     </SectionHeading>
 );
 
@@ -151,7 +146,7 @@ const Experience = (): React.ReactElement => {
                 <ExperienceSectionHeading
                     id="section-lead-mccrae"
                     experience={Experiences.McCraeTechLeadSoftwareEngineer}
-                    logoSx={{ height: "1.5em" }}
+                    logoClassName="h-[1.5em]"
                 />
                 <Paragraph>
                     After the divestment of {McCraeTech} from {OrionHealth}, I
@@ -168,26 +163,22 @@ const Experience = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Orchestrated the migration of{" "}
-                            {Projects.Indexity.name}&apos;s{" "}
-                            <abbr title="Site Reliability Engineering">
-                                SRE
-                            </abbr>{" "}
-                            frameworks and infrastructure from{" "}
-                            {Companies.OrionHealth.name} into{" "}
-                            {Companies.McCraeTech.name}, achieving a smooth
-                            transition without affecting end users.
-                        </Typography>
+                        Orchestrated the migration of {Projects.Indexity.name}
+                        &apos;s{" "}
+                        <abbr title="Site Reliability Engineering">
+                            SRE
+                        </abbr>{" "}
+                        frameworks and infrastructure from{" "}
+                        {Companies.OrionHealth.name} into{" "}
+                        {Companies.McCraeTech.name}, achieving a smooth
+                        transition without affecting end users.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Automated the customer request handling, incident
-                            handling, and on-call rotations for the{" "}
-                            {Projects.Indexity.name} data-planes, with
-                            comprehensive monitoring and alerting, reducing the
-                            response times for many incidents.
-                        </Typography>
+                        Automated the customer request handling, incident
+                        handling, and on-call rotations for the{" "}
+                        {Projects.Indexity.name} data-planes, with comprehensive
+                        monitoring and alerting, reducing the response times for
+                        many incidents.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -195,7 +186,7 @@ const Experience = (): React.ReactElement => {
                 <ExperienceSectionHeading
                     id="section-senior-se-orion"
                     experience={Experiences.OrionHealthSeniorSoftwareEngineer}
-                    logoSx={{ height: "3em" }}
+                    logoClassName="h-[3em]"
                 />
                 <Paragraph>
                     At {OrionHealth}, I spearheaded the deployment of {Indexity}{" "}
@@ -217,45 +208,34 @@ const Experience = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Directed the successful deployment of{" "}
-                            {Projects.Indexity.name} data-planes using AWS{" "}
-                            infrastructure; conducted thorough disaster recovery
-                            planning, which reduced potential downtime risks
-                            from unforeseen incidents by at least 40%.
-                        </Typography>
+                        Directed the successful deployment of{" "}
+                        {Projects.Indexity.name} data-planes using AWS{" "}
+                        infrastructure; conducted thorough disaster recovery
+                        planning, which reduced potential downtime risks from
+                        unforeseen incidents by at least 40%.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Championed an end-to-end deployment strategy for{" "}
-                            {Projects.Indexity.name} within a deployment
-                            framework on {GitLab} and AWS, resulting in a faster
-                            rollout time that decreased development cycles by
-                            one day per development cycle.
-                        </Typography>
+                        Championed an end-to-end deployment strategy for{" "}
+                        {Projects.Indexity.name} within a deployment framework
+                        on {GitLab} and AWS, resulting in a faster rollout time
+                        that decreased development cycles by one day per
+                        development cycle.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Orchestrated comprehensive threat modeling and
-                            privacy assessments, leading to stronger safeguards,
-                            resulting in no major vulnerabilities detected by
-                            penetration tests initiated by customers.
-                        </Typography>
+                        Orchestrated comprehensive threat modeling and privacy
+                        assessments, leading to stronger safeguards, resulting
+                        in no major vulnerabilities detected by penetration
+                        tests initiated by customers.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Enhanced the precision of phone number searches by
-                            implementing {ApacheLucene}-based indexing
-                            techniques, improving the patient searches across
-                            two customers.
-                        </Typography>
+                        Enhanced the precision of phone number searches by
+                        implementing {ApacheLucene}-based indexing techniques,
+                        improving the patient searches across two customers.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Developed the {Terraform} code for deploying
-                            self-hosted GitLab runners on {GoogleCloud},
-                            reducing the development costs by more than 50%.
-                        </Typography>
+                        Developed the {Terraform} code for deploying self-hosted
+                        GitLab runners on {GoogleCloud}, reducing the
+                        development costs by more than 50%.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -263,7 +243,7 @@ const Experience = (): React.ReactElement => {
                 <ExperienceSectionHeading
                     id="section-atl-wso2"
                     experience={Experiences.WSO2AssociateTechnicalLead}
-                    logoSx={{ height: "2.5em" }}
+                    logoClassName="h-[2.5em]"
                 />
                 <Paragraph>
                     I led the technical aspects of the Observability area and it
@@ -292,45 +272,33 @@ const Experience = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Secured the Sustained Outstanding Contribution Award
-                            thrice in a row, an honor given exclusively to only
-                            the top 5% of all company staff members who
-                            demonstrated exceptional technical leadership and
-                            innovative contributions throughout tenure.
-                        </Typography>
+                        Secured the Sustained Outstanding Contribution Award
+                        thrice in a row, an honor given exclusively to only the
+                        top 5% of all company staff members who demonstrated
+                        exceptional technical leadership and innovative
+                        contributions throughout tenure.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Led a senior software engineer in developing the
-                            minimum viable features for the resource scheduling
-                            of the {Projects.Choreo.name} online editor within
-                            1.5 months, using {Kubernetes} and {GoLang}.
-                        </Typography>
+                        Led a senior software engineer in developing the minimum
+                        viable features for the resource scheduling of the{" "}
+                        {Projects.Choreo.name} online editor within 1.5 months,
+                        using {Kubernetes} and {GoLang}.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Eliminated bottlenecks, reducing the startup time of
-                            the Kubernetes resources of the{" "}
-                            {Projects.Choreo.name} Editors by 80% and increasing
-                            the overall user experience.
-                        </Typography>
+                        Eliminated bottlenecks, reducing the startup time of the
+                        Kubernetes resources of the {Projects.Choreo.name}{" "}
+                        Editors by 80% and increasing the overall user
+                        experience.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Reduced the {MSSQL} database utilization by 60%
-                            using a {Redis} cache and randomization of cache
-                            expiry times, increasing the number of users the
-                            system can handle.
-                        </Typography>
+                        Reduced the {MSSQL} database utilization by 60% using a{" "}
+                        {Redis} cache and randomization of cache expiry times,
+                        increasing the number of users the system can handle.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Led the product team, completing 95% of the team
-                            targets and sprint milestones on time by
-                            prioritizing tasks and fostering a good working
-                            environment.
-                        </Typography>
+                        Led the product team, completing 95% of the team targets
+                        and sprint milestones on time by prioritizing tasks and
+                        fostering a good working environment.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -338,7 +306,7 @@ const Experience = (): React.ReactElement => {
                 <ExperienceSectionHeading
                     id="section-senior-se-wso2"
                     experience={Experiences.WSO2SeniorSoftwareEngineer}
-                    logoSx={{ height: "2.5em" }}
+                    logoClassName="h-[2.5em]"
                 />
                 <Paragraph>
                     I completely owned the Observability area of Cellery and
@@ -405,37 +373,28 @@ const Experience = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Spearheaded the implementation of the foundation for
-                            Choreo observability within 3 months with a team of
-                            2 other engineers, creating the backbone of Choreo
-                            observability.
-                        </Typography>
+                        Spearheaded the implementation of the foundation for
+                        Choreo observability within 3 months with a team of 2
+                        other engineers, creating the backbone of Choreo
+                        observability.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Decreased the cost by 90% for the company by
-                            architecting the Choreo observability storages,
-                            including data archival into a Data Lake for Machine
-                            Learning (<abbr title="Machine Learning">ML</abbr>)
-                            use cases.
-                        </Typography>
+                        Decreased the cost by 90% for the company by
+                        architecting the Choreo observability storages,
+                        including data archival into a Data Lake for Machine
+                        Learning (<abbr title="Machine Learning">ML</abbr>) use
+                        cases.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Improved debugging experience for users by revamping
-                            the observability instrumentation at the Ballerina
-                            compiler level, within 1 month, to map the
-                            observability data to the source code.
-                        </Typography>
+                        Improved debugging experience for users by revamping the
+                        observability instrumentation at the Ballerina compiler
+                        level, within 1 month, to map the observability data to
+                        the source code.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Minimized the number of bugs in the Choreo
-                            Observability area by implementing proper code
-                            reviewing, testing, and deployment practices in a
-                            team of 6 engineers.
-                        </Typography>
+                        Minimized the number of bugs in the Choreo Observability
+                        area by implementing proper code reviewing, testing, and
+                        deployment practices in a team of 6 engineers.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -443,7 +402,7 @@ const Experience = (): React.ReactElement => {
                 <ExperienceSectionHeading
                     id="section-se-wso2"
                     experience={Experiences.WSO2SoftwareEngineer}
-                    logoSx={{ height: "2.5em" }}
+                    logoClassName="h-[2.5em]"
                 />
                 <Paragraph>
                     At the start of my employment, I worked in multiple teams as
@@ -509,36 +468,27 @@ const Experience = (): React.ReactElement => {
                 </Paragraph>
                 <AccentedList heading="Highlights" headingVariant="h3">
                     <ListItem>
-                        <Typography>
-                            Delivered the Cellery observability basic features
-                            within 2 months for observing microservice
-                            composites using Kubernetes, {Istio}, {OpenTracing},
-                            and {Envoy}.
-                        </Typography>
+                        Delivered the Cellery observability basic features
+                        within 2 months for observing microservice composites
+                        using Kubernetes, {Istio}, {OpenTracing}, and {Envoy}.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Headed the implementation of Cellery developer tools
-                            using {VSCode} Language Server Extensions and
-                            visualizations of Cells using {D3js}.
-                        </Typography>
+                        Headed the implementation of Cellery developer tools
+                        using {VSCode} Language Server Extensions and
+                        visualizations of Cells using {D3js}.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Developed {Projects.Cellery.name} Hub backed by a{" "}
-                            Docker Registry as the storage and implemented the
-                            authentication of the{" "}
-                            <abbr title="Command Line Interface">CLI</abbr> and
-                            portal using {OIDC} within 1 month.
-                        </Typography>
+                        Developed {Projects.Cellery.name} Hub backed by a Docker
+                        Registry as the storage and implemented the
+                        authentication of the{" "}
+                        <abbr title="Command Line Interface">CLI</abbr> and
+                        portal using {OIDC} within 1 month.
                     </ListItem>
                     <ListItem>
-                        <Typography>
-                            Implemented the observability aspects of the{" "}
-                            {Companies.WSO2.name}
-                            Serverless Platform using {Prometheus} and {Jaeger}{" "}
-                            on top of Kubernetes and Apache OpenWhisk.
-                        </Typography>
+                        Implemented the observability aspects of the{" "}
+                        {Companies.WSO2.name}
+                        Serverless Platform using {Prometheus} and {Jaeger} on
+                        top of Kubernetes and Apache OpenWhisk.
                     </ListItem>
                 </AccentedList>
             </Section>
@@ -546,7 +496,7 @@ const Experience = (): React.ReactElement => {
                 <ExperienceSectionHeading
                     id="section-trainee-wso2"
                     experience={Experiences.WSO2SoftwareEngineeringTrainee}
-                    logoSx={{ height: "2.5em" }}
+                    logoClassName="h-[2.5em]"
                 />
                 <Paragraph>
                     I worked as a Software Engineering intern at {WSO2} as a

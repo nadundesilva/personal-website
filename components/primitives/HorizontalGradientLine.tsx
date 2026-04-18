@@ -12,34 +12,23 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { Box, type SxProps, type Theme } from "@mui/material";
 import type React from "react";
 
+import { cn } from "@/components/primitives/utils/cn";
+
 interface HorizontalGradientLineProps {
-    sx?: SxProps<Theme>;
+    className?: string;
 }
 
 const HorizontalGradientLine = ({
-    sx,
+    className,
 }: HorizontalGradientLineProps): React.ReactElement => (
-    <Box
+    <div
         aria-hidden="true"
-        sx={{
-            mt: 0.75,
-            width: { xs: 32, md: 44 },
-            height: 2,
-            background: (theme) =>
-                `linear-gradient(90deg, ${
-                    theme.palette.mode === "light"
-                        ? theme.palette.primary.main
-                        : theme.palette.primary.light
-                }, transparent)`,
-            borderRadius: 1,
-            opacity: 0.65,
-            ...sx,
-        }}
+        className={cn(
+            "from-primary mt-1.5 h-0.5 w-8 rounded bg-linear-to-r to-transparent opacity-65 md:w-11",
+            className,
+        )}
     />
 );
 

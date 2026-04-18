@@ -12,7 +12,6 @@
  *
  * © 2024 Nadun De Silva. All rights reserved.
  */
-import { Typography } from "@mui/material";
 import type React from "react";
 
 import { LeftAccent } from "@/components/primitives";
@@ -26,10 +25,13 @@ const SubsectionHeading = ({
     children,
     id,
 }: SubsectionHeadingProps): React.ReactElement => (
-    <LeftAccent thickness={2} opacity={0.42} sx={{ mt: 4, mb: 2, pl: 1.5 }}>
-        <Typography id={id} variant="h3">
+    <LeftAccent thickness={2} opacity={0.42} className="mt-8 mb-4 pl-3">
+        <h3
+            id={id}
+            className="text-[1.375rem] leading-snug font-medium tracking-normal"
+        >
             {children}
-        </Typography>
+        </h3>
     </LeftAccent>
 );
 

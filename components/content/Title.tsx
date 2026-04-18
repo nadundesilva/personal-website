@@ -12,10 +12,9 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { Box, Typography } from "@mui/material";
 import type React from "react";
 
-import { ScrollReveal, HorizontalGradientLine } from "@/components/primitives";
+import { HorizontalGradientLine, ScrollReveal } from "@/components/primitives";
 
 interface TitleProps {
     children: React.ReactNode;
@@ -23,12 +22,12 @@ interface TitleProps {
 
 const Title = ({ children }: TitleProps): React.ReactElement => (
     <ScrollReveal>
-        <Box sx={{ mt: { xs: 4, md: 5 }, mb: 3 }}>
-            <Typography variant="h1">{children}</Typography>
-            <HorizontalGradientLine
-                sx={{ mt: 1.25, width: { xs: 100, md: 160 }, opacity: 0.7 }}
-            />
-        </Box>
+        <div className="mt-8 mb-6 md:mt-10">
+            <h1 className="text-4xl leading-tight font-medium tracking-[-0.03em]">
+                {children}
+            </h1>
+            <HorizontalGradientLine className="mt-2.5 w-25 opacity-70 md:w-40" />
+        </div>
     </ScrollReveal>
 );
 

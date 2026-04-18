@@ -23,7 +23,7 @@ interface ContentLayoutProps {
 const ContentLayout = ({
     children,
 }: ContentLayoutProps): React.ReactElement => {
-    return <ContentContainer sx={{ mb: 5 }}>{children}</ContentContainer>;
+    return <ContentContainer className="mb-10">{children}</ContentContainer>;
 };
 
 export default ContentLayout;

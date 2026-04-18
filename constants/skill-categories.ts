@@ -13,9 +13,9 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 
+import Certificates, { type Certificate } from "./certificates";
 import Experiences, { type Experience } from "./experience";
 import Projects, { type Project } from "./projects";
-import Certificates, { type Certificate } from "./certificates";
 import Skills from "./skills";
 
 export enum SkillProficiency {
