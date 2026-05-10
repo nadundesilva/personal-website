@@ -18,9 +18,9 @@ jobs:
               with:
                   fetch-depth: 0
                   persist-credentials: false
-            - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+            - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
               with:
-                  node-version: "24.13.1"
+                  node-version: "24.15.0"
             - name: Install Dependencies
               run: npm ci
             - name: Run Linter
@@ -40,13 +40,13 @@ jobs:
                   fetch-depth: 0
                   persist-credentials: false
             - name: Setup Node.js
-              uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+              uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
               with:
-                  node-version: "24.13.1"
+                  node-version: "24.15.0"
             - name: Install Dependencies
               run: npm ci
             - name: Lint Code Base
-              uses: super-linter/super-linter@61abc07d755095a68f4987d1c2c3d1d64408f1f9 # v8.5.0
+              uses: super-linter/super-linter@9e863354e3ff62e0727d37183162c4a88873df41 # v8.6.0
               env:
                   DEFAULT_BRANCH: main
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -82,7 +82,7 @@ jobs:
               with:
                   persist-credentials: false
             - name: Run Trivy vulnerability scanner
-              uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # 0.35.0
+              uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
               with:
                   scan-type: fs
                   vuln-type: library
@@ -91,7 +91,7 @@ jobs:
                   output: trivy-results.sarif
                   ignore-unfixed: true
             - name: Upload Trivy scan results to GitHub Security tab
-              uses: github/codeql-action/upload-sarif@45cbd0c69e560cd9e7cd7f8c32362050c9b7ded2 # v4.32.2
+              uses: github/codeql-action/upload-sarif@e46ed2cbd01164d986452f91f178727624ae40d7 # v4.35.3
               if: always()
               with:
                   sarif_file: trivy-results.sarif
@@ -113,9 +113,9 @@ jobs:
                   fetch-depth: 0
                   persist-credentials: false
             - name: Setup Node.js
-              uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+              uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
               with:
-                  node-version: "24.13.1"
+                  node-version: "24.15.0"
             - name: Install Dependencies
               run: npm ci
             - name: Instrument Website for Code Coverage
@@ -125,7 +125,7 @@ jobs:
               env:
                   BUILD_TYPE: test
             - name: Run E2E Tests
-              uses: cypress-io/github-action@84d178e4bbce871e23f2ffa3085898cde0e4f0ec # v7.1.2
+              uses: cypress-io/github-action@dace029018fcdf86e0df89a31bc3cfa5b32570d8 # v7.3.0
               with:
                   start: bash .github/scripts/start-server.sh
                   browser: ${{ matrix.browser }}
@@ -150,14 +150,14 @@ jobs:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
             - name: Upload Test Results Artifacts
               if: always()
-              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
               with:
                   name: e2e-test-results-${{ matrix.browser }}
                   path: |
                       cypress/videos/
                       cypress/screenshots/
             - name: Upload Code Coverage Report Artifacts
-              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
               with:
                   name: e2e-tests-coverage-${{ matrix.browser }}
                   path: coverage/
@@ -171,9 +171,9 @@ jobs:
               with:
                   fetch-depth: 0
                   persist-credentials: false
-            - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+            - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
               with:
-                  node-version: "24.13.1"
+                  node-version: "24.15.0"
             - name: Install Dependencies
               run: npm ci
             - name: Build Site
@@ -187,12 +187,12 @@ jobs:
                   SENTRY_RELEASE: ${{ github.sha }}
                   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
             - name: Upload Site
-              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
               with:
                   name: site
                   path: out/
             - name: Upload Unit Tests Code Coverage Report
-              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
               with:
                   name: unit-tests-coverage
                   path: coverage/
@@ -212,9 +212,9 @@ jobs:
                   fetch-depth: 0
                   persist-credentials: false
             - name: Setup Node.js
-              uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+              uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
               with:
-                  node-version: "24.13.1"
+                  node-version: "24.15.0"
             - name: Install Dependencies
               run: npm ci
             - name: Download Site
@@ -229,7 +229,7 @@ jobs:
                   WEBSITE_BUILD_DIR: _site
             - name: Link Checker (General)
               id: lychee
-              uses: lycheeverse/lychee-action@a8c4c7cb88f0c7386610c35eb25108e448569cb0 # v2.7.0
+              uses: lycheeverse/lychee-action@8646ba30535128ac92d33dfc9133794bfdd9b411 # v2.8.0
               with:
                   args: --verbose --no-progress --exclude "${{ env.BOT_RESTRICTED_WEBSITES_PATTERN }}" https://nadundesilva.com/
                   output: ./lychee/out-general.md
@@ -237,7 +237,7 @@ jobs:
                   failIfEmpty: true
             - name: Link Checker (Bot-Protected Sites)
               id: lychee-restricted
-              uses: lycheeverse/lychee-action@a8c4c7cb88f0c7386610c35eb25108e448569cb0 # v2.7.0
+              uses: lycheeverse/lychee-action@8646ba30535128ac92d33dfc9133794bfdd9b411 # v2.8.0
               with:
                   args: --verbose --no-progress --include "${{ env.BOT_RESTRICTED_WEBSITES_PATTERN }}" --accept "200,${{ env.BOT_RESTRICTED_STATUS_CODES }}" https://nadundesilva.com/
                   output: ./lychee/out-restricted.md
@@ -250,7 +250,7 @@ jobs:
                   WEBSITE_BUILD_DIR: _site
             - name: Upload Link Checker Report
               if: always()
-              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
               with:
                   name: link-checker-report
                   path: ./lychee/
@@ -273,9 +273,9 @@ jobs:
                   fetch-depth: 0
                   persist-credentials: false
             - name: Setup Node.js
-              uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+              uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
               with:
-                  node-version: "24.13.1"
+                  node-version: "24.15.0"
             - name: Install Dependencies
               run: npm ci
             - name: Download Site
@@ -284,7 +284,7 @@ jobs:
                   name: site
                   path: _site/
             - name: Run E2E Tests
-              uses: cypress-io/github-action@84d178e4bbce871e23f2ffa3085898cde0e4f0ec # v7.1.2
+              uses: cypress-io/github-action@dace029018fcdf86e0df89a31bc3cfa5b32570d8 # v7.3.0
               with:
                   start: bash .github/scripts/start-server.sh
                   browser: ${{ matrix.browser }}
@@ -299,7 +299,7 @@ jobs:
               run: bash .github/scripts/stop-server.sh
             - name: Upload artifacts
               if: always()
-              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
               with:
                   name: site-build-e2e-test-results-${{ matrix.browser }}
                   path: |
@@ -326,9 +326,9 @@ jobs:
                   name: site
                   path: _site/
             - name: Setup Node.js
-              uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+              uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
               with:
-                  node-version: "24.13.1"
+                  node-version: "24.15.0"
             - name: Run Lighthouse Audit
               run: |
                   ls -la
@@ -341,7 +341,7 @@ jobs:
                   LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Upload artifacts
               if: always()
-              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
               with:
                   name: website-audit
                   path: ./lhci-out
@@ -373,12 +373,12 @@ jobs:
                   name: site
                   path: _site/
             - name: Setup Node.js
-              uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+              uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
               with:
-                  node-version: "24.13.1"
+                  node-version: "24.15.0"
                   package-manager-cache: false
             - name: Deploy
-              uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65 # v3.14.1
+              uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3.15.0
               with:
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
