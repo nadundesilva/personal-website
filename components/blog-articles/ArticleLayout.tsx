@@ -18,11 +18,10 @@ import { Badge, LeftAccent, ScrollReveal } from "@/components/primitives";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import type { StaticImageData } from "next/image";
 import { usePathname } from "next/navigation";
-import Script from "next/script";
-import React from "react";
-import type { BlogPosting, Person, WithContext } from "schema-dts";
 
-import profilePhotoImage from "@/assets/profile-photo.webp";
+import React from "react";
+import type { BlogPosting, IdReference, WithContext } from "schema-dts";
+
 import {
     DateInfo,
     Image,
@@ -31,7 +30,7 @@ import {
     Title,
 } from "@/components/content";
 import { Date as FormattableDate } from "@/constants/date";
-import { FULL_NAME, WEBSITE_PUBLIC_URL } from "@/constants/metadata";
+import { SCHEMA_PERSON_ID, WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 
 interface BlogMetadata {
     image: StaticImageData;
@@ -59,21 +58,21 @@ const ArticleLayout = ({
     const pathname = usePathname();
     const pageUrl = `${WEBSITE_PUBLIC_URL}${pathname}`;
 
-    const author: Person = {
-        "@type": "Person",
-        "name": FULL_NAME,
-        "url": WEBSITE_PUBLIC_URL,
-        "image": new URL(profilePhotoImage.src, WEBSITE_PUBLIC_URL).toString(),
-    };
+    const author: IdReference = { "@id": SCHEMA_PERSON_ID };
 
     const jsonLd: WithContext<BlogPosting> = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
+        "@id": pageUrl,
         "headline": pageMetadata.title,
         "description": pageMetadata.description,
         "image": new URL(blogMetadata.image.src, WEBSITE_PUBLIC_URL).toString(),
         "inLanguage": "en-US",
         "datePublished": blogMetadata.publishedDate.toISOString(),
+        // dateModified intentionally equals datePublished. Computing it from
+        // git history conflates infrastructure changes (component refactors,
+        // layout updates) with content changes, producing false freshness
+        // signals that can suppress articles in Google Search.
         "dateModified": blogMetadata.publishedDate.toISOString(),
         "mainEntityOfPage": {
             "@type": "WebPage",
@@ -87,13 +86,10 @@ const ArticleLayout = ({
         "sameAs": [blogMetadata.mediumUrl],
     };
 
-    const renderingId = React.useId();
-
     return (
         <article>
             <Title>{pageMetadata.title}</Title>
-            <Script
-                id={`json-ld-blog-${renderingId}`}
+            <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify(jsonLd),

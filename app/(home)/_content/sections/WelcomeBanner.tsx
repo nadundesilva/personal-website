@@ -201,14 +201,15 @@ const WelcomeBanner = (): React.ReactElement => {
                             Profiles.GitHub,
                             Profiles.Medium,
                             Profiles.Instagram,
-                        ].map(({ name, Icon, link }) => (
+                        ].map(({ name, Icon, url }) => (
                             <li key={name}>
                                 <Tooltip>
                                     <TooltipTrigger
                                         render={
                                             <Link
-                                                href={link}
+                                                href={url}
                                                 target="_blank"
+                                                rel="me"
                                                 aria-label={`Visit ${name} profile`}
                                                 className="flex items-center text-white/65 hover:text-white hover:no-underline hover:opacity-85 motion-safe:transition-[color,opacity] motion-safe:duration-200"
                                             />

@@ -26,11 +26,13 @@ import {
     SectionHeading,
     Title,
 } from "@/components/content";
+import CollectionPageJsonLd from "@/components/layout/CollectionPageJsonLd";
 import { FULL_NAME } from "@/constants/metadata";
 import {
     PersonalProjects as ProjectDetails,
     type Project,
 } from "@/constants/projects";
+import { resolveRoute } from "@/utils/common/routes";
 
 interface PersonalProjectSectionHeadingProps {
     id: string;
@@ -67,8 +69,8 @@ const PersonalProjectSectionHeading = ({
 );
 
 export const metadata: Metadata = {
-    title: "Personal Projects",
-    description: `Personal projects developed by ${FULL_NAME}.`,
+    title: resolveRoute("/projects/personal").name,
+    description: `Personal software projects developed and maintained by ${FULL_NAME}.`,
 };
 
 const PersonalProjects = (): React.ReactElement => {
@@ -93,6 +95,10 @@ const PersonalProjects = (): React.ReactElement => {
     return (
         <>
             <Title>Personal Projects</Title>
+            <CollectionPageJsonLd
+                metadata={metadata}
+                pathname="/projects/personal"
+            />
             <Section labelledById="section-project-k8s-replicator">
                 <PersonalProjectSectionHeading
                     id="section-project-k8s-replicator"

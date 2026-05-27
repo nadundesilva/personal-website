@@ -31,8 +31,13 @@ export type ProfileIcon =
 
 export interface Profile {
     name: string;
+    username: string;
     Icon: ProfileIcon;
-    link: string;
+    url: string;
+    urlAliases?: string[];
+    /** Wikidata property URL (e.g. Property:P2037 for GitHub) that maps this platform's
+     *  external ID — used as schema:identifier propertyID in JSON-LD. */
+    wikidataPropertyId: string;
 }
 
 export const TWITTER_HANDLE = "@nadunrds";
@@ -41,38 +46,53 @@ export const LINKEDIN_PROFILE_URL = "https://www.linkedin.com/in/nadundesilva";
 const Profiles: Record<string, Profile> = {
     LinkedIn: {
         name: "LinkedIn",
+        username: "nadundesilva",
         Icon: LinkedInIcon,
-        link: LINKEDIN_PROFILE_URL,
+        url: LINKEDIN_PROFILE_URL,
+        wikidataPropertyId: "https://www.wikidata.org/wiki/Property:P6634",
     },
     GitHub: {
         name: "GitHub",
+        username: "nadundesilva",
         Icon: SiGithub,
-        link: "https://github.com/nadundesilva",
+        url: "https://github.com/nadundesilva",
+        wikidataPropertyId: "https://www.wikidata.org/wiki/Property:P2037",
     },
     Medium: {
         name: "Medium",
+        username: "nadundesilva",
         Icon: SiMedium,
-        link: "https://medium.com/@nadundesilva",
+        url: "https://medium.com/@nadundesilva",
+        wikidataPropertyId: "https://www.wikidata.org/wiki/Property:P3899",
     },
     GoogleScholar: {
         name: "Google Scholar",
+        username: "CdXo_YQAAAAJ",
         Icon: SiGooglescholar,
-        link: "https://scholar.google.com/citations?user=CdXo_YQAAAAJ&hl=en&oi=ao",
+        url: "https://scholar.google.com/citations?user=CdXo_YQAAAAJ&hl=en&oi=ao",
+        wikidataPropertyId: "https://www.wikidata.org/wiki/Property:P1960",
     },
     Facebook: {
         name: "Facebook",
+        username: "nadunrds",
         Icon: SiFacebook,
-        link: "https://www.facebook.com/nadunrds",
+        url: "https://www.facebook.com/nadunrds",
+        wikidataPropertyId: "https://www.wikidata.org/wiki/Property:P2013",
     },
     Instagram: {
         name: "Instagram",
+        username: "nadunrds",
         Icon: SiInstagram,
-        link: "https://www.instagram.com/nadunrds",
+        url: "https://www.instagram.com/nadunrds",
+        wikidataPropertyId: "https://www.wikidata.org/wiki/Property:P2003",
     },
     X: {
         name: "X",
+        username: "nadunrds",
         Icon: SiX,
-        link: "https://x.com/nadunrds",
+        url: "https://x.com/nadunrds",
+        urlAliases: ["https://twitter.com/nadunrds"],
+        wikidataPropertyId: "https://www.wikidata.org/wiki/Property:P2002",
     },
 };
 

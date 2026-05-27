@@ -63,10 +63,11 @@ const Contact = (): React.ReactElement => (
                             ([profileKey, profile]) => (
                                 <li key={profileKey}>
                                     <LinkButton
-                                        href={profile.link}
+                                        href={profile.url}
                                         name={profile.name}
                                         startIcon={profile.Icon}
                                         target="_blank"
+                                        rel="me"
                                         className="text-foreground border-primary/33 hover:bg-muted"
                                     />
                                 </li>

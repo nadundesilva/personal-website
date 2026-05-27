@@ -16,15 +16,25 @@ import type { Metadata } from "next";
 import type React from "react";
 
 import ArticlesList from "@/components/blog-articles/ArticlesList";
+import CollectionPageJsonLd from "@/components/layout/CollectionPageJsonLd";
+import { resolveRoute } from "@/utils/common/routes";
+
+const { name } = resolveRoute("/blog-articles/kubernetes-the-right-way");
 
 export const metadata: Metadata = {
-    title: "Kubernetes the Right Way",
+    title: name,
     description:
         "Kubernetes the Right Way series is about the best practices and techniques for improving your Kubernetes Clusters.",
 };
 
 const BlogArticles = async (): Promise<React.ReactElement> => (
-    <ArticlesList subPath="./kubernetes-the-right-way" />
+    <>
+        <CollectionPageJsonLd
+            metadata={metadata}
+            pathname="/blog-articles/kubernetes-the-right-way"
+        />
+        <ArticlesList subPath="./kubernetes-the-right-way" />
+    </>
 );
 
 export default BlogArticles;

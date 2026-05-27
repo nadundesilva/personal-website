@@ -26,14 +26,16 @@ import {
     SectionHeading,
     Title,
 } from "@/components/content";
+import CollectionPageJsonLd from "@/components/layout/CollectionPageJsonLd";
 import Certificates, { type Certificate } from "@/constants/certificates";
 import Institutes, { type Institute } from "@/constants/institutes";
 import { FULL_NAME } from "@/constants/metadata";
 import People, { type Person } from "@/constants/people";
+import { resolveRoute } from "@/utils/common/routes";
 
 export const metadata: Metadata = {
-    title: "Certifications",
-    description: `Various certifications obtained by ${FULL_NAME}.`,
+    title: resolveRoute("/education/certifications").name,
+    description: `Professional certifications earned by ${FULL_NAME} in cloud computing and software engineering.`,
 };
 
 interface CertificationSectionHeadingProps {
@@ -109,6 +111,10 @@ const Certifications = (): React.ReactElement => {
     return (
         <>
             <Title>Certifications</Title>
+            <CollectionPageJsonLd
+                metadata={metadata}
+                pathname="/education/certifications"
+            />
             <Section labelledById="section-cert-rl">
                 <CertificationSectionHeading
                     id="section-cert-rl"

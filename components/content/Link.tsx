@@ -24,10 +24,15 @@ type CustomLinkProps = React.ComponentPropsWithoutRef<typeof NextLink>;
 
 const CustomLink = forwardRef<HTMLAnchorElement, CustomLinkProps>(
     (
-        { href, children, target, className, ...otherProps },
+        { href, children, target, className, rel: callerRel, ...restProps },
         ref,
     ): React.ReactElement => {
-        let ariaLabel = otherProps["aria-label"];
+        const computedRel =
+            target === "_blank"
+                ? `noopener noreferrer${callerRel ? ` ${callerRel}` : ""}`
+                : (callerRel ?? undefined);
+
+        let ariaLabel = restProps["aria-label"];
         if (ariaLabel && target === "_blank") {
             ariaLabel = `${ariaLabel} (opens in a new tab)`;
         }
@@ -36,13 +41,13 @@ const CustomLink = forwardRef<HTMLAnchorElement, CustomLinkProps>(
             <NextLink
                 href={href}
                 target={target}
-                rel={target === "_blank" ? "noopener noreferrer" : undefined}
+                rel={computedRel}
                 ref={ref}
                 className={cn(
                     "font-semibold text-link motion-safe:transition-opacity motion-safe:duration-250 hover:underline hover:decoration-2 hover:underline-offset-4 hover:opacity-85 focus-visible:outline-ring focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2",
                     className,
                 )}
-                {...otherProps}
+                {...restProps}
                 aria-label={ariaLabel}
             >
                 {children}

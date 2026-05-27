@@ -16,15 +16,25 @@ import type { Metadata } from "next";
 import type React from "react";
 
 import ArticlesList from "@/components/blog-articles/ArticlesList";
+import CollectionPageJsonLd from "@/components/layout/CollectionPageJsonLd";
+import { resolveRoute } from "@/utils/common/routes";
+
+const { name } = resolveRoute("/blog-articles/observability");
 
 export const metadata: Metadata = {
-    title: "Observability",
+    title: name,
     description:
         "Articles about observability, OpenTelemetry, monitoring, and reducing observability costs.",
 };
 
 const BlogArticles = async (): Promise<React.ReactElement> => (
-    <ArticlesList subPath="./observability" />
+    <>
+        <CollectionPageJsonLd
+            metadata={metadata}
+            pathname="/blog-articles/observability"
+        />
+        <ArticlesList subPath="./observability" />
+    </>
 );
 
 export default BlogArticles;

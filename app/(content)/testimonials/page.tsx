@@ -16,21 +16,27 @@ import type { Metadata } from "next";
 import type React from "react";
 
 import { Title } from "@/components/content";
+import CollectionPageJsonLd from "@/components/layout/CollectionPageJsonLd";
 import { ScrollReveal } from "@/components/primitives";
 import { FULL_NAME } from "@/constants/metadata";
 import TestimonialsData from "@/constants/testimonials";
+import { resolveRoute } from "@/utils/common/routes";
 
 import Testimonial from "./Testimonial";
 
 export const metadata: Metadata = {
-    title: "Testimonials",
-    description: `Testimonials provided by various professionals throughout the career of ${FULL_NAME}.`,
+    title: resolveRoute("/testimonials").name,
+    description: `Professional testimonials from colleagues and managers who have worked with ${FULL_NAME}.`,
 };
 
 const Testimonials = (): React.ReactElement => {
     return (
         <>
             <Title>Testimonials</Title>
+            <CollectionPageJsonLd
+                metadata={metadata}
+                pathname="/testimonials"
+            />
             <div className="mt-8 flex flex-col gap-6">
                 {Object.entries(TestimonialsData).map(
                     ([testimonialKey, testimonial], index) => (

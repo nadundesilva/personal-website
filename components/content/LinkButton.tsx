@@ -29,6 +29,7 @@ type LinkButtonBaseProps = {
 type LinkButtonWithHref = LinkButtonBaseProps & {
     href: string;
     target?: string;
+    rel?: string;
     prefetch?: boolean;
 
     renderLink?: never;
@@ -60,6 +61,7 @@ const LinkButton = (props: LinkButtonProps): React.ReactElement => {
             <Link
                 href={props.href}
                 target={props.target}
+                rel={props.rel}
                 prefetch={props.prefetch}
             />
         );

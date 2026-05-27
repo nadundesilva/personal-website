@@ -16,15 +16,25 @@ import type { Metadata } from "next";
 import type React from "react";
 
 import ArticlesList from "@/components/blog-articles/ArticlesList";
+import CollectionPageJsonLd from "@/components/layout/CollectionPageJsonLd";
+import { resolveRoute } from "@/utils/common/routes";
+
+const { name } = resolveRoute("/blog-articles/data-analytics");
 
 export const metadata: Metadata = {
-    title: "Data Analytics",
+    title: name,
     description:
         "Articles about data analytics, time series data, and database optimization techniques.",
 };
 
 const BlogArticles = async (): Promise<React.ReactElement> => (
-    <ArticlesList subPath="./data-analytics" />
+    <>
+        <CollectionPageJsonLd
+            metadata={metadata}
+            pathname="/blog-articles/data-analytics"
+        />
+        <ArticlesList subPath="./data-analytics" />
+    </>
 );
 
 export default BlogArticles;

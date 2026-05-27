@@ -17,25 +17,34 @@ import Logos, { type LogoImageData } from "@/constants/logos";
 
 export interface Company {
     name: string;
-    link: string;
     logo: LogoImageData;
+    url: string;
+    /** Additional URLs for this company (e.g. LinkedIn company page) included in sameAs. */
+    urlAliases?: string[];
+    wikidataUrl: string;
 }
 
 const Companies: Record<string, Company> = {
     McCraeTech: {
         name: "McCrae Tech",
-        link: "https://mccrae.tech/",
         logo: Logos.McCraeTech,
+        url: "https://mccrae.tech/",
+        urlAliases: ["https://www.linkedin.com/company/mccraetech"],
+        wikidataUrl: "https://www.wikidata.org/entity/Q139961796",
     },
     OrionHealth: {
         name: "Orion Health",
-        link: "https://www.orionhealth.com/",
         logo: Logos.OrionHealth,
+        url: "https://www.orionhealth.com/",
+        urlAliases: ["https://www.linkedin.com/company/orion-health"],
+        wikidataUrl: "https://www.wikidata.org/entity/Q39045500",
     },
     WSO2: {
         name: "WSO2",
-        link: "https://wso2.com/",
         logo: Logos.WSO2,
+        url: "https://wso2.com/",
+        urlAliases: ["https://www.linkedin.com/company/wso2"],
+        wikidataUrl: "https://www.wikidata.org/entity/Q9095380",
     },
 };
 

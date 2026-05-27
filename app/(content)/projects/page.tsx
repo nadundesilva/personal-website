@@ -27,6 +27,7 @@ import {
     SectionHeading,
     Title,
 } from "@/components/content";
+import CollectionPageJsonLd from "@/components/layout/CollectionPageJsonLd";
 import { ScrollReveal } from "@/components/primitives";
 import Companies, { type Company } from "@/constants/companies";
 import { FULL_NAME } from "@/constants/metadata";
@@ -34,11 +35,11 @@ import {
     EnterpriseProjects as ProjectDetails,
     type Project,
 } from "@/constants/projects";
-import { WebsiteHome } from "@/constants/routes";
+import { resolveRoute } from "@/utils/common/routes";
 
 export const metadata: Metadata = {
-    title: "Projects",
-    description: `Various projects done by ${FULL_NAME} throughout his career.`,
+    title: resolveRoute("/projects").name,
+    description: `Software projects built by ${FULL_NAME} throughout his engineering career.`,
 };
 
 interface ProjectSectionHeadingProps {
@@ -76,7 +77,7 @@ const Projects = (): React.ReactElement => {
         </Link>
     );
     const generateCompanyLink = (company: Company): React.ReactElement =>
-        generateLink(company.name, company.link);
+        generateLink(company.name, company.url);
     const generateProjectLink = (project: Project): React.ReactElement =>
         generateLink(project.name, project.link);
 
@@ -123,14 +124,11 @@ const Projects = (): React.ReactElement => {
     return (
         <>
             <Title>Projects</Title>
+            <CollectionPageJsonLd metadata={metadata} pathname="/projects" />
             <ScrollReveal>
                 <div className="py-4">
                     <LinkButton
-                        href={
-                            WebsiteHome.subRoutes["/projects"].subRoutes![
-                                "/projects/personal"
-                            ].path
-                        }
+                        href={resolveRoute("/projects/personal").path}
                         name="View Personal Projects"
                         endIcon={ChevronRight}
                     />
