@@ -15,9 +15,9 @@
 import "./app.css";
 
 import type { Metadata, Route as NextRoute, Viewport } from "next";
-import Script from "next/script";
+
 import React from "react";
-import type { WebSite, WithContext } from "schema-dts";
+import type { IdReference, WebSite, WithContext } from "schema-dts";
 
 import Layout, { RouterBreadcrumbs } from "@/components/layout";
 import { TooltipProvider } from "@/components/primitives";
@@ -28,9 +28,11 @@ import Experiences from "@/constants/experience";
 import {
     FULL_NAME,
     MAIN_DESCRIPTION,
+    SCHEMA_PERSON_ID,
+    SCHEMA_WEBSITE_ID,
     WEBSITE_PUBLIC_URL,
 } from "@/constants/metadata";
-import { TWITTER_HANDLE } from "@/constants/profiles";
+import Profiles, { TWITTER_HANDLE } from "@/constants/profiles";
 import { Route, WebsiteHome } from "@/constants/routes";
 import {
     type BlogArticleGroup,
@@ -149,21 +151,14 @@ export const viewport: Viewport = {
 const jsonLd: WithContext<WebSite> = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": SCHEMA_WEBSITE_ID,
     "name": FULL_NAME,
     "url": WEBSITE_PUBLIC_URL,
     "description": MAIN_DESCRIPTION,
-    "author": {
-        "@type": "Person",
-        "name": FULL_NAME,
-    },
-    "creator": {
-        "@type": "Person",
-        "name": FULL_NAME,
-    },
-    "copyrightHolder": {
-        "@type": "Person",
-        "name": FULL_NAME,
-    },
+    "about": { "@id": SCHEMA_PERSON_ID } as IdReference,
+    "author": { "@id": SCHEMA_PERSON_ID } as IdReference,
+    "creator": { "@id": SCHEMA_PERSON_ID } as IdReference,
+    "copyrightHolder": { "@id": SCHEMA_PERSON_ID } as IdReference,
 };
 
 const createCspValues = (): string[] => {
@@ -260,7 +255,7 @@ const RootLayout = async ({
                 />
 
                 <meta property="fb:app_id" content={FB_APP_ID} />
-                <meta property="og:fb:profile_id" content="nadunrds" />
+                <meta property="fb:profile_id" content="nadunrds" />
 
                 <link
                     rel="preconnect"
@@ -271,13 +266,17 @@ const RootLayout = async ({
                     href="https://static.cloudflareinsights.com"
                 />
 
-                <Script
-                    id="json-ld-website"
+                {Object.values(Profiles).flatMap((profile) =>
+                    [profile.url, ...(profile.urlAliases ?? [])].map((href) => (
+                        <link key={href} rel="me" href={href} />
+                    )),
+                )}
+            </head>
+            <body className="motion-safe:transition-colors motion-safe:duration-300">
+                <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
-            </head>
-            <body className="motion-safe:transition-colors motion-safe:duration-300">
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"

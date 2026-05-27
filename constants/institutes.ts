@@ -19,6 +19,7 @@ export interface Institute {
     name: string;
     link: string;
     logo: LogoImageData;
+    wikidataUrl: string;
 }
 
 const Institutes: Record<string, Institute> = {
@@ -26,36 +27,43 @@ const Institutes: Record<string, Institute> = {
         name: "St. Joseph's College",
         link: "https://www.stjosephscollege.lk/",
         logo: Logos.StJosephsCollegeColombo10,
+        wikidataUrl: "https://www.wikidata.org/entity/Q13567364",
     },
     UniversityOfMoratuwa: {
         name: "University of Moratuwa",
         link: "https://uom.lk/",
         logo: Logos.UniversityOfMoratuwa,
+        wikidataUrl: "https://www.wikidata.org/entity/Q3523254",
     },
     DeepLearningAi: {
         name: "DeepLearning.AI",
         link: "https://www.deeplearning.ai/",
         logo: Logos.DeepLearningAi,
+        wikidataUrl: "https://www.wikidata.org/entity/Q139973594",
     },
     Coursera: {
         name: "Coursera",
         link: "https://www.coursera.org/",
         logo: Logos.DeepLearningAi,
+        wikidataUrl: "https://www.wikidata.org/entity/Q499962",
     },
     LinuxFoundation: {
         name: "Linux Foundation",
         link: "https://www.linuxfoundation.org/",
         logo: Logos.CKA,
+        wikidataUrl: "https://www.wikidata.org/entity/Q858851",
     },
     UniversityOfAlberta: {
         name: "University of Alberta",
         link: "https://www.ualberta.ca/",
         logo: Logos.UniversityOfAlberta,
+        wikidataUrl: "https://www.wikidata.org/entity/Q640694",
     },
     AlbertaMachineIntelligenceInstitute: {
         name: "Alberta Machine Intelligence Institute (Amii)",
         link: "https://www.amii.ca/",
         logo: Logos.UniversityOfAlberta,
+        wikidataUrl: "https://www.wikidata.org/entity/Q112085318",
     },
 };
 

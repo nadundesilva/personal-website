@@ -25,14 +25,16 @@ import {
     SectionHeading,
     Title,
 } from "@/components/content";
+import CollectionPageJsonLd from "@/components/layout/CollectionPageJsonLd";
 import Companies, { type Company } from "@/constants/companies";
 import Experiences, { type Experience } from "@/constants/experience";
 import { FULL_NAME } from "@/constants/metadata";
 import { EnterpriseProjects, type Project } from "@/constants/projects";
+import { resolveRoute } from "@/utils/common/routes";
 
 export const metadata: Metadata = {
-    title: "Experience",
-    description: `Professional experience of ${FULL_NAME} throughout his career.`,
+    title: resolveRoute("/experience").name,
+    description: `${FULL_NAME}'s professional experience and career history as a software engineer.`,
 };
 
 interface ExperienceSectionHeadingProps {
@@ -73,7 +75,7 @@ const Experience = (): React.ReactElement => {
         </Link>
     );
     const generateCompanyLink = (company: Company): React.ReactElement =>
-        generateLink(company.name, company.link);
+        generateLink(company.name, company.url);
     const generateProjectLink = (project: Project): React.ReactElement =>
         generateLink(project.name, project.link);
 
@@ -142,6 +144,7 @@ const Experience = (): React.ReactElement => {
     return (
         <>
             <Title>Experience</Title>
+            <CollectionPageJsonLd metadata={metadata} pathname="/experience" />
             <Section labelledById="section-lead-mccrae">
                 <ExperienceSectionHeading
                     id="section-lead-mccrae"

@@ -50,6 +50,18 @@ const _Routes: _Route[] = [
     {
         name: "Blog Articles",
         path: "/blog-articles",
+        subRoutes: [
+            { name: "Cellery", path: "/blog-articles/cellery" },
+            { name: "Data Analytics", path: "/blog-articles/data-analytics" },
+            { name: "Engineering", path: "/blog-articles/engineering" },
+            { name: "Java", path: "/blog-articles/java" },
+            {
+                name: "Kubernetes the Right Way",
+                path: "/blog-articles/kubernetes-the-right-way",
+            },
+            { name: "Observability", path: "/blog-articles/observability" },
+            { name: "Scala", path: "/blog-articles/scala" },
+        ],
     },
     {
         name: "Education",

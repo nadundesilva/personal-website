@@ -16,7 +16,6 @@
 
 import type { Route as NextRoute } from "next";
 import { usePathname } from "next/navigation";
-import Script from "next/script";
 import React from "react";
 import type {
     BreadcrumbList as JsonLdBreadcrumbList,
@@ -93,55 +92,55 @@ const RouterBreadcrumbs = ({
         })),
     };
 
+    if (breadcrumbs.length <= 1) return null;
+
     return (
         <>
-            <Script
-                id="json-ld-breadcrumb"
+            <script
+                key={pathname}
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify(breadcrumbJsonLd),
                 }}
             />
-            {breadcrumbs.length > 1 && (
-                <ContentContainer className="my-2 pt-4">
-                    <Breadcrumb>
-                        <BreadcrumbList>
-                            {breadcrumbs.map((breadcrumb, index) => {
-                                const isLast = index === breadcrumbs.length - 1;
-                                return (
-                                    <React.Fragment key={breadcrumb.name}>
-                                        <BreadcrumbItem>
-                                            {isLast ? (
-                                                <BreadcrumbPage
-                                                    data-testid="breadcrumb-item"
-                                                    className="font-semibold"
-                                                >
-                                                    {breadcrumb.name}
-                                                </BreadcrumbPage>
-                                            ) : (
-                                                <BreadcrumbLink
-                                                    render={
-                                                        <Link
-                                                            href={
-                                                                breadcrumb.path as NextRoute<string>
-                                                            }
-                                                            className="font-normal text-muted-foreground hover:no-underline"
-                                                        />
-                                                    }
-                                                    data-testid="breadcrumb-item"
-                                                >
-                                                    {breadcrumb.name}
-                                                </BreadcrumbLink>
-                                            )}
-                                        </BreadcrumbItem>
-                                        {!isLast && <BreadcrumbSeparator />}
-                                    </React.Fragment>
-                                );
-                            })}
-                        </BreadcrumbList>
-                    </Breadcrumb>
-                </ContentContainer>
-            )}
+            <ContentContainer className="my-2 pt-4">
+                <Breadcrumb>
+                    <BreadcrumbList>
+                        {breadcrumbs.map((breadcrumb, index) => {
+                            const isLast = index === breadcrumbs.length - 1;
+                            return (
+                                <React.Fragment key={breadcrumb.name}>
+                                    <BreadcrumbItem>
+                                        {isLast ? (
+                                            <BreadcrumbPage
+                                                data-testid="breadcrumb-item"
+                                                className="font-semibold"
+                                            >
+                                                {breadcrumb.name}
+                                            </BreadcrumbPage>
+                                        ) : (
+                                            <BreadcrumbLink
+                                                render={
+                                                    <Link
+                                                        href={
+                                                            breadcrumb.path as NextRoute<string>
+                                                        }
+                                                        className="font-normal text-muted-foreground hover:no-underline"
+                                                    />
+                                                }
+                                                data-testid="breadcrumb-item"
+                                            >
+                                                {breadcrumb.name}
+                                            </BreadcrumbLink>
+                                        )}
+                                    </BreadcrumbItem>
+                                    {!isLast && <BreadcrumbSeparator />}
+                                </React.Fragment>
+                            );
+                        })}
+                    </BreadcrumbList>
+                </Breadcrumb>
+            </ContentContainer>
         </>
     );
 };

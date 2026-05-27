@@ -26,11 +26,13 @@ import {
     SectionHeading,
     Title,
 } from "@/components/content";
+import CollectionPageJsonLd from "@/components/layout/CollectionPageJsonLd";
 import AchievementDetails, { type Achievement } from "@/constants/achievements";
 import Companies, { type Company } from "@/constants/companies";
 import Competitions, { type Competition } from "@/constants/competitions";
 import Institutes, { type Institute } from "@/constants/institutes";
 import { FULL_NAME } from "@/constants/metadata";
+import { resolveRoute } from "@/utils/common/routes";
 
 import angelHack2016BikeImage from "@/assets/achievements/angel-hack-2016-bike.jpg";
 import angelHack2016Image from "@/assets/achievements/angel-hack-2016.jpg";
@@ -42,8 +44,8 @@ import nasaSpaceAppsChallenge2017Image from "@/assets/achievements/nasa-space-ap
 import wso2OutstandingContributorImage from "@/assets/achievements/wso2-outstanding-contributor.jpg";
 
 export const metadata: Metadata = {
-    title: "Achievements",
-    description: `Various notable achievements of ${FULL_NAME}.`,
+    title: resolveRoute("/achievements").name,
+    description: `Notable achievements and recognition earned by ${FULL_NAME} during his software engineering career.`,
 };
 
 interface AchievementSectionHeadingProps {
@@ -83,7 +85,7 @@ const Achievements = (): React.ReactElement => {
     const generateInstituteLink = (institute: Institute): React.ReactElement =>
         generateLink(institute.name, institute.link);
     const generateCompanyLink = (company: Company): React.ReactElement =>
-        generateLink(company.name, company.link);
+        generateLink(company.name, company.url);
 
     const NasaSpaceAppsChallenge = generateCompetitionLink(
         Competitions.NasaSpaceAppsChallenge,
@@ -116,6 +118,10 @@ const Achievements = (): React.ReactElement => {
     return (
         <>
             <Title>Achievements</Title>
+            <CollectionPageJsonLd
+                metadata={metadata}
+                pathname="/achievements"
+            />
             <Section labelledById="section-wso2-outstanding-contribution">
                 <AchievementSectionHeading
                     id="section-wso2-outstanding-contribution"

@@ -14,7 +14,9 @@
  */
 import { ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
+
 import type React from "react";
+import type { Graph, IdReference } from "schema-dts";
 
 import {
     AccentedList,
@@ -28,15 +30,34 @@ import {
     SectionHeading,
     Title,
 } from "@/components/content";
+import CollectionPageJsonLd from "@/components/layout/CollectionPageJsonLd";
 import { ScrollReveal } from "@/components/primitives";
 import Educations, { type Education } from "@/constants/education";
 import Institutes, { type Institute } from "@/constants/institutes";
-import { FULL_NAME } from "@/constants/metadata";
-import { WebsiteHome } from "@/constants/routes";
+import { FULL_NAME, SCHEMA_PERSON_ID } from "@/constants/metadata";
+import Publications from "@/constants/publications";
+import { resolveRoute } from "@/utils/common/routes";
 
 export const metadata: Metadata = {
-    title: "Education",
-    description: `Educational qualifications of ${FULL_NAME}.`,
+    title: resolveRoute("/education").name,
+    description: `${FULL_NAME}'s academic background and educational qualifications.`,
+};
+
+const scholarlyArticlesJsonLd: Graph = {
+    "@context": "https://schema.org",
+    "@graph": Object.values(Publications).map((pub) => ({
+        "@type": "ScholarlyArticle" as const,
+        "@id": pub.url,
+        "headline": pub.title,
+        "url": pub.url,
+        "datePublished": pub.publishedDate.toISOString(),
+        "keywords": pub.keywords,
+        "author": { "@id": SCHEMA_PERSON_ID } as IdReference,
+        "publisher": {
+            "@type": "Organization" as const,
+            "name": pub.venue,
+        },
+    })),
 };
 
 interface EducationSectionHeadingProps {
@@ -82,39 +103,20 @@ const Education = (): React.ReactElement => {
         Institutes.StJosephsCollegeColombo10,
     );
 
-    const GanBasedAnomalyDetectionInIndustrialSoftwareSystems = (
-        <Link
-            href="https://ieeexplore.ieee.org/document/8818750"
-            target="_blank"
-        >
-            &quot;Generative Adversarial Networks (GAN) based Anomaly Detection
-            in Industrial Software Systems&quot; published in 2019 at Moratuwa
-            Engineering Research Conference (MERCon)
-        </Link>
-    );
-    const AnomalyDetectionInIndustrialSoftwareSystemsUsingVae = (
-        <Link
-            href="https://www.scitepress.org/Papers/2018/66003/pdf/index.html"
-            target="_blank"
-        >
-            &quot;Anomaly Detection in Industrial Software Systems — Using
-            Variational Autoencoders&quot; published in 2017 at the Proceedings
-            of the 7th International Conference on Pattern Recognition
-            Applications and Methods (ICPRAM)
-        </Link>
-    );
-
     return (
         <>
             <Title>Education</Title>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(scholarlyArticlesJsonLd),
+                }}
+            />
+            <CollectionPageJsonLd metadata={metadata} pathname="/education" />
             <ScrollReveal>
                 <div className="py-4">
                     <LinkButton
-                        href={
-                            WebsiteHome.subRoutes["/education"].subRoutes![
-                                "/education/certifications"
-                            ].path
-                        }
+                        href={resolveRoute("/education/certifications").path}
                         name="View Certifications"
                         endIcon={ChevronRight}
                     />
@@ -148,16 +150,14 @@ const Education = (): React.ReactElement => {
                     </ListItem>
                     <ListItem>
                         <List heading="Publications:" headingVariant="h4">
-                            <ListItem>
-                                {
-                                    GanBasedAnomalyDetectionInIndustrialSoftwareSystems
-                                }
-                            </ListItem>
-                            <ListItem>
-                                {
-                                    AnomalyDetectionInIndustrialSoftwareSystemsUsingVae
-                                }
-                            </ListItem>
+                            {Object.values(Publications).map((pub) => (
+                                <ListItem key={pub.url}>
+                                    <Link href={pub.url} target="_blank">
+                                        &quot;{pub.title}&quot; published in{" "}
+                                        {pub.publishedDate.year} at {pub.venue}
+                                    </Link>
+                                </ListItem>
+                            ))}
                         </List>
                     </ListItem>
                 </AccentedList>

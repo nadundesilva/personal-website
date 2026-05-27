@@ -29,8 +29,9 @@ const PATHS = [
 // Rules that should only be enforced against the production server (Cloudflare CDN).
 // They are skipped when auditing the local CI dev server (Caddy) because the local
 // setup structurally can't satisfy them.
-const LIVE_SITE_ASSERTIONS =
-    process.env.VALIDATING_LIVE_SITE !== "true" ? {} : {};
+const LIVE_SITE_ASSERTIONS = {
+    deprecations: ["warn"],
+};
 
 let TARGET_BASE_URL = process.env.TARGET_BASE_URL;
 if (TARGET_BASE_URL === undefined) {
@@ -92,7 +93,9 @@ module.exports = {
                 // This is a framework bundling behaviour, not fixable without restructuring CSS.
                 "unused-css-rules": ["warn"],
 
-                ...LIVE_SITE_ASSERTIONS,
+                ...(process.env.VALIDATING_LIVE_SITE === "true"
+                    ? LIVE_SITE_ASSERTIONS
+                    : {}),
             },
         },
     },

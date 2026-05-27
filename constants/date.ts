@@ -86,7 +86,7 @@ export class Date extends AbstractFormattableDate {
         return new globalThis.Date(this.year, monthIndex);
     }
 
-    private toISOString(): string {
+    toISOString(): string {
         if (this.month !== undefined) {
             const monthIndex = MONTHS.indexOf(this.month) + 1;
             return `${this.year}-${String(monthIndex).padStart(2, "0")}`;

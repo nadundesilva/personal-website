@@ -16,15 +16,25 @@ import type { Metadata } from "next";
 import type React from "react";
 
 import ArticlesList from "@/components/blog-articles/ArticlesList";
+import CollectionPageJsonLd from "@/components/layout/CollectionPageJsonLd";
+import { resolveRoute } from "@/utils/common/routes";
+
+const { name } = resolveRoute("/blog-articles/cellery");
 
 export const metadata: Metadata = {
-    title: "Cellery",
+    title: name,
     description:
         "Articles about Cellery, a microservices framework for building cloud-native applications.",
 };
 
 const BlogArticles = async (): Promise<React.ReactElement> => (
-    <ArticlesList subPath="./cellery" />
+    <>
+        <CollectionPageJsonLd
+            metadata={metadata}
+            pathname="/blog-articles/cellery"
+        />
+        <ArticlesList subPath="./cellery" />
+    </>
 );
 
 export default BlogArticles;

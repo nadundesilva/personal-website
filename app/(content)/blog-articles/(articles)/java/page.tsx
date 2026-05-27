@@ -16,14 +16,24 @@ import type { Metadata } from "next";
 import type React from "react";
 
 import ArticlesList from "@/components/blog-articles/ArticlesList";
+import CollectionPageJsonLd from "@/components/layout/CollectionPageJsonLd";
+import { resolveRoute } from "@/utils/common/routes";
+
+const { name } = resolveRoute("/blog-articles/java");
 
 export const metadata: Metadata = {
-    title: "Java",
+    title: name,
     description: "Articles about Java programming and development.",
 };
 
 const BlogArticles = async (): Promise<React.ReactElement> => (
-    <ArticlesList subPath="./java" />
+    <>
+        <CollectionPageJsonLd
+            metadata={metadata}
+            pathname="/blog-articles/java"
+        />
+        <ArticlesList subPath="./java" />
+    </>
 );
 
 export default BlogArticles;
