@@ -24,7 +24,9 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 });
 
 const withPWA = nextPwa({
-    disable: process.env.NODE_ENV === "development",
+    disable:
+        process.env.NODE_ENV === "development" ||
+        process.env.BUILD_TYPE === "test",
     dest: "public",
     register: true,
 });
@@ -50,15 +52,25 @@ const sentryConfig = {
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options
 
-    enabled: process.env.NODE_ENV !== "development",
+    enabled:
+        process.env.NODE_ENV !== "development" &&
+        process.env.BUILD_TYPE !== "test",
 
     org: "nadundesilva",
     project: "nadundesilva-website",
     authToken: process.env.SENTRY_AUTH_TOKEN,
 
-    hideSourceMaps: true,
     widenClientFileUpload: true,
     transpileClientSDK: true,
+
+    sourcemaps: {
+        // In non-production builds keep source maps in the output so errors can
+        // be mapped back to original source. In production they are uploaded to
+        // Sentry and then removed from the public bundle.
+        deleteSourcemapsAfterUpload:
+            process.env.NODE_ENV === "production" &&
+            process.env.BUILD_TYPE !== "test",
+    },
 
     silent: !process.env.CI,
 
@@ -86,11 +98,16 @@ const nextConfig = (phase, { defaultConfig }) => {
         transpilePackages: ["next-image-export-optimizer"],
         productionBrowserSourceMaps: true,
         reactStrictMode: true,
-        // Patch the MDX webpack rule so that next-swc-loader runs with bundleLayer:"rsc".
-        // Without this, the default SWC loader has no bundleLayer, which causes
-        // isReactServerLayer=false in SWC's serverComponents transform. SWC then treats
-        // MDX pages as client-layer modules and rejects `export const metadata`.
         webpack: (config) => {
+            if (process.env.BUILD_TYPE === "test") {
+                // Disable minification so error stack traces are readable.
+                config.optimization.minimize = false;
+            }
+
+            // Patch the MDX webpack rule so that next-swc-loader runs with bundleLayer:"rsc".
+            // Without this, the default SWC loader has no bundleLayer, which causes
+            // isReactServerLayer=false in SWC's serverComponents transform. SWC then treats
+            // MDX pages as client-layer modules and rejects `export const metadata`.
             const mdxRule = config.module.rules.find((rule) =>
                 rule?.test?.toString().includes(".mdx"),
             );
