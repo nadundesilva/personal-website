@@ -10,6 +10,15 @@
 #
 # © 2023 Nadun De Silva. All rights reserved.
 
+ROOT_CA_KEY="/tmp/rootCA.key"
+ROOT_CA_CERT="/tmp/rootCA.crt"
+
+SERVER_KEY="/tmp/server.key"
+SERVER_CSR="/tmp/server.csr"
+SERVER_CERT="/tmp/server.crt"
+
+CADDYFILE="/tmp/Caddyfile"
+
 validate_inputs() {
     if [[ -z "${WEBSITE_BUILD_DIR}" ]]; then
         echo "Error: WEBSITE_BUILD_DIR is not set" >&2
@@ -25,19 +34,38 @@ validate_inputs() {
 generate_tls_cert() {
     echo
     echo "Generating certs for the website server"
-    openssl req -newkey rsa:4096 \
+
+    # Generate Root CA
+    openssl req \
+        -newkey rsa:4096 \
         -x509 \
         -sha256 \
         -days 3650 \
         -nodes \
-        -out "/tmp/server.crt" \
+        -subj "/C=AU/ST=NSW/L=Sydney/O=nadunrds/OU=nadun/CN=nadundesilva.com Test Root CA/emailAddress=nadunrds@gmail.com" \
+        -keyout "${ROOT_CA_KEY}" \
+        -out "${ROOT_CA_CERT}"
+
+    # Served leaf certs
+    openssl req \
+        -newkey rsa:4096 \
+        -sha256 -nodes \
         -subj "/C=AU/ST=NSW/L=Sydney/O=nadunrds/OU=nadun/CN=nadundesilva.com/emailAddress=nadunrds@gmail.com" \
-        -keyout "/tmp/server.key"
-    export NODE_EXTRA_CA_CERTS="/tmp/server.crt"
+        -keyout "${SERVER_KEY}" \
+        -out "${SERVER_CSR}"
+    openssl x509 \
+        -req \
+        -in "${SERVER_CSR}" \
+        -CA "${ROOT_CA_CERT}" \
+        -CAkey "${ROOT_CA_KEY}" \
+        -CAcreateserial \
+        -days 3650 \
+        -sha256 \
+        -extfile <(printf 'basicConstraints=critical,CA:FALSE\nsubjectAltName=DNS:nadundesilva.com') \
+        -out "${SERVER_CERT}"
 }
 
 generate_caddyfile() {
-    CADDYFILE="/tmp/Caddyfile"
     {
         echo "{"
         echo "    admin off"
@@ -86,16 +114,20 @@ start_server() {
         --name caddy-server \
         --network=host \
         -v "${CADDYFILE}:/etc/caddy/Caddyfile" \
-        -v "/tmp/server.crt:/etc/caddy/server.crt" \
-        -v "/tmp/server.key:/etc/caddy/server.key" \
+        -v "${SERVER_CERT}:/etc/caddy/server.crt" \
+        -v "${SERVER_KEY}:/etc/caddy/server.key" \
         -v "$(realpath "${WEBSITE_BUILD_DIR}"):/srv" \
         caddy:alpine
     npx wait-on -t 10000 -i 1000 --verbose https://nadundesilva.com
 }
 
 trust_tls_cert() {
+    # Node.js (wait-on)
+    export NODE_EXTRA_CA_CERTS="${ROOT_CA_CERT}"
+
+    # System trust store (lychee, Chrome/Chromium)
     sudo apt install -y ca-certificates
-    sudo cp "${NODE_EXTRA_CA_CERTS}" /usr/local/share/ca-certificates
+    sudo cp "${ROOT_CA_CERT}" /usr/local/share/ca-certificates
     sudo update-ca-certificates
 }
 
