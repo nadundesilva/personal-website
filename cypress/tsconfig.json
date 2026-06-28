@@ -1,16 +1,15 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "lib": ["es5", "dom"],
+        "target": "ES2022",
+        "lib": ["ES2022", "dom"],
         "types": ["cypress", "node", "@testing-library/cypress"],
-        "baseUrl": "../",
         "paths": {
-            "@/components/*": ["components/*"],
-            "@/constants/*": ["constants/*"],
-            "@/hooks/*": ["hooks/*"],
-            "@/utils/*": ["utils/*"],
-            "@/styles/*": ["styles/*"],
-            "@/assets/*": ["assets/*"]
+            "@/components/*": ["../components/*"],
+            "@/constants/*": ["../constants/*"],
+            "@/hooks/*": ["../hooks/*"],
+            "@/utils/*": ["../utils/*"],
+            "@/styles/*": ["../styles/*"],
+            "@/assets/*": ["../assets/*"]
         }
     },
     "include": ["index.d.ts", "**/*.ts", "**/*.tsx"]
