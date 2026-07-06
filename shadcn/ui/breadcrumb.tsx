@@ -1,24 +1,8 @@
-/*
- * Nadun De Silva - All Rights Reserved
- *
- * This source code and its associated files are the
- * confidential and proprietary information of Nadun De Silva.
- * Unauthorized reproduction, distribution, or disclosure
- * in any form, in whole or in part, is strictly prohibited
- * except as explicitly provided under a separate license
- * agreement with Nadun De Silva.
- *
- * Website: https://nadundesilva.com
- *
- * © 2026 Nadun De Silva. All rights reserved.
- */
-
-// shadcn/ui component
-
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
+import * as React from "react";
 
-import { cn } from "@/components/primitives/utils/cn";
+import { cn } from "@/shadcn/lib/cn";
 import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react";
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
@@ -36,10 +20,8 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
     return (
         <ol
             data-slot="breadcrumb-list"
-            // VoiceOver in Safari strips list semantics when list-style: none is applied by Tailwind preflight — role="list" restores them.
-            role="list"
             className={cn(
-                "text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm wrap-break-word",
+                "flex flex-wrap items-center gap-1.5 text-sm wrap-break-word text-muted-foreground",
                 className,
             )}
             {...props}
@@ -67,7 +49,7 @@ function BreadcrumbLink({
         props: mergeProps<"a">(
             {
                 className: cn(
-                    "hover:text-foreground motion-safe:transition-colors",
+                    "transition-colors hover:text-foreground",
                     className,
                 ),
             },
@@ -84,8 +66,10 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
     return (
         <span
             data-slot="breadcrumb-page"
+            role="link"
+            aria-disabled="true"
             aria-current="page"
-            className={cn("text-foreground font-normal", className)}
+            className={cn("font-normal text-foreground", className)}
             {...props}
         />
     );
@@ -117,13 +101,14 @@ function BreadcrumbEllipsis({
         <span
             data-slot="breadcrumb-ellipsis"
             role="presentation"
+            aria-hidden="true"
             className={cn(
                 "flex size-5 items-center justify-center [&>svg]:size-4",
                 className,
             )}
             {...props}
         >
-            <MoreHorizontalIcon aria-hidden="true" />
+            <MoreHorizontalIcon />
             <span className="sr-only">More</span>
         </span>
     );

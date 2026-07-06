@@ -15,7 +15,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import type React from "react";
 
-import { cn } from "@/components/primitives/utils/cn";
+import { cn } from "@/shadcn/lib/cn";
 
 const paragraphVariants = cva(
     "mb-5 text-[0.9375rem] leading-[1.75] font-normal",

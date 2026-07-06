@@ -14,7 +14,8 @@
  */
 "use client";
 
-import { Badge, LeftAccent, ScrollReveal } from "@/components/primitives";
+import { LeftAccent, ScrollReveal } from "@/components/primitives";
+import { Badge } from "@/shadcn/ui";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import type { StaticImageData } from "next/image";
 import { usePathname } from "next/navigation";

@@ -24,6 +24,8 @@ import type {
 
 import { Link } from "@/components/content";
 import { ContentContainer } from "@/components/layout";
+import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
+import { type Route } from "@/constants/routes";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -31,9 +33,7 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-} from "@/components/primitives";
-import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
-import { type Route } from "@/constants/routes";
+} from "@/shadcn/ui";
 
 interface RouterBreadcrumbsProps {
     topLevelRoutes: Record<string, Route>;

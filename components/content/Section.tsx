@@ -14,7 +14,8 @@
  */
 import type React from "react";
 
-import { ScrollReveal, Separator } from "@/components/primitives";
+import { ScrollReveal } from "@/components/primitives";
+import { Separator } from "@/shadcn/ui";
 
 interface SectionProps {
     children: React.ReactNode;

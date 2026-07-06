@@ -15,8 +15,8 @@
 import Image from "next-image-export-optimizer";
 import type React from "react";
 
-import { cn } from "@/components/primitives/utils/cn";
 import { type LogoImageData } from "@/constants/logos";
+import { cn } from "@/shadcn/lib/cn";
 import { generateSizesForContentBreakpoints } from "@/utils/common/image-sizes";
 
 // Container: w-full below sm, sm:w-70 (280px) at sm+. Fixed px auto-propagates to md/lg/xl/2xl.

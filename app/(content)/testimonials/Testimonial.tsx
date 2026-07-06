@@ -16,16 +16,10 @@ import { Briefcase, ExternalLink, Quote, Users } from "lucide-react";
 import type React from "react";
 
 import { LinkButton, Paragraph } from "@/components/content";
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    LeftAccent,
-    PrimaryTintedIcon,
-    Separator,
-} from "@/components/primitives";
+import { LeftAccent, PrimaryTintedIcon } from "@/components/primitives";
 import { LINKEDIN_PROFILE_URL } from "@/constants/profiles";
 import { Relationship, type TestimonialData } from "@/constants/testimonials";
+import { Card, CardContent, CardHeader, Separator } from "@/shadcn/ui";
 
 const renderRelationShip = (
     name: string,

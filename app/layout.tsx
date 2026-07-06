@@ -20,8 +20,6 @@ import React from "react";
 import type { IdReference, WebSite, WithContext } from "schema-dts";
 
 import Layout, { RouterBreadcrumbs } from "@/components/layout";
-import { TooltipProvider } from "@/components/primitives";
-import { cn } from "@/components/primitives/utils/cn";
 import { codeFont, defaultFont } from "@/components/theme";
 import WebVitals from "@/components/WebVitals";
 import Experiences from "@/constants/experience";
@@ -34,6 +32,8 @@ import {
 } from "@/constants/metadata";
 import Profiles, { TWITTER_HANDLE } from "@/constants/profiles";
 import { Route, WebsiteHome } from "@/constants/routes";
+import { cn } from "@/shadcn/lib/cn";
+import { TooltipProvider } from "@/shadcn/ui";
 import {
     type BlogArticleGroup,
     getBlogArticleGroups,

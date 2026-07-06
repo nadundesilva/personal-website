@@ -18,8 +18,8 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 
-import { Button } from "@/components/primitives";
-import { cn } from "@/components/primitives/utils/cn";
+import { cn } from "@/shadcn/lib/cn";
+import { Button } from "@/shadcn/ui";
 import type { SkillChipProps } from "./SkillChip";
 
 const SKILLS_PREVIEW_COUNT = 5;

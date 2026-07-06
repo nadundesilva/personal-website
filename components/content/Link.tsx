@@ -18,7 +18,7 @@ import NextLink from "next/link";
 import type React from "react";
 import { forwardRef } from "react";
 
-import { cn } from "@/components/primitives/utils/cn";
+import { cn } from "@/shadcn/lib/cn";
 
 type CustomLinkProps = React.ComponentPropsWithoutRef<typeof NextLink>;
 

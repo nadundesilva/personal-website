@@ -18,6 +18,7 @@ import type React from "react";
 
 import { Link } from "@/components/content";
 import DateInfo from "@/components/content/DateInfo";
+import { Date as FormattableDate } from "@/constants/date";
 import {
     Badge,
     Card,
@@ -25,8 +26,7 @@ import {
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@/components/primitives";
-import { Date as FormattableDate } from "@/constants/date";
+} from "@/shadcn/ui";
 import { generateSizesForColumnLayout } from "@/utils/common/image-sizes";
 import { type BlogArticle } from "@/utils/server/blog-articles";
 

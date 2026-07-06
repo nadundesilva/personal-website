@@ -15,7 +15,7 @@
 import type React from "react";
 import { useId } from "react";
 
-import { cn } from "@/components/primitives/utils/cn";
+import { cn } from "@/shadcn/lib/cn";
 
 import { LeftAccent } from "@/components/primitives";
 

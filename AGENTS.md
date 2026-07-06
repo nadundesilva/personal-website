@@ -85,7 +85,7 @@ Accessibility is a hard requirement, not optional:
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Framework      | Next.js (App Router, `output: "export"`)                                                                                                                                                                                                                                                                    |
 | Language       | TypeScript (strict, ES2022)                                                                                                                                                                                                                                                                                 |
-| UI             | Tailwind CSS v4 + shadcn/ui + `@base-ui/react` + `vaul` (Drawer)                                                                                                                                                                                                                                            |
+| UI             | Tailwind CSS v4 + shadcn/ui + `@base-ui/react`                                                                                                                                                                                                                                                              |
 | Icons          | lucide-react (general UI icons) + `@icons-pack/react-simple-icons` (brand/social icons)                                                                                                                                                                                                                     |
 | Dark Mode      | next-themes (`class` strategy)                                                                                                                                                                                                                                                                              |
 | Animation      | motion (v12) + tw-animate-css                                                                                                                                                                                                                                                                               |
@@ -159,9 +159,16 @@ components/
   content/                         # Semantic structure components (Title, Section, Link, etc.)
   icons/                           # Custom SVG icon components (e.g. LinkedInIcon)
   layout/                          # Navigation, breadcrumbs, scroll handling
-  primitives/                      # shadcn-style UI primitives (see §7 — Primitive Components)
+  primitives/                      # Hand-written primitives (see §7)
   theme/                           # fonts.ts, index.tsx (re-exports fonts)
   WebVitals.tsx
+shadcn/                            # CLI-managed only — never hand-edit (see §7)
+  ui/                              # Badge, Breadcrumb, Button, Card, Drawer, Popover, Separator,
+                                   # Spinner, Tooltip + index.tsx (barrel, hand-written)
+  lib/
+    cn.ts                          # cn() — clsx + tailwind-merge
+    index.ts                       # barrel (hand-written)
+  hooks/                           # shadcn-provided hooks land here if/when added (none yet)
 constants/
   date.ts                          # FormattableDate domain model (Date, Now, DateRange)
   routes.ts                        # Route definitions (WebsiteHome, Route interface)
@@ -171,8 +178,6 @@ constants/
 cypress/
   e2e/                             # E2E test specs (*.cy.tsx)
   support/commands.ts              # Custom commands
-hooks/
-  useHoverDelay.ts                 # Hover/focus overlay state with close-delay (WCAG 1.4.13 "Hoverable")
 utils/
   common/                          # Client-safe utilities: experience.ts, image-metadata.ts, image-sizes.ts
   server/                          # Server-only utilities: blog-articles.ts (filesystem glob + path resolution)
@@ -198,7 +203,7 @@ eslint.config.js                   # ESLint flat config
 | ---------------- | -------------- |
 | `@/components/*` | `components/*` |
 | `@/constants/*`  | `constants/*`  |
-| `@/hooks/*`      | `hooks/*`      |
+| `@/shadcn/*`     | `shadcn/*`     |
 | `@/utils/*`      | `utils/*`      |
 | `@/assets/*`     | `assets/*`     |
 
@@ -246,6 +251,8 @@ npm run build:analyze        # Sets ANALYZE=true, opens bundle report after buil
 ### File Header
 
 Every source file (`.ts`, `.tsx`, `.css`, `.mdx`) must start with the copyright header. Use the year of original file creation. Do not update the year on edits.
+
+**Exception:** files under `shadcn/ui/` and `shadcn/lib/` (excluding their hand-written `index.tsx`/`index.ts` barrels) are CLI output — do not add the copyright header to them, and do not rename them to PascalCase. Use whatever `npx shadcn add` generates, verbatim. See §7 for the full rule.
 
 **`.ts`, `.tsx`, `.css` files** — standard block comment:
 
@@ -296,7 +303,7 @@ This must appear as the very first thing in the file, before any `import` statem
 - React return types: `React.ReactElement` for single-element returns, `React.ReactNode` for children props.
 - Props interfaces use the `Props` suffix, defined directly above the component.
 - Default exports for components. Named exports for utilities, hooks, and types.
-- PascalCase filenames for components. camelCase for utilities and hooks.
+- PascalCase filenames for components. camelCase for utilities and hooks. Exception: `shadcn/ui/*` and `shadcn/lib/*` keep the CLI's lowercase-kebab filenames (`badge.tsx`, `cn.ts`, etc.) — see §7.
 
 ### Import Ordering
 
@@ -430,48 +437,56 @@ Never use raw HTML elements for document structure. Use from [`components/conten
 
 ### Primitive Components
 
-Small reusable building blocks in [`components/primitives/`](./components/primitives/). They render a specific visual segment — a gradient line, a bordered accent, a divider — but carry no semantic meaning on their own. Think of them like design tokens expressed as components: the same visual pattern used in multiple places.
+Two separate homes, split by provenance:
 
-**Available primitives** (all exported from [`components/primitives/index.tsx`](./components/primitives/)):
+- **`shadcn/`** — CLI-managed only (see the rule below). `shadcn/ui/` holds the 9 shadcn primitives, `shadcn/lib/` holds the `cn()` utility, `shadcn/hooks/` is where shadcn-provided hooks would land if any are ever added.
+- **`components/primitives/`** — hand-written building blocks that render a specific visual segment (a gradient line, a bordered accent, a divider) but carry no semantic meaning on their own. Think of them like design tokens expressed as components.
+
+> **shadcn components must not be hand-edited — only regenerated via the CLI.** If a shadcn primitive needs to change (new upstream version, a variant tweak, a prop addition), run `npx shadcn add <component> --overwrite` and `git mv` the freshly generated file(s) into `shadcn/ui/` (or `shadcn/lib/`), rather than editing the existing file by hand. This keeps them byte-for-byte reproducible from the registry — a hand-edit today becomes a silent, undiscoverable diff from upstream that the next regeneration either clobbers or conflicts with. If a shadcn primitive doesn't support something the app needs, either wrap it from `components/primitives/` (composition, not modification) or raise it with the user before hand-patching the CLI output. This means shadcn files also skip the usual file-header and PascalCase-filename rules — use the CLI's output as-is (lowercase-kebab filenames, no copyright header); see the **File Header** and **TypeScript Conventions** sections in §6. The hand-written `index.tsx`/`index.ts` barrels in `shadcn/ui/` and `shadcn/lib/` are the one exception within `shadcn/` — they're ours, not CLI output, so they keep the normal header and convention.
+
+**shadcn primitives** (all exported from [`shadcn/ui/index.tsx`](./shadcn/ui/index.tsx)):
+
+| Primitive              | What it renders                                                                        |
+| ---------------------- | -------------------------------------------------------------------------------------- |
+| `Badge`                | Inline status/category label                                                           |
+| `Breadcrumb` (+ parts) | Accessible breadcrumb navigation components                                            |
+| `Button`               | Styled action button (with size/variant CVA)                                           |
+| `Card`                 | Bordered content card                                                                  |
+| `Drawer` (+ parts)     | Accessible drawer / bottom-sheet overlay components (built on `@base-ui/react/drawer`) |
+| `Popover` (+ parts)    | Accessible popover components                                                          |
+| `Separator`            | Full-width horizontal rule                                                             |
+| `Spinner`              | Animated loading indicator                                                             |
+| `Tooltip` (+ parts)    | Accessible tooltip components                                                          |
+
+**Hand-written primitives** (all exported from [`components/primitives/index.tsx`](./components/primitives/index.tsx)):
 
 | Primitive                | What it renders                                                                         |
 | ------------------------ | --------------------------------------------------------------------------------------- |
-| `Badge`                  | Inline status/category label                                                            |
-| `Breadcrumb` (+ parts)   | Accessible breadcrumb navigation components                                             |
-| `Button`                 | Styled action button (with size/variant CVA)                                            |
-| `Card`                   | Bordered content card                                                                   |
 | `CopyButton`             | Clipboard copy button (used in code blocks)                                             |
-| `Drawer` (+ parts)       | Accessible drawer / bottom-sheet overlay components                                     |
 | `HorizontalGradientLine` | Short left-anchored gradient accent line (color → transparent) used under headings      |
 | `LeftAccent`             | Left border accent wrapping a content block                                             |
-| `Popover` (+ parts)      | Accessible popover components                                                           |
 | `PrimaryTintedIcon`      | Icon tinted with the primary color                                                      |
 | `ProgressFab`            | Circular progress ring FAB — used by `ReadingProgress` to show article reading progress |
 | `ScrollReveal`           | Wraps children in a motion-based scroll-reveal animation                                |
-| `Separator`              | Full-width horizontal rule                                                              |
-| `Spinner`                | Animated loading indicator                                                              |
 | `StaggerReveal`          | Wraps a list in staggered scroll-reveal animations                                      |
-| `Tooltip` (+ parts)      | Accessible tooltip components                                                           |
-
-> **shadcn components** (`Badge`, `Button`, `Tooltip`, `Breadcrumb`, `Card`, `Drawer`, `Popover`, `Separator`, `Spinner`) are scaffolded via shadcn and live in `components/primitives/`. They are all exported from `components/primitives/index.tsx` like the other primitives — import them from there. **shadcn hooks** (e.g. `useHoverDelay`) are scaffolded via shadcn and live in `hooks/`. shadcn components carry a `// shadcn/ui component` comment and shadcn hooks carry a `// shadcn/ui hook` comment, each on the line immediately after the copyright header — add this comment when scaffolding a new shadcn file, and preserve it on edits; do not remove it.
 
 > **shadcn component integrity rule:** Never partially remove sub-components from a shadcn component. If at least one sub-component is used anywhere in the project, the entire component (including all unused sub-components) stays. Only remove the whole component if none of its exports are used anywhere.
 
 > **`CardTitle` and HTML heading levels are orthogonal concerns:** `CardTitle` is a UI slot — it marks the title area of a card regardless of what HTML element renders it. Whether that title should also be a document heading (`<h2>`, `<h3>`, etc.) is a separate decision driven by the page's heading hierarchy. In list items (e.g. project cards, certification cards inside `<li>`), the list provides the document structure so `CardTitle` as a `<div>` is correct — no heading element is needed. For standalone named sections that users should be able to navigate to by heading (e.g. an Experience role), place an `<h3>` directly inside `CardContent` instead of using `CardTitle`.
 
-**When to add a new primitive:**
+**When to add a new hand-written primitive:**
 
 - A visual pattern (gradient, border accent, decorative line, etc.) is used in more than one place.
 - The element has no semantic meaning by itself — it is purely visual.
 
-Export all primitives from `components/primitives/index.tsx`.
+Export shadcn primitives from `shadcn/ui/index.tsx` (or the utility from `shadcn/lib/index.ts`) when regenerating; export hand-written primitives from `components/primitives/index.tsx`.
 
 ### Component Selection Hierarchy
 
 When adding new UI functionality, follow this priority order:
 
-1. **shadcn component** — check `components/primitives/` first. If a suitable component does not exist there, check the shadcn registry (`npx shadcn add`) for one that can be scaffolded in.
-2. **`@base-ui/react` primitive** — if no shadcn component fits semantically, use `@base-ui/react` directly. It is the unstyled primitive library that most shadcn components in this project are built on (exception: `Drawer` uses `vaul`, and `Card` uses plain React).
+1. **shadcn component** — check `shadcn/ui/` first. If a suitable component does not exist there, check the shadcn registry (`npx shadcn add`) for one that can be scaffolded in (see the CLI-only rule in §7).
+2. **`@base-ui/react` primitive** — if no shadcn component fits semantically, use `@base-ui/react` directly. It is the unstyled primitive library that most shadcn components in this project are built on (exception: `Card` uses plain React).
 3. **Custom implementation** — only if neither option above applies. Before writing a custom component, ask the user for approval.
 
 ### Custom Link Component
@@ -582,8 +597,8 @@ Styling uses **Tailwind CSS v4** (CSS-first config) with **shadcn/ui** design to
 
 - Design tokens (fonts, colors, radii, easings, animations) are defined in the `@theme inline` block in [`app/app.css`](./app/app.css) using CSS variable references (e.g. `var(--background)`). The underlying color values use oklch and live in [`app/themes.css`](./app/themes.css), imported by `app.css`.
 - Dark mode is provided by `next-themes` using the `class` strategy — the `dark` class on `<html>` activates a `@custom-variant dark` defined in [`app/app.css`](./app/app.css). A second custom variant `short-h` (`@media (max-height: 500px)`) is also defined there for hero collapse on short viewports.
-- Compose class strings with `cn()` from [`components/primitives/utils/cn.ts`](./components/primitives/utils/cn.ts) (clsx + tailwind-merge).
-- Use `class-variance-authority` (`cva` + `VariantProps`) whenever a component accepts props that map to different class sets (e.g. `size`, `variant`, `intent`). This is the shadcn pattern — see `Button.tsx` and `Badge.tsx` for examples. Expose the resolved variant type via `VariantProps<typeof myVariants>` in the props interface so callers get autocomplete and type safety. For a single varying dimension (e.g. only `size`), a single `cva` call is sufficient — no need for a separate helper function.
+- Compose class strings with `cn()` from [`shadcn/lib/cn.ts`](./shadcn/lib/cn.ts) (clsx + tailwind-merge).
+- Use `class-variance-authority` (`cva` + `VariantProps`) whenever a component accepts props that map to different class sets (e.g. `size`, `variant`, `intent`). This is the shadcn pattern — see `shadcn/ui/button.tsx` and `shadcn/ui/badge.tsx` for examples. Expose the resolved variant type via `VariantProps<typeof myVariants>` in the props interface so callers get autocomplete and type safety. For a single varying dimension (e.g. only `size`), a single `cva` call is sufficient — no need for a separate helper function.
 
 ### Preflight
 

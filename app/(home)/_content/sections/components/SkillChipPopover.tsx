@@ -18,14 +18,14 @@ import { Award, Briefcase, Code2 } from "lucide-react";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
+import { type SkillProficiency } from "@/constants/skill-categories";
 import {
     Popover,
     PopoverContent,
     PopoverTitle,
     PopoverTrigger,
     Separator,
-} from "@/components/primitives";
-import { type SkillProficiency } from "@/constants/skill-categories";
+} from "@/shadcn/ui";
 import SkillChipProficiencyIndicator from "./SkillProficiencyIndicator";
 
 interface SkillChipPopoverSkillSectionProps {

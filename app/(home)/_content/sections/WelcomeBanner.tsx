@@ -17,17 +17,17 @@ import React from "react";
 
 import welcomeBannerImage from "@/assets/banner.webp";
 import { Link, LinkButton } from "@/components/content";
-import {
-    Separator,
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-} from "@/components/primitives";
 import { FULL_NAME, TAGLINE } from "@/constants/metadata";
 import Profiles from "@/constants/profiles";
 import { EnterpriseProjects } from "@/constants/projects";
 import { CvPdfPath } from "@/constants/routes";
 import Skills from "@/constants/skills";
+import {
+    Separator,
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/shadcn/ui";
 import {
     YEARS_EXPERIENCE_INCREMENT,
     calculateYearsOfExperienceForDisplay,

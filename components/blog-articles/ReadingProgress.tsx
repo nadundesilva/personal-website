@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { ProgressFab } from "@/components/primitives";
-import { cn } from "@/components/primitives/utils/cn";
+import { cn } from "@/shadcn/lib/cn";
 
 interface PillProps {
     visible: boolean;

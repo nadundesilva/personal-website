@@ -18,7 +18,7 @@ import { Progress } from "@base-ui/react/progress";
 import { Sparkles } from "lucide-react";
 import type React from "react";
 
-import { cn } from "@/components/primitives/utils/cn";
+import { cn } from "@/shadcn/lib/cn";
 
 // BADGE_SIZE drives both the SVG geometry and the outer div size (= size-10 in Tailwind, 10 × 4px).
 const BADGE_SIZE = 40;

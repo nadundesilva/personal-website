@@ -29,8 +29,9 @@ import {
     SectionHeading,
     SubsectionHeading,
 } from "@/components/content";
-import { LeftAccent, Separator } from "@/components/primitives";
+import { LeftAccent } from "@/components/primitives";
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
+import { Separator } from "@/shadcn/ui";
 
 interface CreatorPlatform {
     name: string;

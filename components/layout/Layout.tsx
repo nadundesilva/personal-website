@@ -17,6 +17,9 @@
 import "./layout.css";
 
 import { Link } from "@/components/content";
+import { FULL_NAME } from "@/constants/metadata";
+import { type Route } from "@/constants/routes";
+import { cn } from "@/shadcn/lib/cn";
 import {
     Button,
     Drawer,
@@ -27,10 +30,7 @@ import {
     Tooltip,
     TooltipContent,
     TooltipTrigger,
-} from "@/components/primitives";
-import { cn } from "@/components/primitives/utils/cn";
-import { FULL_NAME } from "@/constants/metadata";
-import { type Route } from "@/constants/routes";
+} from "@/shadcn/ui";
 import { ChevronUp, Menu, Moon, Sun, X } from "lucide-react";
 import { useReducedMotion } from "motion/react";
 import { useTheme } from "next-themes";
@@ -102,9 +102,8 @@ const Layout = ({
         <Drawer
             open={isDrawerOpen}
             onOpenChange={setDrawerOpen}
-            direction="top"
+            swipeDirection="up"
             modal={false}
-            autoFocus
         >
             {/* Skip to content */}
             <Link
@@ -133,23 +132,25 @@ const Layout = ({
             >
                 <div className="flex h-14 items-center px-4 sm:h-16 sm:px-6 md:px-8 lg:px-20 xl:px-40 2xl:px-80">
                     {/* Mobile menu toggle */}
-                    <DrawerTrigger asChild>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            aria-label={
-                                isDrawerOpen
-                                    ? "Close navigation menu"
-                                    : "Open navigation menu"
-                            }
-                            className="text-primary-foreground hover:bg-primary-foreground/10 mr-4 lg:hidden"
-                        >
-                            {isDrawerOpen ? (
-                                <X aria-hidden={true} />
-                            ) : (
-                                <Menu aria-hidden={true} />
-                            )}
-                        </Button>
+                    <DrawerTrigger
+                        render={
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                aria-label={
+                                    isDrawerOpen
+                                        ? "Close navigation menu"
+                                        : "Open navigation menu"
+                                }
+                                className="text-primary-foreground hover:bg-primary-foreground/10 mr-4 lg:hidden"
+                            />
+                        }
+                    >
+                        {isDrawerOpen ? (
+                            <X aria-hidden={true} />
+                        ) : (
+                            <Menu aria-hidden={true} />
+                        )}
                     </DrawerTrigger>
 
                     {/* Site name */}

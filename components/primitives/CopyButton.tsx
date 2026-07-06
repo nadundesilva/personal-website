@@ -18,12 +18,8 @@ import { AlertCircle, Check, Copy } from "lucide-react";
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { Button } from "@/components/primitives/Button";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-} from "@/components/primitives/Tooltip";
+import { Button } from "@/shadcn/ui";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip";
 
 type CopyButtonProps = {
     label?: string;

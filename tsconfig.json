@@ -7,7 +7,7 @@
         "paths": {
             "@/components/*": ["components/*"],
             "@/constants/*": ["constants/*"],
-            "@/hooks/*": ["hooks/*"],
+            "@/shadcn/*": ["shadcn/*"],
             "@/utils/*": ["utils/*"],
             "@/assets/*": ["assets/*"]
         },

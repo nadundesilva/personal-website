@@ -16,9 +16,9 @@
     },
     "aliases": {
         "components": "@/components",
-        "ui": "@/components/primitives",
-        "utils": "@/components/primitives/utils/cn",
-        "lib": "@/components/primitives/utils",
-        "hooks": "@/hooks"
+        "ui": "@/shadcn/ui",
+        "utils": "@/shadcn/lib/cn",
+        "lib": "@/shadcn/lib",
+        "hooks": "@/shadcn/hooks"
     }
 }

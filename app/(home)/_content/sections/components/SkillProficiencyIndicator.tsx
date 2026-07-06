@@ -15,8 +15,8 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import type React from "react";
 
-import { cn } from "@/components/primitives/utils/cn";
 import { SkillProficiency } from "@/constants/skill-categories";
+import { cn } from "@/shadcn/lib/cn";
 
 // Exported so the Skills legend can reference the same values without
 // duplicating them. Colors do not belong in the global theme palette or

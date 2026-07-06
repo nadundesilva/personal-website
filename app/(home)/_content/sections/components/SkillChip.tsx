@@ -15,9 +15,9 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import type React from "react";
 
-import { cn } from "@/components/primitives/utils/cn";
 import SkillUsages from "@/constants/skill-usages";
 import { type SkillDefinition } from "@/constants/skills";
+import { cn } from "@/shadcn/lib/cn";
 import SkillChipPopover from "./SkillChipPopover";
 import SkillChipProficiencyIndicator from "./SkillProficiencyIndicator";
 

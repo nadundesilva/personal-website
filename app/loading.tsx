@@ -14,7 +14,7 @@
  */
 import type React from "react";
 
-import { Spinner } from "@/components/primitives";
+import { Spinner } from "@/shadcn/ui";
 
 const Loading = (): React.ReactElement => (
     <div className="flex h-screen justify-center pt-[25%]">

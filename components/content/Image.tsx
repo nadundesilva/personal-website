@@ -12,7 +12,7 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-import { cn } from "@/components/primitives/utils/cn";
+import { cn } from "@/shadcn/lib/cn";
 import NextImage from "next-image-export-optimizer";
 import { type StaticImageData } from "next/image";
 import type React from "react";

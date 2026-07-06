@@ -15,7 +15,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import type React from "react";
 
-import { cn } from "@/components/primitives/utils/cn";
+import { cn } from "@/shadcn/lib/cn";
 
 const horizontalGradientLineVariants = cva(
     "mt-1.5 h-0.5 w-8 rounded bg-linear-to-r opacity-65 md:w-11",

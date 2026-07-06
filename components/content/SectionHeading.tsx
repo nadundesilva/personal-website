@@ -15,8 +15,8 @@
 import type React from "react";
 
 import { HorizontalGradientLine } from "@/components/primitives";
-import { cn } from "@/components/primitives/utils/cn";
 import type { FormattableDate } from "@/constants/date";
+import { cn } from "@/shadcn/lib/cn";
 
 import DateInfo from "./DateInfo";
 import LinkButton, { type LinkButtonProps } from "./LinkButton";

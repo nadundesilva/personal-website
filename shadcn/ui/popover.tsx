@@ -1,26 +1,9 @@
-/*
- * Nadun De Silva - All Rights Reserved
- *
- * This source code and its associated files are the
- * confidential and proprietary information of Nadun De Silva.
- * Unauthorized reproduction, distribution, or disclosure
- * in any form, in whole or in part, is strictly prohibited
- * except as explicitly provided under a separate license
- * agreement with Nadun De Silva.
- *
- * Website: https://nadundesilva.com
- *
- * © 2026 Nadun De Silva. All rights reserved.
- */
-
-// shadcn/ui component
-
 "use client";
 
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 import * as React from "react";
 
-import { cn } from "@/components/primitives/utils/cn";
+import { cn } from "@/shadcn/lib/cn";
 
 function Popover({ ...props }: PopoverPrimitive.Root.Props) {
     return <PopoverPrimitive.Root data-slot="popover" {...props} />;
@@ -54,7 +37,7 @@ function PopoverContent({
                 <PopoverPrimitive.Popup
                     data-slot="popover-content"
                     className={cn(
-                        "z-50 flex w-72 origin-(--transform-origin) flex-col gap-2.5 rounded-lg bg-popover p-2.5 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden motion-safe:duration-100 motion-safe:data-[side=bottom]:slide-in-from-top-2 motion-safe:data-[side=inline-end]:slide-in-from-left-2 motion-safe:data-[side=inline-start]:slide-in-from-right-2 motion-safe:data-[side=left]:slide-in-from-right-2 motion-safe:data-[side=right]:slide-in-from-left-2 motion-safe:data-[side=top]:slide-in-from-bottom-2 motion-safe:data-open:animate-in motion-safe:data-open:fade-in-0 motion-safe:data-open:zoom-in-95 motion-safe:data-closed:animate-out motion-safe:data-closed:fade-out-0 motion-safe:data-closed:zoom-out-95",
+                        "z-50 flex w-72 origin-(--transform-origin) flex-col gap-2.5 rounded-lg bg-popover p-2.5 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
                         className,
                     )}
                     {...props}

@@ -14,8 +14,8 @@
  */
 import type React from "react";
 
-import { Button } from "@/components/primitives";
-import { cn } from "@/components/primitives/utils/cn";
+import { cn } from "@/shadcn/lib/cn";
+import { Button } from "@/shadcn/ui";
 import Link from "./Link";
 
 type LinkButtonBaseProps = {

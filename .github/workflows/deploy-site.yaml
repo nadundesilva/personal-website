@@ -10,8 +10,8 @@ permissions:
     packages: read
 
 jobs:
-    run-project-linter:
-        name: Run Project Linter
+    run-project-code-quality-checks:
+        name: Run Project Code Quality Checks
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -26,6 +26,8 @@ jobs:
               run: npm ci
             - name: Run Linter
               run: npm run lint
+            - name: Check Formatting
+              run: npm run format:check
 
     run-super-linter:
         name: Run GitHub Super Linter
@@ -355,7 +357,7 @@ jobs:
             contents: write
         needs:
             - run-super-linter
-            - run-project-linter
+            - run-project-code-quality-checks
             - run-vulnerability-analysis
             - run-e2e-tests
             - build-site

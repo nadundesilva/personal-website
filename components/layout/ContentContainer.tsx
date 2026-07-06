@@ -14,7 +14,7 @@
  */
 import type React from "react";
 
-import { cn } from "@/components/primitives/utils/cn";
+import { cn } from "@/shadcn/lib/cn";
 
 type ContentContainerProps = React.ComponentPropsWithoutRef<"div">;
 

@@ -15,15 +15,10 @@
 import { Building2 } from "lucide-react";
 import type React from "react";
 
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    ScrollReveal,
-} from "@/components/primitives";
-import { cn } from "@/components/primitives/utils/cn";
+import { ScrollReveal } from "@/components/primitives";
 import Experiences, { type Experience } from "@/constants/experience";
+import { cn } from "@/shadcn/lib/cn";
+import { Card, CardContent, CardDescription, CardHeader } from "@/shadcn/ui";
 import ExperienceSkills from "./components/ExperienceSkills";
 import SkillChip from "./components/SkillChip";
 

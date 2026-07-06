@@ -16,18 +16,13 @@ import Image from "next-image-export-optimizer";
 import type React from "react";
 
 import { Link } from "@/components/content";
-import {
-    Card,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-    StaggerReveal,
-} from "@/components/primitives";
+import { StaggerReveal } from "@/components/primitives";
 import {
     EnterpriseProjects,
     PersonalProjects,
     type Project,
 } from "@/constants/projects";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/shadcn/ui";
 import { generateSizesForColumnLayout } from "@/utils/common/image-sizes";
 import SubHeading from "../common/SubHeading";
 

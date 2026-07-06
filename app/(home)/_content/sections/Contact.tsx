@@ -16,15 +16,10 @@ import { Mail } from "lucide-react";
 import type React from "react";
 
 import { LinkButton, Paragraph } from "@/components/content";
-import {
-    Button,
-    Card,
-    CardContent,
-    CopyButton,
-    ScrollReveal,
-} from "@/components/primitives";
+import { CopyButton, ScrollReveal } from "@/components/primitives";
 import { CONTACT_EMAIL } from "@/constants/metadata";
 import Profiles from "@/constants/profiles";
+import { Button, Card, CardContent } from "@/shadcn/ui";
 
 const Contact = (): React.ReactElement => (
     <ScrollReveal>

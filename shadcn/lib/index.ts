@@ -12,22 +12,6 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
+import { cn } from "./cn";
 
-// shadcn/ui component
-
-import { Loader2Icon } from "lucide-react";
-
-import { cn } from "@/components/primitives/utils/cn";
-
-function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
-    return (
-        <Loader2Icon
-            role="status"
-            aria-label="Loading"
-            className={cn("size-4 motion-safe:animate-spin", className)}
-            {...props}
-        />
-    );
-}
-
-export { Spinner };
+export { cn };

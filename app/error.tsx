@@ -18,7 +18,7 @@ import * as Sentry from "@sentry/nextjs";
 import type React from "react";
 import { useEffect } from "react";
 
-import { Button } from "@/components/primitives";
+import { Button } from "@/shadcn/ui";
 
 interface ErrorProps {
     reset: () => void;

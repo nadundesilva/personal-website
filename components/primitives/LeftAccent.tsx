@@ -15,7 +15,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import type React from "react";
 
-import { cn } from "@/components/primitives/utils/cn";
+import { cn } from "@/shadcn/lib/cn";
 
 const leftAccentVariants = cva("border-l-primary/40 border-solid pl-4", {
     variants: {

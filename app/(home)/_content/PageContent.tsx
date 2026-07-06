@@ -15,7 +15,8 @@
 import type React from "react";
 
 import ContentContainer from "@/components/layout/ContentContainer";
-import { ScrollReveal, Separator } from "@/components/primitives";
+import { ScrollReveal } from "@/components/primitives";
+import { Separator } from "@/shadcn/ui";
 import Heading from "./common/Heading";
 import Achievements from "./sections/Achievements";
 import Certifications from "./sections/Certifications";

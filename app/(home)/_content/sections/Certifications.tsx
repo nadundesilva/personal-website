@@ -16,14 +16,9 @@ import Image from "next-image-export-optimizer";
 import type React from "react";
 
 import { Link } from "@/components/content";
-import {
-    Badge,
-    Card,
-    CardHeader,
-    CardTitle,
-    StaggerReveal,
-} from "@/components/primitives";
+import { StaggerReveal } from "@/components/primitives";
 import Certificates, { type Certificate } from "@/constants/certificates";
+import { Badge, Card, CardHeader, CardTitle } from "@/shadcn/ui";
 import { generateSizesForColumnLayout } from "@/utils/common/image-sizes";
 
 // Logo inside mx-5 p-2 (56px inset) or md:mx-7 p-2 (72px inset). flex-wrap gap-4 (16px).
