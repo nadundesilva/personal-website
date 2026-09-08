@@ -145,7 +145,9 @@ const isArticleUnderGroup = (
     articleSubPath === groupSubPath ||
     articleSubPath.startsWith(`${groupSubPath}/`);
 
-function groupArticles(
+// Exported for blog-articles.test.ts - its group-not-found error paths can only
+// be reached with hand-built article fixtures, not through getBlogArticleGroups.
+export function groupArticles(
     articles: BlogArticle[],
     currentGroupMetadata: BlogArticleGroupMetadata | null,
     articleGroupMetadatas: BlogArticleGroupMetadata[],

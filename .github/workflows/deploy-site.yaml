@@ -225,6 +225,39 @@ jobs:
                   name: component-tests-coverage-${{ matrix.browser }}
                   path: coverage/
 
+    run-unit-tests:
+        name: Run Unit Tests
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              with:
+                  fetch-depth: 0
+                  persist-credentials: false
+            - name: Setup Node.js
+              uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+              with:
+                  node-version: "24.13.1"
+            - name: Install Dependencies
+              run: npm ci
+            - name: Run Unit Tests
+              run: npm run test:unit:coverage
+            - name: Upload Code Coverage to CodeCov
+              if: ${{ github.event_name == 'push' }}
+              uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
+              with:
+                  name: coverage-reports
+                  flags: unit-tests
+                  fail_ci_if_error: true
+                  verbose: true
+              env:
+                  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+            - name: Upload Code Coverage Report Artifacts
+              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+              with:
+                  name: unit-tests-coverage
+                  path: coverage/
+
     build-site:
         name: Build Site
         runs-on: ubuntu-latest
@@ -254,11 +287,6 @@ jobs:
               with:
                   name: site
                   path: out/
-            - name: Upload Unit Tests Code Coverage Report
-              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-              with:
-                  name: unit-tests-coverage
-                  path: coverage/
 
     check-links:
         name: Check Links in Website
@@ -421,6 +449,7 @@ jobs:
             - run-vulnerability-analysis
             - run-e2e-tests
             - run-component-tests
+            - run-unit-tests
             - build-site
             - check-links
             - run-website-audit

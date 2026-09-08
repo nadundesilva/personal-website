@@ -41,6 +41,7 @@ import {
 import { domAnimation, LazyMotion, MotionConfig } from "motion/react";
 
 import profilePhotoImage from "@/assets/profile-photo.webp";
+import { createCspValues } from "@/utils/common/csp";
 import { getImageType } from "@/utils/common/image-metadata";
 import { ThemeProvider } from "next-themes";
 
@@ -159,39 +160,6 @@ const jsonLd: WithContext<WebSite> = {
     "author": { "@id": SCHEMA_PERSON_ID } as IdReference,
     "creator": { "@id": SCHEMA_PERSON_ID } as IdReference,
     "copyrightHolder": { "@id": SCHEMA_PERSON_ID } as IdReference,
-};
-
-const createCspValues = (): string[] => {
-    const cspValues = {
-        "default-src": ["'none'"],
-        "manifest-src": ["'self'"],
-        "img-src": ["'self'", "data:"],
-        "style-src": ["'unsafe-inline'"],
-        "style-src-elem": ["'self'", "'unsafe-inline'"],
-        "font-src": ["'self'"],
-        "script-src": [
-            "'self'",
-            "'unsafe-inline'",
-            "https://static.cloudflareinsights.com",
-        ],
-        "worker-src": ["'self'", "blob:"],
-        "child-src": ["'self'", "blob:"],
-        "connect-src": [
-            "'self'",
-            "https://o4507214991917056.ingest.us.sentry.io",
-        ],
-    };
-    if (
-        process.env.NODE_ENV === "development" ||
-        process.env.BUILD_TYPE === "test"
-    ) {
-        cspValues["script-src"].push("'unsafe-eval'");
-    }
-    const csps: string[] = [];
-    for (const [cspKey, cspValue] of Object.entries(cspValues)) {
-        csps.push(`${cspKey} ${cspValue.join(" ")}`);
-    }
-    return csps;
 };
 
 function buildBlogArticleRoutes(

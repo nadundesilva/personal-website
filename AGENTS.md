@@ -81,23 +81,24 @@ Accessibility is a hard requirement, not optional:
 
 ## 3. Tech Stack
 
-| Layer          | Technology                                                                                                                                                                                                                                                                                                  |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Framework      | Next.js (App Router, `output: "export"`)                                                                                                                                                                                                                                                                    |
-| Language       | TypeScript (strict, ES2022)                                                                                                                                                                                                                                                                                 |
-| UI             | Tailwind CSS v4 + shadcn/ui + `@base-ui/react`                                                                                                                                                                                                                                                              |
-| Icons          | lucide-react (general UI icons) + `@icons-pack/react-simple-icons` (brand/social icons)                                                                                                                                                                                                                     |
-| Dark Mode      | next-themes (`class` strategy)                                                                                                                                                                                                                                                                              |
-| Animation      | motion (v12) + tw-animate-css                                                                                                                                                                                                                                                                               |
-| Blog           | MDX + rehype-pretty-code (Dracula / GitHub Light themes)                                                                                                                                                                                                                                                    |
-| Images         | next-image-export-optimizer (custom loader)                                                                                                                                                                                                                                                                 |
-| PWA            | next-pwa                                                                                                                                                                                                                                                                                                    |
-| Error Tracking | Sentry (`@sentry/nextjs`)                                                                                                                                                                                                                                                                                   |
-| E2E Testing    | Cypress + @testing-library/cypress                                                                                                                                                                                                                                                                          |
-| Code Coverage  | NYC/Istanbul via @cypress/code-coverage                                                                                                                                                                                                                                                                     |
-| Linting        | ESLint (`next/core-web-vitals` + `next/typescript` + `eslint-config-prettier`) + Stylelint (`stylelint-config-standard` + `stylelint-config-tailwindcss`)                                                                                                                                                   |
-| Formatting     | Prettier (`semi`, `trailingComma: all`, `tabWidth: 4`, `printWidth: 80`, `quoteProps: consistent`) + `prettier-plugin-organize-imports` (auto-sorts imports) + `prettier-plugin-tailwindcss` (auto-sorts Tailwind classes in `className`, `cn()`, and `clsx()` calls — `tailwindFunctions: ["cn", "clsx"]`) |
-| Git Hooks      | Husky + lint-staged                                                                                                                                                                                                                                                                                         |
+| Layer                   | Technology                                                                                                                                                                                                                                                                                                  |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Framework               | Next.js (App Router, `output: "export"`)                                                                                                                                                                                                                                                                    |
+| Language                | TypeScript (strict, ES2022)                                                                                                                                                                                                                                                                                 |
+| UI                      | Tailwind CSS v4 + shadcn/ui + `@base-ui/react`                                                                                                                                                                                                                                                              |
+| Icons                   | lucide-react (general UI icons) + `@icons-pack/react-simple-icons` (brand/social icons)                                                                                                                                                                                                                     |
+| Dark Mode               | next-themes (`class` strategy)                                                                                                                                                                                                                                                                              |
+| Animation               | motion (v12) + tw-animate-css                                                                                                                                                                                                                                                                               |
+| Blog                    | MDX + rehype-pretty-code (Dracula / GitHub Light themes)                                                                                                                                                                                                                                                    |
+| Images                  | next-image-export-optimizer (custom loader)                                                                                                                                                                                                                                                                 |
+| PWA                     | next-pwa                                                                                                                                                                                                                                                                                                    |
+| Error Tracking          | Sentry (`@sentry/nextjs`)                                                                                                                                                                                                                                                                                   |
+| E2E / Component Testing | Cypress + @testing-library/cypress                                                                                                                                                                                                                                                                          |
+| Unit Testing            | Jest via `next/jest` (`testEnvironment: "node"`) — for pure logic with no DOM                                                                                                                                                                                                                               |
+| Code Coverage           | NYC/Istanbul via @cypress/code-coverage (Cypress suites); Jest built-in `--coverage` (unit suite)                                                                                                                                                                                                           |
+| Linting                 | ESLint (`next/core-web-vitals` + `next/typescript` + `eslint-config-prettier`) + Stylelint (`stylelint-config-standard` + `stylelint-config-tailwindcss`)                                                                                                                                                   |
+| Formatting              | Prettier (`semi`, `trailingComma: all`, `tabWidth: 4`, `printWidth: 80`, `quoteProps: consistent`) + `prettier-plugin-organize-imports` (auto-sorts imports) + `prettier-plugin-tailwindcss` (auto-sorts Tailwind classes in `className`, `cn()`, and `clsx()` calls — `tailwindFunctions: ["cn", "clsx"]`) |
+| Git Hooks               | Husky + lint-staged                                                                                                                                                                                                                                                                                         |
 
 Full dependency list: [`package.json`](./package.json)
 Full Next.js config: [`next.config.mjs`](./next.config.mjs)
@@ -232,6 +233,10 @@ npm run lint:css             # Stylelint only
 # Formatting
 npm run format:check         # Dry-run Prettier check
 npm run format               # Apply Prettier formatting
+
+# Unit tests (Jest, no server, no DOM — pure logic)
+npm run test:unit            # Headless Jest run
+npm run test:unit:coverage   # + coverage report
 
 # E2E tests (requires running server)
 npm run cypress:e2e:open     # Interactive Cypress UI
@@ -699,6 +704,16 @@ This keeps the animation timing values co-located with their keyframes, the CSS 
 
 ### Testing Philosophy
 
+**Unit tests** (`*.test.ts`, colocated next to the source file) — pure logic with no DOM:
+
+- Functions over the `constants/*` and `utils/*` data (dates, route resolution, `sizes` string builders, metadata builders, skill-usage indexing)
+- Build-time helpers (`build/utils/*` rehype plugins)
+- Node-only modules that neither Cypress runner can load (`utils/server/*` — `fs`/`glob`)
+- A pure helper reached only through an async wrapper may be `export`ed solely for its `*.test.ts` (e.g. `groupArticles` in `utils/server/blog-articles.ts`, whose error paths need hand-built fixtures) — mark such an export with a comment saying so, so it is not mistaken for dead code
+- Run with `npm run test:unit` — Jest via `next/jest`, `testEnvironment: "node"`, no server, no browser
+- Import test globals explicitly: `import { describe, expect, it } from "@jest/globals";` — the root `tsconfig.json` puts Cypress's Chai `expect` in global scope, so a Jest global `expect` would clash. Assertions are Jest matchers (`toBe`, `toEqual`, `toMatchObject`, `toThrow`), not Chai (`.to.eq`, …).
+- `next/jest` reuses the project's SWC transform, tsconfig `paths`, and asset mocks, so these specs import the same `@/constants/*` chain (raw `.png` imports, `export enum`) the app does. ESM-only npm packages must be listed in `next.config.mjs` `transpilePackages` to be loadable (e.g. `hast-util-to-string`).
+
 **Component tests** (`cypress/component/`) — component-specific behaviors in isolation:
 
 - Props variants and render paths
@@ -714,9 +729,13 @@ This keeps the animation timing values co-located with their keyframes, the CSS 
 - Theme persistence across reload
 - Server-generated or statically-exported content correctness
 
-**Rule of thumb:** If the test needs a URL/page load → E2E. If it only needs `cy.mount()` → component test.
+**Choose the cheapest level that can verify the behavior — unit > component > E2E.** A behavior moves up a level only when the level below genuinely cannot reach it:
 
-**Prefer component tests** for behaviors that can be verified with `cy.mount()` alone — e.g. `ReadingProgress` scroll math is covered in `cypress/component/components/blog-articles/ReadingProgress.cy.tsx` rather than an E2E step.
+- **Unit** — the default. Use it unless the assertion needs a DOM or rendered output.
+- **Component** — only when the behavior needs a mounted component (`cy.mount()`), but not a real URL, page load, or cross-page flow.
+- **E2E** — only for routing, cross-page flows, theme persistence across reload, and server-generated / statically-exported output correctness (SEO metadata, JSON-LD, sitemap, RSS).
+
+If a test _can_ be a unit test it _must_ be one — don't mount a component to exercise a pure helper. Likewise don't reach for E2E when `cy.mount()` suffices: `ReadingProgress` scroll math is a component test (`cypress/component/components/blog-articles/ReadingProgress.cy.tsx`), not an E2E step; the `sizes` string builders are unit tests, not component tests over a rendered image.
 
 **Don't test behavior the app doesn't use.** Only cover props/variants/paths actually exercised somewhere in `app/` or `components/`. Before adding a test for a prop or variant, grep for a real caller passing it — if none exists, skip the test rather than adding one "for completeness." This applies especially to shadcn-derived primitives (`components/primitives/`): they ship with a much larger surface (variants, directions, sizes) than this site ever uses, and testing the unused parts just adds maintenance cost for behavior nobody depends on. Example: `Drawer`'s `swipeDirection` prop supports `down | up | left | right`, but [`Layout.tsx`](./components/layout/Layout.tsx) only ever renders `swipeDirection="up"` — so `down` (the component's own default), `left` and `right` aren't tested.
 
@@ -833,6 +852,27 @@ Component tests mount individual components in isolation using the Cypress webpa
 ```bash
 npm run cypress:component:run   # Headless component test run
 npm run cypress:component:open  # Interactive component test UI
+```
+
+### Unit Tests with Jest
+
+Pure-logic specs run under Jest (`next/jest` preset, `testEnvironment: "node"`) — no
+browser, no `cy.mount()`, no running server.
+
+- Test files: colocated as `<source>.test.ts` next to the module they cover (e.g.
+  `constants/date.ts` → `constants/date.test.ts`). `nyc.config.mjs`'s include glob
+  already excludes `*.test.*`, and the root `tsconfig.json` type-checks them.
+- Config: [`jest.config.mjs`](./jest.config.mjs) (`.mjs` because `package.json` is
+  `"type": "module"`). `collectCoverageFrom` covers `constants/`, `utils/`, `build/`.
+- Import globals explicitly from `@jest/globals` (see Testing Philosophy above for why).
+- `cy.clock()` has no place here — freeze time with
+  `jest.useFakeTimers()` + `jest.setSystemTime(date)`.
+- CI: the `run-unit-tests` job in [`deploy-site.yaml`](./.github/workflows/deploy-site.yaml)
+  runs `npm run test:unit:coverage` and uploads to the codecov `unit-tests` flag.
+
+```bash
+npm run test:unit             # Headless Jest run
+npm run test:unit:coverage    # + coverage report
 ```
 
 ### Console errors fail tests (both suites)
