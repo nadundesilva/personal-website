@@ -21,6 +21,7 @@ import cleaningImage from "@/assets/blog-articles/miscellaneous/cleaning.webp";
 import fenceImage from "@/assets/blog-articles/miscellaneous/fence.webp";
 import magnifyingGlassImage from "@/assets/blog-articles/miscellaneous/magnifying-glass.webp";
 import winnerImage from "@/assets/blog-articles/miscellaneous/winner.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: podSecurityImage,
@@ -40,15 +41,7 @@ export const metadata = {
     title: "Kubernetes the Right Way: Pod Security",
     description:
         "When you deploy a containerized application that you developed, in a Kubernetes Cluster, there are some security-related aspects that you should implement. This article goes over some of the most important aspects of them all.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

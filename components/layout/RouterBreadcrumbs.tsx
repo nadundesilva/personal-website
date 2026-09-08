@@ -97,6 +97,7 @@ const RouterBreadcrumbs = ({
     return (
         <>
             <script
+                id="json-ld-breadcrumb"
                 key={pathname}
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{

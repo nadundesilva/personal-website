@@ -26,6 +26,7 @@ import cellerySetupCreateExistingOutputImage from "@/assets/blog-articles/celler
 import celleryRunCellOutputImage from "@/assets/blog-articles/cellery/cellery-run-cell-output.webp";
 import celleryListInstancesOutputImage from "@/assets/blog-articles/cellery/cellery-list-instances-output.webp";
 import cellFrontendImage from "@/assets/blog-articles/cellery/cell-frontend.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: celleryOnMicroK8sImage,
@@ -39,15 +40,7 @@ export const metadata = {
     title: "Cellery on MicroK8s",
     description:
         "A guide for deploying Cellery using MicroK8s for Development purposes.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

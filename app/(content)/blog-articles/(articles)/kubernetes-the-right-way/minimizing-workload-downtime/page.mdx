@@ -21,6 +21,7 @@ import softwareEngineer4Image from "@/assets/blog-articles/engineering/software-
 import discussion2Image from "@/assets/blog-articles/engineering/discussion-2.webp";
 import meeting2Image from "@/assets/blog-articles/engineering/meeting-2.webp";
 import achievedImage from "@/assets/blog-articles/miscellaneous/achieved.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: zeroDowntimeImage,
@@ -40,15 +41,7 @@ export const metadata = {
     title: "Kubernetes the Right Way: Minimizing Workload Downtime",
     description:
         "Achieving nearly zero downtime in your Kubernetes Applications requires careful design and proper Site Reliability Engineering.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

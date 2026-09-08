@@ -20,6 +20,7 @@ import celleryToTheRescueImage from "@/assets/blog-articles/cellery/cellery-to-t
 import celleryViewCellImage from "@/assets/blog-articles/cellery/cellery-view-cell.webp";
 import traditionalMicroservicesToCelleryCellsImage from "@/assets/blog-articles/cellery/traditional-microservices-to-cellery-cells.webp";
 import celleryHubFrontendImage from "@/assets/blog-articles/cellery/cellery-hub-frontend.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: celleryImage,
@@ -33,15 +34,7 @@ export const metadata = {
     title: "Reusing your micro-services using Cellery",
     description:
         "Dive into why Cells are the best way to reuse your micro-services.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

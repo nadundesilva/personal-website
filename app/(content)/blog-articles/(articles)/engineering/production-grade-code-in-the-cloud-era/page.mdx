@@ -21,6 +21,7 @@ import hacker2Image from "@/assets/blog-articles/security/hacker-2.webp";
 import problem2Image from "@/assets/blog-articles/engineering/problem-2.webp";
 import metricsImage from "@/assets/blog-articles/observability/metrics.webp";
 import sourceCode1Image from "@/assets/blog-articles/programming/source-code-1.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: programming04Image,
@@ -40,15 +41,7 @@ export const metadata = {
     title: "Production Grade Code in the Cloud Era",
     description:
         "A guide outlining the best practices for running production-grade code in the cloud.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

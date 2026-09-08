@@ -52,7 +52,14 @@ const buildMainSitemapEntries = (
                 path: routePath,
                 filePath: resolveRouteFilePath(routePath),
             });
-            if (route.subRoutes !== undefined) {
+
+            // Blog categories and articles are covered by
+            // buildBlogArticleSitemapEntries's filesystem glob, which is the
+            // authoritative source for everything under /blog-articles.
+            if (
+                route.subRoutes !== undefined &&
+                routePath !== "/blog-articles"
+            ) {
                 entries = entries.concat(
                     buildMainSitemapEntries(route.subRoutes),
                 );

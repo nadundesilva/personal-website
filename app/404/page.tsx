@@ -19,6 +19,12 @@ import NotFound from "./NotFound";
 
 export const metadata: Metadata = {
     title: "Page Not Found",
+    // See app/not-found.tsx for why this page must not inherit the root
+    // layout's index/follow robots directive.
+    robots: {
+        index: false,
+        follow: false,
+    },
 };
 
 const NotFoundPage = (): React.ReactElement => <NotFound />;

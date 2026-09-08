@@ -13,6 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import runCoverageTask from "@cypress/code-coverage/task";
+import webpackPreprocessor from "@cypress/webpack-batteries-included-preprocessor";
 import { defineConfig } from "cypress";
 import { glob } from "glob";
 import {
@@ -36,6 +37,24 @@ export default defineConfig({
             config: Cypress.PluginConfigOptions,
         ) {
             runCoverageTask(on, config);
+
+            // Extends Cypress's own default e2e bundler with an asset rule,
+            // needed for constants/logos.ts's raw .png/.svg imports to parse.
+            // getFullWebpackOptions() builds a fresh options object each
+            // call - unlike `.defaultOptions`, a shared singleton this
+            // package's own TypeScript wiring also mutates.
+            const webpackOptions = webpackPreprocessor.getFullWebpackOptions();
+            webpackOptions.module.rules.push({
+                test: /\.(png|svg|jpe?g|webp|gif|avif)$/i,
+                type: "asset/inline",
+            });
+            // typescript: true calls getResolvedTypescriptVersion, which
+            // only exists in @cypress/webpack-preprocessor >=7.1.0 - see the
+            // "overrides" pin in package.json for why that's forced.
+            on(
+                "file:preprocessor",
+                webpackPreprocessor({ webpackOptions, typescript: true }),
+            );
 
             on("task", {
                 discoverBlogArticles(subPath: string): string[] {

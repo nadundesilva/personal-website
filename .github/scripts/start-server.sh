@@ -98,7 +98,14 @@ generate_caddyfile() {
         done <"${headers_file}"
     fi
 
-    echo "}" >>"${CADDYFILE}"
+    {
+        echo "    handle_errors {"
+        echo "        @404 expression {err.status_code} == 404"
+        echo "        rewrite @404 /404.html"
+        echo "        file_server"
+        echo "    }"
+        echo "}"
+    } >>"${CADDYFILE}"
 }
 
 start_server() {

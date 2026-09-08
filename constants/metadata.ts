@@ -22,8 +22,10 @@ export const MAIN_DESCRIPTION = `${FULL_NAME} is a ${CurrentExperience.name} and
 
 export const BLOG_CATEGORY = "Computer Science and Software Engineering";
 
+export const WEBSITE_DOMAIN = "nadundesilva.com";
+
 const unsanitizedWebsiteUrl =
-    process.env.NEXT_PUBLIC_WEBSITE_URL ?? "https://nadundesilva.com";
+    process.env.NEXT_PUBLIC_WEBSITE_URL ?? `https://${WEBSITE_DOMAIN}`;
 export const WEBSITE_PUBLIC_URL = unsanitizedWebsiteUrl.endsWith("/")
     ? unsanitizedWebsiteUrl.substring(0, unsanitizedWebsiteUrl.length - 1)
     : unsanitizedWebsiteUrl;

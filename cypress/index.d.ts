@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+/// <reference types="next/image-types/global" />
 
 /*
  * Nadun De Silva - All Rights Reserved
@@ -19,12 +20,25 @@ import "@testing-library/cypress/types";
 declare global {
     namespace Cypress {
         interface Chainable {
-            loadPage(url: string): void;
+            loadPage(url: string, options?: Partial<VisitOptions>): void;
+
+            /**
+             * Whitelist console.error messages matching `pattern` for the current
+             * test only, so the console-error guard does not fail it.
+             */
+            allowConsoleError(pattern: RegExp | string): void;
 
             clickNavLink(name: string): Chainable<JQuery<Element>>;
             clickBreadcrumbByName(name: string): Chainable<JQuery<Element>>;
             clickBreadcrumbByHref(href: string): Chainable<JQuery<Element>>;
             clickLinkByHref(href: string): Chainable<JQuery<Element>>;
+
+            /**
+             * Asserts every currently-visible `<img>` on the page has finished
+             * loading (see cypress/support/commands.ts for the scrollIntoView /
+             * timeout reasoning).
+             */
+            assertVisibleImagesLoaded(): void;
 
             task<T = unknown>(
                 event: "discoverBlogArticles",

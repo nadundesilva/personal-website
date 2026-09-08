@@ -53,8 +53,40 @@ const Layout = ({
     const prefersReducedMotion = useReducedMotion();
 
     // On route change, reset scroll to top instantly before any animation starts.
+    // When the URL carries a hash instead (e.g. "/#skills", or a future
+    // "/blog-articles/java#comments"), scroll to that element explicitly. This
+    // duplicates work Next.js's App Router already does internally on a hash
+    // load, but that internal handler's own useLayoutEffect has no dependency
+    // array and can re-run later — observed to coincide with background <Link>
+    // prefetches resolving - resetting scroll to the top after it was already
+    // correct. Re-asserting our own scroll for a bounded window after mount
+    // outlasts that rather than trying to time it exactly (verified: a single
+    // scroll call still loses this race ~25% of the time; re-asserting across
+    // ~1s of animation frames did not fail in 10/10 isolated runs).
     useEffect(() => {
-        window.scrollTo({ top: 0, behavior: "instant" });
+        if (!window.location.hash) {
+            window.scrollTo({ top: 0, behavior: "instant" });
+            return;
+        }
+
+        const targetId = window.location.hash.slice(1);
+        const scrollToTarget = (): void => {
+            document
+                .getElementById(targetId)
+                ?.scrollIntoView({ behavior: "instant", block: "start" });
+        };
+        scrollToTarget();
+
+        const deadline = Date.now() + 1000;
+        let frame: number;
+        const reassert = (): void => {
+            scrollToTarget();
+            if (Date.now() < deadline) {
+                frame = requestAnimationFrame(reassert);
+            }
+        };
+        frame = requestAnimationFrame(reassert);
+        return () => cancelAnimationFrame(frame);
     }, [pathname]);
 
     useEffect(() => {
@@ -91,12 +123,10 @@ const Layout = ({
             behavior: prefersReducedMotion ? "instant" : "smooth",
             block: "start",
         });
-        document.getElementById("main-content")?.focus();
+        // preventScroll: focus() scrolls its target into view by default,
+        // which cancels the smooth scrollIntoView animation started above.
+        document.getElementById("main-content")?.focus({ preventScroll: true });
     };
-
-    // On the home page before any scroll, large screens get a transparent gradient
-    // scrim so nav text stays readable over the hero. Mobile always uses frosted glass.
-    const isAtTopOfHomePage = pathname === "/" && !scrolled;
 
     return (
         <Drawer
@@ -117,17 +147,9 @@ const Layout = ({
             <header
                 data-testid="app-bar"
                 className={cn(
-                    "fixed inset-x-0 top-0 z-40",
-                    "motion-safe:transition-[background-color,backdrop-filter,box-shadow,border-color] motion-safe:duration-200",
-                    isAtTopOfHomePage
-                        ? [
-                              "border-transparent bg-transparent shadow-none backdrop-blur-none",
-                              "lg:bg-linear-to-b lg:from-black/85 lg:to-transparent",
-                          ]
-                        : [
-                              "border-b border-white/8 bg-primary/75 backdrop-blur-lg",
-                              scrolled && "shadow-sm",
-                          ],
+                    "fixed inset-x-0 top-0 z-40 bg-primary/75 backdrop-blur-lg",
+                    "motion-safe:transition-[background-color,backdrop-filter,box-shadow] motion-safe:duration-200",
+                    scrolled && "shadow-sm",
                 )}
             >
                 <div className="flex h-14 items-center px-4 sm:h-16 sm:px-6 md:px-8 lg:px-20 xl:px-40 2xl:px-80">
@@ -229,7 +251,27 @@ const Layout = ({
             {/* Mobile drawer */}
             <DrawerContent
                 className={cn(
-                    "top-14 sm:top-16 z-30 lg:hidden",
+                    // Match Base UI's `data-[swipe-direction=up]:top-0` variant
+                    // so this override wins on specificity; otherwise the open
+                    // drawer sits at top-0 and covers the app bar (its own close
+                    // button and the site-name link).
+                    "data-[swipe-direction=up]:top-14 sm:data-[swipe-direction=up]:top-16 z-30 lg:hidden",
+
+                    // Base UI paints a 48px "bleed" (::after, popover color) just
+                    // above the popup for overscroll; with the drawer offset below
+                    // the header it would show as a light bar, so hide it.
+                    "[--drawer-bleed-background:transparent]",
+
+                    // Base UI's default open/close animation translates the whole
+                    // panel in from off-screen above (from its own full height up),
+                    // so it visually flies down from the top of the page. Disable
+                    // that translate and reveal via clip-path instead, so it looks
+                    // like it unfurls from the app bar's bottom edge and settles in
+                    // the same place, instead of sliding in from above the app bar.
+                    "data-[swipe-direction=up]:[--closed-transform:none]",
+                    "transition-[transform,height,opacity,filter,clip-path] [clip-path:inset(0_0_0%_0)]",
+                    "data-starting-style:[clip-path:inset(0_0_100%_0)] data-ending-style:[clip-path:inset(0_0_100%_0)]",
+
                     "rounded-none border-none bg-primary/95 backdrop-blur-md shadow-none",
                     "flex flex-col gap-1 px-4 py-5 sm:px-6 md:px-8",
                 )}

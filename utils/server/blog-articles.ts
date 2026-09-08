@@ -13,11 +13,8 @@
  * © 2025 Nadun De Silva. All rights reserved.
  */
 
-import { readFile } from "fs/promises";
-
 import { glob } from "glob";
 import { type StaticImageData } from "next/image";
-import readingTime from "reading-time";
 
 export interface BlogArticle {
     title: string;
@@ -54,11 +51,13 @@ async function getBlogArticles(subPath: string): Promise<BlogArticle[]> {
     const articles = await Promise.all(
         (await glob(blogArticlesFilePathPattern)).map(async (filePath) => {
             const websiteSubPath = resolveWebsiteBlogArticlesSubPath(filePath);
-            const { metadata, blogMetadata } = await import(
+            // readingTimeMinutes is injected by build/utils/rehype-reading-time.mjs
+            // during MDX compilation, from the compiled article content - reused
+            // here rather than recomputed so the listing card and the article's own
+            // reading-progress widget always agree.
+            const { metadata, blogMetadata, readingTimeMinutes } = await import(
                 `../../app/(content)/blog-articles/(articles)/${websiteSubPath}/${BLOG_ARTICLE_FILE}`
             );
-            const { minutes } = readingTime(await readFile(filePath, "utf-8"));
-            const readingTimeMinutes = Math.max(1, Math.ceil(minutes));
 
             return {
                 title: metadata.title as string,
@@ -67,7 +66,7 @@ async function getBlogArticles(subPath: string): Promise<BlogArticle[]> {
                 image: blogMetadata.image as StaticImageData,
                 publishedDate: blogMetadata.publishedDate as Date,
                 websiteSubPath,
-                readingTimeMinutes,
+                readingTimeMinutes: readingTimeMinutes as number,
             };
         }),
     );
@@ -125,6 +124,15 @@ async function getSubGroupMetadatas(
     );
 }
 
+// A bare `startsWith` would let an article under "javascript/" be absorbed by
+// a "java" group - require the prefix to end at a path segment boundary.
+const isArticleUnderGroup = (
+    articleSubPath: string,
+    groupSubPath: string,
+): boolean =>
+    articleSubPath === groupSubPath ||
+    articleSubPath.startsWith(`${groupSubPath}/`);
+
 function groupArticles(
     articles: BlogArticle[],
     currentGroupMetadata: BlogArticleGroupMetadata | null,
@@ -139,7 +147,8 @@ function groupArticles(
         // Check if article belongs to any group
         if (
             currentGroupMetadata &&
-            article.websiteSubPath.startsWith(
+            isArticleUnderGroup(
+                article.websiteSubPath,
                 currentGroupMetadata.websiteSubPath,
             )
         ) {
@@ -155,7 +164,8 @@ function groupArticles(
         } else {
             for (const groupMetadata of articleGroupMetadatas) {
                 if (
-                    article.websiteSubPath.startsWith(
+                    isArticleUnderGroup(
+                        article.websiteSubPath,
                         groupMetadata.websiteSubPath,
                     )
                 ) {

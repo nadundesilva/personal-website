@@ -19,6 +19,15 @@ import NotFound from "./404/NotFound";
 
 export const metadata: Metadata = {
     title: "Page Not Found",
+    // Without this override, the root layout's index/follow directive
+    // (app/layout.tsx) would apply here too, contradicting the noindex
+    // Next.js itself injects while statically rendering the reserved /404
+    // route (see out/404.html; the mechanism is in
+    // http-access-fallback/error-boundary.js, not this file).
+    robots: {
+        index: false,
+        follow: false,
+    },
 };
 
 const NotFoundPage = (): React.ReactElement => <NotFound />;
