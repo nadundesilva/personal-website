@@ -23,6 +23,12 @@ interface HeadingProps {
 }
 
 const Heading = (props: HeadingProps): React.ReactElement => {
+    if (props.number !== undefined && props.number > 99) {
+        throw new Error(
+            `Heading number must be at most 2 digits, but got ${props.number}`,
+        );
+    }
+
     return (
         <div className="relative mb-6 flex flex-col items-center md:mb-8">
             {props.number !== undefined && (

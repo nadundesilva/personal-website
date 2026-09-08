@@ -12,15 +12,15 @@
  *
  * © 2023 Nadun De Silva. All rights reserved.
  */
-import { globSync } from "glob";
 import type { MetadataRoute } from "next";
 
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 import { CvPdfPath, WebsiteHome, type Route } from "@/constants/routes";
 import {
-    BLOG_ARTICLE_FILE,
     BLOG_ARTICLES_DIRECTORY_PREFIX,
     BLOG_ARTICLES_GROUP_FILE,
+    discoverBlogArticleFilePaths,
+    discoverBlogArticleGroupFilePaths,
     resolveWebsiteBlogArticlesSubPath,
 } from "@/utils/server/blog-articles";
 import { getLastModifiedDate } from "@/utils/server/git";
@@ -70,16 +70,14 @@ const buildMainSitemapEntries = (
 };
 
 const buildBlogArticleSitemapEntries = (): SitemapEntry[] => {
-    const blogArticleSubGroups = globSync(
-        `${BLOG_ARTICLES_DIRECTORY_PREFIX}/*/**/${BLOG_ARTICLES_GROUP_FILE}`,
-    ).map((filePath) => ({
-        path: `/blog-articles/${resolveWebsiteBlogArticlesSubPath(filePath)}`,
-        filePath,
-    }));
+    const blogArticleSubGroups = discoverBlogArticleGroupFilePaths().map(
+        (filePath) => ({
+            path: `/blog-articles/${resolveWebsiteBlogArticlesSubPath(filePath)}`,
+            filePath,
+        }),
+    );
 
-    const blogArticles = globSync(
-        `${BLOG_ARTICLES_DIRECTORY_PREFIX}/**/${BLOG_ARTICLE_FILE}`,
-    ).map((filePath) => ({
+    const blogArticles = discoverBlogArticleFilePaths().map((filePath) => ({
         path: `/blog-articles/${resolveWebsiteBlogArticlesSubPath(filePath)}`,
         filePath,
     }));

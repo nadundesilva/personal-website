@@ -82,24 +82,35 @@ const SkillChipProficiencyIndicator = ({
     const heights = BAR_HEIGHTS[resolvedSize];
 
     return (
-        <div aria-hidden={true} className={indicatorVariants({ size })}>
-            {([1, 2, 3] as const).map((i) => (
-                <div
-                    key={i}
-                    className={cn(
-                        heights[i - 1],
-                        barVariants({ size }),
-                        i <= bars ? barsClassName : "bg-foreground/15",
-                        animate &&
-                            "motion-safe:origin-bottom motion-safe:animate-(--animate-home-skill-bar-rise)",
-                    )}
-                    style={
-                        animate
-                            ? { animationDelay: `${((i - 1) * 100) / 1000}s` }
-                            : undefined
-                    }
-                />
-            ))}
+        <div
+            data-testid="skill-proficiency-indicator"
+            aria-hidden={true}
+            className={indicatorVariants({ size })}
+        >
+            {([1, 2, 3] as const).map((i) => {
+                const isFilled = i <= bars;
+                return (
+                    <div
+                        key={i}
+                        data-testid="skill-proficiency-bar"
+                        data-test-filled={isFilled}
+                        className={cn(
+                            heights[i - 1],
+                            barVariants({ size }),
+                            isFilled ? barsClassName : "bg-foreground/15",
+                            animate &&
+                                "motion-safe:origin-bottom motion-safe:animate-(--animate-home-skill-bar-rise)",
+                        )}
+                        style={
+                            animate
+                                ? {
+                                      animationDelay: `${((i - 1) * 100) / 1000}s`,
+                                  }
+                                : undefined
+                        }
+                    />
+                );
+            })}
         </div>
     );
 };

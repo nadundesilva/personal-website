@@ -2,15 +2,29 @@
     "compilerOptions": {
         "target": "ES2022",
         "lib": ["ES2022", "dom"],
-        "types": ["cypress", "node", "@testing-library/cypress"],
+        "types": [
+            "cypress",
+            "node",
+            "@testing-library/cypress",
+            "cypress-real-events"
+        ],
         "paths": {
+            "@/app/*": ["../app/*"],
             "@/components/*": ["../components/*"],
             "@/constants/*": ["../constants/*"],
+            "@/hooks/*": ["../hooks/*"],
             "@/shadcn/*": ["../shadcn/*"],
             "@/utils/*": ["../utils/*"],
             "@/assets/*": ["../assets/*"],
             "@/cypress/*": ["./*"]
-        }
+        },
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "jsx": "react-jsx",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "skipLibCheck": true,
+        "allowJs": true
     },
     "include": ["index.d.ts", "**/*.ts", "**/*.tsx"]
 }

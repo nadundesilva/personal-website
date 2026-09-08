@@ -66,6 +66,7 @@ const ProgressFab = ({
                     className="stroke-primary-foreground/25"
                 />
                 <circle
+                    data-testid="progress-ring"
                     cx={ringCentre}
                     cy={ringCentre}
                     r={ringRadius}

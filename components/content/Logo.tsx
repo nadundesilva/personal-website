@@ -43,6 +43,7 @@ const Logo = ({
         )}
     >
         <Image
+            data-testid="logo-light"
             alt={alt}
             src={srcLight}
             fill
@@ -50,7 +51,9 @@ const Logo = ({
             className="object-scale-down object-left sm:object-right dark:hidden"
         />
         <Image
-            alt={alt}
+            data-testid="logo-dark"
+            alt=""
+            aria-hidden={true}
             src={srcDark}
             fill
             sizes={IMAGE_SIZES}

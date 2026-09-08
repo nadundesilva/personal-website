@@ -34,9 +34,10 @@ import {
 import { ChevronUp, Menu, Moon, Sun, X } from "lucide-react";
 import { useReducedMotion } from "motion/react";
 import { useTheme } from "next-themes";
-import { usePathname } from "next/navigation";
 import type React from "react";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+
+import { useRoutePathname } from "@/hooks/useRoutePathname";
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -47,9 +48,10 @@ const Layout = ({
     children,
     topLevelRoutes,
 }: LayoutProps): React.ReactElement => {
-    const pathname = usePathname();
+    const pathname = useRoutePathname();
     const [scrolled, setScrolled] = useState(false);
     const scrollToTopRef = useRef<HTMLDivElement>(null);
+    const drawerTriggerRef = useRef<HTMLButtonElement>(null);
     const prefersReducedMotion = useReducedMotion();
 
     // On route change, reset scroll to top instantly before any animation starts.
@@ -131,7 +133,19 @@ const Layout = ({
     return (
         <Drawer
             open={isDrawerOpen}
-            onOpenChange={setDrawerOpen}
+            onOpenChange={(open, eventDetails) => {
+                setDrawerOpen(open);
+                // modal={false} opts out of Base UI's focus restoration, so a
+                // keyboard dismissal (Escape, or the Android back gesture) would
+                // otherwise leave focus on <body> instead of the toggle button.
+                if (
+                    !open &&
+                    (eventDetails.reason === "escape-key" ||
+                        eventDetails.reason === "close-watcher")
+                ) {
+                    drawerTriggerRef.current?.focus();
+                }
+            }}
             swipeDirection="up"
             modal={false}
         >
@@ -157,6 +171,7 @@ const Layout = ({
                     <DrawerTrigger
                         render={
                             <Button
+                                ref={drawerTriggerRef}
                                 variant="ghost"
                                 size="icon"
                                 aria-label={

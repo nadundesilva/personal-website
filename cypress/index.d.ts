@@ -16,10 +16,16 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import "@testing-library/cypress/types";
+import type { MountOptions, MountReturn } from "cypress/react";
 
 declare global {
     namespace Cypress {
         interface Chainable {
+            mount(
+                component: React.ReactNode,
+                options?: MountOptions,
+            ): Chainable<MountReturn>;
+
             loadPage(url: string, options?: Partial<VisitOptions>): void;
 
             /**

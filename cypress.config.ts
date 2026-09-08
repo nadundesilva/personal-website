@@ -15,11 +15,9 @@
 import runCoverageTask from "@cypress/code-coverage/task";
 import webpackPreprocessor from "@cypress/webpack-batteries-included-preprocessor";
 import { defineConfig } from "cypress";
-import { glob } from "glob";
 import {
-    BLOG_ARTICLE_FILE,
-    BLOG_ARTICLES_DIRECTORY_PREFIX,
-    BLOG_ARTICLES_GROUP_FILE,
+    discoverBlogArticleFilePaths,
+    discoverBlogArticleGroupFilePaths,
     resolveWebsiteBlogArticlesSubPath,
 } from "./utils/server/blog-articles";
 
@@ -58,22 +56,30 @@ export default defineConfig({
 
             on("task", {
                 discoverBlogArticles(subPath: string): string[] {
-                    const pathPattern = `${BLOG_ARTICLES_DIRECTORY_PREFIX}/${subPath}/**/${BLOG_ARTICLE_FILE}`;
-                    const articleFiles = glob.sync(pathPattern);
-                    return articleFiles.map((filePath) => {
-                        const relativePath =
-                            resolveWebsiteBlogArticlesSubPath(filePath);
-                        return `/blog-articles/${relativePath}`;
-                    });
+                    const articles = discoverBlogArticleFilePaths(subPath).map(
+                        (filePath) =>
+                            `/blog-articles/${resolveWebsiteBlogArticlesSubPath(filePath)}`,
+                    );
+                    if (articles.length === 0) {
+                        throw new Error(
+                            `No blog articles discovered under "${subPath}"`,
+                        );
+                    }
+                    return articles;
                 },
                 discoverBlogArticleSubGroups(subPath: string): string[] {
-                    const pathPattern = `${BLOG_ARTICLES_DIRECTORY_PREFIX}/${subPath}/*/**/${BLOG_ARTICLES_GROUP_FILE}`;
-                    const groupFiles = glob.sync(pathPattern);
-                    return groupFiles.map((filePath) => {
-                        const relativePath =
-                            resolveWebsiteBlogArticlesSubPath(filePath);
-                        return `/blog-articles/${relativePath}`;
-                    });
+                    const subGroups = discoverBlogArticleGroupFilePaths(
+                        subPath,
+                    ).map(
+                        (filePath) =>
+                            `/blog-articles/${resolveWebsiteBlogArticlesSubPath(filePath)}`,
+                    );
+                    if (subGroups.length === 0) {
+                        throw new Error(
+                            `No blog article sub-groups discovered under "${subPath}"`,
+                        );
+                    }
+                    return subGroups;
                 },
             });
 
@@ -103,6 +109,45 @@ export default defineConfig({
     },
 
     component: {
+        specPattern: "cypress/component/**/*.cy.{ts,tsx}",
+        // Cypress 14+ defaults justInTimeCompile to true: each spec is
+        // compiled on demand as the runner navigates to it, instead of
+        // bundling every spec upfront. In run mode this has a confirmed race:
+        // the runner can navigate to a spec before the dev server's internal
+        // spec list has been updated for it (verified via
+        // DEBUG=cypress:webpack-dev-server:* - the dev server was still
+        // serving the previous spec's file list after Cypress had already
+        // announced "Running: <new spec>"), so the new spec's loader finds no
+        // match, loads nothing, and the spec registers 0 tests while Cypress
+        // still exits 0. Nx hit and documented this same failure and ships an
+        // automated migration that disables JIT for exactly this reason:
+        // https://nx.dev/docs/technologies/test-tools/cypress/migrations
+        // Disabling it trades a slower upfront full-suite compile for
+        // eliminating the race.
+        justInTimeCompile: false,
+        setupNodeEvents(
+            on: Cypress.PluginEvents,
+            config: Cypress.PluginConfigOptions,
+        ) {
+            runCoverageTask(on, config);
+
+            // Cypress only fails a run on failing tests, not on a spec that
+            // registered none - so any spec whose bundle fails to load or
+            // errors before a single it() runs (a syntax error, an exception
+            // during module evaluation, a dev-server timing issue, etc.)
+            // still exits 0. Treat 0 tests in a spec as a hard failure so
+            // that whole class of bug can never pass silently.
+            on("after:spec", (spec, results) => {
+                if (results.stats.tests === 0) {
+                    throw new Error(
+                        `Spec "${spec.relative}" registered 0 tests - its ` +
+                            `bundle likely failed to load.`,
+                    );
+                }
+            });
+
+            return config;
+        },
         devServer: {
             framework: "next",
             bundler: "webpack",

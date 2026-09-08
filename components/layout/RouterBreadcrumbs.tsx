@@ -15,7 +15,6 @@
 "use client";
 
 import type { Route as NextRoute } from "next";
-import { usePathname } from "next/navigation";
 import React from "react";
 import type {
     BreadcrumbList as JsonLdBreadcrumbList,
@@ -26,6 +25,7 @@ import { Link } from "@/components/content";
 import { ContentContainer } from "@/components/layout";
 import { WEBSITE_PUBLIC_URL } from "@/constants/metadata";
 import { type Route } from "@/constants/routes";
+import { useRoutePathname } from "@/hooks/useRoutePathname";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -42,7 +42,7 @@ interface RouterBreadcrumbsProps {
 const RouterBreadcrumbs = ({
     topLevelRoutes,
 }: RouterBreadcrumbsProps): React.ReactElement | null => {
-    const pathname = usePathname();
+    const pathname = useRoutePathname();
     const pathnames =
         pathname === null ? [] : pathname.split("/").filter((x) => x);
 

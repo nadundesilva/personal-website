@@ -40,6 +40,7 @@ type LinkButtonWithRenderLink = LinkButtonBaseProps & {
 
     href?: never;
     target?: never;
+    rel?: never;
     prefetch?: never;
 };
 
