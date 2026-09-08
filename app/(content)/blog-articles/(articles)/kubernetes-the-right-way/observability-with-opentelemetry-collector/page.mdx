@@ -19,6 +19,7 @@ import kubernetesImage from "@/assets/blog-articles/kubernetes.jpg";
 import opentelemetryCollectorGatewayPatternImage from "@/assets/blog-articles/observability/opentelemetry-collector-gateway-pattern.webp";
 import sourceCode2Image from "@/assets/blog-articles/programming/source-code-2.webp";
 import sourceCode1Image from "@/assets/blog-articles/programming/source-code-1.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: kubernetesImage,
@@ -38,15 +39,7 @@ export const metadata = {
     title: "Kubernetes the Right Way: Observability With OpenTelemetry Collector",
     description:
         "OpenTelemetry Collector can play a big role in ensuring your Observability data pipelines work well in large microservices deployments, especially on Kubernetes.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

@@ -19,6 +19,7 @@ import telescopeImage from "@/assets/blog-articles/telescope.jpg";
 import openTelemetryImage from "@/assets/blog-articles/observability/open-telemetry.webp";
 import explainingImage from "@/assets/blog-articles/engineering/explaining.webp";
 import freedomImage from "@/assets/blog-articles/engineering/freedom.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: telescopeImage,
@@ -38,15 +39,7 @@ export const metadata = {
     title: "Why You Should Adopt OpenTelemetry",
     description:
         "OpenTelemetry has been gaining momentum across many Observability vendors and products and it is becoming the de facto standard.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

@@ -21,6 +21,7 @@ import prepareImage from "@/assets/blog-articles/miscellaneous/prepare.webp";
 import meeting3Image from "@/assets/blog-articles/engineering/meeting-3.webp";
 import stormImage from "@/assets/blog-articles/miscellaneous/storm.webp";
 import intuitionImage from "@/assets/blog-articles/miscellaneous/intuition.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: professional01Image,
@@ -40,15 +41,7 @@ export const metadata = {
     title: "How to get promoted to a Senior Software Engineer",
     description:
         "Becoming a Senior Software Engineer requires gaining experience and knowledge over time. This article outlines what you should cultivate within you to become one.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

@@ -21,6 +21,7 @@ import hacker1Image from "@/assets/blog-articles/security/hacker-1.webp";
 import analyticsImage from "@/assets/blog-articles/data-analytics/analytics.webp";
 import strategyImage from "@/assets/blog-articles/engineering/strategy.webp";
 import insightImage from "@/assets/blog-articles/data-analytics/insight.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: goldImage,
@@ -39,15 +40,7 @@ export const metadata = {
     title: "Data Is the New Gold",
     description:
         "A guide outlining the importance of collecting data and considerations to be taken if you do so.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

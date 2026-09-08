@@ -18,6 +18,7 @@ export const _copyright =
 import networkingImage from "@/assets/blog-articles/networking.webp";
 import doNotEnterImage from "@/assets/blog-articles/miscellaneous/do-not-enter.webp";
 import hacker3Image from "@/assets/blog-articles/security/hacker-3.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: networkingImage,
@@ -37,15 +38,7 @@ export const metadata = {
     title: "Kubernetes the Right Way: Securing Your Production Cluster with Network Policies",
     description:
         "Kubernetes Network Policies is an important tool at your disposal for improving the Security of your Kubernetes Cluster.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

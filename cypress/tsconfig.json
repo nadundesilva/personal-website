@@ -8,7 +8,8 @@
             "@/constants/*": ["../constants/*"],
             "@/shadcn/*": ["../shadcn/*"],
             "@/utils/*": ["../utils/*"],
-            "@/assets/*": ["../assets/*"]
+            "@/assets/*": ["../assets/*"],
+            "@/cypress/*": ["./*"]
         }
     },
     "include": ["index.d.ts", "**/*.ts", "**/*.tsx"]

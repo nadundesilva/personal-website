@@ -16,6 +16,7 @@ export const _copyright =
     undefined;
 
 import kubernetesClusterImage from "@/assets/blog-articles/kubernetes-cluster.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: kubernetesClusterImage,
@@ -35,15 +36,7 @@ export const metadata = {
     title: "Kubernetes the Right Way: Speeding Up Pod Startup in an Autoscaling Cluster",
     description:
         "At K8s Cluster scale-up time the new Pods have a high startup time as the Node startup time adds up to the Pod startup time. This article outlines how you can work around that and reduce the overall startup time.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

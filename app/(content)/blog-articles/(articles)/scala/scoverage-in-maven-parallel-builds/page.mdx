@@ -21,6 +21,7 @@ import problem1Image from "@/assets/blog-articles/engineering/problem-1.webp";
 import softwareEngineer2Image from "@/assets/blog-articles/engineering/software-engineer-2.webp";
 import parallelizedScoverageReport1Image from "@/assets/blog-articles/programming/parallelized-scoverage-report-1.webp";
 import parallelizedScoverageReport2Image from "@/assets/blog-articles/programming/parallelized-scoverage-report-2.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: programming05Image,
@@ -40,15 +41,7 @@ export const metadata = {
     title: "SCoverage in Maven Parallel Builds",
     description:
         "The SCoverage report goal, like some of the other Maven plugin goals out there, is not truly thread-safe. This article covers how you can solve this issue.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

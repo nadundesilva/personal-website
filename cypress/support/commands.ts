@@ -14,23 +14,43 @@
  */
 import { WebsiteHome } from "@/constants/routes";
 import "@testing-library/cypress/add-commands";
+import { allowConsoleError } from "./console-guard";
 
-Cypress.Commands.add("loadPage", (url: string): void => {
-    const viewportWidth = Cypress.config("viewportWidth");
-    const viewportHeight = Cypress.config("viewportHeight");
-    cy.viewport(viewportWidth, viewportHeight);
-    cy.log(`Changed viewport to ${viewportWidth}x${viewportHeight}`);
-
-    cy.visit(url);
-    cy.scrollTo(0, 0, { duration: 1000, ensureScrollable: false });
-    cy.log(`Loaded ${url} page`);
-    window.localStorage.setItem("COLOR_SCHEME", "light");
-
-    if (url !== WebsiteHome.path) {
-        cy.wait(1000);
-        cy.findAllByTestId("route-segment-loading-spinner").should("not.exist");
-    }
+Cypress.Commands.add("allowConsoleError", (pattern: RegExp | string): void => {
+    allowConsoleError(pattern);
 });
+
+Cypress.Commands.add(
+    "loadPage",
+    (url: string, options?: Partial<Cypress.VisitOptions>): void => {
+        const viewportWidth = Cypress.config("viewportWidth");
+        const viewportHeight = Cypress.config("viewportHeight");
+        cy.viewport(viewportWidth, viewportHeight);
+        cy.log(`Changed viewport to ${viewportWidth}x${viewportHeight}`);
+
+        cy.visit(url, {
+            ...options,
+            onBeforeLoad: (win) => {
+                // next-themes reads localStorage.theme during hydration (before React renders).
+                // Setting it here (in onBeforeLoad, before any scripts run) forces the
+                // ThemeProvider to apply the "light" class to <html> instead of falling back
+                // to the system prefers-color-scheme. ThemeProvider is configured with
+                // attribute="class" and storageKey="theme" (the default) in app/layout.tsx.
+                win.localStorage.setItem("theme", "light");
+                options?.onBeforeLoad?.(win);
+            },
+        });
+        cy.scrollTo(0, 0, { duration: 1000, ensureScrollable: false });
+        cy.log(`Loaded ${url} page`);
+
+        if (url !== WebsiteHome.path) {
+            cy.wait(1000);
+            cy.findAllByTestId("route-segment-loading-spinner").should(
+                "not.exist",
+            );
+        }
+    },
+);
 
 Cypress.Commands.add("clickNavLink", (name: string): void => {
     cy.findByTestId("app-bar")
@@ -63,8 +83,8 @@ Cypress.Commands.add("clickBreadcrumbByName", (name: string): void => {
             cy.get("@breadcrumb").click({ waitForAnimations: true });
         });
 
+    cy.wait(1000);
     if (name !== WebsiteHome.name) {
-        cy.wait(1000);
         cy.findAllByTestId("route-segment-loading-spinner").should("not.exist");
     }
 });
@@ -88,9 +108,8 @@ Cypress.Commands.add("clickLinkByHref", (href: string): void => {
     cy.get(`a[href="${href}"]`)
         .as("link")
         .scrollIntoView()
-        .should("be.visible");
-    cy.scrollTo(0, 0, { duration: 1000, ensureScrollable: false });
-    cy.get("@link").click({ waitForAnimations: true });
+        .should("be.visible")
+        .click({ waitForAnimations: true });
 
     cy.wait(1000);
     cy.findAllByTestId("route-segment-loading-spinner").should("not.exist");

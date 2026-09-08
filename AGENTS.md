@@ -238,11 +238,21 @@ npm run cypress:run          # Headless Cypress run
 
 # Bundle analysis
 npm run build:analyze        # Sets ANALYZE=true, opens bundle report after build
+
+# Serve the static output on its own (no rebuild) — e.g. for local e2e runs
+npm run serve -- -l 3000
+
+# Instrument the codebase for coverage (mirrors the CI coverage job)
+npm run instrument
 ```
 
 **Before committing:** lint-staged runs automatically via Husky on staged files — ESLint fix + Stylelint fix + Prettier write. Do not skip hooks (`--no-verify`).
 
 **Installing dependencies:** Use `npm ci` (not `npm install`) in CI and when reproducing CI behavior locally.
+
+**Prefer `npm run <script>` over `npx <tool>` whenever a script already covers it.** Every command above is an npm script — reach for it before typing the underlying `npx`/binary invocation directly, even for one-off local runs (e.g. `npm run cypress:run -- --spec <path>` instead of `npx cypress run --spec <path>`). This keeps local runs on the same flags/env as CI and gives every command a single source of truth.
+
+If no script covers what's needed, **fall back to `npx`/the raw binary** — that's the default, not a last resort to avoid. Don't add a script to `package.json` just because one run needed it. Only add one once a command has genuinely come up repeatedly (e.g. `npx shadcn add` stays `npx` per-component since each invocation targets a different component — see §7 — but a fixed, repeatedly-typed invocation like the coverage instrumentation step became `npm run instrument`).
 
 ---
 
@@ -686,6 +696,89 @@ This keeps the animation timing values co-located with their keyframes, the CSS 
 
 ## 9. Testing
 
+### Testing Philosophy
+
+**Component tests** (`cypress/component/`) — component-specific behaviors in isolation:
+
+- Props variants and render paths
+- Accessibility attributes (ARIA roles, labels, `role=list`, `dateTime`, etc.)
+- User interactions contained within a single component (open/close, clipboard, scroll state)
+- No running server required (`cy.mount()` only)
+
+**E2E tests** (`cypress/e2e/`) — website-level flows:
+
+- Routing and navigation between pages
+- Breadcrumb navigation
+- SEO metadata, JSON-LD, sitemap, RSS
+- Theme persistence across reload
+- Server-generated or statically-exported content correctness
+
+**Rule of thumb:** If the test needs a URL/page load → E2E. If it only needs `cy.mount()` → component test.
+
+**Prefer component tests** for behaviors currently only verified inside a single E2E step (e.g. `ReadingProgress` scroll math).
+
+**Don't test behavior the app doesn't use.** Only cover props/variants/paths actually exercised somewhere in `app/` or `components/`. Before adding a test for a prop or variant, grep for a real caller passing it — if none exists, skip the test rather than adding one "for completeness." This applies especially to shadcn-derived primitives (`components/primitives/`): they ship with a much larger surface (variants, directions, sizes) than this site ever uses, and testing the unused parts just adds maintenance cost for behavior nobody depends on. Example: `Drawer`'s `direction` prop supports `bottom | top | left | right`, but [`Layout.tsx`](./components/layout/Layout.tsx) only ever renders the default (`bottom`) — so the other directions aren't tested.
+
+#### Name tests after behavior, not implementation
+
+Every `it()` title must state the **user-observable behavior** being verified — what a user, screen reader, or crawler experiences — never the mechanism the component uses to achieve it.
+
+**The test:** would a refactor that preserves user-observable behavior falsify this name? Swap `<div>` → `<span>`, rename a CSS class, change `ul` → `ol`. If the name becomes wrong but nothing observable changed, the name is implementation-coupled — rewrite it.
+
+Asserting on the mechanism is fine, and is often the only practical way to check a visual behavior. Only the _name_ must rise above it:
+
+```tsx
+// WRONG — name is the mechanism
+it("sets height to 100vh", …)
+it("renders children as a ul with role=list", …)
+it("sets the dateTime attribute to ISO format", …)
+
+// RIGHT — name is the behavior, assertion is still the mechanism
+it("spans the full height of the viewport", () => {
+    cy.get("img").should("have.css", "height", "100vh");
+});
+it("announces its items as a list to screen readers", …)
+it("exposes the date in machine-readable form for crawlers and assistive tech", …)
+```
+
+Two corollaries:
+
+- **The name must not claim more than the assertion proves.** `"renders key page content"` is unverifiable — name the specific thing checked.
+- **`describe()` names the subject; `it()` names the behavior.** `describe("DateInfo")` and `describe("sitemap")` are correct — do not push behavior up into them.
+
+- **A prop name is fine as input context, not as a substitute for the effect.** `"applies the compact size when size='sm'"` uses the prop _instead of_ describing the outcome — name the visual result instead (`"uses tighter spacing in its compact form"`). But naming the prop _while also_ stating the effect it causes is fine and often clearer, e.g. `"clamps to the visible range when startIndex is out of bounds"` — the prop tells the reader which input scenario is under test; the behavior clause is still what's being verified.
+
+#### Assert computed CSS for visual behavior, not Tailwind class names
+
+For a visual/layout behavior (size, spacing, float, color), prefer `cy.get(...).should("have.css", "<property>", "<value>")` — the computed style — over `should("have.class", "<tailwind-class>")`. A class-name assertion is coupled to the utility class chosen today; if the class is renamed or replaced with an equivalent one during a refactor, the test fails even though the rendered behavior is unchanged. `have.css` checks the actual rendered outcome, matching the "name and assert the behavior, not the mechanism" rule above.
+
+**Exception — color values.** Do not assert literal computed colors (`background-color`, `border-color`, etc.) — the "never hardcode color values" rule (§8, Color Tokens) applies to test assertions too: the resolved value is theme-dependent and its serialization (oklch vs. rgb) isn't stable. For a color-driven variant, either keep the class assertion (and name the test for the variant's effect, not the class), or assert that the computed color differs between two variants rather than asserting a literal value.
+
+#### Assert URL-shaped contracts exactly, not by substring
+
+For `link[rel="canonical"]`, `og:url`, JSON-LD `@id`/`sameAs`, and similar tags whose entire purpose is to identify one exact URL, assert exact equality (`.to.eq(...)`), never `.include(...)` or a loose `.match(/^https?:\/\//)`. A substring or protocol-only match still passes on a wrong host or a corrupted `metadataBase` — precisely the regression these tags exist to catch.
+
+**Exception — component API surface.** A `data-*` attribute or ARIA attribute that is a component's own public contract (e.g. `data-size="sm"`) is not an internal implementation detail to be swapped out under refactor — assert it directly.
+
+#### The selector must mirror the element's meaning, not its position
+
+A selector should name _what the element is_, the same thing its accessible role/name conveys to assistive tech — `findByRole` with a `name`, an accessible label, visible text, a contract `data-*`. The selector and the a11y tree should be picking out the element for the same reason. A structural CSS selector (`[aria-hidden='true'] div`, `.some-wrapper > span:nth-child(2)`) instead names a _position in the current markup_: it matches by accident of nesting, silently starts matching a different element after a refactor that leaves behavior unchanged, and tells a reader nothing about what was selected.
+
+When the element genuinely carries no meaning in the a11y tree — a decorative bar in a chart, an unlabeled visual slot — give it an explicit handle in the component. **Every attribute that exists only for tests lives under the `data-test` namespace:** `data-testid` for identity (this is what `findByTestId` queries — the `@testing-library` default, not reconfigured here), and `data-test-<name>` for any _state_ under test, selected with a plain attribute selector (`.filter('[data-test-filled="true"]')`, `cy.get('[data-test-open]')`). There is no `findBy*` helper for the `data-test-<name>` flags and none is needed — attribute selectors are how variant state is queried. The shared `data-test` prefix keeps test-only hooks greppable and unmistakable for production behavior.
+
+Derive a state flag from the **same expression** that drives the visual state, in one place, so the two cannot diverge (a test that still passes while the visual is wrong is worse than no test):
+
+```tsx
+const isFilled = i <= bars;
+// …
+<div
+    data-test-filled={isFilled}
+    className={cn(isFilled ? filledClass : emptyClass)}
+/>;
+```
+
+Such a test-only attribute is part of the component's public test contract (per the "component API surface" exception above), not an implementation leak. Never distinguish element states by Tailwind class presence (`el.className.includes("bg-foreground/15")`) — that is the class-name coupling the section above forbids; expose the state as a `data-test-<name>` attribute instead.
+
 ### E2E with Cypress
 
 - Test files: [`cypress/e2e/`](./cypress/e2e/) (`.cy.tsx` extension)
@@ -693,6 +786,10 @@ This keeps the animation timing values co-located with their keyframes, the CSS 
 - Configuration: [`cypress.config.ts`](./cypress.config.ts)
 
 **Viewport:** `1280x768`. This is above the `lg` Tailwind breakpoint where the desktop nav renders — below it, the mobile drawer appears, breaking navigation tests. The exact breakpoint is in [`components/layout/Layout.tsx`](./components/layout/Layout.tsx) (currently `lg:` / 1024 px). Do not change the viewport without understanding this.
+
+**Spec bundler:** `cypress.config.ts`'s `e2e.setupNodeEvents` registers a `file:preprocessor` (see its comments for the mechanics/gotchas). This is what lets e2e specs import anything under the `constants/logos.ts` chain — `pages.cy.tsx`, `home.cy.tsx`, `layout.cy.tsx`, `navigation.cy.tsx` import real `@/constants/*` values instead of duplicating literals. The `package.json` `overrides` pin it relies on works around a known, still-open upstream bug: [cypress#34025](https://github.com/cypress-io/cypress/issues/34025).
+
+`WEBSITE_PUBLIC_URL` and its derivatives (`SCHEMA_PERSON_ID`, `SCHEMA_WEBSITE_ID`) are a deliberate exception — `seo.cy.tsx` and `blog-articles.cy.tsx` keep those as local literals rather than importing them, because they're the assertion _target_: importing the real value would make the canonical-URL/JSON-LD assertions tautological against whichever shell ran Cypress, rather than against the shell that built the site under test.
 
 **Custom commands:**
 
@@ -726,12 +823,14 @@ npm run cypress:run     # Headless run
 For the full CI-equivalent flow with coverage instrumentation:
 
 ```bash
-BUILD_TYPE=test npx nyc instrument --in-place --compact=false .
+BUILD_TYPE=test npm run instrument
 npm run build
 source .github/scripts/start-server.sh
 npm run cypress:run
 bash .github/scripts/stop-server.sh
 ```
+
+**`npm run instrument` rewrites source files in place** (via `nyc instrument --in-place`) — it is not a build-output step, it mutates `.ts`/`.tsx` files under version control. Only run it when coverage numbers are actually needed; the plain `npm run build` + `npm run serve` flow above (no coverage) is sufficient for local verification. If you do run it, revert the instrumented files afterwards (`git checkout -- <instrumented files>`, or `git stash`/`git clean` if nothing else is staged) before finishing — do not leave instrumented source committed or lying in the working tree.
 
 ---
 
@@ -781,6 +880,20 @@ Jobs 1–4 run in parallel on every push/PR. Job 5 runs independently. Jobs 6–
 HTTP security headers (`Strict-Transport-Security`, `X-Content-Type-Options`, `X-Frame-Options`, `Permissions-Policy`) are served via [`public/_headers`](./public/_headers) — Cloudflare Pages reads this file automatically. The CSP is set separately via `<meta httpEquiv="Content-Security-Policy">` in [`app/layout.tsx`](./app/layout.tsx) so it can include the conditional `'unsafe-eval'` for dev/test builds.
 
 Note: The CI LHCI server (Caddy Docker via [`start-server.sh`](./.github/scripts/start-server.sh)) parses `${WEBSITE_BUILD_DIR}/_headers` and translates each header under the `/*` pattern into a Caddy `header` directive, so security headers are present during CI LHCI audits.
+
+### Cypress E2E tests must run against the production static export, not the dev server
+
+Running `npm run cypress:run` while the Next.js dev server (`npm run dev`) is active will produce intermittent and persistent test failures. The root cause is HMR: in dev mode, the hot-update mechanism fires immediately after soft-navigation RSC fetches, causing the router to treat its tree as stale and abort `pushState`. The URL never updates, so `cy.location("pathname")` assertions time out. MDX article pages are especially susceptible because they trigger more HMR work (images, nested layouts, more code paths).
+
+**Always stop the dev server before running Cypress.** For quick local testing without coverage instrumentation:
+
+```bash
+npm run build
+npm run serve -- -l 3000 &
+npm run cypress:run
+```
+
+The full CI-equivalent flow (with coverage) is documented in §9.
 
 ### `ContentContainer` padding must be mirrored in `image-sizes.ts`
 

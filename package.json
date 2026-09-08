@@ -7,7 +7,8 @@
         "dev": "NODE_ENV='development' NEXT_PUBLIC_WEBSITE_URL='http://localhost:3000' next dev --webpack -p 3000",
         "build": "NODE_ENV='production' next build --webpack && next-image-export-optimizer",
         "build:analyze": "ANALYZE='true' npm run build",
-        "start": "npm run build && npx serve@latest out",
+        "serve": "serve out",
+        "start": "npm run build && npm run serve",
         "lint": "npm run lint:ts && npm run lint:css",
         "lint:ts": "eslint .",
         "lint:css": "stylelint \"**/*.css\"",
@@ -15,6 +16,8 @@
         "format": "prettier . --write",
         "cypress:open": "cypress open",
         "cypress:run": "cypress run",
+        "cypress:typecheck": "tsc --noEmit -p cypress/tsconfig.json",
+        "instrument": "nyc instrument --in-place --compact=false .",
         "prepare": "husky"
     },
     "browserslist": {
@@ -47,6 +50,7 @@
     },
     "devDependencies": {
         "@cypress/code-coverage": "4.0.3",
+        "@cypress/webpack-batteries-included-preprocessor": "4.2.0",
         "@istanbuljs/nyc-config-typescript": "1.0.2",
         "@mdx-js/loader": "3.1.1",
         "@mdx-js/react": "3.1.1",
@@ -77,6 +81,7 @@
         "rehype-pretty-code": "0.14.3",
         "rss": "1.2.2",
         "schema-dts": "2.0.0",
+        "serve": "14.2.6",
         "shadcn": "4.13.0",
         "stylelint": "17.14.0",
         "stylelint-config-standard": "40.0.0",
@@ -88,5 +93,10 @@
         "*.{tsx,ts,js}": "eslint --no-cache --fix",
         "*.css": "stylelint --fix",
         "*.{tsx,ts,js,mdx}": "prettier --write"
+    },
+    "overrides": {
+        "@cypress/webpack-batteries-included-preprocessor": {
+            "@cypress/webpack-preprocessor": "7.1.2"
+        }
     }
 }

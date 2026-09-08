@@ -17,6 +17,7 @@ export const _copyright =
 
 import programming06Image from "@/assets/blog-articles/programming-06.webp";
 import scalaImplicitConversionsImage from "@/assets/blog-articles/programming/scala-implicit-conversions.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: programming06Image,
@@ -36,15 +37,7 @@ export const metadata = {
     title: "Power Up your Scala Code with Implicit Conversions",
     description:
         "Scala has many powerful capabilities. Implicit conversions stand out among them with the ability to avoid most of the boilerplate code.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

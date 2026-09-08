@@ -24,6 +24,7 @@ import shareYourVisionImage from "@/assets/blog-articles/engineering/share-your-
 import softwareEngineer3Image from "@/assets/blog-articles/engineering/software-engineer-3.webp";
 import boxerImage from "@/assets/blog-articles/miscellaneous/boxer.webp";
 import teamImage from "@/assets/blog-articles/engineering/team.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: leaderImage,
@@ -43,15 +44,7 @@ export const metadata = {
     title: "Becoming a Better Software Engineering Team Leader",
     description:
         "A guide for becoming a great team leader who can walk along with a team and guide them toward achieving their goals.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

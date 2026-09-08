@@ -17,6 +17,7 @@ export const _copyright =
 
 import timeImage from "@/assets/blog-articles/time.webp";
 import ideaImage from "@/assets/blog-articles/data-analytics/idea.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: timeImage,
@@ -36,15 +37,7 @@ export const metadata = {
     title: "Database Agnostic Pagination of Time-Series Results",
     description:
         "A way to paginate time series results in the DB side even when the DB itself doesn’t support it.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

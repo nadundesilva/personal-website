@@ -303,6 +303,7 @@ const Home = async (): Promise<React.ReactElement> => {
     return (
         <div data-testid="home-page">
             <script
+                id="json-ld-person"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />

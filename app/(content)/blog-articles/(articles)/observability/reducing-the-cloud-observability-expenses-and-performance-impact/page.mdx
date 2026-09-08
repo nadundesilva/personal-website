@@ -20,6 +20,7 @@ import thinking1Image from "@/assets/blog-articles/engineering/thinking-1.webp";
 import metricsImage from "@/assets/blog-articles/observability/metrics.webp";
 import archiveImage from "@/assets/blog-articles/observability/archive.webp";
 import balanceImage from "@/assets/blog-articles/engineering/balance.webp";
+import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
 export const blogMetadata = {
     image: analysisImage,
@@ -39,15 +40,7 @@ export const metadata = {
     title: "Reducing the Cloud Observability Expenses and Performance Impact",
     description:
         "Observability is an essential aspect of any production environment, and at the same time, it can be a massive hit on the bottom line.",
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
+    ...buildArticleMetadata(blogMetadata),
 };
 
 export default function Layout({ children }) {

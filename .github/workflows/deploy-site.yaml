@@ -122,7 +122,7 @@ jobs:
               run: npm ci
             - name: Instrument Website for Code Coverage
               run: |
-                  npx nyc instrument --in-place --compact=false .
+                  npm run instrument
                   npm run build
               env:
                   BUILD_TYPE: test
