@@ -5,12 +5,17 @@ coverage:
             unit-tests:
                 flags:
                     - unit-tests
+            component-tests:
+                flags:
+                    - component-tests
             e2e-tests:
                 flags:
                     - e2e-tests
 
 flags:
     unit-tests:
+        carryforward: false
+    component-tests:
         carryforward: false
     e2e-tests:
         carryforward: false
