@@ -15,8 +15,7 @@
 import ContentContainer from "./ContentContainer";
 import Layout from "./Layout";
 import RouterBreadcrumbs from "./RouterBreadcrumbs";
-import useScrollOffset from "./scrolling";
 
 export default Layout;
 
-export { ContentContainer, RouterBreadcrumbs, useScrollOffset };
+export { ContentContainer, RouterBreadcrumbs };

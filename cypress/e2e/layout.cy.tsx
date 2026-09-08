@@ -244,6 +244,38 @@ describe("app-bar styling", () => {
             void expect(hasVisibleShadow(style.boxShadow)).to.be.true;
         });
     });
+
+    // The app bar is fixed and only content pages carry a toolbar spacer to
+    // clear it (Layout.tsx: `{pathname !== "/" && <div className="h-14 sm:h-16" />}`)
+    // - the home page's own hero fills that space instead. Pinning both sides
+    // catches the spacer being removed (content page) as well as it becoming
+    // unconditional (home page).
+    [
+        { width: 1280, height: 768, label: "desktop" },
+        { width: 375, height: 768, label: "mobile" },
+    ].forEach(({ width, height, label }) => {
+        it(`keeps the main content clear of the app bar on a content page (${label})`, () => {
+            cy.viewport(width, height);
+            cy.loadPage(WebsiteHome.subRoutes["/experience"].path);
+
+            cy.get('[data-testid="app-bar"]').then(($appBar) => {
+                const appBarBottom = $appBar[0].getBoundingClientRect().bottom;
+                cy.get("#main-content").should(($main) => {
+                    expect($main[0].getBoundingClientRect().top).to.be.at.least(
+                        appBarBottom,
+                    );
+                });
+            });
+        });
+    });
+
+    it("lets the home page's content run under the fixed app bar", () => {
+        cy.loadPage(WebsiteHome.path);
+
+        cy.get("#main-content").should(($main) => {
+            expect($main[0].getBoundingClientRect().top).to.eq(0);
+        });
+    });
 });
 
 describe("footer", () => {

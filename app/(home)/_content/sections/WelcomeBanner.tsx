@@ -78,7 +78,7 @@ const STATS = [
 
 const WelcomeBanner = (): React.ReactElement => {
     return (
-        <div className="relative flex min-h-lvh flex-col overflow-hidden">
+        <div className="relative flex min-h-[max(100lvh,36rem)] flex-col overflow-hidden">
             {/* Three-layer vignette — z-3 so it sits above auras and darkens the edges uniformly */}
             <div
                 aria-hidden={true}
@@ -112,17 +112,17 @@ const WelcomeBanner = (): React.ReactElement => {
             </div>
 
             {/* Centered glassmorphism card */}
-            <div className="relative z-4 flex flex-1 items-center justify-center px-4 pt-[calc(4rem+env(safe-area-inset-top))] pb-[calc(1rem+env(safe-area-inset-bottom))] sm:px-6 md:pt-[calc(5rem+env(safe-area-inset-top))] md:pb-[calc(2rem+env(safe-area-inset-bottom))] short-h:pt-[calc(3rem+env(safe-area-inset-top))] short-h:pb-[calc(0.5rem+env(safe-area-inset-bottom))]">
-                <div className="w-[88vw] max-w-full rounded-2xl border border-white/15 bg-white/8 px-4 py-5 text-center shadow-[0_24px_80px_rgba(0,0,0,0.4)] backdrop-blur-[20px] sm:w-130 sm:px-6 sm:py-7 md:w-145 md:px-7 md:py-8 lg:w-155 lg:px-10 lg:py-12 short-h:py-3">
+            <div className="relative z-4 flex flex-1 items-center justify-center px-4 pt-[calc(4rem+env(safe-area-inset-top))] pb-[calc(1rem+env(safe-area-inset-bottom))] sm:px-6 md:pt-[calc(5rem+env(safe-area-inset-top))] md:pb-[calc(2rem+env(safe-area-inset-bottom))]">
+                <div className="w-[88vw] max-w-full rounded-2xl border border-white/15 bg-white/8 px-4 py-5 text-center shadow-[0_24px_80px_rgba(0,0,0,0.4)] backdrop-blur-[20px] sm:w-130 sm:px-6 sm:py-7 md:w-145 md:px-7 md:py-8 lg:w-155 lg:px-10 lg:py-12">
                     {/* "Hi, I am" overline */}
-                    <p className="mb-2 text-[11px] font-normal tracking-[0.35em] text-(--home-accent-on-dark) uppercase motion-safe:animate-fade-in-up sm:text-[12px] lg:text-[13px] short-h:mb-1">
+                    <p className="mb-2 text-[11px] font-normal tracking-[0.35em] text-(--home-accent-on-dark) uppercase motion-safe:animate-fade-in-up sm:text-[12px] lg:text-[13px]">
                         Hi, I am
                     </p>
 
                     {/* Name */}
                     <h1
                         translate="no"
-                        className="mb-4 text-[44px] leading-[1.1] font-light tracking-[-0.03em] text-wrap-balance text-(--home-accent-on-dark) motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.15s] sm:text-[54px] md:mb-6 lg:text-[64px] short-h:mb-3"
+                        className="mb-4 text-[44px] leading-[1.1] font-light tracking-[-0.03em] text-wrap-balance text-(--home-accent-on-dark) motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.15s] sm:text-[54px] md:mb-6 lg:text-[64px]"
                     >
                         {FULL_NAME}
                     </h1>
@@ -130,16 +130,16 @@ const WelcomeBanner = (): React.ReactElement => {
                     {/* Gradient divider */}
                     <div
                         aria-hidden={true}
-                        className="mx-auto mb-4 h-px w-20 bg-linear-to-r from-transparent via-white/40 to-transparent motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.25s] sm:w-24 md:mb-6 lg:w-28 short-h:mb-3"
+                        className="mx-auto mb-4 h-px w-20 bg-linear-to-r from-transparent via-white/40 to-transparent motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.25s] sm:w-24 md:mb-6 lg:w-28"
                     />
 
                     {/* Tagline */}
-                    <p className="mb-3 text-[15px] leading-relaxed font-light text-white/80 motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.35s] sm:text-[17px] md:mb-5 lg:text-[18px] short-h:mb-4">
+                    <p className="mb-3 text-[15px] leading-relaxed font-light text-white/80 motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.35s] sm:text-[17px] md:mb-5 lg:text-[18px]">
                         {TAGLINE}
                     </p>
 
                     {/* View CV button */}
-                    <div className="mb-7 motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.45s] md:mb-8 short-h:mb-4">
+                    <div className="mb-7 motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.45s] md:mb-8">
                         <LinkButton
                             href={CvPdfPath}
                             name="View CV"
@@ -150,10 +150,10 @@ const WelcomeBanner = (): React.ReactElement => {
                         />
                     </div>
 
-                    {/* Stats row — hidden on very short viewports */}
+                    {/* Stats row */}
                     <dl
                         aria-label="Key statistics"
-                        className="mb-5 flex flex-row items-start justify-center motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.55s] md:mb-6 short-h:hidden"
+                        className="mb-5 flex flex-row items-start justify-center motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.55s] md:mb-6"
                     >
                         {STATS.map((stat, index) => (
                             <React.Fragment key={stat.id}>
@@ -187,7 +187,7 @@ const WelcomeBanner = (): React.ReactElement => {
                     {/* Thin divider above social icons */}
                     <Separator
                         aria-hidden={true}
-                        className="mb-3 bg-white/15 motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.65s] md:mb-4 short-h:mb-2"
+                        className="mb-3 bg-white/15 motion-safe:animate-fade-in-up motion-safe:[animation-delay:0.65s] md:mb-4"
                     />
 
                     {/* Social icons */}

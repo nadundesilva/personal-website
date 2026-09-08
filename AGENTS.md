@@ -201,6 +201,7 @@ eslint.config.js                   # ESLint flat config
 
 | Alias            | Resolves to    |
 | ---------------- | -------------- |
+| `@/app/*`        | `app/*`        |
 | `@/components/*` | `components/*` |
 | `@/constants/*`  | `constants/*`  |
 | `@/shadcn/*`     | `shadcn/*`     |
@@ -233,8 +234,8 @@ npm run format:check         # Dry-run Prettier check
 npm run format               # Apply Prettier formatting
 
 # E2E tests (requires running server)
-npm run cypress:open         # Interactive Cypress UI
-npm run cypress:run          # Headless Cypress run
+npm run cypress:e2e:open     # Interactive Cypress UI
+npm run cypress:e2e:run      # Headless Cypress run
 
 # Bundle analysis
 npm run build:analyze        # Sets ANALYZE=true, opens bundle report after build
@@ -250,7 +251,7 @@ npm run instrument
 
 **Installing dependencies:** Use `npm ci` (not `npm install`) in CI and when reproducing CI behavior locally.
 
-**Prefer `npm run <script>` over `npx <tool>` whenever a script already covers it.** Every command above is an npm script — reach for it before typing the underlying `npx`/binary invocation directly, even for one-off local runs (e.g. `npm run cypress:run -- --spec <path>` instead of `npx cypress run --spec <path>`). This keeps local runs on the same flags/env as CI and gives every command a single source of truth.
+**Prefer `npm run <script>` over `npx <tool>` whenever a script already covers it.** Every command above is an npm script — reach for it before typing the underlying `npx`/binary invocation directly, even for one-off local runs (e.g. `npm run cypress:component:run -- --spec <path>` instead of `npx cypress run --component --spec <path>`). This keeps local runs on the same flags/env as CI and gives every command a single source of truth.
 
 If no script covers what's needed, **fall back to `npx`/the raw binary** — that's the default, not a last resort to avoid. Don't add a script to `package.json` just because one run needed it. Only add one once a command has genuinely come up repeatedly (e.g. `npx shadcn add` stays `npx` per-component since each invocation targets a different component — see §7 — but a fixed, repeatedly-typed invocation like the coverage instrumentation step became `npm run instrument`).
 
@@ -715,9 +716,11 @@ This keeps the animation timing values co-located with their keyframes, the CSS 
 
 **Rule of thumb:** If the test needs a URL/page load → E2E. If it only needs `cy.mount()` → component test.
 
-**Prefer component tests** for behaviors currently only verified inside a single E2E step (e.g. `ReadingProgress` scroll math).
+**Prefer component tests** for behaviors that can be verified with `cy.mount()` alone — e.g. `ReadingProgress` scroll math is covered in `cypress/component/components/blog-articles/ReadingProgress.cy.tsx` rather than an E2E step.
 
-**Don't test behavior the app doesn't use.** Only cover props/variants/paths actually exercised somewhere in `app/` or `components/`. Before adding a test for a prop or variant, grep for a real caller passing it — if none exists, skip the test rather than adding one "for completeness." This applies especially to shadcn-derived primitives (`components/primitives/`): they ship with a much larger surface (variants, directions, sizes) than this site ever uses, and testing the unused parts just adds maintenance cost for behavior nobody depends on. Example: `Drawer`'s `direction` prop supports `bottom | top | left | right`, but [`Layout.tsx`](./components/layout/Layout.tsx) only ever renders the default (`bottom`) — so the other directions aren't tested.
+**Don't test behavior the app doesn't use.** Only cover props/variants/paths actually exercised somewhere in `app/` or `components/`. Before adding a test for a prop or variant, grep for a real caller passing it — if none exists, skip the test rather than adding one "for completeness." This applies especially to shadcn-derived primitives (`components/primitives/`): they ship with a much larger surface (variants, directions, sizes) than this site ever uses, and testing the unused parts just adds maintenance cost for behavior nobody depends on. Example: `Drawer`'s `swipeDirection` prop supports `down | up | left | right`, but [`Layout.tsx`](./components/layout/Layout.tsx) only ever renders `swipeDirection="up"` — so `down` (the component's own default), `left` and `right` aren't tested.
+
+**A component's behavior is asserted in that component's own spec, not a consumer's.** If `ChildComponent` decides how it opens, closes, or renders internally, that mechanism is pinned in `ChildComponent.cy.tsx` — a consumer spec (`ParentComponent.cy.tsx`) only asserts the decisions _it_ makes: which props it passes, how it wires children together, whether real data reaches a threshold the child reacts to. Re-asserting the child's own mechanism from the parent's spec is duplicate maintenance surface with no additional signal. The one exception is when mounting the component directly is not possible — e.g. an async Server Component, which React's client renderer rejects (see `ArticlesGroup.cy.tsx`'s comment) — in which case the nearest mountable sub-component stands in, with a comment recording why.
 
 #### Name tests after behavior, not implementation
 
@@ -741,10 +744,11 @@ it("announces its items as a list to screen readers", …)
 it("exposes the date in machine-readable form for crawlers and assistive tech", …)
 ```
 
-Two corollaries:
+Three corollaries:
 
 - **The name must not claim more than the assertion proves.** `"renders key page content"` is unverifiable — name the specific thing checked.
 - **`describe()` names the subject; `it()` names the behavior.** `describe("DateInfo")` and `describe("sitemap")` are correct — do not push behavior up into them.
+- **Never name a test after a prop.** `when size='sm'` is the caller's API, not the user's experience; name the visual result instead (`in its compact form`).
 
 - **A prop name is fine as input context, not as a substitute for the effect.** `"applies the compact size when size='sm'"` uses the prop _instead of_ describing the outcome — name the visual result instead (`"uses tighter spacing in its compact form"`). But naming the prop _while also_ stating the effect it causes is fine and often clearer, e.g. `"clamps to the visible range when startIndex is out of bounds"` — the prop tells the reader which input scenario is under test; the behavior clause is still what's being verified.
 
@@ -810,14 +814,65 @@ Such a test-only attribute is part of the component's public test contract (per 
 
 Use these tasks in tests that need to enumerate blog articles dynamically.
 
-### Running Tests Locally
+### Component Tests with Cypress
+
+Component tests mount individual components in isolation using the Cypress webpack devServer. No running server is required.
+
+- Test files: [`cypress/component/`](./cypress/component/) (`.cy.tsx` extension, mirroring the source structure)
+- Spec pattern: `cypress/component/**/*.cy.{ts,tsx}` (set in `cypress.config.ts`)
+- Global providers (`ThemeProvider`, `LazyMotion + MotionConfig`, `TooltipProvider`) are set up in [`cypress/support/component.ts`](./cypress/support/component.ts) and automatically applied to every `cy.mount()` call
+- `reducedMotion="always"` is set in tests so animations never run — tests are deterministic
+
+**File naming convention:** `cypress/component/<source path relative to repo root>`, with `.tsx` → `.cy.tsx`. This is a full mirror of the repo root, matching the source filename's casing exactly — the test's path always resolves to a real source file by stripping `cypress/component/` and swapping the extension:
+
+- `components/content/Link.tsx` → `cypress/component/components/content/Link.cy.tsx`
+- `app/404/NotFound.tsx` → `cypress/component/app/404/NotFound.cy.tsx`
+- `app/(home)/_content/sections/components/Foo.tsx` → `cypress/component/app/(home)/_content/sections/components/Foo.cy.tsx`
+- `shadcn/ui/badge.tsx` → `cypress/component/shadcn/ui/badge.cy.tsx` (map to the file that _defines_ the component, not the `@/shadcn/ui` barrel it's imported through)
+
+```bash
+npm run cypress:component:run   # Headless component test run
+npm run cypress:component:open  # Interactive component test UI
+```
+
+### Console errors fail tests (both suites)
+
+[`cypress/support/console-guard.ts`](./cypress/support/console-guard.ts) makes **any
+`console.error` or uncaught exception fail the test** — wired into
+[`cypress/support/e2e.ts`](./cypress/support/e2e.ts) (via `window:before:load`) and
+[`cypress/support/component.ts`](./cypress/support/component.ts) (via a `beforeEach`
+`cy.window()` patch). This is what catches React hydration errors (e.g. #418) that
+would otherwise pass silently.
+
+- **Fails fast, at the error.** The wrapped `console.error` re-throws from a
+  microtask, so it surfaces as a test failure on the offending test — sibling
+  tests in the same spec file still run. (A plain synchronous re-throw doesn't
+  work: React's render wraps `console.error` calls in try/catch.) The failure
+  lists **every** console error from the incident (a React/browser incident logs
+  its calls in one synchronous burst, and Cypress halts the test on the first
+  failure).
+- **Allowing a known-benign message:** `cy.allowConsoleError(pattern)` (string =
+  literal substring, or a regex) whitelists matching messages **for the current
+  test only**. Pass the _specific_ expected message, not a catch-all — the
+  deliberate throw-in-`ErrorBoundary` tests (`mdx-components.cy.tsx`,
+  `ProgressFab.cy.tsx`, `Heading.cy.tsx`) each allow the exact error string they
+  assert on, and `global-error.cy.tsx` allows the two exact React-internal
+  messages that a full `<html><body>` triggers under isolated mounting. It is
+  only legitimate for (a) framework/runner noise or (b) a deliberately-triggered,
+  asserted error path — never to quiet an error the app or a test should handle.
+- `GLOBAL_ALLOWLIST` in `console-guard.ts` holds the one unavoidable piece of
+  tooling noise (`[webpack-dev-server] Invalid Host/Origin header`). Keep it tiny.
+- The e2e `IntersectionObserver` mock lives in the same `window:before:load` hook
+  but is unrelated — it forces `whileInView` animations to run headless.
+
+### Running E2E Tests Locally
 
 **Critical:** `start-server.sh` must be run with `source`, not `bash` — see [§10 — Server Scripts](#server-scripts) for details.
 
 ```bash
 # Requires a server to be running first
-npm run cypress:open    # Interactive test runner UI
-npm run cypress:run     # Headless run
+npm run cypress:e2e:open    # Interactive test runner UI
+npm run cypress:e2e:run     # Headless run
 ```
 
 For the full CI-equivalent flow with coverage instrumentation:
@@ -826,7 +881,7 @@ For the full CI-equivalent flow with coverage instrumentation:
 BUILD_TYPE=test npm run instrument
 npm run build
 source .github/scripts/start-server.sh
-npm run cypress:run
+npm run cypress:e2e:run
 bash .github/scripts/stop-server.sh
 ```
 
@@ -883,17 +938,44 @@ Note: The CI LHCI server (Caddy Docker via [`start-server.sh`](./.github/scripts
 
 ### Cypress E2E tests must run against the production static export, not the dev server
 
-Running `npm run cypress:run` while the Next.js dev server (`npm run dev`) is active will produce intermittent and persistent test failures. The root cause is HMR: in dev mode, the hot-update mechanism fires immediately after soft-navigation RSC fetches, causing the router to treat its tree as stale and abort `pushState`. The URL never updates, so `cy.location("pathname")` assertions time out. MDX article pages are especially susceptible because they trigger more HMR work (images, nested layouts, more code paths).
+Running `npm run cypress:e2e:run` while the Next.js dev server (`npm run dev`) is active will produce intermittent and persistent test failures. The root cause is HMR: in dev mode, the hot-update mechanism fires immediately after soft-navigation RSC fetches, causing the router to treat its tree as stale and abort `pushState`. The URL never updates, so `cy.location("pathname")` assertions time out. MDX article pages are especially susceptible because they trigger more HMR work (images, nested layouts, more code paths).
 
 **Always stop the dev server before running Cypress.** For quick local testing without coverage instrumentation:
 
 ```bash
 npm run build
 npm run serve -- -l 3000 &
-npm run cypress:run
+npm run cypress:e2e:run
 ```
 
 The full CI-equivalent flow (with coverage) is documented in §9.
+
+### Layout-level components must read the route from `useSelectedLayoutSegments()`, not `usePathname()`
+
+The site is a static export, and the host serves the same prebuilt `out/404.html` for
+every unmatched URL. `usePathname()` returns the **live browser URL**, so on a nested
+unknown route (`/experience/does-not-exist`) it reports `/experience/...` on the client
+while the static 404 shell was built for a different path — a hydration mismatch (React
+error #418) for any component in the root layout that renders based on the path
+(`Layout.tsx`'s nav highlighting, `RouterBreadcrumbs.tsx`'s breadcrumb trail + JSON-LD).
+
+[`hooks/useRoutePathname.ts`](./hooks/useRoutePathname.ts) is the fix: it derives the
+path from `useSelectedLayoutSegments()` (Next's matched route tree, baked identically
+into the flight payload on server and client), filtering out route-group segments
+(`(content)` etc.). `Layout.tsx` and `RouterBreadcrumbs.tsx` use it instead of
+`usePathname()`. It falls back to `usePathname()` when there is no `LayoutRouterContext`
+(isolated Cypress component mounts, which wrap in `PathnameContext.Provider`), so those
+specs are unaffected. Covered by `cypress/e2e/not-found.cy.tsx`.
+
+### The mobile drawer restores focus manually on Escape (`Layout.tsx`)
+
+The drawer is `modal={false}`, which opts out of Base UI's focus restoration. `finalFocus`
+and `modal="trap-focus"` do **not** fix this: Base UI only runs its restoration after the
+exit animation unmounts the popup, and its hardcoded `restoreFocus: "popup"` then
+re-focuses the detached popup node a frame later, knocking focus back to `<body>`. The
+`onOpenChange` handler restores focus to the toggle synchronously (keyed on
+`eventDetails.reason`), before unmount — nothing is left to clobber it. Covered by
+`cypress/e2e/navigation.cy.tsx` ("closes the drawer with Escape and returns focus…").
 
 ### `ContentContainer` padding must be mirrored in `image-sizes.ts`
 

@@ -36,7 +36,10 @@ const SectionHeading = ({
     actionButton,
     id,
 }: SectionHeadingProps): React.ReactElement => (
-    <div className="mt-8 mb-6 flex flex-col items-start gap-4 sm:flex-row sm:gap-6 md:mt-10">
+    <div
+        data-testid="section-heading-row"
+        className="mt-8 mb-6 flex flex-col items-start gap-4 sm:flex-row sm:gap-6 md:mt-10"
+    >
         <div className="min-w-0 flex-1">
             <h2
                 id={id}

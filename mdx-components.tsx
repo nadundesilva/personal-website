@@ -53,8 +53,14 @@ interface ImageProps {
 export function useMDXComponents(components: MDXComponents): MDXComponents {
     return {
         ...components,
-        a: ({ href, children }) =>
-            href ? (
+        a: ({ href, children }) => {
+            if (!href) {
+                throw new Error("MDX links must have an href.");
+            }
+            if (!children) {
+                throw new Error("MDX links must have link text.");
+            }
+            return (
                 <Link
                     href={new URL(
                         href,
@@ -64,7 +70,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 >
                     {children}
                 </Link>
-            ) : null,
+            );
+        },
         h1: ({ children }) => <SectionHeading>{children}</SectionHeading>,
         h2: ({ children }) => <SubsectionHeading>{children}</SubsectionHeading>,
         hr: () => <Separator aria-hidden className="my-8" />,

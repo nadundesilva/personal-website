@@ -21,7 +21,7 @@
 // must be literal numbers for constructing calc() strings.
 // "default" (minWidth: 0) covers all widths below sm and sorts last so it is
 // emitted as the final unconditional sizes clause.
-const CONTENT_BREAKPOINTS = {
+export const CONTENT_BREAKPOINTS = {
     "2xl": { minWidth: 1536, padding: 640 }, // px-80 → 2 × 320px
     "xl": { minWidth: 1280, padding: 320 }, // px-40 → 2 × 160px
     "lg": { minWidth: 1024, padding: 160 }, // px-20 → 2 × 80px

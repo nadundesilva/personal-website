@@ -13,7 +13,7 @@
  * © 2025 Nadun De Silva. All rights reserved.
  */
 
-import { glob } from "glob";
+import { glob, globSync } from "glob";
 import { type StaticImageData } from "next/image";
 
 export interface BlogArticle {
@@ -46,10 +46,24 @@ export function resolveWebsiteBlogArticlesSubPath(filePath: string): string {
         .replace(/(^|\/)page\.(mdx|tsx)$/, "");
 }
 
+// Bare filesystem discovery — matches article/group files without loading
+// their content. getBlogArticles/getSubGroupMetadatas below layer a dynamic
+// import() on top of this for callers that need metadata.
+export function discoverBlogArticleFilePaths(subPath = "."): string[] {
+    return globSync(
+        `${BLOG_ARTICLES_DIRECTORY_PREFIX}/${subPath}/**/${BLOG_ARTICLE_FILE}`,
+    );
+}
+
+export function discoverBlogArticleGroupFilePaths(subPath = "."): string[] {
+    return globSync(
+        `${BLOG_ARTICLES_DIRECTORY_PREFIX}/${subPath}/*/**/${BLOG_ARTICLES_GROUP_FILE}`,
+    );
+}
+
 async function getBlogArticles(subPath: string): Promise<BlogArticle[]> {
-    const blogArticlesFilePathPattern = `${BLOG_ARTICLES_DIRECTORY_PREFIX}/${subPath}/**/${BLOG_ARTICLE_FILE}`;
     const articles = await Promise.all(
-        (await glob(blogArticlesFilePathPattern)).map(async (filePath) => {
+        discoverBlogArticleFilePaths(subPath).map(async (filePath) => {
             const websiteSubPath = resolveWebsiteBlogArticlesSubPath(filePath);
             // readingTimeMinutes is injected by build/utils/rehype-reading-time.mjs
             // during MDX compilation, from the compiled article content - reused
@@ -107,10 +121,8 @@ async function getCurrentGroupMetadata(
 async function getSubGroupMetadatas(
     subPath: string,
 ): Promise<BlogArticleGroupMetadata[]> {
-    const groupFilePathPattern = `${BLOG_ARTICLES_DIRECTORY_PREFIX}/${subPath}/*/**/${BLOG_ARTICLES_GROUP_FILE}`;
-
     return await Promise.all(
-        (await glob(groupFilePathPattern)).map(async (filePath) => {
+        discoverBlogArticleGroupFilePaths(subPath).map(async (filePath) => {
             const websiteSubPath = resolveWebsiteBlogArticlesSubPath(filePath);
             const { metadata } = await import(
                 `../../app/(content)/blog-articles/(articles)/${websiteSubPath ? `${websiteSubPath}/` : ""}${BLOG_ARTICLES_GROUP_FILE}`

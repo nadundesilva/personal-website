@@ -26,10 +26,12 @@ const Contact = (): React.ReactElement => (
         <Card className="relative mb-16 md:mb-24">
             {/* Decorative blobs */}
             <div
+                data-testid="decorative-blob"
                 aria-hidden={true}
                 className="pointer-events-none absolute -top-24 -right-24 size-120 rounded-full bg-[radial-gradient(circle,color-mix(in_oklch,var(--primary)_9%,transparent),transparent_70%)]"
             />
             <div
+                data-testid="decorative-blob"
                 aria-hidden={true}
                 className="pointer-events-none absolute -bottom-20 -left-20 size-75 rounded-full bg-[radial-gradient(circle,color-mix(in_oklch,var(--primary)_6%,transparent),transparent_70%)]"
             />

@@ -74,6 +74,7 @@ const AnimatedStatValue = ({
     return (
         <>
             <span
+                data-testid="stat-value"
                 aria-hidden={true}
                 className="[font-variant-numeric:tabular-nums]"
             >

@@ -15,7 +15,8 @@
         "format:check": "prettier . --check",
         "format": "prettier . --write",
         "cypress:open": "cypress open",
-        "cypress:run": "cypress run",
+        "cypress:e2e:run": "cypress run --e2e",
+        "cypress:component:run": "cypress run --component",
         "cypress:typecheck": "tsc --noEmit -p cypress/tsconfig.json",
         "instrument": "nyc instrument --in-place --compact=false .",
         "prepare": "husky"
@@ -68,6 +69,7 @@
         "@types/rss": "0.0.32",
         "browserslist": "4.28.4",
         "cypress": "15.18.0",
+        "cypress-real-events": "^1.15.0",
         "eslint": "9.39.4",
         "eslint-config-next": "16.2.9",
         "eslint-config-prettier": "10.1.8",

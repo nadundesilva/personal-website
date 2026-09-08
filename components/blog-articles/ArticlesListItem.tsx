@@ -87,7 +87,11 @@ const ArticleListItem = ({
                     <div className="text-muted-foreground flex items-center gap-1">
                         <Clock aria-hidden={true} className="size-3.5" />
                         <span className="text-xs">
-                            ~{blogArticle.readingTimeMinutes} min read
+                            ~{blogArticle.readingTimeMinutes} min
+                            {blogArticle.readingTimeMinutes === 1
+                                ? ""
+                                : "s"}{" "}
+                            read
                         </span>
                     </div>
                     <DateInfo

@@ -55,13 +55,19 @@ const ReadingProgress = (): React.ReactElement => {
     const [totalReadingMinutes, setTotalReadingMinutes] = useState<
         number | null
     >(null);
+    // Defaults to hidden - the FAB shows only once a page is known to be
+    // scrollable.
+    const [isScrollable, setIsScrollable] = useState(false);
 
     useEffect(() => {
         const id = requestAnimationFrame(() => setMounted(true));
         return () => cancelAnimationFrame(id);
     }, []);
 
-    // Effect 1: Read pre-computed reading time injected at build time by the rehype plugin.
+    // Effect 1: Read pre-computed reading time injected at build time by the rehype plugin,
+    // and the page's initial scrollability alongside it - both are set together in the same
+    // rAF callback so they land in one batched render, rather than isScrollable trailing
+    // totalReadingMinutes by a render and causing the FAB to flash hidden then visible.
     // setState is deferred to a rAF callback to satisfy the react-hooks/set-state-in-effect rule.
     useEffect(() => {
         const el = document.querySelector("[data-reading-time-minutes]");
@@ -72,7 +78,12 @@ const ReadingProgress = (): React.ReactElement => {
             10,
         );
 
-        const id = requestAnimationFrame(() => setTotalReadingMinutes(minutes));
+        const id = requestAnimationFrame(() => {
+            setTotalReadingMinutes(minutes);
+            setIsScrollable(
+                document.documentElement.scrollHeight - window.innerHeight > 0,
+            );
+        });
         return () => cancelAnimationFrame(id);
     }, []);
 
@@ -85,8 +96,19 @@ const ReadingProgress = (): React.ReactElement => {
             const scrolled = window.scrollY;
             const total =
                 document.documentElement.scrollHeight - window.innerHeight;
-            const newProgress =
-                total > 0 ? Math.min(100, (scrolled / total) * 100) : 0;
+
+            setIsScrollable(total > 0);
+            // A page whose content already fits the viewport never fires a
+            // scroll event, so without this early return progress/minutesLeft
+            // would stay stuck at their initial values forever - the FAB is
+            // hidden instead (see isScrollable below) rather than showing a
+            // reading-progress indicator that can never change.
+            if (total <= 0) return;
+
+            const newProgress = Math.max(
+                0,
+                Math.min(100, (scrolled / total) * 100),
+            );
             setProgress(newProgress);
             setMinutesLeft(
                 Math.max(
@@ -97,8 +119,18 @@ const ReadingProgress = (): React.ReactElement => {
         };
 
         window.addEventListener("scroll", handleScroll, { passive: true });
+
+        // A page judged unscrollable at mount can still become scrollable
+        // shortly after - e.g. a late-loading image or web font pushes the
+        // document taller. With the FAB hidden the reader has no reason to
+        // scroll, so no "scroll" event would ever arrive to recheck it;
+        // observe layout height directly instead of relying on one.
+        const resizeObserver = new ResizeObserver(handleScroll);
+        resizeObserver.observe(document.documentElement);
+
         return () => {
             window.removeEventListener("scroll", handleScroll);
+            resizeObserver.disconnect();
         };
     }, [totalReadingMinutes]);
 
@@ -113,15 +145,19 @@ const ReadingProgress = (): React.ReactElement => {
     // Portal into document.body so overflow-x:clip on <main> cannot clip this fixed element.
     const fab = (
         <div
+            data-testid="reading-progress-fab"
             className={cn(
                 "fixed right-6 bottom-20 z-30",
                 "pointer-events-none size-10",
                 "motion-safe:transition-opacity motion-safe:duration-300",
-                totalReadingMinutes !== null ? "opacity-100" : "opacity-0",
+                totalReadingMinutes !== null && isScrollable
+                    ? "opacity-100"
+                    : "opacity-0",
             )}
         >
             <Pill visible={showInitialRead}>
-                {totalReadingMinutes} min read
+                {totalReadingMinutes} min{totalReadingMinutes === 1 ? "" : "s"}{" "}
+                read
             </Pill>
             <Pill visible={showMinutesLeft}>
                 {minutesLeft} min{minutesLeft === 1 ? "" : "s"} left
