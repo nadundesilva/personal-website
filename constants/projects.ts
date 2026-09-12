@@ -115,7 +115,7 @@ export const EnterpriseProjects: Record<string, Project> = {
         description:
             "An implementation of the Cell-based Architecture which aims to improve productivity of the development of complex microservices, across multiple teams.",
         logo: Logos.Cellery,
-        link: "https://github.com/wso2-cellery/cellery",
+        link: "https://github.com/wso2-cellery",
         timePeriod: new DateRange(
             new Date(2018, "September"),
             new Date(2019, "December"),

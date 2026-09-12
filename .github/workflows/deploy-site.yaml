@@ -102,6 +102,11 @@ jobs:
 
     run-e2e-tests:
         strategy:
+            # Without this, one browser's failure cancels the others
+            # mid-run before their own results are known - happened in run
+            # 34724463775, where firefox's failure cancelled chrome and
+            # electron before they could finish.
+            fail-fast: false
             matrix:
                 browser:
                     - electron
@@ -169,6 +174,11 @@ jobs:
 
     run-component-tests:
         strategy:
+            # Without this, one browser's failure cancels the others
+            # mid-run before their own results are known - happened in run
+            # 34718598896, where firefox's failure cancelled electron
+            # before it could finish.
+            fail-fast: false
             matrix:
                 browser:
                     - electron
@@ -196,6 +206,11 @@ jobs:
               with:
                   component: true
                   browser: ${{ matrix.browser }}
+                  # Headless Chrome/Edge report `hover: none`, breaking
+                  # any test that asserts hover-driven CSS. Headed mode
+                  # reports `hover: hover` under the Xvfb these runners
+                  # already provision.
+                  headed: true
                   record: true
                   tag: component-tests-in-browser-${{ matrix.browser }}
               env:
@@ -203,7 +218,7 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Upload Code Coverage to CodeCov
               if: ${{ github.event_name == 'push' }}
-              uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
+              uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
               with:
                   name: coverage-reports
                   flags: component-tests
@@ -244,7 +259,7 @@ jobs:
               run: npm run test:unit:coverage
             - name: Upload Code Coverage to CodeCov
               if: ${{ github.event_name == 'push' }}
-              uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
+              uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
               with:
                   name: coverage-reports
                   flags: unit-tests
@@ -294,7 +309,7 @@ jobs:
         needs: build-site
         env:
             # Hostnames and status codes are in the same order.
-            BOT_RESTRICTED_WEBSITES_PATTERN: 'medium\.com|instagram\.com|linkedin\.com|scholar\.google\.com'
+            BOT_RESTRICTED_WEBSITES_PATTERN: 'medium\.com|instagram\.com|linkedin\.com|scholar\.google\.com|x\.com'
             BOT_RESTRICTED_STATUS_CODES: "403,429,999"
         steps:
             - name: Checkout
@@ -348,6 +363,11 @@ jobs:
 
     check-site-build:
         strategy:
+            # Without this, one browser's failure cancels the others
+            # mid-run before their own results are known - happened in run
+            # 34724463775, where firefox's failure left chrome and
+            # electron's results unknown.
+            fail-fast: false
             matrix:
                 browser:
                     - electron
