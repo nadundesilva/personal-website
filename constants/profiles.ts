@@ -26,8 +26,7 @@ import type React from "react";
 import LinkedInIcon from "@/components/icons/LinkedInIcon";
 
 export type ProfileIcon =
-    | IconType
-    | React.ComponentType<{ size?: number; className?: string }>;
+    IconType | React.ComponentType<{ size?: number; className?: string }>;
 
 export interface Profile {
     name: string;

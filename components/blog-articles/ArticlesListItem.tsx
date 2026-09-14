@@ -42,6 +42,11 @@ const ArticleListItem = ({
     <Card className="group h-full overflow-visible motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-bounce-out motion-safe:hover:scale-[1.02]">
         <Link
             href={`/blog-articles/${blogArticle.websiteSubPath}`}
+            // An index page can list a dozen+ of these cards, and Next's default
+            // viewport prefetch would eagerly fetch every card's RSC payload as it
+            // scrolls into view - wasted bandwidth for routes most visitors never
+            // open (see WelcomeBanner.tsx's CV link for the same reasoning).
+            prefetch={false}
             className="hover:bg-accent/5 flex h-full flex-col overflow-hidden rounded-lg font-normal text-inherit hover:no-underline hover:opacity-100 hover:shadow-md focus-visible:rounded-lg motion-safe:transition-[background-color,box-shadow] motion-safe:duration-300"
         >
             <div className="relative aspect-video w-full overflow-hidden">

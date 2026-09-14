@@ -25,8 +25,7 @@ const CodeBlock = ({
 }: React.HTMLAttributes<HTMLPreElement>): React.ReactElement => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const dataLanguage = (props as Record<string, unknown>)["data-language"] as
-        | string
-        | undefined;
+        string | undefined;
 
     return (
         <div
