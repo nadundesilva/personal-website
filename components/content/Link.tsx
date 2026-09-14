@@ -24,7 +24,15 @@ type CustomLinkProps = React.ComponentPropsWithoutRef<typeof NextLink>;
 
 const CustomLink = forwardRef<HTMLAnchorElement, CustomLinkProps>(
     (
-        { href, children, target, className, rel: callerRel, ...restProps },
+        {
+            href,
+            children,
+            target,
+            className,
+            rel: callerRel,
+            onClick: callerOnClick,
+            ...restProps
+        },
         ref,
     ): React.ReactElement => {
         const computedRel =
@@ -37,6 +45,26 @@ const CustomLink = forwardRef<HTMLAnchorElement, CustomLinkProps>(
             ariaLabel = `${ariaLabel} (opens in a new tab)`;
         }
 
+        const handleClick = (
+            event: React.MouseEvent<HTMLAnchorElement>,
+        ): void => {
+            callerOnClick?.(event);
+            if (event.defaultPrevented) return;
+
+            // Next.js 16.3's app-router scroll handler (`appNewScrollHandler`,
+            // enabled by default since 16.3.0) scrolls a same-page hash target
+            // into view but no longer focuses it - a behaviour change made for
+            // segment focus after a route change, not for hash targets. Restore
+            // it here so skip links keep moving keyboard/screen-reader focus.
+            // preventScroll: true avoids fighting the scroll Next.js already
+            // started (see app/app.css `scroll-behavior: smooth`).
+            if (typeof href === "string" && href.startsWith("#")) {
+                document
+                    .getElementById(href.slice(1))
+                    ?.focus({ preventScroll: true });
+            }
+        };
+
         return (
             <NextLink
                 href={href}
@@ -48,6 +76,7 @@ const CustomLink = forwardRef<HTMLAnchorElement, CustomLinkProps>(
                     className,
                 )}
                 {...restProps}
+                onClick={handleClick}
                 aria-label={ariaLabel}
             >
                 {children}
