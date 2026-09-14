@@ -745,8 +745,7 @@ describe("education page JSON-LD structured data", () => {
                     (el as HTMLScriptElement).textContent ?? "{}",
                 ) as Record<string, unknown>;
                 const graph = data["@graph"] as
-                    | Record<string, unknown>[]
-                    | undefined;
+                    Record<string, unknown>[] | undefined;
                 graph
                     ?.filter((e) => e["@type"] === "ScholarlyArticle")
                     .forEach((e) => scholarlyArticles.push(e));

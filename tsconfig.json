@@ -3,15 +3,14 @@
         "noImplicitAny": true,
         "noImplicitThis": true,
         "strictNullChecks": true,
-        "baseUrl": ".",
         "paths": {
-            "@/app/*": ["app/*"],
-            "@/components/*": ["components/*"],
-            "@/constants/*": ["constants/*"],
-            "@/hooks/*": ["hooks/*"],
-            "@/shadcn/*": ["shadcn/*"],
-            "@/utils/*": ["utils/*"],
-            "@/assets/*": ["assets/*"]
+            "@/app/*": ["./app/*"],
+            "@/components/*": ["./components/*"],
+            "@/constants/*": ["./constants/*"],
+            "@/hooks/*": ["./hooks/*"],
+            "@/shadcn/*": ["./shadcn/*"],
+            "@/utils/*": ["./utils/*"],
+            "@/assets/*": ["./assets/*"]
         },
         "target": "ES2022",
         "lib": ["ES2022", "dom", "dom.iterable", "esnext"],
