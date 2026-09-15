@@ -48,7 +48,17 @@ afterEach(() => {
 function AllProviders({ children }: { children: React.ReactNode }) {
     return React.createElement(
         ThemeProvider,
-        { attribute: "class", defaultTheme: "light", enableSystem: false },
+        {
+            attribute: "class",
+            defaultTheme: "light",
+            enableSystem: false,
+
+            // React 19.3 warns on a client-rendered <script> with no data-block
+            // type. next-themes' pre-hydration script never executes under this
+            // client-only mount anyway; theme here comes from ThemeProvider's
+            // useEffect, not the script.
+            scriptProps: { type: "application/json" },
+        },
         React.createElement(
             LazyMotion,
             // strict mirrors app/layout.tsx: throws if any component imports

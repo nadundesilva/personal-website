@@ -14,5 +14,10 @@
  */
 const config = {
     extends: ["stylelint-config-standard", "stylelint-config-tailwindcss"],
+    rules: {
+        // Tailwind's @apply collides with the unrelated, dashed-ident-only @apply
+        // grammar csstree gained from @csstools/css-syntax-patches-for-csstree.
+        "at-rule-prelude-no-invalid": [true, { ignoreAtRules: ["apply"] }],
+    },
 };
 export default config;
