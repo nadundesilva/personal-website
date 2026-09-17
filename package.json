@@ -53,7 +53,7 @@
     },
     "devDependencies": {
         "@cypress/code-coverage": "4.0.3",
-        "@cypress/webpack-batteries-included-preprocessor": "4.2.0",
+        "@cypress/webpack-batteries-included-preprocessor": "5.0.0",
         "@istanbuljs/nyc-config-typescript": "1.0.2",
         "@mdx-js/loader": "3.1.1",
         "@mdx-js/react": "3.1.1",
