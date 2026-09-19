@@ -101,7 +101,7 @@
     },
     "overrides": {
         "@cypress/webpack-batteries-included-preprocessor": {
-            "@cypress/webpack-preprocessor": "7.1.2"
+            "@cypress/webpack-preprocessor": "8.0.0"
         }
     }
 }
