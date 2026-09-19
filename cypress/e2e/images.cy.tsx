@@ -45,9 +45,19 @@ describe("images across every page", () => {
             cy.scrollTo("bottom", { duration: 1000, ensureScrollable: false });
             cy.assertVisibleImagesLoaded();
 
-            cy.findByRole("button", { name: /switch to dark theme/i }).click({
-                waitForAnimations: true,
-            });
+            cy.findByRole("button", { name: /switch to dark theme/i })
+                // force: true - the button is a zero-delay TooltipTrigger with an
+                // unscoped transition-all; Cypress's own hover-based actionability
+                // probing can toggle its aria-expanded styling mid-check, which
+                // this element's real, unrestricted CSS transition then reports
+                // back as "still animating" indefinitely. The click is genuinely
+                // actionable for a real user - this bypasses only Cypress's own
+                // false-positive check, matching the established pattern for this
+                // exact situation elsewhere in the suite (home.cy.tsx,
+                // blog-articles.cy.tsx, layout.cy.tsx, CopyButton.cy.tsx).
+                .click({
+                    force: true,
+                });
             cy.get("html").should("have.class", "dark");
             cy.assertVisibleImagesLoaded();
         }

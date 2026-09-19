@@ -145,20 +145,52 @@ jobs:
               env:
                   BUILD_TYPE: test
                   NODE_ENV: development
+            - name: Start Test Server
+              # Runs to completion before Cypress starts, rather than being
+              # passed as the action's `start:` (backgrounded, unawaited) -
+              # on a cold runner the script's own image pull + wait-on can
+              # lose the race against Cypress's first spec launch, causing
+              # `connect ECONNREFUSED 127.0.0.1:443`.
+              #
+              # The server startup script is sourced rather than executed, so
+              # its exports - e.g. NODE_EXTRA_CA_CERTS - land in this step's
+              # shell instead of a subshell. That export still dies with the
+              # step, so it's re-exported via GITHUB_ENV below.
+              run: |
+                  source .github/scripts/start-server.sh
+                  echo "NODE_EXTRA_CA_CERTS=${ROOT_CA_CERT}" >>"${GITHUB_ENV}"
+              env:
+                  WEBSITE_BUILD_DIR: out
             - name: Run E2E Tests
               uses: cypress-io/github-action@09090944bd8aaa2a517cefb6e38bf1aae336b42b # v7.4.3
               with:
-                  start: bash .github/scripts/start-server.sh
                   browser: ${{ matrix.browser }}
                   record: true
                   tag: prebuild-test-in-browser-${{ matrix.browser }}
               env:
-                  WEBSITE_BUILD_DIR: out
                   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
                   CYPRESS_BASE_URL: https://nadundesilva.com
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Shutdown Test Server
               run: bash .github/scripts/stop-server.sh
+            - name: Collect Browser Crash Dumps
+              if: failure()
+              # Chrome/Edge write their crash database to a single, fixed,
+              # system-level "Crash Reports" path, independent of Cypress's
+              # own --user-data-dir. electron and firefox aren't covered:
+              # electron doesn't run a crash reporter at all, and firefox's
+              # equivalent path isn't confirmed for Cypress's automated runs.
+              run: |
+                  mkdir -p cypress/crash-dumps
+                  case "${{ matrix.browser }}" in
+                      chrome) dir="${HOME}/.config/google-chrome/Crash Reports" ;;
+                      edge) dir="${HOME}/.config/microsoft-edge/Crash Reports" ;;
+                      *) dir="" ;;
+                  esac
+                  if [ -n "$dir" ] && [ -d "$dir" ]; then
+                      cp -r "$dir" cypress/crash-dumps/
+                  fi
+                  ls -laR cypress/crash-dumps || true
             - name: Upload Code Coverage to CodeCov
               if: ${{ github.event_name == 'push' }}
               uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
@@ -177,6 +209,7 @@ jobs:
                   path: |
                       cypress/videos/
                       cypress/screenshots/
+                      cypress/crash-dumps/
             - name: Upload Code Coverage Report Artifacts
               uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
               with:
@@ -405,20 +438,52 @@ jobs:
               with:
                   name: site
                   path: _site/
+            - name: Start Test Server
+              # Runs to completion before Cypress starts, rather than being
+              # passed as the action's `start:` (backgrounded, unawaited) -
+              # on a cold runner the script's own image pull + wait-on can
+              # lose the race against Cypress's first spec launch, causing
+              # `connect ECONNREFUSED 127.0.0.1:443`.
+              #
+              # The server startup script is sourced rather than executed, so
+              # its exports - e.g. NODE_EXTRA_CA_CERTS - land in this step's
+              # shell instead of a subshell. That export still dies with the
+              # step, so it's re-exported via GITHUB_ENV below.
+              run: |
+                  source .github/scripts/start-server.sh
+                  echo "NODE_EXTRA_CA_CERTS=${ROOT_CA_CERT}" >>"${GITHUB_ENV}"
+              env:
+                  WEBSITE_BUILD_DIR: _site
             - name: Run E2E Tests
               uses: cypress-io/github-action@09090944bd8aaa2a517cefb6e38bf1aae336b42b # v7.4.3
               with:
-                  start: bash .github/scripts/start-server.sh
                   browser: ${{ matrix.browser }}
                   record: true
                   tag: check-site-build-in-browser-${{ matrix.browser }}
               env:
-                  WEBSITE_BUILD_DIR: _site
                   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
                   CYPRESS_BASE_URL: https://nadundesilva.com
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Shutdown Test Server
               run: bash .github/scripts/stop-server.sh
+            - name: Collect Browser Crash Dumps
+              if: failure()
+              # Chrome/Edge write their crash database to a single, fixed,
+              # system-level "Crash Reports" path, independent of Cypress's
+              # own --user-data-dir. electron and firefox aren't covered:
+              # electron doesn't run a crash reporter at all, and firefox's
+              # equivalent path isn't confirmed for Cypress's automated runs.
+              run: |
+                  mkdir -p cypress/crash-dumps
+                  case "${{ matrix.browser }}" in
+                      chrome) dir="${HOME}/.config/google-chrome/Crash Reports" ;;
+                      edge) dir="${HOME}/.config/microsoft-edge/Crash Reports" ;;
+                      *) dir="" ;;
+                  esac
+                  if [ -n "$dir" ] && [ -d "$dir" ]; then
+                      cp -r "$dir" cypress/crash-dumps/
+                  fi
+                  ls -laR cypress/crash-dumps || true
             - name: Upload artifacts
               if: always()
               uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -427,6 +492,7 @@ jobs:
                   path: |
                       cypress/videos/
                       cypress/screenshots/
+                      cypress/crash-dumps/
 
     run-website-audit:
         name: Run Website Audit

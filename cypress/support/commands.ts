@@ -132,13 +132,24 @@ Cypress.Commands.add("assertVisibleImagesLoaded", (): void => {
 
         cy.get("img:visible").each(($img) => {
             cy.wrap($img).scrollIntoView();
-            // Default 4s command timeout is occasionally too tight: the
-            // browser's native loading="lazy" fetch is scheduled on an
-            // internal heuristic after scrollIntoView(), not a bounded-
-            // latency event, so decode can occasionally take longer under
-            // load. The timeout must be set on the command directly
-            // preceding .should() - it retries that command, not the whole
-            // chain.
+
+            // Waits on the browser actually starting the fetch, not a fixed
+            // guess at how long that takes: Cypress's .should() retries this
+            // assertion on its own timer until currentSrc is set, so the
+            // wait is exactly as long as needed - no shorter (which would
+            // under-wait on a slower runner) and no longer (which would
+            // waste time once the fetch has already started). The retry
+            // timer doesn't run continuous rendering work, so it doesn't
+            // compete with the image's own decode/paint for main-thread
+            // time on constrained runners the way a scroll animation would.
+            cy.wrap($img, { timeout: 20000 })
+                .should("have.prop", "currentSrc")
+                .and("not.equal", "");
+
+            // The 20s timeout is a margin for genuine decode-under-load
+            // latency once the fetch has actually started. It must be set
+            // on the command directly preceding .should() - it retries that
+            // command, not the whole chain.
             cy.wrap($img, { timeout: 20000 })
                 .should("have.prop", "complete", true)
                 .and("have.prop", "naturalWidth")
