@@ -31,6 +31,26 @@ const mockLogoData: LogoImageData = {
 };
 
 describe("Logo", () => {
+    it("loads immediately at high priority when it is the first thing on the page", () => {
+        cy.mount(<Logo {...mockLogoData} alt="" fetchPriority="high" />);
+
+        // Both themes' images are prioritized: only one is shown at a time,
+        // and either may be the LCP element.
+        for (const testId of ["logo-light", "logo-dark"]) {
+            cy.findByTestId(testId)
+                .should("have.attr", "fetchpriority", "high")
+                .and("have.attr", "loading", "eager");
+        }
+    });
+
+    it("defers loading by default so below-the-fold logos do not compete for bandwidth", () => {
+        cy.mount(<Logo {...mockLogoData} alt="" />);
+
+        for (const testId of ["logo-light", "logo-dark"]) {
+            cy.findByTestId(testId).should("have.attr", "loading", "lazy");
+        }
+    });
+
     it("stays out of the accessibility tree when it is purely decorative", () => {
         cy.mount(<Logo {...mockLogoData} alt="" />);
 

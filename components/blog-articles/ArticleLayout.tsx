@@ -32,6 +32,7 @@ import {
 } from "@/components/content";
 import { Date as FormattableDate } from "@/constants/date";
 import { SCHEMA_PERSON_ID, WEBSITE_PUBLIC_URL } from "@/constants/metadata";
+import { getOptimizedImage } from "@/utils/common/image-metadata";
 
 interface BlogMetadata {
     image: StaticImageData;
@@ -67,7 +68,10 @@ const ArticleLayout = ({
         "@id": pageUrl,
         "headline": pageMetadata.title,
         "description": pageMetadata.description,
-        "image": new URL(blogMetadata.image.src, WEBSITE_PUBLIC_URL).toString(),
+        "image": new URL(
+            getOptimizedImage(blogMetadata.image).src,
+            WEBSITE_PUBLIC_URL,
+        ).toString(),
         "inLanguage": "en-US",
         "datePublished": blogMetadata.publishedDate.toISOString(),
         // dateModified intentionally equals datePublished. Computing it from

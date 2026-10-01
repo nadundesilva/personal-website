@@ -37,22 +37,61 @@ describe("ScrollReveal", () => {
             .should("have.class", "my-custom-class");
     });
 
-    it("keeps its content hidden until the reader scrolls it into view", () => {
+    it("shows content already in the initial viewport without requiring a scroll", () => {
         cy.mount(
-            <>
-                <div style={{ height: "150vh" }} />
-                <ScrollReveal>
-                    <p>Below the fold</p>
-                </ScrollReveal>
-            </>,
+            <ScrollReveal>
+                <p>Above the fold</p>
+            </ScrollReveal>,
         );
 
-        cy.contains("Below the fold")
-            .parent()
-            .should("have.css", "opacity", "0");
-        cy.scrollTo("bottom");
-        cy.contains("Below the fold")
-            .parent()
-            .should("have.css", "opacity", "1");
+        cy.contains("Above the fold").should("be.visible");
+    });
+
+    // The reveal relies on animation-trigger, which only Chromium-based
+    // browsers new enough to ship it support. Elsewhere the @supports gate
+    // (app/app.css) leaves content statically visible, so the tests below have
+    // nothing to assert.
+    describe("where scroll-triggered animations are supported", () => {
+        beforeEach(function () {
+            if (!CSS.supports("animation-trigger", "--t play-forwards")) {
+                this.skip();
+            }
+        });
+
+        it("keeps its content hidden until the reader scrolls it into view", () => {
+            cy.mount(
+                <>
+                    <div style={{ height: "150vh" }} />
+                    <ScrollReveal>
+                        <p>Below the fold</p>
+                    </ScrollReveal>
+                </>,
+            );
+
+            cy.contains("Below the fold")
+                .parent()
+                .should("have.css", "opacity", "0");
+            cy.scrollTo("bottom");
+            cy.contains("Below the fold")
+                .parent()
+                .should("have.css", "opacity", "1");
+        });
+
+        it("fully reveals content that is only partly in view on load, without requiring a scroll", () => {
+            cy.mount(
+                <>
+                    <div style={{ height: "calc(100vh - 20px)" }} />
+                    <ScrollReveal>
+                        <div style={{ height: "100vh" }}>
+                            Straddling the fold
+                        </div>
+                    </ScrollReveal>
+                </>,
+            );
+
+            cy.contains("Straddling the fold")
+                .parent()
+                .should("have.css", "opacity", "1");
+        });
     });
 });

@@ -12,10 +12,9 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-"use client";
-
-import { m } from "motion/react";
 import type React from "react";
+
+import { cn } from "@/shadcn/lib/cn";
 
 interface ScrollRevealProps {
     children: React.ReactNode;
@@ -28,19 +27,12 @@ const ScrollReveal = ({
     delay = 0,
     className,
 }: ScrollRevealProps): React.ReactElement => (
-    <m.div
-        className={className}
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "0px 0px -20px 0px", amount: 0.05 }}
-        transition={{
-            duration: 0.375,
-            ease: [0, 0, 0.2, 1],
-            delay: delay / 1000,
-        }}
+    <div
+        className={cn("scroll-reveal", className)}
+        style={delay ? { animationDelay: `${delay}ms` } : undefined}
     >
         {children}
-    </m.div>
+    </div>
 );
 
 export default ScrollReveal;

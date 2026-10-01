@@ -156,3 +156,36 @@
         transform: translateY(0);
     }
 }
+
+@keyframes scroll-reveal-in {
+    from {
+        opacity: 0;
+        scale: 0.97;
+    }
+
+    to {
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+/* ─── Scroll-triggered reveal (ScrollReveal primitive) ────────────────────── */
+
+/* Content stays visible by default (no @supports/no-preference match), so it
+   never depends on JS for its initial paint and browsers without
+   animation-trigger show it statically. Where supported, the reveal starts when
+   the element's top edge enters the viewport and runs for a fixed duration.
+   Its progress must not depend on scroll position: content straddling the fold
+   at load would otherwise stay part-transparent and fail WCAG AA contrast.
+   scale is anchored via transform-origin so it grows in place with no
+   positional offset. */
+@media (prefers-reduced-motion: no-preference) {
+    @supports (animation-trigger: --t play-forwards) {
+        .scroll-reveal {
+            animation: scroll-reveal-in 0.375s var(--ease-expo-out) both;
+            timeline-trigger: --scroll-reveal view() entry 0% exit 100%;
+            animation-trigger: --scroll-reveal play-forwards;
+            transform-origin: top center;
+        }
+    }
+}

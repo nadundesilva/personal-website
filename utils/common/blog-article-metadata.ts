@@ -16,6 +16,8 @@
 import { type Metadata } from "next";
 import { type StaticImageData } from "next/image";
 
+import { getOptimizedImage } from "@/utils/common/image-metadata";
+
 export interface BlogArticleMetadata {
     image: StaticImageData;
     mediumUrl: string;
@@ -25,20 +27,23 @@ export interface BlogArticleMetadata {
 
 export const buildArticleMetadata = (
     blogMetadata: BlogArticleMetadata,
-): Pick<Metadata, "keywords" | "openGraph" | "twitter"> => ({
-    keywords: blogMetadata.keywords,
-    openGraph: {
-        // `type: "article"` must live here, not in the blog layout: Next.js replaces
-        // (not deep-merges) the `openGraph` object per segment, so each page.mdx's own
-        // `openGraph` would drop a layout-level type. Without type, article:* tags
-        // (published_time, tags) are also omitted.
-        // https://nextjs.org/docs/app/api-reference/functions/generate-metadata#merging
-        type: "article",
-        images: [blogMetadata.image.src],
-        publishedTime: blogMetadata.publishedDate.toISOString(),
-        tags: blogMetadata.keywords,
-    },
-    twitter: {
-        images: [blogMetadata.image.src],
-    },
-});
+): Pick<Metadata, "keywords" | "openGraph" | "twitter"> => {
+    const image = getOptimizedImage(blogMetadata.image);
+    return {
+        keywords: blogMetadata.keywords,
+        openGraph: {
+            // `type: "article"` must live here, not in the blog layout: Next.js replaces
+            // (not deep-merges) the `openGraph` object per segment, so each page.mdx's own
+            // `openGraph` would drop a layout-level type. Without type, article:* tags
+            // (published_time, tags) are also omitted.
+            // https://nextjs.org/docs/app/api-reference/functions/generate-metadata#merging
+            type: "article",
+            images: [image.src],
+            publishedTime: blogMetadata.publishedDate.toISOString(),
+            tags: blogMetadata.keywords,
+        },
+        twitter: {
+            images: [image.src],
+        },
+    };
+};

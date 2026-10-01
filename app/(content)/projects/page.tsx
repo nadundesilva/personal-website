@@ -46,12 +46,14 @@ interface ProjectSectionHeadingProps {
     id: string;
     project: Project;
     logoClassName: string;
+    logoFetchPriority?: "high";
 }
 
 const ProjectSectionHeading = ({
     id,
     project,
     logoClassName,
+    logoFetchPriority,
 }: ProjectSectionHeadingProps): React.ReactElement => (
     <SectionHeading
         id={id}
@@ -62,6 +64,7 @@ const ProjectSectionHeading = ({
                 srcDark={project.logo.srcDark}
                 alt=""
                 className={logoClassName}
+                fetchPriority={logoFetchPriority}
             />
         }
     >
@@ -139,6 +142,7 @@ const Projects = (): React.ReactElement => {
                     id="section-project-indexity"
                     project={ProjectDetails.Indexity}
                     logoClassName="h-[1.5em]"
+                    logoFetchPriority="high"
                 />
                 <Paragraph>
                     {Indexity} is a cloud-native Enterprise Master Patient Index

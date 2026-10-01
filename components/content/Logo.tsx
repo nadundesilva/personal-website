@@ -27,6 +27,7 @@ const IMAGE_SIZES = generateSizesForContentBreakpoints({
 interface LogoProps extends LogoImageData {
     alt: string;
     className?: string;
+    fetchPriority?: "high" | "low" | "auto";
 }
 
 const Logo = ({
@@ -34,6 +35,7 @@ const Logo = ({
     srcDark,
     alt,
     className,
+    fetchPriority,
 }: LogoProps): React.ReactElement => (
     <div
         aria-hidden={alt === "" ? true : undefined}
@@ -48,6 +50,8 @@ const Logo = ({
             src={srcLight}
             fill
             sizes={IMAGE_SIZES}
+            fetchPriority={fetchPriority}
+            loading={fetchPriority === "high" ? "eager" : undefined}
             className="object-scale-down object-left sm:object-right dark:hidden"
         />
         <Image
@@ -57,6 +61,8 @@ const Logo = ({
             src={srcDark}
             fill
             sizes={IMAGE_SIZES}
+            fetchPriority={fetchPriority}
+            loading={fetchPriority === "high" ? "eager" : undefined}
             className="hidden object-scale-down object-left sm:object-right dark:block"
         />
     </div>

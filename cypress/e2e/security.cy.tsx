@@ -59,6 +59,9 @@ describe("security response headers", () => {
                     expect(content).to.match(
                         /connect-src[^;]*https:\/\/o4507214991917056\.ingest\.us\.sentry\.io/,
                     );
+                    expect(content).to.match(
+                        /connect-src[^;]*https:\/\/cloudflareinsights\.com/,
+                    );
                 });
         }
     });

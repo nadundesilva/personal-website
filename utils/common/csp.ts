@@ -30,6 +30,7 @@ export const createCspValues = (): string[] => {
         "connect-src": [
             "'self'",
             "https://o4507214991917056.ingest.us.sentry.io",
+            "https://cloudflareinsights.com",
         ],
     };
 

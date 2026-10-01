@@ -41,12 +41,14 @@ interface ExperienceSectionHeadingProps {
     id: string;
     experience: Experience;
     logoClassName?: string;
+    logoFetchPriority?: "high";
 }
 
 const ExperienceSectionHeading = ({
     id,
     experience,
     logoClassName,
+    logoFetchPriority,
 }: ExperienceSectionHeadingProps): React.ReactElement => (
     <SectionHeading
         id={id}
@@ -57,6 +59,7 @@ const ExperienceSectionHeading = ({
                 srcDark={experience.company.logo.srcDark}
                 alt=""
                 className={logoClassName}
+                fetchPriority={logoFetchPriority}
             />
         }
     >
@@ -150,6 +153,7 @@ const Experience = (): React.ReactElement => {
                     id="section-lead-mccrae"
                     experience={Experiences.McCraeTechLeadSoftwareEngineer}
                     logoClassName="h-[1.5em]"
+                    logoFetchPriority="high"
                 />
                 <Paragraph>
                     After the divestment of {McCraeTech} from {OrionHealth}, I

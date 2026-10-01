@@ -12,11 +12,19 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-import { describe, expect, it } from "@jest/globals";
+import { beforeAll, describe, expect, it } from "@jest/globals";
 
 import { buildArticleMetadata } from "@/utils/common/blog-article-metadata";
 
-const image = { src: "/images/article.webp", height: 630, width: 1200 };
+const image = {
+    src: "/_next/static/media/article.abc123.webp",
+    height: 630,
+    width: 1200,
+};
+
+beforeAll(() => {
+    process.env.nextImageExportOptimizer_exportFolderName = "optimized-images";
+});
 
 describe("buildArticleMetadata", () => {
     it("declares each post as an article so crawlers emit article tags", () => {
@@ -65,7 +73,8 @@ describe("buildArticleMetadata", () => {
             keywords: [],
         });
 
-        expect(metadata.openGraph?.images).toEqual([image.src]);
-        expect(metadata.twitter?.images).toEqual([image.src]);
+        const optimized = ["/optimized-images/article.abc123-opt-1080.WEBP"];
+        expect(metadata.openGraph?.images).toEqual(optimized);
+        expect(metadata.twitter?.images).toEqual(optimized);
     });
 });

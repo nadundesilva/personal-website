@@ -488,7 +488,7 @@ Two separate homes, split by provenance:
 | `LeftAccent`             | Left border accent wrapping a content block                                             |
 | `PrimaryTintedIcon`      | Icon tinted with the primary color                                                      |
 | `ProgressFab`            | Circular progress ring FAB — used by `ReadingProgress` to show article reading progress |
-| `ScrollReveal`           | Wraps children in a motion-based scroll-reveal animation                                |
+| `ScrollReveal`           | Wraps children in a CSS scroll-triggered reveal (`animation-trigger`, fixed duration)   |
 | `StaggerReveal`          | Wraps a list in staggered scroll-reveal animations                                      |
 
 > **shadcn component integrity rule:** Never partially remove sub-components from a shadcn component. If at least one sub-component is used anywhere in the project, the entire component (including all unused sub-components) stays. Only remove the whole component if none of its exports are used anywhere.
@@ -525,6 +525,8 @@ For button-styled links, use [`LinkButton`](./components/content/LinkButton.tsx)
 ### Image Handling
 
 Always import `Image` from `next-image-export-optimizer`, not from `next/image`. Source images live in `assets/` and are imported as static modules (e.g. `import img from "@/assets/foo.webp"`). Optimized WebP output is written to `out/optimized-images/` during `npm run build`.
+
+**Metadata images use the optimized variant, never the original.** og:image, twitter:image, JSON-LD `image`, RSS enclosures and icons must go through `getOptimizedImage()` from [`utils/common/image-metadata.ts`](./utils/common/image-metadata.ts) rather than `StaticImageData.src`. Originals under `_next/static/media` are otherwise fetched at full size and (for raster images) are excluded from the PWA precache in `next.config.mjs` (`buildExcludes`). `getOptimizedImage` mirrors the optimizer's `-opt-<width>.WEBP` naming, which the library doesn't expose — the `seo.cy.tsx` image-fetch tests catch drift.
 
 #### Two image components — which to use
 
@@ -1030,3 +1032,13 @@ re-focuses the detached popup node a frame later, knocking focus back to `<body>
 ### `ContentContainer` padding must be mirrored in `image-sizes.ts`
 
 `CONTENT_BREAKPOINTS` in [`utils/common/image-sizes.ts`](./utils/common/image-sizes.ts) hardcodes the min-width and padding pixel values for each breakpoint. The padding values mirror the `px-*` Tailwind classes in [`components/layout/ContentContainer.tsx`](./components/layout/ContentContainer.tsx). Both `generateSizesForContentBreakpoints` and `generateSizesForColumnLayout` derive their `calc()` strings from these values. If `ContentContainer`'s padding classes change, update `CONTENT_BREAKPOINTS` in the same PR or all `sizes` strings will be wrong.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

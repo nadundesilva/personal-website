@@ -14,6 +14,16 @@
  */
 import { ALL_ROUTE_PATHS as ROUTES_TO_CHECK } from "@/cypress/support/routes";
 
+const THEMES = ["light", "dark"] as const;
+
+const LEAD_LOGO_ROUTES = [
+    "/education",
+    "/education/certifications",
+    "/experience",
+    "/projects",
+    "/projects/personal",
+];
+
 describe("image optimization", () => {
     // next-image-export-optimizer rewrites every image into the built
     // /optimized-images/ folder with a multi-width srcset (see
@@ -68,14 +78,22 @@ describe("LCP image priority across every page", () => {
     // Each page should mark at most one image fetchPriority="high" - the LCP
     // element (see ArticleLayout.tsx, achievements/page.tsx and
     // ArticlesGroup.tsx). Marking more than one defeats the purpose: the
-    // browser can no longer tell which image to prioritize first.
-    it("marks at most one image as high priority on every page", () => {
-        for (const route of ROUTES_TO_CHECK) {
-            cy.loadPage(route);
-            cy.get('img[fetchpriority="high"]').should(
-                "have.length.lessThan",
-                2,
-            );
+    // browser can no longer tell which image to prioritize first. A Logo
+    // renders a light and a dark image of which only one is shown per theme,
+    // so only visible images count - in each theme.
+    it("marks at most one image as high priority on every page in both themes", () => {
+        for (const theme of THEMES) {
+            for (const route of ROUTES_TO_CHECK) {
+                cy.loadPage(route, {
+                    onBeforeLoad: (win) =>
+                        win.localStorage.setItem("theme", theme),
+                });
+                cy.get("html").should("have.class", theme);
+                cy.get('img[fetchpriority="high"]:visible').should(
+                    "have.length.lessThan",
+                    2,
+                );
+            }
         }
 
         cy.task<string[]>("discoverBlogArticles", ".").then((articles) => {
@@ -87,6 +105,23 @@ describe("LCP image priority across every page", () => {
                 );
             }
         });
+    });
+
+    // The first section's logo is the LCP element on these pages (their
+    // page.tsx pass logoFetchPriority="high").
+    it("prioritizes the lead logo that is shown in the active theme", () => {
+        for (const theme of THEMES) {
+            for (const route of LEAD_LOGO_ROUTES) {
+                cy.loadPage(route, {
+                    onBeforeLoad: (win) =>
+                        win.localStorage.setItem("theme", theme),
+                });
+                cy.get("html").should("have.class", theme);
+                cy.get('img[fetchpriority="high"]:visible')
+                    .should("have.length", 1)
+                    .and("have.attr", "data-testid", `logo-${theme}`);
+            }
+        }
     });
 
     it("prioritizes exactly one lead image on the blog index and its group pages", () => {

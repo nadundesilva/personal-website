@@ -38,12 +38,14 @@ interface PersonalProjectSectionHeadingProps {
     id: string;
     project: Project;
     logoClassName: string;
+    logoFetchPriority?: "high";
 }
 
 const PersonalProjectSectionHeading = ({
     id,
     project,
     logoClassName,
+    logoFetchPriority,
 }: PersonalProjectSectionHeadingProps): React.ReactElement => (
     <SectionHeading
         id={id}
@@ -53,6 +55,7 @@ const PersonalProjectSectionHeading = ({
                 srcDark={project.logo.srcDark}
                 alt=""
                 className={logoClassName}
+                fetchPriority={logoFetchPriority}
             />
         }
         actionButton={{
@@ -104,6 +107,7 @@ const PersonalProjects = (): React.ReactElement => {
                     id="section-project-k8s-replicator"
                     project={ProjectDetails.K8sReplicator}
                     logoClassName="h-[3.5em]"
+                    logoFetchPriority="high"
                 />
                 <Paragraph>
                     In {Kubernetes} deployments when the same {Secret},{" "}

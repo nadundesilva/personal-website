@@ -42,13 +42,15 @@ import { domAnimation, LazyMotion, MotionConfig } from "motion/react";
 
 import profilePhotoImage from "@/assets/profile-photo.webp";
 import { createCspValues } from "@/utils/common/csp";
-import { getImageType } from "@/utils/common/image-metadata";
+import { getImageType, getOptimizedImage } from "@/utils/common/image-metadata";
 import { ThemeProvider } from "next-themes";
 
 const GOOGLE_SITE_VERIFICATION = "M8dg6gzVYU0noXFvsPOqknm_WjREFeNE212YeUk0g30";
 const YANDEX_VERIFICATION = "acbc45e5d9645cf0";
 const FB_APP_ID = "567329184466353";
 const BROWSER_CHROME_COLOR = "#384959";
+
+const profilePhoto = getOptimizedImage(profilePhotoImage);
 
 export const metadata: Metadata = {
     metadataBase: new URL(WEBSITE_PUBLIC_URL),
@@ -82,7 +84,7 @@ export const metadata: Metadata = {
     icons: {
         icon: "/icon-maskable-x512.png",
         shortcut: "/icon-maskable-x512.png",
-        apple: profilePhotoImage.src,
+        apple: profilePhoto.src,
     },
     manifest: `${WEBSITE_PUBLIC_URL}/manifest.webmanifest`,
     verification: {
@@ -91,7 +93,7 @@ export const metadata: Metadata = {
     },
     appleWebApp: {
         capable: true,
-        startupImage: profilePhotoImage.src,
+        startupImage: profilePhoto.src,
         statusBarStyle: "black-translucent",
     },
     formatDetection: {
@@ -106,11 +108,11 @@ export const metadata: Metadata = {
         siteName: FULL_NAME,
         locale: "en_US",
         images: {
-            url: profilePhotoImage.src,
+            url: profilePhoto.src,
             alt: FULL_NAME,
-            type: getImageType(profilePhotoImage.src),
-            width: 1960,
-            height: 1960,
+            type: getImageType(profilePhoto.src),
+            width: profilePhoto.width,
+            height: profilePhoto.height,
         },
     },
     twitter: {
@@ -118,11 +120,11 @@ export const metadata: Metadata = {
         site: TWITTER_HANDLE,
         creator: TWITTER_HANDLE,
         images: {
-            url: profilePhotoImage.src,
+            url: profilePhoto.src,
             alt: FULL_NAME,
-            type: getImageType(profilePhotoImage.src),
-            width: 1960,
-            height: 1960,
+            type: getImageType(profilePhoto.src),
+            width: profilePhoto.width,
+            height: profilePhoto.height,
         },
     },
 };

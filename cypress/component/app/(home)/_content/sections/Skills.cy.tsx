@@ -47,7 +47,7 @@ describe("Skills", () => {
     });
 
     it("announces its items as a list to screen readers", () => {
-        cy.get('ul[role="list"]').should(
+        cy.get('ul[role="list"][aria-labelledby^="skills-category-"]').should(
             "have.length",
             Object.keys(SkillCategories).length,
         );

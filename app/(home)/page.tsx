@@ -53,9 +53,11 @@ import {
 import Profiles from "@/constants/profiles";
 import Publications from "@/constants/publications";
 import Skills, { SkillProficiency } from "@/constants/skills";
-import { getImageType } from "@/utils/common/image-metadata";
+import { getImageType, getOptimizedImage } from "@/utils/common/image-metadata";
 import { getBlogArticleGroups } from "@/utils/server/blog-articles";
 import PageContent from "./_content/PageContent";
+
+const profilePhoto = getOptimizedImage(profilePhotoImage);
 
 export const metadata: Metadata = {
     title: {
@@ -70,11 +72,11 @@ export const metadata: Metadata = {
         gender: "Male",
         url: WEBSITE_PUBLIC_URL,
         images: {
-            url: profilePhotoImage.src,
+            url: profilePhoto.src,
             alt: FULL_NAME,
-            type: getImageType(profilePhotoImage.src),
-            width: 1960,
-            height: 1960,
+            type: getImageType(profilePhoto.src),
+            width: profilePhoto.width,
+            height: profilePhoto.height,
         },
     },
 };
@@ -162,10 +164,10 @@ const person: Person = {
     "description": MAIN_DESCRIPTION,
     "image": {
         "@type": "ImageObject",
-        "url": new URL(profilePhotoImage.src, WEBSITE_PUBLIC_URL).toString(),
-        "width": String(profilePhotoImage.width),
-        "height": String(profilePhotoImage.height),
-        "encodingFormat": getImageType(profilePhotoImage.src),
+        "url": new URL(profilePhoto.src, WEBSITE_PUBLIC_URL).toString(),
+        "width": String(profilePhoto.width),
+        "height": String(profilePhoto.height),
+        "encodingFormat": getImageType(profilePhoto.src),
     } as unknown as ImageObject,
     "email": CONTACT_EMAIL,
     "contactPoint": {

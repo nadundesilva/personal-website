@@ -64,12 +64,14 @@ interface EducationSectionHeadingProps {
     id: string;
     education: Education;
     logoClassName?: string;
+    logoFetchPriority?: "high";
 }
 
 const EducationSectionHeading = ({
     id,
     education,
     logoClassName,
+    logoFetchPriority,
 }: EducationSectionHeadingProps): React.ReactElement => (
     <SectionHeading
         id={id}
@@ -80,6 +82,7 @@ const EducationSectionHeading = ({
                 srcDark={education.institute.logo.srcDark}
                 alt=""
                 className={logoClassName}
+                fetchPriority={logoFetchPriority}
             />
         }
     >
@@ -127,6 +130,7 @@ const Education = (): React.ReactElement => {
                     id="section-bsc-uom"
                     education={Educations.BScUniversityOfMoratuwa}
                     logoClassName="h-[4em]"
+                    logoFetchPriority="high"
                 />
                 <Paragraph>
                     I studied for my four-year bachelor&apos;s degree at the{" "}

@@ -14,7 +14,7 @@
  */
 import NextBundleAnalyzer from "@next/bundle-analyzer";
 import nextMDX from "@next/mdx";
-import { withSentryConfig } from "@sentry/nextjs";
+import { withSentryConfig } from "@sentry/nextjs/config";
 import nextPwa from "next-pwa";
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
 import rehypeReadingTime from "./build/utils/rehype-reading-time.mjs";
@@ -29,6 +29,10 @@ const withPWA = nextPwa({
         process.env.BUILD_TYPE === "test",
     dest: "public",
     register: true,
+
+    // Pages render the optimized variants, so the full-size originals are never
+    // fetched and would only bloat the service worker install.
+    buildExcludes: [/static\/media\/.*\.(webp|jpe?g|png|gif)$/i],
 });
 
 const withMDX = nextMDX({
@@ -61,7 +65,6 @@ const sentryConfig = {
     authToken: process.env.SENTRY_AUTH_TOKEN,
 
     widenClientFileUpload: true,
-    transpileClientSDK: true,
 
     sourcemaps: {
         // In non-production builds keep source maps in the output so errors can
@@ -83,12 +86,11 @@ const sentryConfig = {
     },
 };
 
-const nextConfig = (phase, { defaultConfig }) => {
+const nextConfig = (phase) => {
     /**
      * @type {import('next').NextConfig}
      **/
     const nextConfig = {
-        ...defaultConfig,
         pageExtensions: ["ts", "tsx", "md", "mdx", "js", "jsx"],
         images: {
             loader: "custom",

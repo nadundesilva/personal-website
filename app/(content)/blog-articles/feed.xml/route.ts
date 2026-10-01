@@ -19,7 +19,7 @@ import {
     MAIN_DESCRIPTION,
     WEBSITE_PUBLIC_URL,
 } from "@/constants/metadata";
-import { getImageType } from "@/utils/common/image-metadata";
+import { getImageType, getOptimizedImage } from "@/utils/common/image-metadata";
 import {
     getBlogArticleGroups,
     type BlogArticle,
@@ -41,6 +41,7 @@ export async function GET() {
     });
 
     const processArticle = (article: BlogArticle) => {
+        const image = getOptimizedImage(article.image);
         feed.item({
             title: article.title,
             description: article.description,
@@ -49,8 +50,8 @@ export async function GET() {
             categories: article.keywords,
             author: FULL_NAME,
             enclosure: {
-                url: new URL(article.image.src, WEBSITE_PUBLIC_URL).toString(),
-                type: getImageType(article.image.src),
+                url: new URL(image.src, WEBSITE_PUBLIC_URL).toString(),
+                type: getImageType(image.src),
             },
         });
     };

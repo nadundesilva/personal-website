@@ -147,11 +147,10 @@ describe("ArticleLayout", () => {
 
         cy.get('script[type="application/ld+json"]').then(($script) => {
             const data = JSON.parse($script.text());
-            // mockImage.src is a root-relative "/test-image.jpg"; the record
-            // must carry it as an absolute URL or the image is unreachable
-            // from Google's Article rich result.
+            // The record must carry the optimized variant as an absolute URL
+            // or the image is unreachable from Google's Article rich result.
             expect(data["image"]).to.eq(
-                `${WEBSITE_PUBLIC_URL}${mockImage.src}`,
+                `${WEBSITE_PUBLIC_URL}/optimized-images/test-image-opt-1080.WEBP`,
             );
         });
     });
@@ -186,9 +185,9 @@ describe("ArticleLayout", () => {
             </ArticleLayout>,
         );
 
-        // Scrolled into view: the link sits below the fold, and its
-        // ScrollReveal opacity animation only resolves once a real
-        // IntersectionObserver reports it as intersecting.
+        // Scrolled into view: the link sits below the fold, and ScrollReveal's
+        // scroll-driven CSS animation only reveals it once it actually enters
+        // the viewport.
         cy.findByRole("link", { name: /back to all articles/i })
             .scrollIntoView()
             .should("be.visible")

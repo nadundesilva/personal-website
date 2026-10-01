@@ -64,7 +64,7 @@ describe("createCspValues", () => {
             "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
             "worker-src 'self' blob:",
             "child-src 'self' blob:",
-            "connect-src 'self' https://o4507214991917056.ingest.us.sentry.io",
+            "connect-src 'self' https://o4507214991917056.ingest.us.sentry.io https://cloudflareinsights.com",
         ]);
     });
 
