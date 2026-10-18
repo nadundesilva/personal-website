@@ -28,12 +28,12 @@ const mockImage: StaticImageData = {
 };
 
 const makeArticle = (n: number): BlogArticle => ({
-    title: `Article ${n}`,
-    description: `Description ${n}`,
+    title: `Article ${String(n)}`,
+    description: `Description ${String(n)}`,
     keywords: [],
     image: mockImage,
     publishedDate: new Date("2024-01-01"),
-    websiteSubPath: `engineering/article-${n}`,
+    websiteSubPath: `engineering/article-${String(n)}`,
     readingTimeMinutes: 3,
 });
 

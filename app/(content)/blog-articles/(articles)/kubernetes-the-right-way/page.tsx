@@ -27,7 +27,7 @@ export const metadata: Metadata = {
         "Kubernetes the Right Way series is about the best practices and techniques for improving your Kubernetes Clusters.",
 };
 
-const BlogArticles = async (): Promise<React.ReactElement> => (
+const BlogArticles = (): React.ReactElement => (
     <>
         <CollectionPageJsonLd
             metadata={metadata}

@@ -17,12 +17,12 @@ import type React from "react";
 
 interface PrimaryTintedIconProps {
     icon: React.ComponentType<LucideProps>;
-    size?: string;
+    size?: string | number;
 }
 
 const PrimaryTintedIcon = ({
     icon: Icon,
-    size,
+    size = 24,
 }: PrimaryTintedIconProps): React.ReactElement => (
     <Icon aria-hidden="true" className="text-primary/70" size={size} />
 );

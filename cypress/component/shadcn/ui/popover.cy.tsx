@@ -22,7 +22,7 @@ import {
     PopoverTrigger,
 } from "@/shadcn/ui";
 
-function TestPopover() {
+function TestPopover(): React.ReactElement {
     return (
         <Popover>
             <PopoverTrigger render={<Button>Open Popover</Button>} />

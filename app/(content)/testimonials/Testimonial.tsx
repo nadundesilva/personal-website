@@ -25,7 +25,7 @@ const renderRelationShip = (
     name: string,
     relationship: Relationship,
 ): string | null => {
-    const firstName = name.includes(" ") ? name.split(" ")[0] : name;
+    const [firstName = name] = name.split(" ");
     switch (relationship) {
         case Relationship.ManagedDirectly:
             return `${firstName} managed Nadun directly`;

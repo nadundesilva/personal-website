@@ -13,6 +13,7 @@
  * © 2023 Nadun De Silva. All rights reserved.
  */
 import { WebsiteHome } from "@/constants/routes";
+import { at } from "@/cypress/support/collections";
 import "@testing-library/cypress/add-commands";
 import { allowConsoleError } from "./console-guard";
 
@@ -26,7 +27,9 @@ Cypress.Commands.add(
         const viewportWidth = Cypress.config("viewportWidth");
         const viewportHeight = Cypress.config("viewportHeight");
         cy.viewport(viewportWidth, viewportHeight);
-        cy.log(`Changed viewport to ${viewportWidth}x${viewportHeight}`);
+        cy.log(
+            `Changed viewport to ${String(viewportWidth)}x${String(viewportHeight)}`,
+        );
 
         cy.visit(url, {
             ...options,
@@ -137,7 +140,10 @@ Cypress.Commands.add("assertVisibleImagesLoaded", (): void => {
             // and be retargeted by the next image's scroll, leaving lazy
             // images far down the page never scrolled to and never fetched.
             cy.wrap($img).then(($el) => {
-                $el[0].scrollIntoView({ behavior: "instant", block: "center" });
+                at($el).scrollIntoView({
+                    behavior: "instant",
+                    block: "center",
+                });
             });
 
             // Waits on the browser actually starting the fetch, not a fixed

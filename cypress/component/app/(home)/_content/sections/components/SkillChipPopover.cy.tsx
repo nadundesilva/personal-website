@@ -27,7 +27,7 @@ const defaultProps = {
 // React maps onPointerEnter → native "pointerover" (not "pointerenter"), and
 // onPointerLeave → native "pointerout" (not "pointerleave"). Use the native
 // events that React actually registers so the component's handlers fire.
-const hoverOpen = () => {
+const hoverOpen = (): void => {
     cy.findByRole("button", { name: /typescript/i }).trigger("pointerover", {
         pointerType: "mouse",
     });

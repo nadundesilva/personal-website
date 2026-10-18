@@ -38,7 +38,7 @@ export interface TestimonialData {
     content: string[];
 }
 
-const Testimonials: Record<string, TestimonialData> = {
+const Testimonials = {
     TishanDahanayakage: {
         position: Experiences.WSO2AssociateTechnicalLead,
         author: {
@@ -161,6 +161,6 @@ const Testimonials: Record<string, TestimonialData> = {
             "It was a great pleasure to work with Nadun and I would rank him as one of the best engineers that I have worked with. I would not have a second thought in recommending him for any challenging technical positions in the IT field.",
         ],
     },
-};
+} satisfies Record<string, TestimonialData>;
 
 export default Testimonials;

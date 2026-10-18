@@ -14,9 +14,10 @@
  */
 import Testimonial from "@/app/(content)/testimonials/Testimonial";
 import Testimonials, { Relationship } from "@/constants/testimonials";
+import { at } from "@/cypress/support/collections";
 
 // Use a real testimonial from the constants to avoid mocking deeply nested types.
-const testimonial = Object.values(Testimonials)[0];
+const testimonial = at(Object.values(Testimonials));
 
 describe("Testimonial", () => {
     beforeEach(() => {
@@ -32,7 +33,7 @@ describe("Testimonial", () => {
     });
 
     it("shows the quote itself", () => {
-        cy.contains(testimonial.content[0].slice(0, 40)).should("be.visible");
+        cy.contains(at(testimonial.content).slice(0, 40)).should("be.visible");
     });
 
     it("opens the LinkedIn source in a new tab", () => {
@@ -41,16 +42,11 @@ describe("Testimonial", () => {
             .and("have.attr", "target", "_blank");
     });
 
-    it("takes its accessible name from the author heading", () => {
-        cy.findByRole("article")
-            .should("have.attr", "aria-labelledby")
-            .and("not.be.empty")
-            .then((labelledBy) => {
-                cy.get(`#${labelledBy}`).should(
-                    "contain.text",
-                    testimonial.author.person.name,
-                );
-            });
+    it("names the article after its author", () => {
+        cy.findByRole("article", {
+            name: (accessibleName) =>
+                accessibleName.includes(testimonial.author.person.name),
+        }).should("exist");
     });
 
     it("announces the heading as a testimonial attribution to screen readers", () => {
@@ -61,7 +57,7 @@ describe("Testimonial", () => {
 });
 
 describe("Testimonial relationship sentence", () => {
-    const firstName = testimonial.author.person.name.split(" ")[0];
+    const firstName = at(testimonial.author.person.name.split(" "));
 
     it("describes a direct-manager relationship", () => {
         cy.mount(

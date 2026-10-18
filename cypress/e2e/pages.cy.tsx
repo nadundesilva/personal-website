@@ -16,6 +16,7 @@ import Certificates from "@/constants/certificates";
 import { PersonalProjects } from "@/constants/projects";
 import Publications from "@/constants/publications";
 import { WebsiteHome } from "@/constants/routes";
+import { at } from "@/cypress/support/collections";
 import { CONTENT_ROUTE_PATHS } from "@/cypress/support/routes";
 
 describe("every content page's metadata", () => {
@@ -113,7 +114,7 @@ describe("content pages", () => {
     describe("/projects/personal", () => {
         beforeEach(() => {
             cy.loadPage(
-                WebsiteHome.subRoutes["/projects"].subRoutes![
+                WebsiteHome.subRoutes["/projects"].subRoutes[
                     "/projects/personal"
                 ].path,
             );
@@ -178,7 +179,7 @@ describe("content pages", () => {
     describe("/education/certifications", () => {
         beforeEach(() => {
             cy.loadPage(
-                WebsiteHome.subRoutes["/education"].subRoutes![
+                WebsiteHome.subRoutes["/education"].subRoutes[
                     "/education/certifications"
                 ].path,
             );
@@ -257,7 +258,7 @@ describe("content pages", () => {
         it("shows the group's own name as its main heading, not the blog index title", () => {
             cy.task<string[]>("discoverBlogArticleSubGroups", ".").then(
                 (groupPages) => {
-                    cy.loadPage(groupPages[0]);
+                    cy.loadPage(at(groupPages));
 
                     cy.findByRole("heading", { level: 1 }).should(
                         ($heading) => {
@@ -271,7 +272,7 @@ describe("content pages", () => {
         it("identifies the group page in the browser tab and search results", () => {
             cy.task<string[]>("discoverBlogArticleSubGroups", ".").then(
                 (groupPages) => {
-                    cy.loadPage(groupPages[0]);
+                    cy.loadPage(at(groupPages));
 
                     cy.title().should("match", /^.+ \| Nadun De Silva$/);
                     cy.get('meta[name="description"]')
@@ -284,7 +285,7 @@ describe("content pages", () => {
         it("lists the group's articles, each linking to its own page", () => {
             cy.task<string[]>("discoverBlogArticleSubGroups", ".").then(
                 (groupPages) => {
-                    const groupPage = groupPages[0];
+                    const groupPage = at(groupPages);
                     cy.loadPage(groupPage);
 
                     cy.findAllByRole("link")

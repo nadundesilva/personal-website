@@ -44,8 +44,9 @@ describe("responsive navigation", () => {
     // button together with a green suite.
     // Plain attribute selectors, not findByRole: whichever nav is inactive is
     // display:none and so absent from the accessibility tree query.
-    const desktopNav = () => cy.get('nav[aria-label="Primary Navigation"]');
-    const menuButton = () =>
+    const desktopNav = (): Cypress.Chainable<JQuery> =>
+        cy.get('nav[aria-label="Primary Navigation"]');
+    const menuButton = (): Cypress.Chainable<JQuery> =>
         cy.get('button[aria-label="Open navigation menu"]');
 
     it("shows the horizontal nav bar and hides the menu button on wide viewports", () => {

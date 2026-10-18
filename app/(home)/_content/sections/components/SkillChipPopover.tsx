@@ -100,25 +100,27 @@ const SkillChipPopover = ({
     const closeTimerRef = useRef<ReturnType<typeof setTimeout>>(null);
 
     useEffect(() => {
-        return () => {
+        return (): void => {
             if (closeTimerRef.current !== null)
                 clearTimeout(closeTimerRef.current);
         };
     }, []);
 
-    const cancelClose = () => {
+    const cancelClose = (): void => {
         if (closeTimerRef.current !== null) {
             clearTimeout(closeTimerRef.current);
             closeTimerRef.current = null;
         }
     };
 
-    const scheduleClose = () => {
+    const scheduleClose = (): void => {
         cancelClose();
-        closeTimerRef.current = setTimeout(() => setOpen(false), 150);
+        closeTimerRef.current = setTimeout(() => {
+            setOpen(false);
+        }, 150);
     };
 
-    const handleOpenChange = (newOpen: boolean) => {
+    const handleOpenChange = (newOpen: boolean): void => {
         // When the mouse is inside, the only way the popover can be asked to close
         // is by moving away from the chip.
         if (!newOpen && isMouseInsideRef.current) return;

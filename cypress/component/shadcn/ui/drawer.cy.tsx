@@ -29,17 +29,9 @@ interface TestDrawerProps {
     modal?: boolean;
 }
 
-function TestDrawer({
-    swipeDirection,
-    showSwipeHandle,
-    modal,
-}: TestDrawerProps) {
+function TestDrawer(props: TestDrawerProps): React.ReactElement {
     return (
-        <Drawer
-            swipeDirection={swipeDirection}
-            showSwipeHandle={showSwipeHandle}
-            modal={modal}
-        >
+        <Drawer {...props}>
             <DrawerTrigger render={<Button>Open Drawer</Button>} />
             <DrawerContent>
                 <DrawerHeader>

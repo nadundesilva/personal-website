@@ -95,13 +95,14 @@ function buildSizes<T>(
     // Drop a clause when the next lower breakpoint produces the same value —
     // the lower clause already covers all viewports this one would match.
     const clauses = rawClauses.filter(
-        ({ value }, i) =>
-            i === rawClauses.length - 1 || value !== rawClauses[i + 1].value,
+        ({ value }, i) => value !== rawClauses[i + 1]?.value,
     );
 
     return clauses
         .map(({ minWidth, value }) =>
-            minWidth === 0 ? value : `(min-width: ${minWidth}px) ${value}`,
+            minWidth === 0
+                ? value
+                : `(min-width: ${String(minWidth)}px) ${value}`,
         )
         .join(", ");
 }
@@ -133,7 +134,7 @@ export function generateSizesForContentBreakpoints(
         if (entry.viewportFraction !== undefined) {
             const fraction = entry.viewportFraction;
             const padding = CONTENT_BREAKPOINTS[contentBp].padding;
-            return `calc(${fraction * 100}vw - ${fraction * padding}px)`;
+            return `calc(${String(fraction * 100)}vw - ${String(fraction * padding)}px)`;
         }
         return entry.absolute;
     });
@@ -167,7 +168,7 @@ export function generateSizesForColumnLayout(
             (cols - 1) * gapPx +
             cols * columnInsetPx;
         return cols === 1
-            ? `calc(100vw - ${totalFixedPx}px)`
-            : `calc((100vw - ${totalFixedPx}px) / ${cols})`;
+            ? `calc(100vw - ${String(totalFixedPx)}px)`
+            : `calc((100vw - ${String(totalFixedPx)}px) / ${String(cols)})`;
     });
 }

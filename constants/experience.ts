@@ -26,7 +26,7 @@ export interface Experience {
     skills: SkillDefinition[];
 }
 
-const Experiences: Record<string, Experience> = {
+const Experiences = {
     McCraeTechLeadSoftwareEngineer: {
         name: "Lead Software Engineer",
         company: Companies.McCraeTech,
@@ -186,7 +186,7 @@ const Experiences: Record<string, Experience> = {
         institute: "WSO2, Colombo 03, Sri Lanka",
         skills: [Skills.Java, Skills.JavaScript],
     },
-};
+} satisfies Record<string, Experience>;
 
 export const CurrentExperience = Experiences.McCraeTechLeadSoftwareEngineer;
 

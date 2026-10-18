@@ -13,6 +13,8 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 import { WebsiteHome } from "@/constants/routes";
+import { at } from "@/cypress/support/collections";
+import { defined } from "@/cypress/support/defined";
 
 interface ZarazWindow extends Window {
     zaraz?: {
@@ -41,11 +43,13 @@ describe("performance analytics", () => {
         cy.get("@zarazTrack")
             .should("have.been.called")
             .then((stub) => {
-                const [eventName, data] = (
-                    stub as unknown as {
-                        args: [string, Record<string, unknown>][];
-                    }
-                ).args[0];
+                const [eventName, data] = at(
+                    (
+                        stub as unknown as {
+                            args: [string, Record<string, unknown>][];
+                        }
+                    ).args,
+                );
 
                 expect(eventName).to.eq("web_vital");
                 expect(data).to.include.keys(
@@ -120,22 +124,22 @@ describe("performance analytics", () => {
                             args: [string, Record<string, unknown>][];
                         }
                     ).args;
-                    const clsCall = calls.find(
-                        ([, data]) => data.name === "CLS",
+                    const clsCall = defined(
+                        calls.find(([, data]) => data.name === "CLS"),
+                        "a reported CLS metric",
                     );
 
                     // A missing call here means the shift was never captured
                     // (e.g. the visibilitychange stub didn't fire the reporter)
                     // - not that the x1000 scaling is broken. Check the shift
                     // trigger above first if this fails.
-                    void expect(clsCall, "no CLS metric was reported").to.exist;
 
                     // >= 10 rather than > 1 - a large enough shift can occasionally
                     // push raw CLS above 1, so ">1" wouldn't distinguish scaled
                     // from unscaled. A 100px shift scaled x1000 clears this
                     // comfortably; unscaled it can only round to 0.
                     expect(
-                        clsCall![1].value,
+                        clsCall[1].value,
                         "CLS value should be scaled, not the raw unitless score",
                     ).to.be.at.least(10);
                 });

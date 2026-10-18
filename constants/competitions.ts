@@ -21,7 +21,7 @@ export interface Competition {
     logo: LogoImageData;
 }
 
-const Competitions: Record<string, Competition> = {
+const Competitions = {
     BritishCouncilHSBCYouthEnterpriseAwards: {
         name: "British Council HSBC Youth Enterprise Awards",
         link: "https://www.britishcouncil.lk/programmes/education/internationalising-higher-education/hsbc-youth-enterprise-awards",
@@ -42,6 +42,6 @@ const Competitions: Record<string, Competition> = {
         link: "https://angelhack.com/",
         logo: Logos.AngelHack,
     },
-};
+} satisfies Record<string, Competition>;
 
 export default Competitions;

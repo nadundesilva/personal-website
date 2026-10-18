@@ -50,7 +50,7 @@ const CopyButton = ({
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
-        return () => {
+        return (): void => {
             if (timeoutRef.current !== null) {
                 clearTimeout(timeoutRef.current);
             }
@@ -60,7 +60,7 @@ const CopyButton = ({
     const handleClick = useCallback(async () => {
         try {
             const content = await Promise.resolve(
-                copyContent ?? resolveCopyContent?.() ?? "",
+                copyContent ?? resolveCopyContent(),
             );
             await navigator.clipboard.writeText(content);
             setCopied(true);
@@ -94,7 +94,9 @@ const CopyButton = ({
                     <Button
                         variant="ghost"
                         size="icon"
-                        onClick={handleClick}
+                        onClick={() => {
+                            void handleClick();
+                        }}
                         // Intentionally the base label, not currentLabel — the button's
                         // accessible name describes its action ("Copy"), not its state.
                         // State feedback is announced via the role="status" span below.

@@ -36,7 +36,7 @@ export interface Certificate {
     skills: SkillDefinition[];
 }
 
-const Certificates: Record<string, Certificate> = {
+const Certificates = {
     DeepLearningSpecialization: {
         name: "Deep Learning",
         type: "Specialization",
@@ -127,6 +127,6 @@ const Certificates: Record<string, Certificate> = {
             Skills.CloudNativeApplicationDevelopment,
         ],
     },
-};
+} satisfies Record<string, Certificate>;
 
 export default Certificates;

@@ -43,7 +43,7 @@ describe("SkillProficiencyIndicator", () => {
     });
 
     it("fills more bars for higher proficiency levels", () => {
-        const filledBars = () =>
+        const filledBars = (): Cypress.Chainable<JQuery> =>
             cy
                 .findAllByTestId("skill-proficiency-bar")
                 .filter('[data-test-filled="true"]');

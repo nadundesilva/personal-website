@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     description: `${BLOG_CATEGORY} blog by ${FULL_NAME}. ${MAIN_DESCRIPTION}`,
 };
 
-const BlogArticles = async (): Promise<React.ReactElement> => (
+const BlogArticles = (): React.ReactElement => (
     <>
         <CollectionPageJsonLd metadata={metadata} pathname="/blog-articles" />
         <ArticlesList subPath="." />

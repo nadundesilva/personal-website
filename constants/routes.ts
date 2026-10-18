@@ -21,10 +21,10 @@ import type { Route as NextRoute } from "next";
 interface _Route {
     name: string;
     path: NextRoute<string>;
-    subRoutes?: _Route[];
+    subRoutes?: readonly _Route[];
 }
 
-const _Routes: _Route[] = [
+const _Routes = [
     {
         name: "Experience",
         path: "/experience",
@@ -73,7 +73,7 @@ const _Routes: _Route[] = [
             },
         ],
     },
-];
+] as const satisfies readonly _Route[];
 
 /*
  * Internal model for type safety ends here
@@ -82,10 +82,25 @@ const _Routes: _Route[] = [
 export interface Route {
     name: string;
     path: NextRoute<string>;
-    subRoutes?: Record<string, Route>;
+    subRoutes?: Record<string, Route> | undefined;
 }
 
-const buildRoutes = (currentRoutes: _Route[]): Record<string, Route> => {
+// Keys the map by each route's literal path, so a lookup of a known route is never undefined.
+type CompiledRoutes<Routes extends readonly _Route[]> = {
+    [R in Routes[number] as R["path"]]: {
+        name: R["name"];
+        path: R["path"];
+        subRoutes: R extends {
+            subRoutes: infer SubRoutes extends readonly _Route[];
+        }
+            ? CompiledRoutes<SubRoutes>
+            : undefined;
+    };
+};
+
+const compileRoutes = <Routes extends readonly _Route[]>(
+    currentRoutes: Routes,
+): CompiledRoutes<Routes> => {
     const routesMap: Record<string, Route> = {};
     currentRoutes.forEach((route) => {
         routesMap[route.path] = {
@@ -94,10 +109,10 @@ const buildRoutes = (currentRoutes: _Route[]): Record<string, Route> => {
             subRoutes:
                 route.subRoutes === undefined
                     ? undefined
-                    : buildRoutes(route.subRoutes),
+                    : compileRoutes(route.subRoutes),
         };
     });
-    return routesMap;
+    return routesMap as CompiledRoutes<Routes>;
 };
 
 export const CvPdfPath = "/nadundesilva-cv.pdf";
@@ -105,5 +120,5 @@ export const CvPdfPath = "/nadundesilva-cv.pdf";
 export const WebsiteHome = {
     name: "Home",
     path: "/",
-    subRoutes: buildRoutes(_Routes),
+    subRoutes: compileRoutes(_Routes),
 };

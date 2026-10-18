@@ -28,11 +28,11 @@ describe("WelcomeBanner", () => {
         cy.get('dl[aria-label="Key statistics"] dd').should("have.length", 3);
         cy.get('dl[aria-label="Key statistics"]').should(
             "contain.text",
-            `${Object.keys(EnterpriseProjects).length}`,
+            String(Object.keys(EnterpriseProjects).length),
         );
         cy.get('dl[aria-label="Key statistics"]').should(
             "contain.text",
-            `${Object.keys(Skills).length}`,
+            String(Object.keys(Skills).length),
         );
     });
 

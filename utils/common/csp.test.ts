@@ -21,7 +21,7 @@ const ORIGINAL_BUILD_TYPE = process.env.BUILD_TYPE;
 
 const setEnv = (key: "NODE_ENV" | "BUILD_TYPE", value?: string): void => {
     if (value === undefined) {
-        delete process.env[key];
+        Reflect.deleteProperty(process.env, key);
     } else {
         // NODE_ENV is typed readonly (next/types/global.d.ts) so app code can't
         // mutate it; this test helper legitimately needs to for setup/teardown.

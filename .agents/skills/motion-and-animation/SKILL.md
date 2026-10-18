@@ -1,6 +1,6 @@
 ---
 name: motion-and-animation
-description: "Animation rules for this repo: when to use motion/react versus CSS, the motion-safe reduced-motion guard, and page-scoped animation tokens defined next to their keyframes. Make sure to use this skill whenever adding or changing any transition, animation, scroll reveal, hover effect, fade, slide or pulse, or when styling an interactive element that should feel animated, even if the request never says 'animation'."
+description: "Use whenever adding or changing any transition, animation, scroll reveal, hover effect, fade, slide or pulse, or when styling an interactive element that should feel animated, even if the request never says 'animation'. Covers the animation rules for this repo: when to use motion/react versus CSS, the motion-safe reduced-motion guard, and page-scoped animation tokens defined next to their keyframes."
 ---
 
 # Motion and Animation

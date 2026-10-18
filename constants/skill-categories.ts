@@ -22,7 +22,7 @@ export interface SkillGroup {
     skills: SkillDefinition[];
 }
 
-const SkillCategories: Record<string, SkillGroup> = {
+const SkillCategories = {
     ProgrammingLanguages: {
         category: "Programming Languages",
         skills: [
@@ -141,6 +141,6 @@ const SkillCategories: Record<string, SkillGroup> = {
             Skills.TensorFlow,
         ],
     },
-};
+} satisfies Record<string, SkillGroup>;
 
 export default SkillCategories;

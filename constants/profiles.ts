@@ -33,7 +33,7 @@ export interface Profile {
     username: string;
     Icon: ProfileIcon;
     url: string;
-    urlAliases?: string[];
+    urlAliases: string[];
     /** Wikidata property URL (e.g. Property:P2037 for GitHub) that maps this platform's
      *  external ID — used as schema:identifier propertyID in JSON-LD. */
     wikidataPropertyId: string;
@@ -42,12 +42,13 @@ export interface Profile {
 export const TWITTER_HANDLE = "@nadunrds";
 export const LINKEDIN_PROFILE_URL = "https://www.linkedin.com/in/nadundesilva";
 
-const Profiles: Record<string, Profile> = {
+const Profiles = {
     LinkedIn: {
         name: "LinkedIn",
         username: "nadundesilva",
         Icon: LinkedInIcon,
         url: LINKEDIN_PROFILE_URL,
+        urlAliases: [],
         wikidataPropertyId: "https://www.wikidata.org/wiki/Property:P6634",
     },
     GitHub: {
@@ -55,6 +56,7 @@ const Profiles: Record<string, Profile> = {
         username: "nadundesilva",
         Icon: SiGithub,
         url: "https://github.com/nadundesilva",
+        urlAliases: [],
         wikidataPropertyId: "https://www.wikidata.org/wiki/Property:P2037",
     },
     Medium: {
@@ -62,6 +64,7 @@ const Profiles: Record<string, Profile> = {
         username: "nadundesilva",
         Icon: SiMedium,
         url: "https://medium.com/@nadundesilva",
+        urlAliases: [],
         wikidataPropertyId: "https://www.wikidata.org/wiki/Property:P3899",
     },
     GoogleScholar: {
@@ -69,6 +72,7 @@ const Profiles: Record<string, Profile> = {
         username: "CdXo_YQAAAAJ",
         Icon: SiGooglescholar,
         url: "https://scholar.google.com/citations?user=CdXo_YQAAAAJ&hl=en&oi=ao",
+        urlAliases: [],
         wikidataPropertyId: "https://www.wikidata.org/wiki/Property:P1960",
     },
     Facebook: {
@@ -76,6 +80,7 @@ const Profiles: Record<string, Profile> = {
         username: "nadunrds",
         Icon: SiFacebook,
         url: "https://www.facebook.com/nadunrds",
+        urlAliases: [],
         wikidataPropertyId: "https://www.wikidata.org/wiki/Property:P2013",
     },
     Instagram: {
@@ -83,6 +88,7 @@ const Profiles: Record<string, Profile> = {
         username: "nadunrds",
         Icon: SiInstagram,
         url: "https://www.instagram.com/nadunrds",
+        urlAliases: [],
         wikidataPropertyId: "https://www.wikidata.org/wiki/Property:P2003",
     },
     X: {
@@ -93,6 +99,6 @@ const Profiles: Record<string, Profile> = {
         urlAliases: ["https://twitter.com/nadunrds"],
         wikidataPropertyId: "https://www.wikidata.org/wiki/Property:P2002",
     },
-};
+} satisfies Record<string, Profile>;
 
 export default Profiles;

@@ -19,13 +19,13 @@ import { HorizontalGradientLine } from "@/components/primitives";
 interface HeadingProps {
     children: React.ReactNode;
     id?: string;
-    number?: number;
+    number?: number | undefined;
 }
 
 const Heading = (props: HeadingProps): React.ReactElement => {
     if (props.number !== undefined && props.number > 99) {
         throw new Error(
-            `Heading number must be at most 2 digits, but got ${props.number}`,
+            `Heading number must be at most 2 digits, but got ${String(props.number)}`,
         );
     }
 

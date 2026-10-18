@@ -13,6 +13,7 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 import { WebsiteHome } from "@/constants/routes";
+import { at } from "@/cypress/support/collections";
 import { CODE_BLOCK_BLOG_ARTICLE_PATH } from "@/cypress/support/routes";
 
 describe("theme toggle", () => {
@@ -63,10 +64,10 @@ describe("theme toggle", () => {
                     query === "(prefers-color-scheme: dark)"
                         ? {
                               matches: prefersDark,
-                              addListener: () => {},
-                              removeListener: () => {},
-                              addEventListener: () => {},
-                              removeEventListener: () => {},
+                              addListener: (): void => {},
+                              removeListener: (): void => {},
+                              addEventListener: (): void => {},
+                              removeEventListener: (): void => {},
                           }
                         : realMatchMedia(query),
                 );
@@ -86,11 +87,11 @@ describe("theme toggle", () => {
             .first()
             .should(($pre) => {
                 const backgroundColor = window.getComputedStyle(
-                    $pre[0],
+                    at($pre),
                 ).backgroundColor;
                 expect(backgroundColor).to.not.eq("");
             })
-            .then(($pre) => window.getComputedStyle($pre[0]).backgroundColor)
+            .then(($pre) => window.getComputedStyle(at($pre)).backgroundColor)
             .as("lightBackground");
 
         cy.findByRole("button", { name: /switch to dark theme/i }).click({
@@ -100,7 +101,7 @@ describe("theme toggle", () => {
 
         cy.get(".code-block-wrapper pre")
             .first()
-            .then(($pre) => window.getComputedStyle($pre[0]).backgroundColor)
+            .then(($pre) => window.getComputedStyle(at($pre)).backgroundColor)
             .then(function (darkBackground) {
                 expect(darkBackground).to.not.eq(this.lightBackground);
             });
@@ -139,7 +140,7 @@ describe("web fonts", () => {
         cy.loadPage(CODE_BLOCK_BLOG_ARTICLE_PATH);
 
         cy.get("html").should(($html) => {
-            const style = window.getComputedStyle($html[0]);
+            const style = window.getComputedStyle(at($html));
             expect(style.getPropertyValue("--font-default").trim()).to.not.eq(
                 "",
             );
@@ -147,13 +148,13 @@ describe("web fonts", () => {
         });
 
         cy.get("body")
-            .then(($body) => window.getComputedStyle($body[0]).fontFamily)
+            .then(($body) => window.getComputedStyle(at($body)).fontFamily)
             .then((bodyFontFamily) => {
                 cy.get(".code-block-wrapper code[data-theme]")
                     .first()
                     .should(
                         ($code) =>
-                            window.getComputedStyle($code[0]).fontFamily !==
+                            window.getComputedStyle(at($code)).fontFamily !==
                             bodyFontFamily,
                     );
             });

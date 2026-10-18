@@ -14,6 +14,7 @@
  */
 import type { MDXComponents } from "mdx/types";
 import type { StaticImageData } from "next/image";
+import type React from "react";
 
 import MdxArticleImage from "@/components/blog-articles/ArticleImage";
 import ArticleLayout, {
@@ -47,13 +48,16 @@ interface Creator {
 interface ImageProps {
     src: StaticImageData;
     alt: string;
-    creator?: Creator;
+    creator?: Creator | undefined;
 }
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
     return {
         ...components,
-        a: ({ href, children }) => {
+        a: ({
+            href,
+            children,
+        }: React.AnchorHTMLAttributes<HTMLAnchorElement>): React.ReactElement => {
             if (!href) {
                 throw new Error("MDX links must have an href.");
             }
@@ -106,50 +110,50 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
         // Raw markdown image syntax (![alt](src)) is unsupported — use the custom
         // <Image> MDX component instead, which handles attribution and optimization.
-        img: () => {
+        img: (): never => {
             throw new Error(
                 "Raw markdown images are unsupported — use the <Image> MDX component instead.",
             );
         },
         // Tables are not supported in articles.
-        table: () => {
+        table: (): never => {
             throw new Error("Tables are not supported in articles.");
         },
-        thead: () => {
+        thead: (): never => {
             throw new Error("Tables are not supported in articles.");
         },
-        tbody: () => {
+        tbody: (): never => {
             throw new Error("Tables are not supported in articles.");
         },
-        tr: () => {
+        tr: (): never => {
             throw new Error("Tables are not supported in articles.");
         },
-        th: () => {
+        th: (): never => {
             throw new Error("Tables are not supported in articles.");
         },
-        td: () => {
+        td: (): never => {
             throw new Error("Tables are not supported in articles.");
         },
 
         // Heading levels h3–h6 are intentionally unsupported. Articles only use
         // h1 (SectionHeading) and h2 (SubsectionHeading). Supporting deeper levels
         // would add visual and structural complexity without benefit to readers.
-        h3: () => {
+        h3: (): never => {
             throw new Error(
                 "MDX h3 (###) is unsupported — only 2 heading levels are available in articles (h1 and h2).",
             );
         },
-        h4: () => {
+        h4: (): never => {
             throw new Error(
                 "MDX h4 (####) is unsupported — only 2 heading levels are available in articles (h1 and h2).",
             );
         },
-        h5: () => {
+        h5: (): never => {
             throw new Error(
                 "MDX h5 (#####) is unsupported — only 2 heading levels are available in articles (h1 and h2).",
             );
         },
-        h6: () => {
+        h6: (): never => {
             throw new Error(
                 "MDX h6 (######) is unsupported — only 2 heading levels are available in articles (h1 and h2).",
             );

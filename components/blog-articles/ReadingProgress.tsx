@@ -60,8 +60,12 @@ const ReadingProgress = (): React.ReactElement => {
     const [isScrollable, setIsScrollable] = useState(false);
 
     useEffect(() => {
-        const id = requestAnimationFrame(() => setMounted(true));
-        return () => cancelAnimationFrame(id);
+        const id = requestAnimationFrame(() => {
+            setMounted(true);
+        });
+        return (): void => {
+            cancelAnimationFrame(id);
+        };
     }, []);
 
     // Effect 1: Read pre-computed reading time injected at build time by the rehype plugin,
@@ -84,7 +88,9 @@ const ReadingProgress = (): React.ReactElement => {
                 document.documentElement.scrollHeight - window.innerHeight > 0,
             );
         });
-        return () => cancelAnimationFrame(id);
+        return (): void => {
+            cancelAnimationFrame(id);
+        };
     }, []);
 
     // Effect 2: Track scroll progress. Depends on totalReadingMinutes so the
@@ -128,7 +134,7 @@ const ReadingProgress = (): React.ReactElement => {
         const resizeObserver = new ResizeObserver(handleScroll);
         resizeObserver.observe(document.documentElement);
 
-        return () => {
+        return (): void => {
             window.removeEventListener("scroll", handleScroll);
             resizeObserver.disconnect();
         };

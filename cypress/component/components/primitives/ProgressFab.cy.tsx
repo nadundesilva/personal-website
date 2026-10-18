@@ -20,18 +20,16 @@ class ErrorBoundary extends React.Component<
     { children: React.ReactNode },
     { error: Error | null }
 > {
-    state = { error: null };
+    override state: { error: Error | null } = { error: null };
 
-    static getDerivedStateFromError(error: Error) {
+    static getDerivedStateFromError(error: Error): { error: Error } {
         return { error };
     }
 
-    render() {
+    override render(): React.ReactNode {
         if (this.state.error) {
             return (
-                <div data-testid="render-error">
-                    {(this.state.error as Error).message}
-                </div>
+                <div data-testid="render-error">{this.state.error.message}</div>
             );
         }
         return this.props.children;
@@ -140,19 +138,20 @@ describe("ProgressFab", () => {
     });
 
     it("draws the progress ring further round as progress increases", () => {
-        cy.mount(<ProgressFab progress={25} />);
-        cy.findByTestId("progress-ring")
-            .invoke("attr", "stroke-dashoffset")
-            .then((value) => parseFloat(value ?? ""))
-            .as("offsetAt25");
+        const dashOffset = (progress: number): Cypress.Chainable<number> => {
+            cy.mount(<ProgressFab progress={progress} />);
+            return cy
+                .findByTestId("progress-ring")
+                .then(($ring) =>
+                    parseFloat($ring.attr("stroke-dashoffset") ?? ""),
+                );
+        };
 
-        cy.mount(<ProgressFab progress={75} />);
-        cy.findByTestId("progress-ring")
-            .invoke("attr", "stroke-dashoffset")
-            .then((value) => parseFloat(value ?? ""))
-            .then(function (offsetAt75) {
+        dashOffset(25).then((offsetAt25) => {
+            dashOffset(75).then((offsetAt75) => {
                 // A smaller offset means more of the ring's circumference is drawn.
-                expect(offsetAt75).to.be.lessThan(this.offsetAt25);
+                expect(offsetAt75).to.be.lessThan(offsetAt25);
             });
+        });
     });
 });

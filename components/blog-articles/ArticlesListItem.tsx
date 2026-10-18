@@ -32,7 +32,7 @@ import { type BlogArticle } from "@/utils/server/blog-articles";
 
 interface ArticleListItemProps {
     blogArticle: BlogArticle;
-    fetchPriority?: "high" | "low" | "auto";
+    fetchPriority?: "high" | "low" | "auto" | undefined;
 }
 
 const ArticleListItem = ({

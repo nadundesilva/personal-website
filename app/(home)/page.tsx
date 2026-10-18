@@ -83,9 +83,9 @@ export const metadata: Metadata = {
 
 const employmentHistory = Object.values(Experiences).map((exp) => {
     const startDate =
-        exp.timePeriod.from.getRenderSegments()[0].dateTime ??
+        exp.timePeriod.from.getRenderSegments()[0]?.dateTime ??
         exp.timePeriod.from.year.toString();
-    const endDate = exp.timePeriod.to.getRenderSegments()[0].dateTime;
+    const endDate = exp.timePeriod.to.getRenderSegments()[0]?.dateTime;
     return {
         "@type": "OrganizationRole" as const,
         "roleName": exp.name,
@@ -96,7 +96,7 @@ const employmentHistory = Object.values(Experiences).map((exp) => {
             "name": exp.company.name,
             "sameAs": [
                 exp.company.url,
-                ...(exp.company.urlAliases ?? []),
+                ...exp.company.urlAliases,
                 exp.company.wikidataUrl,
             ],
         },
@@ -111,8 +111,8 @@ const profilePage: ProfilePage = {
     "@type": "ProfilePage",
     "@id": SCHEMA_PROFILE_PAGE_ID,
     "url": WEBSITE_PUBLIC_URL,
-    "mainEntity": { "@id": SCHEMA_PERSON_ID } as IdReference,
-    "about": { "@id": SCHEMA_PERSON_ID } as IdReference,
+    "mainEntity": { "@id": SCHEMA_PERSON_ID },
+    "about": { "@id": SCHEMA_PERSON_ID },
     "dateCreated": "2021-03-14T00:00:00.000Z",
     "dateModified": new Date().toISOString(),
     "speakableSpecification": {
@@ -132,7 +132,7 @@ const scholarlyArticles: ScholarlyArticle[] = Object.values(Publications).map(
         "url": pub.url,
         "datePublished": pub.publishedDate.toISOString(),
         "keywords": pub.keywords,
-        "author": { "@id": SCHEMA_PERSON_ID } as IdReference,
+        "author": { "@id": SCHEMA_PERSON_ID },
         "publisher": {
             "@type": "Organization",
             "name": pub.venue,
@@ -195,10 +195,7 @@ const person: Person = {
     "url": WEBSITE_PUBLIC_URL,
     "sameAs": [
         WEBSITE_PUBLIC_URL,
-        ...Object.values(Profiles).flatMap((p) => [
-            p.url,
-            ...(p.urlAliases ?? []),
-        ]),
+        ...Object.values(Profiles).flatMap((p) => [p.url, ...p.urlAliases]),
     ],
     "identifier": Object.values(Profiles).map((profile) => ({
         "@type": "PropertyValue" as const,
@@ -231,7 +228,7 @@ const person: Person = {
             "name": Companies.McCraeTech.name,
             "sameAs": [
                 Companies.McCraeTech.url,
-                ...(Companies.McCraeTech.urlAliases ?? []),
+                ...Companies.McCraeTech.urlAliases,
                 Companies.McCraeTech.wikidataUrl,
             ],
         },
@@ -241,7 +238,7 @@ const person: Person = {
         "name": Companies.McCraeTech.name,
         "sameAs": [
             Companies.McCraeTech.url,
-            ...(Companies.McCraeTech.urlAliases ?? []),
+            ...Companies.McCraeTech.urlAliases,
             Companies.McCraeTech.wikidataUrl,
         ],
     },

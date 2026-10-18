@@ -13,6 +13,7 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 import ScrollReveal from "@/components/primitives/ScrollReveal";
+import { at } from "@/cypress/support/collections";
 
 // The computed `scale` property is "none" once it settles at its initial value.
 const scaleOf = (el: Element): number => {
@@ -92,13 +93,13 @@ describe("ScrollReveal", () => {
             cy.contains("Below the fold")
                 .parent()
                 .should(($el) => {
-                    expect(scaleOf($el[0])).to.be.lessThan(1);
+                    expect(scaleOf(at($el))).to.be.lessThan(1);
                 });
             cy.scrollTo("bottom");
             cy.contains("Below the fold")
                 .parent()
                 .should(($el) => {
-                    expect(scaleOf($el[0])).to.eq(1);
+                    expect(scaleOf(at($el))).to.eq(1);
                 });
         });
 
@@ -117,7 +118,7 @@ describe("ScrollReveal", () => {
             cy.contains("Straddling the fold")
                 .parent()
                 .should(($el) => {
-                    expect(scaleOf($el[0])).to.eq(1);
+                    expect(scaleOf(at($el))).to.eq(1);
                 });
         });
     });

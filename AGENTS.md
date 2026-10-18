@@ -7,8 +7,12 @@
 - Reduce duplication: cross-reference sections instead of repeating information.
 - Point to actual project files rather than duplicating their content here.
 - When updating, consolidate similar information; do not add standalone "new discovery" sections.
-- Knowledge that only matters for one kind of task (writing tests, images, blog MDX, etc.) belongs in a project skill at `.agents/skills/<name>/SKILL.md` (`.claude/skills` is a symlink to it, for Claude Code), not here — this file is loaded in every session. When recording a non-obvious learning: update the existing skill covering that task type; if it is specialised and no skill fits, create one (a `description` that says what the skill covers and when to use it, phrased to trigger even when the request never names the topic; omit `paths:` unless the task cannot start without touching those files, because a `paths`-gated skill is hidden from the skill list until a matching file is touched — e.g. a new image, a test run or a test-level decision happens before any glob matches); if it applies across the board, add it here. Do not list skills in this file.
-- The `<!-- BEGIN:nextjs-agent-rules -->` … `<!-- END:nextjs-agent-rules -->` block at the very end of this file is written and re-added by `next dev` and brings its own `#` heading. Always keep it as the last thing in the file: add new content above it, never after it, or it ends up nested under that heading.
+- In every Markdown file, give the content structure: headings, short paragraphs, and lists where the content is a group of items (files, steps, options). Never leave one long paragraph, and do not turn every sentence into a bullet.
+- Knowledge that only matters for one kind of task (writing tests, images, blog MDX, etc.) belongs in a project skill at `.agents/skills/<name>/SKILL.md` (`.claude/skills` is a symlink to it, for Claude Code), not here, because this file is loaded in every session. When recording a non-obvious learning:
+    - Update the existing skill covering that task type.
+    - If it is specialised and no skill fits, create one. Its `description` says both what the skill covers and when to use it, phrased to trigger even when the request never names the topic, with the key use case first (the skill listing truncates each entry at 1,536 characters). Add narrow `paths:` globs only when a tight file set exists: a `paths`-gated skill loads automatically only once a matching file is touched.
+    - If it applies across the board, add it here.
+    - Do not list skills in this file.
 
 ---
 
@@ -151,6 +155,9 @@ mdx-components.tsx        # MDX element overrides (links, headings, images)
 | `@/shadcn/*`     | `shadcn/*`     |
 | `@/utils/*`      | `utils/*`      |
 | `@/assets/*`     | `assets/*`     |
+| `@/cypress/*`    | `cypress/*`    |
+
+`@/cypress/*` must be in the **root** `tsconfig.json`: the Cypress component bundler resolves aliases from it, not from `cypress/tsconfig.json`.
 
 Always use these aliases in imports — never relative `../../` paths.
 
@@ -217,6 +224,7 @@ Every source file (`.ts`, `.tsx`, `.css`, `.mdx`) must start with the copyright 
 
 - Strict mode is enforced (`strict: true`, `noImplicitAny`, `strictNullChecks`).
 - Type-only imports use the `type` keyword: `import type React from "react"`.
+- Keyed constants use `{…} satisfies Record<string, T>`, not a `Record<string, T>` annotation, so the keys stay literal and `noUncheckedIndexedAccess` does not make every lookup `T | undefined`. Routes get the same treatment through `compileRoutes` in [`constants/routes.ts`](./constants/routes.ts).
 - React return types: `React.ReactElement` for single-element returns, `React.ReactNode` for children props.
 - Props interfaces use the `Props` suffix, defined directly above the component.
 - Default exports for components. Named exports for utilities, hooks, and types.
@@ -360,6 +368,10 @@ live browser URL) disagrees with the path that shell was built for — a hydrati
 [`hooks/useRoutePathname.ts`](./hooks/useRoutePathname.ts) derives the path from
 `useSelectedLayoutSegments()` instead; `Layout.tsx` and `RouterBreadcrumbs.tsx` use it.
 Its JSDoc has the full reasoning; covered by `cypress/e2e/not-found.cy.tsx`.
+
+### `pnpm dlx shadcn add` output may fail the strict tsc flags
+
+`shadcn/` cannot be hand-edited and tsc cannot exclude files that are imported, so newly generated components may fail `exactOptionalPropertyTypes` or `noUncheckedIndexedAccess`. Raise it with the user rather than patching the generated file.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

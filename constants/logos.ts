@@ -58,7 +58,7 @@ export interface LogoImageData {
     srcDark: StaticImageData;
 }
 
-const Logos: Record<string, LogoImageData> = {
+const Logos = {
     DeepLearningAi: {
         srcLight: deepLearningAiLogoImage,
         srcDark: deepLearningAiLogoImage,
@@ -143,6 +143,6 @@ const Logos: Record<string, LogoImageData> = {
         srcLight: britishCouncilLogoImage,
         srcDark: britishCouncilLogoImage,
     },
-};
+} satisfies Record<string, LogoImageData>;
 
 export default Logos;

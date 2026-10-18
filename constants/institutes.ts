@@ -22,7 +22,7 @@ export interface Institute {
     wikidataUrl: string;
 }
 
-const Institutes: Record<string, Institute> = {
+const Institutes = {
     StJosephsCollegeColombo10: {
         name: "St. Joseph's College",
         link: "https://www.stjosephscollege.lk/",
@@ -65,6 +65,6 @@ const Institutes: Record<string, Institute> = {
         logo: Logos.UniversityOfAlberta,
         wikidataUrl: "https://www.wikidata.org/entity/Q112085318",
     },
-};
+} satisfies Record<string, Institute>;
 
 export default Institutes;

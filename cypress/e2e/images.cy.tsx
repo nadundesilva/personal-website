@@ -12,6 +12,7 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
+import { at } from "@/cypress/support/collections";
 import { ALL_ROUTE_PATHS as ROUTES_TO_CHECK } from "@/cypress/support/routes";
 
 const THEMES = ["light", "dark"] as const;
@@ -85,8 +86,9 @@ describe("LCP image priority across every page", () => {
         for (const theme of THEMES) {
             for (const route of ROUTES_TO_CHECK) {
                 cy.loadPage(route, {
-                    onBeforeLoad: (win) =>
-                        win.localStorage.setItem("theme", theme),
+                    onBeforeLoad: (win) => {
+                        win.localStorage.setItem("theme", theme);
+                    },
                 });
                 cy.get("html").should("have.class", theme);
                 cy.get('img[fetchpriority="high"]:visible').should(
@@ -113,8 +115,9 @@ describe("LCP image priority across every page", () => {
         for (const theme of THEMES) {
             for (const route of LEAD_LOGO_ROUTES) {
                 cy.loadPage(route, {
-                    onBeforeLoad: (win) =>
-                        win.localStorage.setItem("theme", theme),
+                    onBeforeLoad: (win) => {
+                        win.localStorage.setItem("theme", theme);
+                    },
                 });
                 cy.get("html").should("have.class", theme);
                 cy.get('img[fetchpriority="high"]:visible')
@@ -130,7 +133,7 @@ describe("LCP image priority across every page", () => {
 
         cy.task<string[]>("discoverBlogArticleSubGroups", ".").then(
             (groupPages) => {
-                cy.loadPage(groupPages[0]);
+                cy.loadPage(at(groupPages));
                 cy.get('img[fetchpriority="high"]').should("have.length", 1);
             },
         );

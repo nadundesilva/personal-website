@@ -14,6 +14,8 @@
  */
 import Experience from "@/app/(home)/_content/sections/Experience";
 import Experiences from "@/constants/experience";
+import { at } from "@/cypress/support/collections";
+import { defined } from "@/cypress/support/defined";
 
 describe("Experience", () => {
     beforeEach(() => {
@@ -25,23 +27,21 @@ describe("Experience", () => {
             .find("> li")
             .should("have.length", Object.keys(Experiences).length)
             .then(($items) => {
-                const itemTexts = $items
-                    .toArray()
-                    .map((el) => el.textContent ?? "");
+                const itemTexts = $items.toArray().map((el) => el.textContent);
 
                 // Role titles repeat across employers, so an entry is only
                 // accounted for when one item carries both its title and its
                 // institute — a matching count alone would still pass if one
                 // role were rendered twice and another dropped.
                 for (const experience of Object.values(Experiences)) {
-                    void expect(
+                    expect(
                         itemTexts.some(
                             (text) =>
                                 text.includes(experience.name) &&
                                 text.includes(experience.institute),
                         ),
                         `no timeline item for "${experience.name}" at "${experience.institute}"`,
-                    ).to.be.true;
+                    ).to.eq(true);
                 }
             });
     });
@@ -67,13 +67,15 @@ describe("Experience", () => {
     // right side of the desktop timeline (Experience.tsx:32,136-183) purely
     // as a visual zig-zag; the underlying content is identical either way.
     it("alternates card placement side to side down the desktop timeline", () => {
-        const [first, second] = Object.values(Experiences);
+        const experiences = Object.values(Experiences);
+        const first = at(experiences, 0);
+        const second = at(experiences, 1);
 
-        const sideOfName = (name: string) =>
+        const sideOfName = (name: string): Cypress.Chainable<JQuery> =>
             cy
                 .findByRole("list", { name: /experience timeline/i })
                 .find("> li")
-                .filter((_, el) => (el.textContent ?? "").includes(name))
+                .filter((_, el) => el.textContent.includes(name))
                 .first()
                 .within(() => {
                     cy.contains(name)
@@ -82,9 +84,9 @@ describe("Experience", () => {
                         .then(($name) => {
                             cy.root().then(($li) => {
                                 const nameMid =
-                                    $name[0].getBoundingClientRect().left +
-                                    $name[0].getBoundingClientRect().width / 2;
-                                const liRect = $li[0].getBoundingClientRect();
+                                    at($name).getBoundingClientRect().left +
+                                    at($name).getBoundingClientRect().width / 2;
+                                const liRect = at($li).getBoundingClientRect();
                                 const liMid = liRect.left + liRect.width / 2;
                                 cy.wrap(nameMid > liMid).as("isRightOfCentre");
                             });
@@ -102,22 +104,20 @@ describe("Experience", () => {
         // ExperienceSkills (tested in isolation with fixtures) collapses
         // past 5 chips - this pins that a real role's skill list actually
         // triggers that behaviour.
-        const experienceWithManySkills = Object.values(Experiences).find(
-            (experience) => experience.skills.length > 5,
+        const experience = defined(
+            Object.values(Experiences).find(
+                (experience) => experience.skills.length > 5,
+            ),
+            "an experience entry with more than 5 skills to exercise this",
         );
-        void expect(
-            experienceWithManySkills,
-            "expected at least one experience entry with more than 5 skills to exercise this",
-        ).to.exist;
-        const experience = experienceWithManySkills!;
-        const hiddenSkill = experience.skills[5];
+        const hiddenSkill = at(experience.skills, 5);
 
         // Role titles repeat across employers (see the timeline-items test
         // above), so the containing <li> is found by name + institute together.
         cy.findByRole("list", { name: /experience timeline/i })
             .find("> li")
             .filter((_, el) => {
-                const text = el.textContent ?? "";
+                const text = el.textContent;
                 return (
                     text.includes(experience.name) &&
                     text.includes(experience.institute)

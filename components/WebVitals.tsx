@@ -22,12 +22,22 @@ interface Zaraz {
     queue: (eventName: string, data?: Record<string, unknown>) => void;
 }
 
+// Next's `Metric` type points at a module that ships no declarations, so the
+// fields reported to Zaraz are declared here.
+interface WebVitalMetric {
+    name: string;
+    value: number;
+    id: string;
+    delta: number;
+    rating: string;
+}
+
 interface ZarazWindow {
     zaraz?: Zaraz;
 }
 
 const WebVitals = (): React.ReactElement | null => {
-    useReportWebVitals((metric) => {
+    useReportWebVitals((metric: WebVitalMetric) => {
         if (
             typeof window !== "undefined" &&
             (window as unknown as ZarazWindow).zaraz

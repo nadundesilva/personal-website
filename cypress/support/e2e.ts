@@ -61,7 +61,7 @@ Cypress.on("window:before:load", (win) => {
                         rootBounds: null,
                         target,
                         time: performance.now(),
-                    } as IntersectionObserverEntry,
+                    },
                 ],
                 this as unknown as IntersectionObserver,
             );

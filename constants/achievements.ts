@@ -23,7 +23,7 @@ export interface Achievement {
     date: FormattableDate;
 }
 
-const Achievements: Record<string, Achievement> = {
+const Achievements = {
     WSO2SustainedOutstandingContributionAward: {
         title: "WSO2 Sustained Outstanding Contribution Award",
         logo: Logos.WSO2,
@@ -66,6 +66,6 @@ const Achievements: Record<string, Achievement> = {
         logoHeight: 2.5,
         date: new Date(2015),
     },
-};
+} satisfies Record<string, Achievement>;
 
 export default Achievements;

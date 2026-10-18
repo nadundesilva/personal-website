@@ -1,6 +1,6 @@
 ---
 name: running-e2e-tests
-description: "How to run the Cypress E2E and component suites, against the static export locally or the same way CI does: browser selection, the local Caddy test server, and coverage instrumentation. Make sure to use this skill whenever running E2E or component tests, starting or stopping the local test server, instrumenting for coverage, or investigating a Cypress failure that only happens in CI or in one browser, even if the request just says 'run the tests'."
+description: "Use whenever running E2E or component tests, starting or stopping the local test server, instrumenting for coverage, or investigating a Cypress failure that only happens in CI or in one browser, even if the request just says 'run the tests'. Covers how to run the Cypress E2E and component suites, against the static export locally or the same way CI does: browser selection, the local Caddy test server, and coverage instrumentation."
 ---
 
 # Running E2E Tests

@@ -63,13 +63,13 @@ const MONTHS: Month[] = [
 
 export class Date extends AbstractFormattableDate {
     year: number;
-    month?: Month;
+    month?: Month | undefined;
 
     constructor(year: number, month?: Month) {
         super();
         if (year < 1994) {
             throw Error(
-                `Invalid year; expected to be greater than or equal to year of birth (1994), but got ${year}`,
+                `Invalid year; expected to be greater than or equal to year of birth (1994), but got ${String(year)}`,
             );
         }
         this.year = year;
@@ -89,7 +89,7 @@ export class Date extends AbstractFormattableDate {
     toISOString(): string {
         if (this.month !== undefined) {
             const monthIndex = MONTHS.indexOf(this.month) + 1;
-            return `${this.year}-${String(monthIndex).padStart(2, "0")}`;
+            return `${String(this.year)}-${String(monthIndex).padStart(2, "0")}`;
         }
         return this.year.toString();
     }

@@ -12,6 +12,8 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
+import { at } from "@/cypress/support/collections";
+import { defined } from "@/cypress/support/defined";
 import { CODE_BLOCK_BLOG_ARTICLE_PATH } from "@/cypress/support/routes";
 import { childrenNamed, childText, parseXml } from "@/cypress/support/xml";
 
@@ -31,7 +33,7 @@ const DUBLIN_CORE_NAMESPACE = "http://purl.org/dc/elements/1.1/";
 const getFeed = (): Cypress.Chainable<{ channel: Element; items: Element[] }> =>
     cy.request("/blog-articles/feed.xml").then((response) => {
         const doc = parseXml(response.body as string);
-        const channel = childrenNamed(doc.documentElement, "channel")[0];
+        const channel = at(childrenNamed(doc.documentElement, "channel"));
         return { channel, items: childrenNamed(channel, "item") };
     });
 
@@ -55,15 +57,20 @@ describe("blog article features", () => {
 
         it("identifies itself to feed readers", () => {
             getFeed().then(({ channel }) => {
-                void expect(childText(channel, "title")).to.not.be.empty;
-                void expect(childText(channel, "description")).to.not.be.empty;
+                expect(childText(channel, "title")).to.have.length.greaterThan(
+                    0,
+                );
+                expect(
+                    childText(channel, "description"),
+                ).to.have.length.greaterThan(0);
                 expect(childText(channel, "language")).to.eq("en-US");
-                void expect(childText(channel, "copyright")).to.not.be.empty;
+                expect(
+                    childText(channel, "copyright"),
+                ).to.have.length.greaterThan(0);
 
-                const selfLink = channel.getElementsByTagNameNS(
-                    ATOM_NAMESPACE,
-                    "link",
-                )[0];
+                const selfLink = at(
+                    channel.getElementsByTagNameNS(ATOM_NAMESPACE, "link"),
+                );
                 expect(selfLink.getAttribute("href")).to.eq(
                     `${WEBSITE_PUBLIC_URL}/blog-articles/feed.xml`,
                 );
@@ -75,8 +82,10 @@ describe("blog article features", () => {
             getFeed().then(({ items }) => {
                 expect(items.length).to.be.greaterThan(0);
                 items.forEach((item) => {
-                    void expect(childText(item, "title"), item.outerHTML).to.not
-                        .be.empty;
+                    expect(
+                        childText(item, "title"),
+                        item.outerHTML,
+                    ).to.have.length.greaterThan(0);
                     expect(childText(item, "link"), item.outerHTML).to.include(
                         WEBSITE_PUBLIC_URL,
                     );
@@ -88,14 +97,21 @@ describe("blog article features", () => {
             getFeed().then(({ items }) => {
                 expect(items.length).to.be.greaterThan(0);
                 items.forEach((item) => {
-                    const enclosure = childrenNamed(item, "enclosure")[0];
+                    const enclosure = at(childrenNamed(item, "enclosure"));
 
                     expect(
-                        new URL(enclosure.getAttribute("url")!).origin,
+                        new URL(
+                            defined(
+                                enclosure.getAttribute("url"),
+                                "enclosure url",
+                            ),
+                        ).origin,
                         item.outerHTML,
                     ).to.eq(new URL(WEBSITE_PUBLIC_URL).origin);
-                    void expect(enclosure.getAttribute("type"), item.outerHTML)
-                        .to.not.be.empty;
+                    expect(
+                        enclosure.getAttribute("type"),
+                        item.outerHTML,
+                    ).to.have.length.greaterThan(0);
                 });
             });
         });
@@ -105,12 +121,18 @@ describe("blog article features", () => {
                 expect(items.length).to.be.greaterThan(0);
                 items.forEach((item) => {
                     const pubDate = childText(item, "pubDate");
-                    void expect(pubDate, item.outerHTML).to.not.be.empty;
-                    void expect(new Date(pubDate).getTime(), item.outerHTML).to
-                        .not.be.NaN;
+                    expect(pubDate, item.outerHTML).to.have.length.greaterThan(
+                        0,
+                    );
+                    expect(
+                        Number.isNaN(new Date(pubDate).getTime()),
+                        item.outerHTML,
+                    ).to.eq(false);
 
-                    void expect(childText(item, "description"), item.outerHTML)
-                        .to.not.be.empty;
+                    expect(
+                        childText(item, "description"),
+                        item.outerHTML,
+                    ).to.have.length.greaterThan(0);
                 });
             });
         });
@@ -129,7 +151,7 @@ describe("blog article features", () => {
                             "creator",
                         ).length > 0;
 
-                    void expect(hasAuthor, item.outerHTML).to.be.true;
+                    expect(hasAuthor, item.outerHTML).to.eq(true);
                     void expect(
                         childrenNamed(item, "category").length,
                         item.outerHTML,
@@ -166,7 +188,12 @@ describe("blog article features", () => {
             cy.get("section")
                 .then(($sections) =>
                     Cypress._.map($sections.toArray(), (section) =>
-                        section.querySelector("time")?.getAttribute("datetime"),
+                        defined(
+                            section
+                                .querySelector("time")
+                                ?.getAttribute("datetime"),
+                            "category lead <time> datetime",
+                        ),
                     ),
                 )
                 .then((leadDates) => {
@@ -174,10 +201,12 @@ describe("blog article features", () => {
                     for (let i = 1; i < leadDates.length; i++) {
                         // Non-strict: dates are month-precision, so two
                         // categories can legitimately tie.
-                        void expect(
-                            leadDates[i - 1]! >= leadDates[i]!,
-                            `expected category ${i - 1} (${leadDates[i - 1]}) to not be older than category ${i} (${leadDates[i]})`,
-                        ).to.be.true;
+                        const previousDate = at(leadDates, i - 1);
+                        const currentDate = at(leadDates, i);
+                        expect(
+                            previousDate >= currentDate,
+                            `expected category ${String(i - 1)} (${previousDate}) to not be older than category ${String(i)} (${currentDate})`,
+                        ).to.eq(true);
                     }
                 });
         });
@@ -186,7 +215,7 @@ describe("blog article features", () => {
     describe("article page content", () => {
         it("shows an article's title, date and body to the reader", () => {
             cy.task<string[]>("discoverBlogArticles", ".").then((articles) => {
-                cy.loadPage(articles[0]);
+                cy.loadPage(at(articles));
 
                 cy.findByRole("heading", { level: 1 }).should("be.visible");
                 cy.get("time").should("exist");
@@ -254,7 +283,7 @@ describe("blog article features", () => {
                                 return (
                                     (
                                         JSON.parse(
-                                            script.textContent ?? "{}",
+                                            script.textContent,
                                         ) as Record<string, unknown>
                                     )["@type"] === "BlogPosting"
                                 );
@@ -328,7 +357,7 @@ describe("blog article features", () => {
                             .map((script) => {
                                 try {
                                     return JSON.parse(
-                                        script.textContent ?? "{}",
+                                        script.textContent,
                                     ) as Record<string, unknown>;
                                 } catch {
                                     return {};
@@ -336,7 +365,7 @@ describe("blog article features", () => {
                             })
                             .find((data) => data["@type"] === "BlogPosting");
                         const keywords = [
-                            ...((blogPosting?.keywords as string[]) ?? []),
+                            ...((blogPosting?.keywords ?? []) as string[]),
                         ].sort();
 
                         expect(
@@ -407,7 +436,7 @@ describe("blog article features", () => {
                     const cardMinutes = /~(\d+)\s+mins?\s+read/.exec(
                         cardText,
                     )?.[1];
-                    void expect(cardMinutes, cardText).to.exist;
+                    expect(cardMinutes, cardText).to.not.eq(undefined);
 
                     cy.loadPage(CODE_BLOCK_BLOG_ARTICLE_PATH);
                     cy.get("[data-reading-time-minutes]")
@@ -452,7 +481,7 @@ describe("blog article features", () => {
                 // non-empty, reader-facing alt text.
                 cy.get("figure img").should("have.length.at.least", 1);
                 cy.get("figure img").each(($img) => {
-                    void expect($img.attr("alt")).to.not.be.empty;
+                    expect($img.attr("alt")).to.have.length.greaterThan(0);
                 });
             });
         });
@@ -511,7 +540,7 @@ describe("blog article features", () => {
 
         it("tracks how far the reader has scrolled through the article", () => {
             cy.task<string[]>("discoverBlogArticles", ".").then((articles) => {
-                cy.loadPage(articles[0]);
+                cy.loadPage(at(articles));
 
                 // Progressbar is rendered and starts at 0
                 cy.findByRole("progressbar", {
@@ -536,7 +565,7 @@ describe("blog article features", () => {
                     // be.visible: pointer-events-none makes elementFromPoint
                     // skip the FAB, so Cypress falsely reports it as covered.
                     .should(($fab) => {
-                        const rect = $fab[0].getBoundingClientRect();
+                        const rect = at($fab).getBoundingClientRect();
                         expect(rect.width, "fab width").to.be.greaterThan(0);
                         expect(rect.height, "fab height").to.be.greaterThan(0);
                         expect(rect.right, "fab right edge").to.be.at.most(

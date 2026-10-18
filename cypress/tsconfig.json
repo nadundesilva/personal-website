@@ -1,5 +1,12 @@
 {
     "compilerOptions": {
+        "strict": true,
+        "noImplicitReturns": true,
+        "noImplicitOverride": true,
+        "exactOptionalPropertyTypes": true,
+        "noUncheckedIndexedAccess": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
         "target": "ES2022",
         "lib": ["ES2022", "dom"],
         "types": [
@@ -21,6 +28,7 @@
         "module": "esnext",
         "moduleResolution": "bundler",
         "jsx": "react-jsx",
+        "verbatimModuleSyntax": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "skipLibCheck": true,

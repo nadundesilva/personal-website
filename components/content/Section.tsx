@@ -19,7 +19,7 @@ import { Separator } from "@/shadcn/ui";
 
 interface SectionProps {
     children: React.ReactNode;
-    labelledById?: string;
+    labelledById?: string | undefined;
 }
 
 const Section = ({

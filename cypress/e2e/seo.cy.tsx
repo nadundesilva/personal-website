@@ -16,6 +16,8 @@ import Profiles, { TWITTER_HANDLE } from "@/constants/profiles";
 import Publications from "@/constants/publications";
 import { CvPdfPath } from "@/constants/routes";
 import Skills, { SkillProficiency } from "@/constants/skills";
+import { at } from "@/cypress/support/collections";
+import { defined } from "@/cypress/support/defined";
 import {
     CONTENT_ROUTE_PATHS,
     SAMPLE_BLOG_ARTICLE_PATH,
@@ -33,9 +35,31 @@ const SCHEMA_PERSON_ID = `${WEBSITE_PUBLIC_URL}/#person`;
 const SCHEMA_WEBSITE_ID = `${WEBSITE_PUBLIC_URL}/#website`;
 
 const getPersonJsonLdGraph = (): Cypress.Chainable<Record<string, unknown>[]> =>
-    cy
-        .get('script[type="application/ld+json"]#json-ld-person')
-        .then(($script) => JSON.parse($script.text())["@graph"]);
+    cy.get('script[type="application/ld+json"]#json-ld-person').then(
+        ($script) =>
+            (
+                JSON.parse($script.text()) as {
+                    "@graph": Record<string, unknown>[];
+                }
+            )["@graph"],
+    );
+
+// The last node of the given @type across the page's JSON-LD scripts.
+const findJsonLd = (
+    $scripts: JQuery,
+    type: string,
+): Record<string, unknown> | undefined =>
+    $scripts
+        .toArray()
+        .map(
+            (el) =>
+                JSON.parse((el as HTMLScriptElement).textContent) as Record<
+                    string,
+                    unknown
+                >,
+        )
+        .filter((data) => data["@type"] === type)
+        .at(-1);
 
 const getPerson = (
     graph: Record<string, unknown>[],
@@ -200,9 +224,9 @@ describe("SEO static routes", () => {
                     display: string;
                 };
 
-                void expect(manifest.name).to.not.be.empty;
-                void expect(manifest.short_name).to.not.be.empty;
-                void expect(manifest.description).to.not.be.empty;
+                expect(manifest.name).to.have.length.greaterThan(0);
+                expect(manifest.short_name).to.have.length.greaterThan(0);
+                expect(manifest.description).to.have.length.greaterThan(0);
                 expect(manifest.start_url).to.eq("/");
                 expect(manifest.display).to.eq("standalone");
             });
@@ -221,8 +245,8 @@ describe("SEO static routes", () => {
 
                 expect(manifest.icons.length).to.be.greaterThan(0);
                 manifest.icons.forEach((icon) => {
-                    void expect(icon.sizes).to.not.be.empty;
-                    void expect(icon.type).to.not.be.empty;
+                    expect(icon.sizes).to.have.length.greaterThan(0);
+                    expect(icon.type).to.have.length.greaterThan(0);
                 });
                 expect(
                     manifest.icons.some((icon) => icon.purpose === "maskable"),
@@ -258,7 +282,7 @@ describe("canonical and profile-identity link tags", () => {
     it("links every social profile as rel=me for identity verification", () => {
         cy.visit("/");
         for (const profile of Object.values(Profiles)) {
-            for (const href of [profile.url, ...(profile.urlAliases ?? [])]) {
+            for (const href of [profile.url, ...profile.urlAliases]) {
                 cy.get(`link[rel="me"][href="${href}"]`).should("exist");
             }
         }
@@ -357,12 +381,12 @@ describe("metadata image assets", () => {
         cy.loadPage("/");
         cy.get('meta[property="og:image"]')
             .invoke("attr", "content")
-            .then((url) => requestAssetPath(url!))
+            .then((url) => requestAssetPath(defined(url, "asset url")))
             .then(expectServedAsImage);
 
         cy.get('meta[name="twitter:image"]')
             .invoke("attr", "content")
-            .then((url) => requestAssetPath(url!))
+            .then((url) => requestAssetPath(defined(url, "asset url")))
             .then(expectServedAsImage);
     });
 
@@ -370,7 +394,7 @@ describe("metadata image assets", () => {
         cy.loadPage("/");
         cy.get('link[rel="apple-touch-icon"]')
             .invoke("attr", "href")
-            .then((url) => requestAssetPath(url!))
+            .then((url) => requestAssetPath(defined(url, "asset url")))
             .then(expectServedAsImage);
 
         cy.request("/manifest.webmanifest").then((response) => {
@@ -407,37 +431,45 @@ describe("home page JSON-LD structured data", () => {
         cy.visit("/");
         cy.get('script[type="application/ld+json"]#json-ld-person').then(
             ($script) => {
-                const data = JSON.parse($script.text());
+                const data = JSON.parse($script.text()) as Record<
+                    string,
+                    unknown
+                >;
                 expect(data["@graph"]).to.be.an("array");
 
-                const profilePage = (data["@graph"] as unknown[]).find(
-                    (e: unknown) =>
-                        (e as Record<string, unknown>)["@type"] ===
-                        "ProfilePage",
-                ) as Record<string, unknown> | undefined;
-                void expect(profilePage).to.exist;
+                const profilePage = defined(
+                    (data["@graph"] as unknown[]).find(
+                        (e: unknown) =>
+                            (e as Record<string, unknown>)["@type"] ===
+                            "ProfilePage",
+                    ) as Record<string, unknown> | undefined,
+                    "ProfilePage node",
+                );
                 void expect(
-                    (profilePage!["mainEntity"] as Record<string, string>)[
+                    (profilePage["mainEntity"] as Record<string, string>)[
                         "@id"
                     ],
                 ).to.eq(SCHEMA_PERSON_ID);
 
-                const person = (data["@graph"] as unknown[]).find(
-                    (e: unknown) =>
-                        (e as Record<string, unknown>)["@type"] === "Person",
-                ) as Record<string, unknown> | undefined;
-                void expect(person).to.exist;
-                void expect(person!["@id"]).to.eq(SCHEMA_PERSON_ID);
-                void expect(person!["knowsAbout"])
+                const person = defined(
+                    (data["@graph"] as unknown[]).find(
+                        (e: unknown) =>
+                            (e as Record<string, unknown>)["@type"] ===
+                            "Person",
+                    ) as Record<string, unknown> | undefined,
+                    "Person node",
+                );
+                void expect(person["@id"]).to.eq(SCHEMA_PERSON_ID);
+                void expect(person["knowsAbout"])
                     .to.be.an("array")
                     .with.length.at.least(1);
-                void expect(person!["award"])
+                void expect(person["award"])
                     .to.be.an("array")
                     .with.length.at.least(1);
-                void expect(person!["hasCredential"])
+                void expect(person["hasCredential"])
                     .to.be.an("array")
                     .with.length.at.least(1);
-                void expect(person!["alumniOf"])
+                void expect(person["alumniOf"])
                     .to.be.an("array")
                     .with.length.at.least(1);
             },
@@ -453,7 +485,7 @@ describe("home page JSON-LD structured data", () => {
                 WEBSITE_PUBLIC_URL,
                 ...Object.values(Profiles).flatMap((profile) => [
                     profile.url,
-                    ...(profile.urlAliases ?? []),
+                    ...profile.urlAliases,
                 ]),
             ];
             expect(person["sameAs"]).to.deep.equal(expectedSameAs);
@@ -558,10 +590,16 @@ describe("home page JSON-LD structured data", () => {
             expect(memberOf).to.be.an("array").with.length.at.least(1);
             memberOf.forEach((role) => {
                 expect(role["@type"]).to.eq("OrganizationRole");
-                void expect(role["roleName"]).to.be.a("string").and.not.empty;
-                void expect(role["startDate"]).to.be.a("string").and.not.empty;
+                expect(role["roleName"])
+                    .to.be.a("string")
+                    .and.have.length.greaterThan(0);
+                expect(role["startDate"])
+                    .to.be.a("string")
+                    .and.have.length.greaterThan(0);
                 const employer = role["memberOf"] as Record<string, unknown>;
-                void expect(employer["name"]).to.be.a("string").and.not.empty;
+                expect(employer["name"])
+                    .to.be.a("string")
+                    .and.have.length.greaterThan(0);
                 void expect(employer["sameAs"])
                     .to.be.an("array")
                     .with.length.at.least(1);
@@ -573,7 +611,7 @@ describe("home page JSON-LD structured data", () => {
             // Exactly one role is ongoing - the current job - every other role
             // in the history must have ended.
             expect(currentRoles).to.have.length(1);
-            const currentRole = currentRoles[0];
+            const currentRole = at(currentRoles);
             const currentEmployer = currentRole["memberOf"] as Record<
                 string,
                 unknown
@@ -581,7 +619,7 @@ describe("home page JSON-LD structured data", () => {
 
             expect(person["jobTitle"]).to.eq(currentRole["roleName"]);
             expect(
-                (person["worksFor"] as Record<string, unknown>[])[0]["name"],
+                at(person["worksFor"] as Record<string, unknown>[])["name"],
             ).to.eq(currentEmployer["name"]);
             expect(
                 (person["affiliation"] as Record<string, unknown>)["name"],
@@ -600,22 +638,17 @@ describe("home page JSON-LD structured data", () => {
             );
 
             Object.values(Publications).forEach((publication) => {
-                const article = scholarlyArticles.find(
-                    (a) => a["@id"] === publication.url,
+                const article = defined(
+                    scholarlyArticles.find((a) => a["@id"] === publication.url),
+                    `ScholarlyArticle for ${publication.url}`,
                 );
-                void expect(
-                    article,
-                    `missing ScholarlyArticle for ${publication.url}`,
-                ).to.exist;
-                expect(article!["url"]).to.eq(publication.url);
-                expect(article!["headline"]).to.eq(publication.title);
-                expect(article!["datePublished"]).to.eq(
+                expect(article["url"]).to.eq(publication.url);
+                expect(article["headline"]).to.eq(publication.title);
+                expect(article["datePublished"]).to.eq(
                     publication.publishedDate.toISOString(),
                 );
-                expect(article!["keywords"]).to.deep.equal(
-                    publication.keywords,
-                );
-                expect(article!["author"]).to.deep.equal({
+                expect(article["keywords"]).to.deep.equal(publication.keywords);
+                expect(article["author"]).to.deep.equal({
                     "@id": SCHEMA_PERSON_ID,
                 });
             });
@@ -641,25 +674,18 @@ describe("site-wide JSON-LD structured data", () => {
     it("identifies the WebSite node every CollectionPage refers back to", () => {
         cy.visit("/");
         cy.get('script[type="application/ld+json"]').then(($scripts) => {
-            let website: Record<string, unknown> | null = null;
-            $scripts.each((_, el) => {
-                const data = JSON.parse(
-                    (el as HTMLScriptElement).textContent ?? "{}",
-                );
-                if ((data as Record<string, unknown>)["@type"] === "WebSite") {
-                    website = data as Record<string, unknown>;
-                }
-            });
-
-            void expect(website).to.not.be.null;
-            void expect(website!["@id"]).to.eq(SCHEMA_WEBSITE_ID);
+            const website = defined(
+                findJsonLd($scripts, "WebSite"),
+                "WebSite JSON-LD",
+            );
+            void expect(website["@id"]).to.eq(SCHEMA_WEBSITE_ID);
             for (const key of [
                 "about",
                 "author",
                 "creator",
                 "copyrightHolder",
             ]) {
-                void expect(website![key]).to.deep.equal({
+                void expect(website[key]).to.deep.equal({
                     "@id": SCHEMA_PERSON_ID,
                 });
             }
@@ -672,7 +698,10 @@ describe("content page JSON-LD structured data", () => {
         cy.loadPage("/experience");
         cy.get('script[type="application/ld+json"]#json-ld-breadcrumb').then(
             ($script) => {
-                const data = JSON.parse($script.text());
+                const data = JSON.parse($script.text()) as Record<
+                    string,
+                    unknown
+                >;
                 expect(data["@type"]).to.eq("BreadcrumbList");
 
                 const items = data["itemListElement"] as unknown[];
@@ -694,15 +723,19 @@ describe("content page JSON-LD structured data", () => {
             cy.get(
                 'script[type="application/ld+json"]#json-ld-breadcrumb',
             ).then(($script) => {
-                const data = JSON.parse($script.text());
+                const data = JSON.parse($script.text()) as Record<
+                    string,
+                    unknown
+                >;
                 expect(data["@type"], route).to.eq("BreadcrumbList");
 
                 const items = data["itemListElement"] as unknown[];
                 expect(items, route).to.be.an("array").with.length.at.least(2);
 
                 const last = items[items.length - 1] as Record<string, unknown>;
-                void expect(last["name"], route).to.be.a("string").and.not
-                    .empty;
+                expect(last["name"], route)
+                    .to.be.a("string")
+                    .and.have.length.greaterThan(0);
             });
         }
     });
@@ -716,12 +749,15 @@ describe("content page JSON-LD structured data", () => {
     it("tells crawlers where a blog article and its group sit in the site hierarchy", () => {
         cy.task<string[]>("discoverBlogArticleSubGroups", ".").then(
             (subGroups) => {
-                for (const route of [SAMPLE_BLOG_ARTICLE_PATH, subGroups[0]]) {
+                for (const route of [SAMPLE_BLOG_ARTICLE_PATH, at(subGroups)]) {
                     cy.loadPage(route);
                     cy.get(
                         'script[type="application/ld+json"]#json-ld-breadcrumb',
                     ).then(($script) => {
-                        const data = JSON.parse($script.text());
+                        const data = JSON.parse($script.text()) as Record<
+                            string,
+                            unknown
+                        >;
                         expect(data["@type"], route).to.eq("BreadcrumbList");
 
                         const items = data["itemListElement"] as unknown[];
@@ -742,7 +778,7 @@ describe("education page JSON-LD structured data", () => {
             const scholarlyArticles: Record<string, unknown>[] = [];
             $scripts.each((_, el) => {
                 const data = JSON.parse(
-                    (el as HTMLScriptElement).textContent ?? "{}",
+                    (el as HTMLScriptElement).textContent,
                 ) as Record<string, unknown>;
                 const graph = data["@graph"] as
                     Record<string, unknown>[] | undefined;
@@ -755,22 +791,17 @@ describe("education page JSON-LD structured data", () => {
             );
 
             Object.values(Publications).forEach((publication) => {
-                const article = scholarlyArticles.find(
-                    (a) => a["@id"] === publication.url,
+                const article = defined(
+                    scholarlyArticles.find((a) => a["@id"] === publication.url),
+                    `ScholarlyArticle for ${publication.url}`,
                 );
-                void expect(
-                    article,
-                    `missing ScholarlyArticle for ${publication.url}`,
-                ).to.exist;
-                expect(article!["url"]).to.eq(publication.url);
-                expect(article!["headline"]).to.eq(publication.title);
-                expect(article!["datePublished"]).to.eq(
+                expect(article["url"]).to.eq(publication.url);
+                expect(article["headline"]).to.eq(publication.title);
+                expect(article["datePublished"]).to.eq(
                     publication.publishedDate.toISOString(),
                 );
-                expect(article!["keywords"]).to.deep.equal(
-                    publication.keywords,
-                );
-                expect(article!["author"]).to.deep.equal({
+                expect(article["keywords"]).to.deep.equal(publication.keywords);
+                expect(article["author"]).to.deep.equal({
                     "@id": SCHEMA_PERSON_ID,
                 });
             });
@@ -782,26 +813,17 @@ describe("CollectionPage JSON-LD structured data", () => {
     it("attributes a non-blog content page to the site owner for crawlers", () => {
         cy.loadPage("/projects");
         cy.get('script[type="application/ld+json"]').then(($scripts) => {
-            let collectionPage: Record<string, unknown> | null = null;
-            $scripts.each((_, el) => {
-                const data = JSON.parse(
-                    (el as HTMLScriptElement).textContent ?? "{}",
-                );
-                if (
-                    (data as Record<string, unknown>)["@type"] ===
-                    "CollectionPage"
-                ) {
-                    collectionPage = data as Record<string, unknown>;
-                }
-            });
-            void expect(collectionPage).to.not.be.null;
-            void expect(collectionPage!["@id"]).to.eq(
+            const collectionPage = defined(
+                findJsonLd($scripts, "CollectionPage"),
+                "CollectionPage JSON-LD",
+            );
+            void expect(collectionPage["@id"]).to.eq(
                 `${WEBSITE_PUBLIC_URL}/projects`,
             );
-            void expect(collectionPage!["isPartOf"]).to.deep.include({
+            void expect(collectionPage["isPartOf"]).to.deep.include({
                 "@id": SCHEMA_WEBSITE_ID,
             });
-            void expect(collectionPage!["about"]).to.deep.include({
+            void expect(collectionPage["about"]).to.deep.include({
                 "@id": SCHEMA_PERSON_ID,
             });
         });
@@ -810,23 +832,14 @@ describe("CollectionPage JSON-LD structured data", () => {
     it("does not attribute the blog index itself to the site owner", () => {
         cy.loadPage("/blog-articles");
         cy.get('script[type="application/ld+json"]').then(($scripts) => {
-            let collectionPage: Record<string, unknown> | null = null;
-            $scripts.each((_, el) => {
-                const data = JSON.parse(
-                    (el as HTMLScriptElement).textContent ?? "{}",
-                );
-                if (
-                    (data as Record<string, unknown>)["@type"] ===
-                    "CollectionPage"
-                ) {
-                    collectionPage = data as Record<string, unknown>;
-                }
-            });
-            void expect(collectionPage).to.not.be.null;
-            void expect(collectionPage!["isPartOf"]).to.deep.include({
+            const collectionPage = defined(
+                findJsonLd($scripts, "CollectionPage"),
+                "CollectionPage JSON-LD",
+            );
+            void expect(collectionPage["isPartOf"]).to.deep.include({
                 "@id": SCHEMA_WEBSITE_ID,
             });
-            void expect(collectionPage!["about"]).to.be.undefined;
+            expect(collectionPage["about"]).to.eq(undefined);
         });
     });
 
@@ -834,26 +847,16 @@ describe("CollectionPage JSON-LD structured data", () => {
         for (const route of CONTENT_ROUTE_PATHS) {
             cy.loadPage(route);
             cy.get('script[type="application/ld+json"]').then(($scripts) => {
-                let collectionPage: Record<string, unknown> | null = null;
-                $scripts.each((_, el) => {
-                    const data = JSON.parse(
-                        (el as HTMLScriptElement).textContent ?? "{}",
-                    );
-                    if (
-                        (data as Record<string, unknown>)["@type"] ===
-                        "CollectionPage"
-                    ) {
-                        collectionPage = data as Record<string, unknown>;
-                    }
-                });
-                void expect(collectionPage, `no CollectionPage on ${route}`).to
-                    .not.be.null;
+                const collectionPage = defined(
+                    findJsonLd($scripts, "CollectionPage"),
+                    `no CollectionPage on ${route}`,
+                );
                 void expect(
-                    collectionPage!["@id"],
+                    collectionPage["@id"],
                     `CollectionPage @id on ${route}`,
                 ).to.include(route);
                 void expect(
-                    collectionPage!["isPartOf"],
+                    collectionPage["isPartOf"],
                     `CollectionPage isPartOf on ${route}`,
                 ).to.deep.include({
                     "@id": SCHEMA_WEBSITE_ID,
@@ -967,24 +970,16 @@ describe("blog article JSON-LD structured data", () => {
     it("avoids duplicating person data by referencing the site owner as blog author", () => {
         cy.visit(SAMPLE_BLOG_ARTICLE_PATH);
         cy.get('script[type="application/ld+json"]').then(($scripts) => {
-            let blogPosting: Record<string, unknown> | null = null;
-            $scripts.each((_, el) => {
-                const data = JSON.parse(
-                    (el as HTMLScriptElement).textContent ?? "{}",
-                );
-                if (
-                    (data as Record<string, unknown>)["@type"] === "BlogPosting"
-                ) {
-                    blogPosting = data as Record<string, unknown>;
-                }
-            });
-            void expect(blogPosting).to.not.be.null;
+            const blogPosting = defined(
+                findJsonLd($scripts, "BlogPosting"),
+                "BlogPosting JSON-LD",
+            );
             void expect(
-                (blogPosting!["author"] as Record<string, unknown>)["@id"],
+                (blogPosting["author"] as Record<string, unknown>)["@id"],
             ).to.include("/#person");
-            void expect(
-                (blogPosting!["author"] as Record<string, unknown>)["@type"],
-            ).to.be.undefined;
+            expect(
+                (blogPosting["author"] as Record<string, unknown>)["@type"],
+            ).to.eq(undefined);
         });
     });
 });

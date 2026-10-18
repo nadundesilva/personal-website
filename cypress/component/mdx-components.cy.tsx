@@ -32,18 +32,16 @@ class ErrorBoundary extends React.Component<
     { children: React.ReactNode },
     { error: Error | null }
 > {
-    state = { error: null };
+    override state: { error: Error | null } = { error: null };
 
-    static getDerivedStateFromError(error: Error) {
+    static getDerivedStateFromError(error: Error): { error: Error } {
         return { error };
     }
 
-    render() {
+    override render(): React.ReactNode {
         if (this.state.error) {
             return (
-                <div data-testid="render-error">
-                    {(this.state.error as Error).message}
-                </div>
+                <div data-testid="render-error">{this.state.error.message}</div>
             );
         }
         return this.props.children;
@@ -81,7 +79,7 @@ const MdxHeading = ({
     level: "h3" | "h4" | "h5" | "h6";
 }): React.ReactElement | null => {
     const components = useMDXComponents({}) as Record<
-        string,
+        typeof level,
         () => React.ReactElement | null
     >;
     const RealMdxHeading = components[level];
@@ -96,7 +94,7 @@ const MdxList = ({
     children: React.ReactNode;
 }): React.ReactElement | null => {
     const components = useMDXComponents({}) as Record<
-        string,
+        typeof component | "li",
         (props: { children: React.ReactNode }) => React.ReactElement | null
     >;
     const RealMdxList = components[component];
@@ -136,7 +134,7 @@ const MdxProseHeading = ({
     children: React.ReactNode;
 }): React.ReactElement | null => {
     const components = useMDXComponents({}) as Record<
-        string,
+        typeof level,
         (props: { children: React.ReactNode }) => React.ReactElement | null
     >;
     const RealMdxProseHeading = components[level];

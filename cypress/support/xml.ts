@@ -30,4 +30,4 @@ export const childrenNamed = (parent: Element, name: string): Element[] =>
     );
 
 export const childText = (parent: Element, name: string): string =>
-    childrenNamed(parent, name)[0]?.textContent?.trim() ?? "";
+    childrenNamed(parent, name)[0]?.textContent.trim() ?? "";

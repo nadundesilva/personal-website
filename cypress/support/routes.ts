@@ -31,7 +31,7 @@ export const CONTENT_ROUTE_PATHS: string[] = ALL_ROUTE_PATHS.filter(
 export const REPRESENTATIVE_ROUTE_PATHS: string[] = [
     WebsiteHome.path,
     WebsiteHome.subRoutes["/experience"].path,
-    WebsiteHome.subRoutes["/projects"].subRoutes!["/projects/personal"].path,
+    WebsiteHome.subRoutes["/projects"].subRoutes["/projects/personal"].path,
 ];
 
 // Individual blog articles are not part of the route tree above - only

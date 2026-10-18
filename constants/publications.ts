@@ -23,7 +23,7 @@ export interface Publication {
     keywords: string[];
 }
 
-const Publications: Record<string, Publication> = {
+const Publications = {
     GanBasedAnomalyDetection: {
         title: "Generative Adversarial Networks (GAN) based Anomaly Detection in Industrial Software Systems",
         url: "https://ieeexplore.ieee.org/document/8818750",
@@ -48,6 +48,6 @@ const Publications: Record<string, Publication> = {
             "Machine Learning",
         ],
     },
-};
+} satisfies Record<string, Publication>;
 
 export default Publications;

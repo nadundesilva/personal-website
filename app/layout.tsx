@@ -17,7 +17,7 @@ import "./app.css";
 import type { Metadata, Route as NextRoute, Viewport } from "next";
 
 import React from "react";
-import type { IdReference, WebSite, WithContext } from "schema-dts";
+import type { WebSite, WithContext } from "schema-dts";
 
 import Layout, { RouterBreadcrumbs } from "@/components/layout";
 import { codeFont, defaultFont } from "@/components/theme";
@@ -31,7 +31,7 @@ import {
     WEBSITE_PUBLIC_URL,
 } from "@/constants/metadata";
 import Profiles, { TWITTER_HANDLE } from "@/constants/profiles";
-import { Route, WebsiteHome } from "@/constants/routes";
+import { type Route, WebsiteHome } from "@/constants/routes";
 import { cn } from "@/shadcn/lib/cn";
 import { TooltipProvider } from "@/shadcn/ui";
 import {
@@ -158,13 +158,13 @@ const jsonLd: WithContext<WebSite> = {
     "name": FULL_NAME,
     "url": WEBSITE_PUBLIC_URL,
     "description": MAIN_DESCRIPTION,
-    "about": { "@id": SCHEMA_PERSON_ID } as IdReference,
-    "author": { "@id": SCHEMA_PERSON_ID } as IdReference,
-    "creator": { "@id": SCHEMA_PERSON_ID } as IdReference,
-    "copyrightHolder": { "@id": SCHEMA_PERSON_ID } as IdReference,
+    "about": { "@id": SCHEMA_PERSON_ID },
+    "author": { "@id": SCHEMA_PERSON_ID },
+    "creator": { "@id": SCHEMA_PERSON_ID },
+    "copyrightHolder": { "@id": SCHEMA_PERSON_ID },
 };
 
-function buildBlogArticleRoutes(
+function compileBlogArticleRoutes(
     subGroups: BlogArticleGroup[],
 ): Record<string, Route> {
     const routes: Record<string, Route> = {};
@@ -202,7 +202,7 @@ const RootLayout = async ({
         ...WebsiteHome.subRoutes,
         "/blog-articles": {
             ...WebsiteHome.subRoutes["/blog-articles"],
-            subRoutes: buildBlogArticleRoutes(subGroups),
+            subRoutes: compileBlogArticleRoutes(subGroups),
         },
     };
 
@@ -237,7 +237,7 @@ const RootLayout = async ({
                 />
 
                 {Object.values(Profiles).flatMap((profile) =>
-                    [profile.url, ...(profile.urlAliases ?? [])].map((href) => (
+                    [profile.url, ...profile.urlAliases].map((href) => (
                         <link key={href} rel="me" href={href} />
                     )),
                 )}

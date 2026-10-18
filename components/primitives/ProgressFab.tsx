@@ -35,7 +35,7 @@ const ProgressFab = ({
 }: ProgressFabProps): React.ReactElement => {
     if (progress < 0 || progress > 100) {
         throw new Error(
-            `ProgressFab: progress must be between 0 and 100, received ${progress}`,
+            `ProgressFab: progress must be between 0 and 100, received ${String(progress)}`,
         );
     }
 

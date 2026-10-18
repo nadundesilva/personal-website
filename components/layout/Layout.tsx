@@ -88,21 +88,27 @@ const Layout = ({
             }
         };
         frame = requestAnimationFrame(reassert);
-        return () => cancelAnimationFrame(frame);
+        return (): void => {
+            cancelAnimationFrame(frame);
+        };
     }, [pathname]);
 
     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 0);
+        const handleScroll = (): void => {
+            setScrolled(window.scrollY > 0);
+        };
         handleScroll();
         window.addEventListener("scroll", handleScroll, { passive: true });
-        return () => window.removeEventListener("scroll", handleScroll);
+        return (): void => {
+            window.removeEventListener("scroll", handleScroll);
+        };
     }, []);
 
     const [isDrawerOpen, setDrawerOpen] = useState(false);
 
     const { resolvedTheme, setTheme } = useTheme();
     const mounted = useSyncExternalStore(
-        () => () => {},
+        () => (): void => {},
         () => true,
         () => false,
     );
@@ -198,7 +204,9 @@ const Layout = ({
                     {/* Site name */}
                     <Link
                         href="/"
-                        onClick={() => setDrawerOpen(false)}
+                        onClick={() => {
+                            setDrawerOpen(false);
+                        }}
                         className="text-primary-foreground -mx-3 rounded-sm px-3 py-1.5 -my-1.5 text-base font-medium hover:no-underline hover:opacity-85 sm:text-xl motion-safe:transition-opacity motion-safe:duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-foreground/80"
                     >
                         <span translate="no">{FULL_NAME}</span>
@@ -247,7 +255,9 @@ const Layout = ({
                                             ? `Switch to ${nextColorScheme} theme`
                                             : "Toggle theme"
                                     }
-                                    onClick={() => setTheme(nextColorScheme)}
+                                    onClick={() => {
+                                        setTheme(nextColorScheme);
+                                    }}
                                     className="text-primary-foreground hover:bg-primary-foreground/10 ml-2"
                                 />
                             }
@@ -309,7 +319,9 @@ const Layout = ({
                             <Link
                                 key={route.path}
                                 href={route.path}
-                                onClick={() => setDrawerOpen(false)}
+                                onClick={() => {
+                                    setDrawerOpen(false);
+                                }}
                                 aria-current={isActive ? "page" : undefined}
                                 className={cn(
                                     "text-primary-foreground relative flex min-h-14 items-center justify-center rounded-lg px-5 py-3 text-base hover:no-underline",

@@ -14,12 +14,13 @@
  */
 import { FULL_NAME } from "@/constants/metadata";
 import { WebsiteHome } from "@/constants/routes";
+import { at } from "@/cypress/support/collections";
 
 // Tailwind's shadow-none computes to zero-alpha rgba() layers, not the
 // literal string "none", so presence of a shadow must be checked by alpha.
 const hasVisibleShadow = (boxShadow: string): boolean =>
     [...boxShadow.matchAll(/,\s*([\d.]+)\)/g)].some(
-        ([, alpha]) => parseFloat(alpha) > 0,
+        (match) => parseFloat(at(match, 1)) > 0,
     );
 
 describe("scroll-to-top FAB", () => {
@@ -233,8 +234,8 @@ describe("app-bar styling", () => {
         cy.loadPage(WebsiteHome.path);
 
         cy.get('[data-testid="app-bar"]').then(($el) => {
-            const style = window.getComputedStyle($el[0]);
-            void expect(hasVisibleShadow(style.boxShadow)).to.be.false;
+            const style = window.getComputedStyle(at($el));
+            expect(hasVisibleShadow(style.boxShadow)).to.eq(false);
         });
     });
 
@@ -243,8 +244,8 @@ describe("app-bar styling", () => {
         cy.scrollTo("bottom", { duration: 500, ensureScrollable: false });
 
         cy.get('[data-testid="app-bar"]').should(($el) => {
-            const style = window.getComputedStyle($el[0]);
-            void expect(hasVisibleShadow(style.boxShadow)).to.be.true;
+            const style = window.getComputedStyle(at($el));
+            expect(hasVisibleShadow(style.boxShadow)).to.eq(true);
         });
     });
 
@@ -262,11 +263,11 @@ describe("app-bar styling", () => {
             cy.loadPage(WebsiteHome.subRoutes["/experience"].path);
 
             cy.get('[data-testid="app-bar"]').then(($appBar) => {
-                const appBarBottom = $appBar[0].getBoundingClientRect().bottom;
+                const appBarBottom = at($appBar).getBoundingClientRect().bottom;
                 cy.get("#main-content").should(($main) => {
-                    expect($main[0].getBoundingClientRect().top).to.be.at.least(
-                        appBarBottom,
-                    );
+                    expect(
+                        at($main).getBoundingClientRect().top,
+                    ).to.be.at.least(appBarBottom);
                 });
             });
         });
@@ -276,7 +277,7 @@ describe("app-bar styling", () => {
         cy.loadPage(WebsiteHome.path);
 
         cy.get("#main-content").should(($main) => {
-            expect($main[0].getBoundingClientRect().top).to.eq(0);
+            expect(at($main).getBoundingClientRect().top).to.eq(0);
         });
     });
 });
@@ -299,7 +300,7 @@ describe("in-page anchor navigation", () => {
 
         cy.findByRole("heading", { name: /^skills$/i, level: 2 }).should(
             ($heading) => {
-                const rect = $heading[0].getBoundingClientRect();
+                const rect = at($heading).getBoundingClientRect();
                 expect(
                     rect.top,
                     "Skills heading should be within the viewport after loading with #skills in the URL",

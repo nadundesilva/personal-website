@@ -1,6 +1,6 @@
 ---
 name: writing-tests
-description: "Conventions for writing or changing tests in this repo: Jest unit tests, Cypress component tests and Cypress E2E specs. Covers choosing the test level, naming tests after behavior, assertion style, selectors and data-test attributes, custom Cypress commands, and the console-error guard. Make sure to use this skill whenever adding, editing or debugging any *.test.ts or *.cy.tsx file, and whenever a code change needs test coverage or a test must be added, renamed or deleted, even if the request never says 'test file'."
+description: "Use whenever adding, editing or debugging any *.test.ts or *.cy.tsx file, and whenever a code change needs test coverage or a test must be added, renamed or deleted, even if the request never says 'test file'. Covers the conventions for writing or changing tests in this repo (Jest unit tests, Cypress component tests and Cypress E2E specs): choosing the test level, naming tests after behavior, assertion style, selectors and data-test attributes, custom Cypress commands, and the console-error guard."
 ---
 
 # Writing Tests

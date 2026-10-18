@@ -16,10 +16,26 @@ import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import prettier from "eslint-config-prettier/flat";
 import { defineConfig, globalIgnores } from "eslint/config";
+import tseslint from "typescript-eslint";
 
 const eslintConfig = defineConfig([
     ...nextCoreWebVitals,
     ...nextTs,
+    {
+        files: ["**/*.ts", "**/*.tsx"],
+        // shadcn/ui and shadcn/lib are CLI output that must not be hand-edited.
+        ignores: ["shadcn/ui/**", "shadcn/lib/**"],
+        extends: [tseslint.configs.strictTypeChecked],
+        languageOptions: {
+            parserOptions: {
+                projectService: true,
+                tsconfigRootDir: import.meta.dirname,
+            },
+        },
+        rules: {
+            "@typescript-eslint/explicit-function-return-type": "error",
+        },
+    },
     prettier,
     globalIgnores([
         "next-env.d.ts",

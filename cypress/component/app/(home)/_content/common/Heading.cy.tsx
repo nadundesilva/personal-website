@@ -20,18 +20,16 @@ class ErrorBoundary extends React.Component<
     { children: React.ReactNode },
     { error: Error | null }
 > {
-    state = { error: null };
+    override state: { error: Error | null } = { error: null };
 
-    static getDerivedStateFromError(error: Error) {
+    static getDerivedStateFromError(error: Error): { error: Error } {
         return { error };
     }
 
-    render() {
+    override render(): React.ReactNode {
         if (this.state.error) {
             return (
-                <div data-testid="render-error">
-                    {(this.state.error as Error).message}
-                </div>
+                <div data-testid="render-error">{this.state.error.message}</div>
             );
         }
         return this.props.children;

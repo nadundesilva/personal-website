@@ -23,7 +23,7 @@ interface LogoProps extends LogoImageData {
     alt: string;
     height: number; // Rendered height in em.
     className?: string;
-    fetchPriority?: "high" | "low" | "auto";
+    fetchPriority?: "high" | "low" | "auto" | undefined;
 }
 
 // Logos are height-limited (object-scale-down), so the rendered width is the
@@ -31,7 +31,7 @@ interface LogoProps extends LogoImageData {
 // which matches the page since no ancestor overrides it.
 const logoSizes = (src: LogoImageData["srcLight"], height: number): string =>
     generateSizesForContentBreakpoints({
-        default: { absolute: `${(height * src.width) / src.height}em` },
+        default: { absolute: `${String((height * src.width) / src.height)}em` },
     });
 
 const Logo = ({
@@ -48,7 +48,7 @@ const Logo = ({
             "relative w-full py-2 motion-safe:transition-opacity motion-safe:duration-250 hover:opacity-80",
             className,
         )}
-        style={{ height: `${height}em` }}
+        style={{ height: `${String(height)}em` }}
     >
         <Image
             data-testid="logo-light"

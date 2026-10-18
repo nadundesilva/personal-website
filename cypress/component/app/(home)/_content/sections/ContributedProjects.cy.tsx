@@ -13,6 +13,7 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 import ContributedProjects from "@/app/(home)/_content/sections/ContributedProjects";
+import { defined } from "@/cypress/support/defined";
 
 describe("ContributedProjects", () => {
     beforeEach(() => {
@@ -26,7 +27,7 @@ describe("ContributedProjects", () => {
     it("labels each project list by its visible subheading", () => {
         for (const name of ["Enterprise Projects", "Personal Projects"]) {
             cy.findByRole("heading", { name }).then(($heading) => {
-                const headingId = $heading.attr("id");
+                const headingId = defined($heading.attr("id"), "heading id");
                 cy.get(`ul[aria-labelledby="${headingId}"]`).should("exist");
             });
         }

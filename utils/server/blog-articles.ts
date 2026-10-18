@@ -35,6 +35,18 @@ export interface BlogArticleGroup extends BlogArticleGroupMetadata {
     articles: BlogArticle[];
 }
 
+// Shapes of what the article and group page modules export. A dynamic
+// import() with a computed path is typed `any`, so they are stated here.
+interface BlogArticleModule {
+    metadata: Pick<BlogArticle, "title" | "description">;
+    blogMetadata: Pick<BlogArticle, "keywords" | "image" | "publishedDate">;
+    readingTimeMinutes: number;
+}
+
+interface BlogArticleGroupModule {
+    metadata: Pick<BlogArticleGroupMetadata, "title">;
+}
+
 export const BLOG_ARTICLES_DIRECTORY_PREFIX =
     "app/(content)/blog-articles/(articles)";
 export const BLOG_ARTICLES_GROUP_FILE = "page.tsx";
@@ -69,18 +81,19 @@ async function getBlogArticles(subPath: string): Promise<BlogArticle[]> {
             // during MDX compilation, from the compiled article content - reused
             // here rather than recomputed so the listing card and the article's own
             // reading-progress widget always agree.
-            const { metadata, blogMetadata, readingTimeMinutes } = await import(
-                `../../app/(content)/blog-articles/(articles)/${websiteSubPath}/${BLOG_ARTICLE_FILE}`
-            );
+            const { metadata, blogMetadata, readingTimeMinutes } =
+                (await import(
+                    `../../app/(content)/blog-articles/(articles)/${websiteSubPath}/${BLOG_ARTICLE_FILE}`
+                )) as BlogArticleModule;
 
             return {
-                title: metadata.title as string,
-                description: metadata.description as string,
-                keywords: blogMetadata.keywords as string[],
-                image: blogMetadata.image as StaticImageData,
-                publishedDate: blogMetadata.publishedDate as Date,
+                title: metadata.title,
+                description: metadata.description,
+                keywords: blogMetadata.keywords,
+                image: blogMetadata.image,
+                publishedDate: blogMetadata.publishedDate,
                 websiteSubPath,
-                readingTimeMinutes: readingTimeMinutes as number,
+                readingTimeMinutes,
             };
         }),
     );
@@ -96,24 +109,24 @@ async function getCurrentGroupMetadata(
     const currentGroupFilePathPattern = `${BLOG_ARTICLES_DIRECTORY_PREFIX}/${subPath}/${BLOG_ARTICLES_GROUP_FILE}`;
     const currentGroupFilePaths = await glob(currentGroupFilePathPattern);
 
-    if (currentGroupFilePaths.length === 0) {
-        return null;
-    }
     if (currentGroupFilePaths.length > 1) {
         throw new Error(
-            `Expected less than or equal to one group file for sub path ${subPath}, but got ${currentGroupFilePaths.length}`,
+            `Expected less than or equal to one group file for sub path ${subPath}, but got ${String(currentGroupFilePaths.length)}`,
         );
     }
+    const [currentGroupFilePath] = currentGroupFilePaths;
+    if (currentGroupFilePath === undefined) {
+        return null;
+    }
 
-    const websiteSubPath = resolveWebsiteBlogArticlesSubPath(
-        currentGroupFilePaths[0],
-    );
-    const { metadata } = await import(
+    const websiteSubPath =
+        resolveWebsiteBlogArticlesSubPath(currentGroupFilePath);
+    const { metadata } = (await import(
         `../../app/(content)/blog-articles/(articles)/${websiteSubPath}/${BLOG_ARTICLES_GROUP_FILE}`
-    );
+    )) as BlogArticleGroupModule;
 
     return {
-        title: metadata.title as string,
+        title: metadata.title,
         websiteSubPath,
     };
 }
@@ -124,12 +137,12 @@ async function getSubGroupMetadatas(
     return await Promise.all(
         discoverBlogArticleGroupFilePaths(subPath).map(async (filePath) => {
             const websiteSubPath = resolveWebsiteBlogArticlesSubPath(filePath);
-            const { metadata } = await import(
+            const { metadata } = (await import(
                 `../../app/(content)/blog-articles/(articles)/${websiteSubPath ? `${websiteSubPath}/` : ""}${BLOG_ARTICLES_GROUP_FILE}`
-            );
+            )) as BlogArticleGroupModule;
 
             return {
-                title: metadata.title as string,
+                title: metadata.title,
                 websiteSubPath,
             };
         }),
@@ -147,6 +160,15 @@ const isArticleUnderGroup = (
 
 // Exported for blog-articles.test.ts - its group-not-found error paths can only
 // be reached with hand-built article fixtures, not through getBlogArticleGroups.
+// Articles are sorted newest first and groups are only created when an article is added to them.
+function getNewestArticleTime(group: BlogArticleGroup): number {
+    const [newestArticle] = group.articles;
+    if (newestArticle === undefined) {
+        throw new Error(`Blog article group ${group.title} has no articles`);
+    }
+    return newestArticle.publishedDate.getTime();
+}
+
 export function groupArticles(
     articles: BlogArticle[],
     currentGroupMetadata: BlogArticleGroupMetadata | null,
@@ -214,8 +236,7 @@ export function groupArticles(
         // Array.from produces a new array — in-place sort is safe and intentional.
         subGroups: Array.from(subGroupsMap.values()).sort(
             (groupA, groupB) =>
-                groupB.articles[0].publishedDate.getTime() -
-                groupA.articles[0].publishedDate.getTime(),
+                getNewestArticleTime(groupB) - getNewestArticleTime(groupA),
         ),
     };
 }

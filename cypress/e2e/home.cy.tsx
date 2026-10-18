@@ -14,6 +14,7 @@
  */
 import { CONTACT_EMAIL, FULL_NAME, TAGLINE } from "@/constants/metadata";
 import { CvPdfPath, WebsiteHome } from "@/constants/routes";
+import { defined } from "@/cypress/support/defined";
 
 describe("home page", () => {
     beforeEach(() => {
@@ -180,10 +181,12 @@ describe("home page", () => {
             .focus()
             .trigger("click");
 
-        cy.get("@skillChip")
-            .invoke("attr", "aria-label")
+        cy.get<JQuery>("@skillChip")
+            .then(($chip) =>
+                defined($chip.attr("aria-label"), "skill chip aria-label"),
+            )
             .then((label) => {
-                const skillName = label!.replace(/ - .+ level\.$/, "");
+                const skillName = label.replace(/ - .+ level\.$/, "");
                 cy.findByRole("dialog").within(() => {
                     cy.findByText(skillName).should("be.visible");
                 });

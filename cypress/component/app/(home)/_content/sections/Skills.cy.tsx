@@ -19,6 +19,7 @@ import Experiences from "@/constants/experience";
 import { EnterpriseProjects, PersonalProjects } from "@/constants/projects";
 import SkillCategories from "@/constants/skill-categories";
 import SkillUsages from "@/constants/skill-usages";
+import { defined } from "@/cypress/support/defined";
 
 describe("Skills", () => {
     beforeEach(() => {
@@ -41,7 +42,10 @@ describe("Skills", () => {
         cy.findByRole("link", { name: /skip skills/i })
             .should("have.attr", "href", "#skip-skills-target")
             .then(($link) => {
-                const id = $link.attr("href")!.replace("#", "");
+                const id = defined(
+                    $link.attr("href"),
+                    "skip link href",
+                ).replace("#", "");
                 cy.get(`#${id}`).should("have.attr", "tabindex", "-1");
             });
     });
@@ -58,12 +62,10 @@ describe("Skills", () => {
             cy.findByRole("heading", {
                 name: skillCategory.category,
                 level: 3,
-            })
-                .invoke("attr", "id")
-                .then((id) => {
-                    void expect(id).to.exist;
-                    cy.get(`ul[aria-labelledby="${id}"]`).should("exist");
-                });
+            }).then(($heading) => {
+                const id = defined($heading.attr("id"), "heading id");
+                cy.get(`ul[aria-labelledby="${id}"]`).should("exist");
+            });
         }
     });
 
@@ -79,7 +81,7 @@ describe("Skills", () => {
                 const renderedLabels = $children
                     .toArray()
                     .slice(0, -1)
-                    .map((el) => el.textContent?.trim());
+                    .map((el) => el.textContent.trim());
                 expect(renderedLabels).to.deep.equal(expectedOrder);
             });
     });
@@ -134,10 +136,10 @@ describe("Skills", () => {
         ].flatMap((entry) => entry.skills);
 
         for (const skill of usedSkills) {
-            void expect(
+            expect(
                 categorizedSkills.has(skill),
                 `skill "${skill.name}" is used but missing from SkillCategories`,
-            ).to.be.true;
+            ).to.eq(true);
         }
     });
 });

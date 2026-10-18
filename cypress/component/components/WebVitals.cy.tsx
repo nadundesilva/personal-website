@@ -29,7 +29,7 @@ describe("WebVitals", () => {
         cy.mount(<WebVitals />);
 
         cy.window().then((win) => {
-            void expect((win as ZarazWindow).zaraz).to.be.undefined;
+            expect((win as ZarazWindow).zaraz).to.eq(undefined);
         });
     });
 

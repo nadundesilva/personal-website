@@ -16,7 +16,7 @@ import { ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
 
 import type React from "react";
-import type { Graph, IdReference } from "schema-dts";
+import type { Graph } from "schema-dts";
 
 import {
     AccentedList,
@@ -52,7 +52,7 @@ const scholarlyArticlesJsonLd: Graph = {
         "url": pub.url,
         "datePublished": pub.publishedDate.toISOString(),
         "keywords": pub.keywords,
-        "author": { "@id": SCHEMA_PERSON_ID } as IdReference,
+        "author": { "@id": SCHEMA_PERSON_ID },
         "publisher": {
             "@type": "Organization" as const,
             "name": pub.venue,

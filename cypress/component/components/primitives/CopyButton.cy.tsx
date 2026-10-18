@@ -14,7 +14,7 @@
  */
 import CopyButton from "@/components/primitives/CopyButton";
 
-function stubClipboard(resolveOrReject: "resolve" | "reject") {
+function stubClipboard(resolveOrReject: "resolve" | "reject"): void {
     cy.window().then((win) => {
         const writeText =
             resolveOrReject === "resolve"

@@ -32,14 +32,13 @@ const ProficiencyLegend = (): React.ReactElement => (
         aria-label="Proficiency legend"
         className="flex flex-wrap items-center justify-center gap-3 md:gap-4"
     >
-        {(
-            Object.entries(skillProficiencyLevels) as [
-                SkillProficiency,
-                { bars: number; className: string },
-            ][]
-        )
-            .sort(([, a], [, b]) => a.bars - b.bars)
-            .map(([level]) => (
+        {Object.values(SkillProficiency)
+            .sort(
+                (a, b) =>
+                    skillProficiencyLevels[a].bars -
+                    skillProficiencyLevels[b].bars,
+            )
+            .map((level) => (
                 <div key={level} className="flex items-center gap-1.5">
                     <SkillProficiencyIndicator proficiencyLevel={level} />
                     <span className="text-muted-foreground text-[11px]">

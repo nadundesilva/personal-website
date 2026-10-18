@@ -29,7 +29,7 @@ const ScrollReveal = ({
 }: ScrollRevealProps): React.ReactElement => (
     <div
         className={cn("scroll-reveal", className)}
-        style={delay ? { animationDelay: `${delay}ms` } : undefined}
+        style={delay ? { animationDelay: `${String(delay)}ms` } : undefined}
     >
         {children}
     </div>

@@ -1,6 +1,6 @@
 ---
 name: content-pages
-description: "How to build or edit pages and sections in this repo: the semantic content components in components/content (Title, Section, SectionHeading, List, AccentedList, …) and their props, the heading hierarchy, the per-page metadata export and title format, registering a route in constants/routes.ts, and how sitemap, feed and JSON-LD pick pages up. Make sure to use this skill whenever adding or editing a page, a page section, a heading, a list of items or a page's title/description, even if the request only says 'add X to the site' or 'show Y on the experience page'."
+description: "Use whenever adding or editing a page, a page section, a heading, a list of items or a page's title/description, even if the request only says 'add X to the site' or 'show Y on the experience page'. Covers how to build or edit pages and sections in this repo: the semantic content components in components/content (Title, Section, SectionHeading, List, AccentedList, …) and their props, the heading hierarchy, the per-page metadata export and title format, registering a route in constants/routes.ts, and how sitemap, feed and JSON-LD pick pages up."
 ---
 
 # Content Pages

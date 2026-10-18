@@ -47,11 +47,7 @@ declare global {
             assertVisibleImagesLoaded(): void;
 
             task<T = unknown>(
-                event: "discoverBlogArticles",
-                arg: string,
-            ): Chainable<T>;
-            task<T = unknown>(
-                event: "discoverBlogArticleSubGroups",
+                event: "discoverBlogArticles" | "discoverBlogArticleSubGroups",
                 arg: string,
             ): Chainable<T>;
         }

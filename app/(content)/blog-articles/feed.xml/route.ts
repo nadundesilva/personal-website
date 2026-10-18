@@ -27,7 +27,7 @@ import {
 
 export const dynamic = "force-static";
 
-export async function GET() {
+export async function GET(): Promise<Response> {
     const { currentGroup, subGroups } = await getBlogArticleGroups(".");
 
     const feed = new RSS({
@@ -35,12 +35,12 @@ export async function GET() {
         description: `Computer Science and Software Engineering blog by ${FULL_NAME}. ${MAIN_DESCRIPTION}`,
         site_url: `${WEBSITE_PUBLIC_URL}/blog-articles`,
         feed_url: `${WEBSITE_PUBLIC_URL}/blog-articles/feed.xml`,
-        copyright: `${new Date().getFullYear()} ${FULL_NAME}`,
+        copyright: `${String(new Date().getFullYear())} ${FULL_NAME}`,
         language: "en-US",
         pubDate: new Date(),
     });
 
-    const processArticle = (article: BlogArticle) => {
+    const processArticle = (article: BlogArticle): void => {
         const image = getOptimizedImage(article.image);
         feed.item({
             title: article.title,

@@ -26,7 +26,7 @@ const injectReadingTimeAttr = (minutes = 5): void => {
 
 const injectTallContent = (height = 3000): void => {
     const spacer = document.createElement("div");
-    spacer.style.height = `${height}px`;
+    spacer.style.height = `${String(height)}px`;
     document.body.appendChild(spacer);
 };
 
@@ -39,10 +39,12 @@ const injectTallContent = (height = 3000): void => {
 let capturedScrollYDescriptor: PropertyDescriptor | undefined;
 
 const cleanup = (): void => {
-    document
-        .querySelectorAll("[data-reading-time-minutes]")
-        .forEach((el) => el.remove());
-    document.querySelectorAll("body > div[style]").forEach((el) => el.remove());
+    document.querySelectorAll("[data-reading-time-minutes]").forEach((el) => {
+        el.remove();
+    });
+    document.querySelectorAll("body > div[style]").forEach((el) => {
+        el.remove();
+    });
 
     if (capturedScrollYDescriptor) {
         Object.defineProperty(window, "scrollY", capturedScrollYDescriptor);
@@ -115,7 +117,9 @@ describe("ReadingProgress", () => {
             .closest('[data-testid="reading-progress-fab"]')
             .should("have.css", "opacity", "0");
 
-        cy.then(() => injectTallContent(3000));
+        cy.then(() => {
+            injectTallContent(3000);
+        });
 
         cy.findByRole("progressbar", {
             name: /article reading progress/i,
@@ -130,7 +134,9 @@ describe("ReadingProgress", () => {
 
         cy.mount(<ReadingProgress />);
 
-        cy.then(() => injectTallContent(3000));
+        cy.then(() => {
+            injectTallContent(3000);
+        });
 
         cy.findByRole("progressbar", {
             name: /article reading progress/i,
@@ -169,7 +175,9 @@ describe("ReadingProgress", () => {
         // Grow the page taller without scrolling further or firing a scroll
         // event - only the ResizeObserver can pick this up. The same scroll
         // offset (the old bottom) is now far short of the new bottom.
-        cy.then(() => injectTallContent(6000));
+        cy.then(() => {
+            injectTallContent(6000);
+        });
 
         cy.findByRole("progressbar", {
             name: /article reading progress/i,

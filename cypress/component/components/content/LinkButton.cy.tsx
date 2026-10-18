@@ -67,8 +67,12 @@ describe("LinkButton", () => {
     });
 
     it("shows icons alongside the label text", () => {
-        const StartIcon = () => <svg data-testid="start-icon" />;
-        const EndIcon = () => <svg data-testid="end-icon" />;
+        const StartIcon = (): React.ReactElement => (
+            <svg data-testid="start-icon" />
+        );
+        const EndIcon = (): React.ReactElement => (
+            <svg data-testid="end-icon" />
+        );
         cy.mount(
             <LinkButton
                 name="With Icons"

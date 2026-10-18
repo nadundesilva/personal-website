@@ -60,3 +60,7 @@ would otherwise pass silently.
   tooling noise (`[webpack-dev-server] Invalid Host/Origin header`). Keep it tiny.
 - The e2e `IntersectionObserver` mock lives in the same `window:before:load` hook
   but is unrelated — it forces `whileInView` animations to run headless.
+
+## Narrowing possibly-missing values
+
+Use `at()` (`@/cypress/support/collections`) and `defined()` (`@/cypress/support/defined`) to narrow indexed lookups and optional values instead of `!`; a missing value then fails with a clear message.

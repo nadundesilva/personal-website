@@ -77,8 +77,10 @@ export const formatConsoleErrorList = (messages: string[]): string => {
         return messages[0] ?? "";
     }
     return [
-        `${messages.length} console errors in this test:`,
-        ...messages.map((m, i) => `[${i + 1}/${messages.length}] ${m}`),
+        `${String(messages.length)} console errors in this test:`,
+        ...messages.map(
+            (m, i) => `[${String(i + 1)}/${String(messages.length)}] ${m}`,
+        ),
     ].join("\n\n");
 };
 

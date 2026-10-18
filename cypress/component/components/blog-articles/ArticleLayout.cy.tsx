@@ -135,10 +135,12 @@ describe("ArticleLayout", () => {
         mountAtPath();
 
         cy.get('script[type="application/ld+json"]').then(($script) => {
-            const data = JSON.parse($script.text());
+            const data = JSON.parse($script.text()) as Record<string, unknown>;
             const pageUrl = `${WEBSITE_PUBLIC_URL}${ARTICLE_PATH}`;
             expect(data["@id"]).to.eq(pageUrl);
-            expect(data["mainEntityOfPage"]["@id"]).to.eq(pageUrl);
+            expect(
+                (data["mainEntityOfPage"] as Record<string, unknown>)["@id"],
+            ).to.eq(pageUrl);
         });
     });
 
@@ -146,7 +148,7 @@ describe("ArticleLayout", () => {
         mountAtPath();
 
         cy.get('script[type="application/ld+json"]').then(($script) => {
-            const data = JSON.parse($script.text());
+            const data = JSON.parse($script.text()) as Record<string, unknown>;
             // The record must carry the optimized variant as an absolute URL
             // or the image is unreachable from Google's Article rich result.
             expect(data["image"]).to.eq(
@@ -159,7 +161,7 @@ describe("ArticleLayout", () => {
         mountAtPath();
 
         cy.get('script[type="application/ld+json"]').then(($script) => {
-            const data = JSON.parse($script.text());
+            const data = JSON.parse($script.text()) as Record<string, unknown>;
             const isoDate = baseBlogMetadata.publishedDate.toISOString();
             expect(data["datePublished"]).to.eq(isoDate);
             expect(data["dateModified"]).to.eq(isoDate);
@@ -170,7 +172,7 @@ describe("ArticleLayout", () => {
         mountAtPath();
 
         cy.get('script[type="application/ld+json"]').then(($script) => {
-            const data = JSON.parse($script.text());
+            const data = JSON.parse($script.text()) as Record<string, unknown>;
             expect(data["sameAs"]).to.deep.eq([baseBlogMetadata.mediumUrl]);
         });
     });
@@ -198,7 +200,7 @@ describe("ArticleLayout", () => {
         mountAtPath();
 
         cy.get('script[type="application/ld+json"]').then(($script) => {
-            const data = JSON.parse($script.text());
+            const data = JSON.parse($script.text()) as Record<string, unknown>;
             [data["author"], data["publisher"]].forEach((reference) => {
                 expect(reference).to.deep.eq({ "@id": SCHEMA_PERSON_ID });
             });

@@ -19,8 +19,8 @@ import React, { useEffect, useState } from "react";
 
 interface AnimatedStatValueProps {
     value: number;
-    prefix?: string;
-    suffix?: string;
+    prefix?: string | undefined;
+    suffix?: string | undefined;
     step?: number;
 }
 
@@ -61,7 +61,9 @@ const AnimatedStatValue = ({
                 setCurrent(Math.min(stepped, value));
             },
         });
-        return () => controls.stop();
+        return (): void => {
+            controls.stop();
+        };
     }, [value, step, reducedMotion]);
 
     // When reduced motion is preferred, skip the count-up and show the final value directly.

@@ -21,6 +21,12 @@ import {
     resolveWebsiteBlogArticlesSubPath,
 } from "./utils/server/blog-articles";
 
+// The preprocessor types getFullWebpackOptions() as `any`; only the rules
+// list is touched here.
+interface WebpackOptions {
+    module: { rules: object[] };
+}
+
 export default defineConfig({
     projectId: "w712w3",
     viewportWidth: 1280,
@@ -41,7 +47,8 @@ export default defineConfig({
             // getFullWebpackOptions() builds a fresh options object each
             // call - unlike `.defaultOptions`, a shared singleton this
             // package's own TypeScript wiring also mutates.
-            const webpackOptions = webpackPreprocessor.getFullWebpackOptions();
+            const webpackOptions =
+                webpackPreprocessor.getFullWebpackOptions() as WebpackOptions;
             webpackOptions.module.rules.push({
                 test: /\.(png|svg|jpe?g|webp|gif|avif)$/i,
                 type: "asset/inline",
@@ -86,7 +93,7 @@ export default defineConfig({
             on("before:browser:launch", (browser, launchOptions) => {
                 if (browser.name === "chrome" && browser.isHeadless) {
                     launchOptions.args.push(
-                        `--window-size=${config.viewportWidth},${config.viewportHeight}`,
+                        `--window-size=${String(config.viewportWidth)},${String(config.viewportHeight)}`,
                     );
                     launchOptions.args.push("--force-device-scale-factor=1");
                 }
@@ -95,9 +102,11 @@ export default defineConfig({
                     launchOptions.preferences.height = config.viewportHeight;
                 }
                 if (browser.name === "firefox" && browser.isHeadless) {
-                    launchOptions.args.push(`--width=${config.viewportWidth}`);
                     launchOptions.args.push(
-                        `--height=${config.viewportHeight}`,
+                        `--width=${String(config.viewportWidth)}`,
+                    );
+                    launchOptions.args.push(
+                        `--height=${String(config.viewportHeight)}`,
                     );
                 }
                 return launchOptions;

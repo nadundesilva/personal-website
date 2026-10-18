@@ -26,7 +26,7 @@ export interface Project {
     skills: SkillDefinition[];
 }
 
-export const EnterpriseProjects: Record<string, Project> = {
+export const EnterpriseProjects = {
     Indexity: {
         name: "Indexity",
         description:
@@ -159,9 +159,9 @@ export const EnterpriseProjects: Record<string, Project> = {
         ),
         skills: [Skills.Java, Skills.Maven],
     },
-};
+} satisfies Record<string, Project>;
 
-export const PersonalProjects: Record<string, Project> = {
+export const PersonalProjects = {
     K8sReplicator: {
         name: "K8s Replicator",
         description:
@@ -192,4 +192,4 @@ export const PersonalProjects: Record<string, Project> = {
             Skills.KubernetesOperatorFramework,
         ],
     },
-};
+} satisfies Record<string, Project>;

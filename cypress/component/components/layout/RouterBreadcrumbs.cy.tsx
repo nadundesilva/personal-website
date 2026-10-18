@@ -12,6 +12,7 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
+import { at } from "@/cypress/support/collections";
 import { PathnameContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
 
 import RouterBreadcrumbs from "@/components/layout/RouterBreadcrumbs";
@@ -94,7 +95,10 @@ describe("RouterBreadcrumbs", () => {
 
         cy.get('script[type="application/ld+json"]#json-ld-breadcrumb').then(
             ($script) => {
-                const data = JSON.parse($script.text());
+                const data = JSON.parse($script.text()) as Record<
+                    string,
+                    unknown
+                >;
                 expect(data["@type"]).to.eq("BreadcrumbList");
 
                 const items = data["itemListElement"] as Record<
@@ -106,11 +110,11 @@ describe("RouterBreadcrumbs", () => {
                     expect(item["position"]).to.eq(index + 1);
                 });
 
-                expect(items[0]["item"]).to.eq(`${WEBSITE_PUBLIC_URL}/`);
-                expect(items[1]["item"]).to.eq(
+                expect(at(items, 0)["item"]).to.eq(`${WEBSITE_PUBLIC_URL}/`);
+                expect(at(items, 1)["item"]).to.eq(
                     `${WEBSITE_PUBLIC_URL}/projects`,
                 );
-                expect(items[2]["item"]).to.eq(
+                expect(at(items, 2)["item"]).to.eq(
                     `${WEBSITE_PUBLIC_URL}/projects/personal`,
                 );
             },

@@ -27,7 +27,7 @@ export const metadata: Metadata = {
         "Articles about observability, OpenTelemetry, monitoring, and reducing observability costs.",
 };
 
-const BlogArticles = async (): Promise<React.ReactElement> => (
+const BlogArticles = (): React.ReactElement => (
     <>
         <CollectionPageJsonLd
             metadata={metadata}

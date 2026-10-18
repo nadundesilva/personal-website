@@ -13,6 +13,7 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 import ContentContainer from "@/components/layout/ContentContainer";
+import { at } from "@/cypress/support/collections";
 import { CONTENT_BREAKPOINTS } from "@/utils/common/image-sizes";
 
 // One representative viewport width per content breakpoint. The image `sizes`
@@ -33,7 +34,7 @@ const VIEWPORT_WIDTH_BY_BREAKPOINT: Record<
 
 describe("ContentContainer", () => {
     Object.entries(CONTENT_BREAKPOINTS).forEach(([breakpoint, { padding }]) => {
-        it(`applies ${padding}px of total horizontal padding at the ${breakpoint} breakpoint`, () => {
+        it(`applies ${String(padding)}px of total horizontal padding at the ${breakpoint} breakpoint`, () => {
             cy.viewport(
                 VIEWPORT_WIDTH_BY_BREAKPOINT[
                     breakpoint as keyof typeof CONTENT_BREAKPOINTS
@@ -47,7 +48,7 @@ describe("ContentContainer", () => {
             );
 
             cy.findByTestId("content-container").should(($el) => {
-                const style = window.getComputedStyle($el[0]);
+                const style = window.getComputedStyle(at($el));
                 const totalPadding =
                     parseFloat(style.paddingLeft) +
                     parseFloat(style.paddingRight);

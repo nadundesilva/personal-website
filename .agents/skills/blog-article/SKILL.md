@@ -1,6 +1,6 @@
 ---
 name: blog-article
-description: "How to write or edit blog articles in this repo: the MDX page structure and required exports, heading-level shifting, element mappings, unsupported MDX syntax, the .mdx copyright header wrapper, and how articles are discovered. Make sure to use this skill whenever creating or editing any page.mdx, blog category page, or MDX component mapping, or when the request is about writing, publishing or fixing a blog post or article, even if it never mentions MDX."
+description: "Use whenever creating or editing any page.mdx, blog category page, or MDX component mapping, or when the request is about writing, publishing or fixing a blog post or article, even if it never mentions MDX. Covers how to write or edit blog articles in this repo: the MDX page structure and required exports, heading-level shifting, element mappings, unsupported MDX syntax, the .mdx copyright header wrapper, and how articles are discovered."
 ---
 
 # Blog Articles

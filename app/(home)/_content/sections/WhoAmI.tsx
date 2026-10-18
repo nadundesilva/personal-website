@@ -37,7 +37,7 @@ const WhoAmI = (): React.ReactElement => {
         prefix = "",
         suffix = "",
     } = calculateYearsOfExperienceForDisplay();
-    const yearsDisplay = `${prefix}${value}${suffix}`;
+    const yearsDisplay = `${prefix}${String(value)}${suffix}`;
     return (
         <ScrollReveal>
             <div className="mx-auto max-w-215">

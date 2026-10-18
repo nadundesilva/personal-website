@@ -12,6 +12,7 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
+import { at } from "@/cypress/support/collections";
 import type { StaticImageData } from "next/image";
 
 import Image from "@/components/content/Image";
@@ -87,7 +88,7 @@ describe("Image", () => {
                     /^\(min-width:\s*(\d+)px\)\s*(.+)$/,
                 );
                 const [minWidth, value] = conditioned
-                    ? [parseInt(conditioned[1], 10), conditioned[2]]
+                    ? [parseInt(at(conditioned, 1), 10), at(conditioned, 2)]
                     : [0, clause];
                 if (viewportWidth < minWidth) continue;
 
@@ -96,14 +97,14 @@ describe("Image", () => {
                 );
                 if (calc) {
                     return (
-                        (parseFloat(calc[1]) / 100) * viewportWidth -
-                        parseFloat(calc[2])
+                        (parseFloat(at(calc, 1)) / 100) * viewportWidth -
+                        parseFloat(at(calc, 2))
                     );
                 }
                 return parseFloat(value);
             }
             throw new Error(
-                `No sizes clause matched viewport ${viewportWidth}`,
+                `No sizes clause matched viewport ${String(viewportWidth)}`,
             );
         };
 

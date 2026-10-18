@@ -12,7 +12,6 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
-import type { StaticImageData } from "next/image";
 
 import Logo from "@/components/content/Logo";
 import type { LogoImageData } from "@/constants/logos";
@@ -22,12 +21,12 @@ const mockLogoData: LogoImageData = {
         src: "/logo-light.png",
         width: 280,
         height: 80,
-    } as StaticImageData,
+    },
     srcDark: {
         src: "/logo-dark.png",
         width: 280,
         height: 80,
-    } as StaticImageData,
+    },
 };
 
 describe("Logo", () => {

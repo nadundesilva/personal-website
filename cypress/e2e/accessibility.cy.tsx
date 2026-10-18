@@ -12,6 +12,7 @@
  *
  * © 2026 Nadun De Silva. All rights reserved.
  */
+import { at } from "@/cypress/support/collections";
 import {
     ALL_ROUTE_PATHS,
     SAMPLE_BLOG_ARTICLE_PATH,
@@ -35,11 +36,11 @@ describe("accessibility invariants across every page", () => {
                     .toArray()
                     .map((el) => Number(el.tagName.slice(1)));
 
-                let previousLevel = levels[0];
+                let previousLevel = at(levels);
                 for (const level of levels) {
                     expect(
                         level - previousLevel,
-                        `heading level jumped from h${previousLevel} to h${level} on ${route}`,
+                        `heading level jumped from h${String(previousLevel)} to h${String(level)} on ${route}`,
                     ).to.be.at.most(1);
                     previousLevel = level;
                 }
@@ -55,10 +56,10 @@ describe("accessibility invariants across every page", () => {
             cy.loadPage(route);
             cy.document().then((doc) => {
                 for (const img of doc.querySelectorAll("img")) {
-                    void expect(
+                    expect(
                         img.getAttribute("alt"),
-                        `image without an alt attribute on ${route}: ${img.getAttribute("src")}`,
-                    ).to.not.be.null;
+                        `image without an alt attribute on ${route}: ${img.src}`,
+                    ).to.not.eq(null);
                 }
             });
         }

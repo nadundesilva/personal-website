@@ -103,7 +103,7 @@ describe("AnimatedStatValue", () => {
             </MotionConfig>,
         );
 
-        const sample = () =>
+        const sample = (): Cypress.Chainable<JQuery> =>
             cy.findByTestId("stat-value").then(($el) => {
                 samples.push(parseFloat($el.text().replace(/,/g, "")));
             });

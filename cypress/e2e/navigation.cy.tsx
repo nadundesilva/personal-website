@@ -14,6 +14,7 @@
  */
 import { FULL_NAME } from "@/constants/metadata";
 import { WebsiteHome, type Route } from "@/constants/routes";
+import { at } from "@/cypress/support/collections";
 import {
     ALL_ROUTE_PATHS,
     SAMPLE_BLOG_ARTICLE_PATH,
@@ -23,7 +24,7 @@ const MOBILE_VIEWPORT_WIDTH = 375;
 const MOBILE_VIEWPORT_HEIGHT = 812;
 
 const extractArticleUrlsFromAllLinks = (
-    allLinks: JQuery<HTMLElement>,
+    allLinks: JQuery,
     allArticleUrls: string[],
 ): string[] => {
     const articleUrlsSet = new Set(allArticleUrls);
@@ -46,7 +47,7 @@ describe("navigation between pages", () => {
             currentRoutes: Record<string, Route>,
             currentRouteName: string,
             currentPath: string,
-        ) => {
+        ): void => {
             Object.values(currentRoutes).forEach((route) => {
                 cy.findByRole("link", {
                     name: currentPath.startsWith("/blog-articles")
@@ -82,7 +83,7 @@ describe("navigation between pages", () => {
             currentRoutes: Record<string, Route>,
             currentRouteName: string,
             currentPath: string,
-        ) => {
+        ): void => {
             Object.values(currentRoutes).forEach((route) => {
                 cy.clickNavLink(route.name);
                 cy.wait(1000);
@@ -108,7 +109,7 @@ describe("navigation between pages", () => {
     });
 
     it("respects the browser's own back/forward navigation, not just in-page breadcrumbs and nav links", () => {
-        const [route] = Object.values(WebsiteHome.subRoutes);
+        const route = at(Object.values(WebsiteHome.subRoutes));
 
         const assertOnRoute = (): void => {
             cy.location("pathname").should("eq", route.path);
@@ -170,7 +171,7 @@ describe("navigation between pages", () => {
         });
 
         it("opens the drawer and navigates to a page", () => {
-            const firstRoute = Object.values(WebsiteHome.subRoutes)[0];
+            const firstRoute = at(Object.values(WebsiteHome.subRoutes));
 
             cy.loadPage(WebsiteHome.path);
             cy.viewport(MOBILE_VIEWPORT_WIDTH, MOBILE_VIEWPORT_HEIGHT);
@@ -256,7 +257,9 @@ describe("navigation between pages", () => {
     it("navigates to all blog articles and back using breadcrumbs", () => {
         cy.task<string[]>("discoverBlogArticles", ".").then(
             (discoveredArticles) => {
-                cy.log(`Discovered ${discoveredArticles.length} blog articles`);
+                cy.log(
+                    `Discovered ${String(discoveredArticles.length)} blog articles`,
+                );
 
                 cy.loadPage("/blog-articles");
                 cy.wait(1000);
@@ -275,7 +278,9 @@ describe("navigation between pages", () => {
                         discoveredArticles,
                     );
 
-                    cy.log(`Found ${articleUrls.length} article links on page`);
+                    cy.log(
+                        `Found ${String(articleUrls.length)} article links on page`,
+                    );
 
                     expect(discoveredArticles.length).to.be.greaterThan(
                         0,
@@ -283,7 +288,7 @@ describe("navigation between pages", () => {
                     );
                     expect(articleUrls.length).to.equal(
                         discoveredArticles.length,
-                        `Expected ${discoveredArticles.length} articles but found ${articleUrls.length}`,
+                        `Expected ${String(discoveredArticles.length)} articles but found ${String(articleUrls.length)}`,
                     );
 
                     // Navigate to each article found on the page
@@ -320,10 +325,10 @@ describe("navigation between pages", () => {
                 cy.task<string[]>("discoverBlogArticles", ".").then(
                     (discoveredArticles) => {
                         cy.log(
-                            `Discovered ${discoveredSubGroupPages.length} sub group pages`,
+                            `Discovered ${String(discoveredSubGroupPages.length)} sub group pages`,
                         );
                         cy.log(
-                            `Discovered ${discoveredArticles.length} blog articles`,
+                            `Discovered ${String(discoveredArticles.length)} blog articles`,
                         );
 
                         cy.loadPage("/blog-articles");
@@ -436,7 +441,7 @@ describe("link integrity across every page", () => {
                 for (const anchor of anchors) {
                     const href = anchor.getAttribute("href") ?? "";
                     if (!href.startsWith("/")) continue; // skip #, mailto:, tel:, http(s):
-                    internalPaths.add(href.split("#")[0]);
+                    internalPaths.add(at(href.split("#")));
                 }
             });
         }

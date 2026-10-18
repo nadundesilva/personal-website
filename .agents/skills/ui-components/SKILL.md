@@ -1,6 +1,6 @@
 ---
 name: ui-components
-description: "How to choose and build UI components in this repo: the selection order (shadcn/ui, then @base-ui/react, then a custom component only with the user's approval), the hand-written primitives in components/primitives, the custom Link and LinkButton, class-variance-authority variants, and the rules for the CLI-managed shadcn/ directory (never hand-edit, how to regenerate, the integrity rule). Make sure to use this skill whenever adding or changing a component, or any UI that needs a button, card, badge, popover, tooltip, drawer, overlay, link, decorative accent or variant props, and whenever touching shadcn/ or running `pnpm dlx shadcn add`, even if the request never names a component."
+description: "Use whenever adding or changing a component, or any UI that needs a button, card, badge, popover, tooltip, drawer, overlay, link, decorative accent or variant props, and whenever touching shadcn/ or running `pnpm dlx shadcn add`, even if the request never names a component. Covers how to choose and build UI components in this repo: the selection order (shadcn/ui, then @base-ui/react, then a custom component only with the user's approval), the hand-written primitives in components/primitives, the custom Link and LinkButton, class-variance-authority variants, and the rules for the CLI-managed shadcn/ directory (never hand-edit, how to regenerate, the integrity rule)."
 ---
 
 # UI Components

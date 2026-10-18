@@ -22,7 +22,7 @@ export interface Education {
     timePeriod: DateRange | Date;
 }
 
-const Educations: Record<string, Education> = {
+const Educations = {
     BScUniversityOfMoratuwa: {
         title: "B.Sc. (Hons.) in Engineering (Computer Science and Engineering)",
         institute: Institutes.UniversityOfMoratuwa,
@@ -36,6 +36,6 @@ const Educations: Record<string, Education> = {
         institute: Institutes.StJosephsCollegeColombo10,
         timePeriod: new Date(2012),
     },
-};
+} satisfies Record<string, Education>;
 
 export default Educations;

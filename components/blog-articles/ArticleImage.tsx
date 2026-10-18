@@ -32,7 +32,7 @@ interface Creator {
 interface ArticleImageProps {
     src: StaticImageData;
     alt: string;
-    creator?: Creator;
+    creator?: Creator | undefined;
 }
 
 const ArticleImage = ({

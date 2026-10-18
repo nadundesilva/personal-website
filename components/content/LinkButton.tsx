@@ -63,7 +63,7 @@ const LinkButton = (props: LinkButtonProps): React.ReactElement => {
                 href={props.href}
                 target={props.target}
                 rel={props.rel}
-                prefetch={props.prefetch}
+                prefetch={props.prefetch ?? null}
             />
         );
 

@@ -27,7 +27,7 @@ export const metadata: Metadata = {
         "Articles about software engineering best practices, team leadership, and career development.",
 };
 
-const BlogArticles = async (): Promise<React.ReactElement> => (
+const BlogArticles = (): React.ReactElement => (
     <>
         <CollectionPageJsonLd
             metadata={metadata}

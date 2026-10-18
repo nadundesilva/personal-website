@@ -14,7 +14,6 @@
  */
 "use client";
 
-import type { Route as NextRoute } from "next";
 import React from "react";
 import type {
     BreadcrumbList as JsonLdBreadcrumbList,
@@ -58,11 +57,11 @@ const RouterBreadcrumbs = ({
             currentPathnames: string[],
             currentBasePath: string,
         ): void => {
-            if (currentRoutes && currentPathnames.length > 0) {
-                const currentSubPath =
-                    currentBasePath + "/" + currentPathnames[0];
-                if (currentSubPath in currentRoutes) {
-                    const route = currentRoutes[currentSubPath];
+            const [currentPathname] = currentPathnames;
+            if (currentRoutes && currentPathname !== undefined) {
+                const currentSubPath = currentBasePath + "/" + currentPathname;
+                const route = currentRoutes[currentSubPath];
+                if (route !== undefined) {
                     breadcrumbs.push({
                         name: route.name,
                         path: currentSubPath,
@@ -123,9 +122,7 @@ const RouterBreadcrumbs = ({
                                             <BreadcrumbLink
                                                 render={
                                                     <Link
-                                                        href={
-                                                            breadcrumb.path as NextRoute<string>
-                                                        }
+                                                        href={breadcrumb.path}
                                                         className="font-normal text-muted-foreground hover:no-underline"
                                                     />
                                                 }

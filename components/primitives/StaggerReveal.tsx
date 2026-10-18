@@ -48,6 +48,7 @@ interface StaggerRevealProps extends Omit<
     | "onDrag"
     | "onDragStart"
     | "onDragEnd"
+    | "style"
 > {
     children: React.ReactElement | React.ReactElement[];
     element: "ol" | "ul";

@@ -33,7 +33,9 @@ import { usePathname, useSelectedLayoutSegments } from "next/navigation";
  * component mounts), matching `usePathname()`'s own behaviour in that case.
  */
 export const useRoutePathname = (): string | null => {
-    const segments = useSelectedLayoutSegments();
+    // Typed `string[]` by Next, but it returns null outside an App Router
+    // context (see the @ts-expect-error in next/dist/client/components/navigation.js).
+    const segments = useSelectedLayoutSegments() as string[] | null;
     const pathname = usePathname();
 
     if (segments === null) return pathname;

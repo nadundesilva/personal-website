@@ -48,7 +48,7 @@ describe("CollectionPageJsonLd", () => {
 
         cy.get('script[type="application/ld+json"]').then(($script) => {
             const data = JSON.parse($script.text()) as Record<string, unknown>;
-            void expect(data["about"]).to.be.undefined;
+            expect(data["about"]).to.eq(undefined);
         });
     });
 });

@@ -29,7 +29,7 @@ interface CollectionPageJsonLdProps {
 const CollectionPageJsonLd = ({
     metadata,
     pathname,
-}: CollectionPageJsonLdProps) => {
+}: CollectionPageJsonLdProps): React.ReactElement => {
     const pageUrl = `${WEBSITE_PUBLIC_URL}${pathname}`;
     const isBlogPage = pathname.startsWith("/blog-articles");
     const jsonLd: WithContext<CollectionPage> = {
@@ -37,8 +37,10 @@ const CollectionPageJsonLd = ({
         "@type": "CollectionPage",
         "@id": pageUrl,
         "url": pageUrl,
-        "name": typeof metadata.title === "string" ? metadata.title : undefined,
-        "description": metadata.description ?? undefined,
+        ...(typeof metadata.title === "string" && { name: metadata.title }),
+        ...(metadata.description != null && {
+            description: metadata.description,
+        }),
         "isPartOf": { "@id": SCHEMA_WEBSITE_ID } as IdReference,
         ...(!isBlogPage && {
             about: { "@id": SCHEMA_PERSON_ID } as IdReference,

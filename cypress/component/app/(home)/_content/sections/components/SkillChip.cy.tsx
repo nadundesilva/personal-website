@@ -18,6 +18,7 @@ import Skills, {
     SkillProficiency,
     type SkillDefinition,
 } from "@/constants/skills";
+import { defined } from "@/cypress/support/defined";
 
 // New object references are not in the SkillUsages Map, so both render as
 // the non-interactive span path (with the sr-only proficiency text).
@@ -87,9 +88,10 @@ describe("SkillChip", () => {
 
         // Verifies experiences.map(e => `${e.name} at ${e.institute}`)
         // against every experience SkillUsages itself records for GoLang
-        const expectedUsages = SkillUsages.get(Skills.GoLang)!.experiences.map(
-            (e) => `${e.name} at ${e.institute}`,
-        );
+        const expectedUsages = defined(
+            SkillUsages.get(Skills.GoLang),
+            "GoLang skill usages",
+        ).experiences.map((e) => `${e.name} at ${e.institute}`);
         cy.findByRole("dialog").within(() => {
             cy.findByRole("list", { name: /used as/i })
                 .findAllByRole("listitem")

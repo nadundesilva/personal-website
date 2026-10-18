@@ -104,7 +104,7 @@ const SkillChipProficiencyIndicator = ({
                         style={
                             animate
                                 ? {
-                                      animationDelay: `${((i - 1) * 100) / 1000}s`,
+                                      animationDelay: `${String(((i - 1) * 100) / 1000)}s`,
                                   }
                                 : undefined
                         }

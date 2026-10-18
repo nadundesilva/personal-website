@@ -27,19 +27,25 @@ export const getOptimizedImage = (
     image: StaticImageData,
 ): { src: string; width: number; height: number } => {
     const name = image.src
-        .split("/")
-        .pop()!
+        .slice(image.src.lastIndexOf("/") + 1)
         .replace(/\.[^.]+$/, "");
+    const exportFolderName =
+        process.env.nextImageExportOptimizer_exportFolderName;
+    if (exportFolderName === undefined) {
+        throw new Error(
+            "nextImageExportOptimizer_exportFolderName is not defined; it is set in next.config.mjs",
+        );
+    }
     const width = Math.min(METADATA_IMAGE_WIDTH, image.width);
     return {
-        src: `/${process.env.nextImageExportOptimizer_exportFolderName}/${name}-opt-${METADATA_IMAGE_WIDTH}.WEBP`,
+        src: `/${exportFolderName}/${name}-opt-${String(METADATA_IMAGE_WIDTH)}.WEBP`,
         width,
         height: Math.round((width * image.height) / image.width),
     };
 };
 
 export const getImageType = (src: string): string => {
-    const extension = src.split(".").pop()?.toLowerCase();
+    const extension = src.slice(src.lastIndexOf(".") + 1).toLowerCase();
     switch (extension) {
         case "ico":
             return "image/x-icon";

@@ -1,6 +1,6 @@
 ---
 name: responsive-images
-description: "Rules for rendering images and logos in this repo: which Image component to use, the mandatory sizes prop and its helper functions, dark/light logo pairs, optimized images for SEO metadata, and the ContentContainer padding mirror in image-sizes.ts. Make sure to use this skill whenever adding or changing any image, picture, logo, icon file, Image or Logo usage, sizes string, or og/twitter/JSON-LD image, including when a new section or page merely needs a picture or logo, and when images load slowly or too large."
+description: "Use whenever adding or changing any image, picture, logo, icon file, Image or Logo usage, sizes string, or og/twitter/JSON-LD image, including when a new section or page merely needs a picture or logo, and when images load slowly or too large. Covers the rules for rendering images and logos in this repo: which Image component to use, the mandatory sizes prop and its helper functions, dark/light logo pairs, optimized images for SEO metadata, and the ContentContainer padding mirror in image-sizes.ts."
 ---
 
 # Responsive Images

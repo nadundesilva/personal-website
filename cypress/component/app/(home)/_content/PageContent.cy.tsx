@@ -13,6 +13,7 @@
  * © 2026 Nadun De Silva. All rights reserved.
  */
 import PageContent from "@/app/(home)/_content/PageContent";
+import { defined } from "@/cypress/support/defined";
 
 const EXPECTED_SECTION_ORDER = [
     "who-am-i-section",
@@ -31,7 +32,10 @@ describe("PageContent", () => {
 
     it("labels every section with a heading that actually exists in the document", () => {
         cy.get("section[aria-labelledby]").each(($section) => {
-            const headingId = $section.attr("aria-labelledby");
+            const headingId = defined(
+                $section.attr("aria-labelledby"),
+                "section aria-labelledby",
+            );
             cy.get(`#${headingId}`).should("exist");
         });
     });

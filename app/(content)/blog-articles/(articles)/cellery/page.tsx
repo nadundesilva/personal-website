@@ -27,7 +27,7 @@ export const metadata: Metadata = {
         "Articles about Cellery, a microservices framework for building cloud-native applications.",
 };
 
-const BlogArticles = async (): Promise<React.ReactElement> => (
+const BlogArticles = (): React.ReactElement => (
     <>
         <CollectionPageJsonLd
             metadata={metadata}

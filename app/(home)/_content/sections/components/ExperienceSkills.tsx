@@ -69,7 +69,9 @@ const ExperienceSkills = ({
                     variant="ghost"
                     size="xs"
                     aria-expanded={expanded}
-                    onClick={() => setExpanded((p) => !p)}
+                    onClick={() => {
+                        setExpanded((p) => !p);
+                    }}
                     className="text-muted-foreground hover:text-foreground aria-expanded:bg-transparent h-6 gap-0.5 px-1 text-[0.625rem] font-normal"
                 >
                     {expanded ? (

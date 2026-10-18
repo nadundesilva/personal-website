@@ -45,7 +45,11 @@ afterEach(() => {
     assertNoResidualConsoleErrors();
 });
 
-function AllProviders({ children }: { children: React.ReactNode }) {
+function AllProviders({
+    children,
+}: {
+    children: React.ReactNode;
+}): React.ReactElement {
     return React.createElement(
         ThemeProvider,
         {

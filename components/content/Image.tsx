@@ -76,11 +76,12 @@ const Image = ({
             <NextImage
                 src={src}
                 alt={alt}
-                fill={fill}
                 sizes={effectiveSizes}
-                fetchPriority={fetchPriority}
-                loading={effectiveLoading}
-                className={fill ? "object-cover" : undefined}
+                {...(fetchPriority !== undefined && { fetchPriority })}
+                {...(effectiveLoading !== undefined && {
+                    loading: effectiveLoading,
+                })}
+                {...(fill && { fill, className: "object-cover" })}
             />
         </div>
     );

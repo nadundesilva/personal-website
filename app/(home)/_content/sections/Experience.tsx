@@ -16,7 +16,9 @@ import { Building2 } from "lucide-react";
 import type React from "react";
 
 import { ScrollReveal } from "@/components/primitives";
-import Experiences, { type Experience } from "@/constants/experience";
+import Experiences, {
+    type Experience as ExperienceData,
+} from "@/constants/experience";
 import { cn } from "@/shadcn/lib/cn";
 import { Card, CardContent, CardDescription, CardHeader } from "@/shadcn/ui";
 import ExperienceSkills from "./components/ExperienceSkills";
@@ -26,7 +28,7 @@ const Experience = (): React.ReactElement => (
     <ol role="list" className="w-full" aria-label="Experience Timeline">
         {Object.entries(Experiences).map(
             (
-                [experienceKey, experience]: [string, Experience],
+                [experienceKey, experience]: [string, ExperienceData],
                 index: number,
             ) => {
                 const isDesktopRight = index % 2 === 0;
@@ -155,7 +157,7 @@ const Experience = (): React.ReactElement => (
                                 <div
                                     className="bg-primary absolute inset-0 rounded-full motion-safe:animate-(--animate-home-timeline-dot-pulse)"
                                     style={{
-                                        animationDelay: `${index * 0.4}s`,
+                                        animationDelay: `${(index * 0.4).toFixed(1)}s`,
                                     }}
                                 />
                                 <div className="bg-primary size-full rounded-full motion-safe:transition-transform motion-safe:duration-150 motion-safe:hover:scale-[1.15]" />

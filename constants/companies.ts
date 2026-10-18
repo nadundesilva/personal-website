@@ -20,11 +20,11 @@ export interface Company {
     logo: LogoImageData;
     url: string;
     /** Additional URLs for this company (e.g. LinkedIn company page) included in sameAs. */
-    urlAliases?: string[];
+    urlAliases: string[];
     wikidataUrl: string;
 }
 
-const Companies: Record<string, Company> = {
+const Companies = {
     McCraeTech: {
         name: "McCrae Tech",
         logo: Logos.McCraeTech,
@@ -46,6 +46,6 @@ const Companies: Record<string, Company> = {
         urlAliases: ["https://www.linkedin.com/company/wso2"],
         wikidataUrl: "https://www.wikidata.org/entity/Q9095380",
     },
-};
+} satisfies Record<string, Company>;
 
 export default Companies;
