@@ -66,7 +66,7 @@
         "@testing-library/user-event": "14.6.8",
         "@types/cypress__code-coverage": "3.10.2",
         "@types/mdx": "2.0.14",
-        "@types/node": "25.9.9",
+        "@types/node": "26.6.5",
         "@types/react": "19.3.0",
         "@types/react-dom": "19.3.0",
         "@types/rss": "0.0.32",
@@ -106,7 +106,7 @@
     "devEngines": {
         "runtime": {
             "name": "node",
-            "version": "24.22.0",
+            "version": "26.13.0",
             "onFail": "download"
         }
     }
