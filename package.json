@@ -39,7 +39,7 @@
         "@sentry/nextjs": "^11.7.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
-        "glob": "^13.0.6",
+        "glob": "^14.0.3",
         "lucide-react": "^1.57.0",
         "motion": "^14.3.0",
         "next": "^16.4.1",
