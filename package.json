@@ -94,7 +94,7 @@
         "stylelint-config-standard": "40.0.0",
         "stylelint-config-tailwindcss": "1.0.1",
         "tailwindcss": "4.3.3",
-        "typescript": "6.0.3",
+        "typescript": "7.0.2",
         "typescript-eslint": "8.72.1",
         "wrangler": "4.156.0"
     },
