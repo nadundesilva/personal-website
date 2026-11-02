@@ -32,12 +32,12 @@ jobs:
                   fetch-depth: 0
                   persist-credentials: false
             - name: Setup pnpm and Node.js
-              uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
+              uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
               with:
                   cache: true
                   require-lockfile: true
             - name: Run E2E Tests
-              uses: cypress-io/github-action@c541a95ea92d9239347a2355f2e895cd4b3f8060 # v7.4.6
+              uses: cypress-io/github-action@4ce68f262a3888d22cf3175d62010a145ba737ee # v7.4.8
               with:
                   record: true
                   tag: deployment-check-in-browser-${{ matrix.browser }}
@@ -105,7 +105,7 @@ jobs:
                       .lighthouserc.cjs
                       package.json
             - name: Setup pnpm and Node.js
-              uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
+              uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
               with:
                   install: false
             - name: Run Lighthouse Audit
@@ -143,7 +143,7 @@ jobs:
                   output: trivy-results.sarif
                   ignore-unfixed: true
             - name: Upload Trivy scan results to GitHub Security tab
-              uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+              uses: github/codeql-action/upload-sarif@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
               if: always()
               with:
                   sarif_file: trivy-results.sarif
