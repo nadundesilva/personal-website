@@ -114,7 +114,7 @@ jobs:
                   output: trivy-results.sarif
                   ignore-unfixed: true
             - name: Upload Trivy scan results to GitHub Security tab
-              uses: github/codeql-action/upload-sarif@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
+              uses: github/codeql-action/upload-sarif@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
               if: always()
               with:
                   sarif_file: trivy-results.sarif
@@ -169,7 +169,7 @@ jobs:
               env:
                   WEBSITE_BUILD_DIR: out
             - name: Run E2E Tests
-              uses: cypress-io/github-action@4ce68f262a3888d22cf3175d62010a145ba737ee # v7.4.8
+              uses: cypress-io/github-action@18016a55674bd02cabf197de5762a1710cb5577c # v7.4.9
               with:
                   browser: ${{ matrix.browser }}
                   record: true
@@ -252,7 +252,7 @@ jobs:
             - name: Instrument Source for Code Coverage
               run: pnpm run instrument
             - name: Run Component Tests
-              uses: cypress-io/github-action@4ce68f262a3888d22cf3175d62010a145ba737ee # v7.4.8
+              uses: cypress-io/github-action@18016a55674bd02cabf197de5762a1710cb5577c # v7.4.9
               with:
                   component: true
                   browser: ${{ matrix.browser }}
@@ -458,7 +458,7 @@ jobs:
               env:
                   WEBSITE_BUILD_DIR: _site
             - name: Run E2E Tests
-              uses: cypress-io/github-action@4ce68f262a3888d22cf3175d62010a145ba737ee # v7.4.8
+              uses: cypress-io/github-action@18016a55674bd02cabf197de5762a1710cb5577c # v7.4.9
               with:
                   browser: ${{ matrix.browser }}
                   record: true
